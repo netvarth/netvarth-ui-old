@@ -1,0 +1,148 @@
+
+
+    <section>
+        <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    </section>
+    
+    <section>
+        <div class="content loc-list">
+            <div class="container" *ngIf="location_data">
+                <div class="row">
+                    <div class="card p0">
+                        <div class="copy locd">
+                                <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                    <div class="cl1">
+                                        <span class="editbt"  (click)="editLocation()" ></span>
+                                        <div class="cop-l">
+                                            <span class="bse-lcn-label" *ngIf="location_data.baseLocation==true">Base Location</span>
+                                            <h4>{{location_data.place}}</h4>
+                                            <span>{{location_data.address}}</span>
+                                            <span *ngIf="location_data.pinCode">
+                                                Pin : {{location_data.pinCode}}
+                                            </span>
+                                        </div>
+                                        <div class="cop-r">
+                                                <iframe width="100%" height="100%" frameborder="0" style="border:0"
+                                                [src]="mapurl" allowfullscreen *ngIf="mapurl"></iframe>
+                                            <div class="gps">
+                                                Longitude: <span>{{location_data.longitude}}</span> 
+                                                Latitude: <span>{{location_data.lattitude}}</span> 
+                                            </div>
+                                        </div>
+                                        <div class="enable-disable1" *ngIf="location_data.baseLocation==false">
+                                            <span class="ttle">Location Status</span>
+                                            <span><mat-slide-toggle [checked]="location_data.status=='ACTIVE'" (click)="changeProviderLocationStatus(location_data)"></mat-slide-toggle></span>
+                                            <span class='enabled' *ngIf="location_data.status=='ACTIVE'">Enabled</span>
+                                            <span class='disabled' *ngIf="location_data.status=='INACTIVE'">Disabled</span>
+                                        </div>
+                                        <div class="enable-disable2" *ngIf="location_data.status=='ACTIVE' && location_data.baseLocation==false">
+                                            <span class="cs-btn bt3" (click)="changeProviderBaseLocationStatus(location_data)">Set as Base Location?</span>
+                                        </div>
+                                    </div>                                
+                                </div>
+                                <div class="lbr col-sm-12 col-md-4 col-lg-4">                                
+                                    <div class="cr1">
+                                    <span class="editbt" (click)="editLocation('badge')" *ngIf="objectKeys(location_data.locationVirtualFields).length > 0 || 
+                                    location_data.open24hours ||
+                                    location_data.parkingType"></span>
+                                        <h5>Location Amenities</h5>
+                                        <ul class="amt-list">
+                                                <li [matTooltip]="'Parking Type: ' + location_data.parkingType" [class]="badgeIcons['parkingtype']['class']" *ngIf="location_data.parkingType"></li>
+                                                <li [matTooltip]="'24 hours'" [class]="badgeIcons['24hour']['class']" *ngIf="location_data.open24hours"></li>
+                                                <ng-container *ngIf="location_data.locationVirtualFields">
+                                                    <ng-container *ngFor="let locvirtual of objectKeys(location_data.locationVirtualFields)">
+                                                        <li [matTooltip]="badge_map_arr[locvirtual]" [class]="badgeIcons[locvirtual]['class']"></li>
+                                                    </ng-container>
+                                                </ng-container>
+                                               
+                                            </ul>
+                                        <ng-container *ngIf=" objectKeys(location_data.locationVirtualFields).length == 0 && 
+                                        !location_data.open24hours &&
+                                        !location_data.parkingType
+                                        ">
+                                            <div class="no-dta" 
+                                            *ngIf="!image_list_popup || image_list_popup.length == 0">
+
+                                                <p>You haven’t added any Location Aminities. </p>
+                                                <span class="cs-btn bt3" (click)="editLocation('badge')" >Add It Now</span>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>    
+                </div>
+                
+
+                <mat-accordion  class="row cst-acc">
+                    <mat-expansion-panel class="card p0"
+                    hideToggle = "{{(queues.length == 0) ? true : false}}"
+                    disabled = "{{(queues.length == 0) ? true : false}}"
+                    expanded = "{{(queues.length == 0) ? false : true}}">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title  class="lc-title">
+                            <h5>Queues <span class="count">{{queues.length}}</span></h5>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                  
+                      <div class="table-outer q-tbl">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Queue</th>
+                                    <th>Schedule</th>
+                                    <th><span class="addbt" (click)="addEditProviderQueue('add')"></span></th>                            
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let queue of queues">
+                                    <td data-title="Queue" class="pointer-cursor" 
+                                    (click)="goQueueDetail(queue)" [class.disabled]="queue.queueState=='DISABLED'">
+                                    {{queue.name}}</td>
+                                    <td data-title="Shedule">
+                                        <div class="schtd">
+                                            <ng-container *ngFor="let schedule of queue.displayschedule">
+                                            <!-- <span class="sch">
+                                                Mon - Fri 09:00 AM - 06:00 PM
+                                            </span> -->
+                                            <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
+                                        </ng-container>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="mbt">
+                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu">
+                                                <!-- <button type="button" (click)="addEditProviderQueue('edit',queue)" mat-menu-item>
+                                                <i class="icon-edit"></i>
+                                                <span>Edit</span>
+                                                </button> -->
+                                                <button type="button" (click)="changeProviderQueueStatus(queue)" mat-menu-item>
+                                                    <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i> 
+                                                    <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
+                                                    <span > {{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</span>
+                                                </button>
+                                            </mat-menu>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="addbt d-block d-md-none"></span>
+                      </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+            </div>
+            <app-field-error-display [displayError]="true" *ngIf="api_error"
+            errorMsg="{{api_error}}"></app-field-error-display>
+            
+            <app-form-success-display [displayMsg]="true" *ngIf="api_success"
+            successMsg="{{api_success}}"></app-form-success-display>
+
+        </div>    
+    </section>

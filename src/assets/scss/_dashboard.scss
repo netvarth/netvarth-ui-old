@@ -1,0 +1,3430 @@
+header {
+    &.dashb {
+        @include respond-to(ynw-767) {
+            padding: 20px 0;
+        }
+        @include respond-to(ynw-575) {
+            padding: 20px 0;
+        }
+        .lgo {
+            @include respond-to(ynw-575) {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+        }
+
+        .lg-opt {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            @include respond-to(ynw-767){
+                flex-flow: column;
+                margin: 0;
+                align-items:flex-end;
+            }
+            @include respond-to(ynw-575) {
+                width: 100%;
+                margin-left: 0 !important;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .bnps {
+                display: flex;
+                color: $cc-gray;
+                
+                @include respond-to(ynw-767){
+                    margin-bottom: 15px;
+                }
+                
+                .pro-pic {
+                    width: 50px;
+                    height: 50px;
+                    @include border-radius(50px);
+                    background-color: $cc-lightgray;
+                    display: flex;                    
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    overflow: hidden;
+                    margin-right: 5px;
+                    
+                    img {
+                        width: 50px;
+                        height: 50px;
+                    }
+                    
+                    &:after {
+                        content: "";
+                        background: url(../images/img-null.svg) no-repeat scroll 0 0;
+                        position: absolute;
+                        width: 60px;
+                        height: 60px;
+                        opacity: .3;
+                    }
+                }
+                
+                .mn-title{
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    
+                    .title-bn, .title-ps {
+                        display: block;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        @include font-medium;
+                        width: 100%;
+                    }
+                    .title-ps {
+                        @include font-regular;
+                        font-size: .875rem;
+                        font-weight: 400;
+                    }
+                }
+                
+                .inbx {
+                    padding-left: 30px;
+
+                    .ot-bx {
+                        width: 50px;
+                        height: 50px;
+                        @include border-radius(50px);
+                        background-color: $cc-lightgray;
+                        display: flex;                    
+                        justify-content: center;
+                        align-items: center;
+                        position: relative;
+
+                        .noti-no {
+                            position: absolute;
+                            width: 20px;
+                            height: 20px;
+                            @include border-radius(10px);
+                            background-color: $green;
+                            color: $white;
+                            text-align: center;
+                            @include font-bold;
+                            font-size: .75rem;
+                            top: 0;
+                            right:0;
+                            vertical-align: middle;
+                        }
+
+                        i {
+                            font-size: 1.625rem;
+                            vertical-align: middle;
+                            margin-top: 9px;
+                        }
+                    }
+                }
+            }
+            
+            .lgmem {
+                padding-left: 40px;
+                font-size: .875rem;
+                display: flex;
+                flex-flow: column;
+                align-items: flex-end;
+                
+                .lgin {
+                    button {
+                        width: 24px;
+                        height: 24px;
+                        
+                        .icon-angle-down {
+                            font-size: .5rem;
+                            display: flex;
+                            width: 24px;
+                            height: 24px;
+                            align-content: center;
+                            justify-content: center;
+                            
+                            &:before {
+                                display: flex;
+                                align-self: center;
+                               
+                            }
+                        }
+                    }
+                }
+                @include respond-to(ynw-575) {
+                    padding-left: 0;
+                    text-align: center;
+                    display: flex;
+                    flex-flow: column;
+                }
+                
+                a {
+                    color: $linkblack;
+                    font-size: .875rem;
+                    display: block;
+                    text-align: right;
+                    
+                    @include respond-to(ynw-575) {
+                        text-align: center;
+                    }
+
+                    i {
+                        font-size: 0.525rem;
+                        margin-left: 3px;
+                        
+                        @include respond-to(ynw-575) {margin: 0;}
+                    }
+                    
+                    &.membership {
+                        font-size: .75rem;
+                        color: $linkblue;
+                        
+                        span {
+                            @include font-bold;
+                        }
+                        
+                        i {
+                            font-size: 1.375rem;
+                            vertical-align: middle;
+                        }
+                    }
+                    
+                    &:first-child {
+                        @include respond-to(ynw-575) {
+                            order: 2;
+                        }
+                    }
+                }
+            }
+        }
+    }    
+}
+
+footer {
+    &.dashb {
+        .sect1, .sect2 {
+            display: none;
+        }
+        .sect3 {
+            background: $footer-darkgray;
+            height: 40px;
+            padding: 10px 0;
+            display: block;
+            /*position: fixed;*/
+            width: 100%;
+            bottom: 0;
+            z-index: 2018;
+            
+            p {
+                margin: 0;
+                font-size: .75rem;
+                opacity: .6;
+            }
+        }
+    }
+}
+
+
+/*profile & search --- no-data styles ***/
+
+.tp-pnl {
+    @include linear-gradient(#b5b5b5,#e0e0e0);
+    
+    .top-mnu {
+        display: flex;
+        justify-content: flex-end;
+        margin: 20px 0;
+        width: 100%;
+        
+        @include respond-to(ynw-575) {
+            justify-content: flex-start;
+            flex-flow: column;
+            
+            .bt5 {                
+                &:before {
+                    display: none;
+                }
+            }
+            
+        }
+        
+        .bt4, .bt5 {
+            margin-left: 10px;
+            
+            @include respond-to(ynw-575) {
+                margin: 0;
+                @include border-radius(0);
+                border-bottom: 1px solid $cc-ash;
+            }
+        }
+        .bt5 {
+            position: relative;
+            /*margin-left: 20px;*/
+            
+            @include respond-to(ynw-575) {
+                margin: 0;
+                border-bottom: none;
+            }
+            
+            &:before {
+                position: absolute;
+                content: "";
+                width: 1px;
+                height: 20px;
+                top: 5px;
+                left: -10px;
+                background: $cc-gray;
+                display: none;
+            }
+        }
+    }
+}
+
+.m-nav {
+    position: relative;
+    
+    a {
+        @include border-top-radius(5px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: $white;
+        height: 60px;
+        font-size: 1.125rem;
+        @include font-medium;
+        color: $cc-black;
+        
+        i {
+            font-size: 1.5rem;
+            height: 24px;
+            margin-right: 10px;
+        }
+        
+        &.active {
+            background: $linkblue;
+            color: $white;
+        }
+        
+        &:hover {
+            color: $linkblue;
+            
+            &.active {
+                color: $white;
+            }
+        }
+    }
+    
+    .nav01 {
+        
+        @include respond-to(ynw-767) {
+            padding: 0;
+            
+            a {
+                border-radius: 0;
+                border-left: 1px solid $cc-ash;
+                
+                &.active {
+                    border: none;
+                }
+            }
+        }
+        @include respond-to(ynw-575) {
+            width: 100%;
+            
+            a {
+                border-left: none;
+                border-bottom: 1px solid $cc-ash;
+            }
+            
+        }
+        @include respond-to(ynw-768-991) {
+            padding: 0;
+            
+            a {
+                border-radius: 0;
+                border-left: 1px solid $cc-ash;
+                
+                &.active {
+                    border: none;
+                }
+            }
+        }
+        
+        &:first-child {
+            a {
+                border: none;
+                
+                @include respond-to(ynw-575) {
+                    border-bottom: 1px solid $cc-ash;
+                }
+            }
+        }
+    }
+    &:after {
+        position: absolute;
+        content: "";
+        border-bottom: 5px solid $linkblue;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        
+        @include respond-to(ynw-575) {
+            display: none;
+        }
+    }
+}
+
+.bcrumb {
+    width: 100%;
+    color: $cc-black;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding:1.125em 0;
+    @include font-medium;
+    font-size: 1.125rem;
+    height: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 600;
+    
+    @include respond-to(ynw-767) {
+        font-size: .875rem;
+    }
+    @include respond-to(ynw-575) {
+        border: none;
+        font-size: .75rem;
+    }
+    
+    a, span {
+        color: $cc-black;
+        position: relative;
+        margin-right: 30px;
+        padding-right: 0px;
+        @include font-regular;
+        @include transition(all 300ms);
+        display: block;
+        font-weight: 500;
+        cursor: pointer;
+        
+        &:after {
+            position: absolute;
+            content: "\67";
+            @include font-custom;
+            font-size: .55rem;
+            right: -20px;
+            top: 0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        
+        &:hover {
+            color: $cc-black;
+            &:before {
+                border-bottom: 1px solid $cc-black;
+                content: "";
+                height: 1px;
+                width: 100%;
+                bottom: 0;
+                left: 0;
+                position: absolute;
+            }
+        }
+        
+        &.bt6 {
+            margin-right: 0;
+            padding-right: 10px;
+            display: flex;
+            
+            &:after {
+                display: none;
+            }
+            
+            &:hover {
+                color: $white;
+                
+                &:before {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.content {
+    .title {
+        width: 100%;
+        height: 80px;
+        @include border-top-radius(10px);
+        @include linear-gradient(#e0e0e0, #f2f2f2);
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        @include respond-to(ynw-575) {height: 60px;}
+        
+        h1 {
+            @include font-medium;
+            font-size: 1.75rem;
+            margin-bottom: 0;
+            font-weight: 500 !important;
+            
+            @include respond-to(ynw-767) {
+                font-size: 1.5rem;
+            }
+        }
+    }
+    
+    .col-a, .col-b {
+        &.pl0, &.pr0 {
+            @include respond-to(ynw-767) {
+                padding: 0;
+            }
+            @include respond-to(ynw-768-991) {
+                padding: 0;
+            }
+        }
+        .card {
+            margin-bottom: 30px;
+
+            h2 {
+                font-size: 1.25rem;
+                @include font-medium;
+                margin-bottom: 20px;
+                color: $cc-darkgray;
+
+                a {
+                    color: $cc-navyblue;
+                    vertical-align: middle;
+                    height: 16px;
+                    font-size: 1rem;
+                    display: inline-block;
+                }
+            }
+
+            .no-dta {
+                p {
+                    font-size: 1rem;
+                }
+            }
+
+            .pubs {
+                margin-bottom: 30px;
+
+                .wbox {
+                    p {
+                        margin-bottom: 10px;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+
+            .adwds {
+                color: $cc-gray;
+
+                p {
+                    font-style: italic;
+                }
+            }
+
+            .cd-t {
+                padding: 20px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid $cc-ash;
+
+                h2 {
+                    text-align: left;
+                }
+
+                .basic-i {                    
+                    .warning {
+                        width: 100%;
+                        text-align: center;
+
+                        i {
+                            font-size: 1.5625rem;
+                            color: $cc-warning;
+                        }
+                        .bt3 {
+                            margin-bottom: 5px;
+                        }
+                        p {
+                            font-size: 1rem;
+                            color: $cc-gray;
+                            span {
+                                display: block;
+                            }
+
+                            &.smlft {
+                                font-size: .75rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .cd-b {
+                border: none;
+                padding-top: 20px;
+
+                .loc-i {
+                    .warning {
+                        text-align: center;
+                        padding: 20px;
+
+                        i {
+                            font-size: 1.5625rem;
+                            color: $cc-warning;
+                        }
+                        .bt3 {
+                            margin-bottom: 5px;
+                        }
+                        p {
+                            font-size: 1rem;
+                            color: $cc-gray;
+                            span {
+                                display: block;
+                            }
+
+                            &.smlft {
+                                font-size: .75rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .ai-table {
+                p {
+                    font-size: 1rem;
+                }
+
+                .tbl-dta {
+                    border: 1px solid $cc-body;
+
+                    .tbl-ai {
+                        margin: 0;
+                        padding: 0;
+
+                        li {
+                            list-style: none;
+                            display: flex;
+                            border-bottom: 1px solid $cc-body;
+                            height: 50px;
+                            align-items: center;
+                            padding: 0 20px;
+
+                            h3 {
+                                font-size: .875rem;
+                                text-transform: uppercase;
+                                @include font-medium;
+                                margin: 0;
+                            }
+
+                            .ad-btn {
+                                position: relative;
+                                width: 24px;
+                                height: 24px;
+
+                                &:before {
+                                    position: absolute;
+                                    @include font-custom;
+                                    content: "\79";
+                                    left: 0;
+                                    top: -6px;
+                                    width: 100%;
+                                    height: 100%;
+                                    font-size: 1.5rem;
+                                }
+                            }
+                            
+                            &:last-child {
+                                border: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }  
+}
+
+/*profile & search ####*/
+
+.content {
+    .col-a {
+        .card {
+            .pubs {
+                &.w-dta {
+                    padding: 20px;
+                    font-size: .875rem;
+                    border-bottom: 1px solid $cc-ash;
+                    margin-bottom: 0px;
+                    
+                    .ctrl {
+                        display: flex;
+                        
+                        .ct-l {
+                            width: 50%;
+                            
+                            @include respond-to(ynw-767){
+                                width: 40%;
+                            }
+                            
+                            h2 {
+                                margin-bottom: 5px;
+                                font-size: 1.125rem;
+                                font-weight: 500;
+                            }
+
+                            .status {
+                                @include font-medium;
+                                margin-bottom: 10px;
+                                display: block;
+                                
+                                .on {
+                                    @include font-bold;
+                                    color: $green;
+                                }
+                                .off {
+                                    @include font-bold;
+                                    color: $cc-red;
+                                }
+                            }
+                            .error {
+                                color: $cc-red;
+                                
+                                i {
+                                    margin-right: 5px;
+                                }
+                            }
+                        }
+                        
+                        .ct-r {
+                            width: 30%;
+                            text-align: right;
+                            
+                            @include respond-to(ynw-575){
+                               width: auto;
+                            }
+                            
+                            .bt3 {
+                                padding-left: 30px;
+                                padding-right: 30px;
+                                margin-bottom: 10px;
+                            }
+                            
+                            span {
+                                display: block;
+                                color: $cc-red;
+                                font-size: .75rem;
+                                @include font-medium;
+                                
+                                i {
+                                    margin-right: 5px;
+                                    font-size: 1rem;
+                                    vertical-align: middle;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .adwds {
+                &.w-dta {
+                    padding: 20px;
+                    font-size: .875rem;
+                    @include font-medium;
+                    
+                    h2 {
+                        position: relative;
+                        margin-bottom: 10px;
+                        font-size: 1.125rem;
+                        font-weight: 500;
+                    }
+                    
+                    .ad-tble {
+                        display: flex;
+                        
+                        @include respond-to(ynw-767){
+                            flex-direction: column;
+                        }
+                        
+                        .ad-r {
+                            @include respond-to(ynw-767){
+                                margin: 10px 0 0 0 !important;
+                            }
+                            
+                            span {
+                                padding: 3px 5px;
+                                @include border-radius(20px);
+                                border: 1px solid $cc-mediumgray;
+                                font-size: .75rem;
+                            }
+                            .bt8 {
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &.w-dta {
+                
+                &.active {
+                    h2 {
+                        color: $linkblue;
+                        position: relative;
+                        padding-left: 40px;
+                        @include font-bold;
+
+                        &:before {
+                            @include font-custom;
+                            position: absolute;
+                            left: 10px;
+                            top: 5px;
+                            content: "\66";
+                            font-size: .75rem;
+                            font-weight: 600;
+                        }
+                    }
+                    .cd-t {
+                        padding-bottom: 20px;
+                        h2 {
+                            color: $linkblue;
+                            position: relative;
+                            padding-left: 40px;
+                            @include  font-bold;
+
+                            &:before {
+                                @include  font-custom;
+                                position: absolute;
+                                left: 10px;
+                                top: 5px;
+                                content: "\66";
+                                font-size: .75rem;
+                                font-weight: 600;
+                            }
+                        }
+                        
+                        .basic-i {
+                            position: relative;
+                            display: flex;
+                            
+                            @include respond-to(ynw-575){
+                                flex-direction: column;
+                            }
+                            
+                            .editbt {
+                                position: absolute;
+                                right: 0px;
+                                top: 0;
+                                width: 30px;
+                                height: 30px;                                
+                                @include border-radius(50%);
+                                @include transition(all 300ms);
+                                color: $linkblue;
+                                font-size: 1rem;
+                                
+                                &:hover {
+                                    background: $cc-ash;
+                                }
+                            }
+                            
+                            .bi-l {
+                                margin-right: 20px;
+                                
+                                @include respond-to(ynw-575){
+                                    margin: 0;
+                                }
+                                
+                                .pro-pic {
+                                    width: 180px;
+                                    height: 180px;
+                                    @include border-radius(50%);
+                                    background: $cc-lightgray;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    overflow: hidden;
+                                    position: relative;
+                                    
+                                    @include respond-to(ynw-575){
+                                        margin: 0 auto;
+                                        width: 120px;
+                                        height: 120px;
+                                    }
+                                    
+                                    .pro-pic-img {
+                                        img {
+                                            width: 180px;
+                                            height: 180px;
+                                        }
+                                    }
+                                    
+                                    .change {
+                                        opacity: 0;
+                                        visibility: hidden;
+                                        width: 100%;
+                                        height: 100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        position: absolute;
+                                        @include transition(all 300ms);
+                                    }
+                                    
+                                    .add, .change {
+                                        text-align: center;
+                                        @include font-bold;
+                                        text-transform: uppercase;
+                                        font-size: .75rem;
+                                        cursor: pointer;
+                                    }
+                                    .add {
+                                        width: 100%;
+                                        height: 100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        position: relative;
+                                        z-index: 1;
+                                        
+                                        span {
+                                            width: 100%;
+                                            height: 100%;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            color: $linkblue;
+                                        }
+                                    }
+                                    
+                                    &.yes {
+                                        .add {
+                                            opacity: 0;
+                                            visibility: hidden;
+                                            width: 0px;
+                                        }
+                                        &:hover {
+                                            .change {
+                                                opacity: 1;
+                                                visibility:visible;
+                                                background: rgba(0,0,0,.5);
+                                                width: 100%;
+                                                height: 100%;
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+                                                position: absolute;
+                                                
+                                                span {
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    color: $white;
+                                                }
+                                            } 
+                                        }
+                                        
+                                        &:before {display: none;}
+                                    }
+                                    
+                                    &:before {                                        
+                                        content: "";
+                                        background: url(../images/img-null.svg) no-repeat scroll 0 0;
+                                        position: absolute;
+                                        width: 200px;
+                                        height: 200px;
+                                        opacity: .3;
+                                        z-index: 0;
+                                        
+                                        @include respond-to(ynw-575){
+                                            width: 140px;
+                                            height: 140px;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            .bi-r {
+                                
+                                @include respond-to(ynw-575){
+                                    text-align: center;
+                                    margin-top: 20px;
+                                }
+                                
+                                h3 {
+                                    font-size: 1.125rem;
+                                    @include font-medium;
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+                        
+                        .phtbl {                            
+                            .tbl-list {
+                                min-width: 100%;
+                                .tth {
+                                    .otr {                                        
+                                        .cth {
+                                            font-weight: 600;
+                                            font-size: 1rem;
+                                            
+                                            .addbt {
+                                                position: relative;
+                                                display: inline-block;
+                                                width: 24px;
+                                                height: 24px;
+                                                font-size: 1.5rem;
+                                                vertical-align: middle;
+                                                margin-left: 5px;
+                                                font-weight: 500;
+                                                color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                }
+                                .ttd {
+                                    font-size: .875rem;
+                                    font-weight: 500;
+                                    
+                                    .otr {
+                                        align-items: center;
+                                        
+                                        @include respond-to(ynw-767){
+                                            flex-flow: column;
+                                            align-items: flex-start;
+                                        }
+                                        
+                                        .mbt {
+                                            right: -20px;
+                                            /*opacity: 0;*/
+                                            @include transition(all 300ms);
+                                            padding: 20px;
+                                            position: absolute;
+                                            font-size: 1rem;
+                                            color: $cc-darkgray;
+                                            
+                                            &:before {
+                                                display: none;
+                                            }
+                                            
+                                            @include respond-to(ynw-767){
+                                                opacity: 1;
+                                            }
+                                            
+                                            &:hover {
+                                                color: $linkblue;
+                                            }
+                                        }
+                                        
+                                        .ctd {
+                                            width: 33%;
+                                            
+                                            @include respond-to(ynw-767){width: 100%;}
+                                            &:nth-child(3) {
+                                                span {
+                                                    display: block;
+                                                    font-size: .75rem;
+                                                    color: $cc-mediumgray;
+                                                    font-weight: 700;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    /*&:hover {
+                                        .otr {
+                                            .mbt {
+                                                opacity: 1;
+                                            }
+                                        }
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                    
+                    .cd-b {
+                        padding: 20px;
+                        
+                        .loc-i {
+                            .loc-panl {
+                                position: relative;
+                                margin-bottom: 20px;
+                                border: 1px solid $cc-body;
+                                
+                                .editbt {
+                                    position: absolute;
+                                    right: 10px;
+                                    top: 5px;
+                                    width: 30px;
+                                    height: 30px;                                
+                                    @include border-radius(50%);
+                                    font-size: 1rem;
+                                    color: $linkblue;
+                                    background: transparent;
+                                    @include transition(all 300ms);
+
+                                    &:hover {
+                                        background: $cc-ash;
+                                    }
+                                }
+                                
+                                .title {
+                                    height: auto;
+                                    background: $cc-body;
+                                    text-align: left;
+                                    justify-content: flex-start;
+                                    padding: 10px 20px;
+                                    @include border-radius(0);
+                                    
+                                    h3 {
+                                        margin: 0;                                        
+                                        font-size: 1.125rem;
+                                        color: $cc-darkgray;
+                                        font-weight: 600;
+                                    }
+                                }
+                                
+                                .copy {
+                                    padding: 20px;
+                                    display: flex;
+                                    font-size: .875rem;
+                                    font-weight: 500;
+                                    
+                                    @include respond-to(ynw-767){
+                                        flex-direction: column;
+                                    }
+                                    
+                                    .cop-l {
+                                        width: 50%;
+                                        
+                                        @include respond-to(ynw-767){
+                                            width: 100%;
+                                            margin-bottom: 10px;
+                                        }
+                                        
+                                        h4 {
+                                            color: $cc-darkgray;
+                                            font-size: 1.125rem;
+                                            @include font-medium;
+                                        }
+                                        
+                                        span {
+                                            display: block;
+                                            margin-bottom: 5px;
+                                            width: 80%;
+                                            
+                                            @include respond-to(ynw-767) {
+                                                width: 40%;
+                                            }
+                                        }
+                                        
+                                        .info-lst {
+                                            width: 80%;
+                                            margin-top: 20px;
+                                            min-height: 26px;
+                                            
+                                            li{
+                                                font-size: inherit;
+                                                font-size: .75rem;
+                                            }
+                                        }
+                                    }
+                                    .cop-r {
+                                        width: 50%;
+                                        display: table;
+                                        
+                                        @include respond-to(ynw-767){
+                                            width: 100%;
+                                        }
+                                        
+                                        iframe {min-height: 200px;}
+                                        
+                                        .gps {
+                                            position: relative;
+                                            padding-left: 26px;
+                                            line-height: 1.8;
+                                            
+                                            span {
+                                                font-weight: 600;
+                                                margin-right: 20px;
+                                                
+                                                &:last-child {
+                                                    margin: 0;
+                                                }
+                                            }
+                                            
+                                            &:before {
+                                                position: absolute;
+                                                @include font-custom;
+                                                content: "\74";
+                                                left: 0;
+                                                top: 0;
+                                            }
+                                        }
+                                    }
+                                    
+                                    .amt-list {
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        margin: 0;
+                                        padding: 0;
+                                        
+                                        li {
+                                            list-style: none;
+                                            font-size: 2rem;
+                                            color: $cc-gray;
+                                            position: relative;
+                                            margin-right: 20px;
+                                            margin-bottom: 10px;
+                                            width: 32px;
+                                            height: 32px;
+                                            
+                                            &:last-child {
+                                                margin-left: 20px;
+                                                
+                                                &:before {
+                                                    position: absolute;
+                                                    width: 1px;
+                                                    height: 22px;
+                                                    background: $cc-gray;
+                                                    content: "";
+                                                    left: -20px;
+                                                    top: 8px;
+                                                }
+                                                
+                                                .editbt {
+                                                    font-size: 1rem;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    &.wrk-hrs {
+                                        display: block;
+                                        
+                                        .whrs {
+                                            margin: 0 0 10px 0;
+                                            padding: 0;
+                                            width: 100%;
+                                            display: block;
+                                            border: 1px solid $cc-body;
+
+                                            li {
+                                                list-style: none;
+                                                font-size: .875rem;
+                                                display: flex;
+                                                align-items: center;
+                                                height: 40px;
+                                                padding: 10px;
+                                                border-bottom: 1px solid $cc-body;
+
+                                                .day {
+                                                    @include font-bold;
+                                                    color: $cc-gray;
+                                                    display: inline-block;
+                                                    font-style: normal;
+                                                    font-size: .875rem;
+                                                    width: 200px;
+                                                    margin: 0;
+                                                }
+                                                .time {
+                                                    font-weight: 500;
+                                                    font-style: normal;
+                                                    color: $cc-black;
+                                                    font-size: .875rem;
+                                                    margin: 0;
+                                                }
+
+                                                &:last-child {
+                                                    margin-bottom: 0;
+                                                    border: none;
+                                                }
+                                            }
+                                        }
+                                        .schedule_msgdiv {
+                                            .info-lst {
+                                                margin-top: 20px;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                h5 {
+                                    text-transform: uppercase;
+                                    font-weight: 600;
+                                    font-size: .875rem;
+                                    color: $cc-gray;
+                                    padding: 5px 20px;
+                                    border-top: 1px solid $cc-body;
+                                    border-bottom: 1px solid $cc-body;
+                                    margin:0;
+                                }
+                                
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
+                            }
+                        }
+                        
+                        .emltbl {                            
+                            .tbl-list {
+                                min-width: 100%;
+                                
+                                .tth {
+                                    .otr {
+                                        .cth {
+                                            font-weight: 600;
+                                            font-size: 1rem;
+                                            
+                                            .addbt {
+                                                position: relative;
+                                                display: inline-block;
+                                                width: 24px;
+                                                height: 24px;
+                                                font-size: 1.5rem;
+                                                vertical-align: middle;
+                                                margin-left: 5px;
+                                                font-weight: 500;
+                                                color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                }
+                                .ttd {
+                                    font-size: .875rem;
+                                    font-weight: 500;
+                                    
+                                    .otr {
+                                        align-items: center;
+                                        
+                                        @include respond-to(ynw-767){
+                                            flex-flow: column;
+                                            align-items: flex-start;
+                                        }
+                                        
+                                        .mbt {
+                                            right: -20px;
+                                            /*opacity: 0;*/
+                                            @include transition(all 300ms);
+                                            padding: 20px;
+                                            position: absolute;
+                                            font-size: 1rem;
+                                            color: $cc-darkgray;
+                                            
+                                            &:before {
+                                                display: none;
+                                            }
+                                            
+                                            @include respond-to(ynw-767){
+                                                opacity: 1;
+                                            }
+                                            
+                                            &:hover {
+                                                color: $linkblue;
+                                            }
+                                        }
+                                        
+                                        .ctd {
+                                            width: 33%;
+                                            
+                                            @include respond-to(ynw-767){width: 100%;}
+                                            &:nth-child(3) {
+                                                span {
+                                                    display: block;
+                                                    font-size: .75rem;
+                                                    color: $cc-mediumgray;
+                                                    font-weight: 700;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    /*&:hover {
+                                        .otr {
+                                            .mbt {
+                                                opacity: 1;
+                                            }
+                                        }
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                    
+                    .ai-table {
+                        .tbl-ai {
+                            margin: 0;
+                            padding: 0;
+
+                            li {
+                                list-style: none;
+                                display: flex;
+                                border-bottom: 1px solid $cc-body;
+                                height: 50px;
+                                align-items: center;
+                                padding: 0 20px;
+
+                                h3 {
+                                    font-size: .875rem;
+                                    text-transform: uppercase;
+                                    @include font-medium;
+                                    margin: 0;
+                                    padding-left: 40px;
+                                }
+
+                                .ad-btn {
+                                    position: relative;
+                                    width: 24px;
+                                    height: 24px;
+
+                                    &:before {
+                                        position: absolute;
+                                        @include font-custom;
+                                        content: "\79";
+                                        left: 0;
+                                        top: -6px;
+                                        width: 100%;
+                                        height: 100%;
+                                        font-size: 1.5rem;
+                                    }
+                                }
+
+                                &:last-child {
+                                    border: none;
+                                }
+
+                                &.w-dta {
+                                    h3 {
+                                        position: relative;
+                                        padding-left: 40px;
+
+                                        &:before {
+                                            @include font-custom;
+                                            position: absolute;
+                                            left: 13px;
+                                            top: 0px;
+                                            content: "\66";
+                                            font-size: .75rem;
+                                            font-weight: 600;
+                                            text-transform: none;
+                                        }
+                                    }
+                                }
+
+                                &.active {
+                                    display: block;
+                                    height: auto;
+                                    padding: 0;
+
+                                    h3 {
+                                        padding: 15px 10px;
+                                        background: $cc-body;
+                                        position: relative;
+                                        padding-left: 40px;
+                                        color: $linkblue;
+                                        font-weight: 600;
+
+                                        &:before {
+                                            @include font-custom;
+                                            position: absolute;
+                                            left: 13px;
+                                            top: 15px;
+                                            content: "\66";
+                                            font-size: .75rem;
+                                            font-weight: 600;
+                                            text-transform: none;
+                                        }
+                                    }
+
+                                    .tbl-pad {
+                                        padding: 10px;
+
+                                        .tbl-list {
+                                            border: 1px solid $cc-body;
+                                            min-width: 600px;
+                                            margin-bottom: 10px;
+
+                                            li {
+                                                height: auto;
+                                                border-bottom: none;
+                                            }
+
+                                            .tth {
+                                                padding: 0;
+                                                border-bottom: 1px solid $cc-body;
+
+                                                .otr {
+                                                    width: 100%;
+                                                    .cth {
+                                                        font-weight: 700;
+                                                        font-size: .875rem;
+                                                        flex-grow: 1;
+                                                        width: 25%;
+                                                    }
+                                                }
+                                            }
+
+                                            .ttd {
+                                                padding: 0;
+                                                .otr {
+                                                    width: 100%;
+                                                    .ctd {
+                                                        font-size: .875rem;
+                                                        flex-grow: 1;
+                                                        width: 25%;
+                                                    }
+
+                                                    .mbt {
+                                                        position: absolute;
+                                                        right: 0;
+                                                        padding: 20px;
+                                                        color: $cc-darkgray;
+                                                        opacity: 0;
+
+                                                        @include respond-to(ynw-767){
+                                                            opacity: 1;
+                                                        }
+                                                        @include respond-to(ynw-768-991){
+                                                            opacity: 1;
+                                                        }
+                                                        @include respond-to(ynw-992-1199){
+                                                            opacity: 1;
+                                                        }
+
+                                                    }
+                                                }
+
+                                                &:hover {
+                                                    .mbt {opacity: 1;}
+                                                }
+                                            }
+                                        }
+
+                                        .addbt {
+                                            font-size: 1.5rem;
+                                            width: 24px;
+                                            height: 24px;
+                                            display: block;
+                                            margin: 0 auto;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &.spc-extra, &.add-extra {
+                .mat-accordion {
+                    .acc-cont {
+                        margin: 0 20px;
+                        display: flex;
+                        border: 1px solid $cc-body;
+                        border-bottom: none;
+
+                        .mat-accordion {                            
+                            width: 100%;                            
+                            border-radius: 0;
+                            
+                            .mat-expansion-panel {
+                                border-radius: 0;
+                                background: transparent;
+                                
+                                .mat-expansion-panel-header {
+                                    min-height: 40px;
+                                    padding: 0 10px;
+                                    height: 40px !important;
+                                    @include transition(all 300ms);
+                                    
+                                    .mat-content {
+                                        mat-panel-title {
+                                            font-size: .875rem;
+                                            text-transform: uppercase;
+                                            font-weight: 500;
+                                        }
+                                        
+                                        mat-panel-description {
+                                            margin-right: 0;
+                                            
+                                            .material-icons {
+                                                font-size: 1.5rem;
+                                                color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                    
+                                    &:hover {
+                                        background: $cc-body;
+                                    }
+                                }
+                                .mat-expansion-panel-content {
+                                    .mat-expansion-panel-body {
+                                        padding-bottom: 0;
+                                        
+                                        .cont-btn {
+                                            padding: 20px;
+                                            position: relative;
+                                            
+                                            p {
+                                                float: none;
+                                            }
+                                            
+                                            .editbt {
+                                                font-size: 1rem;
+                                                top: -35px;
+                                                right: 15px;
+                                                color: $linkblue;
+                                                position: absolute;
+                                                width: 30px;
+                                                height: 30px;    
+                                                @include border-radius(50%);
+                                                @include transition(all 300ms);
+                                                /*opacity: 0;*/
+                                                
+                                                /*@include respond-to(ynw-767){
+                                                    opacity: 1;
+                                                }
+                                                @include respond-to(ynw-768-991){
+                                                    opacity: 1;
+                                                }*/
+                                                
+                                                &:hover {
+                                                    background: $cc-ash;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                &.mat-expanded {
+                                    .mat-expansion-panel-header {
+                                        background: $cc-body;
+                                        
+                                        .mat-content {
+                                            mat-panel-title {
+                                                color: $linkblue;
+                                                font-weight: 600;
+                                            }
+                                        }
+                                        .mat-expansion-indicator {
+                                            &:after {
+                                                border-color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            &.acc-btn-data {
+                                .mat-expansion-panel{
+                                    .mat-expansion-panel-header{
+                                        position: relative;
+
+                                        .mat-content {                                            
+                                            mat-panel-title {
+                                                padding-left: 20px;
+                                            }
+                                        }
+                                        .mat-expansion-indicator {
+                                            position: absolute;
+                                            left: 10px;
+                                        }
+                                    }
+                                }
+                                
+                                
+                            }
+                            &:hover {
+                                .mat-expansion-panel {
+                                    .mat-expansion-panel-content {
+                                        .mat-expansion-panel-body {
+                                            .cont-btn {
+                                                .editbt {
+                                                    opacity: 1;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        &:first-child {
+                            border-top: 1px solid $cc-body;
+                        }
+                        &:last-child {
+                            border-bottom: 1px solid $cc-body;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .col-b {
+        .card {
+            &.w-dta {
+                &.active {
+                    h2 {
+                        color: $linkblue;
+                        position: relative;
+                        padding-left: 40px;
+                        @include font-bold;
+
+                        &:before {
+                            @include font-custom;
+                            position: absolute;
+                            left: 10px;
+                            top: 5px;
+                            content: "\66";
+                            font-size: .75rem;
+                            font-weight: 600;
+                        }
+                    }
+                    
+                    .ph-gal-bx {
+                        padding-left: 20px;
+                        padding-right: 20px;
+                        
+                        .ph-gal {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-wrap: wrap;
+                            align-content: space-around;
+                            margin: 0 0 20px 0;
+                            padding: 0;
+                            width: 100%;
+
+                            li {
+                                list-style: none;
+                                flex-grow: 1;                                
+                                margin-right: 10px;                                
+                                background: $cc-lightgray;
+                                margin-top: 10px;
+                                
+                                @include respond-to(ynw-767){
+                                    margin-top: 0;
+                                }
+                                @include respond-to(ynw-768-991){
+                                    margin-top: 0;
+                                }
+                                
+                                .galbx {
+                                    position: relative;
+                                    width: 100%;
+                                    height: 100px;
+                                    
+                                    @include respond-to(ynw-767){
+                                        height: 100px;
+                                    }
+                                    @include respond-to(ynw-768-991){
+                                        height: 150px;
+                                    }
+                                    @include respond-to(ynw-992-1199){
+                                        height: 80px;
+                                    }
+                                    
+                                    .mbt {
+                                        position: absolute;
+                                        right: 0;
+                                        top: 0;
+                                        width: 32px;
+                                        height: 32px;
+                                        z-index: 4;
+                                        opacity: 0;
+                                        color: $white;
+                                        @include transition(all 300ms);
+                                        
+                                        &:before {
+                                            display: none;
+                                        }
+                                        
+                                        @include respond-to(ynw-767){
+                                            opacity: 1;
+                                        }
+                                        @include respond-to(ynw-768-991){
+                                            opacity: 1;
+                                        }
+                                    }
+                                    
+                                    .img-h {
+                                        position: absolute;
+                                        width: 100%;
+                                        height: 100%;
+                                        top: 0;
+                                        left: 0;
+                                        z-index: 2;
+                                        
+                                        .overlay-y {
+                                            position: absolute;
+                                            opacity: 0;
+                                            @include transition(all 300ms);
+                                            background: rgba(0,0,0,.8);
+                                            width: 100%;
+                                            height: 100%;
+                                            z-index: 3;
+                                        }
+                                        
+                                        img {
+                                            width: 100%;
+                                            height: 100%;
+                                        }
+                                    }
+                                    
+                                    &:hover {
+                                        cursor: pointer;
+                                        
+                                        .img-h {
+                                            .overlay-y {
+                                                opacity: 1;
+                                            }
+                                        }
+                                        
+                                        .mbt {
+                                            opacity: 1;
+                                        }
+                                    }
+                                    
+                                    &:before {                                        
+                                        content: "";
+                                        background: url(../images/img-null.svg) no-repeat scroll center center/ 80%;
+                                        position: absolute;
+                                        width: 100%;
+                                        height: 100%;
+                                        opacity: .3;
+                                        z-index: 0;
+                                    }
+                                }
+
+                                &:first-child {
+                                    width: 100%;
+                                    height: 200px;
+                                    margin-top: 0px;
+                                    margin-right: 0;
+                                    
+                                    @include respond-to(ynw-767){
+                                        height: inherit;
+                                        width: auto;
+                                        margin-bottom: 0;
+                                        margin-right: 10px;
+                                        flex-grow: 1; 
+                                    }
+                                    @include respond-to(ynw-768-991){
+                                        height: inherit;
+                                        width: auto;
+                                        margin-bottom: 0;
+                                        margin-right: 10px;
+                                        flex-grow: 1; 
+                                    }
+                                    
+                                    .galbx {
+                                        height: 200px;
+                                        
+                                        @include respond-to(ynw-767){
+                                            height: 100px;
+                                        }
+                                        @include respond-to(ynw-768-991){
+                                            height: 150px;
+                                        }
+                                    }
+                                }
+                                &:last-child {
+                                    margin-right: 0;
+                                    
+                                    .galbx {
+                                        .mre {
+                                            position: absolute;
+                                            width: 100%;
+                                            height: 100%;
+                                            z-index: 3;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            color: $white;
+                                            background: rgba(0,0,0,.5);
+                                            font-size: 1.5rem;
+                                            font-weight: 600;
+                                        }
+                                        &:after {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+                            &.ph-gal-2 {
+                                li {
+                                    height: auto;
+                                    width: auto;
+                                    margin-top: 0;
+                                    
+                                    .galbx {
+                                        height: 100px;
+                                        
+                                        @include respond-to(ynw-767){
+                                            height: 100px;
+                                        }
+                                        @include respond-to(ynw-768-991){
+                                            height: 150px;
+                                        }
+                                    }
+                                    
+                                    &:first-child {
+                                        margin-right: 10px;
+                                        
+                                        .galbx {
+                                            height: 100px;
+                                            
+                                            @include respond-to(ynw-767){
+                                                height: 100px;
+                                            }
+                                            @include respond-to(ynw-768-991){
+                                                height: 150px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .addbt {
+                            font-size: 1.5rem;
+                            width: 24px;
+                            height: 24px;
+                            display: block;
+                            margin: 0 auto;
+                            color: $linkblue;
+                        }
+                    }
+                    
+                    .cd-t {
+                        padding-bottom: 20px;
+                        padding-top: 0;
+                        .sblinks {
+                            .sbl {
+                                margin: 0 0 20px 0;
+                                padding: 0;
+                                
+                                li {
+                                    list-style: none;
+                                    position: relative;
+                                    display: flex;
+                                    align-items: center;
+                                    font-size: .875rem;
+                                    height: 40px;
+                                    
+                                    a {
+                                        color: $linkblack;
+                                        @include font-regular;
+                                        font-weight: 500;
+                                        padding-left: 34px;
+                                        padding-right: 10px;
+                                        padding-top: 5px;
+                                        padding-bottom: 5px;
+                                        width: 100%;
+                                        position: absolute;
+                                        display: block;
+                                        align-items: center;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        
+                                        &:hover {
+                                            color: $linkblue;
+                                        }
+                                    }
+                                    
+                                    .mbt {
+                                        right: 25px;
+                                        top: 0;
+                                        position: absolute;
+                                        opacity: 0;
+                                        padding: 0;
+                                        width: 0;
+                                        height: 0;
+                                        color: $cc-darkgray;
+                                        font-size: 1rem;
+                                        z-index: 4;
+                                        overflow: visible;
+                                        
+                                        &:before {
+                                            display: none;
+                                        }
+                                        
+                                        @include respond-to(ynw-767){
+                                            opacity: 1;
+                                        }
+                                        @include respond-to(ynw-768-991){
+                                            opacity: 1;
+                                        }
+                                    }
+                                    
+                                    &:before {
+                                        font-size: 1.5rem;
+                                        position: absolute;
+                                        z-index: 0;
+                                    }
+                                    
+                                    &:hover {
+                                        .mbt {
+                                            opacity: 1;
+                                        }
+                                    }
+                                    
+                                    &.fb{
+                                        &:before {
+                                            color: #627aac;
+                                        }
+                                    }
+                                    &.tw{
+                                        &:before {
+                                            color: #5eb0fb;
+                                        }
+                                    }
+                                    &.lkd{
+                                        &:before {
+                                            color: #02a2c2;
+                                        }
+                                    }
+                                    &.ytb{
+                                        &:before {
+                                            color: #ef452f;
+                                        }
+                                    }
+                                    &.gpl{
+                                        &:before {
+                                            color: #ef452f;
+                                        }
+                                    }
+                                    &.pntr{
+                                        &:before {
+                                            color: #ef452f;
+                                        }
+                                    }
+                                }
+                            }
+                            .addbt {
+                                font-size: 1.5rem;
+                                width: 24px;
+                                height: 24px;
+                                display: block;
+                                margin: 0 auto;
+                                color: $linkblue;
+                            }
+                        }
+                    }
+                    
+                    .cd-b {
+                        padding: 20px;
+                        padding-bottom: 0px;
+                        
+                        .info-lst {
+                            min-height: 24px;
+                            li {
+                                font-weight: 500;
+                                padding-top: 3px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* waitlist-manager ####*/
+
+.content {
+    &.w-manager {
+        .card {
+            width: 100%;
+            margin-bottom: 30px;
+            font-size: .875rem;
+            
+            .hd-t {
+                padding: 20px;
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid $cc-ash;
+                
+                h2 {
+                    font-size: 1.25rem;
+                    font-weight: 500 !important;
+                    margin-bottom: 0;
+                }
+                
+                .ctrl {
+                    margin-left: 30px;
+                }
+                
+                .info {
+                    i {
+                        font-size: 1.25rem;
+                        color: $cc-gray;
+                    }
+                }
+            }
+            
+            .copy {
+                padding: 20px 40px;
+                
+                .row {
+                    margin-bottom: 20px;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+                
+                .lbl {
+                    
+                    @include respond-to(ynw-767){
+                        margin-bottom: 15px;
+                    }
+                    
+                    label {
+                        font-weight: 600;
+                        margin-bottom: 0;
+                    }
+                }
+                .lbr {
+                    .rw {
+                        label {
+                            margin-left: 10px;
+                            margin-bottom: 0;
+                        }
+                        
+                        &.fxd {
+                            
+                            .form-group {
+                                display: flex;
+                                height: 40px;
+                                align-items: center;
+                                
+                                input[type="number"] {
+                                    width: 100px;
+                                    margin-left: 15px;
+                                    display: inline-block;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .b-link {
+                padding: 20px;
+                border: 1px solid $linkblue;
+                @include border-radius(5px);
+                cursor: pointer;
+                @include transition(all 300ms);
+                
+                h2 {
+                    margin-bottom: 0;
+                    font-size: 1.25rem;
+                    font-weight: 500 !important;
+                    display: flex;
+                    align-items: center;
+                    color: $linkblue;
+                    
+                    span {
+                        @include border-radius(24px);
+                        width: 20px;
+                        height: 20px;
+                        background: $linkblue;
+                        padding: 3px;
+                        color: $white;
+                        font-size: .75rem;
+                        font-weight: 700;
+                        display: flex;
+                        margin-left: 10px;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+                
+                &:hover {
+                    background: $hover-blue;
+                    border-color: transparent;
+                    
+                    h2 {
+                        color: $white;
+                        
+                        span {
+                            background: $white;
+                            color: $linkblue;
+                        }
+                    }
+                }
+            }
+            
+            .mat-button {
+                margin-left: 50px;
+                margin-bottom: 20px;
+            }
+            
+            app-form-success-display {
+                .sts-msg {
+                    @include border-bottom-radius(5px);
+                    &.success {
+                        padding: 10px 15px;
+                        background: $green;
+                        color: $white;
+                        font-size: .75rem;
+                        font-weight: 500;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* waitlist-manager-locations ####*/
+
+.content {
+    &.loc-list {
+        
+        .n-loc {
+            width: 100%;
+            position: relative;
+            
+            .add-nloc {
+                position: absolute;
+                top: -43px;
+                right: 20px;
+                
+                @include respond-to(ynw-575){
+                    height: auto;
+                    position: static;
+                    margin-bottom: 20px;
+                }
+                
+                &:hover {
+                    background: $linkblue;
+                }
+            }
+        }
+        .card {
+            margin-bottom: 30px;
+            
+            .copy {
+                position: relative;
+                
+                .mbt {
+                    right: 0;
+                    position: absolute;
+                    top: 0px;
+                    z-index: 51;
+                    
+                    &:before {
+                        display: none;
+                    }
+                }
+                
+                h3 {
+                    font-size: 1.125rem;
+                    font-weight: 500 !important;
+                    margin-bottom: 15px;
+                    color: $linkblue;
+                    display: inline-block;
+                }
+                
+                p{
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+                
+                .it-des {
+                    margin-bottom: 20px;
+                }
+                
+                .c-ot {
+                    display: flex;
+                    font-size: .875rem;
+                    margin-bottom: 20px;
+                    
+                    @include respond-to(ynw-575){
+                        flex-direction: column;
+                    }
+                    
+                    .item {
+                        font-weight: 600;
+                        width: 30%;
+                        
+                        @include respond-to(ynw-575){
+                            margin-bottom: 15px;
+                            width: 100%;
+                            
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                        
+                        .ttle {
+                            color: $cc-mediumgray;
+                            display: block;
+                            font-weight: 500;
+                        }
+                        .noti-it {
+                            font-weight: 500;
+                        }
+                        
+                        [class^="icon-"], [class*=" icon-"] {
+                            padding-left: 20px;
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+                            
+                            &:before {
+                                position: absolute;
+                                left: 0;
+                                font-size: .75rem;
+                                height: 14px;
+                            }
+                        }
+                    }
+                    &.m0 {
+                        margin: 0;
+                    }
+                }
+                
+                &.locd {
+                    display: flex;
+                    font-size: .875rem;
+                    
+                    @include respond-to(ynw-767){
+                        flex-direction: column;
+                    }
+                    
+                        .lbl {
+                            .cl1 {
+                                padding: 20px 0;
+                                display: flex;
+                                position: relative;
+                                padding-bottom: 40px;
+                                
+                                @include respond-to(ynw-767){
+                                    flex-direction: column;
+                                }
+                                @include respond-to(ynw-768-991){
+                                    flex-direction: column;
+                                }
+                                
+                                .enable-disable1 {
+                                    position: absolute;
+                                    left: 0;
+                                    bottom: 0;
+                                    height: 40px;
+                                    display: flex;
+                                    align-items: center;
+                                    width: 100%;
+                                    
+                                    .ttle {
+                                        padding-right: 15px;
+                                    }
+                                }
+                                
+                                .editbt {
+                                    position: absolute;
+                                    right: 0px;
+                                    top: 15px;
+                                    width: 30px;
+                                    height: 30px;                                
+                                    @include border-radius(50%);
+                                    @include transition(all 300ms);
+                                    z-index: 11;
+                                    font-size: 1rem;
+                                    color: $linkblue;
+
+                                    &:hover {
+                                        background: $cc-ash;
+                                        color: $linkblack;
+                                    }
+                                }
+                                
+                                .ot-it {
+                                    width: 100%;
+                                    
+                                    h4 {
+                                        font-size: 1.125rem;
+                                        font-weight: 500 !important;
+                                    }
+                                    
+                                    &.que {
+                                        .c-ot {
+                                            .item {
+                                                width: 50%;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                .cop-l {
+                                    flex-grow: 1;
+                                    width: 70%;
+                                    
+                                    @include respond-to(ynw-767){
+                                        width: 100%;
+                                    }
+                                    @include respond-to(ynw-768-991){
+                                        width: 100%;
+                                    }
+                                    
+                                    .enable-disable {
+                                        display: flex;
+                                        margin-bottom: 15px;
+                                        
+                                        .ttle {
+                                            padding-right: 15px;
+                                        }
+                                        
+                                    }
+                                    
+                                    .bse-lcn-label {
+                                        font-size: .75rem;
+                                        font-weight: 600;
+                                        color: $cc-mediumgray;
+                                        position: relative;
+                                        display: table;
+                                        padding-left: 16px;
+                                        margin-bottom: 2px;
+                                        
+                                        &:before {
+                                            position: absolute;
+                                            left: 0;
+                                            content:"\6a";
+                                            @include font-custom;
+                                            width: 14px;
+                                            height: 14px;
+                                        }
+                                    }
+                                    
+                                    h4 {
+                                        font-size: 1.125rem;
+                                        font-weight: 500 !important;
+                                        margin-bottom: 15px;
+                                    }
+
+                                    span {
+                                        display: block;
+                                        margin-bottom: 5px;
+                                    }
+                                }
+                                .cop-r {
+                                    flex-grow: 1;
+                                    padding-right: 50px;
+                                    position: relative;
+                                    display: table;
+                                    
+                                    @include respond-to(ynw-767){
+                                        width: 100%;
+                                        padding-right: 0;
+                                        margin-top: 20px;
+                                    }
+                                    @include respond-to(ynw-768-991){
+                                        width: 100%;
+                                        padding-right: 0;
+                                        margin-top: 20px;
+                                    }
+                                    
+                                    iframe {
+                                        min-height: 200px;
+                                    }
+                                    
+                                    .gps {
+                                        padding-left: 26px;
+                                        position: relative;
+
+                                        span {
+                                            font-weight: 600;
+                                            margin-right: 20px;
+
+                                            &:last-child {
+                                                margin: 0;
+                                            }
+                                        }
+
+                                        &:before {
+                                            position: absolute;
+                                            @include font-custom;
+                                            content: "\74";
+                                            left: 0;
+                                            top: 0;
+                                        }
+                                    }
+                                }
+
+                                
+                            }
+                        }
+                        .lbr {
+                            background: #f7f7f7;
+                            @include border-right-radius(5px);
+                            
+                            @include respond-to(ynw-767){
+                                @include border-right-radius(0px);
+                                @include border-bottom-radius(5px);
+                            }
+                            
+                            .cr1 {
+                                padding: 20px 0;
+                                position: relative;
+                                
+                                .editbt {
+                                    position: absolute;
+                                    right: 0px;
+                                    top: 15px;
+                                    width: 30px;
+                                    height: 30px;                                
+                                    @include border-radius(50%);
+                                    @include transition(all 300ms);
+                                    z-index: 11;
+                                    font-size: 1rem;
+                                    color: $linkblue;
+
+                                    &:hover {
+                                        background: $cc-ash;
+                                        color: $linkblack;
+                                    }
+                                }
+                                
+                                h5 {
+                                    text-transform: uppercase;
+                                    font-size: .875rem;
+                                    font-weight: 600;
+                                    margin-bottom: 20px;
+                                }
+                                
+                                .amt-list {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    margin: 0;
+                                    padding: 0;
+
+                                    li {
+                                        list-style: none;
+                                        font-size: 2rem;
+                                        color: $cc-gray;
+                                        position: relative;
+                                        margin-right: 20px;
+                                        margin-bottom: 10px;
+                                        width: 32px;
+                                        height: 32px;
+                                    }
+                                }
+                                
+                                .ph-gal-bx {
+                                    .ph-gal {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        flex-wrap: wrap;
+                                        align-content: space-around;
+                                        margin: 0 0 20px 0;
+                                        padding: 0;
+                                        width: 100%;
+                                        li {
+                                            list-style: none;
+                                            flex-grow: 1;
+                                            margin-right: 10px;
+                                            background: $cc-lightgray;
+                                            margin-top: 10px;
+                                            @include respond-to(ynw-767) {
+                                                margin-top: 0;
+                                            }
+                                            @include respond-to(ynw-768-991) {
+                                                margin-top: 0;
+                                            }
+                                            .galbx {
+                                                position: relative;
+                                                width: 100%;
+                                                height: 100px;
+                                                @include respond-to(ynw-767) {
+                                                    height: 100px;
+                                                }
+                                                @include respond-to(ynw-768-991) {
+                                                    height: 60px;
+                                                }
+                                                @include respond-to(ynw-992-1199) {
+                                                    height: 80px;
+                                                }
+                                                .mbt {
+                                                    position: absolute;
+                                                    right: 0;
+                                                    top: 0;
+                                                    width: 32px;
+                                                    height: 32px;
+                                                    z-index: 4;
+                                                    opacity: 0;
+                                                    color: $white;
+                                                    @include transition(all 300ms);
+                                                    &:before {
+                                                        display: none;
+                                                    }
+                                                    @include respond-to(ynw-767) {
+                                                        opacity: 1;
+                                                    }
+                                                    @include respond-to(ynw-768-991) {
+                                                        opacity: 1;
+                                                    }
+                                                }
+                                                .img-h {
+                                                    position: absolute;
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    top: 0;
+                                                    left: 0;
+                                                    z-index: 2;
+                                                    .overlay-y {
+                                                        position: absolute;
+                                                        opacity: 0;
+                                                        @include transition(all 300ms);
+                                                        background: rgba(0, 0, 0, .5);
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        z-index: 3;
+                                                    }
+                                                    img {
+                                                        width: 100%;
+                                                        height: 100%;
+                                                    }
+                                                }
+                                                &:hover {
+                                                    cursor: pointer;
+                                                    .img-h {
+                                                        .overlay-y {
+                                                            opacity: 1;
+                                                        }
+                                                    }
+                                                    .mbt {
+                                                        opacity: 1;
+                                                    }
+                                                }
+                                                &:before {
+                                                    content: "";
+                                                    background: url(../images/img-null.svg) no-repeat scroll center center/ 80%;
+                                                    position: absolute;
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    opacity: .3;
+                                                    z-index: 0;
+                                                }
+                                            }
+                                            &:last-child {
+                                                margin-right: 0;
+                                                .galbx {
+                                                    .mre {
+                                                        position: absolute;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        z-index: 3;
+                                                        display: flex;
+                                                        justify-content: center;
+                                                        align-items: center;
+                                                        color: $white;
+                                                        background: rgba(0, 0, 0, .5);
+                                                        font-size: 1.5rem;
+                                                        font-weight: 600;
+                                                    }
+                                                    &:after {
+                                                        display: none;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        &.ph-gal-2 {
+                                            li {
+                                                height: auto;
+                                                width: auto;
+                                                margin-top: 0;
+                                                .galbx {
+                                                    height: 100px;
+                                                    @include respond-to(ynw-767) {
+                                                        height: 100px;
+                                                    }
+                                                    @include respond-to(ynw-768-991) {
+                                                        height: 150px;
+                                                    }
+                                                }
+                                                &:first-child {
+                                                    margin-right: 10px;
+                                                    .galbx {
+                                                        height: 100px;
+                                                        @include respond-to(ynw-767) {
+                                                            height: 100px;
+                                                        }
+                                                        @include respond-to(ynw-768-991) {
+                                                            height: 150px;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .addbt {
+                                        font-size: 1.5rem;
+                                        width: 24px;
+                                        height: 24px;
+                                        display: block;
+                                        margin: 0 auto;
+                                        color: $linkblue;
+                                    }
+                                }
+                                
+                                .sch-ot {
+                                    .sch-rw {
+                                        font-size: .875rem;
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        margin-bottom: 10px;
+                                        
+                                        .day {
+                                            font-weight: 600;
+                                            width: 50%;
+                                        }
+                                        .time {
+                                            font-weight: 400;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    
+                }
+            }
+            
+            .lc-title {
+                padding: 20px;
+                h5 {
+                    font-weight: 600 !important;
+                    color: $cc-darkgray;
+                    font-size: 1rem;
+                    margin-bottom: 0;
+                    display: flex;
+                    
+                    span {
+                        @include border-radius(24px);
+                        width: 20px;
+                        height: 20px;
+                        background: $cc-gray;
+                        padding: 3px;
+                        color: $white;
+                        font-size: .75rem;
+                        font-weight: 700;
+                        display: flex;
+                        margin-left: 10px;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+            
+            &.w-dta {
+                &.active {
+                    .lc-title {
+                        h5 {
+                            color: $linkblue;
+                        }
+                    }
+                    
+                    .lc-content {
+                        .q-tbl {
+                            overflow: auto;
+                            
+                            .tbl-list {
+                                margin-bottom: 20px;
+                                font-size: .875rem;
+                                font-weight: 500;
+
+                                .tth {
+                                    .otr {
+                                        background: $cc-lightgray;
+                                        padding: 0 10px;
+                                        position: relative;
+                                        display: flex;
+                                        align-items: center;
+                                        font-weight: 600;
+
+                                        .addbt {
+                                            position: absolute;
+                                            right: 30px;
+                                            font-size: 1.5rem;
+                                            color: $linkblue;
+                                            font-weight: 400;
+                                        }
+
+                                        .cth {
+
+                                            &:nth-child(1) {
+                                                width: 20%;
+                                            }
+                                        }
+                                    }
+                                }
+                                .ttd {
+                                    .otr {
+                                        padding: 0 10px;
+                                        position: relative;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: flex-start;
+
+                                        .mbt {
+                                            position: absolute;
+                                            right: 30px;
+                                        }
+
+                                        .ctd {
+                                            flex-grow: 0;
+
+                                            &:nth-child(1) {
+                                                width: 20%;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            
+            .q-tbl {
+                padding: 0;                
+                font-size: .875rem;
+                
+                table {
+                    border: none;
+                    margin-bottom: 0;
+                    
+                    thead {
+                        background-color: $cc-ash;                        
+
+                        tr {
+                            th {
+                                color: $linkblack;
+                                
+                                .addbt {
+                                    margin-left: auto;
+                                }
+                                
+                                &:last-child {
+                                    position: relative;
+                                    
+                                    .addbt {
+                                        position: absolute;
+                                        right: 15px;
+                                        font-weight: 400;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    tbody {
+                        tr{
+                            td {
+                                font-weight: 500;
+                                
+                                &[data-title="Queue"] {
+                                    color: $linkblue;
+                                    
+                                    &:before {
+                                        color: $linkblack;
+                                    }
+                                }
+                                
+                                .schtd {
+                                    flex-grow: 2;
+
+                                    .sch {
+                                        display: block;
+                                        border-top: 1px solid $cc-body;
+                                        padding: 5px 0;
+                                        width: 100%;
+
+                                        &:first-child {
+                                            border: none;
+                                        }
+                                    }
+                                }
+                                .mbt {
+                                    position: absolute;
+                                    right: 5px;
+                                    top: 0;
+                                    
+                                    &:before {
+                                        display: none;
+                                    }
+                                }
+                                &:last-child {
+                                    position: relative;
+                                }                                
+                            }
+
+                            &:nth-child(odd) {
+                                background: transparent;
+                            }
+                            &:nth-child(even) {
+                                background: rgba(0, 0, 0, 0.03);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &.bse-lcn {
+                .copy {
+                    .bse-lcn-label {
+                        font-size: .75rem;
+                        font-weight: 600;
+                        color: $cc-mediumgray;
+                        position: relative;
+                        display: table;
+                        padding-left: 16px;
+                        margin-bottom: 3px;
+                        
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            content:"\6a";
+                            @include font-custom;
+                            width: 14px;
+                            height: 14px;
+                        }
+                    }
+                }
+            }
+            &.disabled {
+                opacity: .5;
+                
+                .copy {
+                    .mbt {
+                        pointer-events: all;
+                    }
+                    h3 {
+                        color: $cc-mediumgray;
+                    }
+                }
+            }
+        }
+        
+        .cst-acc {
+            .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+                background: $white;
+            }
+            .mat-expansion-panel-header {
+                @include border-radius(5px);
+                background: $white;
+                
+                &:hover {
+                    background: $white;
+                    
+                    .mat-content {
+                        .mat-expansion-panel-header-title {
+                            h5 {
+                                color: $linkblue;
+                                
+                                .count {
+                                    background: $linkblue;
+                                }
+                            }
+                        }
+                    }
+                }
+                &.mat-expanded {
+                    h5 {
+                        color: $linkblue;
+                        
+                        .count {
+                            background: $linkblue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/*dashboard - today ####*/
+
+.dashboard {
+    .card {
+        &.w-dta {
+            margin: 30px 0;
+            font-size: .875rem;
+            
+            .head {
+                display: flex;
+                height: 50px;
+                border-bottom: 1px solid $cc-ash;
+                position: relative;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                
+                @include respond-to(ynw-767){
+                    flex-direction: column;
+                    height: auto;
+                }
+                @include respond-to(ynw-768-991){
+                    flex-direction: column;
+                    height: auto;
+                }
+                
+                .locn {
+                    position: absolute;
+                    display: flex;
+                    align-items: center;
+                    left: 0;
+                    padding: 0px 20px;                    
+                    font-weight: 600;
+                    font-size: .875rem;
+                    
+                    @include respond-to(ynw-767){
+                        position: relative;
+                        width: 100%;
+                        border-bottom: 1px solid $cc-ash;
+                        height: 50px;
+                        justify-content: center;
+                    }
+                    @include respond-to(ynw-768-991){
+                        position: relative;
+                        width: 100%;
+                        border-bottom: 1px solid $cc-ash;
+                        height: 50px;
+                        justify-content: center;
+                    }
+                    
+                    .icon-edit {
+                        margin-left: 10px;
+                        color: $linkblue;
+                        font-size: 1rem;
+                        cursor: pointer;
+                        display: flex;
+                    }
+                }
+                .links {
+                    display: flex;
+                    
+                    .lnk {
+                        border-left: 1px solid $cc-ash;
+                        padding: 0 30px;
+                        height: 50px;
+                        align-self: center;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        color: $cc-mediumgray;
+                        font-weight: 500;
+                        @include transition(all 300ms);
+                        
+                        @include respond-to(ynw-767){
+                            padding: 0 15px;
+                            height: 40px;
+                        }
+                        @include respond-to(ynw-575){
+                            padding: 0 10px;
+                        }
+
+                        .count {
+                            @include border-radius(24px);
+                            width: 20px;
+                            height: 20px;
+                            background: $cc-mediumgray;
+                            padding: 3px;
+                            color: $white;
+                            font-size: .75rem;
+                            font-weight: 700;
+                            display: flex;
+                            margin-left: 10px;
+                            align-items: center;
+                            justify-content: center;
+                            @include transition(all 300ms);
+                        }
+
+                        &.active {
+                            color: $linkblue;
+                            font-weight: 600;
+
+                            .count {
+                                @include border-radius(24px);
+                                width: 20px;
+                                height: 20px;
+                                background: $linkblue;
+                                padding: 3px;
+                                color: $white;
+                                font-size: .75rem;
+                                font-weight: 700;
+                                display: flex;
+                                margin-left: 10px;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                        }
+                        &:last-child {
+                            border-right: 1px solid $cc-ash;
+                        }    
+                        &:hover {
+                            color: $linkblue;
+
+                            .count {
+                                background: $linkblue;
+                                color: $white;
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+            .qlst {
+                padding: 20px;
+                overflow: auto;
+                
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    
+                    li {
+                        list-style: none;
+                        margin-right: 10px;
+                        
+                        .qname {
+                            @include border-radius(3px);
+                            background-color: $cc-ash;
+                            text-align: center;
+                            font-weight: 600;
+                            width: 150px;
+                            height: 40px;
+                            cursor: pointer;
+                            font-size: .875rem;
+                            padding: 5px;
+                            
+                            .qtitle, .wlst {
+                                display: block;
+                                line-height: 15px;
+                            }
+                            .wlst {
+                                font-size: .75rem;
+                                font-weight: 500;
+                            }
+                        }
+                        
+                        &.active {
+                            .qname {
+                                background-color: $linkblue;
+                                color: $white;
+                            }
+                        }
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+            
+            .dash-list {
+                .ctrls {
+                    display: flex;
+                    padding: 0 20px;
+                    align-items: center;
+                    
+                    @include respond-to(ynw-767){
+                        flex-direction: column;
+                    }
+                    @include respond-to(ynw-575){
+                        padding: 0;
+                    }
+                    
+                    ul {
+                        display: flex;
+                        margin: 0;
+                        padding: 0;
+                        
+                        @include respond-to(ynw-767){
+                            order: 1;
+                            flex-wrap: wrap;
+                        }
+                        @include respond-to(ynw-575){
+                            flex-direction: column;
+                            width: 100%;
+                        }
+                        
+                        li {
+                            list-style: none;
+                            margin-right: 10px;
+                            
+                            @include respond-to(ynw-575){
+                                margin-right: 0;
+                                border-bottom: 1px solid $white;
+                            }
+                            
+                            span {
+                                height: 50px;
+                                cursor: pointer;
+                                background-color: $cc-lightgray;
+                                padding: 0 30px;
+                                display: flex;
+                                align-items: center;
+                                text-transform: uppercase;
+                                font-weight: 600;
+                                font-size: .75rem;
+                                
+                                @include respond-to(ynw-767){
+                                    padding: 0 15px;
+                                    height: 40px;
+                                }
+                                @include respond-to(ynw-768-991){
+                                    padding: 0 15px;
+                                    height: 40px;
+                                }
+                            }
+                            
+                            &:last-child {
+                                margin-right: 0;
+                            }
+                            &.active {
+                                span {
+                                    background-color: $linkblue;
+                                    color: $white;
+                                }
+                            }
+                        }
+                    }
+                    
+                    .cs-btn {
+                        text-transform: uppercase;
+                        font-size: .75rem;
+                        font-weight: 600;
+                        
+                        @include respond-to(ynw-767){
+                            margin: 0 auto 20px auto;
+                        }
+                        
+                        i {
+                            margin-left: 5px;
+                            font-size: 1rem;
+                        }
+                    }
+                }
+                
+                .fltr {
+                    padding: 10px 20px;
+                    background: $linkblue;
+                    display: flex;
+                    align-items: center;
+                    
+                    span {
+                        margin-left: auto;
+                        width: 24px;
+                        height: 24px;
+                        cursor: pointer;
+                        
+                        i {
+                            color: $white;
+                            font-size: 1.35rem;
+                        }
+                    }
+                }
+                
+                .d-tbl {                    
+                    .table {
+                        border: none;
+                        
+                        thead {
+                            background-color: $cc-gray;                        
+
+                            tr {
+                                th {
+                                    color: $white;
+                                }
+                            }
+                        }
+                        tbody {
+                            tr{
+                                td {
+                                    
+                                    &.online {
+                                        text-align: center;
+                                        
+                                        span {
+                                            color: $green;
+                                        }
+                                    }
+                                    &.name {
+                                        font-weight: 500;
+                                        
+                                        span {
+                                            color: $green;
+                                            font-size: 1rem;
+                                            vertical-align: middle;
+                                            margin-left: 5px;
+                                        }
+                                    }
+                                    &.actions {
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        
+                                        span {
+                                            @include border-radius(30px);
+                                            height: auto;
+                                            text-transform: none;  
+                                            padding: 3px 10px;
+                                            display: flex;
+                                            margin-right: 5px;
+                                            margin-bottom: 5px;
+                                            
+                                            i {
+                                                font-size: .875rem;
+                                                width: 14px;
+                                                height: 14px;
+                                                margin-top: 1px;
+                                            }
+                                            
+                                            &:hover {
+                                                background-color: $linkblue;
+                                                border-color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                    &.payment {
+                                        text-align: center;
+                                        
+                                        .paid-n, .paid-h, .paid-f {
+                                            padding: 2px 4px;
+                                            background: $cc-lightgray;
+                                            color: $linkblack;
+                                            position: relative;
+                                            font-weight: 500;
+                                            
+                                            .text {
+                                                position: relative;
+                                                z-index: 1;
+                                            }
+                                        }
+                                        
+                                        .paid-n {
+                                            color: $white;
+                                            &:after {
+                                                width: 100%;
+                                                height: 100%;
+                                                position: absolute;
+                                                content: "";
+                                                left: 0;
+                                                top: 0;
+                                                background: $cc-red;
+                                                z-index: 0;
+                                            }
+                                        }
+                                        .paid-h {                                            
+                                            &:after {
+                                                width: 50%;
+                                                height: 100%;
+                                                position: absolute;
+                                                content: "";
+                                                left: 0;
+                                                top: 0;
+                                                background: #cdef59;
+                                                z-index: 0;
+                                            }
+                                        }
+                                        .paid-f {                           color: $white;                 
+                                            &:after {
+                                                width: 100%;
+                                                height: 100%;
+                                                position: absolute;
+                                                content: "";
+                                                left: 0;
+                                                top: 0;
+                                                background: $green;
+                                                z-index: 0;
+                                            }
+                                        }
+                                    }
+                                    &.message {
+                                        text-align: center;
+                                        
+                                        span {
+                                            cursor: pointer;
+                                            font-size: 1.3rem;
+                                            @include transition(all 300ms);
+                                            
+                                            &:hover {
+                                                color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                    &.cnote {
+                                        text-align: center;
+                                        
+                                        span {
+                                            cursor: pointer;
+                                            font-size: 1.3rem;
+                                            @include transition(all 300ms);
+                                            
+                                            &:hover {
+                                                color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                }
+                                &:nth-child(odd) {
+                                    background: transparent;
+                                }
+                                &:nth-child(even) {
+                                    background: rgba(0, 0, 0, 0.03);
+                                }
+                            }
+                        }
+                    } 
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

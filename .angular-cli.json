@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "v6-ynw"
+    "name": "v3-ynw"
   },
   "apps": [
     {
@@ -19,6 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../node_modules/ng2-slim-loading-bar/bundles/style.css",
+        "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "assets/css/bootstrap.min.css",
+        "customTheme.scss",
         "styles.css"
       ],
       "scripts": [],

@@ -1,0 +1,27 @@
+<app-header [headerTitle] = "'Items'"></app-header>
+
+<button (click)="addItem()">Add Item</button>
+
+<table class="table" *ngIf="item_list.length !=0">
+  <thead>
+    <th></th>
+    <th></th>
+    <th>Taxable</th>
+    <th>Status</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of item_list">
+      <td><img [src]="getItemPic(item.picSmall)"/></td>
+      <td>
+          <div (click)="showDetails(item.itemId)" class="itemdisplayname_anchor">{{item.displayName}}</div>
+          {{item.shortDesc}}<br/>
+    </td>
+    <td>{{(item.taxable===true)?'Yes':'No'}}</td> 
+    <td>{{item.status}}</td>        
+    <td><button (click)="showDetails(item.itemId)">View</button>&nbsp;<button (click)="editItem(item)">Edit</button>&nbsp;<button (click)="dochangeStatus(item)" *ngIf="item.status!='ACTIVE'">Enable</button>&nbsp;<button (click)="doRemoveItem(item)">Delete</button>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="item_list.length ==0 && query_executed == true">{{emptyMsg}}</div>
+

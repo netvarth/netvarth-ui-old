@@ -1,0 +1,522 @@
+
+import {Injectable} from '@angular/core';
+import {Http, Headers, Response, RequestOptions} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+
+// Import RxJs required methods
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
+import { ServiceMeta } from '../../shared/services/service-meta';
+
+@Injectable()
+
+export class ProviderServices {
+
+  constructor(private servicemeta: ServiceMeta, private http: HttpClient) {}
+
+  getProviderConfig() {
+    return this.servicemeta.httpGet('accounts/conf');
+  }
+
+  getBussinessProfile() {
+    // return this.servicemeta.httpGet('accounts/bProfile');
+    return this.servicemeta.httpGet('provider/bProfile');
+  }
+
+  getPublicSearch() {
+    // return this.servicemeta.httpGet('accounts/search');
+    return this.servicemeta.httpGet('provider/search');
+  }
+
+  updatePublicSearch(value) {
+   // const path = 'accounts/search/' + value;
+    const path = 'provider/search/' + value;
+    return this.servicemeta.httpPut(path);
+  }
+
+  getVirtualFields(domain , subdomain = null) {
+    // const path = (!subdomain) ? 'accounts/conf/dataModel/' + domain :
+    // 'accounts/conf/dataModel/' + domain + '/' + subdomain;
+
+    const path = (!subdomain) ? 'provider/ynwConf/dataModel/' + domain :
+     'provider/ynwConf/dataModel/' + domain + '/' + subdomain;
+
+    return this.servicemeta.httpGet(path);
+  }
+
+  getMembers(id) {
+    // return this.servicemeta.httpGet('accounts/providers/familyMember/' + id);
+    return this.servicemeta.httpGet('provider/familyMember/' + id);
+  }
+
+  /*deleteMember(id) {
+    const path = 'providers/familyMember/' + id;
+    return this.servicemeta.httpDelete(path);
+  }*/
+
+  addMembers(data) {
+    // return this.servicemeta.httpPost('accounts/providers/familyMember', data);
+    return this.servicemeta.httpPost('provider/familyMember', data);
+  }
+
+  editMember(data) {
+    // return this.servicemeta.httpPut('providers/familyMember', data);
+  }
+
+  getProviderItems(id?) {
+    if (id) {
+        // return this.servicemeta.httpGet('accounts/item/' + id);
+        return this.servicemeta.httpGet('provider/items/' + id);
+    } else {
+        // return this.servicemeta.httpGet('accounts/item');
+        return this.servicemeta.httpGet('provider/items');
+    }
+  }
+
+  addItem(data) {
+    // return this.servicemeta.httpPost('accounts/item', data);
+    return this.servicemeta.httpPost('provider/items', data);
+
+  }
+  editItem(data) {
+    // return this.servicemeta.httpPut('accounts/item', data);
+    return this.servicemeta.httpPut('provider/items', data);
+  }
+  deleteItem(id) {
+    const path = 'provider/items/' + id;
+    return this.servicemeta.httpDelete(path);
+  }
+  /*changeItemStatus(id, tochangestatus) {
+    if (tochangestatus == 'ACTIVE') {
+        const path = 'provider/items/enable/' + id;
+        return this.servicemeta.httpPut(path);
+    } else {
+      if (tochangestatus == 'INACTIVE') {
+        const path = 'provider/items/enable/' + id;
+        return this.servicemeta.httpPut(path);
+      }
+    }
+  }*/
+  enableItem(id) {
+    const path = 'provider/items/enable/' + id;
+    return this.servicemeta.httpPut(path);
+  }
+  uploadItemImage(id, data) {
+    // const path = 'accounts/item/' + id + '/image';
+    const path = 'provider/items/' + id + '/image';
+    return this.servicemeta.httpPost(path, data);
+  }
+  removeItemImage(data) {
+    // const path = 'accounts/item/' + data.itemId + '/' + encodeURI(data.displayName);
+    const path = 'provider/items/' + data.itemId + '/image' ;
+    return this.servicemeta.httpPut(path);
+  }
+
+  getLicenseDetails() {
+    // return this.servicemeta.httpGet('accounts/license');
+    return this.servicemeta.httpGet('provider/license');
+  }
+
+  getLicenseMetadata() {
+    // return this.servicemeta.httpGet('accounts/license');
+    return this.servicemeta.httpGet('provider/license/licensemetadata');
+  }
+
+
+  getUpgradableLicensePackages() {
+    // return this.servicemeta.httpGet('accounts/license/upgradablePackages');
+    return this.servicemeta.httpGet('provider/license/upgradablePackages');
+  }
+
+  upgradeLicensePackage(value) {
+    // const path = 'accounts/license/' + value;
+    const path = 'provider/license/' + value;
+    return this.servicemeta.httpPut(path);
+  }
+  getAuditList() {
+    // return this.servicemeta.httpGet('accounts/license/auditlog');
+    return this.servicemeta.httpGet('provider/license/auditlog');
+  }
+  getUpgradableAddonPackages() {
+    // return this.servicemeta.httpGet('accounts/license/upgradableAddons');
+    return this.servicemeta.httpGet('provider/license/upgradableAddons');
+  }
+
+  addAddonPackage(value) {
+    // const path = 'accounts/license/addon/' + value;
+    const path = 'provider/license/addon/' + value;
+    return this.servicemeta.httpPost(path);
+  }
+
+  deleteAddonPackage(value) {
+    // const path = 'accounts/license/addon/' + value;
+   // const path = 'provider/license/addon/' + value;
+   // return this.servicemeta.httpDelete(path);
+  }
+
+  // Provider Discounts
+  getProviderDiscounts(id?) {
+    if (id) {
+        return this.servicemeta.httpGet('provider/bill/discounts/' + id);
+    } else {
+        return this.servicemeta.httpGet('provider/bill/discounts');
+    }
+  }
+
+  addDiscount(data) {
+    return this.servicemeta.httpPost('provider/bill/discounts', data);
+  }
+
+  editDiscount(data) {
+    return this.servicemeta.httpPut('provider/bill/discounts', data);
+  }
+  deleteDiscount(id) {
+    const path = 'provider/bill/discounts/' + id;
+    return this.servicemeta.httpDelete(path);
+  }
+
+  // Provider Coupons
+  getProviderCoupons(id?) {
+    if (id) {
+        return this.servicemeta.httpGet('provider/bill/coupons/' + id);
+    } else {
+        return this.servicemeta.httpGet('provider/bill/coupons');
+    }
+  }
+
+  addCoupon(data) {
+    return this.servicemeta.httpPost('provider/bill/coupons', data);
+  }
+
+  editCoupon(data) {
+    return this.servicemeta.httpPut('provider/bill/coupons', data);
+  }
+  deleteCoupon(id) {
+    const path = 'provider/bill/coupons/' + id;
+    return this.servicemeta.httpDelete(path);
+  }
+
+  // Non working days
+  getProviderNonworkingdays(id?) {
+    if (id) {
+        return this.servicemeta.httpGet('provider/settings/nonBusinessDays/' + id);
+    } else {
+        return this.servicemeta.httpGet('provider/settings/nonBusinessDays');
+    }
+  }
+  addHoliday(data) {
+    return this.servicemeta.httpPost('provider/settings/nonBusinessDays', data);
+  }
+  deleteHoliday(id) {
+    const path = 'provider/settings/nonBusinessDays/' + id;
+    return this.servicemeta.httpDelete(path);
+  }
+  editHoliday(data) {
+    return this.servicemeta.httpPut('provider/settings/nonBusinessDays', data);
+  }
+
+  // business profile Primary fields
+  getParkingtypes() {
+    return this.servicemeta.httpGet('ynwConf/parkingTypes');
+  }
+
+  createPrimaryFields(data) {
+    return this.servicemeta.httpPost('provider/bProfile', data);
+  }
+
+  patchbProfile(data) {
+    return this.servicemeta.httpPatch('provider/bProfile', data);
+  }
+  updatePrimaryFields(data) {
+    return this.servicemeta.httpPut('provider/bProfile', data);
+  }
+
+  updateDomainSubDomainFields(data, domain , subdomain = null) {
+
+    const path = (!subdomain) ? 'provider/bProfile/domain' :
+     'provider/bProfile/' + subdomain;
+
+    return this.servicemeta.httpPut(path, data);
+  }
+
+  updateSocialMediaLinks(data) {
+
+   return this.servicemeta.httpPut('provider/bProfile/socialMedia', data);
+  }
+
+  getGalleryImages() {
+    return this.servicemeta.httpGet('provider/gallery');
+  }
+
+  uploadGalleryImages(postdata) {
+    return this.servicemeta.httpPost('provider/gallery', postdata);
+
+  }
+
+  deleteProviderGalleryImage(filename) {
+    return this.servicemeta.httpDelete('provider/gallery/' + filename);
+  }
+
+  getProviderLogo() {
+    return this.servicemeta.httpGet('provider/logo');
+  }
+
+  uploadLogo(data) {
+    return this.servicemeta.httpPost('provider/logo', data);
+  }
+
+  deleteLogo(name) {
+    const url = 'provider/logo/' + name;
+    return this.servicemeta.httpDelete(url);
+  }
+
+  // Addwords
+  getAdwords() {
+    return this.servicemeta.httpGet('provider/license/adwords');
+  }
+  addAdwords(data) {
+    const url = 'provider/license/adwords/' + data;
+    return this.servicemeta.httpPost(url);
+  }
+  deleteAdwords(id) {
+    const url = 'provider/license/adwords/' + id;
+    return this.servicemeta.httpDelete(url);
+  }
+
+  // Waitlist Manager
+  setAcceptOnlineCheckin(status) {
+
+    const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
+  getWaitlistMgr() {
+
+    const url = 'provider/settings/waitlistMgr/';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getProviderLocations() {
+    return this.servicemeta.httpGet('provider/locations');
+  }
+
+  setWaitlistMgr(data) {
+    const url = 'provider/settings/waitlistMgr/';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  getServicesList() {
+    const url = 'provider/services/';
+    return this.servicemeta.httpGet(url);
+  }
+
+  createService(data) {
+    const url = 'provider/services/';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  updateService(data) {
+    const url = 'provider/services/';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  getService(service_id) {
+    const url = 'provider/services/' + service_id;
+    return this.servicemeta.httpGet(url);
+  }
+
+  enableService(service_id) {
+    const url = 'provider/services/' + service_id + '/Enable';
+    return this.servicemeta.httpPut(url);
+  }
+
+  disableService(service_id) {
+    const url = 'provider/services/' + service_id + '/Disable';
+    return this.servicemeta.httpDelete(url);
+  }
+
+  getServiceGallery(service_id) {
+    const url = 'provider/services/serviceGallery/' + service_id;
+    return this.servicemeta.httpGet(url);
+  }
+
+  uploadServiceGallery(service_id, data) {
+    const url = 'provider/services/serviceGallery/' + service_id;
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  deleteServiceGalleryImage(service_id, name) {
+    const url = 'provider/services/serviceGallery/' + service_id + '/' + name;
+    return this.servicemeta.httpDelete(url);
+  }
+  // Waiting listing location
+  addProviderLocation(data) {
+    return this.servicemeta.httpPost('provider/locations', data);
+  }
+
+  changeProviderLocationStatus(id, chstatus) {
+    const url = 'provider/locations/' + id + '/' + chstatus;
+    if (chstatus === 'enable') {
+      return this.servicemeta.httpPut(url);
+    } else if (chstatus === 'disable') {
+      return this.servicemeta.httpDelete(url);
+    }
+  }
+  changeProviderBaseLocationStatus(id) {
+    const url = 'provider/bProfile/baseLocation/' + id;
+    return this.servicemeta.httpPut(url);
+  }
+  editProviderLocation(data) {
+    return this.servicemeta.httpPut('provider/locations', data);
+  }
+  getLicenseUsage() {
+    const url = 'provider/license/usageInfo';
+    return this.servicemeta.httpGet(url);
+  }
+  getProviderQueues() {
+    return this.servicemeta.httpGet('provider/waitlist/queues');
+  }
+  getProviderLocationQueues(location_id) {
+    const url = 'provider/waitlist/queues/' + location_id + '/location';
+    return this.servicemeta.httpGet(url);
+  }
+  addProviderQueue(data) {
+    return this.servicemeta.httpPost('provider/waitlist/queues', data);
+  }
+  editProviderQueue(data) {
+    return this.servicemeta.httpPut('provider/waitlist/queues', data);
+  }
+  changeProviderQueueStatus(id, chstatus) {
+    const url = 'provider/waitlist/queues/' + id + '/' + chstatus;
+    return this.servicemeta.httpPut(url);
+  }
+
+  getProviderInbox() {
+    return this.servicemeta.httpGet('provider/communications');
+  }
+
+  postProviderInboxReply(consumerId, data) {
+    const url = 'provider/communications/' + consumerId;
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  getWaitlistFutureCount(queueId) {
+    const url = 'provider/waitlist/future/count/' + queueId;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getwaitlistTodayCount(queueId) {
+    const url = 'provider/waitlist/today/count/' + queueId;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getwaitlistHistoryCount(queueId) {
+    const url = 'provider/waitlist/history/count/' + queueId;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getTodayWaitlist(queueId) {
+    const url = 'provider/waitlist/today/' + queueId;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getHistroryWaitlist(queueId) {
+    const url = 'provider/waitlist/history/' + queueId;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getFutureWaitlist(queueId) {
+    const url = 'provider/waitlist/future/' + queueId;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getQueueDelay(queueId) {
+    const url = 'provider/waitlist/queues/' + queueId + '/delay';
+    return this.servicemeta.httpGet(url);
+  }
+
+  addQueueDelay(queueId, data) {
+    const url = 'provider/waitlist/queues/' + queueId + '/delay';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  setWaitlistMgrStatus(status) {
+    const url = 'provider/settings/waitlistMgr/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
+  getProviderMessages() {
+    const url = 'provider/ynwConf/messages';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getCustomer(data) {
+    const url = 'provider/customers';
+    return this.servicemeta.httpGet(url, null, data);
+  }
+
+  getQueueWaitingTime(queueId, date) {
+    const url = 'provider/waitlist/queues/' + queueId + '/' + date + '/waitingTime';
+    return this.servicemeta.httpGet(url);
+  }
+
+  addCustomerWaitlist(data) {
+    const url = 'provider/waitlist';
+    return this.servicemeta.httpPost(url, data);
+  }
+  getLocationBadges() {
+    const url = 'provider/ynwConf/badges';
+    return this.servicemeta.httpGet(url);
+  }
+  getGoogleMapLocationAddress(lat, lon) {
+    const url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false';
+    return this.servicemeta.httpGet(url);
+  }
+  getGoogleMapLocationGeometry(address) {
+    const url = 'http://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getLocationDetail(location_id) {
+    const url = 'provider/locations/' + location_id;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getServiceDetail(service_id) {
+    const url = 'provider/services/' + service_id;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getQueueDetail(queue_id) {
+    const url = 'provider/waitlist/queues/' + queue_id;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getLocationCount() {
+    const url = 'provider/locations/count';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getServiceCount() {
+    const url = 'provider/services/count';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getQueuesCount() {
+    const url = 'provider/waitlist/queues/count';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getSpokenLanguages() {
+    const url = 'ynwConf/spokenLangs';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getSpecializations(domain, subdomain) {
+    const url = 'ynwConf/specializations/' + domain + '/' + subdomain;
+    return this.servicemeta.httpGet(url);
+  }
+
+}

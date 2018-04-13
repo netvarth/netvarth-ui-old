@@ -1,0 +1,103 @@
+<h1 class="mat-dialog-title">Privacy Settings - {{curmod | titlecase}} {{curtype | titlecase}}   <button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<mat-dialog-content>
+    <div class="phoneouter" *ngIf="curtype=='phone'">
+        <div class="form-group">
+            <label class="col-form-label" for="phone1">Phone Number *</label>
+            <input type="text" class="form-control" id="phone1" placeholder="Phone#" [(ngModel)]="phonenumber"  [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+           <label class="col-form-label" for="label1">Phone Label * <a [matTooltipClass] = "tooltipcls" [matTooltip]="tooltiphone" href="javascript:void()" data-icon="F"></a></label>
+           <input type="text" class="form-control" placeholder="Label" [(ngModel)]="phonelabel"  [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+                <div> 
+                <label class="col-form-label">This phone number is visible to whom?</label>
+                <mat-radio-group [(ngModel)]="phonepermission" [ngModelOptions]="{standalone: true}">
+                        <mat-radio-button value="all" >{{privacypermissiontxt['all']}}</mat-radio-button>
+                        <mat-radio-button value="customersOnly">{{privacypermissiontxt['customersOnly']}}</mat-radio-button>
+                        <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
+                </mat-radio-group>
+                </div>
+        </div>
+
+
+        <!-- <div *ngFor="let phone of phone_arr; let i = index">
+         <div><strong>Phone # {{(i+1)}}</strong></div> <div *ngIf="phone_arr.length>1"><button (click)="removePhone(phone, i)" class="btn btn-danger">Remove</button></div>   
+        <div class="form-group">
+                <label class="col-form-label" for="label1">Phone Label *</label>
+                <input type="text" class="form-control" placeholder="Label" [(ngModel)]="phone.label"  [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+            <label class="col-form-label" for="phone1">Phone Number *</label>
+            <input type="text" class="form-control" id="phone1" placeholder="Phone#" [(ngModel)]="phone.number"  [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+                <div> 
+                <label class="col-form-label">This phone number is visible to</label>
+                <mat-radio-group [(ngModel)]="phone.permission" [ngModelOptions]="{standalone: true}">
+                <mat-radio-button value="all" >Public</mat-radio-button>
+                <mat-radio-button value="customersOnly">My Customer</mat-radio-button>
+                <mat-radio-button value="self">None</mat-radio-button>
+                </mat-radio-group>
+                </div>
+        </div>
+        
+        </div>
+        <button type="button" (click)="addPhone()" class="btn btn-primary">Add Phone#</button> -->
+    </div>
+
+    <div class="emailouter" *ngIf="curtype=='email'">
+        <div class="form-group">
+                <label class="col-form-label" for="phone1">Email Id *</label>
+                <input type="text" class="form-control" id="phone1" placeholder="Email Id" [(ngModel)]="emailemailid"  [ngModelOptions]="{standalone: true}">
+        </div>    
+        <div class="form-group">
+                <label class="col-form-label" for="label1">Email Label * <a [matTooltipClass] = "tooltipcls" [matTooltip]="tooltemail" href="javascript:void()" data-icon="F"></a></label>
+                <input type="text" class="form-control" placeholder="Label" [(ngModel)]="emaillabel"  [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+                <div> 
+                <label class="col-form-label">This email id is visible to</label>
+                <mat-radio-group [(ngModel)]="emailpermission" [ngModelOptions]="{standalone: true}">
+                <mat-radio-button value="all" >{{privacypermissiontxt['all']}}</mat-radio-button>
+                <mat-radio-button value="customersOnly">{{privacypermissiontxt['customersOnly']}}</mat-radio-button>
+                <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
+                </mat-radio-group>
+                </div>
+        </div>
+
+            <!-- <div *ngFor="let email of email_arr; let i = index">
+            <div><strong>Email # {{(i+1)}}</strong></div> <div *ngIf="email_arr.length>1"><button (click)="removeEmail(email, i)" class="btn btn-danger">Remove</button></div>   
+            <div class="form-group">
+                    <label class="col-form-label" for="label1">Email Label *</label>
+                    <input type="text" class="form-control" placeholder="Label" [(ngModel)]="email.label"  [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="form-group">
+                <label class="col-form-label" for="phone1">Email Id *</label>
+                <input type="text" class="form-control" id="phone1" placeholder="Email Id" [(ngModel)]="email.emailid"  [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="form-group">
+                    <div> 
+                    <label class="col-form-label">This email id is visible to</label>
+                    <mat-radio-group [(ngModel)]="email.permission" [ngModelOptions]="{standalone: true}">
+                    <mat-radio-button value="all" >Public</mat-radio-button>
+                    <mat-radio-button value="customersOnly">My Customer</mat-radio-button>
+                    <mat-radio-button value="self">None</mat-radio-button>
+                    </mat-radio-group>
+                    </div>
+            </div>
+            
+            </div>
+            <button type="button" (click)="addEmail()" class="btn btn-primary">Add Email</button> -->
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button (click)="savePrivacySettings()" type="button" mat-button class="cs-btn bt1">Save</button>
+    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+</mat-dialog-actions> 
+
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+   errorMsg="{{api_error}}"></app-field-error-display>
+   
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>

@@ -1,0 +1,333 @@
+.cs-btn {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: none;
+    white-space: nowrap;
+    outline: 0;
+    padding: 10px 40px;
+    font-size: inherit;
+    line-height: 1.4;
+    -moz-user-select: none;
+    z-index: 2;
+    /* user-select: none; */
+    
+    
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.anim1 {
+    @include transition(all 300ms);
+    outline: none;
+    overflow: hidden;
+    
+    &:hover, &:active {
+        &:before {
+            opacity: 1;
+            transform: scale(5);
+        }
+    }
+    
+    &:before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        width: 30px;
+        height: 30px;
+        border-radius:100%;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom:0;
+        right:0;
+        opacity: 0;
+        transform: scale(0);
+        @include transition(all 300ms);
+    }  
+    
+}
+
+.anim2 {
+    @include transition(all 300ms);
+}
+
+.bt1, .bt2, .bt3, .bt4, .bt5, .bt6, .bt7, .bt8 {
+    background: $linkblue;
+    @include border-radius(3px);
+    height: 40px;
+    @include font-medium;
+    text-transform: uppercase;
+    color: $white;
+    font-size: .875rem;
+    padding-left: 30px;
+    padding-right: 30px;
+    @include transition(all 300ms);
+    
+    &.off {
+        border: 1px solid $cc-red;
+        color: $cc-red;
+        
+        &:hover {
+            border: 1px solid $cc-red;
+            background: $cc-red;
+            color: $white;
+        }
+    }
+    
+    &.on {
+        border: 1px solid $green;
+        color: $green;
+        
+        &:hover {
+            border: 1px solid $green;
+            background: $green;
+            color: $white;
+        }
+    }
+    
+    &.reddelete {
+        background: $cc-red;
+        
+        &:hover {
+            background: darken($cc-red, 30%);
+        }
+    }
+    
+    &:hover {
+        background: $hover-blue;
+    }
+}
+
+.bt2 {
+    background: $cc-ash;
+    color: $cc-gray;
+    
+    &:hover {
+        background: darken($cc-ash, 10%);
+    }
+}
+
+.bt3 {
+    height: 30px;
+    background: transparent;
+    border: 1px solid $linkblue;
+    padding: 6px 15px;
+    color: $linkblue;
+    font-size: .75rem;
+    font-weight: 600;
+    
+    i {
+        margin-right: 5px;
+        font-size: 1rem;
+        margin-top: 2px;
+        vertical-align: middle;
+    }
+    
+    &:hover {
+        color: $white;
+        border-color: $linkblue;
+        background: $linkblue;
+    }
+}
+
+.bt4, .bt5, .bt6 {
+    height: 30px;
+    min-width: 100px;
+    background: $white;
+    color: $cc-gray;
+    text-transform: none;
+    padding: 0px 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+        background: $linkblue;
+        color: $white;
+        
+        i {
+            color: inherit;
+        }
+    }
+    
+    i {
+        margin-right: 5px;
+        font-size: .875rem;
+        height: 14px;
+    }
+}
+
+.bt5 {
+    background: $cc-navyblue;
+    color: $white;
+}
+.bt6 {
+    background: transparent;
+    border: 1px solid $cc-gray;
+    
+    &:hover {
+        background: $cc-navyblue;
+        border-color: transparent;
+    }
+}
+
+.bt7 {
+    height: 30px;
+    background: transparent;
+    border: 1px solid $cc-mediumgray;
+    padding: 6px 15px;
+    color: $cc-gray;
+    font-size: .75rem;
+    font-weight: 600;
+    
+    i {
+        margin-right: 5px;
+        font-size: 1rem;
+        margin-top: 2px;
+        vertical-align: middle;
+    }
+    
+    &:hover {
+        color: $white;
+        border-color: $cc-mediumgray;
+        background: $cc-mediumgray;
+    }
+}
+
+.bt8 {
+    border: none;
+    background: transparent;
+    color: $linkblue;
+    @include anchor-border;
+    padding: 0;
+    height: auto;
+    font-weight: 600;
+    font-size: .75rem;
+    
+    &:hover {
+        color: $linkblue;
+        background: transparent;
+    }
+}
+
+.editbt {
+    position: relative;
+    cursor: pointer;
+    
+    &:before {
+        @include font-custom;
+        content: "\78";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+}
+
+.mbt {
+    position: relative;
+    cursor: pointer;
+    
+    &:before {
+        @include font-custom;
+        content: "\6e";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.addbt {
+    position: relative;
+    cursor: pointer;
+    color: $linkblue;
+    
+    &:before {
+        @include font-custom;
+        content: "\79";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.mat-button {
+    box-shadow: none;
+    background: $linkblue !important;
+    outline: none !important;
+    color: $white !important;
+    font-size: .875rem !important;
+    @include font-regular;
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center !important;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer !important;
+    border: none !important;
+    white-space: nowrap !important;
+    padding: 10px 40px !important;
+    line-height: inherit !important;
+    -moz-user-select: none;
+    z-index: 2;
+    text-transform: uppercase;
+    @include border-radius(3px !important);
+    @include transition(all 300ms);
+    
+    &:hover {
+        background: $hover-blue !important;
+    }
+}
+
+.mat-button:disabled {
+    background: black !important;
+    opacity: .3;
+    cursor: default !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

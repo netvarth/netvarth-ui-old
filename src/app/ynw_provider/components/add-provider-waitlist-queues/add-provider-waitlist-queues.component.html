@@ -1,0 +1,103 @@
+<form [formGroup]="amForm"  novalidate
+(ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+<h1 class="mat-dialog-title">Queue  
+    <button #queue mat-dialog-close class="modal_close">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<mat-dialog-content>
+
+    <div class="form-group">
+        <mat-form-field class="example-full-width">
+            <label class="col-form-label">Queue Name *</label>
+            <input matInput placeholder="Queue Name *" formControlName="qname">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')"
+        errorMsg="Please enter the Queue name">
+        </app-field-error-display> 
+    </div>
+
+    <div class="form-group" *ngIf="data.source !== 'location_detail'">
+        <mat-form-field>
+            <label class="col-form-label">Location *</label>
+            <mat-select placeholder="Location" formControlName="qlocation">
+            <mat-option *ngFor="let loc of loc_list" [value]="loc.id" >
+                {{ loc.place }}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qlocation')"
+        errorMsg="Please enter the location">
+        </app-field-error-display> 
+    </div>
+
+    <div class="form-group">
+        <label class="col-form-label">Service*</label>
+        <section class="example-section">
+            <div *ngFor="let serv of serv_list; index as i">
+            <mat-checkbox class="example-margin" [value]="serv.id" (change)="handleServicechecbox(serv.id)" [checked]="check_existsinArray(selservice_arr, serv.id) >= 0">{{serv.name}}</mat-checkbox>
+            </div>
+        </section>
+    </div>
+
+    <div class="form-group">
+        <label class="col-form-label">Schedule*</label>
+        <section class="example-section">
+            <div *ngFor="let wday of weekdays; index as i">
+            <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecbox(i)" [checked]="check_existsinArray(selday_arr,i) >= 0">{{wday}}</mat-checkbox>
+            </div>
+        </section>
+    </div>
+
+    <div class="form-group">
+            <div class="starttimediv">
+                <label class="col-form-label" for="changeHourStep">Start Time</label>
+                <ngb-timepicker formControlName="qstarttime" meridian="true" #sch_start_time (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
+                
+            <!-- <mat-form-field class="chk-margin">
+                <input matInput placeholder="Start Time" type="time" #sch_start_time [value]="dstart_time" formControlName="qstarttime" (change)="changetime('start',sch_start_time.value)">
+                </mat-form-field> -->
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qstarttime')"
+                    errorMsg="Please enter the start time">
+                </app-field-error-display> 
+            </div>
+            <!-- <mat-form-field class="chk-margin">
+            <input matInput placeholder="End Time" type="time" #sch_end_time [value]="dend_time" formControlName="qendtime" (change)="changetime('end',sch_end_time.value)">
+            </mat-form-field> -->
+            <div class="endtimediv">
+                <label  class="col-form-label"  for="changeHourStep">End Time</label>
+                <ngb-timepicker formControlName="qendtime" meridian="true" #sch_end_time (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qendtime')"
+                errorMsg="Please enter the end time">
+                </app-field-error-display> 
+            </div>
+            
+    </div>
+
+    <div class="form-group">
+        <mat-form-field class="example-full-width">
+            <label class="col-form-label">Maximum Capacity</label>
+            <input matInput type="text" placeholder="Maximum Capacity" formControlName="qcapacity">
+    </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <mat-form-field class="example-full-width">
+                <label class="col-form-label">No of customers served at a time</label>
+            <input matInput type="text" placeholder="No of customers served at a time" formControlName="qserveonce">
+        </mat-form-field>
+    </div> 
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
+    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+</mat-dialog-actions>
+
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>
+</form>

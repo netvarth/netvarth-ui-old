@@ -1,0 +1,115 @@
+
+
+    <section>
+            <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+            <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+        </section>
+        
+        <section>
+            <div class="content loc-list">
+                <div class="container">
+                    <div class="row">
+                        <div class="card p0">
+                            <div class="copy locd">
+                                    <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                        <div class="cl1" *ngIf="api_loading_completed==1">
+                                            <span class="editbt" (click)="editService()"></span>
+                                            <div class="ot-it">
+                                                <h4>{{service_data.name}}</h4>
+                                                <div class="it-des">
+                                                    {{service_data.description}}
+                                                </div>
+                                                <div class="c-ot">
+                                                    <div class="item">
+                                                        <span class="ttle">Estimated Duration</span>
+                                                        <span class="icon-time">  {{service_data.serviceDuration}} min</span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span class="ttle">Price</span>
+                                                        <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span class="ttle">Prepayment Amount</span>
+                                                        <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="c-ot m0">
+                                                    <div class="item">
+                                                        <span>Tax Applicable: 
+                                                            <span class="noti-it" [class.yes]="service_data.taxable==true" [class.no]="service_data.taxable==false">{{(service_data.taxable) ? 'Yes' : 'No'}}</span></span>                 
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>Notifications: 
+                                                            <span class="noti-it">{{((service_data.notificationType) ? service_data.notificationType : 'No') | titlecase}}</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="no-dta" *ngIf="api_loading_completed==0">
+                                            <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
+                                        </div>                               
+                                    </div>
+                                    <div class="lbr col-sm-12 col-md-4 col-lg-4"> 
+                                        
+                                        <div class="no-dta" *ngIf="api_loading_completed==0">
+                                            <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
+                                        </div>                               
+                                        <div class="cr1" *ngIf="api_loading_completed == 1">
+                                            <h5>Service Photo Gallery</h5>
+                                            
+                                            <div class="no-dta" 
+                                            *ngIf="!image_list_popup || image_list_popup.length == 0">
+
+                                                <p>You haven’t added any photos </p>
+                                                <span class="cs-btn bt3" (click)="editImageGallery()" >Add It Now</span>
+                                            </div>
+
+                                            <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
+                                                <ul class="ph-gal" [class.ph-gal-2]="image_list_popup.length==2">
+                                                    <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                                    <li *ngIf="i<2">
+                                                    
+                                                        <div class="galbx">
+                                                            <span class="mbt">
+                                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                                <mat-menu #menu="matMenu">
+                                                                <button type="button" mat-menu-item (click)="confirmDelete(file, i)">
+                                                                    <i class="icon-delete"></i>
+                                                                    <span >Delete</span>
+                                                                </button>
+                                                                </mat-menu>
+                                                            </span>
+                                                            <div class="img-h" (click)="openImageModalRow(file)">
+                                                                <div class="overlay-y"></div><img [src] = "file.modal.img" />
+                                                            </div>
+                                                        </div>   
+                                                    </li> 
+                                                    </ng-container>                            
+                                                    <li *ngIf="image_list_popup.length>3">
+                                                        <div class="galbx">
+                                                            <span class="mre" (click)="openImageModalRow(image_list_popup[2])">+{{(image_list_popup.length-2)}}</span>
+                                                            <div class="img-h"><img [src] = "image_list_popup[2].modal.img" /></div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <span (click)="editImageGallery()" class="addbt"></span>
+            
+                                                <ks-modal-gallery [modalImages]="image_list_popup" 
+                                                [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                                [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                                (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                                (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+            
+                                            </div> 
+
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>    
+        </section>
+            

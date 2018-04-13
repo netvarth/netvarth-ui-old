@@ -1,0 +1,115 @@
+<form [formGroup]="amForm"  novalidate
+(ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+<h1 class="mat-dialog-title">Location <span *ngIf="forbadge">Amenities</span> <button #loc mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<mat-dialog-content>
+    <ng-container *ngIf=" data && !forbadge">
+        <div class="form-group mapselection">
+            <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i data-icon="j"></i>Choose your location in the MAP</button>
+            <span class="expl">If your location is not available in the MAP, kindly fill the location details manually.</span>
+        </div>
+        <div class="form-group">
+        <mat-form-field class="example-full-width">
+            <label class="col-form-label">Location Name *</label>
+            <input matInput placeholder="Location Name *" formControlName="locname">
+        </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')"
+            [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
+            {
+            'required' : 'Please enter the location name',
+            'pattern' : 'Please enter the location name'
+            })">
+        </app-field-error-display> 
+        </div>
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <label class="col-form-label">Latitude *</label>
+                <input matInput type="text" placeholder="Latitude *" formControlName="loclattitude">
+        </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')"
+            [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
+            {
+            'required' : 'Please enter the latitude',
+            'pattern' : 'Please enter a valid lattitude'
+            })">
+            </app-field-error-display> 
+        </div>
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <label class="col-form-label">Longitude *</label>
+                <input matInput type="text" placeholder="Longitude *" formControlName="loclongitude">
+        </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')"
+            [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
+            {
+            'required' : 'Please enter the longitude',
+            'pattern' : 'Please enter a valid longitude'
+            })">
+            </app-field-error-display> 
+            <!-- <button (click)="showGooglemap()" type="button" mat-button>Show Map</button> -->
+        </div>
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <label class="col-form-label">Address</label>
+                <!-- <input matInput type="text" placeholder="Address" formControlName="locaddress"> -->
+                <textarea matInput formControlName="locaddress" row="4"></textarea>
+        </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')"
+            errorMsg="Please enter the address">
+            </app-field-error-display> 
+            <!-- <button mat-button (click)="getCoordinatesFromAddress()" type="button" [disabled]="checkAddressExists()">Get Map Coordinates</button> -->
+        </div>
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <label class="col-form-label">Pincode</label>
+                <input matInput type="text" placeholder="Pincode" formControlName="locpincode">
+        </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locpincode')"
+            errorMsg="Please enter the pincode">
+            </app-field-error-display> 
+        </div>
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <label class="col-form-label">Google Map URL</label>
+                <input matInput type="text" placeholder="Google Map URL" formControlName="locmapurl">
+        </mat-form-field>
+        </div>
+        <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'"> 
+            <label class="col-form-label">Business Schedules</label>
+        </div>
+        <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'"  [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>    
+    </ng-container>
+    <ng-container *ngIf="forbadge">
+        
+        <div class="form-group">
+        <mat-checkbox formControlName="loct24hour">24 hours</mat-checkbox>
+        </div>
+
+        <div *ngIf="data.type=='edit'">
+        <div class="form-group" *ngFor="let badge of loc_badges">
+        <mat-checkbox (change)="handle_badge_click(badge)" [checked]="checkbadgealreadyselected(badge)">{{badge.displayName}}</mat-checkbox>
+        </div>
+        </div>
+        <div class="form-group" #badgediv>
+        <mat-form-field>
+            <label>Select Parking Type</label>
+            <mat-select placeholder="Select Parking Type*" formControlName="locparkingtype">
+                <mat-option *ngFor="let ptype of parking_list" [value]="ptype">
+                {{ ptype }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+    </ng-container>    
+
+</mat-dialog-content>
+<mat-dialog-actions>
+ <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
+ <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+</mat-dialog-actions>  
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>
+</form>

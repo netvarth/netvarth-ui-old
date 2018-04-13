@@ -1,0 +1,22 @@
+// Core variables and mixins
+@import "variables.scss";
+@import "mixins.scss";
+@import "buttons.scss";
+@import "custom-font.scss";
+
+// Global CSS
+@import "global.scss";
+
+
+// Components
+@import "common-ynw.scss";
+@import "header.scss";
+@import "tablesy.scss";
+@import "popups.scss";
+@import "home.scss";
+@import "initial-steps.scss";
+@import "dashboard.scss";
+@import "footer.scss";
+
+// Bootstrap Overrides
+@import "bootstrap-overrides.scss";

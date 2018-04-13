@@ -1,0 +1,93 @@
+a {
+    color: $linkblue;
+}
+
+header {
+    padding: 20px 0;
+    @include font-regular;
+    background: $white;
+    
+    .lgo {
+        @include respond-to(ynw-767) {
+            width: auto;
+        }
+    }
+    
+    .tc1 {
+        margin-top: 10px;
+        align-self: flex-end;
+        text-align: right;
+        
+        @include respond-to(ynw-767) {
+            width: auto !important;
+        }
+        
+        .sgn, .jn {
+            color: $linkblack ;
+            font-size: 0.875em;
+            font-weight: 500;
+            cursor: pointer;
+            @include transition(all 300ms);
+            
+            &:hover {
+                color: $linkblue;
+            }
+        }
+        
+        .isprovidertop {
+            font-weight: 500;
+            margin-top: 10px;
+            font-size: .875rem;
+            color: $cc-mediumgray;
+            
+            span {
+                cursor: pointer;
+                color: $linkblue;
+                margin-left: 5px;
+            }
+        }
+        
+        .smi {
+            margin-top: 10px;
+            margin: 0;
+            li {
+                list-style: none;
+                display: inline-block;
+                
+                span{
+                    @include border-radius(50%);
+                    background: $theme-primary;
+                    width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    margin-left: 10px;
+                    
+                    svg {
+                        font-size: .875em;
+                        margin: 3px;
+                        color: $white;
+                    }
+                    &.smi-a {
+                        background: #475993;
+                    }
+                    &.smi-b {
+                        background: #76a9ea;
+                    }
+                    &.smi-c {
+                        background: #f61c0d;
+                    }
+                    i {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: $white;
+                        font-size: .75rem;
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+

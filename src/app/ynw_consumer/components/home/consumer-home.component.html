@@ -1,0 +1,47 @@
+<h1>Consumer Home</h1>
+<app-header [headerTitle] = "'Cosumer header'"></app-header>
+
+<app-search [showopennow]="0" [searchfields]="searchfields"></app-search>
+<br>
+<h2>Check-Ins/Orders</h2>
+
+<div *ngFor="let waitlist of waitlists">
+
+  <h4>{{waitlist.provider.businessName}},  -{{waitlist.service.name}}</h4>
+  <p>Service is for: {{waitlist.waitlistingFor.firstName}} {{waitlist.waitlistingFor.lastName}} </p>
+  <p>Approx. Service Time:  {{getAppxTime(waitlist.appxWaitingTime)}}</p>
+  <p>Token No.{{waitlist.token}}</p>
+  <p>Number of customers ahead : {{waitlist.personsAhead}}</p>
+  <!-- <button [disabled]="waitlist.messages.length == 0">Notification
+    <span *ngIf="waitlist.messages.length >0">({{waitlist.messages.length}})</span>
+  </button> -->
+  <button (click)="doCancelWaitlist(waitlist)">Cancel</button>
+  <button>Favourites</button>
+
+</div>
+
+<h2>Favourite Providers</h2>
+<div *ngFor="let fav of fav_providers">
+
+      <h4>{{fav.businessName}}</h4>
+
+      <button (click)="doDeleteFavProvider(fav)">remove</button>
+
+</div>
+
+<h2>History</h2>
+
+
+<div *ngFor="let waitlist of history">
+
+    <h4  (click)="goWaitlistDetail(waitlist)">{{waitlist.createdDate | date:'dd-MM-yyyy'}} {{waitlist.provider.businessName}} -{{waitlist.service.name}}</h4>
+
+    <!-- <button [disabled]="waitlist.messages.length == 0" (click)="openNotification(waitlist.messages)">Notification
+      <span *ngIf="waitlist.messages.length >0"> ({{waitlist.messages.length}})</span>
+    </button> -->
+    <button (click)="fav_providers_id_list.indexOf(waitlist.provider.id)==-1 && addFavProvider(waitlist.provider.id)">
+      {{fav_providers_id_list.indexOf(waitlist.provider.id)==-1?'dis_icon':'red'}}</button>
+
+  </div>
+
+  <router-outlet></router-outlet>

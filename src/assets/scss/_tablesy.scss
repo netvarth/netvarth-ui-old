@@ -1,0 +1,163 @@
+/* Force table to not be like tables anymore */
+	.table-outer{
+        padding: 10px;
+        
+        table{
+            border: 1px solid $cc-body;
+            thead{
+                th {
+                    font-size: .875rem;
+                    vertical-align: top;
+                    border: none;
+                }
+            }
+            tbody {
+                tr{
+                    td {
+                        font-size: .875rem;
+                        border-color: $cc-body;
+                        vertical-align: top;
+                        min-height: 45px;
+
+                        &.action {
+                            .mbt {
+                                @include respond-to(ynw-767) {
+                                    display: none;
+                                }
+                                button {
+                                    display: flex;
+                                    width: 24px;
+                                    height: 24px;
+                                    margin-left: auto;
+                                    
+                                    .mat-button-wrapper {
+                                        display: flex;
+                                    }
+                                }
+                                
+                                &:before {
+                                    display: none;
+                                }
+                            }
+                            
+                            .mbt-mobile-show {
+                                width: 55%;
+                                display: flex;
+                                justify-content: flex-end;
+                                
+                                .editcls, .deletecls {
+                                    position: relative;
+                                    border: none;
+                                    background: transparent;
+                                    padding-left: 20px;
+                                    font-weight: 500;
+                                    margin-right: 15px;
+                                    cursor: pointer;
+                                    
+                                    &:before {
+                                        @include font-custom;
+                                        content: "\78";
+                                        position: absolute;
+                                        left: 0;
+                                        font-size: .875rem;
+                                    }
+                                }
+                                
+                                .deletecls {
+                                    margin-right: 0;
+                                    
+                                    &:before {
+                                        content: "\4b";
+                                    }
+                                }
+                                
+                                @include respond-to(ynw-768-991) {
+                                    display: none;
+                                }
+                                @include respond-to(ynw-992-1199) {
+                                    display: none;
+                                }
+                                @include respond-to(ynw-1200) {
+                                    display: none;
+                                }
+                            }
+                        }
+                        
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                    }  
+                    
+                    &:nth-of-type(odd) {
+                        background: rgba(0,0,0,.03);
+                    }
+                }
+                
+            }
+        }
+        
+        .addbt {
+            font-size: 1.5rem;
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        &.d-tbl {
+            padding: 0;
+        }
+        
+	}
+
+
+@include respond-to(ynw-767) {
+    /* Force table to not be like tables anymore */
+	.table-outer table, 
+	.table-outer thead, 
+	.table-outer tbody, 
+	.table-outer th, 
+	.table-outer td, 
+	.table-outer tr { 
+		display: block;
+        font-size: .875rem;
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.table-outer thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	/*.table-outer tr { border: 1px solid #ccc; }*/
+ 
+	.table-outer td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		/*padding-left: 50%; */
+		white-space: normal;
+		text-align:left;
+        display: flex;
+	}
+ 
+	.table-outer td:before { 
+		/* Now like a table header */
+		/*position: absolute;*/
+		/* Top/left values mimic padding */
+		top: 12px;
+		left: 10px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: pre-wrap;
+		text-align:left;
+		font-weight: 600;
+	}
+ 
+	/*
+	Label the data
+	*/
+	.table-outer td:before { content: attr(data-title); }
+}  

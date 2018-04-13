@@ -1,0 +1,20 @@
+<app-header [headerTitle] = "'Provider Coupons'"></app-header>
+
+<button (click)="addCoupons()">Add Coupons</button>
+
+<table class="table" *ngIf="coupon_list.length !=0">
+  <thead>
+    <th>Name</th>
+    <th>Value</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let coupon of coupon_list">
+      <td>{{coupon.name}}</td>
+      <td>{{(coupon.calculationType=='Percentage')? coupon.amount+'%': formatPrice(coupon.amount)}}</td>        
+    <td>&nbsp;<button (click)="editCoupons(coupon)">Edit</button>&nbsp;<button (click)="doRemoveCoupons(coupon)">Delete</button>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="coupon_list.length ==0 && query_executed == true">{{emptyMsg}}</div>
+

@@ -1,0 +1,52 @@
+<app-header [headerTitle] = "'License'"></app-header>
+<table class="table_class">
+    <tr>
+        <td colspan="2"><strong>Settings / License</strong></td>
+    </tr>
+    <tr>
+        <td class="table_td_class">License Information</td>
+        <td class="table_td_class">Billing / Payment Information</td>
+    </tr>
+    <tr>
+        <td>
+            <div *ngIf="currentlicense_details.accountLicense">
+                <div>Current License Package : {{currentlicense_details.accountLicense.name}}</div>
+                <div>Date Applied : {{currentlicense_details.accountLicense.dateApplied | date: 'dd/MMM/yyyy'}}</div>
+                <div class="history_link addon_td2"><a (click)="showLicenceHistory()">License History</a></div>
+                <div class="addon_td2"><button (click)="showupgradeLicense()">Upgrade License</button></div>
+                <div class="addon_td2"><button (click)="showLicenseUsage()">License Usage</button></div>
+              </div>
+
+            <div *ngIf="currentlicense_details.addons">
+                    <table class="table_class" *ngIf="currentlicense_details.addons.length>0">
+                        <tr>
+                            <td colspan="4"><strong>Addons</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="addon_td1">Name</td>
+                            <td class="addon_td2">Description</td>
+                            <td class="addon_td3">Status</td>
+                           <!-- <td class="addon_td4">Action</td> -->
+                        </tr>
+                        <tr *ngFor="let addon of currentlicense_details.addons">
+                            <td>{{addon.name}}</td>
+                            <td>{{addon.description}}</td>
+                            <td>{{addon.status}}</td>
+                            <td class="history_link"><!-- <div (click)="dodelete(addon)">Delete</div>--></td>
+                        </tr>
+                    </table>
+                    <table class="table_class" *ngIf="currentlicense_details.addons.length==0">
+                        <tr>
+                            <td>Addons</td>
+                        </tr>
+                        <tr >
+                            <td>No addons exists</td>
+                        </tr>
+                    </table>
+                    <button (click)="showadd_addons()">Add Add-ons</button>
+                </div>
+        </td>
+        <td></td>
+    </tr>
+</table>
+<app-provider-bprofile-search-adwords></app-provider-bprofile-search-adwords>

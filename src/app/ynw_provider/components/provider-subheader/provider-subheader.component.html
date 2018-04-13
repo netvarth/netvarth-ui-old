@@ -1,0 +1,14 @@
+<div class="tp-pnl">
+    <div class="container">
+        <div class="row">
+            <div class="top-mnu">
+                <button class="cs-btn bt4"><i data-icon="s"></i> Check-In</button> <button class="cs-btn bt4"><i data-icon="u"></i> Create Customer</button> <button class="cs-btn bt4"><i data-icon="A"></i> Kiosk</button> <button class="cs-btn bt5"><i data-icon="B"></i> Help</button>
+            </div>
+        </div>
+        <div class="row m-nav">
+            <div class="col-xs-12 col-sm-4 col-md-4 nav01 pl0"><a routerLink="/" [class.active]="activeTab=='dashboard'"><i data-icon="w"></i> Dashboard</a></div>
+            <div class="col-xs-12 col-sm-4 col-md-4 nav01"><a routerLink="/provider/customers" [class.active]="activeTab=='customers'"><i data-icon="v"></i> Customers</a></div>
+            <div class="col-xs-12 col-sm-4 col-md-4 nav01 pr0"><a routerLink="/provider/settings" [class.active]="activeTab=='settings'"><i data-icon="D"></i> Settings</a></div>
+        </div>
+    </div>    
+</div>

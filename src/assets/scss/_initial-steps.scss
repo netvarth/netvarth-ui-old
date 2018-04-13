@@ -1,0 +1,610 @@
+.bg-gray {
+    background: $cc-body;
+    
+    .row {
+        @include respond-to(ynw-575) {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+}
+
+header {
+    &.itl-steps {
+        .tc1 {
+            display: none;
+        }
+
+        .lg-opt {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            a {
+                color: $linkblack;
+                font-size: .875rem;
+
+                i {
+                    font-size: 0.525rem;
+                    margin-left: 3px;
+                }
+            }
+            
+            .lgmem {
+                color: $linkblack;
+                font-size: .875rem;
+                
+                .icon-angle-down {
+                    font-size: .65rem;
+                }
+            }
+        }
+    }    
+}
+
+footer {    
+    &.itl-steps {
+        .sect1, .sect2 {
+            display: none;
+        }
+        .sect3 {
+            background: $footer-darkgray;
+            /*color: $cc-mediumgray;*/
+            padding: 2.75em 0;
+            
+
+
+            p {margin: 0; font-size: .875rem; font-weight: 500; text-align: center; width: 100%;}
+        }
+    }
+}
+
+
+.is-bx {
+    margin: 3.75em auto;
+    padding: 10px 0 0 0 !important;
+    @include box-shadow(0, 0, 10px, rgba(0,0,0,.05));
+    @include border-radius(5px);
+    @include left-gradient(#1873f2, #00aef2);
+    text-align: center;
+    color: $white;
+    position: relative;
+    
+    @include respond-to(ynw-575) {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    
+    .close-btn {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        font-size: 0.875rem;
+        color: $white;
+        z-index: 2;
+        cursor: pointer;
+    }
+    
+    .pt-top {
+        padding: 3.75em;
+        position: relative;
+        
+        h1 {
+            font-size: 1.625rem;
+            margin-bottom: 1.125em;
+            @include font-medium;
+            font-weight: 600;
+        }
+        
+        p {
+            font-size: 1.125rem;
+            font-weight: 300;
+            @include font-regular;
+            
+            strong {@include font-medium;}
+        }
+        
+        &:after {
+            content: "";
+            position: absolute;
+            background: url(../images/welcome_curve.svg) no-repeat scroll center center/cover;
+            height: 70px;
+            width: 100%;
+            bottom: -5px;
+            left: 0;
+        }
+    }
+    .pt-btm {
+        padding: 1.75em 3.75em 3.75em 3.75em;
+        background: $white;
+        position: relative;
+        @include border-radius(5px);
+        
+        .ico {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.875em;
+            padding: 0;
+            
+            li {
+                @include border-radius(50%);
+                background: $cc-lightgray;
+                width: 70px;
+                height: 70px;
+                padding: 10px;
+                margin: 0 25px;
+                
+                span {
+                    color: $linkblue;
+                    font-size: 2.5rem;
+                }
+                
+                &:nth-child(2) {
+                    width: 90px;
+                    height: 90px;
+                    vertical-align: middle;
+                    
+                    span {
+                        font-size: 3.5rem;
+                    }
+                }
+            }
+        }
+        
+        .lg-btn {
+            background: $linkblue;
+            @include border-radius(40px);
+            font-size: 1rem;
+            font-weight: 500;
+            color: $white;
+            width: 220px;
+            padding: 1.25em;
+            margin-bottom: 2.5em;
+            
+            i {
+                font-size: 0.525rem;
+                margin-left: 3px;
+                color: inherit;
+            }
+            
+            &:hover {
+                background: $hover-blue;
+            }
+        }
+        
+        .status-pnt {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            
+            li {
+                width: 8px;
+                height: 8px;
+                @include border-radius(50%);
+                background: $linkblue;
+                margin: 0 10px;
+            }
+        }
+    }
+    
+    &.step1, &.step2, &.step3, &.step4 {
+        text-align: left;
+        
+        .close-btn {
+            top: 20px;
+        }
+        .header {
+            padding: .225em 1.875em 1.05em;
+            
+            h1 {
+                font-size: 1.625rem;
+                font-weight: 400 !important;
+                margin-bottom: 0;
+            }
+        }
+        
+        .content {
+            background: $white;
+            color: $black;
+            padding: 1.875em 1.875em 2.125em;
+            
+            .form-group {
+                label {
+                    @include font-regular;
+                    @include font-label;
+                    display: block;
+                    margin: 0;
+                }
+                span {
+                    @include font-regular;
+                    @include font-explanation;
+                    display: block;
+                    margin-top: -2px;
+                    margin-bottom: .625em;
+                }
+                
+                &.pcde {
+                    input {
+                        width: 25%;
+                    }
+                }
+            }
+        }
+        
+        .footer {
+            @include border-bottom-radius(5px);
+            background: $white;
+            border-top: 1px solid $cc-ash;
+            padding: 1.25em 1.875em;
+            
+            .status {
+                display: flex;
+                align-items:center;
+                justify-content:flex-start;
+                
+                .status-pnt {
+                    padding: 0;
+                    display: flex;
+                    margin: 0;
+
+                    li {
+                        width: 8px;
+                        height: 8px;
+                        @include border-radius(50%);
+                        background: #e6e6e6;
+                        margin: 0 10px 0 0;
+                        
+                        &.active {
+                            background: $linkblue;
+                        }
+                    }
+                }
+            }
+            
+            .control {
+                display: flex;
+                justify-content:flex-end;
+                
+                .bt2 {
+                    margin-right: 10px;
+                }
+            }
+            
+        }
+    }
+    
+    &.step2, &.step3, &.step4 {
+        
+        .content {
+            position: relative;
+            padding: 0;
+            
+            .bt3 {
+                margin-bottom: 10px;
+                display: inline-block;
+            }
+
+            .stik {
+                position: absolute;
+                @include font-script;
+                width: 30%;
+                right: 15px;
+                top: 30px;
+                font-size: .875rem;
+                
+                @include respond-to(ynw-767) {
+                    width: 100%;
+                    margin-bottom: 0rem;
+                    background: $cc-lightgray;
+                    padding: 15px 30px;
+                    position: static;
+                }
+                
+                .info-lst {
+                    margin: 0;
+                    padding: 0 0 0 34px;
+                    background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/24px 24px;
+                    
+                    li {
+                        list-style: none;
+                        margin-bottom: .25rem;
+                        font-size: .75rem;
+                        
+                        a {text-decoration: underline; color: $linkblue; &:hover{text-decoration: none; color: $linkblue;}}
+                        
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+            
+            .flds {
+                padding: 1.875em 1.875em 2.125em;
+                
+                .wbox {
+                    margin: 3rem 0;
+                }
+                
+                .whrs {
+                    margin: 0;
+                    padding: 0;
+                    
+                    li {
+                        list-style: none;
+                    }
+                }
+            }
+        }
+        
+    }
+    &.step3 {
+        .content {
+            .flds {
+                padding: 1.875em 1.875em 2.125em;
+                
+                .form-group {
+                    margin-bottom: 0px;
+                    
+                    .bt3 {
+                        margin-bottom: 0px;
+                        display: inline-block;
+                        font-style: normal;
+                        color: $linkblue;
+                        font-weight: 600;
+                        
+                        &:hover {
+                            color: $white;
+                        }
+                    }
+
+                    .title16 {
+                        font-size: 1rem;
+                    }
+
+                    .whrs {
+                        margin: 10px 0 15px 0;
+                        padding: 0;
+
+                        li {
+                            list-style: none;
+                            font-size: .875rem;
+                            display: flex;
+                            align-items: center;
+                            height: 40px;
+
+                            .day {
+                                @include font-bold;
+                                color: $cc-gray;
+                                display: inline-block;
+                                font-style: normal;
+                                font-size: .875rem;
+                                width: 170px;
+                                margin: 0;
+                            }
+                            .time {
+                                font-weight: 500;
+                                font-style: normal;
+                                color: $cc-black;
+                                font-size: .875rem;
+                                margin: 0;
+                            }
+                            
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+                
+                .schedule_outer {
+                    font-size: .875rem;
+                    font-weight: 500;
+                    
+                    .whrs {
+                        margin-bottom: 20px;
+                        
+                        li {
+                            display: flex;
+                            align-items: center;
+                            @include transition(all 300ms);
+                            padding-left: 15px;
+                            height: 40px;
+                            
+                            .day {
+                                @include font-bold;
+                                color: $cc-black;
+                                display: inline-block;
+                                font-style: normal;
+                                font-size: .875rem;
+                                width: 80px;
+                                margin: 0;
+                            }
+                            .time {
+                                font-weight: 500;
+                                font-style: normal;
+                                color: $cc-black;
+                                font-size: .875rem;
+                                margin: 0;
+                                width: 175px;
+                            }
+                            .mat-icon-button {
+                                outline: none;
+                                color: $linkblue;
+                            }
+                            
+                            &:hover {
+                                background: $cc-lightgray;
+                            }
+                        }
+                    }
+                    .bt3 {
+                        margin-bottom: 0;
+                    }
+                    
+                    .bt7{
+                        margin-left: 5px;
+                    }
+                    
+                    .schedulesub_outer {
+                        background: $cc-lightgray;
+                        padding: 20px;
+                        
+                        .sch_sel_head {
+                            font-size: 1.125rem;
+                            font-weight: 600;
+                            margin-bottom: 15px;
+                        }
+                        .chk-section{
+                            display: flex;
+                            flex-wrap: wrap;
+                            margin-bottom: 20px;
+                            height: auto;
+                            
+                            .chk-margin {
+                                margin-right: 15px;
+                                margin-left: 0px;
+                                
+                                &:nth-child(1) {
+                                    display: none;
+                                }
+                                &:last-child {
+                                    margin: 0;
+                                }
+                                
+                                .mat-checkbox-layout {
+                                    margin-bottom: 0;
+                                }
+                            }
+                        }
+                        .startendtime {
+                            margin-bottom: 20px;
+                            fieldset {
+                                .form-control {
+                                    @include border-radius(0);
+                                    background: $white;
+                                    @include font-regular;
+                                    font-size: 0.875rem;
+                                    color: $cc-darkgray;
+                                    text-overflow: ellipsis;
+
+                                    &:focus {
+                                        @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                        border: 1px solid $linkblue;
+                                        background: $white;
+                                    }
+                                }
+                                .ngb-tp-hour, .ngb-tp-minute {
+                                    .btn-link {
+                                        display: flex;
+                                        
+                                        &:first-child {
+                                            .chevron {
+                                                width: 16px;
+                                                height: 16px;
+                                                
+                                                &:before {
+                                                    border: none;
+                                                    content: "\66";
+                                                    @include font-custom;
+                                                    color: $linkblue;
+                                                    display: flex;
+                                                    transform: rotate(0);
+                                                    font-size: 1rem;
+                                                    font-weight: 700;
+                                                    align-items: center;
+                                                }
+                                            }
+                                        }
+                                        &:last-child {
+                                            .chevron.bottom {
+                                                width: 16px;
+                                                height: 16px;
+                                                
+                                                &:before {
+                                                    border: none;
+                                                    content: "\72";
+                                                    @include font-custom;
+                                                    color: $linkblue;
+                                                    display: flex;
+                                                    transform: rotate(0);
+                                                    font-size: 1rem;
+                                                    font-weight: 700;
+                                                }
+                                            }
+                                        }
+                                        &:hover, &:focus, &:active {
+                                            text-decoration: none;
+                                        }
+                                    }
+                                }
+                                .ngb-tp-meridian {
+                                    .btn-outline-primary {
+                                        border-color: $linkblue;
+                                        color: $linkblue;
+                                        font-weight: 600;
+                                        font-size: .875rem;
+
+                                        &:hover {
+                                            background: $linkblue;
+                                            color: $white;
+                                        }
+                                        &:focus {
+                                            outline: none;
+                                            box-shadow: none;
+                                        }
+                                    }
+                                }
+                                &:first-child {
+                                    margin-bottom: 15px;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+    &.step4 {
+        .content {
+            .flds {
+                .mb20 {
+                    margin-bottom: 20px;    
+                }
+                
+                .rdo {
+                    display: flex;
+                    
+                    input {
+                        margin-right: 10px;
+                        width: 35px;
+                        height: 20px;
+                        margin-top: 0;
+                    }
+                    
+                    label {@include font-medium; cursor: pointer;}
+                    
+                    &.ton {
+                        label {
+                            color: $green;
+                           
+                        }
+                    }
+                    &.toff {
+                        label {
+                            color: $cc-red;
+                        }
+                    }
+                    &.active {
+                        label {
+                            @include font-bold;
+                        }                        
+                    }
+                }
+            }
+        }
+    }
+}

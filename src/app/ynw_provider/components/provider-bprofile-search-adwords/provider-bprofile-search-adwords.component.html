@@ -1,0 +1,18 @@
+<button (click)="addAdwords()">Add Adwords</button>
+
+<table class="table" *ngIf="adword_list.length !=0">
+  <thead>
+    <th></th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let adword of adword_list">
+      <td>
+          <div>{{adword.name}}</div>
+      </td>
+      <td><button type="button" (click)="doRemoveAdwords(adword)">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="adword_list.length ==0 && query_executed == true">{{emptyMsg}}</div>
+

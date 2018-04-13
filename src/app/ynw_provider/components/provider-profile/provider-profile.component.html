@@ -1,0 +1,132 @@
+<h1>Profile</h1>
+<mat-horizontal-stepper (selectionChange)="stepChange(stepper)" #stepper >
+
+<!-- <mat-step-header  class="mat-horizontal-stepper-header"
+    (click)="step.select()"
+    (keydown)="_onKeydown($event)"
+    [tabIndex]="_focusIndex === i ? 0 : -1"
+    [id]="_getStepLabelId(i)"
+    [attr.aria-controls]="_getStepContentId(i)"
+    [attr.aria-selected]="selectedIndex == i"
+    [index]="i"
+    [icon]="_getIndicatorType(i)"
+    [label]="step.stepLabel || step.label"
+    [selected]="selectedIndex === i"
+    [active]="step.completed || selectedIndex === i || !linear"
+    [optional]="step.optional">
+</mat-step-header> -->
+
+  <mat-step [stepControl]="firstFormGroup"  [label]="'Basic Profile'">
+    <form [formGroup]="firstFormGroup">
+      <div>
+        <label>Profile Picture</label>
+        <div><img [src]="this.profile_pic.base64" style="height:150px"></div>
+        <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif" class="file"
+        #file (change)="imageUpload(file)">
+      </div>
+
+      <div class="form-group">
+          <label class="col-form-label" for="business_name">Business Name *</label>
+          <input type="text" class="form-control" id="business_name" placeholder="Business Name"
+          formControlName="business_name">
+          <app-field-error-display [displayError]="fed_service.isFieldValid(firstFormGroup,'business_name')"
+          errorMsg="Please enter your business name.">
+         </app-field-error-display>
+      </div>
+
+      <div class="form-group">
+          <label class="col-form-label" for="short_name">Short Name</label>
+          <input type="text" class="form-control" id="short_name" placeholder="Short Name"
+          formControlName="short_name">
+          <app-field-error-display [displayError]="fed_service.isFieldValid(firstFormGroup,'short_name')"
+          errorMsg="Please enter your short name.">
+         </app-field-error-display>
+      </div>
+
+      <div class="form-group">
+          <label class="col-form-label" for="mobile">Mobile *</label>
+          <input type="text" class="form-control" id="mobile" placeholder="Mobile"
+          formControlName="mobile">
+          <app-field-error-display [displayError]="fed_service.isFieldValid(firstFormGroup,'mobile')"
+          errorMsg="Please enter your mobile number.">
+         </app-field-error-display>
+      </div>
+
+      <div class="form-group">
+          <label class="col-form-label" for="email">Email *</label>
+          <input type="text" class="form-control" id="email" placeholder="Email"
+          formControlName="email">
+          <app-field-error-display [displayError]="fed_service.isFieldValid(firstFormGroup,'email')"
+          errorMsg="Please enter a valid email.">
+         </app-field-error-display>
+      </div>
+      <div class="form-group">
+          <label class="col-form-label" for="business_desc">Description *</label>
+          <ckeditor
+          formControlName="business_desc"
+          [readonly]="false"
+          debounce="500"
+          [config]="{'toolbar': toolbar}">
+        </ckeditor>
+      </div>
+
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Location & Schedule Information</ng-template>
+
+      <div class="form-group">
+        <label class="col-form-label" for="place">Place *</label>
+        <input type="text" class="form-control" id="place" placeholder="Business Location"
+        formControlName="place" [matAutocomplete]="auto" (keyup)="getLocation($event)" (blur)="checkLocation($event)">
+
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+          <mat-option *ngFor="let location of location_data" [value]="location">
+            <span>{{ location.name }}</span>
+          </mat-option>
+        </mat-autocomplete>
+
+        <app-field-error-display [displayError]="fed_service.isFieldValid(secondFormGroup,'place')"
+        errorMsg="Please enter business location.">
+       </app-field-error-display>
+    </div>
+    <div class="form-group">
+      <label class="col-form-label" for="address">Address</label>
+      <input type="text" class="form-control" id="address" placeholder="Address"
+      formControlName="address">
+    </div>
+    <div class="form-group">
+      <label class="col-form-label" for="pincode">Pincode</label>
+      <input type="text" class="form-control" id="pincode" placeholder="Pincode"
+      formControlName="pincode">
+    </div>
+    <div class="form-group">
+      <label class="col-form-label" for="coordinates">Coordinates *</label>
+      <input type="text" class="form-control" id="coordinates" placeholder="Coordinates"
+      formControlName="coordinates">
+      <app-field-error-display [displayError]="fed_service.isFieldValid(secondFormGroup,'coordinates')"
+      errorMsg="Please enter business location.">
+     </app-field-error-display>
+    </div>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+
+</mat-horizontal-stepper>

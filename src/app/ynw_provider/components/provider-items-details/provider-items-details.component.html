@@ -1,0 +1,39 @@
+<div>
+   <app-header [headerTitle] = "'Items'"></app-header>
+<div *ngIf="item_list">
+    <div class="image_container">
+        <div><img [src]="showimg()"></div>
+        <div>
+                <form [formGroup]="amForm"  novalidate (ngSubmit)="onSubmit(amForm.value)">
+                    <div *ngIf="img_msg">{{img_msg}}</div>
+                        <div class="form-group">
+                            <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)" formControlName="file">
+                            <!-- <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="fileChange($event)" placeholder="Upload file" formControlName="file">  -->
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'file')" errorMsg="Please select the file to upload.">
+                           </app-field-error-display>
+                        </div>
+                        <input type="text" #caption formControlName="caption"/>
+                        <button  type="submit" mat-button [disabled]="!amForm.valid">Upload</button>
+                </form>
+                <div *ngIf="image_exists">{{image_exists}}
+                    <button (click)="doremoveImage()" mat-button>Remove Image</button>
+                </div>
+            </div>
+            <app-field-error-display [displayError]="true" *ngIf="api_error"
+            errorMsg="{{api_error}}"></app-field-error-display>
+
+            <app-form-success-display [displayMsg]="true" *ngIf="api_success"
+            successMsg="{{api_success}}"></app-form-success-display>
+    </div>
+    <hr>
+    <div class="details_container">
+        <div (click)="editItem()">Click to Edit Details</div>
+        <div><strong>Details</strong></div>
+        <div>Name: {{item_list.displayName}}</div>
+        <div>Short Desc: {{item_list.shortDesc}}</div>
+        <div>Detailed Desc: {{item_list.displayDesc}}</div>
+        <div>Taxable: {{item_list.taxable}}</div>
+        <div>Status: {{item_list.status}}</div> 
+    </div>
+</div>
+</div>

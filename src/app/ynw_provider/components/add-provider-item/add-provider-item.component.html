@@ -1,0 +1,47 @@
+<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+
+<div class="form-group" *ngIf="data.type=='add'">
+    <div><img [src]="showimg()" style="width:150px; height:auto;"></div>
+    <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)">
+    <app-field-error-display [displayError]="file_error_msg" errorMsg="Please select the file to upload.">
+    </app-field-error-display>
+    <input type="text" #caption formControlName="caption"/>
+</div>
+
+
+<div class="form-group">
+    <label class="col-form-label" for="displayName">Item Name *</label>
+    <input type="text" class="form-control" id="displayName" placeholder="Item Name" formControlName="displayName">
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayName')" errorMsg="Please enter item name.">
+   </app-field-error-display>
+</div>
+
+<div class="form-group">
+    <label class="col-form-label" for="shortDesc">Short Description *</label>
+    <input type="text" class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc">
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" errorMsg="Please enter the short description">
+   </app-field-error-display>
+</div>
+
+<div class="form-group">
+    <label class="col-form-label" for="displayDesc">Display Description *</label>
+    <input type="text" class="form-control" id="displayDesc" placeholder="Display Description" formControlName="displayDesc">
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')"  errorMsg="Please enter display description.">
+   </app-field-error-display>
+</div>
+<div class="form-group">
+    <label class="col-form-label" for="taxable">Taxable *</label>
+    <input type="radio" class="form-control" id="taxable" value="1" formControlName="taxable"> Yes<br/>
+    <input type="radio" class="form-control" id="taxable" value="0" formControlName="taxable"> No
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')"  errorMsg="Please select taxable">
+   </app-field-error-display>
+</div>
+
+<button  type="submit" mat-button [disabled]="!amForm.valid">Submit</button>
+
+</form>
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>
