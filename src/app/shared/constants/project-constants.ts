@@ -40,9 +40,9 @@ export const projectConstants = {
       monthYearA11yLabel: 'MMMM YYYY'
     }
   },
-  TIMEOUT_DELAY : 2000,
+  TIMEOUT_DELAY : 12000,
   TIMEOUT_DELAY_SMALL : 200,
-  TIMEOUT_DELAY_LARGE : 4100,
+  TIMEOUT_DELAY_LARGE : 14100,
   TOOLBAR_CONFIG : [
                 { name: 'document',
                   groups: [ 'mode', 'document', 'doctools' ],

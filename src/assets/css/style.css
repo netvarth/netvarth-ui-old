@@ -5084,7 +5084,9 @@ footer.dashb .sect3 {
             flex-grow: 1; }
             .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable {
               font-size: .75rem;
-              font-weight: 600; }
+              font-weight: 600;
+              display: flex;
+              align-items: center; }
               .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable .ttle {
                 padding-right: 15px; }
               .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable .enabled, .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable .disabled {
@@ -5247,7 +5249,6 @@ footer.dashb .sect3 {
           .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal {
             display: flex;
             align-items: center;
-            justify-content: center;
             flex-wrap: wrap;
             align-content: space-around;
             margin: 0 0 20px 0;
@@ -5255,10 +5256,10 @@ footer.dashb .sect3 {
             width: 100%; }
             .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
               list-style: none;
-              flex-grow: 1;
               margin-right: 10px;
               background: #f8f8f8;
-              margin-top: 10px; }
+              margin-top: 10px;
+              width: 30%; }
               @media only screen and (max-width: 767px) {
                 .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
                   margin-top: 0; } }
@@ -5494,6 +5495,12 @@ footer.dashb .sect3 {
           position: relative; }
         .content.loc-list .card .q-tbl table tbody tr td.disabled {
           color: #222223; }
+        .content.loc-list .card .q-tbl table tbody tr td.status [class^="icon-"], .content.loc-list .card .q-tbl table tbody tr td.status [class*=" icon-"] {
+          display: flex;
+          align-items: center; }
+          .content.loc-list .card .q-tbl table tbody tr td.status [class^="icon-"]:before, .content.loc-list .card .q-tbl table tbody tr td.status [class*=" icon-"]:before {
+            margin-right: 5px;
+            font-size: 1rem; }
       .content.loc-list .card .q-tbl table tbody tr:nth-child(odd) {
         background: transparent; }
       .content.loc-list .card .q-tbl table tbody tr:nth-child(even) {
