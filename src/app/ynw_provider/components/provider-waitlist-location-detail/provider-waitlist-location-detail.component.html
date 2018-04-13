@@ -30,7 +30,7 @@
                                                 Latitude: <span>{{location_data.lattitude}}</span> 
                                             </div>
                                         </div>
-                                        <div class="btm-ctrl">
+                                        <div class="btm-ctrl" *ngIf="location_data.baseLocation==false">
                                             <div class="ctrl enable-disable" *ngIf="location_data.baseLocation==false">
                                                 <span class="ttle">Location Status</span>
                                                 <span><mat-slide-toggle [checked]="location_data.status=='ACTIVE'" (click)="changeProviderLocationStatus(location_data)"></mat-slide-toggle></span>
@@ -39,7 +39,7 @@
                                             </div>
                                             <div class="ctrl bse-lcn" *ngIf="location_data.status=='ACTIVE' && location_data.baseLocation==false">
                                                 <span class="cs-btn bt8" (click)="changeProviderBaseLocationStatus(location_data)">
-                                                    set as base location
+                                                    Set as base location
                                                 </span>
                                             </div>    
                                         </div>

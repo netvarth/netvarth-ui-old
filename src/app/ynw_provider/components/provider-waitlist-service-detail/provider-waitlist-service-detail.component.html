@@ -65,10 +65,9 @@
                                             </div>
 
                                             <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
-                                                <ul class="ph-gal" [class.ph-gal-2]="image_list_popup.length==2">
+                                                <ul class="ph-gal">
                                                     <ng-container *ngFor="let file of image_list_popup;let i = index">
-                                                    <li *ngIf="i<2">
-                                                    
+                                                    <li *ngIf="i<3">
                                                         <div class="galbx">
                                                             <span class="mbt">
                                                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -89,8 +88,8 @@
                                                     </ng-container>                            
                                                     <li *ngIf="image_list_popup.length>3">
                                                         <div class="galbx">
-                                                            <span class="mre" (click)="openImageModalRow(image_list_popup[2])">+{{(image_list_popup.length-2)}}</span>
-                                                            <div class="img-h"><img [src] = "image_list_popup[2].modal.img" /></div>
+                                                            <span class="mre" (click)="openImageModalRow(image_list_popup[3])">+{{(image_list_popup.length-3)}}</span>
+                                                            <div class="img-h"><img [src] = "image_list_popup[3].modal.img" /></div>
                                                         </div>
                                                     </li>
                                                 </ul>
