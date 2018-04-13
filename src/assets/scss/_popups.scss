@@ -204,7 +204,6 @@
                     }
                 }
             }
-            
             .example-section {
                 mat-checkbox {
                     label {
@@ -343,6 +342,7 @@
     .mat-dialog-actions {
         border-top: 1px solid $cc-ash;
         display: block;
+        margin-bottom: 0;
         
         .bt1 {
             margin-right: 10px;
@@ -761,6 +761,10 @@
                 width: 30px;
                 height: 30px;
                 cursor: pointer;
+                
+                #image_src {
+                    display: none;
+                }
 
                 &:before {
                     @include font-custom;

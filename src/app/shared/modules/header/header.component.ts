@@ -107,25 +107,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.headercls = '';
     const currenturl = this.router.url.split(';');
     const checkUrl = currenturl[0]; // this.curPgurl;
-    // console.log('subst', checkUrl);
-    if (checkUrl.substr(-17) === '/provider/bwizard') {
+   // console.log('subst', checkUrl);
+   /* if (checkUrl.substr(-17) === '/provider/bwizard') {
       this.headercls = 'itl-steps';
       // this.headercls = 'dashb';
     } else if (checkUrl.substr(-34) === '/provider/settings/bprofile-search') {
       this.headercls = 'dashb';
-    }
+    }*/
    // return this.headercls;
    for (const url of this.urls_class) {
      if (url.url != null) {
         const match = checkUrl.match(url.url) ;
         if (match instanceof Array && match.length === 1) {
           this.headercls = url.class;
+          console.log('reached here', url.class);
         }
 
-     } else {
-        this.headercls = 'dashb';
      }
 
+   }
+   if (this.headercls === '') {
+        this.headercls = 'dashb';
    }
 
   }

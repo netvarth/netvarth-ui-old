@@ -2382,6 +2382,8 @@ footer {
                                         &.enable-disable {       
                                             font-size: .75rem;
                                             font-weight: 600;
+                                            display: flex;
+                                            align-items: center;
 
                                             .ttle {
                                                 padding-right: 15px;
@@ -2433,6 +2435,16 @@ footer {
                                         .c-ot {
                                             .item {
                                                 width: 50%;
+                                                
+                                                .it0 {
+                                                    border: 1px solid $cc-ash;
+                                                    padding: 3px 8px;
+                                                    margin-right: 10px;
+                                                    font-weight: 500;
+                                                    @include border-radius(20px);
+                                                    display: inline-block;
+                                                    margin-bottom: 5px;
+                                                }
                                             }
                                         }
                                     }
@@ -2586,7 +2598,6 @@ footer {
                                     .ph-gal {
                                         display: flex;
                                         align-items: center;
-                                        justify-content: center;
                                         flex-wrap: wrap;
                                         align-content: space-around;
                                         margin: 0 0 20px 0;
@@ -2594,10 +2605,10 @@ footer {
                                         width: 100%;
                                         li {
                                             list-style: none;
-                                            flex-grow: 1;
                                             margin-right: 10px;
                                             background: $cc-lightgray;
                                             margin-top: 10px;
+                                            width: 30%;
                                             @include respond-to(ynw-767) {
                                                 margin-top: 0;
                                             }
@@ -2936,6 +2947,17 @@ footer {
                                 
                                 &.disabled {
                                     color: $linkblack;
+                                }
+                                &.status {
+                                    [class^="icon-"],[class*=" icon-"] {
+                                        display: flex;
+                                        align-items: center;
+                                        
+                                        &:before {
+                                            margin-right: 5px;
+                                            font-size: 1rem;
+                                        }
+                                    }
                                 }
                             }
 

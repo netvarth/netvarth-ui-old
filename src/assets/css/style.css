@@ -1514,7 +1514,8 @@ header {
   .commonpopupmainclass .mat-dialog-actions,
   .googlemainmappopup .mat-dialog-actions {
     border-top: 1px solid #dbdbdb;
-    display: block; }
+    display: block;
+    margin-bottom: 0; }
     .signupmainclass .mat-dialog-actions .bt1,
     .loginmainclass .mat-dialog-actions .bt1,
     .moreoptionsmainclass .mat-dialog-actions .bt1,
@@ -1869,6 +1870,8 @@ header {
     width: 30px;
     height: 30px;
     cursor: pointer; }
+    .commonpopupmainclass .mat-dialog-content .upload-doc .select-wrapper #image_src {
+      display: none; }
     .commonpopupmainclass .mat-dialog-content .upload-doc .select-wrapper:before {
       font-family: "custom-ynw" !important;
       content: "\4d";
@@ -5123,6 +5126,17 @@ footer.dashb .sect3 {
             font-weight: 500 !important; }
           .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
             width: 50%; }
+            .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item .it0 {
+              border: 1px solid #dbdbdb;
+              padding: 3px 8px;
+              margin-right: 10px;
+              font-weight: 500;
+              -webkit-border-radius: 20px;
+              border-radius: 20px;
+              background-clip: padding-box;
+              /* stops bg color from leaking outside the border: */
+              display: inline-block;
+              margin-bottom: 5px; }
         .content.loc-list .card .copy.locd .lbl .cl1 .cop-l {
           flex-grow: 1;
           width: 70%; }
