@@ -63,21 +63,7 @@ export class ProviderWaitlistServicesComponent implements OnInit {
 
   changeServiceStatus(service) {
 
-    let chstatusmsg = '';
-    if (service.status === 'ACTIVE') {
-       chstatusmsg = 'disabled';
-    } else {
-       chstatusmsg = 'enabled';
-    }
-
-    let msg = Messages.WAITLIST_SERVICE_CHG_STAT.replace('[sername]', service.name);
-    msg = msg.replace('[status]', chstatusmsg);
-
-    if (service.status === 'ACTIVE') {
-      this.disableService(service, msg);
-    } else {
-      this.enableService(service, msg);
-    }
+    this.provider_shared_functions.changeServiceStatus(this, service);
 
   }
 

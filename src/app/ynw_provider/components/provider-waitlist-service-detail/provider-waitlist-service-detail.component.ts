@@ -20,6 +20,7 @@ import {
     AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
     DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
   } from 'angular-modal-gallery';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
     selector: 'app-provider-waitlist-service-detail',
@@ -51,13 +52,11 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
       ];
     breadcrumbs = this.breadcrumbs_init;
 
-    loadingParams: any = {'diameter' : 40, 'strokewidth': 15};
 
     image_list: any = [];
     image_list_popup: Image[];
     image_showlist: any = [];
     image_remaining_cnt = 0;
-    api_loading_completed = 0;
 
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
@@ -91,7 +90,8 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
         private dialog: MatDialog,
         private router: Router,
         private activated_route: ActivatedRoute,
-        private sanitizer: DomSanitizer) {
+        private sanitizer: DomSanitizer,
+        public provider_shared_functions: ProviderSharedFuctions) {
 
             this.activated_route.params.subscribe(params => {
                 this.service_id = params.id;
@@ -109,7 +109,6 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
     }
 
     getServiceDetail() {
-        this.api_loading_completed = 0;
         this.provider_services.getServiceDetail(this.service_id)
         .subscribe(
             data => {
@@ -128,9 +127,6 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
            },
             error => {
                 this.goBack();
-            },
-            () => {
-                this.api_loading_completed = 1;
             }
         );
     }
@@ -294,5 +290,35 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
         'services']);
     }
 
+    changeServiceStatus(service) {
+      this.provider_shared_functions.changeServiceStatus(this, service);
+    }
+
+    disableService(service, msg) {
+      this.provider_services.disableService(service.id)
+      .subscribe(
+        data => {
+          this.getServiceDetail();
+          const snackBarRef =  this.provider_shared_functions.openSnackBar (msg);
+        },
+        error => {
+          const snackBarRef =  this.provider_shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+          this.getServiceDetail();
+        });
+
+    }
+
+    enableService(service, msg) {
+      this.provider_services.enableService(service.id)
+      .subscribe(
+        data => {
+          this.getServiceDetail();
+          const snackBarRef =  this.provider_shared_functions.openSnackBar (msg);
+        },
+        error => {
+          const snackBarRef =  this.provider_shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+          this.getServiceDetail();
+        });
+    }
 
 }

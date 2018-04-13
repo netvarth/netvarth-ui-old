@@ -91,4 +91,27 @@ export class ProviderSharedFuctions {
         ob.getProviderQueues();
       }
     }
+
+
+  changeServiceStatus(ob, service) {
+
+    let chstatusmsg = '';
+    if (service.status === 'ACTIVE') {
+        chstatusmsg = 'disabled';
+    } else {
+        chstatusmsg = 'enabled';
+    }
+
+    let msg = Messages.WAITLIST_SERVICE_CHG_STAT.replace('[sername]', service.name);
+    msg = msg.replace('[status]', chstatusmsg);
+
+    if (service.status === 'ACTIVE') {
+      ob.disableService(service, msg);
+    } else {
+      ob.enableService(service, msg);
+    }
+
+  }
+
+
 }
