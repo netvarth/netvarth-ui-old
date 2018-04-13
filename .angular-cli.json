@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "v3-ynw"
+    "name": "v7-you-never-wait"
   },
   "apps": [
     {

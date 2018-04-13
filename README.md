@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # V6Ynw
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.6.
+=======
+# V7YouNeverWait
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
+>>>>>>> da1a1a47144178cb400479ffee2d40f2adb9b246
 
 ## Development server
 

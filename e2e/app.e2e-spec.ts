@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('v6-ynw App', () => {
+describe('v7-you-never-wait App', () => {
   let page: AppPage;
 
   beforeEach(() => {

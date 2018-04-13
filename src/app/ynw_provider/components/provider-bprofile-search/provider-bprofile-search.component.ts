@@ -235,7 +235,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
         }
 
         if (this.bProfile.baseLocation) {
-          if (this.bProfile.baseLocation.parkingType || this.bProfile.baseLocation.open24hours || this.objectKeys(this.bProfile.baseLocation.locationVirtualFields).length > 0) {
+          if (this.bProfile.baseLocation.parkingType || this.bProfile.baseLocation.open24hours
+             || this.objectKeys(this.bProfile.baseLocation.locationVirtualFields).length > 0) {
             this.normal_locationamenities_show = 3;
           } else {
             this.normal_locationamenities_show = 2;
@@ -252,7 +253,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
           }
 
           // calling function which saves the business related details to show in the header
-          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName'] || '', this.bProfile['serviceSector']['displayName'] || '', '');
+          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+           || '', this.bProfile['serviceSector']['displayName'] || '', '');
           this.getProviderLogo();
           this.getDomainVirtualFields();
 
@@ -270,7 +272,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
         // check whether normal search section can be displayed
         this.normal_search_display = this.bProfile.enableSearch;
         // check whether normal business profile section can be displayed
-        if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined) || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined) ) {
+        if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
+         || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined) ) {
           this.normal_basicinfo_show = 3;
         } else {
           this.normal_basicinfo_show = 2;
@@ -526,7 +529,9 @@ export class ProviderBprofileSearchComponent implements OnInit {
         this.routerobj.navigate(['/provider/settings/waitlist-manager/location-detail/' + locid]);
       }
     }
-    // the following section is commented as client told that they wanted the provider to be taken to the location details page under waitlist manager when clicked on edit button, rather than editing the location here itself
+    // the following section is commented as client told that they wanted the provider
+    // to be taken to the location details page under waitlist manager when clicked on
+    // edit button, rather than editing the location here itself
 
     /* const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
       width: '50%',
@@ -808,7 +813,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
           logo = '';
         }
         // calling function which saves the business related details to show in the header
-        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName'] || '', this.bProfile['serviceSector']['displayName'] || '', logo );
+        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+         || '', this.bProfile['serviceSector']['displayName'] || '', logo );
       },
       error => {
 
@@ -830,7 +836,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
        const tday = today.toString().replace(/\s/g, '');
        const blogo = this.blogo[0].url + '?' + tday;
 
-       this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName'] || '', this.bProfile['serviceSector']['displayName'] || '', blogo || '' );
+       this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+        || '', this.bProfile['serviceSector']['displayName'] || '', blogo || '' );
        /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
       },
       error => {
