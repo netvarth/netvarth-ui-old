@@ -112,11 +112,14 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
     }
 
 
-  addEditProviderQueue(type) {
+    addEditProviderQueue(type) {
+      this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_detail', this.queue_data);
 
-    this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_detail', this.queue_data);
+    }
 
-  }
+    changeProviderQueueStatus(obj) {
+      this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'queue_detail');
+    }
 
 
 

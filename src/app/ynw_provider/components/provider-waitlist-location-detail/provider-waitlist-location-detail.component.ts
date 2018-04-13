@@ -232,7 +232,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
 
     changeProviderQueueStatus (obj) {
 
-        this.provider_shared_functions.changeProviderQueueStatus(this, obj);
+        this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'location_detail');
 
     }
 

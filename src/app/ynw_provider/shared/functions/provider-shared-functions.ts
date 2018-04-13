@@ -12,8 +12,7 @@ export class ProviderSharedFuctions {
 
     }
 
-    changeProviderQueueStatus(ob, obj) {
-        ob.resetApiErrors();
+    changeProviderQueueStatus(ob, obj, source = 'queue_list') {
         let chgstatus = '';
         let chstatusmsg = '';
 
@@ -30,19 +29,11 @@ export class ProviderSharedFuctions {
         ob.provider_services.changeProviderQueueStatus(obj.id, chgstatus)
         .subscribe(data => {
           this.openSnackBar (msg);
-            /*ob.api_success = msg;
-          setTimeout(() => {
-            ob.resetApiErrors();
-          }, projectConstants.TIMEOUT_DELAY_LARGE);*/
-          ob.getProviderQueues();
+          this.queueReloadApi(ob, source);
         },
         error => {
           this.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
-           /* ob.api_error = error.error;
-          setTimeout(() => {
-            ob.resetApiErrors();
-          }, projectConstants.TIMEOUT_DELAY_LARGE);*/
-            ob.getProviderQueues();
+          this.queueReloadApi(ob, source);
         });
     }
 
@@ -60,13 +51,7 @@ export class ProviderSharedFuctions {
 
           dialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
-                if (source === 'queue_list') {
-                  ob.getProviderQueues();
-                } else if (source === 'queue_detail') {
-                  ob.getQueueDetail();
-                } else if (source === 'location_detail') {
-                  ob.getProviderQueues();
-                }
+              this.queueReloadApi(ob, source);
             }
           });
     }
@@ -95,5 +80,15 @@ export class ProviderSharedFuctions {
       const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
       const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
       return snackBarRef;
+    }
+
+    queueReloadApi(ob, source = 'queue_list') {
+      if (source === 'queue_list') {
+        ob.getProviderQueues();
+      } else if (source === 'queue_detail') {
+        ob.getQueueDetail();
+      } else if (source === 'location_detail') {
+        ob.getProviderQueues();
+      }
     }
 }

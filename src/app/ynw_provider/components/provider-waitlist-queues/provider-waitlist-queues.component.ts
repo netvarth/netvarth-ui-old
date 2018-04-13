@@ -77,7 +77,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit {
   }
 
   changeProviderQueueStatus(obj) {
-    this.provider_shared_functions.changeProviderQueueStatus(this, obj);
+    this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'queue_list');
   }
 
   resetApiErrors() {
