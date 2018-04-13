@@ -819,6 +819,17 @@ app-footer {
     .info-lst li:last-child {
       margin-bottom: 0; }
 
+/* Snackbar ####*/
+.snackbarnormal, .snackbarerror {
+  color: #fff;
+  background: #00aef2; }
+  .snackbarnormal .mat-simple-snackbar, .snackbarerror .mat-simple-snackbar {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500; }
+
+.snackbarerror {
+  background: #f24949; }
+
 /*popup menu ####*/
 .pop-mnu {
   display: none; }
@@ -5173,7 +5184,7 @@ footer.dashb .sect3 {
               left: 0;
               top: 0; }
       .content.loc-list .card .copy.locd .lbr {
-        background: #f7f7f7;
+        background: #fbfbfb;
         -webkit-border-bottom-right-radius: 5px;
         border-bottom-right-radius: 5px;
         -webkit-border-top-right-radius: 5px;
@@ -5481,6 +5492,8 @@ footer.dashb .sect3 {
             display: none; }
         .content.loc-list .card .q-tbl table tbody tr td:last-child {
           position: relative; }
+        .content.loc-list .card .q-tbl table tbody tr td.disabled {
+          color: #222223; }
       .content.loc-list .card .q-tbl table tbody tr:nth-child(odd) {
         background: transparent; }
       .content.loc-list .card .q-tbl table tbody tr:nth-child(even) {

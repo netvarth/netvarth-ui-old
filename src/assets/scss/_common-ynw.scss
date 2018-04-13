@@ -273,6 +273,20 @@ app-footer {
     }
 }
 
+/* Snackbar ####*/
+.snackbarnormal, .snackbarerror {
+    color: $white;
+    background: $linkblue;
+    
+    .mat-simple-snackbar {
+        @include font-medium;
+    }
+}
+
+.snackbarerror {
+    background: $cc-red;
+}
+
 /*popup menu ####*/
 .pop-mnu {
     display: none;

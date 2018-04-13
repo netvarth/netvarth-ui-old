@@ -31,26 +31,17 @@
                                             </div>
                                         </div>
                                         <div class="btm-ctrl">
-                                                <div class="ctrl enable-disable" *ngIf="location_data.baseLocation==false">
-                                                    <span class="ttle">Location Status</span>
-                                                    <span><mat-slide-toggle [checked]="location_data.status=='ACTIVE'" (click)="changeProviderLocationStatus(location_data)"></mat-slide-toggle></span>
-                                                    <span class='enabled' *ngIf="location_data.status=='ACTIVE'">Enabled</span>
-                                                    <span class='disabled' *ngIf="location_data.status=='INACTIVE'">Disabled</span>
-                                                </div>
-                                                <div class="ctrl bse-lcn">
-                                                    <span class="cs-btn bt8">
-                                                        set as base location
-                                                    </span>
-                                                </div>    
+                                            <div class="ctrl enable-disable" *ngIf="location_data.baseLocation==false">
+                                                <span class="ttle">Location Status</span>
+                                                <span><mat-slide-toggle [checked]="location_data.status=='ACTIVE'" (click)="changeProviderLocationStatus(location_data)"></mat-slide-toggle></span>
+                                                <span class='enabled' *ngIf="location_data.status=='ACTIVE'">Enabled</span>
+                                                <span class='disabled' *ngIf="location_data.status=='INACTIVE'">Disabled</span>
                                             </div>
-                                        <div class="enable-disable1" *ngIf="location_data.baseLocation==false">
-                                            <span class="ttle">Location Status</span>
-                                            <span><mat-slide-toggle [checked]="location_data.status=='ACTIVE'" (click)="changeProviderLocationStatus(location_data)"></mat-slide-toggle></span>
-                                            <span class='enabled' *ngIf="location_data.status=='ACTIVE'">Enabled</span>
-                                            <span class='disabled' *ngIf="location_data.status=='INACTIVE'">Disabled</span>
-                                        </div>
-                                        <div class="enable-disable2" *ngIf="location_data.status=='ACTIVE' && location_data.baseLocation==false">
-                                            <span class="cs-btn bt3" (click)="changeProviderBaseLocationStatus(location_data)">Set as Base Location?</span>
+                                            <div class="ctrl bse-lcn" *ngIf="location_data.status=='ACTIVE' && location_data.baseLocation==false">
+                                                <span class="cs-btn bt8" (click)="changeProviderBaseLocationStatus(location_data)">
+                                                    set as base location
+                                                </span>
+                                            </div>    
                                         </div>
                                     </div>                                
                                 </div>
@@ -105,6 +96,7 @@
                                 <tr>
                                     <th>Queue</th>
                                     <th>Schedule</th>
+                                    <th>Status</th>
                                     <th><span class="addbt" (click)="addEditProviderQueue('add')"></span></th>                            
                                 </tr>
                             </thead>
@@ -122,6 +114,10 @@
                                             <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
                                         </ng-container>
                                         </div>
+                                    </td>
+                                    <td data-title="Status" class="status">
+                                        <span class="icon-enable" *ngIf="queue.queueState=='ENABLED'"> Enabled</span>
+                                        <span class="icon-disable" *ngIf="queue.queueState=='DISABLED'"> Disabled</span>
                                     </td>
                                     <td>
                                         <span class="mbt">
