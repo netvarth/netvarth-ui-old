@@ -328,11 +328,18 @@ footer {
             }
         }
         @include respond-to(ynw-575) {
-            width: 100%;
+            width: auto;
+            flex-grow: 1;
             
             a {
                 border-left: none;
                 border-bottom: 1px solid $cc-ash;
+                display: flex;
+                flex-direction: column;
+                
+                i {
+                    margin-right: 0;
+                }
             }
             
         }
@@ -368,9 +375,6 @@ footer {
         width: 100%;
         height: 5px;
         
-        @include respond-to(ynw-575) {
-            display: none;
-        }
     }
 }
 
@@ -1184,13 +1188,13 @@ footer {
                                         
                                         li {
                                             list-style: none;
-                                            font-size: 2rem;
+                                            font-size: 1.5rem;
                                             color: $cc-gray;
                                             position: relative;
                                             margin-right: 20px;
                                             margin-bottom: 10px;
-                                            width: 32px;
-                                            height: 32px;
+                                            width: 24px;
+                                            height: 24px;
                                             
                                             &:last-child {
                                                 margin-left: 20px;
@@ -1202,11 +1206,13 @@ footer {
                                                     background: $cc-gray;
                                                     content: "";
                                                     left: -20px;
-                                                    top: 8px;
+                                                    top: 0px;
                                                 }
                                                 
                                                 .editbt {
                                                     font-size: 1rem;
+                                                    top: -4px;
+                                                    left: -2px;
                                                 }
                                             }
                                         }
@@ -1667,6 +1673,46 @@ footer {
                             border-bottom: 1px solid $cc-body;
                         }
                     }
+                }
+            }
+            
+            .special-dta, .lang-dta {
+                position: relative;
+                margin: 0 20px;
+                display: flex;
+                flex-wrap: wrap;
+                
+                .editbt {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    font-size: 1rem;
+                    color: $linkblue;
+                    width: 30px;
+                    height: 30px;
+                    @include border-radius(50%);
+                    @include transition(all 300ms);
+                    
+                    &:hover {
+                        background: $cc-ash;
+                    }
+                }
+                
+                div {
+                    @include border-radius(30px);
+                    border:1px solid $cc-mediumgray;
+                    padding: 3px 10px;
+                    margin-right: 10px;
+                    font-weight: 500;
+                    margin-bottom: 10px;
+                }
+            }
+            
+            .lang-dta {
+                div {
+                    @include border-radius(0px);
+                    border: none;
+                    background: $cc-body;
                 }
             }
         }
@@ -2310,7 +2356,7 @@ footer {
                                 padding: 20px 0;
                                 display: flex;
                                 position: relative;
-                                padding-bottom: 40px;
+                                padding-bottom: 60px;
                                 
                                 @include respond-to(ynw-767){
                                     flex-direction: column;
@@ -2319,7 +2365,7 @@ footer {
                                     flex-direction: column;
                                 }
                                 
-                                .enable-disable1 {
+                                .btm-ctrl {
                                     position: absolute;
                                     left: 0;
                                     bottom: 0;
@@ -2327,11 +2373,35 @@ footer {
                                     display: flex;
                                     align-items: center;
                                     width: 100%;
+                                    border-top: 1px solid $cc-ash;
+                                    /*padding: 0 10px;*/
                                     
-                                    .ttle {
-                                        padding-right: 15px;
+                                    .ctrl {
+                                        flex-grow: 1;
+                                        
+                                        &.enable-disable {       
+                                            font-size: .75rem;
+                                            font-weight: 600;
+
+                                            .ttle {
+                                                padding-right: 15px;
+                                            }
+                                            .enabled, .disabled {
+                                                color: $green;
+                                                padding-left: 5px;
+                                            }
+                                            .disabled {
+                                                color: $cc-mediumgray;
+                                            }
+                                        }
+
+                                        &.bse-lcn {
+                                            text-align: right;
+                                        }
                                     }
+                                    
                                 }
+                                
                                 
                                 .editbt {
                                     position: absolute;
@@ -2377,16 +2447,6 @@ footer {
                                     }
                                     @include respond-to(ynw-768-991){
                                         width: 100%;
-                                    }
-                                    
-                                    .enable-disable {
-                                        display: flex;
-                                        margin-bottom: 15px;
-                                        
-                                        .ttle {
-                                            padding-right: 15px;
-                                        }
-                                        
                                     }
                                     
                                     .bse-lcn-label {
@@ -2467,7 +2527,7 @@ footer {
                             }
                         }
                         .lbr {
-                            background: #f7f7f7;
+                            background: #fbfbfb;
                             @include border-right-radius(5px);
                             
                             @include respond-to(ynw-767){
@@ -2512,13 +2572,13 @@ footer {
 
                                     li {
                                         list-style: none;
-                                        font-size: 2rem;
+                                        font-size: 1.7rem;
                                         color: $cc-gray;
                                         position: relative;
                                         margin-right: 20px;
                                         margin-bottom: 10px;
-                                        width: 32px;
-                                        height: 32px;
+                                        width: 28px;
+                                        height: 30px;
                                     }
                                 }
                                 
@@ -2639,6 +2699,10 @@ footer {
                                                         display: none;
                                                     }
                                                 }
+                                            }
+                                            
+                                            &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+                                                margin-top: 0;
                                             }
                                         }
                                         &.ph-gal-2 {
@@ -2868,7 +2932,11 @@ footer {
                                 }
                                 &:last-child {
                                     position: relative;
-                                }                                
+                                }
+                                
+                                &.disabled {
+                                    color: $linkblack;
+                                }
                             }
 
                             &:nth-child(odd) {
@@ -2887,7 +2955,7 @@ footer {
                     .bse-lcn-label {
                         font-size: .75rem;
                         font-weight: 600;
-                        color: $cc-mediumgray;
+                        color: $green;
                         position: relative;
                         display: table;
                         padding-left: 16px;
@@ -2905,16 +2973,7 @@ footer {
                 }
             }
             &.disabled {
-                opacity: .5;
-                
-                .copy {
-                    .mbt {
-                        pointer-events: all;
-                    }
-                    h3 {
-                        color: $cc-mediumgray;
-                    }
-                }
+                background: #f7f7f7;
             }
         }
         
@@ -3394,6 +3453,8 @@ footer {
         }
     }
 }
+
+/*#### Settings Page ***/
 
 
 

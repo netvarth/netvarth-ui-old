@@ -470,9 +470,9 @@ footer {
                                 &:nth-child(1) {
                                     display: none;
                                 }
-                                &:last-child {
+                                /*&:last-child {
                                     margin: 0;
-                                }
+                                }*/
                                 
                                 .mat-checkbox-layout {
                                     margin-bottom: 0;
@@ -481,86 +481,98 @@ footer {
                         }
                         .startendtime {
                             margin-bottom: 20px;
-                            fieldset {
-                                .form-control {
-                                    @include border-radius(0);
-                                    background: $white;
-                                    @include font-regular;
-                                    font-size: 0.875rem;
-                                    color: $cc-darkgray;
-                                    text-overflow: ellipsis;
+                            display: flex;
+                            flex-wrap: wrap;
 
-                                    &:focus {
-                                        @include box-shadow(0, 0, 1px, $linkblue, inset);
-                                        border: 1px solid $linkblue;
+                            .starttimediv, .endtimediv {
+                                flex-grow: 1;
+
+                                fieldset {
+                                    .form-control {
+                                        @include border-radius(0);
                                         background: $white;
-                                    }
-                                }
-                                .ngb-tp-hour, .ngb-tp-minute {
-                                    .btn-link {
-                                        display: flex;
-                                        
-                                        &:first-child {
-                                            .chevron {
-                                                width: 16px;
-                                                height: 16px;
-                                                
-                                                &:before {
-                                                    border: none;
-                                                    content: "\66";
-                                                    @include font-custom;
-                                                    color: $linkblue;
-                                                    display: flex;
-                                                    transform: rotate(0);
-                                                    font-size: 1rem;
-                                                    font-weight: 700;
-                                                    align-items: center;
-                                                }
-                                            }
-                                        }
-                                        &:last-child {
-                                            .chevron.bottom {
-                                                width: 16px;
-                                                height: 16px;
-                                                
-                                                &:before {
-                                                    border: none;
-                                                    content: "\72";
-                                                    @include font-custom;
-                                                    color: $linkblue;
-                                                    display: flex;
-                                                    transform: rotate(0);
-                                                    font-size: 1rem;
-                                                    font-weight: 700;
-                                                }
-                                            }
-                                        }
-                                        &:hover, &:focus, &:active {
-                                            text-decoration: none;
-                                        }
-                                    }
-                                }
-                                .ngb-tp-meridian {
-                                    .btn-outline-primary {
-                                        border-color: $linkblue;
-                                        color: $linkblue;
-                                        font-weight: 600;
-                                        font-size: .875rem;
+                                        @include font-regular;
+                                        font-size: 0.875rem;
+                                        color: $cc-darkgray;
+                                        text-overflow: ellipsis;
 
-                                        &:hover {
-                                            background: $linkblue;
-                                            color: $white;
-                                        }
                                         &:focus {
-                                            outline: none;
-                                            box-shadow: none;
+                                            @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                            border: 1px solid $linkblue;
+                                            background: $white;
                                         }
                                     }
-                                }
-                                &:first-child {
-                                    margin-bottom: 15px;
+                                    .ngb-tp-hour,
+                                    .ngb-tp-minute {
+                                        .btn-link {
+                                            display: flex;
+
+                                            &:first-child {
+                                                .chevron {
+                                                    width: 16px;
+                                                    height: 16px;
+
+                                                    &:before {
+                                                        border: none;
+                                                        content: "\66";
+                                                        @include font-custom;
+                                                        color: $linkblue;
+                                                        display: flex;
+                                                        transform: rotate(0);
+                                                        font-size: 1rem;
+                                                        font-weight: 700;
+                                                        align-items: center;
+                                                    }
+                                                }
+                                            }
+                                            &:last-child {
+                                                .chevron.bottom {
+                                                    width: 16px;
+                                                    height: 16px;
+
+                                                    &:before {
+                                                        border: none;
+                                                        content: "\72";
+                                                        @include font-custom;
+                                                        color: $linkblue;
+                                                        display: flex;
+                                                        transform: rotate(0);
+                                                        font-size: 1rem;
+                                                        font-weight: 700;
+                                                    }
+                                                }
+                                            }
+                                            &:hover,
+                                            &:focus,
+                                            &:active {
+                                                text-decoration: none;
+                                            }
+                                        }
+                                    }
+                                    .ngb-tp-meridian {
+                                        .btn-outline-primary {
+                                            border-color: $linkblue;
+                                            color: $linkblue;
+                                            font-weight: 600;
+                                            font-size: .875rem;
+
+                                            &:hover {
+                                                background: $linkblue;
+                                                color: $white;
+                                            }
+                                            &:focus {
+                                                outline: none;
+                                                box-shadow: none;
+                                            }
+                                        }
+                                    }
+                                    &:first-child {
+                                        margin-bottom: 15px;
+                                    }
                                 }
                             }
+
+
                         }
                         
                     }
