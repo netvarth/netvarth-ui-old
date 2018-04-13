@@ -1,0 +1,25 @@
+<app-header [headerTitle] = "'License History'"></app-header>
+<div>
+    <div class="gobackcls" (click)="goback()">Go Back</div>
+    <div class="audit_outer">
+        <div class="" *ngIf="auditlog_details.length>0">
+            <table width="100%">
+                <tr>
+                    <th>Name</th>
+                    <th>Applied On</th>
+                    <th>Expiry Date</th>
+                    <th>Status</th>
+                </tr>
+                <tr *ngFor="let auditlog of auditlog_details">
+                    <td>{{auditlog.name}}</td>
+                    <td>{{auditlog.dateApplied | date: dateFormat }}</td>
+                    <td>{{auditlog.expiryDate | date: dateFormat }}</td>
+                    <td>{{auditlog.status}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="" *ngIf="auditlog_details.length==0">
+            No logs found
+        </div>
+    </div>
+</div>

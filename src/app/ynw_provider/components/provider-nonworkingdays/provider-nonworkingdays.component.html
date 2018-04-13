@@ -1,0 +1,25 @@
+<app-header [headerTitle] = "'Provider Non Working Days'"></app-header>
+
+<button (click)="addHolidays()">Add Holiday</button>
+
+<table class="table" *ngIf="nonworking_list.length !=0">
+    <thead>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let nonworking of nonworking_list">
+        <td>{{nonworking.startDay | date: 'dd/MMM/yyyy'}}</td>
+        <td>{{nonworking.description}}</td>
+        <td>{{nonworking.nonWorkingHours.sTime}}</td>
+        <td>{{nonworking.nonWorkingHours.eTime}}</td>        
+      <td>&nbsp;<button (click)="editHolidays(nonworking)">Edit</button>&nbsp;<button (click)="doRemoveHolidays(nonworking)">Delete</button>&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="nonworking_list.length ==0 && query_executed == true">{{emptyMsg}}</div>
+  
+  

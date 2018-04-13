@@ -1,0 +1,31 @@
+<h1 class="mat-dialog-title">Choose Your Location in the MAP  <span>Mark your location by clicking on the map or by dragging the Marker</span> <button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<mat-dialog-content>
+    
+
+<mat-accordion > <!-- older class obtained-address-outer-->
+    <mat-expansion-panel *ngIf="mapaddress.length>1" [expanded]="true">
+            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+            <mat-panel-title class="title">
+                Obtained Addresses, select the required one
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <table class="googleaddresstable">
+            <tr *ngFor="let addressrow of mapaddress; let i = index">
+                <td class="googlecheckboxtd"><mat-radio-button value="{{i}}" [checked]="i===0" (change)="mapaddress_change(addressrow)"></mat-radio-button></td>
+                <td class="googleaddresstd">{{addressrow.address}}</td>
+            </tr>
+        </table>
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+<div>
+ <input id="pac-input"  autocorrect="off" autocapitalize="off" spellcheck="off" 
+ type="text" #search placeholder="Enter a location">
+</div>
+<div #gmap style='width:100%;height:400px'></div>
+</mat-dialog-content>
+<mat-dialog-actions>
+<button mat-button type="button" (click)="mapselectionDone()">Yes, I'm Done!</button>
+</mat-dialog-actions>

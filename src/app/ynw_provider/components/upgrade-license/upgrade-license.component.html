@@ -1,0 +1,22 @@
+<div *ngIf="obtainedUpgradable && upgradablepackages.length>0">
+<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+    <div class="form-group">
+        <label class="col-form-label" for="displayName">License Package *</label>
+        <select name="license_selpackage" #license_selpackage formControlName="license_selpackage" *ngIf="upgradablepackages" (change)="licensepackage_Select(license_selpackage.value)">
+            <option value=''>-- Select Package --</option>
+            <option *ngFor="let package of upgradablepackages" [value]="package.pkgId">{{package.displayName}}</option>    
+        </select>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'license_selpackage')" errorMsg="Please select the package.">
+        </app-field-error-display> 
+    </div>
+    <button  type="submit" mat-button [disabled]="!amForm.valid">Submit</button>
+</form>
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>
+</div>
+<div *ngIf="obtainedUpgradable && upgradablepackages.length==0">
+    Sorry No upgradable packages found.
+</div>

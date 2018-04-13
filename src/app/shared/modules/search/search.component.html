@@ -1,0 +1,73 @@
+<div class="sa-fld">
+  <div class="sa-lc flex-shrink-0">
+      <mat-form-field class="search_location_class">
+        <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name"  matInput [formControl]="myControl_loc" [matAutocomplete]="autoloc">
+        <mat-autocomplete #autoloc="matAutocomplete">
+          <div *ngIf="locationList">
+          <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname" (click)="setLocation(loc)">
+            <div [innerHTML] ="highlightSelText(loc.autoname, 'search_autocompletehighlight', 'location', loc.typ)"></div>
+          </mat-option>
+          </div>
+        </mat-autocomplete>
+      </mat-form-field>
+  </div>
+
+  <div class="sa-dm flex-shrink-0 ml5">
+    <mat-form-field>
+      <div>
+        <mat-select panelClass ="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (change)="handledomainchange(seldomain.value)" >
+          <mat-option value="All">All</mat-option>
+          <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain" >
+            {{ domain.displayName }} 
+          </mat-option>
+        </mat-select>
+      </div>
+    </mat-form-field> 
+  </div>
+
+  <div class="sa-src flex-shrink-1 plr0i ml5">
+      <mat-form-field class="search_keyword_class">
+        <input name="provider_box" aria-label="provs" placeholder="Search here" aria-label="Search here" [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" (click)="filterKeywords($event.target.value)">
+        <mat-autocomplete #autoprov="matAutocomplete">
+          <div *ngIf="keywordgroupList">
+              <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList">
+                <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (click)="setKeyword(kw)">
+                    <span [innerHTML] ="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>
+                </mat-option>
+              </mat-optgroup>
+        </div>
+        </mat-autocomplete>
+      </mat-form-field>
+  </div>
+
+  <div class="flex-shrink-0 plr0i">
+      <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1" (click)="do_search()"><span href="#" class="icon icon-search"></span></div>
+  </div>
+  <div class="sa-mo flex-shrink-0" *ngIf="chk_moreoptionshow()">
+      <span class="icon icon-filter" (click)="showMoreOptions()">More Options</span>
+  </div>
+</div>
+<!-- <div class="sa-ps">
+  <p>Popular Searches: <a href="#">Pediatric</a> <a href="#">Orthodontist</a> <a href="#">Hair Coloring</a> <a href="#">Meditation</a> <a href="#" class="icon icon-more-down"></a></p>
+</div> -->
+
+
+
+<!-- <div class="search_component">
+
+  <div class="btn-group btn-group-toggle" ngbRadioGroup name="customfilters" [(ngModel)]="commonfilters">
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" value="always_open1" (click)="handleCustomfilter('always_open1')"> 24 hour Open
+    </label>
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" value="opennow" (click)="handleCustomfilter('opennow')"> Open Now
+    </label>
+  </div>
+  <div class="search_buttondiv"><button name="search_button" (click)="do_search()">Search</button></div>
+</div> -->
+  
+  <!-- <div class="popular_searchdiv" *ngIf="showopennow===1"><span class="popular_searchopen" (click)="opennow_searchhandle()">Open Now</span>  </div> -->
+  <!-- <div class="searchlabels_outer" *ngIf="show_searchlabellist">
+    <div *ngFor="let searchlabels of show_searchlabellist" class="searchlabels_item" (click)="searchlabels_clicked(searchlabels)">{{searchlabels.displayname}}</div>
+  </div> -->
+  

@@ -1,0 +1,272 @@
+<section class="bg-gray">
+    <div class="container">
+        <div class="row">
+
+            <!-- Step 0 -->
+            <div *ngIf="active_step==0" class="is-bx step0 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                <div class="pt-top">
+                    <h1>Congratulations, {{userdet.userName}}!</h1>
+                    <p>You have made a right choice by signing up for <strong>YouNeverWait!</strong></p>
+                    <p>We will walk you through to enable Public search!</p>
+                    <p><strong>Remember!</strong> You can always adjust any of the settings by going to business profile under the settings!</p>
+                </div>
+                <div class="pt-btm">
+                    <ul class="ico">
+                        <li><span data-icon="l"></span></li>
+                        <li><span data-icon="k"></span></li>
+                        <li><span data-icon="d"></span></li>
+                    </ul>
+                    
+                    <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">Let's Get Started <i class="icon icon-angle-right"></i>
+                    </span>
+                    <ul class="status-pnt">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 1 -->
+            <div *ngIf="active_step==1" class="is-bx step1 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                <form action="">
+                    <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                    <div class="header">
+                        <h1>Profile Name and Summary</h1>
+                    </div>
+                    <div class="content">                 
+                        <div class="form-group">
+                            <label>Name</label>
+                            <span class="expl">Your customers will view this in public profile</span>
+                            <input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Summary</label>
+                            <span class="expl">Your customers will view this in public profile</span>
+                            <textarea class="form-control" id="" rows="3" [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
+                        </div>                    
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-6 status">
+                                <ul class="status-pnt">
+                                    <li class="active"></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                            <div class="col-6 control">
+                               <button type="button" (click)="showStep(2)" class="cs-btn bt1" *ngIf="!loading_active">Next</button>
+                               <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+             <!-- Step 2 -->
+             <div *ngIf="active_step==2" class="is-bx step2 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                    <form action="">
+                        <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                        <div class="header">
+                            <h1>Location</h1>
+                        </div>
+                        <div class="content">                          
+                            <div class="stik">
+                                <ul class="info-lst">
+                                    <li>You can add more locations in the settings.</li>
+                                    <li>How to get GPS coordinates click <a href="#">Learn More</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                <div class="form-group">
+                                    <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i data-icon="j"></i>Choose your location in the MAP</button>
+                                    <span class="expl">If your location is not available in the MAP, kindly fill the location details manually.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>GPS Coordinates</label>
+                                    <span class="expl">GPS coordinates needed for the customerts who uses their mobile phone for search by location proximity.</span>
+                                    <div class="row">
+                                        <div class="col-6"><input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"></div>
+                                        <div class="col-6"><input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lon']" name="lon" placeholder="Longitude"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <span class="expl">Enter the Address/Direction where your customers can find you.</span>
+                                    <textarea class="form-control" id="" [(ngModel)]="wizard_data_holder['address']" name="address"></textarea>
+                                </div>
+                                <!-- <div class="form-group pcde">
+                                    <label>Pincode</label>
+                                    <span class="expl">Your business location’s pincode</span>
+                                    <input type="text" class="form-control" id="" placeholder="" [(ngModel)]="wizard_data_holder['pincode']" name="pincode">
+                                </div> -->
+                                <div class="form-group">
+                                    <label>Location Name</label>
+                                    <span class="expl">Display name of the location where you render services for your customers. This is what your customers see when they search online.</span>
+                                    <input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Google Map URL</label>
+                                    <span class="expl">This can be used to find the exact location</span>
+                                    <input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder="">
+                                </div>
+                            </div>                                 
+                        </div>
+                        <div class="footer">
+                            <div class="row">
+                                <div class="col-6 status">
+                                    <ul class="status-pnt">
+                                        <li></li>
+                                        <li class="active"></li>
+                                        <li></li>
+                                        <li></li>
+                                    </ul>
+                                </div>
+                                <div class="col-6 control">
+                                    <button type="button" (click)="showStep(1)" class="cs-btn bt2" *ngIf="!loading_active">Back</button>
+                                    <button type="button" (click)="showStep(3)" class="cs-btn bt1" *ngIf="!loading_active">Next</button>
+                                    <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            
+             <!-- Step 3 -->
+             <div *ngIf="active_step==3" class="is-bx step3 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                    <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                    <div class="header">
+                        <h1>Working Hours</h1>
+                    </div>
+                    <div class="content">                        
+                        <div class="flds">
+                            <div class="form-group" *ngIf="ischange_schedule_clicked == false">
+                                <label class="title16">Working Hours</label>
+                                <span class="expl">This shows your office/business working hours</span>
+                                <ul class="whrs">
+                                <li *ngFor="let schedule of display_schedule">
+                                    <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
+                                </li>
+                                </ul>
+                                <span class="cs-btn bt3" (click)="changeSchedule_clicked()">{{(display_schedule.length>0) ? 'Change Schedule': 'Add Schedule'}}</span>
+                            </div>
+                            <app-provider-schedule *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)"></app-provider-schedule>
+                        </div>                                 
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-6 status">
+                                <ul class="status-pnt">
+                                    <li></li>
+                                    <li></li>
+                                    <li class="active"></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                            <div class="col-6 control">
+                                <button (click)="showStep(2) " type="button" class="cs-btn bt2" *ngIf="!loading_active">Back</button>
+                                <button (click)="showStep(4) "type="button" class="cs-btn bt1" *ngIf="!loading_active">Next</button>
+                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div *ngIf="active_step==4" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                <form action="">
+                    <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                    <div class="header">
+                        <h1>Public Search</h1>
+                    </div>
+                    <div class="content">                          
+                        <div class="stik">
+                            <ul class="info-lst">
+                                <li>You can always go to Public Search under settings and Turn it On or Off</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                            <div class="form-group">
+                                <label class="mb20">Do you want to make your Profile public searchable and viewable?</label>
+                                <div class="rdo ton" [class.active]="search_status==1">
+                                    <mat-radio-button name='searchstatus' value="ENABLE" [checked]="search_status==1" (change)="handle_searchstatus('ENABLE')"></mat-radio-button>
+                                    <!-- <input type="radio" name='searchstatus' value="ENABLE" [checked]="search_status==1" (change)="handle_searchstatus('ENABLE')"> -->
+                                    <label for="" (click)="handle_searchstatus('ENABLE')">
+                                        Turn on Public Search
+                                        <span>Your customers can search your profile online in <strong>youneverwait.com</strong> and they can check-in for your services.</span>
+                                    </label>
+                                </div>
+                                <div class="rdo toff" [class.active]="search_status==2" >
+                                    <mat-radio-button name='searchstatus' [checked]="search_status==2" value="DISABLE" (change)="handle_searchstatus('DISABLE')"></mat-radio-button>
+                                    <!-- <input type="radio" name='searchstatus' [checked]="search_status==2" value="DISABLE" (change)="handle_searchstatus('DISABLE')"> -->
+                                    <label for="" (click)="handle_searchstatus('DISABLE')">
+                                        Turn off Public Search
+                                        <span>Your customers can’t see your profile online in <strong>youneverwait.com</strong> and they can’t check-in for your services.</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>                                 
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-6 status">
+                                <ul class="status-pnt">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li class="active"></li>
+                                </ul>
+                            </div>
+                            <div class="col-6 control">
+                                <button type="button" (click)="showStep(3)" class="cs-btn bt2" *ngIf="!loading_active">Back</button>
+                                <button type="button" (click)="checkClose()" class="cs-btn bt1" *ngIf="!loading_active">Next</button>
+                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+            <!-- Step 5 -->
+            <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                <form action="">
+                    <span (click)="redirecttoProfile()" class="close-btn" data-icon="i"></span>
+                    <div class="header">
+                        <h1>Public Search</h1>
+                    </div>
+                    <div class="content">                        
+                        <div class="flds col-12">
+                            <div class="wbox">
+                                <div class="bx-ico"><i data-icon="m"></i></div>
+                                <div class="bx-copy">Some of the information is missing, we recommend to visit <span (click)="redirecttoProfile()">Settings</span> page and complete your profile, then you can turn on <strong>Public Search!</strong></div>
+                            </div>
+                        </div>                                 
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-6 status">
+                                <ul class="status-pnt">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li class="active"></li>
+                                </ul>
+                            </div>
+                            <div class="col-6 control">
+                                <button type="button" (click)="showStep(4)" class="cs-btn bt2" *ngIf="!loading_active">Back</button>
+                                <button type="button" (click)="redirecttoProfile()" class="cs-btn bt1" *ngIf="!loading_active">Next</button>
+                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

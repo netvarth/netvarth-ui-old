@@ -1,0 +1,17 @@
+<div>
+  
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    
+    <mat-dialog-content>
+    
+      <div *ngFor="let question of questions">
+      <app-question class="width-100" [question]="question" [form]="form" [messages] = "messages"></app-question>
+    </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button type="submit" mat-button [disabled]="!form.valid" class="cs-btn bt1">Save</button>
+      <button  type="button" class="cs-btn bt2" mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </form>
+</div>

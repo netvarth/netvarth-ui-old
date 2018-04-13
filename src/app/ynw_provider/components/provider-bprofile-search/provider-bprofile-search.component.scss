@@ -1,0 +1,32 @@
+:host{
+
+    /deep/ header{
+        background: #000 !important;
+        padding: 0px !important;
+    }
+    .acc-btn{
+        mat-panel-title {
+            line-height: 40px;    
+        }
+
+        .acc-plus-btn{
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-description {
+            color: rgba(0,0,0,.54);
+        } 
+        .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-title {
+            color: rgba(0,0,0,.87);
+        }
+    }
+    .cont-btn {
+        width: 100%;
+        display: inline-block;
+        p {
+            width: 100%;
+            float: left;
+        }
+        
+    }
+}

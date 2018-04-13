@@ -1,0 +1,72 @@
+<app-header [headerTitle]="'Header'"></app-header>
+<div class="providerdet_actions_div">
+   <div class="providerdet_favbuttondiv"><button class="btn btn-primary" *ngIf="sharedFunctionobj.checkLogin() && !isFavourite" (click)="addtoFavourite()">Add to Favourites</button></div>
+   <div class="providerdet_backbuttondiv"><button class="btn btn-primary" (click)="gobacktoSearch()">Back to Search</button></div>
+   <div>
+   <div class="btn-danger" *ngIf="msg_exists">{{msg_exists}}</div>
+  </div>
+</div>
+<div class="providerdet_outerdiv">
+  <div class="providerdet_maindetaildiv" *ngIf="businessjson">
+    <div class="providerdet_logodiv"><img src="{{sharedFunctionobj.showlogoicon(businessjson?.logo?.url)}}"/></div>
+    <div class="providerdet_descriptiondiv">
+      <div class="providerdet_name">{{businessjson.businessName}}</div>
+      <div class="providerdet_phone">{{businessjson.primaryPhoneNo}}</div>
+      <div class="providerdet_desc" [innerHTML]="businessjson.businessDesc"></div>
+    </div>
+  </div>
+</div>
+
+<mat-tab-group class="demo-tab-group">
+  <mat-tab label="Our Services">
+      <div class="demo-tab-content">
+       <div class="services_outerdiv" *ngIf="servicesjson">
+          <div class="row" *ngFor="let services of servicesjson">
+            <div class="service_logodiv">
+              <img *ngIf="services.servicegallery" src="{{sharedFunctionobj.showlogoicon(services?.servicegallery[0]?.thumbUrl)}}"/>
+              <img *ngIf="!services.servicegallery" src="{{sharedFunctionobj.showlogoicon('')}}"/>
+            </div>
+            <div class="service_nameouterdiv" *ngIf="services.name">
+                <div class="service_name">{{services.name}}</div>
+                <div class="service_desc">{{services.description}}</div>
+            </div>
+            <div class="service_checkinbuttondiv"><button class="btn btn-primary" (click)="handle_checkinClicked(services.id)">Check-in/Order</button></div>
+          </div> 
+      </div> 
+      </div>
+  </mat-tab>
+  <mat-tab label="Gallery">
+      <div class="demo-tab-content">
+          <div class="gallery_outerdiv" *ngIf="galleryjson">
+            <div class="gallery_mainimagediv"><img src="{{mainimage_holder}}"/></div>
+            <div class="gallery_thumb_outer">
+              <div class="gallery_thumbdiv" *ngFor="let thumbimage of galleryjson">
+                <img src="{{thumbimage.thumbUrl}}" (click)="swap_image(thumbimage.url)" *ngIf="thumbimage.thumbUrl"/>
+              </div>
+            </div>
+          </div>  
+          <div class="gallery_outerdiv" *ngIf="!galleryjson">
+              No Images in gallery
+           </div> 
+      </div>
+  </mat-tab>
+</mat-tab-group>
+<div class="openinghours_outerdiv" *ngIf="locationjson">
+<div class="openinghours_heading">Opening Hours: </div>
+<div  class="location_containerdiv">
+  <div  *ngFor="let locationdet of locationjson">
+    <div >
+      <div  *ngIf="locationdet.place">{{locationdet.place}}<span *ngIf="locationdet.address">,</span> {{locationdet.address}}</div>
+    </div>
+    <div >
+      <div  *ngIf="locationdet.businessScheduleJson.timespec">
+        <div *ngFor="let slot_display of locationdet.businessScheduleJson.timespec">
+        <div>{{getScheduledaysstr(slot_display.repeatIntervals)}} {{slot_display.timeSlots[0].sTime}} - {{slot_display.timeSlots[0].eTime}}</div>
+      </div> 
+    </div> 
+  </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="approx_waitingtime">Approximate Waiting Time: {{approx_waitingtime}} </div>

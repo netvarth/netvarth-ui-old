@@ -1,0 +1,94 @@
+
+<section>
+  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+
+<section>
+  <div class="content loc-list">
+      <div class="container">
+          <div class="row">
+              <div class="n-loc">
+                  <span class="add-nloc cs-btn bt3" (click)="addEditProviderQueue('add')">Add New Queue</span>
+              </div>
+          </div>
+          <div class="row" *ngFor="let queue of queue_list">
+                <div class="card" [class.disabled]="queue.queueState=='DISABLED'">
+                    <div class="copy">
+                        <span class="mbt">
+                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </span>
+                        
+                        <h3 class="pointer-cursor" (click)="goQueueDetail(queue)">
+                        {{queue.name}}
+                        </h3>
+
+                        <div class="c-ot m0">
+                            <div class="item">
+                                <span class="ttle">Location</span>
+                                <span class="icon-location">{{queue.location.id}}</span>
+                            </div>
+                            <div class="item">
+                                <span class="ttle">Max. Capacity</span>
+                                <span class="icon-rupee">{{queue.capacity}}</span>
+                            </div>
+                        </div>
+
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="changeProviderQueueStatus(queue)">
+                                    <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i> 
+                                    <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i> 
+                                {{(queue.queueState=='ENABLED') ? 'Disable' :'Enable'}}
+                            </button>
+                        </mat-menu>
+
+                    </div>
+                </div>    
+            </div>
+
+            <div class="row" *ngIf="api_load_complete == 1 && queue_list.length == 0">
+                <div class="card">
+                    <div class="copy">
+                        <h3 class="pointer-cursor">
+                        No queues available
+                        </h3>
+                    </div>
+                </div>
+            </div>
+    </div> 
+    </div>   
+</section>
+
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>
+
+<!-- <table class="table" *ngIf="queue_list.length !=0">
+  <thead>
+    <th>Queue Name</th>
+    <th>Active</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let queue of queue_list">
+      <td>
+          <div (click)=editQueues(queue)>{{queue.name}}</div>
+      </td>
+      <td>
+        <div>
+            <mat-slide-toggle [checked]="queue.queueState=='ENABLED'"  (change)="changeProviderQueueStatus(queue)" [disableRipple]="true"></mat-slide-toggle>
+        </div>
+       </td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="queue_list.length ==0 && query_executed == true">{{emptyMsg}}</div> -->
+<!-- 
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display> -->

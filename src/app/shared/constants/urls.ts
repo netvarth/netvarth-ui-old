@@ -1,0 +1,8 @@
+const ip_url = 'http://54.215.5.201:8181/v1/rest/';
+
+
+export const base_url = ip_url;
+// export const provider_url = 'https://bpc7tlo2vd.execute-api.ap-southeast-1.amazonaws.com/cloud/suggest';
+// export const search_url = 'https://bpc7tlo2vd.execute-api.ap-southeast-1.amazonaws.com/cloud/search';
+
+

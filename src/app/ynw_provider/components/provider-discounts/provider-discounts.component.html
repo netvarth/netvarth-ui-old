@@ -1,0 +1,20 @@
+<app-header [headerTitle] = "'Provider Discounts'"></app-header>
+
+<button (click)="addDiscounts()">Add Discount</button>
+
+<table class="table" *ngIf="discount_list.length !=0">
+  <thead>
+    <th>Name</th>
+    <th>Value</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let discount of discount_list">
+      <td>{{discount.name}}</td>
+      <td>{{(discount.calculationType=='Percentage')? discount.discValue+'%': formatPrice(discount.discValue)}}</td>        
+    <td>&nbsp;<button (click)="editDiscounts(discount)">Edit</button>&nbsp;<button (click)="doRemoveDiscounts(discount)">Delete</button>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="discount_list.length ==0 && query_executed == true">{{emptyMsg}}</div>
+

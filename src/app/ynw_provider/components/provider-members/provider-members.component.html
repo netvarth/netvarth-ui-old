@@ -1,0 +1,25 @@
+<app-header [headerTitle] = "'Members'"></app-header>
+
+
+
+<table class="table" *ngIf="member_list.length !=0">
+  <thead>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Mobile Number</th>
+    <!-- <th></th>
+    <th></th> -->
+  </thead>
+  <tbody>
+    <tr *ngFor="let member of member_list">
+      <td>{{member.userProfile.firstName}}</td>
+      <td>{{member.userProfile.lastName}}</td>
+      <td>{{member.userProfile.primaryMobileNo}}</td>
+      <!-- <td><button (click)="doRemoveMember(member)">Delete</button></td>
+      <td><button (click)="editMember(member)">Edit</button></td> -->
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="member_list.length ==0  && query_executed == true;">No family members exists</div>
+
+<button (click)="addMember()">Add</button>

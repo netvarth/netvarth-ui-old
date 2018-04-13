@@ -1,0 +1,39 @@
+
+
+<mat-accordion>
+    <mat-expansion-panel disabled>
+        <mat-expansion-panel-header>
+          <div class="width-20">
+            Date
+          </div>
+          <div class="width-20">
+              Service
+          </div>
+          <div class="width-20">
+              Name
+          </div>
+          <div  class="width-40">
+              Message
+          </div>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let message of messages">
+    <mat-expansion-panel-header>
+      <div class="width-20">
+        {{message.timeStamp | date:'yyyy-MM-dd'}}
+      </div>
+      <div class="width-20">
+
+      </div>
+      <div class="width-20">
+        {{message.owner.userName}}
+      </div>
+      <div  class="width-40">
+        {{ (message.msg.length>20)? (message.msg | slice:0:20)+'..':(message.msg) }}
+      </div>
+    </mat-expansion-panel-header>
+
+    {{ message.msg }}
+    <div (click)="replyMessage(message)"><mat-icon>reply</mat-icon></div>
+  </mat-expansion-panel>
+</mat-accordion>

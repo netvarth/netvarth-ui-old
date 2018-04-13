@@ -1,0 +1,45 @@
+<form [formGroup]="loginForm"  novalidate
+(ngSubmit)="loginForm.valid &&
+onSubmit(loginForm.value)" (keyup)="resetApiErrors()" *ngIf="step==1">
+<div class="mat-dialog-title">{{this.data.type | titlecase }} Login <button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></div>
+<div class="mat-dialog-content">
+<div class="form-group">
+  <label class="col-form-label" for="phonenumber">Mobile #*</label>
+  <input type="text" class="form-control" id="phonenumber" placeholder="Mobile"
+  formControlName="phonenumber">
+  <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'phonenumber')"
+  [errorMsgs]="fed_service.getErrorMessage(loginForm,'phonenumber',
+  {
+    'required' : 'Phone number is required',
+    'minlength' : 'Phone number should have 10 digits',
+    'maxlength' : 'Phone number should have 10 digits',
+    'pattern' : 'Only numbers are allowed'
+  })">
+ </app-field-error-display>
+</div>
+
+<div class="form-group">
+  <label class="col-form-label" for="password">Password</label>
+  <input type="password" class="form-control" id="password" placeholder="Password"
+  formControlName="password">
+  <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password')"
+  errorMsg="Password required.">
+ </app-field-error-display>
+</div>
+</div>
+<div class="mat-dialog-actions">
+<button  type="submit" mat-button
+[disabled]="!loginForm.valid">Submit</button>
+
+<div class="forgotpass" (click)="doForgotPassword()">Forgot Password?</div>
+<div class="newuser" (click)="doSignup()">New User? Signup here</div>
+</div>
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+
+</form>
+
+<div class="example-container" *ngIf="step==2">
+  <app-forgot-password (onChangePassword)="onChangePassword($event)"></app-forgot-password>
+</div>

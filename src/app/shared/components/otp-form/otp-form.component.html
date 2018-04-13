@@ -1,0 +1,60 @@
+  <ng-container *ngIf="showOTPContainer">
+  <form [formGroup]="otp_form" novalidate
+  (ngSubmit)="otp_form.valid && doOnOtpSubmit(otp_form.value)"
+  (keyup)="doResetApiErrors()">
+  <app-form-success-display [displayMsg]="true" *ngIf="message"
+  successMsg="{{message}}"></app-form-success-display>
+  <mat-dialog-content>
+      <div class="form-group">
+      <mat-form-field>
+          <label class="col-form-label" for="otp">Enter OTP *</label>
+          <input matInput placeholder="Otp"
+          [formControl]="otp_form.controls['phone_otp']">
+        </mat-form-field>
+        
+        <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
+        errorMsg="Please enter a valid otp.">
+       </app-field-error-display>
+      </div> 
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button  type="submit" mat-button [disabled]="!otp_form.valid">Submit</button>
+        <div class="resendouter">
+          <span (click)="resendOTP()" mat-button> Resend Otp</span>
+          <span (click)="setResendViaEmail()" *ngIf="type=='signup'" mat-button> Resend Otp Via Email</span>
+        </div>
+    </mat-dialog-actions> 
+  </form>
+  </ng-container>
+
+  <ng-container *ngIf="showOTPEmailContainer">
+  <div class="otpbottom">
+  <form  [formGroup]="email_form" novalidate *ngIf="email_otp_req"
+  (ngSubmit)="email_form.valid && resendViaEmail(email_form.value)"
+  (keyup)="doResetApiErrors()">
+  <app-field-error-display [displayError]="fed_service.isFieldValid(email_form,'otp_email')"
+  errorMsg="Please enter a valid email.">
+  </app-field-error-display>
+  <mat-dialog-content>
+      <div class="form-group">
+      <mat-form-field>
+      <label class="col-form-label" for="otp">Enter Email id</label>
+    <input type="email"  [formControl]="email_form.controls['otp_email']" matInput />
+        </mat-form-field>
+   
+    </div>
+   </mat-dialog-content>
+
+    <mat-dialog-actions> 
+    <button type="submit" mat-button [disabled]="!email_form.valid">Resend</button>
+    <button type="button" mat-button (click)="doCancelEmailOTP()">Cancel</button>
+    </mat-dialog-actions> 
+  </form>
+  </div>
+</ng-container>
+
+  
+
+
+
