@@ -120,7 +120,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const match = checkUrl.match(url.url) ;
         if (match instanceof Array && match.length === 1) {
           this.headercls = url.class;
-          console.log('reached here', url.class);
+          // console.log('reached here', url.class);
         }
 
      }
