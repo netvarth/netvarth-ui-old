@@ -1145,7 +1145,8 @@ header {
   .googlemainmappopup input {
     font-family: 'Montserrat', sans-serif;
     font-weight: normal;
-    font-size: .875rem; }
+    font-size: .875rem;
+    font-weight: 500; }
   .signupmainclass .mat-dialog-title,
   .loginmainclass .mat-dialog-title,
   .moreoptionsmainclass .mat-dialog-title,
@@ -1287,6 +1288,28 @@ header {
         .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
         .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
           display: none; }
+    .signupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
+    .loginmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
+    .moreoptionsmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
+    .forgotpasswordmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
+    .commonpopupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
+    .googlemainmappopup .mat-dialog-content .form-group .example-section mat-checkbox label {
+      margin-bottom: 0; }
+    .signupmainclass .mat-dialog-content .form-group.inline,
+    .loginmainclass .mat-dialog-content .form-group.inline,
+    .moreoptionsmainclass .mat-dialog-content .form-group.inline,
+    .forgotpasswordmainclass .mat-dialog-content .form-group.inline,
+    .commonpopupmainclass .mat-dialog-content .form-group.inline,
+    .googlemainmappopup .mat-dialog-content .form-group.inline {
+      display: flex;
+      align-items: center; }
+      .signupmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
+      .loginmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
+      .moreoptionsmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
+      .forgotpasswordmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
+      .commonpopupmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
+      .googlemainmappopup .mat-dialog-content .form-group.inline .mat-slide-toggle {
+        margin-left: 15px; }
     .signupmainclass .mat-dialog-content .mat-form-field,
     .loginmainclass .mat-dialog-content .mat-form-field,
     .moreoptionsmainclass .mat-dialog-content .mat-form-field,
@@ -1722,82 +1745,96 @@ header {
       height: auto; }
       .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .chk-section .chk-margin {
         margin-right: 15px;
-        margin-left: 0px; }
+        margin-left: 0px;
+        margin-bottom: 10px;
+        /*&:last-child {
+            margin: 0;
+        }*/ }
         .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .chk-section .chk-margin:nth-child(1) {
           display: none; }
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .chk-section .chk-margin:last-child {
-          margin: 0; }
         .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .chk-section .chk-margin .mat-checkbox-layout {
           margin-bottom: 0; }
     .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime {
-      margin-bottom: 20px; }
-      .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .form-control {
-        -webkit-border-radius: 0;
-        border-radius: 0;
-        background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */
-        background: #fff;
-        font-family: 'Montserrat', sans-serif;
-        font-weight: normal;
-        font-size: 0.875rem;
-        color: #4c4c4c;
-        text-overflow: ellipsis; }
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .form-control:focus {
-          -webkit-box-shadow: 0 0 1px #00aef2 inset;
-          -moz-box-shadow: 0 0 1px #00aef2 inset;
-          box-shadow: 0 0 1px #00aef2 inset;
-          border: 1px solid #00aef2;
-          background: #fff; }
-      .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link,
-      .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link {
-        display: flex; }
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:first-child .chevron,
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:first-child .chevron {
-          width: 16px;
-          height: 16px; }
-          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
-          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
-            border: none;
-            content: "\66";
-            font-family: "custom-ynw" !important;
-            color: #00aef2;
-            display: flex;
-            transform: rotate(0);
-            font-size: 1rem;
-            font-weight: 700;
-            align-items: center; }
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
-          width: 16px;
-          height: 16px; }
-          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
-          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
-            border: none;
-            content: "\72";
-            font-family: "custom-ynw" !important;
-            color: #00aef2;
-            display: flex;
-            transform: rotate(0);
-            font-size: 1rem;
-            font-weight: 700; }
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:hover, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:focus, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:active,
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:hover,
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:focus,
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:active {
-          text-decoration: none; }
-      .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-meridian .btn-outline-primary {
-        border-color: #00aef2;
-        color: #00aef2;
-        font-weight: 600;
-        font-size: .875rem; }
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-meridian .btn-outline-primary:hover {
-          background: #00aef2;
-          color: #fff; }
-        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-meridian .btn-outline-primary:focus {
-          outline: none;
-          box-shadow: none; }
-      .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime fieldset:first-child {
-        margin-bottom: 15px; }
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap; }
+      .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv {
+        flex-grow: 1; }
+        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .form-control, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .form-control {
+          -webkit-border-radius: 0;
+          border-radius: 0;
+          background-clip: padding-box;
+          /* stops bg color from leaking outside the border: */
+          background: #fff;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: normal;
+          font-size: 0.875rem;
+          color: #4c4c4c;
+          text-overflow: ellipsis; }
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .form-control:focus, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .form-control:focus {
+            -webkit-box-shadow: 0 0 1px #00aef2 inset;
+            -moz-box-shadow: 0 0 1px #00aef2 inset;
+            box-shadow: 0 0 1px #00aef2 inset;
+            border: 1px solid #00aef2;
+            background: #fff; }
+        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link {
+          display: flex; }
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
+            width: 16px;
+            height: 16px; }
+            .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
+              border: none;
+              content: "\66";
+              font-family: "custom-ynw" !important;
+              color: #00aef2;
+              display: flex;
+              transform: rotate(0);
+              font-size: 1rem;
+              font-weight: 700;
+              align-items: center; }
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
+            width: 16px;
+            height: 16px; }
+            .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
+              border: none;
+              content: "\72";
+              font-family: "custom-ynw" !important;
+              color: #00aef2;
+              display: flex;
+              transform: rotate(0);
+              font-size: 1rem;
+              font-weight: 700; }
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active {
+            text-decoration: none; }
+        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary {
+          border-color: #00aef2;
+          color: #00aef2;
+          font-weight: 600;
+          font-size: .875rem; }
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover {
+            background: #00aef2;
+            color: #fff; }
+          .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus {
+            outline: none;
+            box-shadow: none; }
+        .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset:first-child, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset:first-child {
+          margin-bottom: 15px; }
     .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .sts-msg {
       margin-top: 15px; }
 .commonpopupmainclass .mat-dialog-content .upload-doc {
@@ -3179,74 +3216,95 @@ footer.itl-steps .sect3 {
           height: auto; }
           .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin {
             margin-right: 15px;
-            margin-left: 0px; }
+            margin-left: 0px;
+            /*&:last-child {
+                margin: 0;
+            }*/ }
             .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin:nth-child(1) {
               display: none; }
-            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin:last-child {
-              margin: 0; }
             .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin .mat-checkbox-layout {
               margin-bottom: 0; }
         .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime {
-          margin-bottom: 20px; }
-          .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .form-control {
-            -webkit-border-radius: 0;
-            border-radius: 0;
-            background-clip: padding-box;
-            /* stops bg color from leaking outside the border: */
-            background: #fff;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: normal;
-            font-size: 0.875rem;
-            color: #4c4c4c;
-            text-overflow: ellipsis; }
-            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .form-control:focus {
-              -webkit-box-shadow: 0 0 1px #00aef2 inset;
-              -moz-box-shadow: 0 0 1px #00aef2 inset;
-              box-shadow: 0 0 1px #00aef2 inset;
-              border: 1px solid #00aef2;
-              background: #fff; }
-          .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link {
-            display: flex; }
-            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:first-child .chevron, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:first-child .chevron {
-              width: 16px;
-              height: 16px; }
-              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:first-child .chevron:before, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
-                border: none;
-                content: "\66";
-                font-family: "custom-ynw" !important;
-                color: #00aef2;
-                display: flex;
-                transform: rotate(0);
-                font-size: 1rem;
-                font-weight: 700;
-                align-items: center; }
-            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
-              width: 16px;
-              height: 16px; }
-              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
-                border: none;
-                content: "\72";
-                font-family: "custom-ynw" !important;
-                color: #00aef2;
-                display: flex;
-                transform: rotate(0);
-                font-size: 1rem;
-                font-weight: 700; }
-            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:hover, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:focus, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-hour .btn-link:active, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:hover, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:focus, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-minute .btn-link:active {
-              text-decoration: none; }
-          .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-meridian .btn-outline-primary {
-            border-color: #00aef2;
-            color: #00aef2;
-            font-weight: 600;
-            font-size: .875rem; }
-            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-meridian .btn-outline-primary:hover {
-              background: #00aef2;
-              color: #fff; }
-            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset .ngb-tp-meridian .btn-outline-primary:focus {
-              outline: none;
-              box-shadow: none; }
-          .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime fieldset:first-child {
-            margin-bottom: 15px; }
+          margin-bottom: 20px;
+          display: flex;
+          flex-wrap: wrap; }
+          .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv {
+            flex-grow: 1; }
+            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .form-control, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .form-control {
+              -webkit-border-radius: 0;
+              border-radius: 0;
+              background-clip: padding-box;
+              /* stops bg color from leaking outside the border: */
+              background: #fff;
+              font-family: 'Montserrat', sans-serif;
+              font-weight: normal;
+              font-size: 0.875rem;
+              color: #4c4c4c;
+              text-overflow: ellipsis; }
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .form-control:focus, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .form-control:focus {
+                -webkit-box-shadow: 0 0 1px #00aef2 inset;
+                -moz-box-shadow: 0 0 1px #00aef2 inset;
+                box-shadow: 0 0 1px #00aef2 inset;
+                border: 1px solid #00aef2;
+                background: #fff; }
+            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link {
+              display: flex; }
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
+                width: 16px;
+                height: 16px; }
+                .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+                .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+                .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
+                  border: none;
+                  content: "\66";
+                  font-family: "custom-ynw" !important;
+                  color: #00aef2;
+                  display: flex;
+                  transform: rotate(0);
+                  font-size: 1rem;
+                  font-weight: 700;
+                  align-items: center; }
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
+                width: 16px;
+                height: 16px; }
+                .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+                .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+                .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
+                  border: none;
+                  content: "\72";
+                  font-family: "custom-ynw" !important;
+                  color: #00aef2;
+                  display: flex;
+                  transform: rotate(0);
+                  font-size: 1rem;
+                  font-weight: 700; }
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active {
+                text-decoration: none; }
+            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary {
+              border-color: #00aef2;
+              color: #00aef2;
+              font-weight: 600;
+              font-size: .875rem; }
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover {
+                background: #00aef2;
+                color: #fff; }
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus {
+                outline: none;
+                box-shadow: none; }
+            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset:first-child, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset:first-child {
+              margin-bottom: 15px; }
   .is-bx.step4 .content .flds .mb20 {
     margin-bottom: 20px; }
   .is-bx.step4 .content .flds .rdo {
@@ -3537,10 +3595,15 @@ footer.dashb .sect3 {
           border: none; } }
   @media only screen and (max-width: 575px) {
     .m-nav .nav01 {
-      width: 100%; }
+      width: auto;
+      flex-grow: 1; }
       .m-nav .nav01 a {
         border-left: none;
-        border-bottom: 1px solid #dbdbdb; } }
+        border-bottom: 1px solid #dbdbdb;
+        display: flex;
+        flex-direction: column; }
+        .m-nav .nav01 a i {
+          margin-right: 0; } }
   @media (min-width: 768px) and (max-width: 991px) {
     .m-nav .nav01 {
       padding: 0; }
@@ -3562,9 +3625,6 @@ footer.dashb .sect3 {
     left: 0;
     width: 100%;
     height: 5px; }
-    @media only screen and (max-width: 575px) {
-      .m-nav:after {
-        display: none; } }
 
 .bcrumb {
   width: 100%;
@@ -4183,13 +4243,13 @@ footer.dashb .sect3 {
         padding: 0; }
         .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .amt-list li {
           list-style: none;
-          font-size: 2rem;
+          font-size: 1.5rem;
           color: #666;
           position: relative;
           margin-right: 20px;
           margin-bottom: 10px;
-          width: 32px;
-          height: 32px; }
+          width: 24px;
+          height: 24px; }
           .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .amt-list li:last-child {
             margin-left: 20px; }
             .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .amt-list li:last-child:before {
@@ -4199,9 +4259,11 @@ footer.dashb .sect3 {
               background: #666;
               content: "";
               left: -20px;
-              top: 8px; }
+              top: 0px; }
             .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .amt-list li:last-child .editbt {
-              font-size: 1rem; }
+              font-size: 1rem;
+              top: -4px;
+              left: -2px; }
       .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy.wrk-hrs {
         display: block; }
         .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy.wrk-hrs .whrs {
@@ -4504,6 +4566,46 @@ footer.dashb .sect3 {
     border-top: 1px solid #f2f2f2; }
   .content .col-a .card.spc-extra .mat-accordion .acc-cont:last-child, .content .col-a .card.add-extra .mat-accordion .acc-cont:last-child {
     border-bottom: 1px solid #f2f2f2; }
+.content .col-a .card .special-dta, .content .col-a .card .lang-dta {
+  position: relative;
+  margin: 0 20px;
+  display: flex;
+  flex-wrap: wrap; }
+  .content .col-a .card .special-dta .editbt, .content .col-a .card .lang-dta .editbt {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 1rem;
+    color: #00aef2;
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    -moz-transition: all 300ms;
+    -o-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms; }
+    .content .col-a .card .special-dta .editbt:hover, .content .col-a .card .lang-dta .editbt:hover {
+      background: #dbdbdb; }
+  .content .col-a .card .special-dta div, .content .col-a .card .lang-dta div {
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    border: 1px solid #999999;
+    padding: 3px 10px;
+    margin-right: 10px;
+    font-weight: 500;
+    margin-bottom: 10px; }
+.content .col-a .card .lang-dta div {
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
+  border: none;
+  background: #f2f2f2; }
 .content .col-b .card.w-dta.active h2 {
   color: #00aef2;
   position: relative;
@@ -4950,23 +5052,37 @@ footer.dashb .sect3 {
         padding: 20px 0;
         display: flex;
         position: relative;
-        padding-bottom: 40px; }
+        padding-bottom: 60px; }
         @media only screen and (max-width: 767px) {
           .content.loc-list .card .copy.locd .lbl .cl1 {
             flex-direction: column; } }
         @media (min-width: 768px) and (max-width: 991px) {
           .content.loc-list .card .copy.locd .lbl .cl1 {
             flex-direction: column; } }
-        .content.loc-list .card .copy.locd .lbl .cl1 .enable-disable1 {
+        .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl {
           position: absolute;
           left: 0;
           bottom: 0;
           height: 40px;
           display: flex;
           align-items: center;
-          width: 100%; }
-          .content.loc-list .card .copy.locd .lbl .cl1 .enable-disable1 .ttle {
-            padding-right: 15px; }
+          width: 100%;
+          border-top: 1px solid #dbdbdb;
+          /*padding: 0 10px;*/ }
+          .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl {
+            flex-grow: 1; }
+            .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable {
+              font-size: .75rem;
+              font-weight: 600; }
+              .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable .ttle {
+                padding-right: 15px; }
+              .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable .enabled, .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable .disabled {
+                color: #00cc96;
+                padding-left: 5px; }
+              .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable .disabled {
+                color: #999999; }
+            .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.bse-lcn {
+              text-align: right; }
         .content.loc-list .card .copy.locd .lbl .cl1 .editbt {
           position: absolute;
           right: 0px;
@@ -5003,11 +5119,6 @@ footer.dashb .sect3 {
           @media (min-width: 768px) and (max-width: 991px) {
             .content.loc-list .card .copy.locd .lbl .cl1 .cop-l {
               width: 100%; } }
-          .content.loc-list .card .copy.locd .lbl .cl1 .cop-l .enable-disable {
-            display: flex;
-            margin-bottom: 15px; }
-            .content.loc-list .card .copy.locd .lbl .cl1 .cop-l .enable-disable .ttle {
-              padding-right: 15px; }
           .content.loc-list .card .copy.locd .lbl .cl1 .cop-l .bse-lcn-label {
             font-size: .75rem;
             font-weight: 600;
@@ -5115,13 +5226,13 @@ footer.dashb .sect3 {
             padding: 0; }
             .content.loc-list .card .copy.locd .lbr .cr1 .amt-list li {
               list-style: none;
-              font-size: 2rem;
+              font-size: 1.7rem;
               color: #666;
               position: relative;
               margin-right: 20px;
               margin-bottom: 10px;
-              width: 32px;
-              height: 32px; }
+              width: 28px;
+              height: 30px; }
           .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal {
             display: flex;
             align-items: center;
@@ -5228,6 +5339,8 @@ footer.dashb .sect3 {
                   font-weight: 600; }
                 .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li:last-child .galbx:after {
                   display: none; }
+              .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li:nth-child(1), .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li:nth-child(2), .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li:nth-child(3) {
+                margin-top: 0; }
             .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal.ph-gal-2 li {
               height: auto;
               width: auto;
@@ -5375,7 +5488,7 @@ footer.dashb .sect3 {
   .content.loc-list .card.bse-lcn .copy .bse-lcn-label {
     font-size: .75rem;
     font-weight: 600;
-    color: #999999;
+    color: #00cc96;
     position: relative;
     display: table;
     padding-left: 16px;
@@ -5388,11 +5501,7 @@ footer.dashb .sect3 {
       width: 14px;
       height: 14px; }
   .content.loc-list .card.disabled {
-    opacity: .5; }
-    .content.loc-list .card.disabled .copy .mbt {
-      pointer-events: all; }
-    .content.loc-list .card.disabled .copy h3 {
-      color: #999999; }
+    background: #f7f7f7; }
 .content.loc-list .cst-acc .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .content.loc-list .cst-acc .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .content.loc-list .cst-acc .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
   background: #fff; }
 .content.loc-list .cst-acc .mat-expansion-panel-header {
@@ -5746,6 +5855,7 @@ footer.dashb .sect3 {
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:nth-child(even) {
       background: rgba(0, 0, 0, 0.03); }
 
+/*#### Settings Page ***/
 footer {
   color: #fff;
   font-family: 'Montserrat', sans-serif;

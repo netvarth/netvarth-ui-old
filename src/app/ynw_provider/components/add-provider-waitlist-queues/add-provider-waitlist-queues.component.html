@@ -52,26 +52,28 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     </div>
 
     <div class="form-group">
-            <div class="starttimediv">
-                <label class="col-form-label" for="changeHourStep">Start Time</label>
-                <ngb-timepicker formControlName="qstarttime" meridian="true" #sch_start_time (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
-                
-            <!-- <mat-form-field class="chk-margin">
-                <input matInput placeholder="Start Time" type="time" #sch_start_time [value]="dstart_time" formControlName="qstarttime" (change)="changetime('start',sch_start_time.value)">
+            <div class="startendtime">
+                <div class="starttimediv">
+                    <label class="col-form-label" for="changeHourStep">Start Time</label>
+                    <ngb-timepicker formControlName="qstarttime" meridian="true" #sch_start_time (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
+                    
+                <!-- <mat-form-field class="chk-margin">
+                    <input matInput placeholder="Start Time" type="time" #sch_start_time [value]="dstart_time" formControlName="qstarttime" (change)="changetime('start',sch_start_time.value)">
+                    </mat-form-field> -->
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qstarttime')"
+                        errorMsg="Please enter the start time">
+                    </app-field-error-display> 
+                </div>
+                <!-- <mat-form-field class="chk-margin">
+                <input matInput placeholder="End Time" type="time" #sch_end_time [value]="dend_time" formControlName="qendtime" (change)="changetime('end',sch_end_time.value)">
                 </mat-form-field> -->
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qstarttime')"
-                    errorMsg="Please enter the start time">
-                </app-field-error-display> 
-            </div>
-            <!-- <mat-form-field class="chk-margin">
-            <input matInput placeholder="End Time" type="time" #sch_end_time [value]="dend_time" formControlName="qendtime" (change)="changetime('end',sch_end_time.value)">
-            </mat-form-field> -->
-            <div class="endtimediv">
-                <label  class="col-form-label"  for="changeHourStep">End Time</label>
-                <ngb-timepicker formControlName="qendtime" meridian="true" #sch_end_time (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qendtime')"
-                errorMsg="Please enter the end time">
-                </app-field-error-display> 
+                <div class="endtimediv">
+                    <label  class="col-form-label"  for="changeHourStep">End Time</label>
+                    <ngb-timepicker formControlName="qendtime" meridian="true" #sch_end_time (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qendtime')"
+                    errorMsg="Please enter the end time">
+                    </app-field-error-display> 
+                </div>
             </div>
             
     </div>
