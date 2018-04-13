@@ -12,6 +12,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
     selector: 'app-provider-waitlist-queue-detail',
@@ -49,7 +50,8 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
         private dialog: MatDialog,
         private router: Router,
         private activated_route: ActivatedRoute,
-        private sanitizer: DomSanitizer) {
+        private sanitizer: DomSanitizer,
+        public provider_shared_functions: ProviderSharedFuctions) {
 
             this.activated_route.params.subscribe(params => {
                 this.queue_id = params.id;
@@ -108,6 +110,14 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
         this.router.navigate(['provider', 'settings' , 'waitlist-manager',
         'queues']);
     }
+
+
+  addEditProviderQueue(type) {
+
+    this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_detail', this.queue_data);
+
+  }
+
 
 
 }

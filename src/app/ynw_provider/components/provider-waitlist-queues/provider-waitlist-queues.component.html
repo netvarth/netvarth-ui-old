@@ -20,32 +20,32 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                         </span>
-                        
+
                         <h3 class="pointer-cursor" (click)="goQueueDetail(queue)">
                         {{queue.name}}
                         </h3>
 
                         <div class="c-ot m0">
-                            <div class="item">
+                            <div class="item" *ngIf="queue.location">
                                 <span class="ttle">Location</span>
-                                <span class="icon-location">{{queue.location.id}}</span>
+                                <span class="icon-location">{{queue.location.place}}</span>
                             </div>
-                            <div class="item">
+                            <div class="item" *ngIf="queue.capacity">
                                 <span class="ttle">Max. Capacity</span>
-                                <span class="icon-rupee">{{queue.capacity}}</span>
+                                <span class="icon-customer-line">{{queue.capacity}}</span>
                             </div>
                         </div>
 
                         <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="changeProviderQueueStatus(queue)">
-                                    <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i> 
-                                    <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i> 
+                                    <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
+                                    <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
                                 {{(queue.queueState=='ENABLED') ? 'Disable' :'Enable'}}
                             </button>
                         </mat-menu>
 
                     </div>
-                </div>    
+                </div>
             </div>
 
             <div class="row" *ngIf="api_load_complete == 1 && queue_list.length == 0">
@@ -57,8 +57,8 @@
                     </div>
                 </div>
             </div>
-    </div> 
-    </div>   
+    </div>
+    </div>
 </section>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error"
@@ -86,7 +86,7 @@ successMsg="{{api_success}}"></app-form-success-display>
   </tbody>
 </table>
 <div *ngIf="queue_list.length ==0 && query_executed == true">{{emptyMsg}}</div> -->
-<!-- 
+<!--
 <app-field-error-display [displayError]="true" *ngIf="api_error"
 errorMsg="{{api_error}}"></app-field-error-display>
 

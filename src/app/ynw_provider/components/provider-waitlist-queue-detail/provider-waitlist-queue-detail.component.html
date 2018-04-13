@@ -1,10 +1,10 @@
 
 
     <section>
-        <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+        <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
         <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
     </section>
-    
+
     <section>
     <div class="content loc-list">
         <div class="container" *ngIf="queue_data">
@@ -13,38 +13,38 @@
                     <div class="copy locd">
                             <div class="lbl col-sm-12 col-md-8 col-lg-8">
                                 <div class="cl1">
-                                    <span class="editbt"></span>
+                                    <span class="editbt" (click)="addEditProviderQueue('edit')"></span>
                                     <div class="ot-it que">
                                         <h4>{{queue_data.name}}</h4>
                                         <div class="c-ot">
                                             <div class="item">
                                                 <span class="ttle">Location</span>
-                                                <span class="icon-location">{{queue_data.location.id}}</span>
+                                                <span class="icon-location">{{queue_data.location.place}}</span>
                                             </div>
                                             <div class="item">
                                                 <span class="ttle">Service</span>
                                                 <span class="it0" *ngFor="let service of queue_data.services">
-                                                    <span class="itm">{{service.id}}</span>
+                                                    <span class="itm">{{service.name}}</span>
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="c-ot m0">
                                             <div class="item">
                                                 <span class="ttle">Maximum Capacity</span>
-                                                <span class="icon-customer-line">{{queue_data.capacity}}</span>  
+                                                <span class="icon-customer-line">{{queue_data.capacity}}</span>
                                             </div>
                                             <div class="item">
                                                 <span class="ttle">No of customers served at a time</span>
-                                                <span class="icon-customer-served">{{queue_data.maxPartySize}}</span>  
+                                                <span class="icon-customer-served">{{queue_data.maxPartySize}}</span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
-                            <div class="lbr col-sm-12 col-md-4 col-lg-4">                                
+                            <div class="lbr col-sm-12 col-md-4 col-lg-4">
                                 <div class="cr1">
                                     <h5>Schedule</h5>
-                                    
+
                                     <div class="sch-ot">
                                         <div class="sch-rw" *ngFor="let schedule of this.display_schedule">
                                             <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
@@ -53,8 +53,8 @@
                                 </div>
                             </div>
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
-    </div>  
+    </div>
     </section>

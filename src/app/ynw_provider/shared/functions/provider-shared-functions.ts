@@ -60,7 +60,13 @@ export class ProviderSharedFuctions {
 
           dialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
-                ob.getProviderQueues();
+                if (source === 'queue_list') {
+                  ob.getProviderQueues();
+                } else if (source === 'queue_detail') {
+                  ob.getQueueDetail();
+                } else if (source === 'location_detail') {
+                  ob.getProviderQueues();
+                }
             }
           });
     }

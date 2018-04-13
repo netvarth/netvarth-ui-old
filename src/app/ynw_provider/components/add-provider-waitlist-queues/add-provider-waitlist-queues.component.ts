@@ -82,8 +82,14 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   // sets up the form with the values filled in
   updateForm() {
    // console.log(this.data.queue.queueSchedule.timeSlots[0].sTime);
-    const sttime = {hour: moment(this.data.queue.queueSchedule.timeSlots[0].sTime, ['h:mm A']).format('HH'), minute: moment(this.data.queue.queueSchedule.timeSlots[0].sTime, ['h:mm A']).format('mm')};
-    const edtime = {hour: moment(this.data.queue.queueSchedule.timeSlots[0].eTime, ['h:mm A']).format('HH'), minute: moment(this.data.queue.queueSchedule.timeSlots[0].eTime, ['h:mm A']).format('mm')};
+    const sttime = {hour: moment(this.data.queue.queueSchedule.timeSlots[0].sTime,
+                      ['h:mm A']).format('HH'),
+                      minute: moment(this.data.queue.queueSchedule.timeSlots[0].sTime,
+                      ['h:mm A']).format('mm')};
+    const edtime = {hour: moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
+                      ['h:mm A']).format('HH'),
+                      minute: moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
+                      ['h:mm A']).format('mm')};
 
     this.amForm.setValue({
       qname: this.data.queue.name || null,
@@ -249,7 +255,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       const curday = new Date();
       const today_date = moment(curday).format('YYYY-MM-DD');
       // const today_curtime = moment(moment(curday).format('LT'), ['hh:mm A']).format('HH:mm');
-      // console.log('compare', this.sharedfunctionObj.getminutesOfDay(this.dstart_time), this.sharedfunctionObj.getminutesOfDay(this.dend_time));
+      // console.log('compare', this.sharedfunctionObj.getminutesOfDay(this.dstart_time),
+      // this.sharedfunctionObj.getminutesOfDay(this.dend_time));
       if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
         this.api_error = Messages.WAITLIST_QUEUE_STIMEERROR;
         return;

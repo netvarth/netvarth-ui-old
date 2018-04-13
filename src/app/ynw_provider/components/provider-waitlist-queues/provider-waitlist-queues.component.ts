@@ -70,37 +70,6 @@ export class ProviderWaitlistQueuesComponent implements OnInit {
       });
   }
 
-  addQueues() {
-    const dialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass'],
-      data: {
-        type : 'add'
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.getProviderQueues();
-      }
-    });
-  }
-  editQueues(obj) {
-      const dialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
-        width: '50%',
-        data: {
-          queue : obj,
-          type : 'edit'
-        }
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === 'reloadlist') {
-          this.getProviderQueues();
-        }
-      });
-  }
-
   addEditProviderQueue(type, queue = null) {
 
     this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_list', queue);
