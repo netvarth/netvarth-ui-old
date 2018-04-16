@@ -27,6 +27,9 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     'showTokenId': false
   };
   waitlist_manager: any  = null;
+  reset_waitlist_manager: any  = null;
+  formChange = 0;
+
   api_success = null;
 
   constructor(private provider_services: ProviderServices,
@@ -35,17 +38,16 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
 
   ngOnInit() {
 
-    this.waitlist_manager = this.provider_datastorage.get('waitlistManage') || [];
-    console.log(this.waitlist_manager);
-    this.setValue();
+    this.waitlist_manager = this.reset_waitlist_manager = this.provider_datastorage.get('waitlistManage') || [];
+    this.setValue(this.waitlist_manager);
   }
 
-  setValue() {
+  setValue(value) {
 
-    this.form.calculationMode = this.waitlist_manager['calculationMode'] || '';
-    this.form.trnArndTime = this.waitlist_manager['trnArndTime'] || null;
-    this.form.futureDateWaitlist = this.waitlist_manager['futureDateWaitlist'] || false;
-    this.form.showTokenId = this.waitlist_manager['showTokenId'] || false;
+    this.form.calculationMode = value['calculationMode'] || '';
+    this.form.trnArndTime = value['trnArndTime'] || null;
+    this.form.futureDateWaitlist = value['futureDateWaitlist'] || false;
+    this.form.showTokenId = value['showTokenId'] || false;
 
   }
 
@@ -75,7 +77,10 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     .subscribe(
       data => {
         this.waitlist_manager = data;
+        this.reset_waitlist_manager = data;
+        this.setValue(this.waitlist_manager);
         this.provider_datastorage.set('waitlistManage', data);
+        this.formChange = 0;
       },
       error => {
 
@@ -83,6 +88,14 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     );
   }
 
+  onFormChange() {
+    this.formChange = 1;
+  }
+
+  cancelChange() {
+    this.formChange = 0;
+    this.setValue(this.reset_waitlist_manager);
+  }
 
 
 
