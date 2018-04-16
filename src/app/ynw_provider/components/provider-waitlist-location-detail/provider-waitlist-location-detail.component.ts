@@ -31,7 +31,8 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
     badge_map_arr: any = [];
     breadcrumbs_init = [
         {
-          title: 'Settings'
+          title: 'Settings',
+          url: '/provider/settings'
         },
         {
           title: 'Waitlist Manager',

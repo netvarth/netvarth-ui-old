@@ -34,7 +34,8 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
 
   breadcrumbs = [
     {
-      title: 'Settings'
+      title: 'Settings',
+      url: '/provider/settings'
     },
     {
     title: 'Waitlist Manager',

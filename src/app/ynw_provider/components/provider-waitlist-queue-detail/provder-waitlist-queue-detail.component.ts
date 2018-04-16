@@ -30,7 +30,8 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
     display_schedule: any = [];
     breadcrumbs_init = [
         {
-          title: 'Settings'
+          title: 'Settings',
+          url: '/provider/settings'
         },
         {
           title: 'Waitlist Manager',
