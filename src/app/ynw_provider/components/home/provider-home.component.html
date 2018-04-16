@@ -1,4 +1,139 @@
-<h1>Provider Home</h1>
+
+<section>
+  <app-provider-subheader [activeTab]="'dashboard'"></app-provider-subheader> <!-- Subheader section -->
+</section>
+<section class="dashboard">
+  <div class="container">
+      <div class="row">
+          <div class="card p0 w-dta">
+              <div class="head">
+                  <div class="locn" *ngIf="selected_location">
+                      <span class="loc-name">{{selected_location.place}}</span>
+                      <span class="icon-edit"></span>
+                  </div>
+                  <div class="links">
+                      <span class="lnk" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
+                        Today <span class="count">{{today_waitlist_count}}</span>
+                      </span>
+                      <span class="lnk" (click)="setTimeType(2)" [ngClass]="{'active': time_type==2}">
+                        Future <span class="count">{{future_waitlist_count}}</span></span>
+                      <span class="lnk" (click)="setTimeType(0)" [ngClass]="{'active': time_type==0}">
+                        History</span>
+                  </div>
+              </div>
+
+              <div class="qlst">
+                  <ul>
+                      <li
+                      [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
+                      *ngFor="let queue of queues">
+                        <div class="qname"  (click)="selectedQueue(queue)">
+                          <span class="qtitle"> {{queue.name}}</span>
+                          <span class="wlst" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
+                            {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
+                          </span>
+                        </div>
+                      </li>
+                  </ul>
+              </div>
+
+              <div class="dash-list"
+              *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+                  <div class="ctrls">
+                      <ul>
+                          <li class="active"><span>Check-Ins</span></li>
+                          <li><span>Started</span></li>
+                          <li><span>Completed</span></li>
+                          <li><span>Cancelled</span></li>
+                      </ul>
+
+                      <span class="ml-auto cs-btn bt5">
+                          Adjust Delay <i class="icon-question"></i>
+                      </span>
+                  </div>
+
+                  <div class="fltr" *ngIf="check_in_list.length != 0">
+                      <span><i class="icon-filter-one"></i></span>
+                  </div>
+                  <div class="table-outer d-tbl" *ngIf="check_in_list.length != 0">
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th></th>
+                                  <th>Seq No</th>
+                                  <th>Name</th>
+                                  <th>Service</th>
+                                  <th>Actions</th>
+                                  <th>Payment Status</th>
+                                  <th>Message</th>
+                                  <th>Consumer Note</th>
+                                  <th></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr  *ngFor="let checkin of check_in_list">
+                                  <td class="online"><span class="icon-cloud"></span></td>
+                                  <td data-title="Seq No" class="seq">#{{checkin.token}</td>
+                                  <td data-title="Name" class="name">Ajith Paulson
+                                    <span class="icon-arrived" title="Arrived"></span>
+                                  </td>
+                                  <td data-title="Service" class="service">{{checkin.service.name}}</td>
+                                  <td data-title="Actions" class="actions">
+                                      <span class="start cs-btn bt7"><i class="icon-play"></i>Start</span>
+                                  </td>
+                                  <td data-title="Payment Status" class="payment"><span class="paid-n"><span class="text">Not Paid</span></span> <span class="paid-h"><span class="text">Partially Paid</span></span> <span class="paid-f"><span class="text">Paid</span></span></td>
+                                  <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
+                                  <td data-title="Consumer Note" class="cnote"><span><i class="icon-note"></i></span></td>
+                                  <td class="mre"><span class="mbt"></span></td>
+                              </tr>
+                              <tr>
+                                  <td class="online"></td>
+                                  <td data-title="Seq No" class="seq">#6</td>
+                                  <td data-title="Name" class="name">Sony Joy</td>
+                                  <td data-title="Service" class="service">Service Name</td>
+                                  <td data-title="Actions" class="actions">
+                                      <span class="arrived cs-btn bt7"><i class="icon-arrived"></i> Arrived</span> <span class="start cs-btn bt7"><i class="icon-play"></i>Start</span>
+                                  </td>
+                                  <td data-title="Payment Status" class="payment"><span class="paid-n"><span class="text">Not Paid</span></span> <span class="paid-h"><span class="text">Partially Paid</span></span> <span class="paid-f"><span class="text">Paid</span></span></td>
+                                  <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
+                                  <td data-title="Consumer Note" class="cnote"><span><i class="icon-note"></i></span></td>
+                                  <td class="mre"><span class="mbt"></span></td>
+                              </tr>
+                              <tr>
+                                  <td class="online"><span class="icon-cloud"></span></td>
+                                  <td data-title="Seq No" class="seq">#4</td>
+                                  <td data-title="Name" class="name">Nithin Skariah <span class="icon-arrived" title="Arrived"></span></td>
+                                  <td data-title="Service" class="service">Service Name</td>
+                                  <td data-title="Actions" class="actions">
+                                      <span class="start cs-btn bt7"><i class="icon-play"></i>Start</span>
+                                  </td>
+                                  <td data-title="Payment Status" class="payment"><span class="paid-n"><span class="text">Not Paid</span></span> <span class="paid-h"><span class="text">Partially Paid</span></span> <span class="paid-f"><span class="text">Paid</span></span></td>
+                                  <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
+                                  <td data-title="Consumer Note" class="cnote"><span><i class="icon-note"></i></span></td>
+                                  <td class="mre"><span class="mbt"></span></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="qlst no-dta" *ngIf="check_in_list.length == 0">
+                    No check-ins available
+                  </div>
+
+              </div>
+
+              <div class="qlst no-dta"
+              *ngIf="time_type ==1 && (!selected_queue || !selected_queue.id)">
+                <p>No available queues</p>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+<!-- <h1>Provider Home</h1>
 <app-header [headerTitle]="'Provider Header'"></app-header>
 <a routerLink="/provider/settings/bprofile-search" routerLinkActive="active">Go to Bprofile</a>
 <a routerLink="/provider/bwizard" routerLinkActive="active">Go to Bwizard</a>
@@ -73,4 +208,4 @@
       </tbody>
     </table>
   </div>
-</div>
+</div> -->

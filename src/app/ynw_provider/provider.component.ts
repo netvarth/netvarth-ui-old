@@ -17,7 +17,7 @@ export class ProviderComponent {
 
                 const match_url = '\/provider\/settings';
                 if (router.url === '\/provider\/settings' ||
-                router.url === '\/provider' ||
+                // router.url === '\/provider' ||
                 router.url === '\/provider\/waitlist-manager' ||
                 router.url === '\/provider\/license' ) {
                      router.navigate(['provider', 'settings', 'bprofile-search']);
