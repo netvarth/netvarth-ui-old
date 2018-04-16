@@ -1,20 +1,47 @@
-<app-header [headerTitle] = "'Provider Discounts'"></app-header>
+<section>
+  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
 
-<button (click)="addDiscounts()">Add Discount</button>
-
-<table class="table" *ngIf="discount_list.length !=0">
-  <thead>
-    <th>Name</th>
-    <th>Value</th>
-    <th></th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let discount of discount_list">
-      <td>{{discount.name}}</td>
-      <td>{{(discount.calculationType=='Percentage')? discount.discValue+'%': formatPrice(discount.discValue)}}</td>        
-    <td>&nbsp;<button (click)="editDiscounts(discount)">Edit</button>&nbsp;<button (click)="doRemoveDiscounts(discount)">Delete</button>&nbsp;</td>
-    </tr>
-  </tbody>
-</table>
-<div *ngIf="discount_list.length ==0 && query_executed == true">{{emptyMsg}}</div>
-
+<section>
+    <div class="content">
+        <div class="container">
+              <div class="table-outer q-tbl">
+                  <table class="table" *ngIf="discount_list.length !=0">
+                      <thead>
+                          <tr>
+                              <th>Name</th>
+                              <th>Value</th>
+                              <th>  </th>                            
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let discount of discount_list">
+                              <td data-title="Name" class="pointer-cursor" class="td1">{{discount.name}}</td>
+                              <td data-title="Value" class="pointer-cursor" clas="td2">{{(discount.calculationType=='Percentage')? discount.discValue+'%': formatPrice(discount.discValue)}}</td>        
+                              <td data-title="Action" class="tdact">
+                                  <span class="mbt">
+                                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                          <mat-icon>more_vert</mat-icon>
+                                      </button>
+                                      <mat-menu #menu="matMenu">
+                                          <button type="button" (click)="editDiscounts(discount)" mat-menu-item>
+                                              <i class="icon-edit"></i> 
+                                              Edit
+                                          </button>
+                                          <button type="button" (click)="doRemoveDiscounts(discount)" mat-menu-item>
+                                              <i class="icon-delete"></i> 
+                                              Delete
+                                          </button>
+                                      </mat-menu>
+                                  </span>
+                              </td>   
+                          </tr>
+                      </tbody>
+                  </table>
+                  <div *ngIf="discount_list.length ==0 && query_executed == true" class="nolist">{{emptyMsg}}</div>
+                  <div><span class="addbt" (click)="addDiscounts()"></span></div>
+              </div>
+      </div>
+  </div>
+</section>

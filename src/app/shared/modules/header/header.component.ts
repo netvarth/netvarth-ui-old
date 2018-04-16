@@ -176,5 +176,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     alert('Inbox');
   }
 
+  redirectto (mod) {
+    switch (mod) {
+      case 'disc':
+        this.router.navigate(['provider', 'discounts']);
+      break;
+      case 'coup':
+        this.router.navigate(['provider', 'coupons']);
+      break;
+    }
+  }
 
 }

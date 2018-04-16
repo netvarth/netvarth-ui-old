@@ -1,4 +1,150 @@
-<h1>Settings</h1>
+<section>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+
+<section>
+    <div class="content settings">
+        <div class="container">
+            <div class="set-otr">
+                <div class="card set01 p0">
+                    <div class="copy">
+                        <div class="hd">
+                            <h2>Profile &amp; Search</h2>
+                        </div>
+                        <div class="ct">
+                            <ul>
+                                <li>
+                                    <span class="ttle">
+                                        Public Search <span class="sts">On</span>
+                                    </span>
+                                    <span class="ctrl"> On</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('bprofile')">Profile</span>
+                                </li>
+                            </ul>    
+                        </div>                    
+                    </div>
+                </div>
+                
+                <div class="card set02 p0">
+                    <div class="copy">
+                        <div class="hd">
+                            <h2>Waitlist Manager</h2>
+                        </div>
+                        <div class="ct">
+                            <ul>
+                                <li>
+                                    <span class="ttle">
+                                        Accept Online Check-in <span class="sts">On</span>
+                                    </span>
+                                    <span class="ctrl"> On</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('locations')">Locations (2)</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('services')">Services (6)</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('queues')">Queues (2)</span>
+                                </li>
+                            </ul>    
+                        </div>                    
+                    </div>
+                </div>
+                
+                <div class="card set03 p0">
+                    <div class="copy">
+                        <div class="hd">
+                            <h2>License</h2>
+                        </div>
+                        <div class="ct">
+                            <ul>
+                                <li>
+                                    <span class="lnk">Renew License</span>
+                                </li>
+                                <li>
+                                    <span class="lnk">Add-ons</span>
+                                </li>
+                                <li>
+                                    <span class="lnk">License &amp; Invoice</span>
+                                </li>
+                            </ul>    
+                        </div>                    
+                    </div>
+                </div>
+                
+                <div class="card set04 p0">
+                    <div class="copy">
+                        <div class="hd">
+                            <h2>Payments</h2>
+                        </div>
+                        <div class="ct">
+                            <ul>
+                                <li>
+                                    <span class="ttle">
+                                        Accept Payments <span class="sts">On</span>
+                                    </span>
+                                    <span class="ctrl"> On</span>
+                                </li>
+                                <li>
+                                    <span class="lnk">Paytm</span>
+                                </li>
+                                <li>
+                                    <span class="lnk">CC / DC / Net Banking</span>
+                                </li>
+                            </ul>    
+                        </div>                    
+                    </div>
+                </div>
+                
+                <div class="card set05 p0">
+                    <div class="copy">
+                        <div class="hd">
+                            <h2>Billing/POS</h2>
+                        </div>
+                        <div class="ct">
+                            <ul>
+                                <li>
+                                    <span class="lnk">Items (5)</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('discounts')">Discounts (3)</span>
+                                </li>
+                                <li>
+                                    <span class="lnk">Coupons (2)</span>
+                                </li>
+                            </ul>    
+                        </div>                    
+                    </div>
+                </div>
+                
+                <div class="card set06 p0">
+                    <div class="copy">
+                        <div class="hd">
+                            <h2>Miscellaneous</h2>
+                        </div>
+                        <div class="ct">
+                            <ul>
+                                <li>
+                                    <span class="lnk">Non-working Days</span>
+                                </li>
+                            </ul>    
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</section>
+
+
+
+
+
+<!-- <h1>Settings</h1>
 <button [routerLink]="['/provider/settings/bprofile-search']">Profile & Search</button>
 <button [routerLink]="['/provider/settings/waitlist-manager']">Waitlist Manager</button>
 <mat-slide-toggle
@@ -10,4 +156,4 @@ class="example-margin"
 Waitlist
 </mat-slide-toggle>
 
-<button [routerLink]="['/provider/settings/license']">License</button>
+<button [routerLink]="['/provider/settings/license']">License</button> -->

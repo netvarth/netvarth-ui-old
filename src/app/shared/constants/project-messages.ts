@@ -22,14 +22,15 @@ export const Messages = {
   // Bill Discount
   'DISCOUNT_CREATED' : 'Bill Discount created successfully',
   'DISCOUNT_UPDATED' : 'Bill Discount updated successfully',
-  'DISCOUNT_DELETE'  : 'Do you really want to remove the discount "[name]"?',
-  'DISCOUNT_LISTEMPTY' : 'No Discounts exists',
+  'DISCOUNT_DELETE'  : 'Do you really want to remove the bill discount "[name]"?',
+  'DISCOUNT_DELETED' : 'Bill Discount deleted successfully',
+  'DISCOUNT_LISTEMPTY' : 'No Bill Discounts exists',
 
   // Bill Coupons
   'COUPON_CREATED' : 'Bill Coupon created successfully',
   'COUPON_UPDATED' : 'Bill Coupon updated successfully',
-  'COUPON_DELETE'  : 'Do you really want to remove the coupon "[name]"?',
-  'COUPON_LISTEMPTY' : 'No Coupons exists',
+  'COUPON_DELETE'  : 'Do you really want to remove the bill coupon "[name]"?',
+  'COUPON_LISTEMPTY' : 'No Bill Coupons exists',
 
   // non working days
   'HOLIDAY_CREATED' : 'Holiday created successfully',

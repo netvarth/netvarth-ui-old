@@ -55,10 +55,14 @@ export class AddProviderDiscountsComponent implements OnInit {
   }
   onSubmit (form_data) {
         if (isNaN(form_data.discValue)) {
-          this.api_error = 'Please enter a numeric discount value';
+          if (form_data.calculationType === 'Percentage') {
+            this.api_error = 'Please enter a numeric discount percentage value';
+          } else {
+            this.api_error = 'Please enter a numeric discount value';
+          }
           return;
         } else {
-            if (form_data.discValue == 0) {
+            if (form_data.discValue === 0) {
               this.api_error = 'Please enter the discount value';
               return;
             }

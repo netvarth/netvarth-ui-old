@@ -44,6 +44,9 @@ const routes: Routes = [
         path: 'waitlist-manager',
         component: ProviderWaitlistComponent
       },
+      { path: 'discounts',
+        component: ProviderDiscountsComponent
+      },
       {
         path: 'waitlist-manager',
         children: [
@@ -94,7 +97,7 @@ const routes: Routes = [
     { path: 'members', component: ProviderMembersComponent },
     { path: 'items', component: ProviderItemsComponent },
     { path: 'items/:id', component: ProviderItemsDetailsComponent },
-    { path: 'discounts', component: ProviderDiscountsComponent },
+   // { path: 'discounts', component: ProviderDiscountsComponent },
     { path: 'coupons', component: ProviderCouponsComponent },
     { path: 'fields', component: VirtualFieldsComponent},
     { path: 'holidays', component: ProviderNonworkingdaysComponent },

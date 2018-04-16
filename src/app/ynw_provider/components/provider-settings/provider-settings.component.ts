@@ -7,7 +7,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
-
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -18,8 +18,14 @@ import { FormMessageDisplayService } from '../../../shared/modules/form-message-
 export class ProviderSettingsComponent implements OnInit {
 
   waitlist_status = false;
+  breadcrumbs = [
+    {
+      title: 'Settings'
+    }
+  ];
 
-  constructor(private provider_services: ProviderServices) {}
+  constructor(private provider_services: ProviderServices,
+  private routerobj: Router) {}
 
   ngOnInit() {
     this.getWaitlistMgr();
@@ -35,6 +41,25 @@ export class ProviderSettingsComponent implements OnInit {
       error => {}
     );
 
+  }
+  redirecTo(mod) {
+    switch (mod) {
+      case 'bprofile':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
+      break;
+      case 'locations':
+        this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'locations']);
+      break;
+      case 'services':
+        this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'services']);
+      break;
+      case 'queues':
+        this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
+      break;
+      case 'discounts':
+      this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'discounts']);
+    break;
+    }
   }
   changeWaitlist(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';

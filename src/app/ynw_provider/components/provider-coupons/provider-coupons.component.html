@@ -1,6 +1,53 @@
-<app-header [headerTitle] = "'Provider Coupons'"></app-header>
+<section>
+  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
 
 <button (click)="addCoupons()">Add Coupons</button>
+
+<section>
+  <div class="content">
+      <div class="container">
+            <div class="table-outer q-tbl">
+                <table class="table" *ngIf="coupon_list.length !=0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                            <th>  </th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let coupon of coupon_list">
+                            <td data-title="Name" class="pointer-cursor" class="td1">{{coupon.name}}</td>
+                            <td data-title="Value" class="pointer-cursor" clas="td2">{{(coupon.calculationType=='Percentage')? coupon.amount+'%': formatPrice(coupon.amount)}}</td>        
+                            <td data-title="Action" class="tdact">
+                                <span class="mbt">
+                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button type="button" (click)="editCoupons(coupon)" mat-menu-item>
+                                            <i class="icon-edit"></i> 
+                                            Edit
+                                        </button>
+                                        <button type="button" (click)="doRemoveCoupons(coupon)" mat-menu-item>
+                                            <i class="icon-delete"></i> 
+                                            Delete
+                                        </button>
+                                    </mat-menu>
+                                </span>
+                            </td>   
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="discount_list.length ==0 && query_executed == true" class="nolist">{{emptyMsg}}</div>
+                <div><span class="addbt" (click)="addCoupons()"></span></div>
+            </div>
+    </div>
+</div>
+</section>
+
 
 <table class="table" *ngIf="coupon_list.length !=0">
   <thead>

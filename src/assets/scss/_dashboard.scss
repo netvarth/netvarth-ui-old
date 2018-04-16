@@ -639,7 +639,7 @@ footer {
                                 &:before {
                                     position: absolute;
                                     @include font-custom;
-                                    content: "\79";
+                                    content: "\45";
                                     left: 0;
                                     top: -6px;
                                     width: 100%;
@@ -1398,7 +1398,7 @@ footer {
                                     &:before {
                                         position: absolute;
                                         @include font-custom;
-                                        content: "\79";
+                                        content: "\45";
                                         left: 0;
                                         top: -6px;
                                         width: 100%;
@@ -3478,7 +3478,138 @@ footer {
 
 /*#### Settings Page ***/
 
-
+.content {
+    &.settings {
+        .set-otr {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            
+            .card {
+                width: 320px;
+                margin-bottom: 50px;
+                
+                @include respond-to(ynw-767) {
+                    width: 100%;
+                    margin-bottom: 30px;
+                }
+                @include respond-to(ynw-992-1199) {
+                    width: 30%;
+                }
+                
+                .copy {
+                    padding: 0 20px;
+                    .hd {
+                        display: flex;
+                        align-items: center;
+                        border-bottom: 2px solid $cc-body;
+                        margin-bottom: 30px;
+                        
+                        h2 {
+                            font-size: 1.125rem;
+                            color: $cc-darkgray;
+                            font-weight: 600;
+                            height: 60px;
+                            margin-bottom: 0;
+                            line-height: 60px;
+                            position: relative;
+                            padding-left: 40px;
+                            
+                            &:before {
+                                @include font-custom;
+                                content: "\36";
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                font-size: 2rem;
+                                color: $linkblue;
+                                font-weight: normal;
+                            }
+                        }
+                    }
+                    .ct {
+                        ul {
+                            margin: 0;
+                            padding: 0;
+                            
+                            li {
+                                list-style: none;
+                                display: flex;
+                                font-weight: 500;
+                                font-size: .875rem;
+                                margin-bottom: 20px;
+                                
+                                .ttle {
+                                    color: $linkblack;
+                                    padding-right: 20px;
+                                    
+                                    .sts {
+                                        display: block;
+                                        color: $cc-mediumgray;
+                                    }
+                                }
+                                .ctrl {
+                                    color: $cc-mediumgray;
+                                }
+                                
+                                .lnk {
+                                    color: $linkblue;
+                                    cursor: pointer;
+                                    @include anchor-border;
+                                }
+                            }
+                        }
+                    }
+                }
+                &.set02 {
+                    .copy {
+                        h2 {
+                            &:before {
+                                content: "\33";
+                            }
+                        }
+                    }
+                }
+                &.set03 {
+                    .copy {
+                        h2 {
+                            &:before {
+                                content: "\5a";
+                            }
+                        }
+                    }
+                }
+                &.set04 {
+                    .copy {
+                        h2 {
+                            &:before {
+                                content: "\57";
+                            }
+                        }
+                    }
+                }
+                &.set05 {
+                    .copy {
+                        h2 {
+                            &:before {
+                                content: "\58";
+                            }
+                        }
+                    }
+                }
+                &.set06 {
+                    .copy {
+                        h2 {
+                            &:before {
+                                content: "\34";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 

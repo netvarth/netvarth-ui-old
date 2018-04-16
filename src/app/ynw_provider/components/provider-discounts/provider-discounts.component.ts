@@ -11,6 +11,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { AddProviderDiscountsComponent } from '../add-provider-discounts/add-provider-discounts.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-provider-discounts',
@@ -22,9 +23,25 @@ export class ProviderDiscountsComponent implements OnInit {
     discount_list: any = [] ;
     query_executed = false;
     emptyMsg = Messages.DISCOUNT_LISTEMPTY;
+    breadcrumbs_init = [
+        {
+          url: '/provider/settings',
+          title: 'Settings'
+        },
+        // {
+        //   title: 'Waitlist Manager',
+        //   url: '/provider/settings/waitlist-manager'
+        // },
+        {
+          title: 'Billing Discounts',
+          url: '/provider/discounts'
+        }
+      ];
+    breadcrumbs = this.breadcrumbs_init;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
-        private sharedfunctionObj: SharedFunctions) {}
+        private sharedfunctionObj: SharedFunctions,
+        private provider_shared_functions: ProviderSharedFuctions) {}
 
     ngOnInit() {
         this.getDiscounts(); // Call function to get the list of discount lists
@@ -40,6 +57,8 @@ export class ProviderDiscountsComponent implements OnInit {
     addDiscounts() {
         const dialogRef = this.dialog.open(AddProviderDiscountsComponent, {
           width: '50%',
+          panelClass: ['commonpopupmainclass'],
+          autoFocus: false,
           data: {
             type : 'add'
           }
@@ -54,6 +73,8 @@ export class ProviderDiscountsComponent implements OnInit {
     editDiscounts(obj) {
         const dialogRef = this.dialog.open(AddProviderDiscountsComponent, {
           width: '50%',
+          panelClass: ['commonpopupmainclass'],
+          autoFocus: false,
           data: {
             discount : obj,
             type : 'edit'
@@ -73,8 +94,10 @@ export class ProviderDiscountsComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
+        panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
         data: {
-          'message' : Messages.DISCOUNT_DELETE.replace('[name]', discount.name)
+          'message' : Messages.DISCOUNT_DELETE.replace('[name]', discount.name),
+          'heading' : 'Delete Confirmation'
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -84,10 +107,12 @@ export class ProviderDiscountsComponent implements OnInit {
       });
     }
 
+
     deleteDiscounts(id) {
       this.provider_servicesobj.deleteDiscount(id)
       .subscribe(
         data => {
+          this.provider_shared_functions.openSnackBar(Messages.DISCOUNT_DELETED);
           this.getDiscounts();
         },
         error => {
@@ -99,4 +124,5 @@ export class ProviderDiscountsComponent implements OnInit {
     formatPrice(price) {
       return this.sharedfunctionObj.print_PricewithCurrency(price);
     }
+
 }

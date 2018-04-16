@@ -231,7 +231,7 @@
   color: #00aef2; }
   .addbt:before {
     font-family: "custom-ynw" !important;
-    content: "\79";
+    content: "\45";
     position: absolute;
     left: 0;
     top: 0;
@@ -369,17 +369,8 @@
 .icon-info:before {
   content: "\42"; }
 
-.icon-first-aid:before {
-  content: "\43"; }
-
 .icon-settings:before {
   content: "\44"; }
-
-.icon-trauma:before {
-  content: "\45"; }
-
-.icon-parking:before {
-  content: "\47"; }
 
 .icon-angle-left:before {
   content: "\61"; }
@@ -389,9 +380,6 @@
 
 .icon-angle-down:before {
   content: "\72"; }
-
-.icon-add:before {
-  content: "\79"; }
 
 .icon-emergency:before {
   content: "\68"; }
@@ -426,9 +414,6 @@
 .icon-kiosk:before {
   content: "\41"; }
 
-.icon-invoice:before {
-  content: "\4f"; }
-
 .icon-cloud:before {
   content: "\50"; }
 
@@ -450,9 +435,6 @@
 .icon-customer-line:before {
   content: "\76"; }
 
-.icon-question:before {
-  content: "\46"; }
-
 .icon-payment:before {
   content: "\57"; }
 
@@ -471,9 +453,6 @@
 .icon-customer-served:before {
   content: "\35"; }
 
-.icon-others:before {
-  content: "\34"; }
-
 .icon-tick:before {
   content: "\32"; }
 
@@ -488,6 +467,39 @@
 
 .icon-w-manager:before {
   content: "\33"; }
+
+.icon-tick:before {
+  content: "\32"; }
+
+.icon-psearch:before {
+  content: "\36"; }
+
+.icon-invoice:before {
+  content: "\4f"; }
+
+.icon-question:before {
+  content: "\46"; }
+
+.icon-parking:before {
+  content: "\47"; }
+
+.icon-others:before {
+  content: "\34"; }
+
+.icon-trauma:before {
+  content: "\79"; }
+
+.icon-open-time-1:before {
+  content: "\43"; }
+
+.icon-add:before {
+  content: "\45"; }
+
+.icon-bell:before {
+  content: "\37"; }
+
+.icon-first-aid:before {
+  content: "\38"; }
 
 html {
   font-size: 16px; }
@@ -1306,6 +1318,387 @@ header {
     .commonpopupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .googlemainmappopup .mat-dialog-content .form-group .example-section mat-checkbox label {
       margin-bottom: 0; }
+    .signupmainclass .mat-dialog-content .form-group .service-section, .signupmainclass .mat-dialog-content .form-group .schedule-section,
+    .loginmainclass .mat-dialog-content .form-group .service-section,
+    .loginmainclass .mat-dialog-content .form-group .schedule-section,
+    .moreoptionsmainclass .mat-dialog-content .form-group .service-section,
+    .moreoptionsmainclass .mat-dialog-content .form-group .schedule-section,
+    .forgotpasswordmainclass .mat-dialog-content .form-group .service-section,
+    .forgotpasswordmainclass .mat-dialog-content .form-group .schedule-section,
+    .commonpopupmainclass .mat-dialog-content .form-group .service-section,
+    .commonpopupmainclass .mat-dialog-content .form-group .schedule-section,
+    .googlemainmappopup .mat-dialog-content .form-group .service-section,
+    .googlemainmappopup .mat-dialog-content .form-group .schedule-section {
+      display: flex;
+      flex-wrap: wrap; }
+    .signupmainclass .mat-dialog-content .form-group .startendtime,
+    .loginmainclass .mat-dialog-content .form-group .startendtime,
+    .moreoptionsmainclass .mat-dialog-content .form-group .startendtime,
+    .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime,
+    .commonpopupmainclass .mat-dialog-content .form-group .startendtime,
+    .googlemainmappopup .mat-dialog-content .form-group .startendtime {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap; }
+      .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv,
+      .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv,
+      .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv,
+      .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv,
+      .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv,
+      .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv,
+      .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv,
+      .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv,
+      .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv {
+        flex-grow: 1; }
+        .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control {
+          -webkit-border-radius: 0;
+          border-radius: 0;
+          background-clip: padding-box;
+          /* stops bg color from leaking outside the border: */
+          background: #fff;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: normal;
+          font-size: 0.875rem;
+          color: #4c4c4c;
+          text-overflow: ellipsis; }
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus {
+            -webkit-box-shadow: 0 0 1px #00aef2 inset;
+            -moz-box-shadow: 0 0 1px #00aef2 inset;
+            box-shadow: 0 0 1px #00aef2 inset;
+            border: 1px solid #00aef2;
+            background: #fff; }
+        .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
+        .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"], .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
+        .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"],
+        .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
+        .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"],
+        .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
+        .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"],
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"],
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"],
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"],
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"],
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"],
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"],
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"],
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"] {
+          background: #e6e6e6; }
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus {
+            -webkit-box-shadow: 0 0 1px #00aef2 inset;
+            -moz-box-shadow: 0 0 1px #00aef2 inset;
+            box-shadow: 0 0 1px #00aef2 inset;
+            border: 1px solid #00aef2;
+            background: #fff; }
+        .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link {
+          display: flex; }
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
+            width: 16px;
+            height: 16px; }
+            .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
+              border: none;
+              content: "\66";
+              font-family: "custom-ynw" !important;
+              color: #00aef2;
+              display: flex;
+              transform: rotate(0);
+              font-size: 1rem;
+              font-weight: 700;
+              align-items: center; }
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
+            width: 16px;
+            height: 16px; }
+            .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
+              border: none;
+              content: "\72";
+              font-family: "custom-ynw" !important;
+              color: #00aef2;
+              display: flex;
+              transform: rotate(0);
+              font-size: 1rem;
+              font-weight: 700; }
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover, .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active {
+            text-decoration: none; }
+        .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary {
+          border-color: #00aef2;
+          color: #00aef2;
+          font-weight: 600;
+          font-size: .875rem; }
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover {
+            background: #00aef2;
+            color: #fff; }
+          .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus {
+            outline: none;
+            box-shadow: none; }
+        .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
+        .loginmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
+        .moreoptionsmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
+        .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child {
+          margin-bottom: 15px; }
     .signupmainclass .mat-dialog-content .form-group.inline,
     .loginmainclass .mat-dialog-content .form-group.inline,
     .moreoptionsmainclass .mat-dialog-content .form-group.inline,
@@ -3845,7 +4238,7 @@ footer.dashb .sect3 {
           .content .col-a .card .ai-table .tbl-dta .tbl-ai li .ad-btn:before, .content .col-b .card .ai-table .tbl-dta .tbl-ai li .ad-btn:before {
             position: absolute;
             font-family: "custom-ynw" !important;
-            content: "\79";
+            content: "\45";
             left: 0;
             top: -6px;
             width: 100%;
@@ -4408,7 +4801,7 @@ footer.dashb .sect3 {
       .content .col-a .card.w-dta.active .ai-table .tbl-ai li .ad-btn:before {
         position: absolute;
         font-family: "custom-ynw" !important;
-        content: "\79";
+        content: "\45";
         left: 0;
         top: -6px;
         width: 100%;
@@ -5890,6 +6283,88 @@ footer.dashb .sect3 {
       background: rgba(0, 0, 0, 0.03); }
 
 /*#### Settings Page ***/
+.content.settings .set-otr {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; }
+  .content.settings .set-otr .card {
+    width: 320px;
+    margin-bottom: 50px; }
+    @media only screen and (max-width: 767px) {
+      .content.settings .set-otr .card {
+        width: 100%;
+        margin-bottom: 30px; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .content.settings .set-otr .card {
+        width: 30%; } }
+    .content.settings .set-otr .card .copy {
+      padding: 0 20px; }
+      .content.settings .set-otr .card .copy .hd {
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid #f2f2f2;
+        margin-bottom: 30px; }
+        .content.settings .set-otr .card .copy .hd h2 {
+          font-size: 1.125rem;
+          color: #4c4c4c;
+          font-weight: 600;
+          height: 60px;
+          margin-bottom: 0;
+          line-height: 60px;
+          position: relative;
+          padding-left: 40px; }
+          .content.settings .set-otr .card .copy .hd h2:before {
+            font-family: "custom-ynw" !important;
+            content: "\36";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 2rem;
+            color: #00aef2;
+            font-weight: normal; }
+      .content.settings .set-otr .card .copy .ct ul {
+        margin: 0;
+        padding: 0; }
+        .content.settings .set-otr .card .copy .ct ul li {
+          list-style: none;
+          display: flex;
+          font-weight: 500;
+          font-size: .875rem;
+          margin-bottom: 20px; }
+          .content.settings .set-otr .card .copy .ct ul li .ttle {
+            color: #222223;
+            padding-right: 20px; }
+            .content.settings .set-otr .card .copy .ct ul li .ttle .sts {
+              display: block;
+              color: #999999; }
+          .content.settings .set-otr .card .copy .ct ul li .ctrl {
+            color: #999999; }
+          .content.settings .set-otr .card .copy .ct ul li .lnk {
+            color: #00aef2;
+            cursor: pointer;
+            position: relative;
+            cursor: pointer; }
+            .content.settings .set-otr .card .copy .ct ul li .lnk:hover:after {
+              border-bottom-width: 1px;
+              border-bottom-style: solid;
+              border-bottom-color: inherit;
+              content: "";
+              height: 1px;
+              width: 100%;
+              bottom: 0;
+              left: 0;
+              position: absolute; }
+    .content.settings .set-otr .card.set02 .copy h2:before {
+      content: "\33"; }
+    .content.settings .set-otr .card.set03 .copy h2:before {
+      content: "\5a"; }
+    .content.settings .set-otr .card.set04 .copy h2:before {
+      content: "\57"; }
+    .content.settings .set-otr .card.set05 .copy h2:before {
+      content: "\58"; }
+    .content.settings .set-otr .card.set06 .copy h2:before {
+      content: "\34"; }
+
 footer {
   color: #fff;
   font-family: 'Montserrat', sans-serif;
