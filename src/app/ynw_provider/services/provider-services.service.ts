@@ -382,6 +382,10 @@ export class ProviderServices {
     const url = 'provider/waitlist/queues/' + location_id + '/location';
     return this.servicemeta.httpGet(url);
   }
+  getProviderLocationQueuesByDate(location_id, date) {
+    const url = 'provider/waitlist/queues/' + location_id + '/location/' + date;
+    return this.servicemeta.httpGet(url);
+  }
   addProviderQueue(data) {
     return this.servicemeta.httpPost('provider/waitlist/queues', data);
   }

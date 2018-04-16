@@ -12,6 +12,8 @@ import { AddProviderCheckinComponent } from '../add-provider-checkin/add-provide
 
 import { SharedServices } from '../../../shared/services/shared-services';
 
+import * as moment from 'moment';
+
 @Component({
     selector: 'app-provider-home',
     templateUrl: './provider-home.component.html',
@@ -36,6 +38,7 @@ export class ProviderHomeComponent implements OnInit {
   histroy_waitlist_count: any = 0;
   time_type = 1;
   check_in_list: any = [];
+  queue_date = moment(new Date()).format('YYYY-MM-DD');
 
   ngOnInit() {
     this.getLocationList();
@@ -77,7 +80,8 @@ export class ProviderHomeComponent implements OnInit {
   getQueueList() {
     this.selected_queue = null;
     if (this.selected_location.id) {
-      this.provider_services.getProviderLocationQueues(this.selected_location.id)
+      this.provider_services.getProviderLocationQueuesByDate(
+        this.selected_location.id, this.queue_date)
       .subscribe(
         data => {
           this.queues = data;
@@ -100,17 +104,14 @@ export class ProviderHomeComponent implements OnInit {
 
     this.selected_location = location;
     this.selected_queue = null;
-    this.getQueueList();
+    this.loadApiSwitch();
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
 
   }
 
   selectedQueue(selected_queue) {
     this.selected_queue = selected_queue;
-    this.getFutureCheckinCount();
-    this.getTodayCheckinCount();
-    this.getHistoryCheckinCount();
-    this.setTimeType(1);
+    this.getTodayCheckIn();
   }
 
   getFutureCheckinCount() {
@@ -183,10 +184,15 @@ export class ProviderHomeComponent implements OnInit {
   setTimeType(time_type) {
     this.time_type = time_type;
     this.check_in_list  = [];
+    this.loadApiSwitch();
+  }
+
+  loadApiSwitch() {
+
     switch (this.time_type) {
 
       case 0 : this.getHistoryCheckIn(); break;
-      case 1 : this.getTodayCheckIn(); break;
+      case 1 : this.getQueueList(); break;
       case 2 : this.getFutureCheckIn(); break;
     }
   }

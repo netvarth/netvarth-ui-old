@@ -10,7 +10,7 @@
           <div class="row">
               <div class="card p0">
                   <div class="hd-t">
-                      <h2>Accept Online Check-in</h2> 
+                      <h2>Accept Online Check-in</h2>
                       <div class="ctrl">
                           <mat-slide-toggle
                           class="example-margin"
@@ -22,9 +22,9 @@
                   <app-provider-waitlist-online-checkin *ngIf="online_checkin">
 
                   </app-provider-waitlist-online-checkin>
-              </div>    
+              </div>
           </div>
-          
+
           <div class="row">
               <div class="card p0">
                   <span (click)="goLocation()" class="b-link">
@@ -48,73 +48,7 @@
                   </span>
               </div>
           </div>
-          
+
       </div>
-  </div>    
+  </div>
 </section>
-
-
-
-<!-- <h2>Wailist Manager</h2>
-
-<div style="padding:20px">
-  <mat-accordion *ngIf="waitlist_manager != null">
-
-    <mat-expansion-panel >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Accept Online Check-in
-          <mat-slide-toggle
-          class="example-margin"
-          (change)="changAcceptOnlineCheckin($event)"
-          [checked]="online_checkin">
-
-          </mat-slide-toggle>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-provider-waitlist-online-checkin>
-
-      </app-provider-waitlist-online-checkin>
-
-    </mat-expansion-panel>
-
-    <mat-expansion-panel >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Location
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-provider-waitlist-locations>
-
-      </app-provider-waitlist-locations>
-
-    </mat-expansion-panel>
-
-    <mat-expansion-panel >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Service
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-provider-waitlist-services>
-
-      </app-provider-waitlist-services>
-
-    </mat-expansion-panel>
-
-    <mat-expansion-panel >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Queue
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-provider-waitlist-queues>
-
-      </app-provider-waitlist-queues>
-
-    </mat-expansion-panel>
-
-  </mat-accordion>
-
-
-</div> -->
