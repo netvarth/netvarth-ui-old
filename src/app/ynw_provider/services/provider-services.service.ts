@@ -426,13 +426,15 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
 
-  getHistroryWaitlist(queueId) {
-    const url = 'provider/waitlist/history/' + queueId;
+  getHistroryWaitlist(queueId = null) {
+    const url = (queueId) ? 'provider/waitlist/history/' + queueId :
+    'provider/waitlist/history';
     return this.servicemeta.httpGet(url);
   }
 
-  getFutureWaitlist(queueId) {
-    const url = 'provider/waitlist/future/' + queueId;
+  getFutureWaitlist(queueId = null) {
+    const url = (queueId) ? 'provider/waitlist/future/' + queueId :
+    'provider/waitlist/future';
     return this.servicemeta.httpGet(url);
   }
 
