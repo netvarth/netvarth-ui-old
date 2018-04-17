@@ -297,6 +297,14 @@ export class ProviderServices {
     const url = 'provider/settings/waitlistMgr/';
     return this.servicemeta.httpGet(url);
   }
+  getPaymentSettings() {
+    const url = 'provider/payment/settings/';
+    return this.servicemeta.httpGet(url);
+  }
+  setPaymentSettings(data) {
+    const url = 'provider/payment/settings/';
+    return this.servicemeta.httpPut(url, data);
+  }
 
   getProviderLocations() {
     return this.servicemeta.httpGet('provider/locations');

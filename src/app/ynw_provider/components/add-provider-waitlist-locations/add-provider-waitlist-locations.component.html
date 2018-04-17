@@ -77,7 +77,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'"> 
             <label class="col-form-label">Business Schedules</label>
         </div>
-        <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'"  [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>    
+        <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>    
     </ng-container>
     <ng-container *ngIf="forbadge">
         

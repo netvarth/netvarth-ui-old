@@ -1,45 +1,48 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-
+<h1 class="mat-dialog-title">Non Working Day - {{ data.type | titlecase }}  
+  <button #queue mat-dialog-close class="modal_close">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content>
 <div class="form-group">
-    <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Select Date" formControlName="selectdate" [min]="minDate" [max]="maxDate">
+    <label for="reason" class="col-form-label">{{(this.data.type === 'edit') ? 'Selected Date' : 'Select Date'}}</label>
+      <input matInput [matDatepicker]="picker" formControlName="selectdate" [min]="minDate" [max]="maxDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
 </div>
 <div class="form-group">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Reason" formControlName="reason">
-  </mat-form-field>
+   <label for="reason" class="col-form-label">Reason</label>
+   <input matInput formControlName="reason" class="reason">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')"
     errorMsg="Please enter reason">
    </app-field-error-display> 
-  </div>
+</div>
   <div class="form-group">
-    <!-- <mat-form-field class="example-full-width">
-        <input matInput type="time" placeholder="Start Time" formControlName="starttime">
-  </mat-form-field> -->
-  <label for="changeHourStep">Start Time</label>
-  <ngb-timepicker formControlName="starttime" meridian="true"></ngb-timepicker>
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')"
-    errorMsg="Please enter the start time">
-    </app-field-error-display> 
+  <div class="startendtime">
+    <div class="starttimediv">
+      <label for="changeHourStep">Start Time</label>
+      <ngb-timepicker formControlName="starttime" meridian="true"></ngb-timepicker>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')"
+        errorMsg="Please enter the start time">
+        </app-field-error-display> 
+    </div>    
+    <div class="endtimediv">
+    <label for="changeHourStep">End Time</label>
+    <ngb-timepicker formControlName="endtime" meridian="true"></ngb-timepicker>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')"
+      errorMsg="Please enter the Closing time">
+      </app-field-error-display> 
+    </div>  
 </div>
-<div class="form-group">
-    <!-- <mat-form-field class="example-full-width">
-        <input matInput type="time" placeholder="Closing Time" formControlName="endtime">
-  </mat-form-field> -->
-  <label for="changeHourStep">End Time</label>
-  <ngb-timepicker formControlName="endtime" meridian="true"></ngb-timepicker>
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')"
-    errorMsg="Please enter the Closing time">
-    </app-field-error-display> 
 </div>
-
+</mat-dialog-content>
+<mat-dialog-actions>
 <button  type="submit" mat-button [disabled]="!amForm.valid">Save</button>
-
+<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+</mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error"
 errorMsg="{{api_error}}"></app-field-error-display>

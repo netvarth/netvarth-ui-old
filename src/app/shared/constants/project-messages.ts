@@ -20,17 +20,18 @@ export const Messages = {
   'ITEM_LISTEMPTY' : 'No Items exists',
 
   // Bill Discount
-  'DISCOUNT_CREATED' : 'Bill Discount created successfully',
-  'DISCOUNT_UPDATED' : 'Bill Discount updated successfully',
-  'DISCOUNT_DELETE'  : 'Do you really want to remove the bill discount "[name]"?',
-  'DISCOUNT_DELETED' : 'Bill Discount deleted successfully',
-  'DISCOUNT_LISTEMPTY' : 'No Bill Discounts exists',
+  'DISCOUNT_CREATED' : 'Billing Discount created successfully',
+  'DISCOUNT_UPDATED' : 'Billing Discount updated successfully',
+  'DISCOUNT_DELETE'  : 'Do you really want to remove the billing discount "[name]"?',
+  'DISCOUNT_DELETED' : 'Billing Discount deleted successfully',
+  'DISCOUNT_LISTEMPTY' : 'No Billing Discounts exists',
 
   // Bill Coupons
-  'COUPON_CREATED' : 'Bill Coupon created successfully',
-  'COUPON_UPDATED' : 'Bill Coupon updated successfully',
-  'COUPON_DELETE'  : 'Do you really want to remove the bill coupon "[name]"?',
-  'COUPON_LISTEMPTY' : 'No Bill Coupons exists',
+  'COUPON_CREATED' : 'Billing Coupon created successfully',
+  'COUPON_UPDATED' : 'Billing Coupon updated successfully',
+  'COUPON_DELETE'  : 'Do you really want to remove the billing coupon "[name]"?',
+  'COUPON_DELETED' : 'Billing Coupon deleted successfully',
+  'COUPON_LISTEMPTY' : 'No Billing Coupons exists',
 
   // non working days
   'HOLIDAY_CREATED' : 'Holiday created successfully',

@@ -16,9 +16,9 @@
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Public Search <span class="sts">On</span>
+                                        Public Search <span class="sts" [class.active]="search_status==1">{{search_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"> On</span>
+                                    <span class="ctrl"><mat-slide-toggle [checked]="search_status==1" (change)="handle_searchstatus()"></mat-slide-toggle></span>
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('bprofile')">Profile</span>
@@ -37,18 +37,21 @@
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Accept Online Check-in <span class="sts">On</span>
+                                        Accept Online Check-in <span class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"> On</span>
+                                    <span class="ctrl"><mat-slide-toggle [checked]="waitlist_status" (change)="handle_waitliststatus($event)"></mat-slide-toggle></span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('locations')">Locations (2)</span>
+                                    <span class="lnk" (click)="redirecTo('waitlistmanager')">Settings</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('services')">Services (6)</span>
+                                    <span class="lnk" (click)="redirecTo('locations')">Locations ({{location_count}})</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('queues')">Queues (2)</span>
+                                    <span class="lnk" (click)="redirecTo('services')">Services ({{service_count}})</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('queues')">Queues ({{queues_count}})</span>
                                 </li>
                             </ul>    
                         </div>                    
@@ -85,9 +88,9 @@
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Accept Payments <span class="sts">On</span>
+                                        Accept Payments <span class="sts"[class.active]="payment_status">{{payment_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"> On</span>
+                                    <span class="ctrl"><mat-slide-toggle [checked]="payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle></span>
                                 </li>
                                 <li>
                                     <span class="lnk">Paytm</span>
@@ -111,10 +114,10 @@
                                     <span class="lnk">Items (5)</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('discounts')">Discounts (3)</span>
+                                    <span class="lnk" (click)="redirecTo('discounts')">Discounts ({{discount_count}})</span>
                                 </li>
                                 <li>
-                                    <span class="lnk">Coupons (2)</span>
+                                    <span class="lnk" (click)="redirecTo('coupons')">Coupons ({{coupon_count}})</span>
                                 </li>
                             </ul>    
                         </div>                    
@@ -129,7 +132,7 @@
                         <div class="ct">
                             <ul>
                                 <li>
-                                    <span class="lnk">Non-working Days</span>
+                                    <span class="lnk" (click)="redirecTo('nonworking')">Non-working Days</span>
                                 </li>
                             </ul>    
                         </div>                    

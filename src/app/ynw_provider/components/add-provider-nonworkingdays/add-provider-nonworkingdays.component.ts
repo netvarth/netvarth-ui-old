@@ -39,7 +39,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
   }
   createForm() {
     this.amForm = this.fb.group({
-    selectdate: ['', Validators.compose([Validators.required])],
+    selectdate: [{value: '', disabled: (this.data.type === 'edit') ? true : false}, Validators.compose([Validators.required])],
     reason: ['', Validators.compose([Validators.required])],
     starttime: [{hour: 9, minute: 0}, Validators.compose([Validators.required])],
     endtime: [{hour: 18, minute: 0}, Validators.compose([Validators.required])]
@@ -64,9 +64,14 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     const curday = new Date();
     const today_date = moment(curday).format('YYYY-MM-DD');
     const today_curtime = moment(moment(curday).format('LT'), ['h:mm A']).format('HH:mm');
-
+    let startdate;
+    if (this.data.type === 'edit') {
+      startdate = this.data.holiday.startDay;
+    } else {
+      startdate = form_data.selectdate;
+    }
     // convert date to required format
-    const date =  new Date(form_data.selectdate);
+    const date =  new Date(startdate);
     const date_format = moment(date).format('YYYY-MM-DD');
 
     if (today_date === date_format) {

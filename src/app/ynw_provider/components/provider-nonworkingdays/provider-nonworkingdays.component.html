@@ -1,6 +1,66 @@
-<app-header [headerTitle] = "'Provider Non Working Days'"></app-header>
+<section>
+  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
 
-<button (click)="addHolidays()">Add Holiday</button>
+<section>
+  <div class="content comn-cls">
+      <div class="container">
+          <div class="no-dta" *ngIf="nonworking_list.length ==0 && query_executed == true">
+                  <p>{{emptyMsg}}</p>
+                  <span class="cs-btn bt3" (click)="addHolidays()">Add Holidays</span>
+          </div>
+          <div class="w-dta" *ngIf="nonworking_list.length>0">
+                  <div class="row">
+                      <div class="card">
+                          <div class="copy">
+                              <div class="table-outer q-tbl">
+                                  <table class="table">
+                                      <thead>
+                                          <tr>
+                                            <th>Date</th>
+                                            <th>Reason</th>
+                                            <th>Time</th>
+                                            <th><span class="addbt" (click)="addHolidays()"></span></th>                            
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let nonworking of nonworking_list">
+                                            <td data-title="Date"  class="td1">{{nonworking.startDay | date: 'dd/MMM/yyyy'}}</td>
+                                            <td data-title="Reason" clas="td2">{{nonworking.description}}</td>        
+                                            <td data-title="Time"  clas="td3">{{nonworking.nonWorkingHours.sTime}} - {{nonworking.nonWorkingHours.eTime}}</td>        
+                                            <td data-title="Action" class="tdact">
+                                                <span class="mbt">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button type="button" (click)="editHolidays(nonworking)" mat-menu-item>
+                                                            <i class="icon-edit"></i> 
+                                                            Edit
+                                                        </button>
+                                                        <button type="button" (click)="doRemoveHolidays(nonworking)" mat-menu-item>
+                                                            <i class="icon-delete"></i> 
+                                                            Delete
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
+                                            </td>   
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  <span class="addbt d-block d-md-none" (click)="addHolidays()"></span>
+                              </div>
+                          </div>
+                      </div>    
+                  </div>
+              </div>
+          </div>
+      </div>  
+</section>
+
+
+<!-- <button (click)="addHolidays()">Add Holiday</button>
 
 <table class="table" *ngIf="nonworking_list.length !=0">
     <thead>
@@ -20,6 +80,6 @@
       </tr>
     </tbody>
   </table>
-  <div *ngIf="nonworking_list.length ==0 && query_executed == true">{{emptyMsg}}</div>
+  <div *ngIf="nonworking_list.length ==0 && query_executed == true">{{emptyMsg}}</div> -->
   
   

@@ -11,6 +11,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provider-coupons.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -22,9 +23,21 @@ export class ProviderCouponsComponent implements OnInit {
     coupon_list: any = [] ;
     query_executed = false;
     emptyMsg = Messages.COUPON_LISTEMPTY;
+    breadcrumbs_init = [
+      {
+        url: '/provider/settings',
+        title: 'Settings'
+      },
+      {
+        title: 'Billing Coupons',
+        url: '/provider/settings/coupons'
+      }
+    ];
+  breadcrumbs = this.breadcrumbs_init;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
-        private sharedfunctionObj: SharedFunctions) {}
+        private sharedfunctionObj: SharedFunctions,
+        private provider_shared_functions: ProviderSharedFuctions) {}
 
     ngOnInit() {
         this.getCoupons(); // Call function to get the list of discount lists
@@ -40,6 +53,7 @@ export class ProviderCouponsComponent implements OnInit {
     addCoupons() {
         const dialogRef = this.dialog.open(AddProviderCouponsComponent, {
           width: '50%',
+          panelClass: ['commonpopupmainclass'],
           data: {
             type : 'add'
           }
@@ -54,6 +68,7 @@ export class ProviderCouponsComponent implements OnInit {
     editCoupons(obj) {
         const dialogRef = this.dialog.open(AddProviderCouponsComponent, {
           width: '50%',
+          panelClass: ['commonpopupmainclass'],
           data: {
             coupon : obj,
             type : 'edit'
@@ -73,8 +88,10 @@ export class ProviderCouponsComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
+        panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
         data: {
-          'message' : Messages.COUPON_DELETE.replace('[name]', coupon.name)
+          'message' : Messages.COUPON_DELETE.replace('[name]', coupon.name),
+          'heading' : 'Delete Confirmation'
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -88,6 +105,7 @@ export class ProviderCouponsComponent implements OnInit {
       this.provider_servicesobj.deleteCoupon(id)
       .subscribe(
         data => {
+          this.provider_shared_functions.openSnackBar(Messages.COUPON_DELETED);
           this.getCoupons();
         },
         error => {

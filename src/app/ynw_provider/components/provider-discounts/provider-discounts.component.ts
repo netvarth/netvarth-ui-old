@@ -34,7 +34,7 @@ export class ProviderDiscountsComponent implements OnInit {
         // },
         {
           title: 'Billing Discounts',
-          url: '/provider/discounts'
+          url: '/provider/settings/discounts'
         }
       ];
     breadcrumbs = this.breadcrumbs_init;
