@@ -8,10 +8,22 @@
           <div class="card p0 w-dta">
               <div class="head">
                   <div class="locn" *ngIf="selected_location">
-                      <span class="loc-name">{{selected_location.place}}</span>
-                      <span class="icon-edit"></span>
+                      <span class="loc-name" *ngIf="!edit_location">{{selected_location.place}}</span>
+                      <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location"></span>
+
+                        <mat-form-field class="example-full-width" *ngIf="edit_location">
+
+                          <mat-select placeholder="Locations" [(value)]="selected_location_index" (change)="onChangeLocationSelect($event)">
+                            <mat-option *ngFor="let location of locations;let i = index" [value]="i">
+                              {{ location.place }}
+                            </mat-option>
+                          </mat-select>
+
+                        </mat-form-field>
+                        <span class="icon-close" (click)="cancellocationChange()" *ngIf="edit_location"></span>
+
                   </div>
-                  <div class="links">
+                  <div class="links"  *ngIf="selected_location">
                       <span class="lnk" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
                         Today <span class="count">{{today_waitlist_count}}</span>
                       </span>
@@ -22,7 +34,7 @@
                   </div>
               </div>
 
-              <div class="qlst">
+              <div class="qlst" *ngIf="queues.length != 0">
                   <ul>
                       <li
                       [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
@@ -47,7 +59,7 @@
                           <li><span>Cancelled</span></li>
                       </ul>
 
-                      <span class="ml-auto cs-btn bt5">
+                      <span class="ml-auto cs-btn bt5" (click)="showAdjustDelay()">
                           Adjust Delay <i class="icon-question"></i>
                       </span>
                   </div>
@@ -115,17 +127,17 @@
                           </tbody>
                       </table>
                   </div>
-                  <div class="qlst no-dta" *ngIf="check_in_list.length == 0">
+                  <div class="qlst no-dta" *ngIf="load_waitlist ==1 && check_in_list.length == 0">
                     No check-ins available
                   </div>
 
               </div>
 
               <div class="qlst no-dta"
-              *ngIf="time_type ==1 && (!selected_queue || !selected_queue.id)">
+              *ngIf="time_type ==1 && load_queue == 1 &&
+              queues.length ==0">
                 <p>No available queues</p>
               </div>
-
           </div>
       </div>
   </div>

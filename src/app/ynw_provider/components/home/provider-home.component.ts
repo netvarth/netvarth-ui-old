@@ -14,6 +14,11 @@ import { SharedServices } from '../../../shared/services/shared-services';
 
 import * as moment from 'moment';
 
+import {Observable} from 'rxjs/Observable';
+import {startWith} from 'rxjs/operators/startWith';
+import {map} from 'rxjs/operators/map';
+import {FormControl} from '@angular/forms';
+
 @Component({
     selector: 'app-provider-home',
     templateUrl: './provider-home.component.html',
@@ -22,16 +27,11 @@ import * as moment from 'moment';
 
 export class ProviderHomeComponent implements OnInit {
 
-  constructor(private provider_services: ProviderServices,
-    private provider_datastorage: ProviderDataStorageService,
-    private router: Router,
-    private shared_functions: SharedFunctions,
-    private dialog: MatDialog,
-    private shared_services: SharedServices) {}
 
   locations: any = [];
   queues: any = [];
   selected_location = null;
+  selected_location_index = null;
   selected_queue = null;
   future_waitlist_count: any = 0;
   today_waitlist_count: any = 0;
@@ -39,12 +39,28 @@ export class ProviderHomeComponent implements OnInit {
   time_type = 1;
   check_in_list: any = [];
   queue_date = moment(new Date()).format('YYYY-MM-DD');
+  edit_location = 0;
+
+  load_locations = 0;
+  load_queue = 0;
+  load_waitlist = 0 ;
+
+  constructor(private provider_services: ProviderServices,
+    private provider_datastorage: ProviderDataStorageService,
+    private router: Router,
+    private shared_functions: SharedFunctions,
+    private dialog: MatDialog,
+    private shared_services: SharedServices) {
+    }
+
 
   ngOnInit() {
     this.getLocationList();
   }
 
   getLocationList() {
+
+    this.load_locations = 0;
     this.selected_location = null;
     this.provider_services.getProviderLocations()
     .subscribe(
@@ -60,6 +76,10 @@ export class ProviderHomeComponent implements OnInit {
         }
       },
       error => {
+        this.load_locations = 1;
+      },
+      () => {
+        this.load_locations = 1;
       }
     );
   }
@@ -79,6 +99,8 @@ export class ProviderHomeComponent implements OnInit {
 
   getQueueList() {
     this.selected_queue = null;
+    this.load_queue = 0;
+
     if (this.selected_location.id) {
       this.provider_services.getProviderLocationQueuesByDate(
         this.selected_location.id, this.queue_date)
@@ -90,15 +112,16 @@ export class ProviderHomeComponent implements OnInit {
           }
         },
         error => {
+          this.queues = [];
+          this.load_queue = 1;
+        },
+        () => {
+          this.load_queue = 1;
         }
       );
     }
   }
 
-  onChangeLocationSelect(event) {
-    const value = event.target.value;
-    this.changeLocation(this.locations[value] || []);
-  }
 
   changeLocation(location) {
 
@@ -148,36 +171,47 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getTodayCheckIn() {
-
+    this.load_waitlist = 0;
     this.provider_services.getTodayWaitlist(this.selected_queue.id)
     .subscribe(
       data => {
         this.check_in_list = data;
       },
       error => {
-
+        this.load_waitlist = 1;
+      },
+      () => {
+        this.load_waitlist = 1;
       });
   }
 
   getFutureCheckIn() {
-    this.provider_services.getFutureWaitlist(this.selected_queue.id)
+    this.load_waitlist = 0;
+    this.provider_services.getFutureWaitlist()
     .subscribe(
       data => {
         this.check_in_list = data;
       },
       error => {
-
+        this.load_waitlist = 1;
+      },
+      () => {
+        this.load_waitlist = 1;
       });
   }
 
   getHistoryCheckIn() {
-    this.provider_services.getHistroryWaitlist(this.selected_queue.id)
+    this.load_waitlist = 0;
+    this.provider_services.getHistroryWaitlist()
     .subscribe(
       data => {
         this.check_in_list = data;
       },
       error => {
-
+        this.load_waitlist = 1;
+      },
+      () => {
+        this.load_waitlist = 1;
       });
   }
 
@@ -188,7 +222,6 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   loadApiSwitch() {
-
     switch (this.time_type) {
 
       case 0 : this.getHistoryCheckIn(); break;
@@ -205,6 +238,7 @@ export class ProviderHomeComponent implements OnInit {
 
     const dialogRef = this.dialog.open(AdjustQueueDelayComponent, {
       width: '50%',
+      panelClass: ['commonpopupmainclass'],
       data: {
         queues: this.queues,
         queue_id: this.selected_queue.id
@@ -239,7 +273,23 @@ export class ProviderHomeComponent implements OnInit {
 
   }
 
-  goPatient() {
+  editLocation() {
+     this.locations.forEach((loc, index) => {
+      if (this.selected_location.id === loc.id) {
+        this.selected_location_index = index;
+      }
+    });
+    this.edit_location = 1;
 
   }
+
+  cancellocationChange() {
+    this.edit_location = 0;
+  }
+
+  onChangeLocationSelect(event) {
+    const value = event.value;
+    this.changeLocation(this.locations[value] || []);
+  }
+
 }
