@@ -29,7 +29,7 @@
                                             <td data-title="Date"  class="td1">{{nonworking.startDay | date: 'dd/MMM/yyyy'}}</td>
                                             <td data-title="Reason" clas="td2">{{nonworking.description}}</td>        
                                             <td data-title="Time"  clas="td3">{{nonworking.nonWorkingHours.sTime}} - {{nonworking.nonWorkingHours.eTime}}</td>        
-                                            <td data-title="Action" class="tdact">
+                                            <td class="action">
                                                 <span class="mbt">
                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                         <mat-icon>more_vert</mat-icon>
@@ -44,6 +44,11 @@
                                                             Delete
                                                         </button>
                                                     </mat-menu>
+                                                </span>
+
+                                                <span class="mbt-mobile-show">
+                                                        <button class="editcls" type="button" (click)="editHolidays(nonworking)">Edit</button>
+                                                        <button class="deletecls" type="button" (click)="doRemoveHolidays(nonworking)">Delete</button>
                                                 </span>
                                             </td>   
                                           </tr>

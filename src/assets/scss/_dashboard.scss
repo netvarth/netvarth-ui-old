@@ -835,12 +835,6 @@ footer {
                                 position: absolute;
                                 right: 0px;
                                 top: 0;
-                                width: 30px;
-                                height: 30px;                                
-                                @include border-radius(50%);
-                                @include transition(all 300ms);
-                                color: $linkblue;
-                                font-size: 1rem;
                                 
                                 &:hover {
                                     background: $cc-ash;
@@ -1077,13 +1071,6 @@ footer {
                                     position: absolute;
                                     right: 10px;
                                     top: 5px;
-                                    width: 30px;
-                                    height: 30px;                                
-                                    @include border-radius(50%);
-                                    font-size: 1rem;
-                                    color: $linkblue;
-                                    background: transparent;
-                                    @include transition(all 300ms);
 
                                     &:hover {
                                         background: $cc-ash;
@@ -2432,23 +2419,11 @@ footer {
                                     
                                 }
                                 
-                                
                                 .editbt {
                                     position: absolute;
                                     right: 0px;
                                     top: 15px;
-                                    width: 30px;
-                                    height: 30px;                                
-                                    @include border-radius(50%);
-                                    @include transition(all 300ms);
                                     z-index: 11;
-                                    font-size: 1rem;
-                                    color: $linkblue;
-
-                                    &:hover {
-                                        background: $cc-ash;
-                                        color: $linkblack;
-                                    }
                                 }
                                 
                                 .ot-it {
@@ -2587,18 +2562,7 @@ footer {
                                     position: absolute;
                                     right: 0px;
                                     top: 15px;
-                                    width: 30px;
-                                    height: 30px;                                
-                                    @include border-radius(50%);
-                                    @include transition(all 300ms);
                                     z-index: 11;
-                                    font-size: 1rem;
-                                    color: $linkblue;
-
-                                    &:hover {
-                                        background: $cc-ash;
-                                        color: $linkblack;
-                                    }
                                 }
                                 
                                 h5 {
@@ -2935,6 +2899,7 @@ footer {
                                         position: absolute;
                                         right: 15px;
                                         font-weight: 400;
+                                        margin-top: 0;
                                     }
                                 }
                             }
@@ -3223,7 +3188,6 @@ footer {
                             background-color: $cc-ash;
                             text-align: center;
                             font-weight: 600;
-                            width: 150px;
                             height: 40px;
                             cursor: pointer;
                             font-size: .875rem;
@@ -3655,87 +3619,33 @@ footer {
         
     }
     .w-dta {
-        .n-btn {
-            width: 100%;
-            position: relative;
+        .card {
+            margin-bottom: 30px;
+            
+            .n-btn {
+                width: 100%;
+                position: relative;
 
-            .add-btn {
-                position: absolute;
-                top: -43px;
-                right: 20px;
+                .add-btn {
+                    position: absolute;
+                    top: -43px;
+                    right: 20px;
 
-                @include respond-to(ynw-575){
-                    height: auto;
-                    position: static;
-                    margin-bottom: 20px;
-                }
-
-                &:hover {
-                    background: $linkblue;
-                }
-            }
-        }
-        .table-outer {
-            &.q-tbl {
-                padding: 0;
-
-                table {
-                    margin: 0;
-
-                    thead {
-                        tr {
-                            th {
-                                &:nth-child(1) {
-                                    width: 25%;
-                                    
-                                    @include respond-to(ynw-767){
-                                        width: 100%;
-                                    }
-                                }
-                                .addbt {
-                                    margin: 0 0 0 auto;
-                                }
-                                &:last-child {
-                                    font-weight: normal;
-                                }
-                            }
-                        }
+                    @include respond-to(ynw-575){
+                        height: auto;
+                        position: static;
+                        margin-bottom: 20px;
                     }
-                    tbody {
-                        tr {
-                            td {
-                                &:nth-child(1) {
-                                    width: 25%;
-                                    
-                                    @include respond-to(ynw-767){
-                                        width: 100%;
-                                    }
-                                }
-                                &.tdact {
-                                    position: relative;
-                                    
-                                    @include respond-to(ynw-767){
-                                        width: 100%;
-                                    }
-                                    
-                                    .mbt {
-                                        position: absolute;
-                                        right: 3px;
-                                        top: 2px;
-                                        
-                                        &:before {
-                                            display: none;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+
+                    &:hover {
+                        background: $linkblue;
                     }
                 }
             }
-            &.q-itm {
-                padding: 0;
-                
+            .table-outer {
+                &.q-tbl {
+                    padding: 0;
+
                     table {
                         margin: 0;
 
@@ -3743,7 +3653,7 @@ footer {
                             tr {
                                 th {
                                     &:nth-child(1) {
-                                        width: 15%;
+                                        width: 25%;
 
                                         @include respond-to(ynw-767){
                                             width: 100%;
@@ -3762,31 +3672,10 @@ footer {
                             tr {
                                 td {
                                     &:nth-child(1) {
-                                        width: 15%;
-                                        
-                                        img {
-                                            width: 100%;
-                                        }
+                                        width: 25%;
 
                                         @include respond-to(ynw-767){
                                             width: 100%;
-                                            
-                                            img {
-                                                width: 150px;
-                                                height: 80px;
-                                            }
-                                            
-                                            &:before {
-                                                display: none;
-                                            }
-                                        }
-                                    }
-                                    &:nth-child(2) {
-                                        color: $linkblue;
-                                        font-weight: 500;
-                                        
-                                        &:before {
-                                            color: $linkblack;
                                         }
                                     }
                                     &.tdact {
@@ -3798,7 +3687,7 @@ footer {
 
                                         .mbt {
                                             position: absolute;
-                                            right: 4px;
+                                            right: 3px;
                                             top: 2px;
 
                                             &:before {
@@ -3810,61 +3699,176 @@ footer {
                             }
                         }
                     }
+                }
+                &.q-itm {
+                    padding: 0;
+
+                        table {
+                            margin: 0;
+
+                            thead {
+                                tr {
+                                    th {
+                                        &:nth-child(1) {
+                                            width: 15%;
+
+                                            @include respond-to(ynw-767){
+                                                width: 100%;
+                                            }
+                                        }
+                                        .addbt {
+                                            margin: 0 0 0 auto;
+                                        }
+                                        &:last-child {
+                                            font-weight: normal;
+                                        }
+                                    }
+                                }
+                            }
+                            tbody {
+                                tr {
+                                    td {
+                                        &:nth-child(1) {
+                                            width: 15%;
+
+                                            
+                                            .itm-prdct {
+                                                img {
+                                                    width: 100%;
+                                                }
+
+                                                @include respond-to(ynw-767){
+                                                    width: 100%;
+
+                                                    img {
+                                                        width: 150px;
+                                                        height: 80px;
+                                                    }
+
+                                                    &:before {
+                                                        display: none;
+                                                    }
+                                                }
+                                                .noimage {
+                                                    width: 100%;
+                                                    height: 60px;
+                                                    position: relative;
+
+                                                    &:after {
+                                                        content: "";
+                                                        background: url(../images/img-null.svg) no-repeat scroll 50% -13px;
+                                                        position: absolute;
+                                                        width: 100%;
+                                                        height: 60px;
+                                                        opacity: .3;
+                                                        z-index: 10;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        &:nth-child(2) {
+                                            color: $linkblue;
+                                            font-weight: 500;
+
+                                            &:before {
+                                                color: $linkblack;
+                                            }
+                                        }
+                                        &.tdact {
+                                            position: relative;
+
+                                            @include respond-to(ynw-767){
+                                                width: 100%;
+                                            }
+
+                                            .mbt {
+                                                position: absolute;
+                                                right: 4px;
+                                                top: 2px;
+
+                                                &:before {
+                                                    display: none;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                }
             }
-        }
-        .itm-d {
-            display: flex;
-            font-size: .875rem;
-            
-            @include respond-to(ynw-767) {
-                flex-direction: column;
-            }
-            
-            .itm-l {
-                width: 25%;
-                
+            .itm-d {
+                display: flex;
+                font-size: .875rem;
+
                 @include respond-to(ynw-767) {
-                    width: 50%;
-                    margin-bottom: 20px;
-                }
-                @include respond-to(ynw-575) {
-                    width: 100%;
-                }
-                
-                .itm-prdct {
-                    width: 100%;
-                    margin-bottom: 10px;
-                    
-                    @include respond-to(ynw-575) {
-                        width: auto;
-                    }
-                }
-                
-                input[type="text"] {
-                    width: 100%;
-                }
-                
-                .ctrls {
-                    display: flex;
                     flex-direction: column;
-                    
-                    .bt7 {
+                }
+
+                .itm-l {
+                    width: 25%;
+
+                    @include respond-to(ynw-767) {
+                        width: 50%;
+                        margin-bottom: 20px;
+                    }
+                    @include respond-to(ynw-575) {
                         width: 100%;
-                        
-                        &:first-child {
+                    }
+
+                    .itm-prdct {
+                        margin-bottom: 20px;
+
+                        img {
+                            width: 100%;
+
+                            @include respond-to(ynw-575) {
+                                width: 230px;
+                            }
+                        }
+                        .noimage {
+                            width: 100%;
+                            height: 100px;
+                            position: relative;
+                            background: $cc-lightgray;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            &:after {
+                                content: "";
+                                background: url(../images/img-null.svg) no-repeat scroll 0 0;
+                                position: absolute;
+                                width: 100px;
+                                height: 100px;
+                                opacity: .3;
+                                z-index: 10;
+                            }
+                        }
+                    }
+
+                    .ctrls {
+                        display: flex;
+                        flex-direction: column;
+
+                        .bt3 {
                             border-color: $linkblue;
                             margin-bottom: 15px;
                             color: $linkblue;
-                            
+
                             &:hover {
                                 background-color: $linkblue;
                                 color: $white;
                             }
                         }
-                        &:last-child {
+
+                        .bt7 {
                             border-color: $cc-red;
                             color: $cc-red;
-                            
+
                             &:hover {
                                 background-color: $cc-red;
                                 color: $white;
@@ -3872,59 +3876,54 @@ footer {
                         }
                     }
                 }
-            }
-            .itm-r {
-                padding-left: 20px;
-                flex-grow: 1;
-                position: relative;
-                
-                @include respond-to(ynw-767) {
-                    padding-left: 0;
-                }
-                
-                .editbt {
-                    position: absolute;
-                    right: 0px;
-                    top: 0px;
-                    font-size: 1rem;
-                    color: $linkblue;
-                    width: 30px;
-                    height: 30px;
-                    @include border-radius(50%);
-                    @include transition(all 300ms);
-                    
-                    &:hover {
-                        background: $cc-ash;
+                .itm-r {
+                    padding-left: 20px;
+                    flex-grow: 1;
+                    position: relative;
+
+                    @include respond-to(ynw-767) {
+                        padding-left: 0;
                     }
-                }
-                
-                h3 {
-                    font-weight: 600;
-                    font-size: 1.125rem;
-                    margin-bottom: 20px;
-                }
-                
-                .dtls {
-                    display: flex;
-                    margin-bottom: 15px;
-                    border-bottom: 1px solid $cc-lightgray;
-                    padding-bottom: 10px;
-                    
-                    @include respond-to(ynw-575) {
-                        flex-direction: column;
+
+                    .editbt {
+                        position: absolute;
+                        right: 0px;
+                        top: 0px;
                     }
-                    
-                    .label {
+
+                    h3 {
                         font-weight: 600;
-                        width: 30%;
-                        color: $cc-darkgray;
+                        font-size: 1.125rem;
+                        margin-bottom: 20px;
                     }
-                    &:last-child {
-                        border: none;
+
+                    .dtls {
+                        display: flex;
+                        margin-bottom: 15px;
+                        border-bottom: 1px solid $cc-lightgray;
+                        padding-bottom: 10px;
+
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
+                        }
+
+                        .label {
+                            font-weight: 600;
+                            width: 30%;
+                            color: $cc-darkgray;
+
+                            @include respond-to(ynw-575) {
+                                width: 100%;
+                            }
+                        }
+                        &:last-child {
+                            border: none;
+                        }
                     }
                 }
             }
         }
+        
     }
     
 }

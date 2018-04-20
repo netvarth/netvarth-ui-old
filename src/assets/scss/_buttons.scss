@@ -221,6 +221,12 @@
 .editbt {
     position: relative;
     cursor: pointer;
+    @include border-radius(50%);
+    @include transition(all 300ms);
+    color: $linkblue;
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
     
     &:before {
         @include font-custom;
@@ -234,6 +240,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    
+    &:hover {
+        background: $cc-ash;
+        color: $linkblue;
     }
     
 }

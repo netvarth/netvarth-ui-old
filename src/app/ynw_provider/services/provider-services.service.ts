@@ -111,7 +111,8 @@ export class ProviderServices {
   removeItemImage(data) {
     // const path = 'accounts/item/' + data.itemId + '/' + encodeURI(data.displayName);
     const path = 'provider/items/' + data.itemId + '/image' ;
-    return this.servicemeta.httpPut(path);
+    // return this.servicemeta.httpPut(path);
+    return this.servicemeta.httpDelete(path);
   }
 
   getLicenseDetails() {

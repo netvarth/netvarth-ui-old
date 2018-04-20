@@ -13,19 +13,19 @@
                         <div class="copy">
                             <div class="itm-d">
                                 <div class="itm-l">
-                                    <img src="../dev/images/item1.jpeg" alt="" class="itm-prdct">
-                                    <form action="">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control">
-                                        </div>     
-                                    </form>
+                                    <div class="itm-prdct">
+                                    <img [src]="itemimg" *ngIf="image_exists && itemimg!=''">
+                                    <div class="noimage" *ngIf="!image_exists"></div>
+                                    <!-- <img src="../dev/images/item1.jpeg" alt="" class="itm-prdct"> -->
+                                    </div>
                                     <div class="ctrls">
-                                        <span class="cs-btn bt7">Change Image</span>
-                                        <span class="cs-btn bt7">Remove Image</span>
+                                        <span class="cs-btn bt3" *ngIf="!image_exists" (click)="editImage(item_list, 'add')">Add Image</span>
+                                        <span class="cs-btn bt3" *ngIf="image_exists" (click)="editImage(item_list, 'change')">Change Image</span>
+                                        <span class="cs-btn bt7" (click)="doremoveImage()" *ngIf="image_exists">Remove Image</span>
                                     </div>
                                 </div>
                                 <div class="itm-r">
-                                    <span class="editbt"></span>
+                                    <span class="editbt" (click)="editItem()"></span>
                                     <h3>Item Details</h3>
                                     <div class="dtls">
                                         <span class="label">Item Name</span>
@@ -68,7 +68,7 @@
     </div>    
 </section>
 
-<div>
+<!-- <div>
    <app-header [headerTitle] = "'Items'"></app-header>
 <div *ngIf="item_list">
     <div class="image_container">
@@ -78,7 +78,6 @@
                     <div *ngIf="img_msg">{{img_msg}}</div>
                         <div class="form-group">
                             <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)" formControlName="file">
-                            <!-- <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="fileChange($event)" placeholder="Upload file" formControlName="file">  -->
                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'file')" errorMsg="Please select the file to upload.">
                            </app-field-error-display>
                         </div>
@@ -106,4 +105,4 @@
         <div>Status: {{item_list.status}}</div> 
     </div>
 </div>
-</div>
+</div> -->

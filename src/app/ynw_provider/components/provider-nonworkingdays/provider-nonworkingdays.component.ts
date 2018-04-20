@@ -27,7 +27,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
         title: 'Settings'
       },
       {
-        title: 'Non Working Days Coupons',
+        title: 'Non Working Days',
         url: '/provider/settings/holidays'
       }
     ];

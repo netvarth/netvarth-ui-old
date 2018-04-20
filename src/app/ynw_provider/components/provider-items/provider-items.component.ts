@@ -72,7 +72,7 @@ export class ProviderItemsComponent implements OnInit {
     editItem(obj) {
       const dialogRef = this.dialog.open(AddProviderItemComponent, {
         width: '50%',
-          panelClass: ['commonpopupmainclass'],
+        panelClass: ['commonpopupmainclass'],
         data: {
           item : obj,
           type : 'edit'
@@ -123,7 +123,6 @@ export class ProviderItemsComponent implements OnInit {
         );
     }
     showDetails(id) {
-      console.log('i am here', id);
       if (!id) {
         return ;
       }

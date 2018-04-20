@@ -335,6 +335,11 @@
                     margin-left: 15px;
                 }
             }
+            &.bold {
+                label {
+                    font-weight: 600;
+                }
+            }
         }
 
         .mat-form-field {
@@ -422,6 +427,61 @@
                 }
             }
         }
+        
+        .itemtopouter {
+            margin-bottom: 1.25em;
+            display: flex;
+            
+            .galul {
+                margin-right: 15px;
+                li {
+                    width: auto;
+                    
+                    .galimg_outer {
+                        padding: 0;
+                    }
+                }
+            }
+            
+            .upload-doc {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                
+                label {
+                    margin-bottom: 0px;
+                    cursor: pointer;
+                }
+                .select-wrapper  {
+                    width: auto;
+                    height: auto;
+                    margin: 0 0 0 15px;
+                    
+                    &:before {
+                        height: 20px;
+                    }
+                }
+                &.imageexist {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    
+                    label {
+                        margin-bottom: 20px;
+                    }
+                    
+                    .select-wrapper  {
+                        width: 30px;
+                        height: 30px;
+                    }
+                }
+            }
+            
+            > div {
+                width: 40%;
+            }
+        }
 
         .custom-select {
             background-color: $cc-formbg;
@@ -444,6 +504,26 @@
 
         .custom-control {
             padding-left: 0;
+        }
+        
+        .mat-radio-group {
+            .mat-radio-button {
+                margin-left: 10px;
+            }  
+        }
+        
+        .pickerouter {
+            display: flex;
+            
+            input[type="text"] {
+                width: 120px;
+            }
+            
+            .mat-datepicker-toggle {
+                border: 1px solid $linkblue;
+                @include border-radius(.25rem);
+                margin-right: 15px;
+            }
         }
 
         > .ng-star-inserted {

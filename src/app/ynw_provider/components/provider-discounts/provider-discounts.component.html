@@ -27,7 +27,7 @@
                                                 <tr *ngFor="let discount of discount_list">
                                                         <td data-title="Name"  class="td1">{{discount.name}}</td>
                                                         <td data-title="Value" clas="td2">{{(discount.calculationType=='Percentage')? discount.discValue+'%': formatPrice(discount.discValue)}}</td>        
-                                                        <td data-title="Action" class="tdact">
+                                                        <td class="action">
                                                             <span class="mbt">
                                                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                     <mat-icon>more_vert</mat-icon>
@@ -42,6 +42,11 @@
                                                                         Delete
                                                                     </button>
                                                                 </mat-menu>
+                                                            </span>
+
+                                                            <span class="mbt-mobile-show">
+                                                                    <button class="editcls" type="button" (click)="editDiscounts(discount)">Edit</button>
+                                                                    <button class="deletecls" type="button" (click)="doRemoveDiscounts(discount)">Delete</button>
                                                             </span>
                                                         </td>   
                                                     </tr>

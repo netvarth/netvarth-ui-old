@@ -18,6 +18,8 @@ export const Messages = {
   'ITEM_DELETE'  : 'Do you really want to remove the item "[name]"?',
   'ITEM_ENABLE'  : 'Do you really want to change the status to "[status]"?',
   'ITEM_LISTEMPTY' : 'No Items exists',
+  'ITEM_IMGREMOVED': 'Image removed successfully',
+  'ITEMIMAGE_UPLOADED': 'Image uploaded successfully',
 
   // Bill Discount
   'DISCOUNT_CREATED' : 'Billing Discount created successfully',
