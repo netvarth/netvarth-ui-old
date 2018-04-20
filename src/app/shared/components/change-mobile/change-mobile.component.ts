@@ -64,11 +64,14 @@ export class ChangeMobileComponent implements OnInit {
     onSubmit(submit_data) {
       if (!submit_data.phonenumber) { return false; }
 
+      this.resetApiErrors();
+
       this.shared_services.verifyNewPhone(submit_data.phonenumber, this.shared_functions.isBusinessOwner('returntyp'))
       .subscribe(
         data => {
           this.step = 2;
           this.submit_data = submit_data;
+          this.api_success = Messages.OTP_SENT_MOBILE;
         },
         error => {
           this.api_error = error.error;

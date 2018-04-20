@@ -414,35 +414,33 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
 
-  getWaitlistFutureCount(queueId) {
-    const url = 'provider/waitlist/future/count/' + queueId;
+  getWaitlistFutureCount() {
+    const url = 'provider/waitlist/future/count/';
     return this.servicemeta.httpGet(url);
   }
 
-  getwaitlistTodayCount(queueId) {
-    const url = 'provider/waitlist/today/count/' + queueId;
+  getwaitlistTodayCount() {
+    const url = 'provider/waitlist/today/count/';
     return this.servicemeta.httpGet(url);
   }
 
-  getwaitlistHistoryCount(queueId) {
-    const url = 'provider/waitlist/history/count/' + queueId;
+  getwaitlistHistoryCount() {
+    const url = 'provider/waitlist/history/count/';
     return this.servicemeta.httpGet(url);
   }
 
   getTodayWaitlist(queueId) {
-    const url = 'provider/waitlist/today/' + queueId;
+    const url = 'provider/waitlist/today/';
+    return this.servicemeta.httpGet(url, null , {'queue-eq' : queueId});
+  }
+
+  getHistroryWaitlist() {
+    const url = 'provider/waitlist/history';
     return this.servicemeta.httpGet(url);
   }
 
-  getHistroryWaitlist(queueId = null) {
-    const url = (queueId) ? 'provider/waitlist/history/' + queueId :
-    'provider/waitlist/history';
-    return this.servicemeta.httpGet(url);
-  }
-
-  getFutureWaitlist(queueId = null) {
-    const url = (queueId) ? 'provider/waitlist/future/' + queueId :
-    'provider/waitlist/future';
+  getFutureWaitlist() {
+    const url = 'provider/waitlist/future';
     return this.servicemeta.httpGet(url);
   }
 

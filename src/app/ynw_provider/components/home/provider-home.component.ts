@@ -130,6 +130,9 @@ export class ProviderHomeComponent implements OnInit {
     this.loadApiSwitch();
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
 
+    this.getFutureCheckinCount();
+    this.getTodayCheckinCount();
+    // this.getHistoryCheckinCount();
   }
 
   selectedQueue(selected_queue) {
@@ -138,7 +141,7 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getFutureCheckinCount() {
-    this.provider_services.getWaitlistFutureCount(this.selected_queue.id)
+    this.provider_services.getWaitlistFutureCount()
     .subscribe(
       data => {
         this.future_waitlist_count = data || 0 ;
@@ -149,7 +152,7 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getHistoryCheckinCount() {
-    this.provider_services.getwaitlistHistoryCount(this.selected_queue.id)
+    this.provider_services.getwaitlistHistoryCount()
     .subscribe(
       data => {
         this.histroy_waitlist_count = data || 0 ;
@@ -160,7 +163,7 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getTodayCheckinCount() {
-    this.provider_services.getwaitlistTodayCount(this.selected_queue.id)
+    this.provider_services.getwaitlistTodayCount()
     .subscribe(
       data => {
         this.today_waitlist_count = data || 0 ;
@@ -218,6 +221,7 @@ export class ProviderHomeComponent implements OnInit {
   setTimeType(time_type) {
     this.time_type = time_type;
     this.check_in_list  = [];
+    this.queues = [];
     this.loadApiSwitch();
   }
 

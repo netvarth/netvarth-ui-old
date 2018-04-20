@@ -6,7 +6,9 @@
     <ul class="galul">
     <li *ngFor="let file of item_pic.files;let i = index ">
       <div class="galimg_outer">
-      <div class="gal_img"><img [src]="item_pic.base64[i]"></div>
+      <div class="gal_img">
+        <img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]">
+      </div>
       <div class="gal_caption"><input type="text" [(ngModel)]="item_pic.caption[i]" placeholder="Caption"></div>
       <div class="gal_action">
           <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
@@ -31,7 +33,7 @@
       <input type="file"  multiple name="image_src" id="image_src"  accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #filed (change)="imageSelect(filed,$event)">
     </span>
   </div>
-  
+
 </mat-dialog-content>
 <mat-dialog-actions>
   <button (click)="saveImages()" *ngIf="item_pic.files.length >0" mat-button class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>

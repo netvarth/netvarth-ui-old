@@ -2,10 +2,7 @@
 <form [formGroup]="signupForm"  novalidate
 (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">
-<div *ngIf="api_error">
-    <app-field-error-display [displayError]="true"
-    errorMsg="{{api_error}}"></app-field-error-display>
-</div>
+
 <div class="mat-dialog-content" *ngIf="step==1">
   <div class="form-group">
     <label class="col-form-label" for="phonenumber">Mobile *</label>
@@ -24,7 +21,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   <div class="form-group-inline">
   <div class="form-group">
     <label class="col-form-label" for="first_name">First Name *</label>
-    <input type="text" class="form-control" id="first_name" 
+    <input type="text" class="form-control" id="first_name"
     formControlName="first_name" uppercase>
     <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')"
     [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
@@ -37,7 +34,7 @@ onSubmit()" (keyup)="resetApiErrors()">
 
   <div class="form-group">
     <label class="col-form-label" for="last_name">Last Name *</label>
-    <input type="text" class="form-control" id="last_name" 
+    <input type="text" class="form-control" id="last_name"
     formControlName="last_name">
     <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')"
     [errorMsgs]="fed_service.getErrorMessage(signupForm,'last_name',
@@ -58,8 +55,8 @@ onSubmit()" (keyup)="resetApiErrors()">
         </mat-option>
       </mat-select>
     </mat-form-field>
-        
- 
+
+
     <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedDomainIndex')"
       errorMsg="Select one Service Sector" >
     </app-field-error-display>
@@ -80,7 +77,7 @@ onSubmit()" (keyup)="resetApiErrors()">
      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedSubDomains')"
      errorMsg="Select one sub sector">
     </app-field-error-display>
-    
+
   </div>
 
   <div class="form-group-packages"  *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
@@ -90,7 +87,7 @@ onSubmit()" (keyup)="resetApiErrors()">
     <mat-radio-group formControlName="package_id">
       <ng-container *ngFor="let package of packages">
         <mat-radio-button value="{{package.pkgId}}" (click)="clickedPackage(package.pkgId)" [class.activepackcls]="isSelectedClass(package.pkgId)" > {{package.displayName}}</mat-radio-button>
-      </ng-container>  
+      </ng-container>
     </mat-radio-group>
 
   </div>
@@ -112,6 +109,14 @@ onSubmit()" (keyup)="resetApiErrors()">
 
 <div class="example-container" *ngIf="step==3">
   <app-sp-form (onPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"></app-sp-form>
+</div>
+<div *ngIf="api_error">
+    <app-field-error-display [displayError]="true"
+    errorMsg="{{api_error}}"></app-field-error-display>
+</div>
+<div *ngIf="api_success">
+<app-form-success-display [displayMsg]="true"
+successMsg="{{api_success}}"></app-form-success-display>
 </div>
 
 

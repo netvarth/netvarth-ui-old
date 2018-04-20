@@ -528,6 +528,10 @@ export class ProviderBprofileSearchComponent implements OnInit {
       if (locid) {
         this.routerobj.navigate(['/provider/settings/waitlist-manager/location-detail/' + locid]);
       }
+    } else {
+      // come to base profile from wizard and profile is disabled
+      // chance for no base profile
+      this.addLocation();
     }
     // the following section is commented as client told that they wanted the provider
     // to be taken to the location details page under waitlist manager when clicked on

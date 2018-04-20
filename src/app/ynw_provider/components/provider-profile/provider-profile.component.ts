@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
@@ -15,7 +15,9 @@ import { projectConstants } from '../../../shared/constants/project-constants';
     templateUrl: './provider-profile.component.html'
 })
 
-export class ProviderProfileComponent implements OnInit {
+export class ProviderProfileComponent implements OnInit, OnDestroy {
+
+  @ViewChild('ckeditor') ckeditor: ElementRef;
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -36,12 +38,27 @@ export class ProviderProfileComponent implements OnInit {
   toolbar = projectConstants.TOOLBAR_CONFIG;
   files;
   subscription;
+  ckeditorLoaded = false;
 
   constructor(private fb: FormBuilder,
   private shared_functions: SharedFunctions,
   private shared_services: SharedServices,
   private provider_services: ProviderServices,
-  public fed_service: FormMessageDisplayService) { }
+  public fed_service: FormMessageDisplayService) {
+
+    if (!window['CKEDITOR']) {
+      const url = '//cdn.ckeditor.com/4.7.3/full/ckeditor.js';
+      const script = document.createElement('script');
+      script.onload = () => {
+          this.ckeditorLoaded = true;
+         };
+      script.type = 'text/javascript';
+      script.src = url;
+      document.body.appendChild(script);
+    }
+
+
+  }
 
   ngOnInit() {
     this.firstFormGroup = this.fb.group({
@@ -207,6 +224,12 @@ export class ProviderProfileComponent implements OnInit {
       return val;
     }
 
+
+ }
+ ngOnDestroy() {
+  if (window['CKEDITOR']) {
+    window['CKEDITOR'].removeAllListeners(); this.ckeditorLoaded = false;
+  }
 
  }
 

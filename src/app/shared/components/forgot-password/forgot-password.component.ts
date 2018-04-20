@@ -5,6 +5,7 @@ import {NgForm} from '@angular/forms';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
 import {projectConstants} from '../../../shared/constants/project-constants';
+import {Messages} from '../../constants/project-messages';
 
 @Component({
   selector: 'app-forgot-password',
@@ -124,10 +125,13 @@ export class ForgotPasswordComponent  {
     sendOtpApi(phonenumber) {
       const type = (this.is_provider === 'true') ? 'provider' : 'consumer';
 
+      this.resetApiErrors();
+
       this.shared_services.forgotPassword(type, phonenumber)
       .subscribe(
         data => {
           this.createForm(2);
+          this.api_success = Messages.OTP_SENT_MOBILE;
           this.submit_data = phonenumber;
         },
         error => {
@@ -145,6 +149,7 @@ export class ForgotPasswordComponent  {
 
     resetApiErrors() {
       this.api_error = null;
+      this.api_success = null;
     }
 
 }
