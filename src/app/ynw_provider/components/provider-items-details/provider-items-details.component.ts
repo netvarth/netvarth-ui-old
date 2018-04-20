@@ -22,6 +22,17 @@ export class ProviderItemsDetailsComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
+  breadcrumbs_init = [
+    {
+      url: '/provider/settings',
+      title: 'Settings'
+    },
+    {
+      title: 'Items',
+      url: '/provider/settings/items'
+    }
+  ];
+breadcrumbs = this.breadcrumbs_init;
 
     constructor( private provider_servicesobj: ProviderServices,
         private router: ActivatedRoute, private dialog: MatDialog,

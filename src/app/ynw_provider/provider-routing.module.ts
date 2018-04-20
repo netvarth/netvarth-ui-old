@@ -44,14 +44,25 @@ const routes: Routes = [
         path: 'waitlist-manager',
         component: ProviderWaitlistComponent
       },
-      { path: 'discounts',
+      {
+        path: 'discounts',
         component: ProviderDiscountsComponent
       },
-      { path: 'coupons',
+      {
+        path: 'coupons',
         component: ProviderCouponsComponent
       },
-      { path: 'holidays',
+      {
+        path: 'holidays',
         component: ProviderNonworkingdaysComponent
+      },
+      {
+        path: 'items',
+        component: ProviderItemsComponent
+      },
+      {
+        path: 'items/:id',
+        component: ProviderItemsDetailsComponent
       },
       {
         path: 'waitlist-manager',
@@ -101,11 +112,11 @@ const routes: Routes = [
     { path: 'tour', component: ProviderTourComponent },
     { path: 'profile', component: ProviderProfileComponent },
     { path: 'members', component: ProviderMembersComponent },
-    { path: 'items', component: ProviderItemsComponent },
-    { path: 'items/:id', component: ProviderItemsDetailsComponent },
+    // { path: 'items', component: ProviderItemsComponent },
+    // { path: 'items/:id', component: ProviderItemsDetailsComponent },
    // { path: 'discounts', component: ProviderDiscountsComponent },
    // { path: 'coupons', component: ProviderCouponsComponent },
-    { path: 'fields', component: VirtualFieldsComponent},
+   // { path: 'fields', component: VirtualFieldsComponent},
    // { path: 'holidays', component: ProviderNonworkingdaysComponent },
     { path: 'inbox', component: ProviderInboxComponent },
     { path: 'bwizard', component: ProviderbWizardComponent }

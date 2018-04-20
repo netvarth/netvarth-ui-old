@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit,  } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ViewChild, ElementRef } from '@angular/core';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
@@ -24,7 +25,10 @@ export class AddProviderItemComponent implements OnInit {
     files: [],
     base64: null
   };
+  holdtaxable = false;
   file_error_msg = '';
+  img_exists = false;
+  @ViewChild('caption') private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,16 +50,16 @@ export class AddProviderItemComponent implements OnInit {
         displayName: ['', Validators.compose([Validators.required])],
         shortDesc: ['', Validators.compose([Validators.required])],
         displayDesc: ['', Validators.compose([Validators.required])],
-        taxable: ['1', Validators.compose([Validators.required])],
+        taxable: [false, Validators.compose([Validators.required])] // ,
         /*file: ['', Validators.compose([Validators.required])],*/
-        caption: ['Itempic']
+        // caption: ['Itempic']
       });
     } else {
       this.amForm = this.fb.group({
         displayName: ['', Validators.compose([Validators.required])],
         shortDesc: ['', Validators.compose([Validators.required])],
         displayDesc: ['', Validators.compose([Validators.required])],
-        taxable: ['1', Validators.compose([Validators.required])]
+        taxable: [false, Validators.compose([Validators.required])]
       });
     }
 
@@ -63,23 +67,44 @@ export class AddProviderItemComponent implements OnInit {
       this.updateForm();
     }
   }
+  updateForm() {
+    // let taxable = '0';
+    if (this.data.item.taxable === true) {
+      // taxable = '1';
+      this.holdtaxable = true;
+    }
+    this.amForm.setValue({
+      'displayName': this.data.item.displayName || null,
+      'shortDesc': this.data.item.shortDesc || null,
+      'displayDesc': this.data.item.displayDesc || null,
+      'taxable': this.holdtaxable
+    });
+  }
   showimg() {
     if (this.item_pic.base64) {
         return this.item_pic.base64;
     } else {
-      return this.sharedfunctionObj.showlogoicon('');
+      return this.sharedfunctionObj.showitemimg('');
     }
   }
   onSubmit (form_data) {
     let taxable = false;
-    if (form_data.taxable === '1') {
-      taxable = true;
-    }
+    // console.log( this.captionRef.nativeElement.value);
+    // if (form_data.taxable === '1') {
+    taxable = this.holdtaxable;
+   // }
     if (this.data.type === 'add') {
         if (!this.selitem_pic) {
-          this.file_error_msg = 'Please select the file';
+          this.api_error = 'Please select the file';
           return;
         }
+        let imgcaption = '';
+        if (this.captionRef.nativeElement) {
+          imgcaption = this.captionRef.nativeElement.value || '';
+        }
+        imgcaption = (imgcaption === '') ? 'Itempic' : imgcaption;
+
+
         const submit_data: FormData = new FormData();
 
         const post_itemdata = {
@@ -95,7 +120,7 @@ export class AddProviderItemComponent implements OnInit {
 
         submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
         const propertiesDet = {
-                                'caption' : form_data.caption
+                                'caption' : imgcaption // form_data.caption
         };
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
@@ -142,18 +167,6 @@ export class AddProviderItemComponent implements OnInit {
           }
     );
   }
-  updateForm() {
-    let taxable = '0';
-    if (this.data.item.taxable === true) {
-      taxable = '1';
-    }
-    this.amForm.setValue({
-      'displayName': this.data.item.displayName || null,
-      'shortDesc': this.data.item.shortDesc || null,
-      'displayDesc': this.data.item.displayDesc || null,
-      'taxable': taxable
-    });
-  }
 
   resetApiErrors () {
     this.api_error = null;
@@ -161,7 +174,9 @@ export class AddProviderItemComponent implements OnInit {
   }
 
   imageSelect(input, ev) {
+    this.resetApiErrors();
     if (input.files && input.files[0]) {
+      this.img_exists = true;
       const reader = new FileReader();
       this.item_pic.files = input.files[0];
       this.selitem_pic = input.files[0];
@@ -173,6 +188,17 @@ export class AddProviderItemComponent implements OnInit {
      reader.readAsDataURL(fileobj);
     }
     this.file_error_msg = '';
+  }
+
+  deleteTempImage() {
+    this.img_exists = false;
+    this.item_pic.files = [];
+    this.item_pic.base64 = '';
+    this.selitem_pic = '';
+  }
+
+  handleTaxablechange() {
+    this.holdtaxable = !this.holdtaxable;
   }
 
 }

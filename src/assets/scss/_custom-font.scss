@@ -89,9 +89,6 @@
 .icon-edit:before {
   content: "\78";
 }
-.icon-open-time:before {
-  content: "\7a";
-}
 .icon-info:before {
   content: "\42";
 }
@@ -215,7 +212,7 @@
 .icon-trauma:before {
   content: "\79";
 }
-.icon-open-time-1:before {
+.icon-open-time:before {
   content: "\43";
 }
 .icon-add:before {
@@ -226,4 +223,10 @@
 }
 .icon-first-aid:before {
   content: "\38";
+}
+.icon-ambulance:before {
+  content: "\7a";
+}
+.icon-claim:before {
+  content: "\39";
 }
