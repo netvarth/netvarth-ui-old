@@ -50,6 +50,9 @@ export class ChangeEmailComponent implements OnInit {
     }
 
     onSubmit(submit_data) {
+
+      this.resetApiErrors();
+
       if (!submit_data.email) { return false; }
 
       this.shared_services.verifyNewPhone(submit_data.email, this.shared_functions.isBusinessOwner('returntyp'))
@@ -57,6 +60,7 @@ export class ChangeEmailComponent implements OnInit {
         data => {
           this.step = 2;
           this.submit_data = submit_data;
+          this.api_success = Messages.OTP_SENT_EMAIL;
         },
         error => {
           this.api_error = error.error;

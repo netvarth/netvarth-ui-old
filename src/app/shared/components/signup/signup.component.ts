@@ -5,6 +5,7 @@ import {FormMessageDisplayService} from '../../modules/form-message-display/form
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import {Messages} from '../../constants/project-messages';
 
 @Component({
   selector: 'app-signup',
@@ -27,6 +28,7 @@ export class SignUpComponent implements OnInit {
   selectedDomain = null;
   signupForm: FormGroup;
   api_error = null;
+  api_success = null;
   is_provider = 'true';
   step = 1;
   otp = null;
@@ -219,11 +221,21 @@ export class SignUpComponent implements OnInit {
 
     signUpApiProvider(user_details) {
 
+      this.resetApiErrors();
+
+      console.log(user_details);
       this.shared_services.signUpProvider(user_details)
       .subscribe(
         data => {
-           // console.log(data);
+            console.log(user_details);
             this.createForm(2);
+            if (user_details.userProfile &&
+              user_details.userProfile.email) {
+
+                this.setMessage('email');
+              } else {
+                this.setMessage('mobile');
+              }
         },
         error => {
             console.log(error);
@@ -310,6 +322,7 @@ export class SignUpComponent implements OnInit {
 
     resetApiErrors() {
       this.api_error = null;
+      this.api_success = null;
     }
 
     resendOtp(user_details) {
@@ -332,5 +345,15 @@ export class SignUpComponent implements OnInit {
       } else {
         return false;
       }
+    }
+
+    setMessage (type) {
+
+      if (type === 'email') {
+        this.api_success  = Messages.OTP_SENT_EMAIL;
+      } else if (type === 'mobile') {
+        this.api_success = Messages.OTP_SENT_MOBILE;
+      }
+
     }
 }

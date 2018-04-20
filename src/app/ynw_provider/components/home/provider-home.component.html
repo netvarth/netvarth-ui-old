@@ -34,14 +34,14 @@
                   </div>
               </div>
 
-              <div class="qlst" *ngIf="queues.length != 0">
+              <div class="qlst" *ngIf="time_type ==1 && queues.length != 0">
                   <ul>
                       <li
                       [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
                       *ngFor="let queue of queues">
                         <div class="qname"  (click)="selectedQueue(queue)">
-                          <span class="qtitle"> {{queue.name}}</span>
-                          <span class="wlst" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
+                          <!-- <span class="qtitle"> {{queue.name}}</span> -->
+                          <span class="qtitle" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
                             {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
                           </span>
                         </div>
@@ -136,7 +136,7 @@
               <div class="qlst no-dta"
               *ngIf="time_type ==1 && load_queue == 1 &&
               queues.length ==0">
-                <p>No available queues</p>
+                <p>No queues available</p>
               </div>
           </div>
       </div>

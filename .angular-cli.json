@@ -26,7 +26,9 @@
         "customTheme.scss",
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/js/google_map_AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

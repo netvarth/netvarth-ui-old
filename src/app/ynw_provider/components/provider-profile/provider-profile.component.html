@@ -20,7 +20,7 @@
     <form [formGroup]="firstFormGroup">
       <div>
         <label>Profile Picture</label>
-        <div><img [src]="this.profile_pic.base64" style="height:150px"></div>
+        <div><img *ngIf="this.profile_pic.base64" [src]="this.profile_pic.base64" style="height:150px"></div>
         <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif" class="file"
         #file (change)="imageUpload(file)">
       </div>
@@ -60,9 +60,9 @@
           errorMsg="Please enter a valid email.">
          </app-field-error-display>
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="ckeditorLoaded">
           <label class="col-form-label" for="business_desc">Description *</label>
-          <ckeditor
+          <ckeditor #ckeditor
           formControlName="business_desc"
           [readonly]="false"
           debounce="500"

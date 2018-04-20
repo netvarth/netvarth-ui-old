@@ -399,10 +399,10 @@ export class ProviderbWizardComponent implements OnInit {
   checkClose() {
     const redirect = false;
     let show_incomplete = false;
-    const bname = this.wizard_data_holder.name.trim();
-    const lat = this.wizard_data_holder.lat.trim();
-    const lon = this.wizard_data_holder.lon.trim();
-    const lname = this.wizard_data_holder.location.trim();
+    const bname = (this.wizard_data_holder.name) ? this.wizard_data_holder.name.trim() : '';
+    const lat = (this.wizard_data_holder.lat) ? this.wizard_data_holder.lat.trim() : '';
+    const lon = (this.wizard_data_holder.lon)  ? this.wizard_data_holder.lon.trim() : '';
+    const lname = (this.wizard_data_holder.location) ? this.wizard_data_holder.location.trim() : '';
     const sch = this.schedule_arr.length;
     if (bname === '')  {
       show_incomplete = true;
