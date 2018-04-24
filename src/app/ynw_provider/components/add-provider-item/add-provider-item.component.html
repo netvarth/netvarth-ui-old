@@ -1,13 +1,53 @@
 <form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-
-<div class="form-group" *ngIf="data.type=='add'">
+<h1 class="mat-dialog-title">Item - {{ data.type | titlecase }}  
+        <button #queue mat-dialog-close class="modal_close">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </h1>
+<mat-dialog-content>
+<!-- <div class="form-group" *ngIf="data.type=='add'">
     <div><img [src]="showimg()" style="width:150px; height:auto;"></div>
     <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)">
     <app-field-error-display [displayError]="file_error_msg" errorMsg="Please select the file to upload.">
     </app-field-error-display>
+   
+</div> 
+<div class="form-group" *ngIf="data.type=='add'">
     <input type="text" #caption formControlName="caption"/>
-</div>
+</div>-->
 
+        <div class="itemtopouter">
+        <div *ngIf="img_exists && data.type=='add'">
+        <ul class="galul">
+        <li>
+        <div class="galimg_outer">
+        <div class="gal_img"><img [src]="item_pic.base64"></div>
+        <div class="gal_caption"><input type="text" name="caption" #caption placeholder="Caption"></div>
+        <div class="gal_action">
+            <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
+                <mat-icon>more_vert</mat-icon>
+            </button>
+                <mat-menu #menu="matMenu">
+                <button type="button" mat-menu-item (click)="deleteTempImage()">
+                    <!-- <mat-icon>delete</mat-icon> -->
+                    <i class="icon-delete"></i>
+                    <span >Delete</span>
+                    </button>
+                </mat-menu>
+        </div>
+        </div>
+        </li>
+        </ul>
+        </div>
+
+        <div class="upload-doc" [class.imageexist] = "img_exists" (click)="file.click()" *ngIf="data.type=='add'">
+        <label class="col-form-label" *ngIf="!img_exists">Click here to select the image</label>
+        <label class="col-form-label" *ngIf="img_exists">Click here to change the image</label>
+        <span class="select-wrapper ">
+        <input type="file" name="image_src" id="image_src"  accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)">
+        </span>
+        </div>
+    </div>
 
 <div class="form-group">
     <label class="col-form-label" for="displayName">Item Name *</label>
@@ -30,15 +70,19 @@
    </app-field-error-display>
 </div>
 <div class="form-group">
-    <label class="col-form-label" for="taxable">Taxable *</label>
-    <input type="radio" class="form-control" id="taxable" value="1" formControlName="taxable"> Yes<br/>
-    <input type="radio" class="form-control" id="taxable" value="0" formControlName="taxable"> No
+    <label class="col-form-label" for="taxable">Taxable * </label>
+    <mat-slide-toggle formControlName="taxable" (change)="handleTaxablechange()" [checked]="holdtaxable"></mat-slide-toggle>
+    <!-- <input type="radio" class="form-control" id="taxable" value="1" formControlName="taxable"> Yes<br/>
+    <input type="radio" class="form-control" id="taxable" value="0" formControlName="taxable"> No -->
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')"  errorMsg="Please select taxable">
    </app-field-error-display>
 </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+<button  type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">Submit</button>
+<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 
-<button  type="submit" mat-button [disabled]="!amForm.valid">Submit</button>
-
+</mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error"
 errorMsg="{{api_error}}"></app-field-error-display>

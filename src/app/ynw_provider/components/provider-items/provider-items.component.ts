@@ -21,6 +21,17 @@ export class ProviderItemsComponent implements OnInit {
     item_list: any = [] ;
     query_executed = false;
     emptyMsg = Messages.ITEM_LISTEMPTY;
+    breadcrumbs_init = [
+      {
+        url: '/provider/settings',
+        title: 'Settings'
+      },
+      {
+        title: 'Items',
+        url: '/provider/settings/items'
+      }
+    ];
+  breadcrumbs = this.breadcrumbs_init;
     constructor( private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions) {}
@@ -46,6 +57,7 @@ export class ProviderItemsComponent implements OnInit {
     addItem() {
       const dialogRef = this.dialog.open(AddProviderItemComponent, {
         width: '50%',
+        panelClass: ['commonpopupmainclass'],
         data: {
           type : 'add'
         }
@@ -60,6 +72,7 @@ export class ProviderItemsComponent implements OnInit {
     editItem(obj) {
       const dialogRef = this.dialog.open(AddProviderItemComponent, {
         width: '50%',
+        panelClass: ['commonpopupmainclass'],
         data: {
           item : obj,
           type : 'edit'
@@ -113,7 +126,7 @@ export class ProviderItemsComponent implements OnInit {
       if (!id) {
         return ;
       }
-      this.router.navigate(['/provider/items/' + id]);
+      this.router.navigate(['provider', 'settings', 'items', id]);
     }
 
     doRemoveItem(item) {
@@ -123,6 +136,7 @@ export class ProviderItemsComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
+        panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
         data: {
           'message' : Messages.ITEM_DELETE.replace('[name]', item.displayName)
         }

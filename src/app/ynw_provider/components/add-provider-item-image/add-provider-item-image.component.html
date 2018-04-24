@@ -1,0 +1,51 @@
+<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+<h1 class="mat-dialog-title">Item Image - {{ data.type | titlecase }}  
+        <button #queue mat-dialog-close class="modal_close">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </h1>
+<mat-dialog-content>
+
+        <div class="itemtopouter">
+        <div *ngIf="img_exists">
+        <ul class="galul">
+        <li>
+        <div class="galimg_outer">
+        <div class="gal_img"><img [src]="item_pic.base64"></div>
+        <div class="gal_caption"><input type="text" name="caption" #caption placeholder="Caption"></div>
+        <div class="gal_action">
+            <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
+                <mat-icon>more_vert</mat-icon>
+            </button>
+                <mat-menu #menu="matMenu">
+                <button type="button" mat-menu-item (click)="deleteTempImage()">
+                    <i class="icon-delete"></i>
+                    <span >Delete</span>
+                    </button>
+                </mat-menu>
+        </div>
+        </div>
+        </li>
+        </ul>
+        </div>
+
+        <div class="upload-doc" [class.imageexist] = "img_exists" (click)="file.click()" *ngIf="show_img_select">
+        <label class="col-form-label" *ngIf="!img_exists">Click here to select the image</label>
+        <label class="col-form-label" *ngIf="img_exists">Click here to change the image</label>
+        <span class="select-wrapper ">
+        <input type="file" name="image_src" id="image_src"  accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)">
+        </span>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+<button  type="submit" mat-button class="cs-btn bt1" [disabled]="!img_exists || uploading">{{upload_button_caption}}</button>
+<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+
+</mat-dialog-actions>
+</form>
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>

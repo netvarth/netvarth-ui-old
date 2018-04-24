@@ -220,6 +220,13 @@ export class SharedFunctions {
         return logo;
       }
     }
+    public showitemimg(logo, moreparams?) {
+      if (logo == null || logo === '') {
+        return 'assets/images/no_image_icon.png';
+      } else {
+        return logo;
+      }
+    }
 
     public tosentenceCase (str) { /* Convert string to sentence case*/
       if ((str === null) || (str === '')) {
@@ -479,7 +486,7 @@ export class SharedFunctions {
 
   orderChangeWorkingHours(schedulearr) {
     const tmparr = schedulearr;
-    console.log('inside before', schedulearr);
+    // console.log('inside before', schedulearr);
     for (let i = 0; i < tmparr.length; i++ ) {
       for (let j = i; j < tmparr.length; j++ ) {
         if (tmparr[j].day < tmparr[i].day) {

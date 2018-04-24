@@ -27,7 +27,7 @@
                                                 <tr *ngFor="let coupon of coupon_list">
                                                         <td data-title="Name" class="pointer-cursor" class="td1">{{coupon.name}}</td>
                                                         <td data-title="Value" class="pointer-cursor" clas="td2">{{(coupon.calculationType=='Percentage')? coupon.amount+'%': formatPrice(coupon.amount)}}</td>        
-                                                        <td data-title="Action" class="tdact">
+                                                        <td class="action">
                                                             <span class="mbt">
                                                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                     <mat-icon>more_vert</mat-icon>
@@ -42,6 +42,11 @@
                                                                         Delete
                                                                     </button>
                                                                 </mat-menu>
+                                                            </span>
+
+                                                            <span class="mbt-mobile-show">
+                                                                    <button class="editcls" type="button" (click)="editCoupons(coupon)">Edit</button>
+                                                                    <button class="deletecls" type="button" (click)="doRemoveCoupons(coupon)">Delete</button>
                                                             </span>
                                                         </td>   
                                                     </tr>

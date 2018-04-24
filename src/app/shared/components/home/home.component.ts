@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
         private shared_service: SharedServices,
-        private shared_functions: SharedFunctions,
+        public shared_functions: SharedFunctions,
         private routerobj: Router,
         public dialog: MatDialog,
         private _ngZone: NgZone

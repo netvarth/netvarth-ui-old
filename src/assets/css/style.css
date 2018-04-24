@@ -195,7 +195,19 @@
 
 .editbt {
   position: relative;
-  cursor: pointer; }
+  cursor: pointer;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+  color: #00aef2;
+  width: 30px;
+  height: 30px;
+  font-size: 1rem; }
   .editbt:before {
     font-family: "custom-ynw" !important;
     content: "\78";
@@ -208,6 +220,9 @@
     display: flex;
     align-items: center;
     justify-content: center; }
+  .editbt:hover {
+    background: #dbdbdb;
+    color: #00aef2; }
 
 .mbt {
   position: relative;
@@ -363,9 +378,6 @@
 .icon-edit:before {
   content: "\78"; }
 
-.icon-open-time:before {
-  content: "\7a"; }
-
 .icon-info:before {
   content: "\42"; }
 
@@ -489,7 +501,7 @@
 .icon-trauma:before {
   content: "\79"; }
 
-.icon-open-time-1:before {
+.icon-open-time:before {
   content: "\43"; }
 
 .icon-add:before {
@@ -500,6 +512,12 @@
 
 .icon-first-aid:before {
   content: "\38"; }
+
+.icon-ambulance:before {
+  content: "\7a"; }
+
+.icon-claim:before {
+  content: "\39"; }
 
 html {
   font-size: 16px; }
@@ -909,7 +927,7 @@ header {
     header .tc1 .isprovidertop {
       font-weight: 500;
       margin-top: 10px;
-      font-size: .875rem;
+      font-size: .75rem;
       color: #999999; }
       header .tc1 .isprovidertop span {
         cursor: pointer;
@@ -1016,7 +1034,7 @@ header {
     width: 24px;
     height: 24px;
     display: block;
-    margin: 0 auto; }
+    margin: 15px auto 0 auto; }
   .table-outer.d-tbl {
     padding: 0; }
 
@@ -1170,6 +1188,27 @@ header {
     font-weight: normal;
     font-size: .875rem;
     font-weight: 500; }
+    .signupmainclass div .mat-slide-toggle-content,
+    .signupmainclass label .mat-slide-toggle-content,
+    .signupmainclass input .mat-slide-toggle-content,
+    .loginmainclass div .mat-slide-toggle-content,
+    .loginmainclass label .mat-slide-toggle-content,
+    .loginmainclass input .mat-slide-toggle-content,
+    .moreoptionsmainclass div .mat-slide-toggle-content,
+    .moreoptionsmainclass label .mat-slide-toggle-content,
+    .moreoptionsmainclass input .mat-slide-toggle-content,
+    .forgotpasswordmainclass div .mat-slide-toggle-content,
+    .forgotpasswordmainclass label .mat-slide-toggle-content,
+    .forgotpasswordmainclass input .mat-slide-toggle-content,
+    .commonpopupmainclass div .mat-slide-toggle-content,
+    .commonpopupmainclass label .mat-slide-toggle-content,
+    .commonpopupmainclass input .mat-slide-toggle-content,
+    .googlemainmappopup div .mat-slide-toggle-content,
+    .googlemainmappopup label .mat-slide-toggle-content,
+    .googlemainmappopup input .mat-slide-toggle-content {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: normal;
+      font-weight: 500; }
   .signupmainclass .mat-dialog-title,
   .loginmainclass .mat-dialog-title,
   .moreoptionsmainclass .mat-dialog-title,
@@ -1714,6 +1753,13 @@ header {
       .commonpopupmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
       .googlemainmappopup .mat-dialog-content .form-group.inline .mat-slide-toggle {
         margin-left: 15px; }
+    .signupmainclass .mat-dialog-content .form-group.bold label,
+    .loginmainclass .mat-dialog-content .form-group.bold label,
+    .moreoptionsmainclass .mat-dialog-content .form-group.bold label,
+    .forgotpasswordmainclass .mat-dialog-content .form-group.bold label,
+    .commonpopupmainclass .mat-dialog-content .form-group.bold label,
+    .googlemainmappopup .mat-dialog-content .form-group.bold label {
+      font-weight: 600; }
     .signupmainclass .mat-dialog-content .mat-form-field,
     .loginmainclass .mat-dialog-content .mat-form-field,
     .moreoptionsmainclass .mat-dialog-content .mat-form-field,
@@ -1847,6 +1893,100 @@ header {
         .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label {
           border: none;
           padding: 0; }
+    .signupmainclass .mat-dialog-content .itemtopouter,
+    .loginmainclass .mat-dialog-content .itemtopouter,
+    .moreoptionsmainclass .mat-dialog-content .itemtopouter,
+    .forgotpasswordmainclass .mat-dialog-content .itemtopouter,
+    .commonpopupmainclass .mat-dialog-content .itemtopouter,
+    .googlemainmappopup .mat-dialog-content .itemtopouter {
+      margin-bottom: 1.25em;
+      display: flex; }
+      .signupmainclass .mat-dialog-content .itemtopouter .galul,
+      .loginmainclass .mat-dialog-content .itemtopouter .galul,
+      .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul,
+      .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul,
+      .commonpopupmainclass .mat-dialog-content .itemtopouter .galul,
+      .googlemainmappopup .mat-dialog-content .itemtopouter .galul {
+        margin-right: 15px; }
+        .signupmainclass .mat-dialog-content .itemtopouter .galul li,
+        .loginmainclass .mat-dialog-content .itemtopouter .galul li,
+        .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul li,
+        .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul li,
+        .commonpopupmainclass .mat-dialog-content .itemtopouter .galul li,
+        .googlemainmappopup .mat-dialog-content .itemtopouter .galul li {
+          width: auto; }
+          .signupmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
+          .loginmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
+          .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
+          .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
+          .commonpopupmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
+          .googlemainmappopup .mat-dialog-content .itemtopouter .galul li .galimg_outer {
+            padding: 0; }
+      .signupmainclass .mat-dialog-content .itemtopouter .upload-doc,
+      .loginmainclass .mat-dialog-content .itemtopouter .upload-doc,
+      .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc,
+      .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc,
+      .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc,
+      .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center; }
+        .signupmainclass .mat-dialog-content .itemtopouter .upload-doc label,
+        .loginmainclass .mat-dialog-content .itemtopouter .upload-doc label,
+        .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc label,
+        .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc label,
+        .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc label,
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc label {
+          margin-bottom: 0px;
+          cursor: pointer; }
+        .signupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
+        .loginmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
+        .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
+        .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
+        .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper {
+          width: auto;
+          height: auto;
+          margin: 0 0 0 15px; }
+          .signupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
+          .loginmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
+          .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
+          .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
+          .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before {
+            height: 20px; }
+        .signupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
+        .loginmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
+        .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
+        .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
+        .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center; }
+          .signupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
+          .loginmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
+          .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
+          .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
+          .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist label {
+            margin-bottom: 20px; }
+          .signupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
+          .loginmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
+          .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
+          .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
+          .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper {
+            width: 30px;
+            height: 30px; }
+      .signupmainclass .mat-dialog-content .itemtopouter > div,
+      .loginmainclass .mat-dialog-content .itemtopouter > div,
+      .moreoptionsmainclass .mat-dialog-content .itemtopouter > div,
+      .forgotpasswordmainclass .mat-dialog-content .itemtopouter > div,
+      .commonpopupmainclass .mat-dialog-content .itemtopouter > div,
+      .googlemainmappopup .mat-dialog-content .itemtopouter > div {
+        width: 40%; }
     .signupmainclass .mat-dialog-content .custom-select,
     .loginmainclass .mat-dialog-content .custom-select,
     .moreoptionsmainclass .mat-dialog-content .custom-select,
@@ -1885,6 +2025,39 @@ header {
     .commonpopupmainclass .mat-dialog-content .custom-control,
     .googlemainmappopup .mat-dialog-content .custom-control {
       padding-left: 0; }
+    .signupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
+    .loginmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
+    .moreoptionsmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
+    .forgotpasswordmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
+    .commonpopupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
+    .googlemainmappopup .mat-dialog-content .mat-radio-group .mat-radio-button {
+      margin-left: 10px; }
+    .signupmainclass .mat-dialog-content .pickerouter,
+    .loginmainclass .mat-dialog-content .pickerouter,
+    .moreoptionsmainclass .mat-dialog-content .pickerouter,
+    .forgotpasswordmainclass .mat-dialog-content .pickerouter,
+    .commonpopupmainclass .mat-dialog-content .pickerouter,
+    .googlemainmappopup .mat-dialog-content .pickerouter {
+      display: flex; }
+      .signupmainclass .mat-dialog-content .pickerouter input[type="text"],
+      .loginmainclass .mat-dialog-content .pickerouter input[type="text"],
+      .moreoptionsmainclass .mat-dialog-content .pickerouter input[type="text"],
+      .forgotpasswordmainclass .mat-dialog-content .pickerouter input[type="text"],
+      .commonpopupmainclass .mat-dialog-content .pickerouter input[type="text"],
+      .googlemainmappopup .mat-dialog-content .pickerouter input[type="text"] {
+        width: 120px; }
+      .signupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
+      .loginmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
+      .moreoptionsmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
+      .forgotpasswordmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
+      .commonpopupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
+      .googlemainmappopup .mat-dialog-content .pickerouter .mat-datepicker-toggle {
+        border: 1px solid #00aef2;
+        -webkit-border-radius: 0.25rem;
+        border-radius: 0.25rem;
+        background-clip: padding-box;
+        /* stops bg color from leaking outside the border: */
+        margin-right: 15px; }
     .signupmainclass .mat-dialog-content > .ng-star-inserted,
     .loginmainclass .mat-dialog-content > .ng-star-inserted,
     .moreoptionsmainclass .mat-dialog-content > .ng-star-inserted,
@@ -3781,14 +3954,17 @@ header.dashb .lg-opt {
       margin-right: 5px; }
       header.dashb .lg-opt .bnps .pro-pic img {
         width: 50px;
-        height: 50px; }
+        height: 50px;
+        position: relative;
+        z-index: 11; }
       header.dashb .lg-opt .bnps .pro-pic:after {
         content: "";
         background: url(../images/img-null.svg) no-repeat scroll 0 0;
         position: absolute;
         width: 60px;
         height: 60px;
-        opacity: .3; }
+        opacity: .3;
+        z-index: 10; }
     header.dashb .lg-opt .bnps .mn-title {
       display: flex;
       align-items: center;
@@ -4008,7 +4184,8 @@ footer.dashb .sect3 {
         border-left: none;
         border-bottom: 1px solid #dbdbdb;
         display: flex;
-        flex-direction: column; }
+        flex-direction: column;
+        font-size: 1rem; }
         .m-nav .nav01 a i {
           margin-right: 0; } }
   @media (min-width: 768px) and (max-width: 991px) {
@@ -4038,6 +4215,7 @@ footer.dashb .sect3 {
   color: #222223;
   height: 50px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 1.125em 0;
   font-family: 'Montserrat', sans-serif;
@@ -4259,7 +4437,7 @@ footer.dashb .sect3 {
       width: 50%; }
       @media only screen and (max-width: 767px) {
         .content .col-a .card .pubs.w-dta .ctrl .ct-l {
-          width: 40%; } }
+          width: 55%; } }
       .content .col-a .card .pubs.w-dta .ctrl .ct-l h2 {
         margin-bottom: 5px;
         font-size: 1.125rem;
@@ -4368,19 +4546,7 @@ footer.dashb .sect3 {
     .content .col-a .card.w-dta.active .cd-t .basic-i .editbt {
       position: absolute;
       right: 0px;
-      top: 0;
-      width: 30px;
-      height: 30px;
-      -webkit-border-radius: 50%;
-      border-radius: 50%;
-      background-clip: padding-box;
-      /* stops bg color from leaking outside the border: */
-      -moz-transition: all 300ms;
-      -o-transition: all 300ms;
-      -webkit-transition: all 300ms;
-      transition: all 300ms;
-      color: #00aef2;
-      font-size: 1rem; }
+      top: 0; }
       .content .col-a .card.w-dta.active .cd-t .basic-i .editbt:hover {
         background: #dbdbdb; }
     .content .col-a .card.w-dta.active .cd-t .basic-i .bi-l {
@@ -4556,20 +4722,7 @@ footer.dashb .sect3 {
     .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .editbt {
       position: absolute;
       right: 10px;
-      top: 5px;
-      width: 30px;
-      height: 30px;
-      -webkit-border-radius: 50%;
-      border-radius: 50%;
-      background-clip: padding-box;
-      /* stops bg color from leaking outside the border: */
-      font-size: 1rem;
-      color: #00aef2;
-      background: transparent;
-      -moz-transition: all 300ms;
-      -o-transition: all 300ms;
-      -webkit-transition: all 300ms;
-      transition: all 300ms; }
+      top: 5px; }
       .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .editbt:hover {
         background: #dbdbdb; }
     .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .title {
@@ -4613,6 +4766,9 @@ footer.dashb .sect3 {
           @media only screen and (max-width: 767px) {
             .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .cop-l span {
               width: 40%; } }
+          @media only screen and (max-width: 575px) {
+            .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .cop-l span {
+              width: 100%; } }
         .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .cop-l .info-lst {
           width: 80%;
           margin-top: 20px;
@@ -4683,8 +4839,9 @@ footer.dashb .sect3 {
             list-style: none;
             font-size: .875rem;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            height: 40px;
+            height: auto;
             padding: 10px;
             border-bottom: 1px solid #f2f2f2; }
             .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy.wrk-hrs .whrs li .day {
@@ -5058,6 +5215,9 @@ footer.dashb .sect3 {
         @media only screen and (max-width: 767px) {
           .content .col-b .card.w-dta.active .ph-gal-bx .ph-gal li .galbx {
             height: 100px; } }
+        @media only screen and (max-width: 575px) {
+          .content .col-b .card.w-dta.active .ph-gal-bx .ph-gal li .galbx {
+            height: 60px; } }
         @media (min-width: 768px) and (max-width: 991px) {
           .content .col-b .card.w-dta.active .ph-gal-bx .ph-gal li .galbx {
             height: 150px; } }
@@ -5144,6 +5304,9 @@ footer.dashb .sect3 {
           @media only screen and (max-width: 767px) {
             .content .col-b .card.w-dta.active .ph-gal-bx .ph-gal li:first-child .galbx {
               height: 100px; } }
+          @media only screen and (max-width: 575px) {
+            .content .col-b .card.w-dta.active .ph-gal-bx .ph-gal li:first-child .galbx {
+              height: 60px; } }
           @media (min-width: 768px) and (max-width: 991px) {
             .content .col-b .card.w-dta.active .ph-gal-bx .ph-gal li:first-child .galbx {
               height: 150px; } }
@@ -5292,12 +5455,15 @@ footer.dashb .sect3 {
       font-weight: 500 !important;
       margin-bottom: 0; }
     .content.w-manager .card .hd-t .ctrl {
-      margin-left: 30px; }
+      margin-left: 20px; }
     .content.w-manager .card .hd-t .info i {
       font-size: 1.25rem;
       color: #666; }
   .content.w-manager .card .copy {
     padding: 20px 40px; }
+    @media only screen and (max-width: 575px) {
+      .content.w-manager .card .copy {
+        padding: 20px 10px; } }
     .content.w-manager .card .copy .row {
       margin-bottom: 20px;
       margin-left: 0;
@@ -5305,9 +5471,17 @@ footer.dashb .sect3 {
     @media only screen and (max-width: 767px) {
       .content.w-manager .card .copy .lbl {
         margin-bottom: 15px; } }
+    @media only screen and (max-width: 575px) {
+      .content.w-manager .card .copy .lbl {
+        padding-left: 0;
+        padding-right: 0; } }
     .content.w-manager .card .copy .lbl label {
       font-weight: 600;
       margin-bottom: 0; }
+    @media only screen and (max-width: 575px) {
+      .content.w-manager .card .copy .lbr {
+        padding-left: 0;
+        padding-right: 0; } }
     .content.w-manager .card .copy .lbr .rw label {
       margin-left: 10px;
       margin-bottom: 0; }
@@ -5496,22 +5670,7 @@ footer.dashb .sect3 {
           position: absolute;
           right: 0px;
           top: 15px;
-          width: 30px;
-          height: 30px;
-          -webkit-border-radius: 50%;
-          border-radius: 50%;
-          background-clip: padding-box;
-          /* stops bg color from leaking outside the border: */
-          -moz-transition: all 300ms;
-          -o-transition: all 300ms;
-          -webkit-transition: all 300ms;
-          transition: all 300ms;
-          z-index: 11;
-          font-size: 1rem;
-          color: #00aef2; }
-          .content.loc-list .card .copy.locd .lbl .cl1 .editbt:hover {
-            background: #dbdbdb;
-            color: #222223; }
+          z-index: 11; }
         .content.loc-list .card .copy.locd .lbl .cl1 .ot-it {
           width: 100%; }
           .content.loc-list .card .copy.locd .lbl .cl1 .ot-it h4 {
@@ -5519,6 +5678,9 @@ footer.dashb .sect3 {
             font-weight: 500 !important; }
           .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
             width: 50%; }
+            @media only screen and (max-width: 575px) {
+              .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
+                width: 100%; } }
             .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item .it0 {
               border: 1px solid #dbdbdb;
               padding: 3px 8px;
@@ -5618,22 +5780,7 @@ footer.dashb .sect3 {
             position: absolute;
             right: 0px;
             top: 15px;
-            width: 30px;
-            height: 30px;
-            -webkit-border-radius: 50%;
-            border-radius: 50%;
-            background-clip: padding-box;
-            /* stops bg color from leaking outside the border: */
-            -moz-transition: all 300ms;
-            -o-transition: all 300ms;
-            -webkit-transition: all 300ms;
-            transition: all 300ms;
-            z-index: 11;
-            font-size: 1rem;
-            color: #00aef2; }
-            .content.loc-list .card .copy.locd .lbr .cr1 .editbt:hover {
-              background: #dbdbdb;
-              color: #222223; }
+            z-index: 11; }
           .content.loc-list .card .copy.locd .lbr .cr1 h5 {
             text-transform: uppercase;
             font-size: .875rem;
@@ -5670,6 +5817,9 @@ footer.dashb .sect3 {
               @media only screen and (max-width: 767px) {
                 .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
                   margin-top: 0; } }
+              @media only screen and (max-width: 575px) {
+                .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+                  margin-bottom: 10px; } }
               @media (min-width: 768px) and (max-width: 991px) {
                 .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
                   margin-top: 0; } }
@@ -5876,7 +6026,8 @@ footer.dashb .sect3 {
             .content.loc-list .card .q-tbl table thead tr th:last-child .addbt {
               position: absolute;
               right: 15px;
-              font-weight: 400; }
+              font-weight: 400;
+              margin-top: 0; }
       .content.loc-list .card .q-tbl table tbody tr td {
         font-weight: 500; }
         .content.loc-list .card .q-tbl table tbody tr td[data-title="Queue"] {
@@ -5884,7 +6035,8 @@ footer.dashb .sect3 {
           .content.loc-list .card .q-tbl table tbody tr td[data-title="Queue"]:before {
             color: #222223; }
         .content.loc-list .card .q-tbl table tbody tr td .schtd {
-          flex-grow: 2; }
+          flex-grow: 2;
+          width: 45%; }
           .content.loc-list .card .q-tbl table tbody tr td .schtd .sch {
             display: block;
             border-top: 1px solid #f2f2f2;
@@ -6083,7 +6235,6 @@ footer.dashb .sect3 {
           background-color: #dbdbdb;
           text-align: center;
           font-weight: 600;
-          width: 150px;
           height: 40px;
           cursor: pointer;
           font-size: .875rem;
@@ -6364,6 +6515,197 @@ footer.dashb .sect3 {
       content: "\58"; }
     .content.settings .set-otr .card.set06 .copy h2:before {
       content: "\34"; }
+
+/*#### Settings - Billing Sub Pages ***/
+.comn-cls .no-dta {
+  text-align: center; }
+.comn-cls .w-dta .card {
+  margin-bottom: 30px; }
+  .comn-cls .w-dta .card .n-btn {
+    width: 100%;
+    position: relative; }
+    .comn-cls .w-dta .card .n-btn .add-btn {
+      position: absolute;
+      top: -43px;
+      right: 20px; }
+      @media only screen and (max-width: 575px) {
+        .comn-cls .w-dta .card .n-btn .add-btn {
+          height: auto;
+          position: static;
+          margin-bottom: 20px; } }
+      .comn-cls .w-dta .card .n-btn .add-btn:hover {
+        background: #00aef2; }
+  .comn-cls .w-dta .card .table-outer.q-tbl {
+    padding: 0; }
+    .comn-cls .w-dta .card .table-outer.q-tbl table {
+      margin: 0; }
+      .comn-cls .w-dta .card .table-outer.q-tbl table thead tr th:nth-child(1) {
+        width: 25%; }
+        @media only screen and (max-width: 767px) {
+          .comn-cls .w-dta .card .table-outer.q-tbl table thead tr th:nth-child(1) {
+            width: 100%; } }
+      .comn-cls .w-dta .card .table-outer.q-tbl table thead tr th .addbt {
+        margin: 0 0 0 auto; }
+      .comn-cls .w-dta .card .table-outer.q-tbl table thead tr th:last-child {
+        font-weight: normal; }
+      .comn-cls .w-dta .card .table-outer.q-tbl table tbody tr td:nth-child(1) {
+        width: 25%; }
+        @media only screen and (max-width: 767px) {
+          .comn-cls .w-dta .card .table-outer.q-tbl table tbody tr td:nth-child(1) {
+            width: 100%; } }
+      .comn-cls .w-dta .card .table-outer.q-tbl table tbody tr td.tdact {
+        position: relative; }
+        @media only screen and (max-width: 767px) {
+          .comn-cls .w-dta .card .table-outer.q-tbl table tbody tr td.tdact {
+            width: 100%; } }
+        .comn-cls .w-dta .card .table-outer.q-tbl table tbody tr td.tdact .mbt {
+          position: absolute;
+          right: 3px;
+          top: 2px; }
+          .comn-cls .w-dta .card .table-outer.q-tbl table tbody tr td.tdact .mbt:before {
+            display: none; }
+  .comn-cls .w-dta .card .table-outer.q-itm {
+    padding: 0; }
+    .comn-cls .w-dta .card .table-outer.q-itm table {
+      margin: 0; }
+      .comn-cls .w-dta .card .table-outer.q-itm table thead tr th:nth-child(1) {
+        width: 15%; }
+        @media only screen and (max-width: 767px) {
+          .comn-cls .w-dta .card .table-outer.q-itm table thead tr th:nth-child(1) {
+            width: 100%; } }
+      .comn-cls .w-dta .card .table-outer.q-itm table thead tr th .addbt {
+        margin: 0 0 0 auto; }
+      .comn-cls .w-dta .card .table-outer.q-itm table thead tr th:last-child {
+        font-weight: normal; }
+      .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) {
+        width: 15%; }
+        .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) .itm-prdct img {
+          width: 100%; }
+        @media only screen and (max-width: 767px) {
+          .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) .itm-prdct {
+            width: 100%; }
+            .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) .itm-prdct img {
+              width: 150px;
+              height: 80px; }
+            .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) .itm-prdct:before {
+              display: none; } }
+        .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) .itm-prdct .noimage {
+          width: 100%;
+          height: 60px;
+          position: relative; }
+          .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) .itm-prdct .noimage:after {
+            content: "";
+            background: url(../images/img-null.svg) no-repeat scroll 50% -13px;
+            position: absolute;
+            width: 100%;
+            height: 60px;
+            opacity: .3;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center; }
+      .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(2) {
+        color: #00aef2;
+        font-weight: 500; }
+        .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(2):before {
+          color: #222223; }
+      .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td.tdact {
+        position: relative; }
+        @media only screen and (max-width: 767px) {
+          .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td.tdact {
+            width: 100%; } }
+        .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td.tdact .mbt {
+          position: absolute;
+          right: 4px;
+          top: 2px; }
+          .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td.tdact .mbt:before {
+            display: none; }
+  .comn-cls .w-dta .card .itm-d {
+    display: flex;
+    font-size: .875rem; }
+    @media only screen and (max-width: 767px) {
+      .comn-cls .w-dta .card .itm-d {
+        flex-direction: column; } }
+    .comn-cls .w-dta .card .itm-d .itm-l {
+      width: 25%; }
+      @media only screen and (max-width: 767px) {
+        .comn-cls .w-dta .card .itm-d .itm-l {
+          width: 50%;
+          margin-bottom: 20px; } }
+      @media only screen and (max-width: 575px) {
+        .comn-cls .w-dta .card .itm-d .itm-l {
+          width: 100%; } }
+      .comn-cls .w-dta .card .itm-d .itm-l .itm-prdct {
+        margin-bottom: 20px; }
+        .comn-cls .w-dta .card .itm-d .itm-l .itm-prdct img {
+          width: 100%; }
+          @media only screen and (max-width: 575px) {
+            .comn-cls .w-dta .card .itm-d .itm-l .itm-prdct img {
+              width: 230px; } }
+        .comn-cls .w-dta .card .itm-d .itm-l .itm-prdct .noimage {
+          width: 100%;
+          height: 100px;
+          position: relative;
+          background: #f8f8f8;
+          display: flex;
+          align-items: center;
+          justify-content: center; }
+          .comn-cls .w-dta .card .itm-d .itm-l .itm-prdct .noimage:after {
+            content: "";
+            background: url(../images/img-null.svg) no-repeat scroll 0 0;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: .3;
+            z-index: 10; }
+      .comn-cls .w-dta .card .itm-d .itm-l .ctrls {
+        display: flex;
+        flex-direction: column; }
+        .comn-cls .w-dta .card .itm-d .itm-l .ctrls .bt3 {
+          border-color: #00aef2;
+          margin-bottom: 15px;
+          color: #00aef2; }
+          .comn-cls .w-dta .card .itm-d .itm-l .ctrls .bt3:hover {
+            background-color: #00aef2;
+            color: #fff; }
+        .comn-cls .w-dta .card .itm-d .itm-l .ctrls .bt7 {
+          border-color: #f24949;
+          color: #f24949; }
+          .comn-cls .w-dta .card .itm-d .itm-l .ctrls .bt7:hover {
+            background-color: #f24949;
+            color: #fff; }
+    .comn-cls .w-dta .card .itm-d .itm-r {
+      padding-left: 20px;
+      flex-grow: 1;
+      position: relative; }
+      @media only screen and (max-width: 767px) {
+        .comn-cls .w-dta .card .itm-d .itm-r {
+          padding-left: 0; } }
+      .comn-cls .w-dta .card .itm-d .itm-r .editbt {
+        position: absolute;
+        right: 0px;
+        top: 0px; }
+      .comn-cls .w-dta .card .itm-d .itm-r h3 {
+        font-weight: 600;
+        font-size: 1.125rem;
+        margin-bottom: 20px; }
+      .comn-cls .w-dta .card .itm-d .itm-r .dtls {
+        display: flex;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #f8f8f8;
+        padding-bottom: 10px; }
+        @media only screen and (max-width: 575px) {
+          .comn-cls .w-dta .card .itm-d .itm-r .dtls {
+            flex-direction: column; } }
+        .comn-cls .w-dta .card .itm-d .itm-r .dtls .label {
+          font-weight: 600;
+          width: 30%;
+          color: #4c4c4c; }
+          @media only screen and (max-width: 575px) {
+            .comn-cls .w-dta .card .itm-d .itm-r .dtls .label {
+              width: 100%; } }
+        .comn-cls .w-dta .card .itm-d .itm-r .dtls:last-child {
+          border: none; }
 
 footer {
   color: #fff;

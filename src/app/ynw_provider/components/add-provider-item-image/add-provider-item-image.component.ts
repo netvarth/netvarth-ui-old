@@ -10,11 +10,11 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
-  selector: 'app-provider-item-add',
-  templateUrl: './add-provider-item.component.html',
+  selector: 'app-provider-item-image-add',
+  templateUrl: './add-provider-item-image.component.html',
   // styleUrls: ['./home.component.scss']
 })
-export class AddProviderItemComponent implements OnInit {
+export class AddProviderItemImageComponent implements OnInit {
 
   amForm: FormGroup;
   api_error = null;
@@ -28,9 +28,12 @@ export class AddProviderItemComponent implements OnInit {
   holdtaxable = false;
   file_error_msg = '';
   img_exists = false;
+  show_img_select = true;
+  upload_button_caption = 'Upload';
+  uploading = false;
   @ViewChild('caption') private captionRef: ElementRef;
   constructor(
-    public dialogRef: MatDialogRef<AddProviderItemComponent>,
+    public dialogRef: MatDialogRef<AddProviderItemImageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -42,43 +45,11 @@ export class AddProviderItemComponent implements OnInit {
      }
 
   ngOnInit() {
-     this.createForm();
+    this.createForm();
   }
   createForm() {
-    if (this.data.type === 'add') {
-      this.amForm = this.fb.group({
-        displayName: ['', Validators.compose([Validators.required])],
-        shortDesc: ['', Validators.compose([Validators.required])],
-        displayDesc: ['', Validators.compose([Validators.required])],
-        taxable: [false, Validators.compose([Validators.required])] // ,
-        /*file: ['', Validators.compose([Validators.required])],*/
-        // caption: ['Itempic']
-      });
-    } else {
-      this.amForm = this.fb.group({
-        displayName: ['', Validators.compose([Validators.required])],
-        shortDesc: ['', Validators.compose([Validators.required])],
-        displayDesc: ['', Validators.compose([Validators.required])],
-        taxable: [false, Validators.compose([Validators.required])]
-      });
-    }
-
-    if (this.data.type === 'edit') {
-      this.updateForm();
-    }
-  }
-  updateForm() {
-    // let taxable = '0';
-    if (this.data.item.taxable === true) {
-      // taxable = '1';
-      this.holdtaxable = true;
-    }
-    this.amForm.setValue({
-      'displayName': this.data.item.displayName || null,
-      'shortDesc': this.data.item.shortDesc || null,
-      'displayDesc': this.data.item.displayDesc || null,
-      'taxable': this.holdtaxable
-    });
+    this.amForm = this.fb.group({
+     });
   }
   showimg() {
     if (this.item_pic.base64) {
@@ -87,17 +58,16 @@ export class AddProviderItemComponent implements OnInit {
       return this.sharedfunctionObj.showitemimg('');
     }
   }
+
   onSubmit (form_data) {
-    let taxable = false;
-    // console.log( this.captionRef.nativeElement.value);
-    // if (form_data.taxable === '1') {
-    taxable = this.holdtaxable;
-   // }
-    if (this.data.type === 'add') {
+      this.resetApiErrors();
         if (!this.selitem_pic) {
           this.api_error = 'Please select the file';
           return;
         }
+        this.show_img_select = false;
+        this.uploading = true;
+        this.upload_button_caption = 'Uploading ...';
         let imgcaption = '';
         if (this.captionRef.nativeElement) {
           imgcaption = this.captionRef.nativeElement.value || '';
@@ -107,17 +77,6 @@ export class AddProviderItemComponent implements OnInit {
 
         const submit_data: FormData = new FormData();
 
-        const post_itemdata = {
-                                'displayName': form_data.displayName,
-                                'shortDesc': form_data.shortDesc,
-                                'displayDesc': form_data.displayDesc,
-                                'taxable': taxable
-        };
-
-        const blob_itemdata = new Blob([JSON.stringify(post_itemdata)], { type: 'application/json' });
-
-        submit_data.append('item', blob_itemdata);
-
         submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
         const propertiesDet = {
                                 'caption' : imgcaption // form_data.caption
@@ -125,49 +84,14 @@ export class AddProviderItemComponent implements OnInit {
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
 
-        this.addItem(submit_data);
-
-    } else {
-          const post_itemdata = {
-            'displayName': form_data.displayName,
-            'shortDesc': form_data.shortDesc,
-            'displayDesc': form_data.displayDesc,
-            'taxable': taxable
-          };
-          this.editItem(post_itemdata);
-    }
-  }
-
-  addItem(post_data) {
-    this.provider_services.addItem(post_data)
-        .subscribe(
-          data => {
-            this.api_success = Messages.ITEM_CREATED;
+        this.provider_services.uploadItemImage(this.data.item.itemId, submit_data)
+        .subscribe(data => {
+            this.api_success = Messages.ITEMIMAGE_UPLOADED;
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.api_error = error.error;
-          }
-    );
+        });
   }
-  editItem(post_data) {
-    post_data.itemId =  this.data.item.itemId;
-    this.provider_services.editItem(post_data)
-        .subscribe(
-          data => {
-            this.api_success = Messages.ITEM_UPDATED;
-            setTimeout(() => {
-            this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.api_error = error.error;
-          }
-    );
-  }
-
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;

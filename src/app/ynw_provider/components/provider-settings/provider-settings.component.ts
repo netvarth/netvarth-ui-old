@@ -27,6 +27,8 @@ export class ProviderSettingsComponent implements OnInit {
   discount_count = 0;
   coupon_list;
   coupon_count = 0;
+  item_list;
+  item_count = 0;
   breadcrumbs = [
     {
       title: 'Settings'
@@ -48,6 +50,7 @@ export class ProviderSettingsComponent implements OnInit {
     this.getpaymentDetails();
     this.getDiscounts();
     this.getCoupons();
+    this.getitems();
   }
 
   getWaitlistMgr() {
@@ -144,6 +147,9 @@ export class ProviderSettingsComponent implements OnInit {
       case 'nonworking':
         this.routerobj.navigate(['provider', 'settings', 'holidays']);
       break;
+      case 'items':
+        this.routerobj.navigate(['provider', 'settings', 'items']);
+      break;
       case 'waitlistmanager':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager']);
       break;
@@ -201,5 +207,12 @@ export class ProviderSettingsComponent implements OnInit {
         this.coupon_list = data;
         this.coupon_count = this.coupon_list.length;
     });
+  }
+  getitems() {
+    this.provider_services.getProviderItems()
+      .subscribe(data => {
+          this.item_list = data;
+          this.item_count = this.item_list.length;
+      });
   }
 }

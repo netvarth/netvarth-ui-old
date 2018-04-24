@@ -39,7 +39,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
   imagePointer = 0;
   savedisabled = false;
   img_save_caption = 'Save';
-  
+
   service_id = null;
 
   constructor(private provider_services: ProviderServices,

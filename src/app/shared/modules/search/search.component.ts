@@ -343,7 +343,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     break;
    }
  }
- private filterKeywords(criteria: string= '') {
+ filterKeywords(criteria: string= '') {
   this.keyssearchcriteria = criteria;
     this.displaykeywordList = [];
     this.keywordgroupList = [];
@@ -619,7 +619,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
        typ: kw.typ || ''
     };
  }
- private do_search(labelq?) {
+ 
+ do_search(labelq?) {
     const currenturl = this.routerobj.url.split(';');
 
    /* if (!this.location_latitude) {

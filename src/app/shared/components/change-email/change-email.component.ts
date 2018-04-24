@@ -21,7 +21,7 @@ export class ChangeEmailComponent implements OnInit {
   is_verified = false;
   user_details;
   step = 1;
-  submit_data= {'email' : null};
+  submit_data = {'email' : null};
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,

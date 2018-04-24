@@ -28,10 +28,6 @@ export class ProviderDiscountsComponent implements OnInit {
           url: '/provider/settings',
           title: 'Settings'
         },
-        // {
-        //   title: 'Waitlist Manager',
-        //   url: '/provider/settings/waitlist-manager'
-        // },
         {
           title: 'Billing Discounts',
           url: '/provider/settings/discounts'
