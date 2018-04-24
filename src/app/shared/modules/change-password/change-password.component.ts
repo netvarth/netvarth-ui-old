@@ -7,6 +7,8 @@ import {FormMessageDisplayService} from '../../modules/form-message-display/form
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
+import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-change-password',
@@ -18,12 +20,24 @@ export class ChangePasswordComponent implements OnInit {
   spForm: FormGroup;
   api_error = null;
   api_success = null;
+  breadcrumbs_init = [
+    {
+      title: 'Dashboard',
+      url: '/provider'
+    },
+    {
+      title: 'Change Password',
+      url: '/provider/change-password'
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router) {}
+    public router: Router,
+    public provider_shared_functions: ProviderSharedFuctions) {}
 
     ngOnInit() {
 
@@ -32,8 +46,7 @@ export class ChangePasswordComponent implements OnInit {
           [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]).{8,}$')]) ],
         new_password: ['', Validators.compose(
           [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]).{8,}$')]) ],
-        confirm_password: ['', Validators.compose(
-            [Validators.required]) ],
+        confirm_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]).{8,}$')]) ],
 
     });
 
@@ -51,16 +64,22 @@ export class ChangePasswordComponent implements OnInit {
         this.shared_services.changePasswordProfile(post_data, this.shared_functions.isBusinessOwner('returntyp'))
         .subscribe(
           data => {
-            this.api_success = Messages.PASSWORD_CHANGED;
+            // this.api_success = Messages.PASSWORD_CHANGED;
+            this.provider_shared_functions.openSnackBar(Messages.PASSWORD_CHANGED);
             this.spForm.reset();
           },
           error => {
-            this.api_error = error.error;
+            // this.api_error = error.error;
+            this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+            if (error.status === 419) { // case of session expired
+              this.router.navigate(['/logout']);
+            }
           }
         );
 
       } else {
-        this.api_error = Messages.PASSWORD_MISMATCH;
+        this.provider_shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
+        // this.api_error = Messages.PASSWORD_MISMATCH;
       }
 
     }

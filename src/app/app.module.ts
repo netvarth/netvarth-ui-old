@@ -21,16 +21,15 @@ import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { ForgotPasswordComponent} from './shared/components/forgot-password/forgot-password.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
-import { OtpFormComponent } from './shared/components/otp-form/otp-form.component';
+// import { OtpFormComponent } from './shared/components/otp-form/otp-form.component';
 import { SetPasswordFormComponent } from './shared/components/set-password-form/set-password-form.component';
 import { LoginComponent } from './shared/components/login/login.component';
 import { SearchDetailComponent } from './shared/components/search-detail/search-detail.component';
 import { ProviderDetailComponent } from './shared/components/provider-detail/provider-detail.component';
 import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
-import { EditProfileComponent } from './shared/components/edit-profile/edit-profile.component';
-import { ChangePasswordComponent } from './shared/components/change-password/change-password.component';
-import { ChangeMobileComponent } from './shared/components/change-mobile/change-mobile.component';
-import { ChangeEmailComponent } from './shared/components/change-email/change-email.component';
+// import { ChangePasswordComponent } from './shared/components/change-password/change-password.component';
+// import { ChangeMobileComponent } from './shared/components/change-mobile/change-mobile.component';
+// import { ChangeEmailComponent } from './shared/components/change-email/change-email.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin } from './shared/guard/auth.guard';
@@ -55,15 +54,14 @@ import 'hammerjs';
     ForgotPasswordComponent,
     EqualValidator,
     SignUpComponent,
-    OtpFormComponent,
+    // OtpFormComponent,
     SetPasswordFormComponent,
     LoginComponent,
     SearchDetailComponent,
     ProviderDetailComponent,
-    EditProfileComponent,
-    ChangePasswordComponent,
-    ChangeMobileComponent,
-    ChangeEmailComponent,
+    // ChangePasswordComponent,
+    // ChangeMobileComponent,
+   // ChangeEmailComponent,
     ConfirmBoxComponent,
     SearchMoreOptionsComponent
   ],

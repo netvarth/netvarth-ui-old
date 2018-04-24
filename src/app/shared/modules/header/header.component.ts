@@ -178,11 +178,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   redirectto (mod) {
     switch (mod) {
-      case 'disc':
-        this.router.navigate(['provider', 'discounts']);
+      case 'profile':
+        this.router.navigate(['provider', 'profile']);
       break;
-      case 'coup':
-        this.router.navigate(['provider', 'coupons']);
+      case 'change-password':
+        this.router.navigate(['provider', 'change-password']);
+      break;
+      case 'change-mobile':
+        this.router.navigate(['provider', 'change-mobile']);
+      break;
+      case 'change-email':
+        this.router.navigate(['provider', 'change-email']);
       break;
     }
   }

@@ -7,6 +7,9 @@ import {FormMessageDisplayService} from '../../modules/form-message-display/form
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
+import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { projectConstants } from '../../../shared/constants/project-constants';
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,61 +22,76 @@ export class EditProfileComponent implements OnInit {
   api_error = null;
   api_success = null;
   curtype;
+  maxalloweddate = '';
+  breadcrumbs_init = [
+    {
+      title: 'Dashboard',
+      url: '/provider'
+    },
+    {
+      title: 'Update Profile',
+      url: '/provider/profile'
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router) {}
+    public router: Router,
+    public provider_shared_functions: ProviderSharedFuctions
+  ) {}
 
   ngOnInit() {
 
     this.editProfileForm = this.fb.group({
-      first_name: ['', Validators.compose([Validators.required])],
-      last_name: ['', Validators.compose([Validators.required])],
-      address: [''],
-      mobile: [{value: '', disabled: true}],
-      gender: ['male'],
-      dob: [''],
-      email: [{value: '', disabled: true}, Validators.compose([Validators.email]) ]
-
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+      gender: ['male', Validators.compose([Validators.required])],
+      dob: ['', Validators.compose([Validators.required])]
     });
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     const ob = this;
+    this.getProfile(this.curtype);
+    const tday = new Date();
+    const month = (tday.getMonth() + 1);
+    let dispmonth = '';
+    if (month < 10) {
+      dispmonth = '0' + month;
+    } else {
+      dispmonth = month.toString();
+    }
+    this.maxalloweddate = tday.getFullYear() + '-' + dispmonth + '-' + tday.getDate();
+    // console.log('max', this.maxalloweddate);
+  }
+
+  getProfile(typ) {
     this.shared_functions.getProfile()
     .then(
       data =>  {
-        if ( this.curtype === 'consumer') {
+        if ( typ === 'consumer') {
           this.editProfileForm.setValue({
             first_name : data['userProfile']['firstName'] || null,
             last_name : data['userProfile']['lastName'] || null,
-            address : data['userProfile']['address'] || null,
-            mobile : data['userProfile']['primaryMobileNo'] || null,
             gender : data['userProfile']['gender'] || null,
-            dob : data['userProfile']['dob'] || null,
-            email : data['userProfile']['email'] || null
+            dob : data['userProfile']['dob'] || null
           });
-        } else if ( this.curtype === 'provider') {
+        } else if ( typ === 'provider') {
           this.editProfileForm.setValue({
             first_name : data['basicInfo']['firstName'] || null,
             last_name : data['basicInfo']['lastName'] || null,
-            address : data['basicInfo']['address'] || null,
-            mobile : data['basicInfo']['mobile'] || null,
             gender : data['basicInfo']['gender'] || null,
-            dob : data['basicInfo']['dob'] || null,
-            email : data['basicInfo']['email'] || null
+            dob : data['basicInfo']['dob'] || null
           });
         }
       },
-      error => { ob.api_error = error.error; }
+      error => { this.api_error = error.error; }
     );
-
-
   }
 
-
   onSubmit(sub_data) {
-    console.log(sub_data);
+   // console.log(sub_data);
 
     let date_format = null;
     if (sub_data.dob != null) {
@@ -85,19 +103,18 @@ export class EditProfileComponent implements OnInit {
     let post_data;
     let passtyp;
     const curuserdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    console.log('localstorage', curuserdet.id);
+    // console.log('localstorage', curuserdet.id);
     if (this.curtype === 'consumer') {
       post_data = {
                     'id': curuserdet['id'] || null,
                     'firstName': sub_data.first_name || null,
                     'lastName': sub_data.last_name || null,
                     'dob': date_format || null,
-                    'gender': sub_data.gender || null,
-                    'address': sub_data.address || null
+                    'gender': sub_data.gender || null
       };
       passtyp = 'consumer';
     } else if (this.curtype === 'provider') {
-      
+
       post_data = {
               'basicInfo': {
                   'id': curuserdet['id'] || null,
@@ -112,10 +129,13 @@ export class EditProfileComponent implements OnInit {
     this.shared_services.updateProfile(post_data, passtyp)
     .subscribe(
       data => {
-        this.api_success = Messages.PROFILE_UPDATE;
+        // this.api_success = Messages.PROFILE_UPDATE;
+        this.provider_shared_functions.openSnackBar(Messages.PROFILE_UPDATE);
+        this.getProfile(this.curtype);
       },
       error => {
-        this.api_error = error.error;
+        // this.api_error = error.error;
+        this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       }
     );
   }

@@ -4,17 +4,6 @@
             <div class="lgo col-md-3"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
             <div class="tc1 col-md-3 ml-auto" *ngIf="!shared_functions.checkLogin()">
                 <div class="topsignouter"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span></div>
-                <!-- <ul class="smi" >
-                    <li>
-                        <a href="#"><span class="smi-a"><i class="fa fa-facebook fb"></i></span></a>                       
-                    </li>
-                    <li>
-                        <a href="#"><span class="smi-b"><i class="fa fa-twitter tw"></i></span></a>
-                    </li>
-                    <li>                        
-                        <a href="#"><span class="smi-c"><i class="fa fa-youtube-play ytb"></i></span></a>
-                    </li>     
-                </ul>  -->
                 <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">Are you a Provider? <span (click)="doLogin('provider')">Click Here</span></div>
             </div>
             <div class="lg-opt ml-auto" *ngIf="provider_loggedin">
@@ -42,22 +31,22 @@
                         <i class="icon-angle-down"></i>
                     </button>
                         <mat-menu #menu="matMenu">
-                        <!-- <button mat-menu-item (click)="doLogout()">
-                                <i class="icon-logout"></i>
+                        <button mat-menu-item (click)="redirectto('profile')">
+                                <i class="icon-user"></i>
                                 <span>Profile</span>
-                        </button> -->
-                        <!-- <button mat-menu-item (click)="redirectto('disc')">
-                                <i class="fa fa-tags"></i>
-                                <span>Discounts</span>
                         </button>
-                        <button mat-menu-item (click)="redirectto('coup')">
-                                <i class="icon-logout"></i>
-                                <span>Coupons</span>
+                        <button mat-menu-item (click)="redirectto('change-password')">
+                            <i class="icon-user"></i>
+                            <span>Change Password</span>
                         </button>
-                        <button mat-menu-item (click)="doNonworkingdays()">
-                                <i class="icon-logout"></i>
-                                <span>Non Working Days</span>
-                        </button> -->
+                        <button mat-menu-item (click)="redirectto('change-mobile')">
+                            <i class="icon-user"></i>
+                            <span>Change Mobile</span>
+                        </button>
+                        <button mat-menu-item (click)="redirectto('change-email')">
+                            <i class="icon-user"></i>
+                            <span>Change Email</span>
+                        </button>
                         <button mat-menu-item (click)="doLogout()">
                             <i class="icon-logout"></i>
                             <span>Logout</span>

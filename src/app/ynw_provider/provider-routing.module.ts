@@ -26,8 +26,11 @@ import { ProviderWaitlistServiceDetailComponent } from './components/provider-wa
 import { ProviderWaitlistQueuesComponent } from './components/provider-waitlist-queues/provider-waitlist-queues.component';
 import { ProviderWaitlistQueueDetailComponent } from './components/provider-waitlist-queue-detail/provder-waitlist-queue-detail.component';
 
-import { AuthGuardProviderHome, AuthGuardNewProviderHome } from '../shared/guard/auth.guard';
-
+import { AuthGuardProviderHome, AuthGuardNewProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
+import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
+import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
+import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
 const routes: Routes = [
     {path: '', component: ProviderComponent, children: [
 
@@ -109,15 +112,14 @@ const routes: Routes = [
 
       ]
     },
-    { path: 'tour', component: ProviderTourComponent },
-    { path: 'profile', component: ProviderProfileComponent },
+    { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
+    { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin]},
+    { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
+    { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin]},
+    // { path: 'tour', component: ProviderTourComponent },
+   // { path: 'profile', component: ProviderProfileComponent },
     { path: 'members', component: ProviderMembersComponent },
-    // { path: 'items', component: ProviderItemsComponent },
-    // { path: 'items/:id', component: ProviderItemsDetailsComponent },
-   // { path: 'discounts', component: ProviderDiscountsComponent },
-   // { path: 'coupons', component: ProviderCouponsComponent },
-   // { path: 'fields', component: VirtualFieldsComponent},
-   // { path: 'holidays', component: ProviderNonworkingdaysComponent },
+    // { path: 'fields', component: VirtualFieldsComponent},
     { path: 'inbox', component: ProviderInboxComponent },
     { path: 'bwizard', component: ProviderbWizardComponent }
   ]}

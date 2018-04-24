@@ -3,7 +3,7 @@ export const Messages = {
   'OTP_SENT_EMAIL': 'OTP has been sent to your email. Please enter your OTP.',
   'OTP_SENT_MOBILE': 'OTP has been sent to your mobile. Please enter your OTP.',
   'PROFILE_UPDATE': 'Profile has been updated successfully',
-  'PASSWORD_MISMATCH': 'Password Mismatch',
+  'PASSWORD_MISMATCH': 'Password and Confirm password do not match',
   'PASSWORD_CHANGED': 'Password has been changed successfully',
   'EMAIL_VERIFIED': 'Your email is verified',
   'PHONE_VERIFIED': 'You phone number is verified',

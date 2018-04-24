@@ -125,6 +125,10 @@ export class ProviderServices {
     return this.servicemeta.httpGet('provider/license/licensemetadata');
   }
 
+  getTotalAllowedAdwordsCnt() {
+    return this.servicemeta.httpGet('provider/license/adwords/count');
+  }
+
 
   getUpgradableLicensePackages() {
     // return this.servicemeta.httpGet('accounts/license/upgradablePackages');

@@ -15,7 +15,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
-//import { CheckinComponent } from '../checkin/checkin.component';
+// import { CheckinComponent } from '../checkin/checkin.component';
 
 @Component({
   selector: 'app-provider-detail',

@@ -6,8 +6,7 @@
       <div class="form-group">
       <mat-form-field>
           <label class="col-form-label" for="otp">Enter OTP *</label>
-          <input matInput placeholder="Otp"
-          [formControl]="otp_form.controls['phone_otp']">
+          <input matInput [formControl]="otp_form.controls['phone_otp']">
         </mat-form-field>
 
         <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"

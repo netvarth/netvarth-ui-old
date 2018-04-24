@@ -7,6 +7,7 @@ import {FormMessageDisplayService} from '../../modules/form-message-display/form
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
+import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import {projectConstants} from '../../constants/project-constants';
 
 @Component({
@@ -22,12 +23,24 @@ export class ChangeMobileComponent implements OnInit {
   user_details;
   step = 1;
   submit_data = {'phonenumber' : null};
+  breadcrumbs_init = [
+    {
+      title: 'Dashboard',
+      url: '/provider'
+    },
+    {
+      title: 'Change Mobile Number',
+      url: '/provider/change-mobile'
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router) {}
+    public router: Router,
+    public provider_shared_functions: ProviderSharedFuctions) {}
 
     ngOnInit() {
 
@@ -36,7 +49,7 @@ export class ChangeMobileComponent implements OnInit {
           [ Validators.required,
             Validators.maxLength(10),
             Validators.minLength(10),
-            Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])  ]
+            Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])]
 
       });
       const ob = this;
@@ -44,17 +57,19 @@ export class ChangeMobileComponent implements OnInit {
       .then(
         success =>  {
           this.user_details = success;
+         // console.log('typ', this.shared_functions.isBusinessOwner('returntyp'));
           if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
             this.spForm.setValue({
               'phonenumber': success['basicInfo']['mobile'] || null
             });
+            this.is_verified = success['basicInfo']['phoneVerified'];
           } else {
 
             this.spForm.setValue({
               'phonenumber': success['userProfile']['primaryMobileNo'] || null
             });
+            this.is_verified = success['userProfile']['phoneVerified'];
           }
-          this.is_verified = success['userProfile']['phoneVerified'];
         },
         error => { ob.api_error = error.error; }
       );
@@ -72,6 +87,7 @@ export class ChangeMobileComponent implements OnInit {
           this.step = 2;
           this.submit_data = submit_data;
           this.api_success = Messages.OTP_SENT_MOBILE;
+          // this.provider_shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
         },
         error => {
           this.api_error = error.error;
@@ -80,10 +96,18 @@ export class ChangeMobileComponent implements OnInit {
     }
 
     isVerified(data) {
-      if (this.user_details.userProfile.primaryMobileNo === data) {
-        this.is_verified = true;
+      if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
+        if (this.user_details.basicInfo.mobile === data) {
+          this.is_verified = true;
+        } else {
+          this.is_verified = false;
+        }
       } else {
-        this.is_verified = false;
+        if (this.user_details.userProfile.primaryMobileNo === data) {
+          this.is_verified = true;
+        } else {
+          this.is_verified = false;
+        }
       }
     }
 
@@ -101,13 +125,15 @@ export class ChangeMobileComponent implements OnInit {
       this.shared_services.verifyNewPhoneOTP(submit_data.phone_otp, post_data, this.shared_functions.isBusinessOwner('returntyp'))
       .subscribe(
         data => {
-          this.api_success = Messages.PHONE_VERIFIED;
+         // this.api_success = Messages.PHONE_VERIFIED;
+          this.provider_shared_functions.openSnackBar(Messages.PHONE_VERIFIED);
           setTimeout(() => {
             this.router.navigate(['/']);
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = error.error;
+          // this.api_error = error.error;
+          this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
 

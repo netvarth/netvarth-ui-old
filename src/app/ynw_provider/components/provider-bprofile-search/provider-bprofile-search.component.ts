@@ -160,8 +160,9 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
   ngOnInit() {
     this.getSpokenLanguages();
-    this.getLicenseDetails();
+    // this.getLicenseDetails();
     // this.getLicenseMetadata();
+    this.getTotalAllowedAdwordsCnt();
     this.getLocationBadges();
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
     // console.log('icons', this.badgeIcons);
@@ -974,7 +975,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       }
       );
   }
-  getLicenseMetadata() {
+  /*getLicenseMetadata() {
     this.provider_services.getLicenseMetadata()
       .subscribe (data => {
         this.license_metadata = data;
@@ -982,8 +983,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
         // console.log('adword count', this.adwordsmaxcount);
         this.getAdwords();
       });
-  }
-  getLicenseMeticvalue(metricid, fieldname) {
+  }*/
+  /*getLicenseMeticvalue(metricid, fieldname) {
     const packageid = this.currentlicense_details.accountLicense.licPkgOrAddonId;
     // console.log('packageid', packageid);
     for (let i = 0; i < this.license_metadata.length; i++) {
@@ -995,15 +996,25 @@ export class ProviderBprofileSearchComponent implements OnInit {
         }
       }
     }
-  }
-  getLicenseDetails() {
+  }*/
+  /*getLicenseDetails() {
     this.provider_services.getLicenseDetails()
       .subscribe(data => {
         this.currentlicense_details = data;
         // console.log('license', this.currentlicense_details);
         this.getLicenseMetadata();
       });
+  }*/
+  getTotalAllowedAdwordsCnt() {
+    this.provider_services.getTotalAllowedAdwordsCnt()
+      .subscribe (data => {
+        this.currentlicense_details = data;
+        console.log('this', this.currentlicense_details);
+        this.adwordsmaxcount = this.currentlicense_details;
+        this.getAdwords();
+      });
   }
+
   getAdwords() {
     this.adwordshow_list = [];
     this.provider_services.getAdwords()

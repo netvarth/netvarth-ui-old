@@ -74,13 +74,18 @@ import { SharedFunctions } from '../shared/functions/shared-functions';
 import { ProviderServices } from './services/provider-services.service';
 import { ProviderDataStorageService } from './services/provider-datastorage.service';
 import { MessageService } from './services/provider-message.service';
-import { BreadCrumbComponent } from '../shared/components/breadcrumb/breadcrumb.component';
+// import { BreadCrumbComponent } from '../shared/components/breadcrumb/breadcrumb.component';
 import { ProviderSharedFuctions } from './shared/functions/provider-shared-functions';
 
 import { DynamicFormQuestionComponent } from './components/dynamicforms/dynamic-form-question.component';
 import { DynamicFormComponent } from './components/dynamicforms/dynamic-form.component';
 import { QuestionService } from './components/dynamicforms/dynamic-form-question.service';
 import { projectConstants } from '../shared/constants/project-constants';
+
+import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
+// import { ChangePasswordModule } from '../shared/modules/change-password/change-password.module';
+// import { ChangeMobileModule } from '../shared/modules/change-mobile/change-mobile.module';
+
 
 import 'hammerjs';
 import 'mousetrap';
@@ -91,7 +96,8 @@ import 'mousetrap';
         SharedModule,
         CKEditorModule,
         ModalGalleryModule.forRoot(),
-        AngularMultiSelectModule
+        AngularMultiSelectModule,
+        BreadCrumbModule
     ],
     declarations: [
         ProviderComponent,
@@ -151,7 +157,6 @@ import 'mousetrap';
         AddProviderBprofileSpecializationsComponent,
         LoadingSpinnerComponent,
         ProviderWaitlistLocationDetailComponent,
-        BreadCrumbComponent,
         ProviderWaitlistServiceDetailComponent,
         ProviderWaitlistQueueDetailComponent,
         AddProviderWaitlistServiceGalleryComponent,

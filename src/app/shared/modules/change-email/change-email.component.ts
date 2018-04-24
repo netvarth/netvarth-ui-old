@@ -8,6 +8,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
 import {projectConstants} from '../../constants/project-constants';
+import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-change-email',
@@ -22,12 +23,24 @@ export class ChangeEmailComponent implements OnInit {
   user_details;
   step = 1;
   submit_data = {'email' : null};
+  breadcrumbs_init = [
+    {
+      title: 'Dashboard',
+      url: '/provider'
+    },
+    {
+      title: 'Change Email id',
+      url: '/provider/change-email'
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router) {}
+    public router: Router,
+    public provider_shared_functions: ProviderSharedFuctions) {}
 
     ngOnInit() {
 
@@ -39,10 +52,17 @@ export class ChangeEmailComponent implements OnInit {
       .then(
         success =>  {
           this.user_details = success;
-          this.spForm.setValue({
-            'email': success['userProfile']['email'] || null
-          });
-          this.is_verified = success['userProfile']['emailVerified'];
+          if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
+            this.spForm.setValue({
+              'email': success['basicInfo']['email'] || null
+            });
+            this.is_verified = success['basicInfo']['emailVerified'];
+          } else {
+            this.spForm.setValue({
+                'email': success['userProfile']['email'] || null
+              });
+            this.is_verified = success['userProfile']['emailVerified'];
+          }
         },
         error => { ob.api_error = error.error; }
       );
@@ -69,10 +89,18 @@ export class ChangeEmailComponent implements OnInit {
     }
 
     isVerified(data) {
-      if (this.user_details.userProfile.email === data) {
-        this.is_verified = true;
+      if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
+        if (this.user_details.basicInfo.email === data) {
+          this.is_verified = true;
+        } else {
+          this.is_verified = false;
+        }
       } else {
-        this.is_verified = false;
+        if (this.user_details.userProfile.email === data) {
+          this.is_verified = true;
+        } else {
+          this.is_verified = false;
+        }
       }
     }
 
@@ -91,13 +119,15 @@ export class ChangeEmailComponent implements OnInit {
       this.shared_services.verifyNewPhoneOTP(submit_data.phone_otp, post_data, this.shared_functions.isBusinessOwner('returntyp'))
       .subscribe(
         data => {
-          this.api_success = Messages.EMAIL_VERIFIED;
+          // this.api_success = Messages.EMAIL_VERIFIED;
+          this.provider_shared_functions.openSnackBar(Messages.EMAIL_VERIFIED);
           setTimeout(() => {
             this.router.navigate(['/']);
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = error.error;
+          // this.api_error = error.error;
+          this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
 
