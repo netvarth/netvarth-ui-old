@@ -67,6 +67,7 @@ import { ProviderWaitlistLocationDetailComponent } from './components/provider-w
 import { ProviderWaitlistServiceDetailComponent } from './components/provider-waitlist-service-detail/provider-waitlist-service-detail.component';
 import { ProviderWaitlistQueueDetailComponent } from './components/provider-waitlist-queue-detail/provder-waitlist-queue-detail.component';
 import { AddProviderWaitlistServiceGalleryComponent } from './components/add-provider-waitlist-service-gallery/add-provider-waitlist-service-gallery';
+import { ProviderWaitlistCancelPopupComponent } from './components/provider-waitlist-cancel-popup/provider-waitlist-cancel-popup.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -153,7 +154,8 @@ import 'mousetrap';
         BreadCrumbComponent,
         ProviderWaitlistServiceDetailComponent,
         ProviderWaitlistQueueDetailComponent,
-        AddProviderWaitlistServiceGalleryComponent
+        AddProviderWaitlistServiceGalleryComponent,
+        ProviderWaitlistCancelPopupComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -183,7 +185,8 @@ import 'mousetrap';
       AddProviderBprofileSpokenLanguagesComponent,
       AddProviderBprofileSpecializationsComponent,
       ProviderBprofileSearchDynamicComponent,
-      AddProviderWaitlistServiceGalleryComponent
+      AddProviderWaitlistServiceGalleryComponent,
+      ProviderWaitlistCancelPopupComponent
     ],
     providers: [
        AuthGuardProviderHome,

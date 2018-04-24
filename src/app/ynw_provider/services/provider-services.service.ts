@@ -531,4 +531,9 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
 
+  changeProviderWaitlistStatus(waitlist_id, action , message = {}) {
+    const url = 'provider/waitlist/' + waitlist_id + '/' + action;
+    return this.servicemeta.httpPut(url, message);
+  }
+
 }
