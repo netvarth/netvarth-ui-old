@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
 
 import { ProviderServices } from '../../services/provider-services.service';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
+
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -9,6 +11,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-delay.component';
 import { AddProviderCheckinComponent } from '../add-provider-checkin/add-provider-checkin.component';
+import { ProviderWaitlistCancelPopupComponent } from '../provider-waitlist-cancel-popup/provider-waitlist-cancel-popup.component';
 
 import { SharedServices } from '../../../shared/services/shared-services';
 
@@ -18,6 +21,7 @@ import {Observable} from 'rxjs/Observable';
 import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
 import {FormControl} from '@angular/forms';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-provider-home',
@@ -38,6 +42,8 @@ export class ProviderHomeComponent implements OnInit {
   histroy_waitlist_count: any = 0;
   time_type = 1;
   check_in_list: any = [];
+  check_in_filtered_list: any = [];
+  status_type = 'all';
   queue_date = moment(new Date()).format('YYYY-MM-DD');
   edit_location = 0;
 
@@ -47,6 +53,7 @@ export class ProviderHomeComponent implements OnInit {
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
+    private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
@@ -98,27 +105,31 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getQueueList() {
-    this.selected_queue = null;
-    this.load_queue = 0;
 
-    if (this.selected_location.id) {
-      this.provider_services.getProviderLocationQueuesByDate(
-        this.selected_location.id, this.queue_date)
-      .subscribe(
-        data => {
-          this.queues = data;
-          if (this.queues[0]) {
-            this.selectedQueue(this.queues[0]);
+    this.load_queue = 0;
+    if (!this.selected_queue) {
+
+      if (this.selected_location.id) {
+        this.provider_services.getProviderLocationQueuesByDate(
+          this.selected_location.id, this.queue_date)
+        .subscribe(
+          data => {
+            this.queues = data;
+            if (this.queues[0] && this.selected_queue == null) {
+              this.selectedQueue(this.queues[0]);
+            }
+          },
+          error => {
+            this.queues = [];
+            this.load_queue = 1;
+          },
+          () => {
+            this.load_queue = 1;
           }
-        },
-        error => {
-          this.queues = [];
-          this.load_queue = 1;
-        },
-        () => {
-          this.load_queue = 1;
-        }
-      );
+        );
+      }
+    } else {
+      this.selectedQueue(this.selected_queue);
     }
   }
 
@@ -179,6 +190,11 @@ export class ProviderHomeComponent implements OnInit {
     .subscribe(
       data => {
         this.check_in_list = data;
+        if (this.status_type) {
+            this.changeStatusType(this.status_type);
+        } else {
+          this.changeStatusType('all');
+        }
       },
       error => {
         this.load_waitlist = 1;
@@ -193,7 +209,8 @@ export class ProviderHomeComponent implements OnInit {
     this.provider_services.getFutureWaitlist()
     .subscribe(
       data => {
-        this.check_in_list = data;
+        this.check_in_list = this.check_in_filtered_list = data;
+        this.future_waitlist_count = this.check_in_list.length || 0;
       },
       error => {
         this.load_waitlist = 1;
@@ -208,7 +225,7 @@ export class ProviderHomeComponent implements OnInit {
     this.provider_services.getHistroryWaitlist()
     .subscribe(
       data => {
-        this.check_in_list = data;
+        this.check_in_list = this.check_in_filtered_list = data;
       },
       error => {
         this.load_waitlist = 1;
@@ -219,9 +236,9 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   setTimeType(time_type) {
+    this.check_in_list  = this.check_in_filtered_list = [];
     this.time_type = time_type;
-    this.check_in_list  = [];
-    this.queues = [];
+    // this.queues = [];
     this.loadApiSwitch();
   }
 
@@ -295,5 +312,82 @@ export class ProviderHomeComponent implements OnInit {
     const value = event.value;
     this.changeLocation(this.locations[value] || []);
   }
+
+  reloadAPIs() {
+    this.loadApiSwitch();
+  }
+
+  changeStatusType(type) {
+
+
+  this.status_type = type;
+  let status: any = this.status_type ;
+
+  switch (type) {
+    case 'all' : status = ['checkedIn', 'arrived'];
+  }
+
+  this.check_in_filtered_list = this.check_in_list.filter(
+      check_in => {
+        if (typeof(status) === 'string' &&
+        check_in.waitlistStatus === status) {
+          return check_in;
+        } else if (typeof(status) === 'object') {
+
+          const index = status.indexOf(check_in.waitlistStatus);
+          if (index !== -1) {
+            return check_in;
+          }
+
+        }
+
+      });
+  }
+
+  changeWaitlistStatus(waitlist, action) {
+
+    if (action === 'CANCEL') {
+
+      const dialogRef = this.dialog.open(ProviderWaitlistCancelPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass'],
+        data: {
+          waitlist: waitlist
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+
+        }
+      });
+
+    } else {
+      this.changeWaitlistStatusApi(waitlist, action);
+    }
+  }
+
+  changeWaitlistStatusApi(waitlist, action) {
+    this.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action)
+    .subscribe(
+      data => {
+        this.loadApiSwitch();
+        let status_msg = '';
+        switch (action) {
+          case 'REPORT' : status_msg = 'ARRIVED'; break;
+          case 'STARTED' : status_msg = 'STARTED'; break;
+          case 'CANCEL' : status_msg = 'CANCELLED'; break;
+          case 'CHECK_IN' : status_msg = 'CHECK IN'; break;
+          case 'DONE': status_msg = 'COMPLETED'; break;
+        }
+        const msg = Messages.WAITLIST_STATUS_CHANGE.replace('[status]', status_msg);
+        this.provider_shared_functions.openSnackBar (msg);
+      },
+      error => {
+        this.provider_shared_functions.openSnackBar (error.error);
+      }
+    );
+  }
+
 
 }

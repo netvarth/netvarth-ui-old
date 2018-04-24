@@ -66,6 +66,9 @@ export class SharedFunctions {
                     this.logout();
                 } else {
                     console.log('Something went wrong. Please try after sometime');
+                    if (error.error && typeof(error.error) === 'object') {
+                      error.error = Messages.API_ERROR;
+                    }
                     reject(error);
                 }
             });
@@ -122,7 +125,10 @@ export class SharedFunctions {
                 reject(error);
                 this.logout();
               } else {
-                console.log('Something went wrong. Please try after sometime');
+                console.log('Something went wrong. Please try after sometime', error);
+                if (error.error && typeof(error.error) === 'object') {
+                  error.error = Messages.API_ERROR;
+                }
                 reject(error);
               }
             });

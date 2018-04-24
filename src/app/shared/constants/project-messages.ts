@@ -107,7 +107,8 @@ export const Messages = {
   // Dashboard
 
   'ADD_DELAY': 'New delay added successfully',
-  'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully'
+  'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
+  'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to "[status]"'
 
 
 };

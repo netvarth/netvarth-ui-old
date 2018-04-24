@@ -1,0 +1,12 @@
+<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" >
+    <div class="form-group">
+        <label class="col-form-label" for="displayName">Message*</label>
+        <textarea class="form-control" id="message" placeholder="Message" formControlName="message">
+
+        </textarea>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter message.">
+      </app-field-error-display>
+    </div>
+    <button  type="submit" mat-button [disabled]="!amForm.valid">Submit</button>
+  </form>
+

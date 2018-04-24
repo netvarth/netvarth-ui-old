@@ -49,25 +49,33 @@
                   </ul>
               </div>
 
-              <div class="dash-list"
-              *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+              <div class="dash-list">
                   <div class="ctrls">
                       <ul>
-                          <li class="active"><span>Check-Ins</span></li>
-                          <li><span>Started</span></li>
-                          <li><span>Completed</span></li>
-                          <li><span>Cancelled</span></li>
+                          <li [ngClass]="{'active': status_type =='all'}"  (click)="changeStatusType('all')"
+                          *ngIf="time_type != 1 || (time_type ==1 && selected_queue!=null && selected_queue.id)">
+                          <span>Check-Ins</span>
+                          </li>
+                          <ng-container  *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+                            <li [ngClass]="{'active': status_type =='started'}"  (click)="changeStatusType('started')">
+                              <span>Started</span></li>
+                            <li [ngClass]="{'active': status_type =='done'}"  (click)="changeStatusType('done')">
+                              <span>Completed</span></li>
+                            <li [ngClass]="{'active': status_type =='cancelled'}"  (click)="changeStatusType('cancelled')">
+                              <span>Cancelled</span></li>
+                          </ng-container>
                       </ul>
 
-                      <span class="ml-auto cs-btn bt5" (click)="showAdjustDelay()">
+                      <span *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id"
+                      class="ml-auto cs-btn bt5" (click)="showAdjustDelay()">
                           Adjust Delay <i class="icon-question"></i>
                       </span>
                   </div>
 
-                  <div class="fltr" *ngIf="check_in_list.length != 0">
+                  <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
                       <span><i class="icon-filter-one"></i></span>
                   </div>
-                  <div class="table-outer d-tbl" *ngIf="check_in_list.length != 0">
+                  <div class="table-outer d-tbl" *ngIf="check_in_filtered_list.length != 0">
                       <table class="table">
                           <thead>
                               <tr>
@@ -76,29 +84,62 @@
                                   <th>Name</th>
                                   <th>Service</th>
                                   <th>Actions</th>
-                                  <th>Payment Status</th>
+                                  <!-- <th>Payment Status</th> -->
                                   <th>Message</th>
                                   <th>Consumer Note</th>
                                   <th></th>
                               </tr>
                           </thead>
                           <tbody>
-                              <tr  *ngFor="let checkin of check_in_list">
-                                  <td class="online"><span class="icon-cloud"></span></td>
-                                  <td data-title="Seq No" class="seq">#{{checkin.token}</td>
-                                  <td data-title="Name" class="name">Ajith Paulson
-                                    <span class="icon-arrived" title="Arrived"></span>
+                              <tr  *ngFor="let checkin of check_in_filtered_list">
+                                  <td class="online">
+                                    <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'"></span>
+                                  </td>
+                                  <td data-title="Seq No" class="seq">#{{checkin.token}}</td>
+                                  <td data-title="Name" class="name" *ngIf="checkin.consumer">
+                                    {{checkin.consumer.userProfile.firstName}}  {{checkin.consumer.userProfile.lastName}}
+                                    <span class="icon-arrived" title="Arrived"  *ngIf="checkin.waitlistStatus == 'arrived'"></span>
                                   </td>
                                   <td data-title="Service" class="service">{{checkin.service.name}}</td>
                                   <td data-title="Actions" class="actions">
-                                      <span class="start cs-btn bt7"><i class="icon-play"></i>Start</span>
-                                  </td>
-                                  <td data-title="Payment Status" class="payment"><span class="paid-n"><span class="text">Not Paid</span></span> <span class="paid-h"><span class="text">Partially Paid</span></span> <span class="paid-f"><span class="text">Paid</span></span></td>
+                                    <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
+                                    *ngIf="checkin.waitlistStatus == 'checkedIn' &&  time_type!=2">
+                                      <i class="icon-arrived"></i> Arrived
+                                    </span>
+
+                                    <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
+                                    *ngIf="time_type!=2 && (checkin.waitlistStatus == 'checkedIn'
+                                    || checkin.waitlistStatus == 'arrived')">
+                                      <i class="icon-play"></i>Start
+                                    </span>
+
+                                    <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
+                                    *ngIf="checkin.waitlistStatus == 'started'">
+                                      <i class="icon-play"></i>Done
+                                    </span>
+
+                                    <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
+                                    *ngIf="checkin.waitlistStatus == 'checkedIn'">
+                                      <i class="icon-play"></i>Cancel
+                                    </span>
+
+                                    </td>
+                                  <!-- <td data-title="Payment Status" class="payment"><span class="paid-n"><span class="text">Not Paid</span></span> <span class="paid-h"><span class="text">Partially Paid</span></span> <span class="paid-f"><span class="text">Paid</span></span></td> -->
                                   <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
                                   <td data-title="Consumer Note" class="cnote"><span><i class="icon-note"></i></span></td>
-                                  <td class="mre"><span class="mbt"></span></td>
+                                  <td class="mre"><span class="mbt">
+                                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                          <mat-icon>more_vert</mat-icon>
+                                      </button>
+                                      <mat-menu #menu="matMenu">
+                                          <button type="button" mat-menu-item>
+                                            Cancel Check-In
+                                          </button>
+                                      </mat-menu>
+                                  </span>
+                                </td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                   <td class="online"></td>
                                   <td data-title="Seq No" class="seq">#6</td>
                                   <td data-title="Name" class="name">Sony Joy</td>
@@ -123,13 +164,15 @@
                                   <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
                                   <td data-title="Consumer Note" class="cnote"><span><i class="icon-note"></i></span></td>
                                   <td class="mre"><span class="mbt"></span></td>
-                              </tr>
+                              </tr> -->
                           </tbody>
                       </table>
                   </div>
-                  <div class="qlst no-dta" *ngIf="load_waitlist ==1 && check_in_list.length == 0">
-                    No check-ins available
-                  </div>
+                  <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
+                    <div class="qlst no-dta" *ngIf="load_waitlist ==1 && check_in_filtered_list.length == 0">
+                      No check-ins available
+                    </div>
+                  </ng-container>
 
               </div>
 

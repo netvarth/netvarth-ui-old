@@ -67,6 +67,7 @@ import { ProviderWaitlistLocationDetailComponent } from './components/provider-w
 import { ProviderWaitlistServiceDetailComponent } from './components/provider-waitlist-service-detail/provider-waitlist-service-detail.component';
 import { ProviderWaitlistQueueDetailComponent } from './components/provider-waitlist-queue-detail/provder-waitlist-queue-detail.component';
 import { AddProviderWaitlistServiceGalleryComponent } from './components/add-provider-waitlist-service-gallery/add-provider-waitlist-service-gallery';
+import { ProviderWaitlistCancelPopupComponent } from './components/provider-waitlist-cancel-popup/provider-waitlist-cancel-popup.component';
 import { AddProviderItemImageComponent } from './components/add-provider-item-image/add-provider-item-image.component';
 
 import { SharedServices } from '../shared/services/shared-services';
@@ -160,6 +161,7 @@ import 'mousetrap';
         ProviderWaitlistServiceDetailComponent,
         ProviderWaitlistQueueDetailComponent,
         AddProviderWaitlistServiceGalleryComponent,
+        ProviderWaitlistCancelPopupComponent,
         AddProviderItemImageComponent
     ],
     exports: [ConfirmBoxComponent],
@@ -191,6 +193,7 @@ import 'mousetrap';
       AddProviderBprofileSpecializationsComponent,
       ProviderBprofileSearchDynamicComponent,
       AddProviderWaitlistServiceGalleryComponent,
+      ProviderWaitlistCancelPopupComponent,
       AddProviderItemImageComponent
     ],
     providers: [
