@@ -31,9 +31,9 @@ export class ConsumerHomeComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getWaitlist();
-    this.getHistoryCount();
-    this.getFavouriteProvider();
+    // this.getWaitlist();
+    // this.getHistoryCount();
+    // this.getFavouriteProvider();
 
   }
   getWaitlist() {

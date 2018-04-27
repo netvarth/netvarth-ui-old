@@ -1,4 +1,5 @@
-<div class="sa-fld">
+<ng-container>
+<div [class.sa-fld]="includedfrom=='home'" [class.tp-srch]="includedfrom=='consumer_header'">
   <div class="sa-lc flex-shrink-0">
       <mat-form-field class="search_location_class">
         <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name"  matInput [formControl]="myControl_loc" [matAutocomplete]="autoloc">
@@ -41,12 +42,17 @@
   </div>
 
   <div class="flex-shrink-0 plr0i">
-      <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1" (click)="do_search()"><span href="#" class="icon icon-search"></span></div>
+      <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1" (click)="do_search()"><span class="icon icon-search"></span></div>
   </div>
-  <div class="sa-mo flex-shrink-0" *ngIf="chk_moreoptionshow()">
-      <span class="icon icon-filter" (click)="showMoreOptions()">More Options</span>
+  <!-- <div class="sa-mo flex-shrink-0" *ngIf="chk_moreoptionshow()"> -->
+      <div class="sa-mo flex-shrink-0">
+      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'">More Options</span>
+      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom=='consumer_header'"></span>
   </div>
 </div>
+</ng-container>
+
+
 <!-- <div class="sa-ps">
   <p>Popular Searches: <a href="#">Pediatric</a> <a href="#">Orthodontist</a> <a href="#">Hair Coloring</a> <a href="#">Meditation</a> <a href="#" class="icon icon-more-down"></a></p>
 </div> -->

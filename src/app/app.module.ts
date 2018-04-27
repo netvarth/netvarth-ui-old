@@ -15,6 +15,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import { SearchModule } from './shared/modules/search/search.module';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
+import { HeaderModule } from './shared/modules/header/header.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
@@ -84,7 +85,8 @@ import 'hammerjs';
     SearchModule,
     PagerModule,
     SharedModule,
-    RatingStarModule
+    RatingStarModule,
+    HeaderModule
   ],
   providers: [
     AuthGuardConsumer,

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from './material.module';
 import { RouterModule } from '@angular/router';
-import { HeaderModule } from '../../../shared/modules/header/header.module';
+// import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { FooterModule } from '../../../shared/modules/footer/footer.module';
 import { EditProfileModule } from '../../../shared/modules/edit-profile/edit-profile.module';
 import { ChangePasswordModule } from '../../../shared/modules/change-password/change-password.module';
@@ -25,7 +25,7 @@ import { NgBootstrapModule } from './ngbootstrap.module';
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        HeaderModule,
+        // HeaderModule,
         EditProfileModule,
         ChangePasswordModule,
         ChangeMobileModule,
@@ -42,7 +42,7 @@ import { NgBootstrapModule } from './ngbootstrap.module';
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        HeaderModule,
+        // HeaderModule,
         OtpFormModule,
         EditProfileModule,
         ChangePasswordModule,

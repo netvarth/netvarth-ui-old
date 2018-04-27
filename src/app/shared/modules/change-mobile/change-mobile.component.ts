@@ -7,7 +7,7 @@ import {FormMessageDisplayService} from '../../modules/form-message-display/form
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+// import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import {projectConstants} from '../../constants/project-constants';
 
 @Component({
@@ -26,11 +26,11 @@ export class ChangeMobileComponent implements OnInit {
   breadcrumbs_init = [
     {
       title: 'Dashboard',
-      url: '/provider'
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
       title: 'Change Mobile Number',
-      url: '/provider/change-mobile'
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -40,7 +40,8 @@ export class ChangeMobileComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public router: Router,
-    public provider_shared_functions: ProviderSharedFuctions) {}
+  //  public provider_shared_functions: ProviderSharedFuctions
+  ) {}
 
     ngOnInit() {
 
@@ -52,11 +53,15 @@ export class ChangeMobileComponent implements OnInit {
             Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])]
 
       });
+      this.getProfile();
+    }
+    getProfile() {
       const ob = this;
       this.shared_functions.getProfile()
       .then(
         success =>  {
           this.user_details = success;
+          this.step = 1;
          // console.log('typ', this.shared_functions.isBusinessOwner('returntyp'));
           if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
             this.spForm.setValue({
@@ -73,9 +78,7 @@ export class ChangeMobileComponent implements OnInit {
         },
         error => { ob.api_error = error.error; }
       );
-
     }
-
     onSubmit(submit_data) {
       if (!submit_data.phonenumber) { return false; }
 
@@ -87,7 +90,7 @@ export class ChangeMobileComponent implements OnInit {
           this.step = 2;
           this.submit_data = submit_data;
           this.api_success = Messages.OTP_SENT_MOBILE;
-          // this.provider_shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
+          // this.shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
         },
         error => {
           this.api_error = error.error;
@@ -126,14 +129,20 @@ export class ChangeMobileComponent implements OnInit {
       .subscribe(
         data => {
          // this.api_success = Messages.PHONE_VERIFIED;
-          this.provider_shared_functions.openSnackBar(Messages.PHONE_VERIFIED);
+         this.resetApiErrors();
+         this.api_success = null;
+          this.shared_functions.openSnackBar(Messages.PHONE_VERIFIED);
+          const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
+          ynw.loginId = this.submit_data.phonenumber; // change the phone number to the new one in the local storage variable
+          this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
           setTimeout(() => {
-            this.router.navigate(['/']);
+            // this.router.navigate(['/']);
+            this.getProfile();
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
           // this.api_error = error.error;
-          this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
 

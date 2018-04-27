@@ -258,6 +258,7 @@
 // Responsive Breakpoints //
 
 $break-767: 767px;
+$break-400: 400px;
 $break-575: 575px;
 $break-768: 768px;
 $break-991: 991px;
@@ -269,6 +270,10 @@ $break-1200: 1200px;
     // Small devices (landscape phones, less than 768px)
   @if $media == ynw-767 {
     @media only screen and (max-width: $break-767) { @content; }
+  }
+    // Custom for YNW (custom created for ynw less than 401px)
+  @else if $media == ynw-400 {
+    @media only screen and (max-width: $break-400) { @content; }
   }
     // Extra small devices (portrait phones, less than 576px)
   @else if $media == ynw-575 {

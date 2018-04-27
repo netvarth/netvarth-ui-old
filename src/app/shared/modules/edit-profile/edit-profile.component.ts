@@ -7,7 +7,7 @@ import {FormMessageDisplayService} from '../../modules/form-message-display/form
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+// import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
 
@@ -26,11 +26,11 @@ export class EditProfileComponent implements OnInit {
   breadcrumbs_init = [
     {
       title: 'Dashboard',
-      url: '/provider'
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
       title: 'Update Profile',
-      url: '/provider/profile'
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -40,7 +40,7 @@ export class EditProfileComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public router: Router,
-    public provider_shared_functions: ProviderSharedFuctions
+   // public provider_shared_functions: ProviderSharedFuctions
   ) {}
 
   ngOnInit() {
@@ -130,12 +130,12 @@ export class EditProfileComponent implements OnInit {
     .subscribe(
       data => {
         // this.api_success = Messages.PROFILE_UPDATE;
-        this.provider_shared_functions.openSnackBar(Messages.PROFILE_UPDATE);
+        this.shared_functions.openSnackBar(Messages.PROFILE_UPDATE);
         this.getProfile(this.curtype);
       },
       error => {
         // this.api_error = error.error;
-        this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -145,7 +145,5 @@ export class EditProfileComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
-
-
 
 }

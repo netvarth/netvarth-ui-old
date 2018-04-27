@@ -1,4 +1,4 @@
-<header [class]="headercls">
+<header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home'">
     <div class="container"> 
         <div class="row">
             <div class="lgo col-md-3"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
@@ -32,20 +32,24 @@
                     </button>
                         <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="redirectto('profile')">
-                                <i class="icon-user"></i>
+                                <i class="icon-profile"></i>
                                 <span>Profile</span>
                         </button>
                         <button mat-menu-item (click)="redirectto('change-password')">
-                            <i class="icon-user"></i>
+                            <i class="icon-password"></i>
                             <span>Change Password</span>
                         </button>
                         <button mat-menu-item (click)="redirectto('change-mobile')">
-                            <i class="icon-user"></i>
+                            <i class="icon-mobile"></i>
                             <span>Change Mobile</span>
                         </button>
                         <button mat-menu-item (click)="redirectto('change-email')">
-                            <i class="icon-user"></i>
+                            <i class="icon-inbox"></i>
                             <span>Change Email</span>
+                        </button>
+                        <button mat-menu-item (click)="switchtoConsumer()" *ngIf="isprovider">
+                            <i class="icon-switch"></i>
+                            <span>Switch to Consumer</span>
                         </button>
                         <button mat-menu-item (click)="doLogout()">
                             <i class="icon-logout"></i>
@@ -53,7 +57,81 @@
                         </button>
                         </mat-menu>
                     </span>
-                    <a href="javascript:void()" (click)="upgradeMembership()" class="membership" *ngIf="headercls!='itl-steps'"><i class="icon-membership"></i> Upgrade <span>Membership</span></a>
+                    <a href="javascript:void()" (click)="upgradeMembership()" class="membership" *ngIf="headercls!='itl-steps' && isprovider"><i class="icon-membership"></i> Upgrade <span>Membership</span></a>
+                </div>
+            </div>
+        </div>        
+    </div>
+</header>
+
+
+<header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home'">
+    <div class="container">
+        <div class="row">
+            <div class="tp-1">
+                <div class="tp-l lgo"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
+                <div class="tp-r">
+                    <div class="tc1 ml-auto">
+                        <div class="topsignouter">
+                        <span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> <span *ngIf="!shared_functions.checkLogin()">/</span> <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span>
+                        <div class="lgmem" *ngIf="ctype=='consumer'">
+                                <span class="lgin">
+                                {{userdet.userName}}
+                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                    <i class="icon-angle-down"></i>
+                                </button>
+                                    <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="redirectto('profile')">
+                                            <i class="icon-profile"></i>
+                                            <span>Profile</span>
+                                    </button>
+                                    <button mat-menu-item (click)="redirectto('change-password')">
+                                        <i class="icon-password"></i>
+                                        <span>Change Password</span>
+                                    </button>
+                                    <button mat-menu-item (click)="redirectto('change-mobile')">
+                                        <i class="icon-mobile"></i>
+                                        <span>Change Mobile</span>
+                                    </button>
+                                    <button mat-menu-item (click)="redirectto('change-email')">
+                                        <i class="icon-inbox"></i>
+                                        <span>Change Email</span>
+                                    </button>
+                                    <button mat-menu-item (click)="switchtoProvider()" *ngIf="!isprovider">
+                                        <i class="icon-switch"></i>
+                                        <span>Switch to Provider</span>
+                                    </button>
+                                    <button mat-menu-item (click)="doLogout()">
+                                        <i class="icon-logout"></i>
+                                        <span>Logout</span>
+                                    </button>
+                                    </mat-menu>
+                                </span>
+                            </div>    
+                    </div> 
+
+                        <div class="isprovidertop ng-star-inserted" *ngIf="!shared_functions.checkLogin()">Are you a Provider? <span (click)="doLogin('provider')">Click Here</span></div>
+                    </div>
+                   
+                    <app-search [showopennow]="0" [searchfields]="searchfields" [includedfrom]="'consumer_header'" (searchclick)="handlesearchClick($event)"></app-search>
+                    <!-- <div class="tp-srch">
+                        <div class="sa-lc flex-shrink-0">
+                        </div>
+
+                        <div class="sa-dm flex-shrink-0 ml5">
+                        </div>
+
+                        <div class="sa-src flex-shrink-1 plr0i ml5">
+                        </div>
+                        <div class="flex-shrink-0 plr0i">
+                            <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1">
+                            <span href="#" class="icon icon-search"></span>
+                            </div>
+                        </div>
+                        <div class="sa-mo flex-shrink-0">
+                            <a href="#" class="icon icon-filter"></a>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>        

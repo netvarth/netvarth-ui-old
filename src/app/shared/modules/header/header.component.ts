@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,6 +10,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
+import { SearchFields } from '../../modules/search/searchfields';
+
+import { ViewChild } from '@angular/core';
 
 @Component({
     selector: 'app-header',
@@ -22,6 +25,8 @@ import { LoginComponent } from '../../components/login/login.component';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   @Input() headerTitle: string;
+  @Input() includedfrom: string;
+  @Output() searchclick = new EventEmitter<any>();
   userdet: any = [];
   headercls = '';
   provider_loggedin = false;
@@ -37,6 +42,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     {url: '\/provider\/settings\/.+' , class: 'dashb'},
     {url: null , class: 'dashb'},
   ];
+  isprovider = false;
+  ctype;
+  public searchfields: SearchFields = new SearchFields();
+  locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
+  keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': ''};
+  selected_domain = '';
 
 
   constructor(
@@ -70,6 +81,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.getUserdetails();
     this.getBusinessdetFromLocalstorage();
     // this.handleHeaderclassbasedonURL();
+    this.isprovider = this.shared_functions.isBusinessOwner();
+    this.ctype = this.shared_functions.isBusinessOwner('returntyp');
   }
 
   ngOnDestroy() {
@@ -107,13 +120,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.headercls = '';
     const currenturl = this.router.url.split(';');
     const checkUrl = currenturl[0]; // this.curPgurl;
-   // console.log('subst', checkUrl);
-   /* if (checkUrl.substr(-17) === '/provider/bwizard') {
-      this.headercls = 'itl-steps';
-      // this.headercls = 'dashb';
-    } else if (checkUrl.substr(-34) === '/provider/settings/bprofile-search') {
-      this.headercls = 'dashb';
-    }*/
    // return this.headercls;
    for (const url of this.urls_class) {
      if (url.url != null) {
@@ -177,20 +183,60 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   redirectto (mod) {
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
     switch (mod) {
       case 'profile':
-        this.router.navigate(['provider', 'profile']);
+        this.router.navigate([usertype, 'profile']);
       break;
       case 'change-password':
-        this.router.navigate(['provider', 'change-password']);
+        this.router.navigate([usertype, 'change-password']);
       break;
       case 'change-mobile':
-        this.router.navigate(['provider', 'change-mobile']);
+        this.router.navigate([usertype, 'change-mobile']);
       break;
       case 'change-email':
-        this.router.navigate(['provider', 'change-email']);
+        this.router.navigate([usertype, 'change-email']);
       break;
     }
   }
+  switchtoConsumer() {
+    const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+    // console.log('credentials', ynw.loginId, ynw.password);
+    this.shared_service.ProviderLogout()
+         .subscribe(data => {
+            this.shared_functions.clearLocalstorage();
+            const post_data = {
+              'countryCode': '+91',
+              'loginId': ynw.loginId,
+              'password': ynw.password
+            };
+            this.shared_functions.consumerLogin(post_data);
+         },
+         error => {
+            // console.log(error);
+         }
+         );
+  }
+  switchtoProvider() {
+    const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+    // console.log('credentials', ynw.loginId, ynw.password);
+    this.shared_service.ConsumerLogout()
+      .subscribe(data => {
+        this.shared_functions.clearLocalstorage();
+        const post_data = {
+          'countryCode': '+91',
+          'loginId': ynw.loginId,
+          'password': ynw.password
+        };
+        this.shared_functions.providerLogin(post_data);
+      },
+      error => {
+        // console.log(error);
+      }
+    );
+  }
 
+  handlesearchClick(ob) {
+     this.searchclick.emit(ob);
+  }
 }

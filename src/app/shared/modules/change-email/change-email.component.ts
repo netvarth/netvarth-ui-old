@@ -8,7 +8,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
 import {projectConstants} from '../../constants/project-constants';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+// import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-change-email',
@@ -26,11 +26,11 @@ export class ChangeEmailComponent implements OnInit {
   breadcrumbs_init = [
     {
       title: 'Dashboard',
-      url: '/provider'
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
       title: 'Change Email id',
-      url: '/provider/change-email'
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-email'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -40,17 +40,22 @@ export class ChangeEmailComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public router: Router,
-    public provider_shared_functions: ProviderSharedFuctions) {}
+    // public provider_shared_functions: ProviderSharedFuctions
+  ) {}
 
     ngOnInit() {
 
       this.spForm = this.fb.group({
         email: ['', Validators.compose([Validators.email]) ]
       });
+      this.getProviderProfile();
+    }
+    getProviderProfile() {
       const ob = this;
       this.shared_functions.getProfile()
       .then(
         success =>  {
+          this.step = 1;
           this.user_details = success;
           if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
             this.spForm.setValue({
@@ -64,11 +69,12 @@ export class ChangeEmailComponent implements OnInit {
             this.is_verified = success['userProfile']['emailVerified'];
           }
         },
-        error => { ob.api_error = error.error; }
+        error => {
+          // ob.api_error = error.error;
+          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        }
       );
-
     }
-
     onSubmit(submit_data) {
 
       this.resetApiErrors();
@@ -120,14 +126,16 @@ export class ChangeEmailComponent implements OnInit {
       .subscribe(
         data => {
           // this.api_success = Messages.EMAIL_VERIFIED;
-          this.provider_shared_functions.openSnackBar(Messages.EMAIL_VERIFIED);
+          this.shared_functions.openSnackBar(Messages.EMAIL_VERIFIED);
+          this.api_success = null;
           setTimeout(() => {
-            this.router.navigate(['/']);
+            // this.router.navigate(['/']);
+            this.getProviderProfile();
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
           // this.api_error = error.error;
-          this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
 
