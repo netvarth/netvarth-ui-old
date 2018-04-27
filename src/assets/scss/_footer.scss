@@ -45,6 +45,9 @@ footer {
                     @include respond-to(ynw-767) {
                         margin-right: 10px;
                     }
+                    @include respond-to(ynw-400) {
+                        flex-grow: 1;
+                    }
                     
                     a {
                         span{

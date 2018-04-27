@@ -3,8 +3,10 @@
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section> 
 <section>
-  <div class="content">
+  <div class="content see-pages">
       <div class="container">
+        <div class="outer-card">
+        <div class="card">
         <div *ngIf="step==1">
           <form [formGroup]="spForm" novalidate
           (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
@@ -14,7 +16,7 @@
               <label class="col-form-label" for="phonenumber">Mobile *</label>
               <input type="text" class="form-control" id="phonenumber" placeholder="Mobile"
               formControlName="phonenumber" (keyup)="isVerified(spForm.controls['phonenumber'].value)">
-              <div *ngIf="is_verified">Verifed</div>
+              <div *ngIf="is_verified" class="verified">Verifed</div>
               <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'phonenumber')"
               [errorMsgs]="fed_service.getErrorMessage(spForm,'phonenumber',
               {
@@ -40,6 +42,17 @@
 
         <app-form-success-display [displayMsg]="true" *ngIf="api_success"
         successMsg="{{api_success}}"></app-form-success-display>
-</div>
-</div>
+        </div>
+        <div class="right-menu">
+            <div class="right-menu-header">Related Links</div>
+            <ul class="related-link">
+                <li (click)="shared_functions.redirectto('profile')" class="icon-profile">Profile</li>
+                <li (click)="shared_functions.redirectto('change-password')" class="icon-password">Change Password</li>
+                <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">Change Email</li>
+
+            </ul>
+        </div>
+        </div>
+    </div>
+  </div>
 </section>

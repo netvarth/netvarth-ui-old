@@ -3,22 +3,39 @@
         <div class="text-center">
             <!-- pager -->
             <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <li [class.disabled]="pager.currentPage === 1">
                     <a (click)="onpagerclick(1)">First</a>
                 </li>
-                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <li [class.disabled]="pager.currentPage === 1">
                     <a (click)="onpagerclick(pager.currentPage - 1)">Previous</a>
                 </li>
-                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <li *ngFor="let page of pager.pages" [class.active]="pager.currentPage === page">
                     <a (click)="onpagerclick(page)">{{page}}</a>
                 </li>
-                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <li [class.disabled]="pager.currentPage === pager.totalPages">
                     <a (click)="onpagerclick(pager.currentPage + 1)">Next</a>
                 </li>
-                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <li [class.disabled]="pager.currentPage === pager.totalPages">
                     <a (click)="onpagerclick(pager.totalPages)">Last</a>
                 </li>
             </ul>
+            <!-- <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="onpagerclick(1)">First</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="onpagerclick(pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                        <a (click)="onpagerclick(page)">{{page}}</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="onpagerclick(pager.currentPage + 1)">Next</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="onpagerclick(pager.totalPages)">Last</a>
+                    </li>
+                </ul> -->
         </div>
     </div>
 </div>

@@ -44,6 +44,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   @Input() domainpassedfromrefined: string;
   @Input() subdomainpassedfromrefined: any;
   @Input() domainlistpassed: any = [];
+  @Input() includedfrom: any;
 
   @Output() searchclick = new EventEmitter<any>();
 
@@ -127,12 +128,13 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
 
   ngOnInit() {
+    // console.log('included from', this.includedfrom);
     this.selected_domain = 'All';
     if (this.domainlistpassed.length > 0) {
        this.domainlist_data = this.domainlistpassed;
        this.loadkeywordAPIreponsetoArray();
     } else {
-      console.log('reached here');
+      // console.log('reached here');
         this.getDomainList();
     }
     this.getAllsearchlabels();
@@ -619,8 +621,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
        typ: kw.typ || ''
     };
  }
- 
+
  do_search(labelq?) {
+   console.log('search clicked');
     const currenturl = this.routerobj.url.split(';');
 
    /* if (!this.location_latitude) {

@@ -124,7 +124,7 @@ export class SharedServices {
        // rebuilding the parameters to accomodate q.parser and q.options
        const pass_params = {
         'start': params.start,
-        'return': params.return,
+       // 'return': params.return,
         'fq': params.fq,
         'q': params.q,
         'size': params.size ,

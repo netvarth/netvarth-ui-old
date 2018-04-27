@@ -18,7 +18,8 @@ export class SharedFunctions {
     private subject = new Subject<any>();
 
     constructor(private shared_service: SharedServices, private router: Router,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private snackBar: MatSnackBar
     ) {}
 
     logout() {
@@ -56,7 +57,7 @@ export class SharedFunctions {
             data => {
                 // console.log(data);
                 resolve(data);
-                this.setLoginData(data, post_data);
+                this.setLoginData(data, post_data, 'consumer');
                 this.router.navigate(['/consumer']);
             },
             error => {
@@ -116,7 +117,7 @@ export class SharedFunctions {
             data => {
               resolve(data);
               // console.log(data);
-              this.setLoginData(data, post_data);
+              this.setLoginData(data, post_data, 'provider');
               this.router.navigate(['/provider']);
 
             },
@@ -138,15 +139,19 @@ export class SharedFunctions {
 
 
 
-    private setLoginData(data, post_data) {
+    public setLoginData(data, post_data, mod) {
 
           localStorage.setItem('ynw-user', JSON.stringify(data));
-          localStorage.setItem('isBusinessOwner', data['isProvider']);
+          // localStorage.setItem('isBusinessOwner', data['isProvider']);
+          localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
+          if (mod === 'provider') {
+
+          }
           localStorage.setItem('ynw-credentials', JSON.stringify(post_data));
 
     }
 
-    private clearLocalstorage() {
+    public clearLocalstorage() {
 
         for (let index = 0; index < localStorage.length; index++) {
           if (this.dont_delete_localstorage.indexOf(localStorage.key( index )) === -1) {
@@ -164,12 +169,19 @@ export class SharedFunctions {
 
     public isBusinessOwner(passtyp?) {
       let is_business_owner;
-
-      if (passtyp === 'returntyp') {
-        // console.log('origin', passtyp);
-          is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
+      if (localStorage.getItem('isBusinessOwner')) {
+        if (passtyp === 'returntyp') {
+          // console.log('origin', passtyp);
+            is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
+        } else {
+            is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? true : false;
+        }
       } else {
-          is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? true : false;
+        if (passtyp === 'returntyp') {
+            is_business_owner = '';
+        } else {
+            is_business_owner = false;
+        }
       }
       return is_business_owner;
     }
@@ -581,7 +593,28 @@ isNumberOnly(str) {
   const pattern = /^\d+$/;
   return pattern.test(str);  // returns a boolean
 }
+openSnackBar(message: string, params: any = []) {
+  const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
+  const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
+  return snackBarRef;
+}
 
-
+redirectto (mod) {
+  const usertype = this.isBusinessOwner('returntyp');
+  switch (mod) {
+    case 'profile':
+      this.router.navigate([usertype, 'profile']);
+    break;
+    case 'change-password':
+      this.router.navigate([usertype, 'change-password']);
+    break;
+    case 'change-mobile':
+      this.router.navigate([usertype, 'change-mobile']);
+    break;
+    case 'change-email':
+      this.router.navigate([usertype, 'change-email']);
+    break;
+  }
+}
 
 }

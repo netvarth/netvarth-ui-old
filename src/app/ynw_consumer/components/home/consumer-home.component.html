@@ -1,9 +1,16 @@
-<h1>Consumer Home</h1>
-<app-header [headerTitle] = "'Cosumer header'"></app-header>
+<!-- <app-header [headerTitle] = "'Cosumer header'"></app-header> -->
 
-<app-search [showopennow]="0" [searchfields]="searchfields"></app-search>
+<!-- <app-search [showopennow]="0" [searchfields]="searchfields"></app-search> -->
 <br>
-<h2>Check-Ins/Orders</h2>
+<!-- <h2>Check-Ins/Orders</h2> -->
+<section class="content">
+    <div class="container">
+        <div class="row">
+<h2>Consumer Dashboard</h2>
+</div>
+</div>
+</section>
+
 
 <div *ngFor="let waitlist of waitlists">
 
@@ -20,7 +27,7 @@
 
 </div>
 
-<h2>Favourite Providers</h2>
+<!-- <h2>Favourite Providers</h2> -->
 <div *ngFor="let fav of fav_providers">
 
       <h4>{{fav.businessName}}</h4>
@@ -29,7 +36,7 @@
 
 </div>
 
-<h2>History</h2>
+<!-- <h2>History</h2> -->
 
 
 <div *ngFor="let waitlist of history">
@@ -44,4 +51,4 @@
 
   </div>
 
-  <router-outlet></router-outlet>
+  <!-- <router-outlet></router-outlet> -->

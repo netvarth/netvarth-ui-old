@@ -1,0 +1,116 @@
+/***** Common Pages #### */
+
+.content {
+    &.see-pages {
+        
+        .outer-card {
+            display: flex;
+            width: 100% !important;
+            
+            @include respond-to(ynw-575) {
+                flex-direction: column;
+            }
+
+            .card {
+                width: 60%;
+                
+                @include respond-to(ynw-575) {
+                    margin-bottom: 30px;
+                    width: 100%;
+                }
+                
+                .form-group {
+                    .pickerouter {
+                        display: flex;
+
+                        input[type="text"] {
+                            width: 120px;
+                            padding: .375rem .75rem;
+                        }
+
+                        .mat-datepicker-toggle {
+                            border: 1px solid $linkblue;
+                            @include border-radius(.25rem);
+                            margin-right: 15px;
+
+                            .mat-icon-button {
+                                height: 38px;
+                                line-height: 38px;
+                            }
+                        }
+                    }
+                    .mat-radio-group {
+                        .mat-radio-button {
+                            @include font-regular;
+                        }
+                    }
+                    .mat-radio-group {
+                        .mat-radio-button {
+                            margin-right: 10px;
+                        }
+                    }
+                    
+                    .verified {
+                        position: relative;
+                        margin-top: 10px;
+                        padding-left: 20px;
+                        
+                        &:before {
+                            content: "\24";
+                            position: absolute;
+                            @include font-custom;
+                            left: 0;
+                            top: 0;
+                            color: $green;
+                            font-size: 1rem;
+                        }
+                        
+                    }
+                }
+            }
+            .right-menu {
+                flex-grow: 1;
+                margin-left: 50px;
+                
+                @include respond-to(ynw-575) {
+                    margin-left: 0;
+                }
+                
+                .right-menu-header {
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                }
+                
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    
+                    li {
+                        list-style: none;
+                        font-size: .875rem;
+                        color: $linkblue;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                        display: table;
+                        padding-left: 20px;
+                        position: relative;
+                        
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            top: 2px;
+                        }
+                    }
+                }
+            }
+            
+            .mat-dialog-actions {
+
+                &:last-child {
+                    margin: 0;
+                    padding: 20px 0;
+                }
+            }
+        }
+    }
+}

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-
+import {SharedFunctions} from '../../../shared/functions/shared-functions';
 import { AddProviderWaitlistQueuesComponent } from '../../components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 
 @Injectable()
 export class ProviderSharedFuctions {
 
-    constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {
+    constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
+    public shared_functions: SharedFunctions) {
 
     }
 
@@ -77,9 +78,10 @@ export class ProviderSharedFuctions {
     }
 
     openSnackBar(message: string, params: any = []) {
-      const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
-      const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
-      return snackBarRef;
+      // const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
+      // const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
+      // return snackBarRef;
+      return this.shared_functions.openSnackBar(message, params);
     }
 
     queueReloadApi(ob, source = 'queue_list') {

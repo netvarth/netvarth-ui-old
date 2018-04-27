@@ -43,6 +43,7 @@ export class SearchDetailComponent implements OnInit {
   public search_result_count;
   public sortfield;
   public sortorder;
+  sortfieldsels;
   public nosearch_results;
   public startpageval;
   public labelq;
@@ -61,6 +62,7 @@ export class SearchDetailComponent implements OnInit {
   public commonfilters;
   public showopnow = 0;
   public subdomainleft;
+  showrefinedsection = true;
   searchfields: SearchFields = new SearchFields();
   constructor(private routerobj: Router,
               private location: Location,
@@ -77,6 +79,7 @@ export class SearchDetailComponent implements OnInit {
             this.getDomainList();
             // this.do_search();
     });
+    this.sortfieldsels = 'titleasc';
     this.nosearch_results = false;
   }
   private getDomainList() {
@@ -547,7 +550,29 @@ export class SearchDetailComponent implements OnInit {
     return this.searchfields;
   }
   private selected_sortfield(sel) {
-    this.sortfield = sel;
+    let selfield = '';
+    let selorder = '';
+    switch (sel) {
+      case 'titleasc':
+        selfield = 'title';
+        selorder = 'asc';
+      break;
+      case 'titledesc':
+        selfield = 'title';
+        selorder = 'desc';
+      break;
+      case 'sectorasc':
+       selfield = 'sector';
+       selorder = 'asc';
+      break;
+      case 'sectordesc':
+        selfield = 'sector';
+        selorder = 'desc';
+      break;
+    }
+    this.sortfieldsels = sel;
+    this.sortfield = selfield;
+    this.sortorder = selorder;
     // changing the url of the search result page based on the selected criteria
     this.change_url_on_criteria_change();
     this.do_search();
@@ -870,4 +895,7 @@ export class SearchDetailComponent implements OnInit {
     this.handle_optionclick(obj.cloudindex, 'Rating', obj.selectedrating, false);
   }
 
+  togger_refinesection() {
+    this.showrefinedsection = !this.showrefinedsection;
+  }
 }

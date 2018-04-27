@@ -1,282 +1,141 @@
-.consumer {
-    padding-top: 15px;
+header {
+    &.consumer {
+        padding-top: 15px;
 
-    .tp-1 {
-        width: 100%;
-        display: flex;
-        
-        .tp-l {
-            margin-right: 20px;
-            
-            @include respond-to(ynw-768-991) {
-                position: absolute;
-            }
-            
-            &.lgo {
-                padding-top: 40px;
-                
-                @include respond-to(ynw-768-991) {
-                    padding-top: 0;
-                }
-            }
-        }
-        
-        .tp-r {
-            flex-grow: 1;
-            
-            .tc1 {
-                margin-top: 0;
-                margin-bottom: 20px;
-                
-                @include respond-to(ynw-768-991) {
-                    height: 70px;
-                }
+        .tp-1 {
+            width: 100%;
+            display: flex;
 
-                .isprovidertop {
-                    margin-top: 5px;
-                }
-            }
-
-            .tp-srch {
-                width: 100%;
-                position: relative;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
+            .tp-l {
+                margin-right: 20px;
 
                 @include respond-to(ynw-767) {
-                    flex-direction: column;
-                    align-items: flex-start;
+                    position: absolute;
                 }
                 @include respond-to(ynw-768-991) {
-                    flex-direction: column;
-                    align-items: flex-start;
+                    position: absolute;
                 }
 
-                .sa-lc,
-                .sa-dm,
-                .sa-src {
-                    background-color: $cc-formbg;
-                    height: 50px;
+                &.lgo {
+                    padding-top: 33px;
 
                     @include respond-to(ynw-767) {
-                        height: $input-h;
+                        padding-top: 0;
                     }
                     @include respond-to(ynw-768-991) {
-                        height: $input-h;
+                        padding-top: 0;
                     }
                 }
+            }
 
-                .flex-shrink-0 {
-                    flex-shrink: 0;
-                    -ms-flex-negative: 0;
-                }
-                .flex-shrink-1 {
-                    -ms-flex-negative: 1;
-                    flex-shrink: 1;
-                }
-                .ml5 {
-                    margin-left: 5px;
+            .tp-r {
+                flex-grow: 1;
+
+                .tc1 {
+                    margin-top: 0;
+                    margin-bottom: 15px;
 
                     @include respond-to(ynw-767) {
-                        margin-left: 0;
+                        height: 70px;
+                    }
+                    @include respond-to(ynw-400) {
+                        margin-top: 80px;
+                        height: auto;
+                    }
+                    @include respond-to(ynw-575) {
+                        padding-top: 20px;
                     }
                     @include respond-to(ynw-768-991) {
-                        margin-left: 0;
-                    }
-                }
-                .mr5 {
-                    margin-right: 5px;
-                }
-
-                .sa-lc {
-                    width: 250px;
-                    cursor: pointer;
-                    position: relative;
-
-                    @include respond-to(ynw-767) {
-                        width: 100%;
-                        margin-bottom: 5px;
-                    }
-                    @include respond-to(ynw-768-991) {
-                        width: 100%;
-                        margin-bottom: 5px;
+                        height: 70px;
                     }
 
-                    .search_location_class {
-                        border: none;
-                        background: transparent;
-                        padding: 0px;
-                        @include border-radius(0px);
-                        position: relative;
-                        z-index: 2;
-                        font-size: 1.125em;
-                        font-weight: 500;
-                        width: 100%;
-
-                        .mat-form-field-wrapper {
-                            padding: 0;
-                            height: 90px;
-
-                            @include respond-to(ynw-767) {
-                                height: $input-h;
-                            }
-                            @include respond-to(ynw-768-991) {
-                                height: $input-h;
-                            }
-
-                            .mat-input-infix {
-                                padding: 0;
-                                border-top: none;
-
-                                .mat-input-element {
-                                    padding: 15px;
-                                    vertical-align: top;
-                                    height: 90px;
-                                    font-size: .875rem;
-                                    padding-left: 40px;
-                                    text-overflow: ellipsis;
-                                    @include font-regular;
-                                    font-weight: 500;
-                                    color: $cc-black;
-
-                                    @include respond-to(ynw-767) {
-                                        height: $input-h;
-                                        padding: 11px 11px 11px 40px;
-                                    }
-                                    @include respond-to(ynw-768-991) {
-                                        height: $input-h;
-                                        padding: 11px 11px 11px 40px;
-                                    }
-                                }
-
-                                .mat-form-field-label {
-                                    display: none;
-                                }
-                            }
-
-                        }
-
-                        .mat-form-field-underline {
-                            display: none;
-                        }
-
-                        &:focus {
-                            outline: none;
-                            border: none;
-                        }
-                    }
-
-                    &:before {
-                        content: "\74";
-                        /*background: url(../images/icon-location.svg);*/
-                        @include font-custom;
-                        width: 14px;
-                        height: 18px;
-                        position: absolute;
-                        left: 15px;
-                        top: 50%;
-                        margin-top: -12px;
+                    .isprovidertop {
+                        margin-top: 5px;
                     }
                 }
 
-                .sa-dm {
-                    width: 200px;
-                    cursor: pointer;
-
-                    @include respond-to(ynw-767) {
-                        width: 100%;
-                        margin-bottom: 5px;
-                    }
-                    @include respond-to(ynw-768-991) {
-                        width: 100%;
-                        margin-bottom: 5px;
-                    }
-
-                    .mat-form-field {
-                        display: block;
-
-                        .mat-input-wrapper {
-                            padding-bottom: 0;
-
-                            .mat-input-infix {
-                                padding: 0;
-                                border-top: none;
-
-                                .mat-select {
-                                    box-shadow: none !important;
-                                    border: none !important;
-                                    height: 90px;
-                                    background: none;
-                                    border-radius: 0px;
-                                    display: flex;
-                                    align-items: center;
-                                    @include font-regular;
-                                    font-weight: 500;
-                                    font-size: .875rem;
-                                    color: $cc-black;
-                                    padding: 15px;
-
-                                    @include respond-to(ynw-767) {
-                                        height: $input-h;
-                                    }
-                                    @include respond-to(ynw-768-991) {
-                                        height: $input-h;
-                                    }
-
-                                    .mat-select-arrow {
-                                        color: $cc-black;
-                                        border: none;
-                                        position: relative;
-                                        width: 10px;
-                                        height: 10px;
-                                        font-size: .65rem;
-                                        font-weight: 700;
-                                        display: flex;
-                                        align-items: center;
-                                        margin: 0;
-
-                                        &:after {
-                                            @include font-custom;
-                                            content: "\72";
-                                            position: absolute;
-                                            right: 0;
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            .mat-form-field-underline {
-                                display: none;
-                            }
-                        }
-                    }
-                }
-
-                .sa-src {
+                .tp-srch {
                     width: 100%;
-                    @include font-regular;
+                    position: relative;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
 
-                    .search_keyword_class {
-                        padding: 0px;
-                        background: transparent;
-                        border-radius: 0;
-                        border: none;
-                        width: 100%;
+                    @include respond-to(ynw-767) {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+                    @include respond-to(ynw-768-991) {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
 
-                        .mat-input-infix {
-                            padding: 0;
-                            border-top: none;
+                    .sa-lc,
+                    .sa-dm,
+                    .sa-src {
+                        background-color: $cc-formbg;
+                        height: 50px;
+                        font-size: .875rem;
 
-                            .mat-input-element {
-                                height: 90px;
-                                padding: 15px;
-                                @include font-regular;
-                                font-weight: 600;
-                                font-size: 0.875rem;
-                                color: $cc-black;
+                        @include respond-to(ynw-767) {
+                            height: $input-h;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            height: $input-h;
+                        }
+                    }
+
+                    .flex-shrink-0 {
+                        flex-shrink: 0;
+                        -ms-flex-negative: 0;
+                    }
+                    .flex-shrink-1 {
+                        -ms-flex-negative: 1;
+                        flex-shrink: 1;
+                    }
+                    .ml5 {
+                        margin-left: 5px;
+
+                        @include respond-to(ynw-767) {
+                            margin-left: 0;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            margin-left: 0;
+                        }
+                    }
+                    .mr5 {
+                        margin-right: 5px;
+                    }
+
+                    .sa-lc {
+                        width: 250px;
+                        cursor: pointer;
+                        position: relative;
+
+                        @include respond-to(ynw-767) {
+                            width: 100%;
+                            margin-bottom: 5px;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 100%;
+                            margin-bottom: 5px;
+                        }
+
+                        .search_location_class {
+                            border: none;
+                            background: transparent;
+                            padding: 0px;
+                            @include border-radius(0px);
+                            position: relative;
+                            z-index: 2;
+                            font-size: 1.125em;
+                            font-weight: 500;
+                            width: 100%;
+
+                            .mat-form-field-wrapper {
+                                padding: 0;
+                                height: 50px;
 
                                 @include respond-to(ynw-767) {
                                     height: $input-h;
@@ -285,162 +144,900 @@
                                     height: $input-h;
                                 }
 
-                            }
+                                .mat-input-infix {
+                                    padding: 0;
+                                    border-top: none;
 
-                            .mat-form-field-label-wrapper {
-                                display: block;
+                                    .mat-input-element {
+                                        padding: 15px;
+                                        vertical-align: top;
+                                        height: 50px;
+                                        font-size: .875rem;
+                                        padding-left: 40px;
+                                        text-overflow: ellipsis;
+                                        @include font-regular;
+                                        font-weight: 500;
+                                        color: $cc-black;
 
-                                .mat-form-field-label {
-                                    padding-left: 15px;
-                                    padding-top: 30px;
-                                    @include font-regular;
-                                    font-weight: 500;
-
-                                    @include respond-to(ynw-767) {
-                                        padding-top: 10px;
-                                        padding-left: 20px;
+                                        @include respond-to(ynw-767) {
+                                            height: $input-h;
+                                            padding: 11px 11px 11px 40px;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            height: $input-h;
+                                            padding: 11px 11px 11px 40px;
+                                        }
                                     }
-                                    @include respond-to(ynw-768-991) {
-                                        padding-top: 10px;
-                                        padding-left: 20px;
+
+                                    .mat-form-field-label {
+                                        display: none;
                                     }
                                 }
+
+                            }
+
+                            .mat-form-field-underline {
+                                display: none;
+                            }
+
+                            &:focus {
+                                outline: none;
+                                border: none;
                             }
                         }
 
-                        .mat-form-field-underline {
-                            display: none;
+                        &:before {
+                            content: "\74";
+                            /*background: url(../images/icon-location.svg);*/
+                            @include font-custom;
+                            width: 14px;
+                            height: 18px;
+                            position: absolute;
+                            left: 15px;
+                            top: 50%;
+                            margin-top: -12px;
                         }
-
-                        &.mat-focused {
-                            .mat-form-field-label-wrapper {
-                                .mat-form-field-label {
-                                    color: $cc-darkgray;
-
-                                    @include respond-to(ynw-767) {
-                                        padding-top: 20px;
-                                    }
-                                    @include respond-to(ynw-768-991) {
-                                        padding-top: 20px;
-                                    }
-
-                                }
-                            }
-                        }
-
-                    }
-                }
-
-                .plr0i {
-                    @include respond-to(ynw-767) {
-                        width: 100%;
-                    }
-                    @include respond-to(ynw-768-991) {
-                        width: 100%;
                     }
 
-                    #search_button {
-                        background: $cc-red;
-                        color: #fff;
-                        width: 100px;
-                        line-height: 18px;
-                        font-weight: 400;
-                        text-align: center;
-                        border: none;
-                        @include border-bottom-radius(0);
-                        position: relative;
-                        height: 50px;
+                    .sa-dm {
+                        width: 200px;
                         cursor: pointer;
 
                         @include respond-to(ynw-767) {
-                            height: $input-h;
                             width: 100%;
-                            margin-bottom: 10px;
+                            margin-bottom: 5px;
                         }
                         @include respond-to(ynw-768-991) {
-                            height: $input-h;
                             width: 100%;
-                            margin-bottom: 10px;
+                            margin-bottom: 5px;
                         }
 
-                        .icon-search {
-                            color: $white;
-                            font-size: 1.5rem;
+                        .mat-form-field {
+                            display: block;
+
+                            .mat-input-wrapper {
+                                padding-bottom: 0;
+
+                                .mat-input-infix {
+                                    padding: 0;
+                                    border-top: none;
+
+                                    .mat-select {
+                                        box-shadow: none !important;
+                                        border: none !important;
+                                        height: 50px;
+                                        background: none;
+                                        border-radius: 0px;
+                                        display: flex;
+                                        align-items: center;
+                                        @include font-regular;
+                                        font-weight: 500;
+                                        font-size: .875rem;
+                                        color: $cc-black;
+                                        padding: 15px;
+
+                                        @include respond-to(ynw-767) {
+                                            height: $input-h;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            height: $input-h;
+                                        }
+
+                                        .mat-select-arrow {
+                                            color: $cc-black;
+                                            border: none;
+                                            position: relative;
+                                            width: 10px;
+                                            height: 10px;
+                                            font-size: .65rem;
+                                            font-weight: 700;
+                                            display: flex;
+                                            align-items: center;
+                                            margin: 0;
+
+                                            &:after {
+                                                @include font-custom;
+                                                content: "\72";
+                                                position: absolute;
+                                                right: 0;
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                .mat-form-field-underline {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+
+                    .sa-src {
+                        width: 100%;
+                        @include font-regular;
+
+                        .search_keyword_class {
+                            padding: 0px;
+                            background: transparent;
+                            border-radius: 0;
+                            border: none;
+                            width: 100%;
+
+                            .mat-input-infix {
+                                padding: 0;
+                                border-top: none;
+
+                                .mat-input-element {
+                                    height: 50px;
+                                    padding: 15px;
+                                    @include font-regular;
+                                    font-weight: 600;
+                                    font-size: 0.875rem;
+                                    color: $cc-black;
+
+                                    @include respond-to(ynw-767) {
+                                        height: $input-h;
+                                    }
+                                    @include respond-to(ynw-768-991) {
+                                        height: $input-h;
+                                    }
+
+                                }
+
+                                .mat-form-field-label-wrapper {
+                                    display: block;
+
+                                    .mat-form-field-label {
+                                        padding-left: 15px;
+                                        padding-top: 30px;
+                                        @include font-regular;
+                                        font-weight: 500;
+
+                                        @include respond-to(ynw-767) {
+                                            padding-top: 10px;
+                                            padding-left: 20px;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            padding-top: 10px;
+                                            padding-left: 20px;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .mat-form-field-underline {
+                                display: none;
+                            }
+
+                            &.mat-focused {
+                                .mat-form-field-label-wrapper {
+                                    .mat-form-field-label {
+                                        color: $cc-darkgray;
+
+                                        @include respond-to(ynw-767) {
+                                            padding-top: 20px;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            padding-top: 20px;
+                                        }
+
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    .plr0i {
+                        @include respond-to(ynw-767) {
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 100%;
+                        }
+
+                        #search_button {
+                            background: $cc-red;
+                            color: #fff;
+                            width: 100px;
+                            line-height: 18px;
+                            font-weight: 400;
+                            text-align: center;
+                            border: none;
+                            @include border-bottom-radius(0);
+                            position: relative;
+                            height: 50px;
+                            cursor: pointer;
 
                             @include respond-to(ynw-767) {
-                                font-size: 1.5rem;
+                                height: $input-h;
+                                width: 100%;
+                                margin-bottom: 10px;
                             }
                             @include respond-to(ynw-768-991) {
+                                height: $input-h;
+                                width: 100%;
+                                margin-bottom: 10px;
+                            }
+
+                            .icon-search {
+                                color: $white;
                                 font-size: 1.5rem;
+
+                                @include respond-to(ynw-767) {
+                                    font-size: 1.5rem;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    font-size: 1.5rem;
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    width: 100%;
+                                    height: 100%;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    top: 0;
+                                    left: 0;
+                                }
+                            }
+                        }
+
+                        .cs-btn {
+                            &:before {
+                                background: lighten($cc-red, 10%);
+                            }
+                        }
+
+                    }
+
+                    .sa-mo {
+                        line-height: 1em;
+
+                        @include respond-to(ynw-767) {
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 100%;
+                        }
+
+                        .icon-filter {
+                            font-size: 0.875em;
+                            color: $linkblack;
+                            font-weight: 500;
+                            position: relative;
+                            display: block;
+                            width: 35px;
+                            cursor: pointer;
+
+                            @include respond-to(ynw-767) {
+                                margin: 10px auto 0 auto;
+                                height: 20px;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                margin: 10px auto 0 auto;
+                                height: 20px;
                             }
 
                             &:before {
                                 position: absolute;
-                                width: 100%;
-                                height: 100%;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                top: 0;
-                                left: 0;
+                                left: 8px;
+                                top: -10px;
+                                font-size: 1.675rem;
+
+                                @include respond-to(ynw-768-991) {
+                                    left: 0;
+                                }
                             }
                         }
                     }
 
-                    .cs-btn {
-                        &:before {
-                            background: lighten($cc-red, 10%);
+                }
+            }
+        }
+
+    }
+}
+
+
+.content {
+    background: $cc-body;
+    
+    .status-bar {
+        width: 100%;
+        display: flex;
+        margin-top: 30px;
+        
+        .ct1 {
+            width: 25%;
+            position: relative;
+            margin-right: 30px;
+            
+            @include respond-to(ynw-767){
+                width: 30%;
+                display: flex;
+                align-items: flex-end;
+            }
+            @include respond-to(ynw-575){
+                width: 120px;
+                margin-right: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .ct-l {
+                position: absolute;
+                width: 30px;
+                height: 20px;
+                
+                @include respond-to(ynw-575){
+                    position: relative;
+                }
+                
+                .mnu {
+                    display: flex;
+                    flex-direction: column;
+                    cursor: pointer;
+                    
+                    span {
+                        background: $cc-gray;
+                        height: 3px;
+                        width: 100%;
+                        @include border-radius(30px);
+                        margin-bottom: 5px;
+                        
+                        &:last-child {
+                            margin-bottom: 0;
                         }
                     }
-
                 }
-
-                .sa-mo {
-                    line-height: 1em;
-
-                    @include respond-to(ynw-767) {
-                        width: 100%;
+            }
+            .ct-r {
+                margin-left: 50px;
+                
+                @include respond-to(ynw-575){
+                    margin-left: 0px;
+                    margin-top: 10px;
+                }
+                
+                .ttle {
+                    font-size: 1rem;
+                    font-weight: 600;
+                    
+                    @include respond-to(ynw-767){
+                        font-size: .875rem;
                     }
-                    @include respond-to(ynw-768-991) {
-                        width: 100%;
+                }
+            }
+        }
+        
+        .ct2 {
+            display: flex;
+            font-size: .875rem;
+            flex-grow: 1;
+            
+            @include respond-to(ynw-767){
+                flex-direction: column;
+            }
+            
+            .ct-l {
+                @include respond-to(ynw-767){
+                    order: 2;
+                    margin-top: 10px;
+                }
+                .rslts {
+                    @include respond-to(ynw-767){
+                        text-align: right;
                     }
-
-                    .icon-filter {
-                        font-size: 0.875em;
-                        color: $linkblack;
+                    span {
+                        color: $linkblue;
                         font-weight: 500;
-                        position: relative;
-                        display: block;
-                        width: 35px;
-                        cursor: pointer;
-
-                        @include respond-to(ynw-767) {
-                            width: 100px;
-                            margin: 0 auto;
-                        }
-                        @include respond-to(ynw-768-991) {
-                            width: 100px;
-                            margin: 10px auto 0 auto;
-                        }
-                        @include respond-to(ynw-992-1199) {
-                            width: 60;
-                        }
-
-                        &:before {
-                            position: absolute;
-                            left: 8px;
-                            top: -10px;
-                            font-size: 1.675rem;
-                            
-                            @include respond-to(ynw-768-991) {
-                                left: 0;
-                            }
-                        }
                     }
                 }
-
             }
         }
     }
+    
+    .c-outer {
+        display: flex;
+        width: 100%;
+        margin-top: 10px;
+        position: relative;
+        
+        .sidebar-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.9);
+            display: none;
+            z-index: 1001;
+
+            @include respond-to(ynw-767){
+                display: block;
+            }
+        }
+        
+        .sidebar {
+            width: 25%;
+            margin-right: 30px;
+            font-size: .875rem;
+            margin-bottom: 30px;
+            
+            @include respond-to(ynw-767){
+                position: absolute;
+                width: 50%;
+                z-index: 1002;
+                margin-right: 0;
+            }
+            
+            .rs-box {
+                background: $white;
+                @include box-shadow(0, 20px, 30px, rgba(0,0,0,.03) !important);
+                
+                .bx-block {
+                    border-bottom: 2px solid $cc-body;
+                    
+                    &:last-child {
+                        border: none;
+                    }
+                }
+            }
+        }
+        
+        .c-body {
+            flex-grow: 1;
+            position: relative;
+            
+            .srlst {
+                background: $white;
+                font-size: .875rem;
+                font-weight: 500;
+                @include box-shadow(0, 20px, 30px, rgba(0,0,0,.03) !important);
+                margin-bottom: 30px;
+                
+                .top-sect {
+                    display: flex;
+                    width: 100%;
+                    padding: 20px;
+                    border-bottom: 2px solid $cc-body;
+                    
+                    @include respond-to(ynw-767) {
+                        flex-direction: column;
+                    }
+                    @include respond-to(ynw-768-991) {
+                        flex-direction: column;
+                    }
+                    
+                    .tp-l {
+                        width: 90%;
+                        margin-right: 30px;
+                        display: flex;
+                        
+                        @include respond-to(ynw-767) {
+                            margin-right: 0;
+                            margin-bottom: 20px;
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            margin-right: 0;
+                            margin-bottom: 20px;
+                            width: 100%;
+                        }
+                        
+                        .tp1 {
+                            margin-right: 20px;
+                            
+                            @include respond-to(ynw-767) {
+                                order: 2;
+                                margin-right: 0;
+                            }
+                            @include respond-to(ynw-575) {
+                                width: 170px;
+                                margin-top: 15px;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                order: 2;
+                                margin-right: 0;
+                            }
+                            
+                            .pro-img {
+                                margin-bottom: 10px;
+                                
+                                @include respond-to(ynw-767) {
+                                    img {
+                                        width: 100%;
+                                        height: 100px;
+                                    }
+                                }
+                                @include respond-to(ynw-575) {
+                                    width: 170px;
+                                    margin-right: 0;
+                                }
+                                
+                                @include respond-to(ynw-768-991) {
+                                    img {
+                                        width: 100%;
+                                        height: 100px;
+                                    }
+                                }
+                            }
+                            .gal {
+                                margin: 0 0 10px 0;
+                                padding: 0;
+                                display: flex;
+                                
+                                li {
+                                    list-style: none;
+                                    margin-right: 10px;
+                                    
+                                    &:last-child {
+                                        margin-right: 0;
+                                        
+                                        .galbx {
+                                            position: relative;
+                                            width: 100%;
+                                            height: 100%;
+                                            
+                                            .overlay {
+                                                position: absolute;
+                                                width: 100%;
+                                                height: 100%;
+                                                z-index: 10;
+                                                background: rgba(0,0,0,.3);
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                color: $white;
+                                                font-weight: 500;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .tp2 {
+                            flex-grow: 1;
+                            
+                            .ynw-verified {
+                                background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
+                                width: 65px;
+                                height: 20px;
+                                display: none;
+                                
+                                @include respond-to(ynw-767) {
+                                    display: block;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    display: block;
+                                }
+                            }
+                            
+                            h3 {
+                                font-size: 1rem;
+                                font-weight: 600;
+                                margin-bottom: 5px;
+                            }
+                            
+                            .address {
+                                margin-bottom: 15px;
+                                display: inline-block;
+                            }
+                            
+                            .clr {
+                                color: $cc-gray;
+                                
+                                .otr-elements {
+                                    margin-bottom: 15px;
+                                    display: flex;
+                                    flex-direction: column;
+
+                                    .span {
+                                        display: inline-block;
+                                        margin-bottom: 3px;         
+                                    }
+                                }
+
+                                .schedule {
+                                    margin-bottom: 15px;
+                                    
+                                    ul {
+                                        margin: 0;
+                                        padding: 0;
+
+                                        li {
+                                            list-style: none;
+                                            display: flex;
+                                            margin-bottom: 5px;
+                                            
+                                            @include respond-to(ynw-992-1199) {
+                                                flex-direction: column;
+                                            }
+
+                                            .day {
+                                                font-weight: 600;
+                                                width: 40%;
+                                                margin-right: 10px;
+                                            }
+                                            .time {
+                                                flex-grow: 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                .services {
+                                    margin-bottom: 15px;
+                                    
+                                    ul {
+                                        margin: 0;
+                                        padding: 0;
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        
+                                        li {
+                                            list-style: none;
+                                            margin-right: 10px;
+                                            border: 1px solid $cc-gray;
+                                            font-size: .75rem;
+                                            padding: 0 5px;
+                                            @include border-radius(20px);
+                                            cursor: pointer;
+                                            margin-bottom: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            .more-clinics {
+                                span {
+                                    color: $linkblue;
+                                    @include anchor-border;
+                                }
+                            }
+                        }
+                    }
+                    .tp-r {
+                        flex-grow: 1;
+                        text-align: right;
+                        
+                        .ynw-verified {
+                            background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
+                            width: 110px;
+                            height: 32px;
+                            margin-left: auto;
+                            margin-bottom: 15px;
+                            
+                            @include respond-to(ynw-767) {
+                                display: none;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                display: none;
+                            }
+                        }
+                        
+                        .badges {
+                            margin: 0 0 15px 0;
+                            padding: 0;
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: flex-end;
+                            
+                            @include respond-to(ynw-767) {
+                                justify-content: flex-start;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                justify-content: flex-start;
+                            }
+                            
+                            li {
+                                list-style: none;
+                                font-size: 1.625rem;
+                                margin-left: 30px;
+                                
+                                @include respond-to(ynw-767) {
+                                    margin-left: 0px;
+                                    margin-right: 30px;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    margin-left: 0px;
+                                    margin-right: 30px;
+                                }
+                            }
+                        }
+                        
+                        .communicate {
+                            position: relative;
+                            text-align: right;
+                            color: $linkblue;
+                            padding-left: 20px;
+                            display: table;
+                            margin-bottom: 10px;
+                            margin-left: auto;
+                            cursor: pointer;
+                            
+                            @include respond-to(ynw-767) {
+                                margin-left: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                margin-left: 0;
+                            }
+                            
+                            &:before {
+                                position: absolute;
+                                content: "\53";
+                                @include font-custom;
+                                left: 0;
+                                top: 0;
+                            }
+                        }
+                        
+                        .claim-business {
+                            position: relative;
+                            text-align: right;
+                            color: $cc-warning;
+                            padding-left: 20px;
+                            display: table;
+                            margin-left: auto;
+                            cursor: pointer;
+                            
+                            @include respond-to(ynw-767) {
+                                margin-left: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                margin-left: 0;
+                            }
+                            
+                            &:before {
+                                position: absolute;
+                                content: "\39";
+                                @include font-custom;
+                                left: 0;
+                                top: 0;
+                            }
+                        }
+                    }
+                }
+                .bottom-sect {
+                    padding: 20px;
+                    display: flex;
+                    
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
+                    }
+                    
+                    .bt-l {
+                        flex-grow: 1;
+                        
+                        @include respond-to(ynw-575) {
+                            margin-bottom: 20px;
+                        }
+                        
+                        .wt-tme {
+                            display: flex;
+                            align-items: center;
+                            
+                            @include respond-to(ynw-575) {
+                                justify-content: center;
+                            }
+                            
+                            .o-now {
+                                display: flex;
+                                align-items: center;
+                                background: $green;
+                                height: 50px;
+                                padding: 0px 10px;
+                                position: relative;
+                                color: $white;
+                                font-weight: 600;
+                                margin-right: 30px;
+                                
+                                &:after {
+                                    position: absolute;
+                                    content: "";
+                                    right: -15px;
+                                    top: 0;
+                                    z-index: 2;
+                                    width: 10px;
+                                    height: 50px;
+                                    border-top: 25px solid transparent;
+                                    border-bottom: 25px solid transparent;  
+                                    border-left: 15px solid $green;
+                                }
+                            }
+                            .timing {
+                                display: flex;
+                                flex-direction: column;
+                                
+                                
+                                .est-time {
+                                    color: $cc-mediumgray;
+                                }
+                                .time-data {
+                                    font-weight: 600;
+                                    position: relative;
+                                    padding-left: 20px;
+                                    
+                                    &:before {
+                                        position: absolute;
+                                        content: "\31";
+                                        @include font-custom;
+                                        left: 0;
+                                        top: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .bt-r {
+                        .chk-btn {
+                            
+                            @include respond-to(ynw-767) {
+                                width: 150px;
+                            }
+                            @include respond-to(ynw-575) {
+                                width: auto;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                width: 150px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

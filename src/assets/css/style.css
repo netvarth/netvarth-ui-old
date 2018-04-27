@@ -193,6 +193,72 @@
     color: #00aef2;
     background: transparent; }
 
+.chk-btn {
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
+  background: #00aef2;
+  /* Old browsers */
+  background: -moz-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00aef2), color-stop(100%, #1873f2));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+  /* IE10+ */
+  background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
+  /* IE6-9 */
+  height: 50px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+  outline: none;
+  overflow: hidden; }
+  .chk-btn:before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    transform: scale(0);
+    -moz-transition: all 300ms;
+    -o-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+    background-color: rgba(255, 255, 255, 0.3); }
+  .chk-btn:hover:before, .chk-btn:active:before {
+    opacity: 1;
+    transform: scale(8); }
+    @media only screen and (max-width: 575px) {
+      .chk-btn:hover:before, .chk-btn:active:before {
+        transform: scale(20); } }
+  .chk-btn.disabled {
+    background: #dbdbdb;
+    pointer-events: none;
+    color: #999999; }
+
 .editbt {
   position: relative;
   cursor: pointer;
@@ -518,6 +584,18 @@
 
 .icon-claim:before {
   content: "\39"; }
+
+.icon-switch:before {
+  content: "\21"; }
+
+.icon-mobile:before {
+  content: "\22"; }
+
+.icon-password:before {
+  content: "\23"; }
+
+.icon-verified:before {
+  content: "\24"; }
 
 html {
   font-size: 16px; }
@@ -1164,7 +1242,7 @@ header {
 .moreoptionsmainclass,
 .forgotpasswordmainclass,
 .commonpopupmainclass,
-.googlemainmappopup {
+.googlemainmappopup, .outer-card {
   width: 600px !important; }
   .signupmainclass div,
   .signupmainclass label,
@@ -1183,7 +1261,9 @@ header {
   .commonpopupmainclass input,
   .googlemainmappopup div,
   .googlemainmappopup label,
-  .googlemainmappopup input {
+  .googlemainmappopup input, .outer-card div,
+  .outer-card label,
+  .outer-card input {
     font-family: 'Montserrat', sans-serif;
     font-weight: normal;
     font-size: .875rem;
@@ -1205,7 +1285,9 @@ header {
     .commonpopupmainclass input .mat-slide-toggle-content,
     .googlemainmappopup div .mat-slide-toggle-content,
     .googlemainmappopup label .mat-slide-toggle-content,
-    .googlemainmappopup input .mat-slide-toggle-content {
+    .googlemainmappopup input .mat-slide-toggle-content, .outer-card div .mat-slide-toggle-content,
+    .outer-card label .mat-slide-toggle-content,
+    .outer-card input .mat-slide-toggle-content {
       font-family: 'Montserrat', sans-serif;
       font-weight: normal;
       font-weight: 500; }
@@ -1214,7 +1296,7 @@ header {
   .moreoptionsmainclass .mat-dialog-title,
   .forgotpasswordmainclass .mat-dialog-title,
   .commonpopupmainclass .mat-dialog-title,
-  .googlemainmappopup .mat-dialog-title {
+  .googlemainmappopup .mat-dialog-title, .outer-card .mat-dialog-title {
     margin: 0;
     padding: 15px 20px;
     font-family: 'Montserrat', sans-serif;
@@ -1244,7 +1326,7 @@ header {
     .moreoptionsmainclass .mat-dialog-title .modal_close,
     .forgotpasswordmainclass .mat-dialog-title .modal_close,
     .commonpopupmainclass .mat-dialog-title .modal_close,
-    .googlemainmappopup .mat-dialog-title .modal_close {
+    .googlemainmappopup .mat-dialog-title .modal_close, .outer-card .mat-dialog-title .modal_close {
       position: absolute;
       background: none;
       border: none;
@@ -1262,14 +1344,14 @@ header {
       .moreoptionsmainclass .mat-dialog-title .modal_close i,
       .forgotpasswordmainclass .mat-dialog-title .modal_close i,
       .commonpopupmainclass .mat-dialog-title .modal_close i,
-      .googlemainmappopup .mat-dialog-title .modal_close i {
+      .googlemainmappopup .mat-dialog-title .modal_close i, .outer-card .mat-dialog-title .modal_close i {
         display: flex; }
         .signupmainclass .mat-dialog-title .modal_close i:before,
         .loginmainclass .mat-dialog-title .modal_close i:before,
         .moreoptionsmainclass .mat-dialog-title .modal_close i:before,
         .forgotpasswordmainclass .mat-dialog-title .modal_close i:before,
         .commonpopupmainclass .mat-dialog-title .modal_close i:before,
-        .googlemainmappopup .mat-dialog-title .modal_close i:before {
+        .googlemainmappopup .mat-dialog-title .modal_close i:before, .outer-card .mat-dialog-title .modal_close i:before {
           font-family: "custom-ynw" !important;
           content: "\69";
           font-size: 1rem !important;
@@ -1281,7 +1363,7 @@ header {
   .moreoptionsmainclass .mat-dialog-content,
   .forgotpasswordmainclass .mat-dialog-content,
   .commonpopupmainclass .mat-dialog-content,
-  .googlemainmappopup .mat-dialog-content {
+  .googlemainmappopup .mat-dialog-content, .outer-card .mat-dialog-content {
     margin: 0;
     padding: 20px;
     overflow: auto; }
@@ -1290,7 +1372,7 @@ header {
     .moreoptionsmainclass .mat-dialog-content .form-group .sts-msg,
     .forgotpasswordmainclass .mat-dialog-content .form-group .sts-msg,
     .commonpopupmainclass .mat-dialog-content .form-group .sts-msg,
-    .googlemainmappopup .mat-dialog-content .form-group .sts-msg {
+    .googlemainmappopup .mat-dialog-content .form-group .sts-msg, .outer-card .mat-dialog-content .form-group .sts-msg {
       font-weight: 500;
       font-size: .625rem;
       padding: 5px;
@@ -1301,21 +1383,21 @@ header {
       .moreoptionsmainclass .mat-dialog-content .form-group .sts-msg.error,
       .forgotpasswordmainclass .mat-dialog-content .form-group .sts-msg.error,
       .commonpopupmainclass .mat-dialog-content .form-group .sts-msg.error,
-      .googlemainmappopup .mat-dialog-content .form-group .sts-msg.error {
+      .googlemainmappopup .mat-dialog-content .form-group .sts-msg.error, .outer-card .mat-dialog-content .form-group .sts-msg.error {
         color: #f24949; }
     .signupmainclass .mat-dialog-content .form-group .mat-form-field,
     .loginmainclass .mat-dialog-content .form-group .mat-form-field,
     .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field,
     .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field,
     .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field,
-    .googlemainmappopup .mat-dialog-content .form-group .mat-form-field {
+    .googlemainmappopup .mat-dialog-content .form-group .mat-form-field, .outer-card .mat-dialog-content .form-group .mat-form-field {
       width: 100%; }
       .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
       .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
       .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
       .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
       .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
-      .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper {
+      .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper {
         padding: 0;
         margin: 0; }
         .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
@@ -1323,7 +1405,7 @@ header {
         .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
         .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
         .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
-        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
+        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
           margin: 0;
           padding: 0;
           border: none; }
@@ -1332,14 +1414,14 @@ header {
           .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
           .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
           .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
-          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
             display: none; }
           .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
-          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
             padding: 10px;
             height: 40px;
             background: #e6e6e6; }
@@ -1348,14 +1430,14 @@ header {
         .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
         .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
         .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
-        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
+        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
           display: none; }
     .signupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .loginmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .moreoptionsmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .forgotpasswordmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .commonpopupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
-    .googlemainmappopup .mat-dialog-content .form-group .example-section mat-checkbox label {
+    .googlemainmappopup .mat-dialog-content .form-group .example-section mat-checkbox label, .outer-card .mat-dialog-content .form-group .example-section mat-checkbox label {
       margin-bottom: 0; }
     .signupmainclass .mat-dialog-content .form-group .service-section, .signupmainclass .mat-dialog-content .form-group .schedule-section,
     .loginmainclass .mat-dialog-content .form-group .service-section,
@@ -1367,7 +1449,7 @@ header {
     .commonpopupmainclass .mat-dialog-content .form-group .service-section,
     .commonpopupmainclass .mat-dialog-content .form-group .schedule-section,
     .googlemainmappopup .mat-dialog-content .form-group .service-section,
-    .googlemainmappopup .mat-dialog-content .form-group .schedule-section {
+    .googlemainmappopup .mat-dialog-content .form-group .schedule-section, .outer-card .mat-dialog-content .form-group .service-section, .outer-card .mat-dialog-content .form-group .schedule-section {
       display: flex;
       flex-wrap: wrap; }
     .signupmainclass .mat-dialog-content .form-group .startendtime,
@@ -1375,7 +1457,7 @@ header {
     .moreoptionsmainclass .mat-dialog-content .form-group .startendtime,
     .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime,
     .commonpopupmainclass .mat-dialog-content .form-group .startendtime,
-    .googlemainmappopup .mat-dialog-content .form-group .startendtime {
+    .googlemainmappopup .mat-dialog-content .form-group .startendtime, .outer-card .mat-dialog-content .form-group .startendtime {
       margin-bottom: 20px;
       display: flex;
       flex-wrap: wrap; }
@@ -1389,7 +1471,7 @@ header {
       .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv,
       .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv,
       .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv,
-      .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv {
+      .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv {
         flex-grow: 1; }
         .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
         .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
@@ -1401,7 +1483,7 @@ header {
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
-        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control {
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control {
           -webkit-border-radius: 0;
           border-radius: 0;
           background-clip: padding-box;
@@ -1422,7 +1504,7 @@ header {
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus {
             -webkit-box-shadow: 0 0 1px #00aef2 inset;
             -moz-box-shadow: 0 0 1px #00aef2 inset;
             box-shadow: 0 0 1px #00aef2 inset;
@@ -1450,7 +1532,9 @@ header {
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"],
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
-        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"] {
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"], .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
+        .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"], .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
+        .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"] {
           background: #e6e6e6; }
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
@@ -1474,7 +1558,9 @@ header {
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus {
             -webkit-box-shadow: 0 0 1px #00aef2 inset;
             -moz-box-shadow: 0 0 1px #00aef2 inset;
             box-shadow: 0 0 1px #00aef2 inset;
@@ -1502,7 +1588,9 @@ header {
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
-        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link {
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link {
           display: flex; }
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
@@ -1526,7 +1614,9 @@ header {
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
             width: 16px;
             height: 16px; }
             .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
@@ -1551,7 +1641,9 @@ header {
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before,
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
-            .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
               border: none;
               content: "\66";
               font-family: "custom-ynw" !important;
@@ -1583,7 +1675,9 @@ header {
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
             width: 16px;
             height: 16px; }
             .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
@@ -1608,7 +1702,9 @@ header {
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before,
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
-            .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
+            .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
               border: none;
               content: "\72";
               font-family: "custom-ynw" !important;
@@ -1683,7 +1779,13 @@ header {
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active {
             text-decoration: none; }
         .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
         .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
@@ -1695,7 +1797,7 @@ header {
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
-        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary {
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary {
           border-color: #00aef2;
           color: #00aef2;
           font-weight: 600;
@@ -1710,7 +1812,7 @@ header {
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover {
             background: #00aef2;
             color: #fff; }
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
@@ -1723,7 +1825,7 @@ header {
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus {
             outline: none;
             box-shadow: none; }
         .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
@@ -1736,14 +1838,14 @@ header {
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
-        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child {
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child {
           margin-bottom: 15px; }
     .signupmainclass .mat-dialog-content .form-group.inline,
     .loginmainclass .mat-dialog-content .form-group.inline,
     .moreoptionsmainclass .mat-dialog-content .form-group.inline,
     .forgotpasswordmainclass .mat-dialog-content .form-group.inline,
     .commonpopupmainclass .mat-dialog-content .form-group.inline,
-    .googlemainmappopup .mat-dialog-content .form-group.inline {
+    .googlemainmappopup .mat-dialog-content .form-group.inline, .outer-card .mat-dialog-content .form-group.inline {
       display: flex;
       align-items: center; }
       .signupmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
@@ -1751,28 +1853,28 @@ header {
       .moreoptionsmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
       .forgotpasswordmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
       .commonpopupmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
-      .googlemainmappopup .mat-dialog-content .form-group.inline .mat-slide-toggle {
+      .googlemainmappopup .mat-dialog-content .form-group.inline .mat-slide-toggle, .outer-card .mat-dialog-content .form-group.inline .mat-slide-toggle {
         margin-left: 15px; }
     .signupmainclass .mat-dialog-content .form-group.bold label,
     .loginmainclass .mat-dialog-content .form-group.bold label,
     .moreoptionsmainclass .mat-dialog-content .form-group.bold label,
     .forgotpasswordmainclass .mat-dialog-content .form-group.bold label,
     .commonpopupmainclass .mat-dialog-content .form-group.bold label,
-    .googlemainmappopup .mat-dialog-content .form-group.bold label {
+    .googlemainmappopup .mat-dialog-content .form-group.bold label, .outer-card .mat-dialog-content .form-group.bold label {
       font-weight: 600; }
     .signupmainclass .mat-dialog-content .mat-form-field,
     .loginmainclass .mat-dialog-content .mat-form-field,
     .moreoptionsmainclass .mat-dialog-content .mat-form-field,
     .forgotpasswordmainclass .mat-dialog-content .mat-form-field,
     .commonpopupmainclass .mat-dialog-content .mat-form-field,
-    .googlemainmappopup .mat-dialog-content .mat-form-field {
+    .googlemainmappopup .mat-dialog-content .mat-form-field, .outer-card .mat-dialog-content .mat-form-field {
       width: 100%; }
       .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
       .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
       .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
       .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
       .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
-      .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper {
+      .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper {
         padding: 0;
         margin: 0; }
         .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg,
@@ -1780,14 +1882,14 @@ header {
         .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg,
         .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg,
         .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg,
-        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg {
+        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg {
           color: #f24949; }
         .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
         .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
         .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
         .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
         .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
-        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix {
+        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix {
           margin: 0;
           padding: 0;
           border: none; }
@@ -1796,14 +1898,14 @@ header {
           .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
           .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
           .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
-          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
             display: none; }
           .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
-          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element {
+          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element {
             padding: 10px;
             background: #e6e6e6;
             height: 40px; }
@@ -1812,7 +1914,7 @@ header {
             .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus,
             .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus,
             .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus,
-            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus {
+            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus {
               -webkit-box-shadow: 0 0 1px #00aef2 inset;
               -moz-box-shadow: 0 0 1px #00aef2 inset;
               box-shadow: 0 0 1px #00aef2 inset;
@@ -1823,7 +1925,7 @@ header {
           .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
-          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
             padding: 10px;
             height: 40px;
             background: #e6e6e6; }
@@ -1832,7 +1934,7 @@ header {
             .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
             .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
             .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
-            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
+            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
               color: #222223;
               border: none;
               position: relative;
@@ -1848,7 +1950,7 @@ header {
               .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
               .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
               .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
-              .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after {
+              .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after {
                 font-family: "custom-ynw" !important;
                 content: "\72";
                 position: absolute;
@@ -1858,21 +1960,21 @@ header {
         .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
         .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
         .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
-        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline {
+        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline {
           display: none; }
     .signupmainclass .mat-dialog-content .form-group-packages .col-form-label,
     .loginmainclass .mat-dialog-content .form-group-packages .col-form-label,
     .moreoptionsmainclass .mat-dialog-content .form-group-packages .col-form-label,
     .forgotpasswordmainclass .mat-dialog-content .form-group-packages .col-form-label,
     .commonpopupmainclass .mat-dialog-content .form-group-packages .col-form-label,
-    .googlemainmappopup .mat-dialog-content .form-group-packages .col-form-label {
+    .googlemainmappopup .mat-dialog-content .form-group-packages .col-form-label, .outer-card .mat-dialog-content .form-group-packages .col-form-label {
       font-weight: 600; }
     .signupmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
     .loginmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
     .moreoptionsmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
     .forgotpasswordmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
     .commonpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
-    .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group {
+    .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -1882,7 +1984,7 @@ header {
       .moreoptionsmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button,
       .forgotpasswordmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button,
       .commonpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button,
-      .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button {
+      .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button {
         margin-right: 0;
         padding: 10px; }
         .signupmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label,
@@ -1890,7 +1992,7 @@ header {
         .moreoptionsmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label,
         .forgotpasswordmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label,
         .commonpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label,
-        .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label {
+        .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label {
           border: none;
           padding: 0; }
     .signupmainclass .mat-dialog-content .itemtopouter,
@@ -1898,7 +2000,7 @@ header {
     .moreoptionsmainclass .mat-dialog-content .itemtopouter,
     .forgotpasswordmainclass .mat-dialog-content .itemtopouter,
     .commonpopupmainclass .mat-dialog-content .itemtopouter,
-    .googlemainmappopup .mat-dialog-content .itemtopouter {
+    .googlemainmappopup .mat-dialog-content .itemtopouter, .outer-card .mat-dialog-content .itemtopouter {
       margin-bottom: 1.25em;
       display: flex; }
       .signupmainclass .mat-dialog-content .itemtopouter .galul,
@@ -1906,28 +2008,28 @@ header {
       .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul,
       .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul,
       .commonpopupmainclass .mat-dialog-content .itemtopouter .galul,
-      .googlemainmappopup .mat-dialog-content .itemtopouter .galul {
+      .googlemainmappopup .mat-dialog-content .itemtopouter .galul, .outer-card .mat-dialog-content .itemtopouter .galul {
         margin-right: 15px; }
         .signupmainclass .mat-dialog-content .itemtopouter .galul li,
         .loginmainclass .mat-dialog-content .itemtopouter .galul li,
         .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul li,
         .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul li,
         .commonpopupmainclass .mat-dialog-content .itemtopouter .galul li,
-        .googlemainmappopup .mat-dialog-content .itemtopouter .galul li {
+        .googlemainmappopup .mat-dialog-content .itemtopouter .galul li, .outer-card .mat-dialog-content .itemtopouter .galul li {
           width: auto; }
           .signupmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
           .loginmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
           .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
           .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
           .commonpopupmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
-          .googlemainmappopup .mat-dialog-content .itemtopouter .galul li .galimg_outer {
+          .googlemainmappopup .mat-dialog-content .itemtopouter .galul li .galimg_outer, .outer-card .mat-dialog-content .itemtopouter .galul li .galimg_outer {
             padding: 0; }
       .signupmainclass .mat-dialog-content .itemtopouter .upload-doc,
       .loginmainclass .mat-dialog-content .itemtopouter .upload-doc,
       .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc,
       .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc,
       .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc,
-      .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc {
+      .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc, .outer-card .mat-dialog-content .itemtopouter .upload-doc {
         flex-grow: 1;
         display: flex;
         justify-content: center; }
@@ -1936,7 +2038,7 @@ header {
         .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc label,
         .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc label,
         .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc label,
-        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc label {
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc label, .outer-card .mat-dialog-content .itemtopouter .upload-doc label {
           margin-bottom: 0px;
           cursor: pointer; }
         .signupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
@@ -1944,7 +2046,7 @@ header {
         .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
         .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
         .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
-        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper {
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper, .outer-card .mat-dialog-content .itemtopouter .upload-doc .select-wrapper {
           width: auto;
           height: auto;
           margin: 0 0 0 15px; }
@@ -1953,14 +2055,14 @@ header {
           .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
           .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
           .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
-          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before {
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before, .outer-card .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before {
             height: 20px; }
         .signupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
         .loginmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
         .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
         .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
         .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
-        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist {
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist {
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -1970,14 +2072,14 @@ header {
           .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
           .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
           .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
-          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist label {
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist label, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist label {
             margin-bottom: 20px; }
           .signupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
           .loginmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
           .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
           .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
           .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
-          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper {
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper {
             width: 30px;
             height: 30px; }
       .signupmainclass .mat-dialog-content .itemtopouter > div,
@@ -1985,14 +2087,14 @@ header {
       .moreoptionsmainclass .mat-dialog-content .itemtopouter > div,
       .forgotpasswordmainclass .mat-dialog-content .itemtopouter > div,
       .commonpopupmainclass .mat-dialog-content .itemtopouter > div,
-      .googlemainmappopup .mat-dialog-content .itemtopouter > div {
+      .googlemainmappopup .mat-dialog-content .itemtopouter > div, .outer-card .mat-dialog-content .itemtopouter > div {
         width: 40%; }
     .signupmainclass .mat-dialog-content .custom-select,
     .loginmainclass .mat-dialog-content .custom-select,
     .moreoptionsmainclass .mat-dialog-content .custom-select,
     .forgotpasswordmainclass .mat-dialog-content .custom-select,
     .commonpopupmainclass .mat-dialog-content .custom-select,
-    .googlemainmappopup .mat-dialog-content .custom-select {
+    .googlemainmappopup .mat-dialog-content .custom-select, .outer-card .mat-dialog-content .custom-select {
       background-color: #e6e6e6;
       border-radius: 0;
       border: 0;
@@ -2002,56 +2104,56 @@ header {
       .moreoptionsmainclass .mat-dialog-content .custom-select option,
       .forgotpasswordmainclass .mat-dialog-content .custom-select option,
       .commonpopupmainclass .mat-dialog-content .custom-select option,
-      .googlemainmappopup .mat-dialog-content .custom-select option {
+      .googlemainmappopup .mat-dialog-content .custom-select option, .outer-card .mat-dialog-content .custom-select option {
         padding: 10px; }
     .signupmainclass .mat-dialog-content .form-check,
     .loginmainclass .mat-dialog-content .form-check,
     .moreoptionsmainclass .mat-dialog-content .form-check,
     .forgotpasswordmainclass .mat-dialog-content .form-check,
     .commonpopupmainclass .mat-dialog-content .form-check,
-    .googlemainmappopup .mat-dialog-content .form-check {
+    .googlemainmappopup .mat-dialog-content .form-check, .outer-card .mat-dialog-content .form-check {
       margin-bottom: 10px; }
       .signupmainclass .mat-dialog-content .form-check label,
       .loginmainclass .mat-dialog-content .form-check label,
       .moreoptionsmainclass .mat-dialog-content .form-check label,
       .forgotpasswordmainclass .mat-dialog-content .form-check label,
       .commonpopupmainclass .mat-dialog-content .form-check label,
-      .googlemainmappopup .mat-dialog-content .form-check label {
+      .googlemainmappopup .mat-dialog-content .form-check label, .outer-card .mat-dialog-content .form-check label {
         cursor: pointer; }
     .signupmainclass .mat-dialog-content .custom-control,
     .loginmainclass .mat-dialog-content .custom-control,
     .moreoptionsmainclass .mat-dialog-content .custom-control,
     .forgotpasswordmainclass .mat-dialog-content .custom-control,
     .commonpopupmainclass .mat-dialog-content .custom-control,
-    .googlemainmappopup .mat-dialog-content .custom-control {
+    .googlemainmappopup .mat-dialog-content .custom-control, .outer-card .mat-dialog-content .custom-control {
       padding-left: 0; }
     .signupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .loginmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .moreoptionsmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .forgotpasswordmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .commonpopupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
-    .googlemainmappopup .mat-dialog-content .mat-radio-group .mat-radio-button {
+    .googlemainmappopup .mat-dialog-content .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .mat-radio-group .mat-radio-button {
       margin-left: 10px; }
     .signupmainclass .mat-dialog-content .pickerouter,
     .loginmainclass .mat-dialog-content .pickerouter,
     .moreoptionsmainclass .mat-dialog-content .pickerouter,
     .forgotpasswordmainclass .mat-dialog-content .pickerouter,
     .commonpopupmainclass .mat-dialog-content .pickerouter,
-    .googlemainmappopup .mat-dialog-content .pickerouter {
+    .googlemainmappopup .mat-dialog-content .pickerouter, .outer-card .mat-dialog-content .pickerouter {
       display: flex; }
       .signupmainclass .mat-dialog-content .pickerouter input[type="text"],
       .loginmainclass .mat-dialog-content .pickerouter input[type="text"],
       .moreoptionsmainclass .mat-dialog-content .pickerouter input[type="text"],
       .forgotpasswordmainclass .mat-dialog-content .pickerouter input[type="text"],
       .commonpopupmainclass .mat-dialog-content .pickerouter input[type="text"],
-      .googlemainmappopup .mat-dialog-content .pickerouter input[type="text"] {
+      .googlemainmappopup .mat-dialog-content .pickerouter input[type="text"], .outer-card .mat-dialog-content .pickerouter input[type="text"] {
         width: 120px; }
       .signupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
       .loginmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
       .moreoptionsmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
       .forgotpasswordmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
       .commonpopupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
-      .googlemainmappopup .mat-dialog-content .pickerouter .mat-datepicker-toggle {
+      .googlemainmappopup .mat-dialog-content .pickerouter .mat-datepicker-toggle, .outer-card .mat-dialog-content .pickerouter .mat-datepicker-toggle {
         border: 1px solid #00aef2;
         -webkit-border-radius: 0.25rem;
         border-radius: 0.25rem;
@@ -2063,14 +2165,14 @@ header {
     .moreoptionsmainclass .mat-dialog-content > .ng-star-inserted,
     .forgotpasswordmainclass .mat-dialog-content > .ng-star-inserted,
     .commonpopupmainclass .mat-dialog-content > .ng-star-inserted,
-    .googlemainmappopup .mat-dialog-content > .ng-star-inserted {
+    .googlemainmappopup .mat-dialog-content > .ng-star-inserted, .outer-card .mat-dialog-content > .ng-star-inserted {
       margin-bottom: 20px; }
       .signupmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
       .loginmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
       .moreoptionsmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
       .forgotpasswordmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
       .commonpopupmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
-      .googlemainmappopup .mat-dialog-content > .ng-star-inserted .refine_subheader {
+      .googlemainmappopup .mat-dialog-content > .ng-star-inserted .refine_subheader, .outer-card .mat-dialog-content > .ng-star-inserted .refine_subheader {
         font-weight: 600;
         margin-bottom: 10px; }
   .signupmainclass .mat-dialog-actions,
@@ -2078,7 +2180,7 @@ header {
   .moreoptionsmainclass .mat-dialog-actions,
   .forgotpasswordmainclass .mat-dialog-actions,
   .commonpopupmainclass .mat-dialog-actions,
-  .googlemainmappopup .mat-dialog-actions {
+  .googlemainmappopup .mat-dialog-actions, .outer-card .mat-dialog-actions {
     border-top: 1px solid #dbdbdb;
     display: block;
     margin-bottom: 0; }
@@ -2087,21 +2189,21 @@ header {
     .moreoptionsmainclass .mat-dialog-actions .bt1,
     .forgotpasswordmainclass .mat-dialog-actions .bt1,
     .commonpopupmainclass .mat-dialog-actions .bt1,
-    .googlemainmappopup .mat-dialog-actions .bt1 {
+    .googlemainmappopup .mat-dialog-actions .bt1, .outer-card .mat-dialog-actions .bt1 {
       margin-right: 10px; }
     .signupmainclass .mat-dialog-actions .resendouter,
     .loginmainclass .mat-dialog-actions .resendouter,
     .moreoptionsmainclass .mat-dialog-actions .resendouter,
     .forgotpasswordmainclass .mat-dialog-actions .resendouter,
     .commonpopupmainclass .mat-dialog-actions .resendouter,
-    .googlemainmappopup .mat-dialog-actions .resendouter {
+    .googlemainmappopup .mat-dialog-actions .resendouter, .outer-card .mat-dialog-actions .resendouter {
       margin-top: 15px; }
       .signupmainclass .mat-dialog-actions .resendouter span,
       .loginmainclass .mat-dialog-actions .resendouter span,
       .moreoptionsmainclass .mat-dialog-actions .resendouter span,
       .forgotpasswordmainclass .mat-dialog-actions .resendouter span,
       .commonpopupmainclass .mat-dialog-actions .resendouter span,
-      .googlemainmappopup .mat-dialog-actions .resendouter span {
+      .googlemainmappopup .mat-dialog-actions .resendouter span, .outer-card .mat-dialog-actions .resendouter span {
         display: table;
         margin-bottom: 10px;
         color: #00aef2;
@@ -2112,14 +2214,14 @@ header {
         .moreoptionsmainclass .mat-dialog-actions .resendouter span:last-child,
         .forgotpasswordmainclass .mat-dialog-actions .resendouter span:last-child,
         .commonpopupmainclass .mat-dialog-actions .resendouter span:last-child,
-        .googlemainmappopup .mat-dialog-actions .resendouter span:last-child {
+        .googlemainmappopup .mat-dialog-actions .resendouter span:last-child, .outer-card .mat-dialog-actions .resendouter span:last-child {
           margin-bottom: 0; }
     .signupmainclass .mat-dialog-actions:last-child,
     .loginmainclass .mat-dialog-actions:last-child,
     .moreoptionsmainclass .mat-dialog-actions:last-child,
     .forgotpasswordmainclass .mat-dialog-actions:last-child,
     .commonpopupmainclass .mat-dialog-actions:last-child,
-    .googlemainmappopup .mat-dialog-actions:last-child {
+    .googlemainmappopup .mat-dialog-actions:last-child, .outer-card .mat-dialog-actions:last-child {
       margin: 0;
       padding: 20px; }
   .signupmainclass app-field-error-display .sts-msg.error,
@@ -2127,7 +2229,7 @@ header {
   .moreoptionsmainclass app-field-error-display .sts-msg.error,
   .forgotpasswordmainclass app-field-error-display .sts-msg.error,
   .commonpopupmainclass app-field-error-display .sts-msg.error,
-  .googlemainmappopup app-field-error-display .sts-msg.error {
+  .googlemainmappopup app-field-error-display .sts-msg.error, .outer-card app-field-error-display .sts-msg.error {
     padding: 10px 15px;
     background: #f24949;
     color: #fff;
@@ -2139,7 +2241,7 @@ header {
   .moreoptionsmainclass app-field-error-display .sts-msg.success,
   .forgotpasswordmainclass app-field-error-display .sts-msg.success,
   .commonpopupmainclass app-field-error-display .sts-msg.success,
-  .googlemainmappopup app-field-error-display .sts-msg.success {
+  .googlemainmappopup app-field-error-display .sts-msg.success, .outer-card app-field-error-display .sts-msg.success {
     padding: 10px 15px;
     background: #00cc96;
     color: #fff;
@@ -2151,7 +2253,7 @@ header {
   .moreoptionsmainclass app-form-success-display .sts-msg.success,
   .forgotpasswordmainclass app-form-success-display .sts-msg.success,
   .commonpopupmainclass app-form-success-display .sts-msg.success,
-  .googlemainmappopup app-form-success-display .sts-msg.success {
+  .googlemainmappopup app-form-success-display .sts-msg.success, .outer-card app-form-success-display .sts-msg.success {
     padding: 10px 15px;
     background: #00cc96;
     color: #fff;
@@ -2163,14 +2265,14 @@ header {
   .moreoptionsmainclass .otpbottom .mat-dialog-content,
   .forgotpasswordmainclass .otpbottom .mat-dialog-content,
   .commonpopupmainclass .otpbottom .mat-dialog-content,
-  .googlemainmappopup .otpbottom .mat-dialog-content {
+  .googlemainmappopup .otpbottom .mat-dialog-content, .outer-card .otpbottom .mat-dialog-content {
     padding-top: 0; }
     .signupmainclass .otpbottom .mat-dialog-content .form-group,
     .loginmainclass .otpbottom .mat-dialog-content .form-group,
     .moreoptionsmainclass .otpbottom .mat-dialog-content .form-group,
     .forgotpasswordmainclass .otpbottom .mat-dialog-content .form-group,
     .commonpopupmainclass .otpbottom .mat-dialog-content .form-group,
-    .googlemainmappopup .otpbottom .mat-dialog-content .form-group {
+    .googlemainmappopup .otpbottom .mat-dialog-content .form-group, .outer-card .otpbottom .mat-dialog-content .form-group {
       margin-bottom: 0; }
 
 .loginmainclass .mat-dialog-actions {
@@ -4057,13 +4159,16 @@ header.dashb .lg-opt {
             margin: 0; } }
       header.dashb .lg-opt .lgmem a.membership {
         font-size: .75rem;
-        color: #00aef2; }
+        color: #00aef2;
+        margin-right: 27px;
+        margin-top: 5px; }
         header.dashb .lg-opt .lgmem a.membership span {
           font-family: 'Montserrat', sans-serif;
           font-weight: bold; }
         header.dashb .lg-opt .lgmem a.membership i {
           font-size: 1.375rem;
-          vertical-align: middle; }
+          vertical-align: middle;
+          display: none; }
       @media only screen and (max-width: 575px) {
         header.dashb .lg-opt .lgmem a:first-child {
           order: 2; } }
@@ -6707,32 +6812,48 @@ footer.dashb .sect3 {
         .comn-cls .w-dta .card .itm-d .itm-r .dtls:last-child {
           border: none; }
 
-.consumer {
+header.consumer {
   padding-top: 15px; }
-  .consumer .tp-1 {
+  header.consumer .tp-1 {
     width: 100%;
     display: flex; }
-    .consumer .tp-1 .tp-l {
+    header.consumer .tp-1 .tp-l {
       margin-right: 20px; }
-      @media (min-width: 768px) and (max-width: 991px) {
-        .consumer .tp-1 .tp-l {
+      @media only screen and (max-width: 767px) {
+        header.consumer .tp-1 .tp-l {
           position: absolute; } }
-      .consumer .tp-1 .tp-l.lgo {
-        padding-top: 40px; }
-        @media (min-width: 768px) and (max-width: 991px) {
-          .consumer .tp-1 .tp-l.lgo {
+      @media (min-width: 768px) and (max-width: 991px) {
+        header.consumer .tp-1 .tp-l {
+          position: absolute; } }
+      header.consumer .tp-1 .tp-l.lgo {
+        padding-top: 33px; }
+        @media only screen and (max-width: 767px) {
+          header.consumer .tp-1 .tp-l.lgo {
             padding-top: 0; } }
-    .consumer .tp-1 .tp-r {
-      flex-grow: 1; }
-      .consumer .tp-1 .tp-r .tc1 {
-        margin-top: 0;
-        margin-bottom: 20px; }
         @media (min-width: 768px) and (max-width: 991px) {
-          .consumer .tp-1 .tp-r .tc1 {
+          header.consumer .tp-1 .tp-l.lgo {
+            padding-top: 0; } }
+    header.consumer .tp-1 .tp-r {
+      flex-grow: 1; }
+      header.consumer .tp-1 .tp-r .tc1 {
+        margin-top: 0;
+        margin-bottom: 15px; }
+        @media only screen and (max-width: 767px) {
+          header.consumer .tp-1 .tp-r .tc1 {
             height: 70px; } }
-        .consumer .tp-1 .tp-r .tc1 .isprovidertop {
+        @media only screen and (max-width: 400px) {
+          header.consumer .tp-1 .tp-r .tc1 {
+            margin-top: 80px;
+            height: auto; } }
+        @media only screen and (max-width: 575px) {
+          header.consumer .tp-1 .tp-r .tc1 {
+            padding-top: 20px; } }
+        @media (min-width: 768px) and (max-width: 991px) {
+          header.consumer .tp-1 .tp-r .tc1 {
+            height: 70px; } }
+        header.consumer .tp-1 .tp-r .tc1 .isprovidertop {
           margin-top: 5px; }
-      .consumer .tp-1 .tp-r .tp-srch {
+      header.consumer .tp-1 .tp-r .tp-srch {
         width: 100%;
         position: relative;
         display: flex;
@@ -6740,57 +6861,58 @@ footer.dashb .sect3 {
         justify-content: center;
         align-items: center; }
         @media only screen and (max-width: 767px) {
-          .consumer .tp-1 .tp-r .tp-srch {
+          header.consumer .tp-1 .tp-r .tp-srch {
             flex-direction: column;
             align-items: flex-start; } }
         @media (min-width: 768px) and (max-width: 991px) {
-          .consumer .tp-1 .tp-r .tp-srch {
+          header.consumer .tp-1 .tp-r .tp-srch {
             flex-direction: column;
             align-items: flex-start; } }
-        .consumer .tp-1 .tp-r .tp-srch .sa-lc,
-        .consumer .tp-1 .tp-r .tp-srch .sa-dm,
-        .consumer .tp-1 .tp-r .tp-srch .sa-src {
+        header.consumer .tp-1 .tp-r .tp-srch .sa-lc,
+        header.consumer .tp-1 .tp-r .tp-srch .sa-dm,
+        header.consumer .tp-1 .tp-r .tp-srch .sa-src {
           background-color: #e6e6e6;
-          height: 50px; }
+          height: 50px;
+          font-size: .875rem; }
           @media only screen and (max-width: 767px) {
-            .consumer .tp-1 .tp-r .tp-srch .sa-lc,
-            .consumer .tp-1 .tp-r .tp-srch .sa-dm,
-            .consumer .tp-1 .tp-r .tp-srch .sa-src {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-lc,
+            header.consumer .tp-1 .tp-r .tp-srch .sa-dm,
+            header.consumer .tp-1 .tp-r .tp-srch .sa-src {
               height: 50px; } }
           @media (min-width: 768px) and (max-width: 991px) {
-            .consumer .tp-1 .tp-r .tp-srch .sa-lc,
-            .consumer .tp-1 .tp-r .tp-srch .sa-dm,
-            .consumer .tp-1 .tp-r .tp-srch .sa-src {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-lc,
+            header.consumer .tp-1 .tp-r .tp-srch .sa-dm,
+            header.consumer .tp-1 .tp-r .tp-srch .sa-src {
               height: 50px; } }
-        .consumer .tp-1 .tp-r .tp-srch .flex-shrink-0 {
+        header.consumer .tp-1 .tp-r .tp-srch .flex-shrink-0 {
           flex-shrink: 0;
           -ms-flex-negative: 0; }
-        .consumer .tp-1 .tp-r .tp-srch .flex-shrink-1 {
+        header.consumer .tp-1 .tp-r .tp-srch .flex-shrink-1 {
           -ms-flex-negative: 1;
           flex-shrink: 1; }
-        .consumer .tp-1 .tp-r .tp-srch .ml5 {
+        header.consumer .tp-1 .tp-r .tp-srch .ml5 {
           margin-left: 5px; }
           @media only screen and (max-width: 767px) {
-            .consumer .tp-1 .tp-r .tp-srch .ml5 {
+            header.consumer .tp-1 .tp-r .tp-srch .ml5 {
               margin-left: 0; } }
           @media (min-width: 768px) and (max-width: 991px) {
-            .consumer .tp-1 .tp-r .tp-srch .ml5 {
+            header.consumer .tp-1 .tp-r .tp-srch .ml5 {
               margin-left: 0; } }
-        .consumer .tp-1 .tp-r .tp-srch .mr5 {
+        header.consumer .tp-1 .tp-r .tp-srch .mr5 {
           margin-right: 5px; }
-        .consumer .tp-1 .tp-r .tp-srch .sa-lc {
+        header.consumer .tp-1 .tp-r .tp-srch .sa-lc {
           width: 250px;
           cursor: pointer;
           position: relative; }
           @media only screen and (max-width: 767px) {
-            .consumer .tp-1 .tp-r .tp-srch .sa-lc {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-lc {
               width: 100%;
               margin-bottom: 5px; } }
           @media (min-width: 768px) and (max-width: 991px) {
-            .consumer .tp-1 .tp-r .tp-srch .sa-lc {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-lc {
               width: 100%;
               margin-bottom: 5px; } }
-          .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class {
+          header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class {
             border: none;
             background: transparent;
             padding: 0px;
@@ -6803,22 +6925,22 @@ footer.dashb .sect3 {
             font-size: 1.125em;
             font-weight: 500;
             width: 100%; }
-            .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper {
               padding: 0;
-              height: 90px; }
+              height: 50px; }
               @media only screen and (max-width: 767px) {
-                .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper {
                   height: 50px; } }
               @media (min-width: 768px) and (max-width: 991px) {
-                .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper {
                   height: 50px; } }
-              .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix {
+              header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix {
                 padding: 0;
                 border-top: none; }
-                .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-input-element {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-input-element {
                   padding: 15px;
                   vertical-align: top;
-                  height: 90px;
+                  height: 50px;
                   font-size: .875rem;
                   padding-left: 40px;
                   text-overflow: ellipsis;
@@ -6827,21 +6949,21 @@ footer.dashb .sect3 {
                   font-weight: 500;
                   color: #222223; }
                   @media only screen and (max-width: 767px) {
-                    .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-input-element {
+                    header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-input-element {
                       height: 50px;
                       padding: 11px 11px 11px 40px; } }
                   @media (min-width: 768px) and (max-width: 991px) {
-                    .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-input-element {
+                    header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-input-element {
                       height: 50px;
                       padding: 11px 11px 11px 40px; } }
-                .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-form-field-label {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-form-field-label {
                   display: none; }
-            .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-underline {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-underline {
               display: none; }
-            .consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class:focus {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class:focus {
               outline: none;
               border: none; }
-          .consumer .tp-1 .tp-r .tp-srch .sa-lc:before {
+          header.consumer .tp-1 .tp-r .tp-srch .sa-lc:before {
             content: "\74";
             /*background: url(../images/icon-location.svg);*/
             font-family: "custom-ynw" !important;
@@ -6851,28 +6973,28 @@ footer.dashb .sect3 {
             left: 15px;
             top: 50%;
             margin-top: -12px; }
-        .consumer .tp-1 .tp-r .tp-srch .sa-dm {
+        header.consumer .tp-1 .tp-r .tp-srch .sa-dm {
           width: 200px;
           cursor: pointer; }
           @media only screen and (max-width: 767px) {
-            .consumer .tp-1 .tp-r .tp-srch .sa-dm {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-dm {
               width: 100%;
               margin-bottom: 5px; } }
           @media (min-width: 768px) and (max-width: 991px) {
-            .consumer .tp-1 .tp-r .tp-srch .sa-dm {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-dm {
               width: 100%;
               margin-bottom: 5px; } }
-          .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field {
+          header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field {
             display: block; }
-            .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper {
               padding-bottom: 0; }
-              .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix {
+              header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix {
                 padding: 0;
                 border-top: none; }
-                .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
                   box-shadow: none !important;
                   border: none !important;
-                  height: 90px;
+                  height: 50px;
                   background: none;
                   border-radius: 0px;
                   display: flex;
@@ -6884,12 +7006,12 @@ footer.dashb .sect3 {
                   color: #222223;
                   padding: 15px; }
                   @media only screen and (max-width: 767px) {
-                    .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+                    header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
                       height: 50px; } }
                   @media (min-width: 768px) and (max-width: 991px) {
-                    .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+                    header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
                       height: 50px; } }
-                  .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
+                  header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
                     color: #222223;
                     border: none;
                     position: relative;
@@ -6900,28 +7022,28 @@ footer.dashb .sect3 {
                     display: flex;
                     align-items: center;
                     margin: 0; }
-                    .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after {
+                    header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after {
                       font-family: "custom-ynw" !important;
                       content: "\72";
                       position: absolute;
                       right: 0; }
-              .consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-form-field-underline {
+              header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-form-field-underline {
                 display: none; }
-        .consumer .tp-1 .tp-r .tp-srch .sa-src {
+        header.consumer .tp-1 .tp-r .tp-srch .sa-src {
           width: 100%;
           font-family: 'Montserrat', sans-serif;
           font-weight: normal; }
-          .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class {
+          header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class {
             padding: 0px;
             background: transparent;
             border-radius: 0;
             border: none;
             width: 100%; }
-            .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix {
               padding: 0;
               border-top: none; }
-              .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
-                height: 90px;
+              header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
+                height: 50px;
                 padding: 15px;
                 font-family: 'Montserrat', sans-serif;
                 font-weight: normal;
@@ -6929,44 +7051,44 @@ footer.dashb .sect3 {
                 font-size: 0.875rem;
                 color: #222223; }
                 @media only screen and (max-width: 767px) {
-                  .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
+                  header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
                     height: 50px; } }
                 @media (min-width: 768px) and (max-width: 991px) {
-                  .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
+                  header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
                     height: 50px; } }
-              .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-form-field-label-wrapper {
+              header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-form-field-label-wrapper {
                 display: block; }
-                .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-form-field-label-wrapper .mat-form-field-label {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-form-field-label-wrapper .mat-form-field-label {
                   padding-left: 15px;
                   padding-top: 30px;
                   font-family: 'Montserrat', sans-serif;
                   font-weight: normal;
                   font-weight: 500; }
                   @media only screen and (max-width: 767px) {
-                    .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-form-field-label-wrapper .mat-form-field-label {
+                    header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-form-field-label-wrapper .mat-form-field-label {
                       padding-top: 10px;
                       padding-left: 20px; } }
                   @media (min-width: 768px) and (max-width: 991px) {
-                    .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-form-field-label-wrapper .mat-form-field-label {
+                    header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-form-field-label-wrapper .mat-form-field-label {
                       padding-top: 10px;
                       padding-left: 20px; } }
-            .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-underline {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-underline {
               display: none; }
-            .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class.mat-focused .mat-form-field-label-wrapper .mat-form-field-label {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class.mat-focused .mat-form-field-label-wrapper .mat-form-field-label {
               color: #4c4c4c; }
               @media only screen and (max-width: 767px) {
-                .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class.mat-focused .mat-form-field-label-wrapper .mat-form-field-label {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class.mat-focused .mat-form-field-label-wrapper .mat-form-field-label {
                   padding-top: 20px; } }
               @media (min-width: 768px) and (max-width: 991px) {
-                .consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class.mat-focused .mat-form-field-label-wrapper .mat-form-field-label {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class.mat-focused .mat-form-field-label-wrapper .mat-form-field-label {
                   padding-top: 20px; } }
         @media only screen and (max-width: 767px) {
-          .consumer .tp-1 .tp-r .tp-srch .plr0i {
+          header.consumer .tp-1 .tp-r .tp-srch .plr0i {
             width: 100%; } }
         @media (min-width: 768px) and (max-width: 991px) {
-          .consumer .tp-1 .tp-r .tp-srch .plr0i {
+          header.consumer .tp-1 .tp-r .tp-srch .plr0i {
             width: 100%; } }
-        .consumer .tp-1 .tp-r .tp-srch .plr0i #search_button {
+        header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button {
           background: #f24949;
           color: #fff;
           width: 100px;
@@ -6983,25 +7105,25 @@ footer.dashb .sect3 {
           height: 50px;
           cursor: pointer; }
           @media only screen and (max-width: 767px) {
-            .consumer .tp-1 .tp-r .tp-srch .plr0i #search_button {
+            header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button {
               height: 50px;
               width: 100%;
               margin-bottom: 10px; } }
           @media (min-width: 768px) and (max-width: 991px) {
-            .consumer .tp-1 .tp-r .tp-srch .plr0i #search_button {
+            header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button {
               height: 50px;
               width: 100%;
               margin-bottom: 10px; } }
-          .consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search {
+          header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search {
             color: #fff;
             font-size: 1.5rem; }
             @media only screen and (max-width: 767px) {
-              .consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search {
+              header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search {
                 font-size: 1.5rem; } }
             @media (min-width: 768px) and (max-width: 991px) {
-              .consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search {
+              header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search {
                 font-size: 1.5rem; } }
-            .consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search:before {
+            header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search:before {
               position: absolute;
               width: 100%;
               height: 100%;
@@ -7010,17 +7132,17 @@ footer.dashb .sect3 {
               align-items: center;
               top: 0;
               left: 0; }
-        .consumer .tp-1 .tp-r .tp-srch .plr0i .cs-btn:before {
+        header.consumer .tp-1 .tp-r .tp-srch .plr0i .cs-btn:before {
           background: #f57979; }
-        .consumer .tp-1 .tp-r .tp-srch .sa-mo {
+        header.consumer .tp-1 .tp-r .tp-srch .sa-mo {
           line-height: 1em; }
           @media only screen and (max-width: 767px) {
-            .consumer .tp-1 .tp-r .tp-srch .sa-mo {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-mo {
               width: 100%; } }
           @media (min-width: 768px) and (max-width: 991px) {
-            .consumer .tp-1 .tp-r .tp-srch .sa-mo {
+            header.consumer .tp-1 .tp-r .tp-srch .sa-mo {
               width: 100%; } }
-          .consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter {
+          header.consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter {
             font-size: 0.875em;
             color: #222223;
             font-weight: 500;
@@ -7029,24 +7151,517 @@ footer.dashb .sect3 {
             width: 35px;
             cursor: pointer; }
             @media only screen and (max-width: 767px) {
-              .consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter {
-                width: 100px;
-                margin: 0 auto; } }
+              header.consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter {
+                margin: 10px auto 0 auto;
+                height: 20px; } }
             @media (min-width: 768px) and (max-width: 991px) {
-              .consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter {
-                width: 100px;
-                margin: 10px auto 0 auto; } }
-            @media (min-width: 992px) and (max-width: 1199px) {
-              .consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter {
-                width: 60; } }
-            .consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter:before {
+              header.consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter {
+                margin: 10px auto 0 auto;
+                height: 20px; } }
+            header.consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter:before {
               position: absolute;
               left: 8px;
               top: -10px;
               font-size: 1.675rem; }
               @media (min-width: 768px) and (max-width: 991px) {
-                .consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter:before {
+                header.consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter:before {
                   left: 0; } }
+
+.content {
+  background: #f2f2f2; }
+  .content .status-bar {
+    width: 100%;
+    display: flex;
+    margin-top: 30px; }
+    .content .status-bar .ct1 {
+      width: 25%;
+      position: relative;
+      margin-right: 30px; }
+      @media only screen and (max-width: 767px) {
+        .content .status-bar .ct1 {
+          width: 30%;
+          display: flex;
+          align-items: flex-end; } }
+      @media only screen and (max-width: 575px) {
+        .content .status-bar .ct1 {
+          width: 120px;
+          margin-right: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start; } }
+      .content .status-bar .ct1 .ct-l {
+        position: absolute;
+        width: 30px;
+        height: 20px; }
+        @media only screen and (max-width: 575px) {
+          .content .status-bar .ct1 .ct-l {
+            position: relative; } }
+        .content .status-bar .ct1 .ct-l .mnu {
+          display: flex;
+          flex-direction: column;
+          cursor: pointer; }
+          .content .status-bar .ct1 .ct-l .mnu span {
+            background: #666;
+            height: 3px;
+            width: 100%;
+            -webkit-border-radius: 30px;
+            border-radius: 30px;
+            background-clip: padding-box;
+            /* stops bg color from leaking outside the border: */
+            margin-bottom: 5px; }
+            .content .status-bar .ct1 .ct-l .mnu span:last-child {
+              margin-bottom: 0; }
+      .content .status-bar .ct1 .ct-r {
+        margin-left: 50px; }
+        @media only screen and (max-width: 575px) {
+          .content .status-bar .ct1 .ct-r {
+            margin-left: 0px;
+            margin-top: 10px; } }
+        .content .status-bar .ct1 .ct-r .ttle {
+          font-size: 1rem;
+          font-weight: 600; }
+          @media only screen and (max-width: 767px) {
+            .content .status-bar .ct1 .ct-r .ttle {
+              font-size: .875rem; } }
+    .content .status-bar .ct2 {
+      display: flex;
+      font-size: .875rem;
+      flex-grow: 1; }
+      @media only screen and (max-width: 767px) {
+        .content .status-bar .ct2 {
+          flex-direction: column; } }
+      @media only screen and (max-width: 767px) {
+        .content .status-bar .ct2 .ct-l {
+          order: 2;
+          margin-top: 10px; } }
+      @media only screen and (max-width: 767px) {
+        .content .status-bar .ct2 .ct-l .rslts {
+          text-align: right; } }
+      .content .status-bar .ct2 .ct-l .rslts span {
+        color: #00aef2;
+        font-weight: 500; }
+  .content .c-outer {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    position: relative; }
+    .content .c-outer .sidebar-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      z-index: 1001; }
+      @media only screen and (max-width: 767px) {
+        .content .c-outer .sidebar-overlay {
+          display: block; } }
+    .content .c-outer .sidebar {
+      width: 25%;
+      margin-right: 30px;
+      font-size: .875rem;
+      margin-bottom: 30px; }
+      @media only screen and (max-width: 767px) {
+        .content .c-outer .sidebar {
+          position: absolute;
+          width: 50%;
+          z-index: 1002;
+          margin-right: 0; } }
+      .content .c-outer .sidebar .rs-box {
+        background: #fff;
+        -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
+        -moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ; }
+        .content .c-outer .sidebar .rs-box .bx-block {
+          border-bottom: 2px solid #f2f2f2; }
+          .content .c-outer .sidebar .rs-box .bx-block:last-child {
+            border: none; }
+    .content .c-outer .c-body {
+      flex-grow: 1;
+      position: relative; }
+      .content .c-outer .c-body .srlst {
+        background: #fff;
+        font-size: .875rem;
+        font-weight: 500;
+        -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
+        -moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
+        margin-bottom: 30px; }
+        .content .c-outer .c-body .srlst .top-sect {
+          display: flex;
+          width: 100%;
+          padding: 20px;
+          border-bottom: 2px solid #f2f2f2; }
+          @media only screen and (max-width: 767px) {
+            .content .c-outer .c-body .srlst .top-sect {
+              flex-direction: column; } }
+          @media (min-width: 768px) and (max-width: 991px) {
+            .content .c-outer .c-body .srlst .top-sect {
+              flex-direction: column; } }
+          .content .c-outer .c-body .srlst .top-sect .tp-l {
+            width: 90%;
+            margin-right: 30px;
+            display: flex; }
+            @media only screen and (max-width: 767px) {
+              .content .c-outer .c-body .srlst .top-sect .tp-l {
+                margin-right: 0;
+                margin-bottom: 20px;
+                width: 100%; } }
+            @media only screen and (max-width: 575px) {
+              .content .c-outer .c-body .srlst .top-sect .tp-l {
+                flex-direction: column; } }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .content .c-outer .c-body .srlst .top-sect .tp-l {
+                margin-right: 0;
+                margin-bottom: 20px;
+                width: 100%; } }
+            .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 {
+              margin-right: 20px; }
+              @media only screen and (max-width: 767px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 {
+                  order: 2;
+                  margin-right: 0; } }
+              @media only screen and (max-width: 575px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 {
+                  width: 170px;
+                  margin-top: 15px; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 {
+                  order: 2;
+                  margin-right: 0; } }
+              .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img {
+                margin-bottom: 10px; }
+                @media only screen and (max-width: 767px) {
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img img {
+                    width: 100%;
+                    height: 100px; } }
+                @media only screen and (max-width: 575px) {
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img {
+                    width: 170px;
+                    margin-right: 0; } }
+                @media (min-width: 768px) and (max-width: 991px) {
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img img {
+                    width: 100%;
+                    height: 100px; } }
+              .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal {
+                margin: 0 0 10px 0;
+                padding: 0;
+                display: flex; }
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li {
+                  list-style: none;
+                  margin-right: 10px; }
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li:last-child {
+                    margin-right: 0; }
+                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li:last-child .galbx {
+                      position: relative;
+                      width: 100%;
+                      height: 100%; }
+                      .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li:last-child .galbx .overlay {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        z-index: 10;
+                        background: rgba(0, 0, 0, 0.3);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #fff;
+                        font-weight: 500; }
+            .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 {
+              flex-grow: 1; }
+              .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified {
+                background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
+                width: 65px;
+                height: 20px;
+                display: none; }
+                @media only screen and (max-width: 767px) {
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified {
+                    display: block; } }
+                @media (min-width: 768px) and (max-width: 991px) {
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified {
+                    display: block; } }
+              .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 h3 {
+                font-size: 1rem;
+                font-weight: 600;
+                margin-bottom: 5px; }
+              .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .address {
+                margin-bottom: 15px;
+                display: inline-block; }
+              .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr {
+                color: #666; }
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements {
+                  margin-bottom: 15px;
+                  display: flex;
+                  flex-direction: column; }
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .span {
+                    display: inline-block;
+                    margin-bottom: 3px; }
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule {
+                  margin-bottom: 15px; }
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule ul {
+                    margin: 0;
+                    padding: 0; }
+                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule ul li {
+                      list-style: none;
+                      display: flex;
+                      margin-bottom: 5px; }
+                      @media (min-width: 992px) and (max-width: 1199px) {
+                        .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule ul li {
+                          flex-direction: column; } }
+                      .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule ul li .day {
+                        font-weight: 600;
+                        width: 40%;
+                        margin-right: 10px; }
+                      .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule ul li .time {
+                        flex-grow: 1; }
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .services {
+                  margin-bottom: 15px; }
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .services ul {
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    flex-wrap: wrap; }
+                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .services ul li {
+                      list-style: none;
+                      margin-right: 10px;
+                      border: 1px solid #666;
+                      font-size: .75rem;
+                      padding: 0 5px;
+                      -webkit-border-radius: 20px;
+                      border-radius: 20px;
+                      background-clip: padding-box;
+                      /* stops bg color from leaking outside the border: */
+                      cursor: pointer;
+                      margin-bottom: 5px; }
+              .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .more-clinics span {
+                color: #00aef2;
+                position: relative;
+                cursor: pointer; }
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .more-clinics span:hover:after {
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: inherit;
+                  content: "";
+                  height: 1px;
+                  width: 100%;
+                  bottom: 0;
+                  left: 0;
+                  position: absolute; }
+          .content .c-outer .c-body .srlst .top-sect .tp-r {
+            flex-grow: 1;
+            text-align: right; }
+            .content .c-outer .c-body .srlst .top-sect .tp-r .ynw-verified {
+              background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
+              width: 110px;
+              height: 32px;
+              margin-left: auto;
+              margin-bottom: 15px; }
+              @media only screen and (max-width: 767px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-r .ynw-verified {
+                  display: none; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-r .ynw-verified {
+                  display: none; } }
+            .content .c-outer .c-body .srlst .top-sect .tp-r .badges {
+              margin: 0 0 15px 0;
+              padding: 0;
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: flex-end; }
+              @media only screen and (max-width: 767px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-r .badges {
+                  justify-content: flex-start; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-r .badges {
+                  justify-content: flex-start; } }
+              .content .c-outer .c-body .srlst .top-sect .tp-r .badges li {
+                list-style: none;
+                font-size: 1.625rem;
+                margin-left: 30px; }
+                @media only screen and (max-width: 767px) {
+                  .content .c-outer .c-body .srlst .top-sect .tp-r .badges li {
+                    margin-left: 0px;
+                    margin-right: 30px; } }
+                @media (min-width: 768px) and (max-width: 991px) {
+                  .content .c-outer .c-body .srlst .top-sect .tp-r .badges li {
+                    margin-left: 0px;
+                    margin-right: 30px; } }
+            .content .c-outer .c-body .srlst .top-sect .tp-r .communicate {
+              position: relative;
+              text-align: right;
+              color: #00aef2;
+              padding-left: 20px;
+              display: table;
+              margin-bottom: 10px;
+              margin-left: auto;
+              cursor: pointer; }
+              @media only screen and (max-width: 767px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-r .communicate {
+                  margin-left: 0; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-r .communicate {
+                  margin-left: 0; } }
+              .content .c-outer .c-body .srlst .top-sect .tp-r .communicate:before {
+                position: absolute;
+                content: "\53";
+                font-family: "custom-ynw" !important;
+                left: 0;
+                top: 0; }
+            .content .c-outer .c-body .srlst .top-sect .tp-r .claim-business {
+              position: relative;
+              text-align: right;
+              color: #fda60d;
+              padding-left: 20px;
+              display: table;
+              margin-left: auto;
+              cursor: pointer; }
+              @media only screen and (max-width: 767px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-r .claim-business {
+                  margin-left: 0; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-r .claim-business {
+                  margin-left: 0; } }
+              .content .c-outer .c-body .srlst .top-sect .tp-r .claim-business:before {
+                position: absolute;
+                content: "\39";
+                font-family: "custom-ynw" !important;
+                left: 0;
+                top: 0; }
+        .content .c-outer .c-body .srlst .bottom-sect {
+          padding: 20px;
+          display: flex; }
+          @media only screen and (max-width: 575px) {
+            .content .c-outer .c-body .srlst .bottom-sect {
+              flex-direction: column; } }
+          .content .c-outer .c-body .srlst .bottom-sect .bt-l {
+            flex-grow: 1; }
+            @media only screen and (max-width: 575px) {
+              .content .c-outer .c-body .srlst .bottom-sect .bt-l {
+                margin-bottom: 20px; } }
+            .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme {
+              display: flex;
+              align-items: center; }
+              @media only screen and (max-width: 575px) {
+                .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme {
+                  justify-content: center; } }
+              .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .o-now {
+                display: flex;
+                align-items: center;
+                background: #00cc96;
+                height: 50px;
+                padding: 0px 10px;
+                position: relative;
+                color: #fff;
+                font-weight: 600;
+                margin-right: 30px; }
+                .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .o-now:after {
+                  position: absolute;
+                  content: "";
+                  right: -15px;
+                  top: 0;
+                  z-index: 2;
+                  width: 10px;
+                  height: 50px;
+                  border-top: 25px solid transparent;
+                  border-bottom: 25px solid transparent;
+                  border-left: 15px solid #00cc96; }
+              .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .timing {
+                display: flex;
+                flex-direction: column; }
+                .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .timing .est-time {
+                  color: #999999; }
+                .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .timing .time-data {
+                  font-weight: 600;
+                  position: relative;
+                  padding-left: 20px; }
+                  .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .timing .time-data:before {
+                    position: absolute;
+                    content: "\31";
+                    font-family: "custom-ynw" !important;
+                    left: 0;
+                    top: 0; }
+          @media only screen and (max-width: 767px) {
+            .content .c-outer .c-body .srlst .bottom-sect .bt-r .chk-btn {
+              width: 150px; } }
+          @media only screen and (max-width: 575px) {
+            .content .c-outer .c-body .srlst .bottom-sect .bt-r .chk-btn {
+              width: auto; } }
+          @media (min-width: 768px) and (max-width: 991px) {
+            .content .c-outer .c-body .srlst .bottom-sect .bt-r .chk-btn {
+              width: 150px; } }
+
+/***** Common Pages #### */
+.content.see-pages .outer-card {
+  display: flex;
+  width: 100% !important; }
+  @media only screen and (max-width: 575px) {
+    .content.see-pages .outer-card {
+      flex-direction: column; } }
+  .content.see-pages .outer-card .card {
+    width: 60%; }
+    @media only screen and (max-width: 575px) {
+      .content.see-pages .outer-card .card {
+        margin-bottom: 30px;
+        width: 100%; } }
+    .content.see-pages .outer-card .card .form-group .pickerouter {
+      display: flex; }
+      .content.see-pages .outer-card .card .form-group .pickerouter input[type="text"] {
+        width: 120px;
+        padding: .375rem .75rem; }
+      .content.see-pages .outer-card .card .form-group .pickerouter .mat-datepicker-toggle {
+        border: 1px solid #00aef2;
+        -webkit-border-radius: 0.25rem;
+        border-radius: 0.25rem;
+        background-clip: padding-box;
+        /* stops bg color from leaking outside the border: */
+        margin-right: 15px; }
+        .content.see-pages .outer-card .card .form-group .pickerouter .mat-datepicker-toggle .mat-icon-button {
+          height: 38px;
+          line-height: 38px; }
+    .content.see-pages .outer-card .card .form-group .mat-radio-group .mat-radio-button {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: normal; }
+    .content.see-pages .outer-card .card .form-group .mat-radio-group .mat-radio-button {
+      margin-right: 10px; }
+    .content.see-pages .outer-card .card .form-group .verified {
+      position: relative;
+      margin-top: 10px;
+      padding-left: 20px; }
+      .content.see-pages .outer-card .card .form-group .verified:before {
+        content: "\24";
+        position: absolute;
+        font-family: "custom-ynw" !important;
+        left: 0;
+        top: 0;
+        color: #00cc96;
+        font-size: 1rem; }
+  .content.see-pages .outer-card .right-menu {
+    flex-grow: 1;
+    margin-left: 50px; }
+    @media only screen and (max-width: 575px) {
+      .content.see-pages .outer-card .right-menu {
+        margin-left: 0; } }
+    .content.see-pages .outer-card .right-menu .right-menu-header {
+      font-weight: 600;
+      margin-bottom: 20px; }
+    .content.see-pages .outer-card .right-menu ul {
+      margin: 0;
+      padding: 0; }
+      .content.see-pages .outer-card .right-menu ul li {
+        list-style: none;
+        font-size: .875rem;
+        color: #00aef2;
+        margin-bottom: 10px;
+        cursor: pointer;
+        display: table;
+        padding-left: 20px;
+        position: relative; }
+        .content.see-pages .outer-card .right-menu ul li:before {
+          position: absolute;
+          left: 0;
+          top: 2px; }
+  .content.see-pages .outer-card .mat-dialog-actions:last-child {
+    margin: 0;
+    padding: 20px 0; }
 
 footer {
   color: #fff;
@@ -7081,6 +7696,9 @@ footer {
         @media only screen and (max-width: 767px) {
           footer .sect1 .ft-cpy .sbi-bt li {
             margin-right: 10px; } }
+        @media only screen and (max-width: 400px) {
+          footer .sect1 .ft-cpy .sbi-bt li {
+            flex-grow: 1; } }
         footer .sect1 .ft-cpy .sbi-bt li a span {
           -webkit-border-radius: 50%;
           border-radius: 50%;

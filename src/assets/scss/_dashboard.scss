@@ -180,6 +180,8 @@ header {
                     &.membership {
                         font-size: .75rem;
                         color: $linkblue;
+                        margin-right: 27px;
+                        margin-top: 5px;
                         
                         span {
                             @include font-bold;
@@ -188,6 +190,7 @@ header {
                         i {
                             font-size: 1.375rem;
                             vertical-align: middle;
+                            display: none;
                         }
                     }
                     

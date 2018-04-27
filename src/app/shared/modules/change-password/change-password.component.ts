@@ -7,7 +7,7 @@ import {FormMessageDisplayService} from '../../modules/form-message-display/form
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+// import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
@@ -23,11 +23,11 @@ export class ChangePasswordComponent implements OnInit {
   breadcrumbs_init = [
     {
       title: 'Dashboard',
-      url: '/provider'
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
       title: 'Change Password',
-      url: '/provider/change-password'
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-password'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -37,7 +37,8 @@ export class ChangePasswordComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public router: Router,
-    public provider_shared_functions: ProviderSharedFuctions) {}
+  //  public provider_shared_functions: ProviderSharedFuctions
+  ) {}
 
     ngOnInit() {
 
@@ -65,12 +66,16 @@ export class ChangePasswordComponent implements OnInit {
         .subscribe(
           data => {
             // this.api_success = Messages.PASSWORD_CHANGED;
-            this.provider_shared_functions.openSnackBar(Messages.PASSWORD_CHANGED);
+            const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
+            ynw.password = sub_data.new_password; // change the password to the new one in the local storage variable
+            this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
+
+            this.shared_functions.openSnackBar(Messages.PASSWORD_CHANGED);
             this.spForm.reset();
           },
           error => {
             // this.api_error = error.error;
-            this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+            this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
             if (error.status === 419) { // case of session expired
               this.router.navigate(['/logout']);
             }
@@ -78,7 +83,7 @@ export class ChangePasswordComponent implements OnInit {
         );
 
       } else {
-        this.provider_shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
         // this.api_error = Messages.PASSWORD_MISMATCH;
       }
 

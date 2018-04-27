@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { ProviderRouterModule } from './provider-routing.module';
+import { HeaderModule } from '../shared/modules/header/header.module';
 
 import { ProviderComponent } from './provider.component';
 import { ProviderHomeComponent } from './components/home/provider-home.component';
@@ -99,7 +100,8 @@ import 'mousetrap';
         CKEditorModule,
         ModalGalleryModule.forRoot(),
         AngularMultiSelectModule,
-        BreadCrumbModule
+        BreadCrumbModule,
+        HeaderModule
     ],
     declarations: [
         ProviderComponent,

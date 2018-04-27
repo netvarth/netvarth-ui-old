@@ -1,4 +1,4 @@
-<app-header [headerTitle]=""></app-header>
+<app-header [headerTitle]="" [includedfrom]="'home'"></app-header>
 
 <section class="srch">
   <div class="container">
@@ -6,7 +6,7 @@
           <div class="sa">
               <h1>Skip the Queue!</h1>
               <ng-container *ngIf="domain_obtained==true">
-                <app-search [showopennow]="0" [searchfields]="searchfields" [domainlistpassed]="domainlist_data"></app-search>
+                <app-search [showopennow]="0" [searchfields]="searchfields" [domainlistpassed]="domainlist_data" [includedfrom]="'home'"></app-search>
               </ng-container>
           </div>
       </div>
