@@ -11,7 +11,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-delay.component';
 import { AddProviderCheckinComponent } from '../add-provider-checkin/add-provider-checkin.component';
-import { ProviderWaitlistCancelPopupComponent } from '../provider-waitlist-cancel-popup/provider-waitlist-cancel-popup.component';
+import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 
 import { SharedServices } from '../../../shared/services/shared-services';
 
@@ -34,6 +35,7 @@ export class ProviderHomeComponent implements OnInit {
 
   locations: any = [];
   queues: any = [];
+  services: any = [];
   selected_location = null;
   selected_location_index = null;
   selected_queue = null;
@@ -51,6 +53,23 @@ export class ProviderHomeComponent implements OnInit {
   load_queue = 0;
   load_waitlist = 0 ;
 
+  open_filter = false;
+  waitlist_status = [
+    {name : 'Check Ins', value: 'CheckedIn'},
+    {name : 'Cancelled', value: 'Cancelled'},
+    {name : 'Started', value: 'Started'},
+    {name : 'Arrived', value: 'Arrived'},
+    {name : 'Done', value: 'Done'}];
+
+  filter = {
+    first_name: '',
+    queue: 'all',
+    service: 'all',
+    waitlist_status: 'all',
+    check_in_date: moment(new Date()).format('YYYY-MM-DD'),
+    location_id: 'all'
+  };
+
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -63,6 +82,7 @@ export class ProviderHomeComponent implements OnInit {
 
   ngOnInit() {
     this.getLocationList();
+    this.getServiceList();
   }
 
   getLocationList() {
@@ -102,6 +122,18 @@ export class ProviderHomeComponent implements OnInit {
     (selected_location !== null) ? this.changeLocation(selected_location) :
     this.changeLocation(this.locations[0]);
 
+  }
+
+  getServiceList() {
+    this.provider_services.getServicesList()
+    .subscribe(
+      data => {
+        this.services = data;
+      },
+      error => {
+
+      }
+    );
   }
 
   getQueueList() {
@@ -186,7 +218,9 @@ export class ProviderHomeComponent implements OnInit {
 
   getTodayCheckIn() {
     this.load_waitlist = 0;
-    this.provider_services.getTodayWaitlist(this.selected_queue.id)
+    const filter = this.setFilterForApi();
+
+    this.provider_services.getTodayWaitlist(filter)
     .subscribe(
       data => {
         this.check_in_list = data;
@@ -348,7 +382,7 @@ export class ProviderHomeComponent implements OnInit {
 
     if (action === 'CANCEL') {
 
-      const dialogRef = this.dialog.open(ProviderWaitlistCancelPopupComponent, {
+      const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
         data: {
@@ -357,8 +391,8 @@ export class ProviderHomeComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        if (result === 'reloadlist') {
-
+        if (result && result.cancelReason) {
+          this.changeWaitlistStatusApi(waitlist, action, result);
         }
       });
 
@@ -367,8 +401,8 @@ export class ProviderHomeComponent implements OnInit {
     }
   }
 
-  changeWaitlistStatusApi(waitlist, action) {
-    this.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action)
+  changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+    this.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
     .subscribe(
       data => {
         this.loadApiSwitch();
@@ -389,5 +423,40 @@ export class ProviderHomeComponent implements OnInit {
     );
   }
 
+  showConsumerNote (checkin) {
+    const dialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass'],
+      data: {
+        checkin: checkin
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
+    });
+  }
+
+  toggleFilter() {
+    this.open_filter = !this.open_filter;
+  }
+
+  setFilterData(type, value) {
+    this.filter[type] = value;
+    console.log(this.filter);
+  }
+
+  setFilterForApi() {
+    let filter = {
+      'queue-eq' : this.selected_queue.id
+    };
+    return filter;
+  }
+
+  doSearch() {
+
+  }
 
 }

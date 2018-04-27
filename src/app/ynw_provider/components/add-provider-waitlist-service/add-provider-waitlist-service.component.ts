@@ -54,7 +54,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
 
      const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
      this.type = this.data.type;
-     
+
      const package_id = (user['accountLicenseDetails']['accountLicense']['licPkgOrAddonId']) ?
      user['accountLicenseDetails']['accountLicense']['licPkgOrAddonId'] : null;
      this.base_licence = (package_id === 1) ? true : false;
@@ -88,13 +88,13 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
     totalAmount: ['', Validators.compose([Validators.pattern(this.number_decimal_pattern)])],
     enabled_prepayment: [{'value': false , 'disabled': this.base_licence }],
-    taxable: [false],
+    // taxable: [false],
     notification: [false]
     });
   }
 
   setValue(data) {
-    console.log(data, data['taxable'] );
+    // console.log(data, data['taxable'] );
     this.amForm.setValue({
       'name': data['name'] || this.amForm.get('name').value,
       'description': data['description'] || this.amForm.get('description').value,
@@ -103,7 +103,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       'enabled_prepayment': (!this.base_licence && data['minPrePaymentAmount'] &&
                               data['minPrePaymentAmount'] !== 0
                               ) ? true : false,
-      'taxable': data['taxable'] || this.amForm.get('taxable').value,
+      // 'taxable': data['taxable'] || this.amForm.get('taxable').value,
       'notification': data['notification'] || this.amForm.get('notification').value,
     });
 

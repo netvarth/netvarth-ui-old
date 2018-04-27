@@ -2,7 +2,7 @@
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
-<h1 class="mat-dialog-title">Service  
+<h1 class="mat-dialog-title">Service
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -68,13 +68,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
   </app-field-error-display>
   </div>
 
-  <div class="form-group inline">
+  <!-- <div class="form-group inline">
     <label class="col-form-label">Tax applicable</label>
     <mat-slide-toggle
     class="example-margin"
     formControlName="taxable">
     </mat-slide-toggle>
-  </div>
+  </div> -->
 
   <div class="form-group inline">
 
@@ -88,14 +88,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
   </div>
 
 
-  <mat-radio-group formControlName="notificationType" 
+  <mat-radio-group formControlName="notificationType"
   *ngIf="amForm.get('notification').value === true">
     <mat-radio-button value="pushMsg">Push Message</mat-radio-button>
     <mat-radio-button value="email">Email</mat-radio-button>
   </mat-radio-group>
-  
+
   <ng-container *ngIf="type == 'add' ">
-      
+
     <div class="form-group">
       <label class="col-form-label">Gallery</label>
     </div>
@@ -122,13 +122,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
       </li>
       </ul>
     </div>
-  
+
     <div *ngIf="item_pic.files">
       <ul class="galul">
       <li *ngFor="let file of item_pic.files;let i = index ">
         <div class="galimg_outer">
         <div class="gal_img" *ngIf="item_pic.base64[i]"><img [src]="item_pic.base64[i]"></div>
-        <div class="gal_caption"><input type="text" [(ngModel)]="item_pic.caption[i]" 
+        <div class="gal_caption"><input type="text" [(ngModel)]="item_pic.caption[i]"
           [ngModelOptions]="{standalone: true}"
           placeholder="Caption"></div>
         <div class="gal_action">
@@ -147,11 +147,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
       </li>
       </ul>
     </div>
-    
+
     <div class="upload-doc" (click)="file.click()">
       <label class="col-form-label">Click here to select the image files</label>
       <span class="select-wrapper ">
-        <input type="file"  multiple name="image_src" id="image_src" accept="image/*"  
+        <input type="file"  multiple name="image_src" id="image_src" accept="image/*"
         #file (change)="imageSelect(file,$event)">
       </span>
     </div>
@@ -160,7 +160,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 
 
-  
+
 </mat-dialog-content>
 
 <mat-dialog-actions>

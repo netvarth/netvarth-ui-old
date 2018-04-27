@@ -434,19 +434,19 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
 
-  getTodayWaitlist(queueId) {
+  getTodayWaitlist(filter) {
     const url = 'provider/waitlist/today/';
-    return this.servicemeta.httpGet(url, null , {'queue-eq' : queueId});
+    return this.servicemeta.httpGet(url, null , filter);
   }
 
-  getHistroryWaitlist() {
+  getHistroryWaitlist(filter = {}) {
     const url = 'provider/waitlist/history';
-    return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url, null , filter);
   }
 
-  getFutureWaitlist() {
+  getFutureWaitlist(filter = {}) {
     const url = 'provider/waitlist/future';
-    return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url, null , filter);
   }
 
   getQueueDelay(queueId) {

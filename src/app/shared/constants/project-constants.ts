@@ -170,4 +170,9 @@ VALIDATOR_FLOAT: /^[+-]?([0-9]*[.])?[0-9]+$/,
 VALIDATOR_PHONENUMBERCOUNT10: /^\d{10}$/,
 VALIDATOR_CHARONLY: /^[a-zA-Z]+$/,
 VALIDATOR_EMAIL: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$/,
+WAITLIST_CANCEL_RESON: [ { title : 'No Show Up', value: 'noshowup'},
+                         {title : 'Self', value: 'self'},
+                         {title : 'Blocked', value: 'blocked'},
+                         {title : 'Closing Soon', value: 'closingSoon'},
+                         {title : 'Too Full', value: 'tooFull'}]
 };

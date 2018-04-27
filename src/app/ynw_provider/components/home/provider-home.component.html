@@ -72,9 +72,86 @@
                       </span>
                   </div>
 
-                  <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
+                  <!-- <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
                       <span><i class="icon-filter-one"></i></span>
-                  </div>
+                  </div> -->
+                  <mat-accordion *ngIf="check_in_filtered_list.length != 0">
+                    <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
+                      <mat-expansion-panel-header class="fltr">
+                          <span (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                      </mat-expansion-panel-header>
+
+                      <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                          <label class="col-form-label">First name</label>
+                          <input matInput [(ngModel)]="filter.first_name">
+                        </mat-form-field>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-form-label" for="displayName">Queues</label>
+                        <mat-chip-list>
+                          <mat-chip
+                          color="{{(filter.queue === 'all') ? 'primary' : ''}}"
+                          selected="{{(filter.queue === 'all' )? true : false}}"
+                          (click)="setFilterData('queue', 'all')">All</mat-chip>
+
+                          <mat-chip
+                          color="{{(filter.queue === queue.id) ? 'primary' : ''}}"
+                          selected="{{(filter.queue === queue.id )? true : false}}"
+                          *ngFor="let queue of queues" (click)="setFilterData('queue', queue.id)">
+                              {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
+                          </mat-chip>
+
+                        </mat-chip-list>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-form-label" for="displayName">Services</label>
+                        <mat-chip-list>
+                          <mat-chip
+                          color="{{(filter.service === 'all') ? 'primary' : ''}}"
+                          selected="{{(filter.service === 'all' )? true : false}}"
+                          (click)="setFilterData('service', 'all')">All</mat-chip>
+                          <mat-chip
+                          color="{{(filter.service === service.id) ? 'primary' : ''}}"
+                          selected="{{(filter.service === service.id )? true : false}}"
+                          (click)="setFilterData('service', service.id)"
+                          *ngFor="let service of services">
+                              {{service.name}}
+                          </mat-chip>
+                        </mat-chip-list>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-form-label" for="displayName">Waitlist Status</label>
+                        <mat-chip-list>
+                          <mat-chip
+                          color="{{(filter.waitlist_status === 'all') ? 'primary' : ''}}"
+                          selected="{{(filter.waitlist_status === 'all' )? true : false}}"
+                          (click)="setFilterData('waitlist_status', 'all')">All</mat-chip>
+
+                          <mat-chip
+                          color="{{(filter.waitlist_status === status.value) ? 'primary' : ''}}"
+                          selected="{{(filter.waitlist_status === status.value )? true : false}}"
+                          (click)="setFilterData('waitlist_status', status.value)" *ngFor="let status of waitlist_status">
+                              {{status.name}}
+                          </mat-chip>
+                        </mat-chip-list>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-form-label" for="displayName">Check-In Date</label>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="filter.check_in_date" [matDatepicker]="picker" placeholder="Choose a date">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                      </div>
+
+                      <button  type="button" (doSearch)="doSearch()" mat-button class="cs-btn bt1">Search</button>
+                    </mat-expansion-panel>
+                  </mat-accordion>
                   <div class="table-outer d-tbl" *ngIf="check_in_filtered_list.length != 0">
                       <table class="table">
                           <thead>
@@ -84,7 +161,7 @@
                                   <th>Name</th>
                                   <th>Service</th>
                                   <th>Actions</th>
-                                  <!-- <th>Payment Status</th> -->
+                                  <th>Payment Status</th>
                                   <th>Message</th>
                                   <th>Consumer Note</th>
                                   <th></th>
@@ -118,22 +195,44 @@
                                       <i class="icon-play"></i>Done
                                     </span>
 
-                                    <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
-                                    *ngIf="checkin.waitlistStatus == 'checkedIn'">
-                                      <i class="icon-play"></i>Cancel
-                                    </span>
-
                                     </td>
-                                  <!-- <td data-title="Payment Status" class="payment"><span class="paid-n"><span class="text">Not Paid</span></span> <span class="paid-h"><span class="text">Partially Paid</span></span> <span class="paid-f"><span class="text">Paid</span></span></td> -->
+                                  <td data-title="Payment Status" class="payment">
+                                    <ng-container *ngIf="checkin.paymentStatus">
+                                        <span class="paid-n" *ngIf="checkin.paymentStatus == 'NotPaid'"><span class="text">Not Paid</span></span>
+                                        <span class="paid-h" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span class="text">Partially Paid</span></span>
+                                        <span class="paid-f" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span class="text">Paid</span></span>
+
+                                    </ng-container>
+                                  </td>
                                   <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
-                                  <td data-title="Consumer Note" class="cnote"><span><i class="icon-note"></i></span></td>
-                                  <td class="mre"><span class="mbt">
+                                  <td data-title="Consumer Note" class="cnote">
+                                    <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
+                                      <i class="icon-note"></i>
+                                    </span>
+                                  </td>
+                                  <td class="mre"><span class="mbt" *ngIf="checkin.waitlistStatus != 'done'">
                                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                           <mat-icon>more_vert</mat-icon>
                                       </button>
                                       <mat-menu #menu="matMenu">
-                                          <button type="button" mat-menu-item>
-                                            Cancel Check-In
+                                          <button type="button" mat-menu-item
+                                          (click)="changeWaitlistStatus(checkin, 'CANCEL')"
+                                          *ngIf="time_type!=0 &&
+                                          ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
+                                            Cancel Check In
+                                          </button>
+                                          <button type="button" mat-menu-item
+                                          (click)="changeWaitlistStatus(checkin, 'REPORT')"
+                                          *ngIf="time_type!=0 &&
+                                          (checkin.waitlistStatus == 'cancelled' || checkin.waitlistStatus == 'started')">
+                                            Change Status to Arrived
+                                          </button>
+                                          <button type="button" mat-menu-item
+                                          (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                                          *ngIf="time_type!=0 &&
+                                          (checkin.waitlistStatus == 'cancelled' || checkin.waitlistStatus == 'arrived' ||
+                                          checkin.waitlistStatus == 'started')">
+                                            Change Status to Check In
                                           </button>
                                       </mat-menu>
                                   </span>

@@ -9,17 +9,19 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
-  selector: 'app-provider-waitlist-cancel-popup',
-  templateUrl: './provider-waitlist-cancel-popup.component.html'
+  selector: 'app-provider-waitlist-checkin-cancel-popup',
+  templateUrl: './provider-waitlist-checkin-cancel-popup.component.html'
 })
-export class ProviderWaitlistCancelPopupComponent implements OnInit {
+export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   amForm: FormGroup;
   api_error = null;
   api_success = null;
   message = [];
+  cancel_reasons = projectConstants.WAITLIST_CANCEL_RESON;
+
   constructor(
-    public dialogRef: MatDialogRef<ProviderWaitlistCancelPopupComponent>,
+    public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -36,18 +38,36 @@ export class ProviderWaitlistCancelPopupComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
       reason : ['', Validators.compose([Validators.required])],
-      send_message: [false],
-      message: ['', Validators.compose([Validators.required])]
+      send_message: [false]
     });
+    this.amForm.get('send_message').valueChanges
+    .subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.amForm.addControl('message',
+          new FormControl('', Validators.compose([Validators.required])));
+        } else {
+          this.amForm.removeControl('message');
+        }
+      }
+    );
   }
 
   onSubmit (form_data) {
    const post_data =  {
-      'communicationMessage': form_data.message
+      'cancelReason': form_data.reason
     };
+    if (form_data.send_message) {
+      post_data['communicationMessage'] = form_data.message;
+    }
 
+    this.dialogRef.close(post_data);
   }
 
+  selectReason(cancel_reason) {
+    this.amForm.get('reason').setValue(cancel_reason.value);
+  }
 
   resetApiErrors () {
     this.api_error = null;
