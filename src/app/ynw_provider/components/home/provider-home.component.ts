@@ -35,6 +35,7 @@ export class ProviderHomeComponent implements OnInit {
 
   locations: any = [];
   queues: any = [];
+  all_queues: any = [];
   services: any = [];
   selected_location = null;
   selected_location_index = null;
@@ -55,20 +56,23 @@ export class ProviderHomeComponent implements OnInit {
 
   open_filter = false;
   waitlist_status = [
-    {name : 'Check Ins', value: 'CheckedIn'},
-    {name : 'Cancelled', value: 'Cancelled'},
-    {name : 'Started', value: 'Started'},
-    {name : 'Arrived', value: 'Arrived'},
-    {name : 'Done', value: 'Done'}];
+    {name : 'Check Ins', value: 'checkedIn'},
+    {name : 'Cancelled', value: 'cancelled'},
+    {name : 'Started', value: 'started'},
+    {name : 'Arrived', value: 'arrived'},
+    {name : 'Done', value: 'done'}];
 
   filter = {
     first_name: '',
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
-    check_in_date: moment(new Date()).format('YYYY-MM-DD'),
+    check_in_date: null,
     location_id: 'all'
-  };
+  }; // same in resetFilter Fn
+
+  filter_date_max = moment(new Date()).add(-1, 'days');
+  filter_date_min = moment(new Date()).add(+1, 'days');
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -101,6 +105,7 @@ export class ProviderHomeComponent implements OnInit {
         } else {
           this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
         }
+        this.getQueueList();
       },
       error => {
         this.load_locations = 1;
@@ -137,6 +142,19 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getQueueList() {
+    this.provider_services.getProviderLocationQueues(this.selected_location.id)
+    .subscribe(
+      data => {
+        this.all_queues = data;
+      },
+      error => {
+      },
+      () => {
+      }
+    );
+  }
+
+  getQueueListByDate() {
 
     this.load_queue = 0;
     if (!this.selected_queue) {
@@ -170,7 +188,7 @@ export class ProviderHomeComponent implements OnInit {
 
     this.selected_location = location;
     this.selected_queue = null;
-    this.loadApiSwitch();
+    this.loadApiSwitch('changeLocation');
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
 
     this.getFutureCheckinCount();
@@ -240,7 +258,8 @@ export class ProviderHomeComponent implements OnInit {
 
   getFutureCheckIn() {
     this.load_waitlist = 0;
-    this.provider_services.getFutureWaitlist()
+    const filter = this.setFilterForApi();
+    this.provider_services.getFutureWaitlist(filter)
     .subscribe(
       data => {
         this.check_in_list = this.check_in_filtered_list = data;
@@ -256,7 +275,8 @@ export class ProviderHomeComponent implements OnInit {
 
   getHistoryCheckIn() {
     this.load_waitlist = 0;
-    this.provider_services.getHistroryWaitlist()
+    const filter = this.setFilterForApi();
+    this.provider_services.getHistroryWaitlist(filter)
     .subscribe(
       data => {
         this.check_in_list = this.check_in_filtered_list = data;
@@ -272,15 +292,34 @@ export class ProviderHomeComponent implements OnInit {
   setTimeType(time_type) {
     this.check_in_list  = this.check_in_filtered_list = [];
     this.time_type = time_type;
+    this.status_type = 'all';
+    this.setFilterDateMaxMin();
     // this.queues = [];
-    this.loadApiSwitch();
+    this.loadApiSwitch('setTimeType');
   }
 
-  loadApiSwitch() {
+  setFilterDateMaxMin() {
+
+    this.filter_date_max = null;
+    this.filter_date_min = null;
+
+    if (this.time_type === 0) {
+      this.filter_date_max = moment(new Date()).add(-1, 'days');
+    } else if (this.time_type === 2) {
+      this.filter_date_min = moment(new Date()).add(+1, 'days');
+    }
+
+  }
+
+  loadApiSwitch(source) {
+    if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
+      this.resetFilter();
+    }
+
     switch (this.time_type) {
 
       case 0 : this.getHistoryCheckIn(); break;
-      case 1 : this.getQueueList(); break;
+      case 1 : this.getQueueListByDate(); break;
       case 2 : this.getFutureCheckIn(); break;
     }
   }
@@ -348,7 +387,7 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   reloadAPIs() {
-    this.loadApiSwitch();
+    this.loadApiSwitch('reloadAPIs');
   }
 
   changeStatusType(type) {
@@ -405,7 +444,7 @@ export class ProviderHomeComponent implements OnInit {
     this.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
     .subscribe(
       data => {
-        this.loadApiSwitch();
+        this.loadApiSwitch('changeWaitlistStatusApi');
         let status_msg = '';
         switch (action) {
           case 'REPORT' : status_msg = 'ARRIVED'; break;
@@ -445,18 +484,54 @@ export class ProviderHomeComponent implements OnInit {
 
   setFilterData(type, value) {
     this.filter[type] = value;
-    console.log(this.filter);
+    this.doSearch();
   }
 
   setFilterForApi() {
-    let filter = {
-      'queue-eq' : this.selected_queue.id
-    };
-    return filter;
+    const api_filter = {};
+
+    if (this.time_type === 1) {
+      api_filter['queue-eq'] = this.selected_queue.id;
+    } else if (this.filter.queue !== 'all') {
+      api_filter['queue-eq'] = this.filter.queue;
+    }
+
+    if (this.filter.first_name !== '') {
+      api_filter['firstName-eq'] = this.filter.first_name;
+    }
+
+    if (this.filter.service !== 'all') {
+      api_filter['service-eq'] = this.filter.service;
+    }
+
+    if (this.time_type !== 1 ) {
+      if (this.filter.waitlist_status !== 'all') {
+        api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
+      }
+
+      if (this.filter.check_in_date != null) {
+        api_filter['date-eq'] = this.filter.check_in_date.format('YYYY-MM-DD');
+      }
+
+    }
+
+
+    return api_filter;
   }
 
   doSearch() {
+    this.loadApiSwitch('doSearch');
+  }
 
+  resetFilter() {
+    this.filter = {
+      first_name: '',
+      queue: 'all',
+      service: 'all',
+      waitlist_status: 'all',
+      check_in_date: null,
+      location_id: 'all'
+    };
   }
 
 }

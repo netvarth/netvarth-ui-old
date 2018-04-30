@@ -75,7 +75,7 @@
                   <!-- <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
                       <span><i class="icon-filter-one"></i></span>
                   </div> -->
-                  <mat-accordion *ngIf="check_in_filtered_list.length != 0">
+                  <mat-accordion >
                     <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
                       <mat-expansion-panel-header class="fltr">
                           <span (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
@@ -84,11 +84,11 @@
                       <div class="form-group">
                         <mat-form-field class="example-full-width">
                           <label class="col-form-label">First name</label>
-                          <input matInput [(ngModel)]="filter.first_name">
+                          <input matInput [(ngModel)]="filter.first_name"  (blur)="doSearch()">
                         </mat-form-field>
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Queues</label>
                         <mat-chip-list>
                           <mat-chip
@@ -99,7 +99,7 @@
                           <mat-chip
                           color="{{(filter.queue === queue.id) ? 'primary' : ''}}"
                           selected="{{(filter.queue === queue.id )? true : false}}"
-                          *ngFor="let queue of queues" (click)="setFilterData('queue', queue.id)">
+                          *ngFor="let queue of all_queues" (click)="setFilterData('queue', queue.id)">
                               {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
                           </mat-chip>
 
@@ -123,7 +123,7 @@
                         </mat-chip-list>
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Waitlist Status</label>
                         <mat-chip-list>
                           <mat-chip
@@ -140,16 +140,16 @@
                         </mat-chip-list>
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Check-In Date</label>
                         <mat-form-field>
-                            <input matInput [(ngModel)]="filter.check_in_date" [matDatepicker]="picker" placeholder="Choose a date">
+                            <input matInput [(ngModel)]="filter.check_in_date" [matDatepicker]="picker"
+                            (dateChange)="doSearch()" [min]="filter_date_min" [max]="filter_date_max" placeholder="Choose a date">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>
                       </div>
 
-                      <button  type="button" (doSearch)="doSearch()" mat-button class="cs-btn bt1">Search</button>
                     </mat-expansion-panel>
                   </mat-accordion>
                   <div class="table-outer d-tbl" *ngIf="check_in_filtered_list.length != 0">
