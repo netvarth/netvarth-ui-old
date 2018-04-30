@@ -28,7 +28,7 @@
 
   <div class="sa-src flex-shrink-1 plr0i ml5">
       <mat-form-field class="search_keyword_class">
-        <input name="provider_box" aria-label="provs" placeholder="Search here" aria-label="Search here" [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" (click)="filterKeywords($event.target.value)">
+        <input name="provider_box" aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" (click)="filterKeywords($event.target.value)">
         <mat-autocomplete #autoprov="matAutocomplete">
           <div *ngIf="keywordgroupList">
               <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList">
