@@ -87,7 +87,7 @@ export class SearchDetailComponent implements OnInit {
     .subscribe (
       res => {
         this.domainlist_data = res;
-        console.log('domainlist', this.domainlist_data);
+       // console.log('domainlist', this.domainlist_data);
         if (this.domain) {
           this.getlistofSubdomains();
         }
@@ -108,7 +108,7 @@ export class SearchDetailComponent implements OnInit {
     );
   }
   setSearchfields(obj, src) {
-   console.log('src', src, 'details', obj);
+   // console.log('src', src, 'details', obj);
     if (src === 1) { // case from ngoninit
       this.domain = obj.do;
       this.locname = obj.lon;
@@ -207,7 +207,7 @@ export class SearchDetailComponent implements OnInit {
         }
       }
     }
-    console.log('qrystr', this.querystringrefineretain_arr);
+   // console.log('qrystr', this.querystringrefineretain_arr);
     this.arraycreatedfromquerystring = true;
   }
 
@@ -473,8 +473,8 @@ export class SearchDetailComponent implements OnInit {
         }
     }
     // Creating criteria to be passed via get
-    console.log('refined query', this.refined_querystr);
-    console.log('search query', q_str);
+    // console.log('refined query', this.refined_querystr);
+   // console.log('search query', q_str);
     projectConstants.searchpass_criteria.q = q_str;
     projectConstants.searchpass_criteria.sort = sortval;
     projectConstants.searchpass_criteria.fq = this.refined_querystr;
@@ -501,6 +501,30 @@ export class SearchDetailComponent implements OnInit {
           this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria)
           .subscribe(res => {
             this.search_data = res;
+            // console.log('search', this.search_data.hits.hit);
+            const schedule_arr = [];
+            for (let i = 0 ; i < this.search_data.hits.hit.length ; i++) {
+              if (this.search_data.hits.hit[i].fields.business_hours1) {
+                for (let j = 0; j < this.search_data.hits.hit[i].fields.business_hours1.length; j++) {
+                  const obt_sch = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[j]);
+                 // console.log('business', obt_sch[0].repeatIntervals);
+                    for (let k = 0; k < obt_sch[0].repeatIntervals.length; k++) {
+                      // pushing the schedule details to the respective array to show it in the page
+                      schedule_arr.push({
+                          day: obt_sch[0].repeatIntervals[k],
+                          sTime: obt_sch[0].timeSlots[0].sTime,
+                          eTime: obt_sch[0].timeSlots[0].eTime
+                      });
+                    }
+                    this.search_data.hits.hit[i].fields['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+                }
+              }
+            }
+            // console.log('search after', this.search_data.hits.hit);
+          /*let display_schedule = [];
+          display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+          this.queues[ii]['displayschedule'] = display_schedule;*/
+
             this.search_result_count = this.search_data.hits.found || 0;
 
             if (this.search_data.hits.found === 0) {
@@ -614,7 +638,7 @@ export class SearchDetailComponent implements OnInit {
     }
     this.searchdetailserviceobj.getRefinedSearch(this.domain, subdom)
       .subscribe( data => {
-          console.log(this.domain, this.kw);
+         // console.log(this.domain, this.kw);
           if (this.domain && this.kw) { // case if domain and subdomain are available
             if (data['refinedFilters']) {
               this.searchrefine_arr = data['refinedFilters'];
@@ -634,7 +658,7 @@ export class SearchDetailComponent implements OnInit {
                 this.searchrefine_arr = data['commonFilters'];
               }
           }
-          console.log('refined', this.searchrefine_arr);
+         // console.log('refined', this.searchrefine_arr);
           // console.log('qrystr', this.querystringrefineretain_arr);
 
           // section which populates the respective arrays with criteria based on query string
@@ -672,7 +696,7 @@ export class SearchDetailComponent implements OnInit {
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
-    // console.log('click', fieldname, fieldtype, selval);
+   // console.log('click', fieldname, fieldtype, selval);
     if (this.searchrefineresult_arr.length) {
       const sec_indx = this.check_fieldexistsinArray(fieldname, fieldtype);
       if (sec_indx === -1) {
@@ -685,9 +709,14 @@ export class SearchDetailComponent implements OnInit {
           this.searchrefineresult_arr[sec_indx][fieldname].splice(0, 1);
         }
         const chk_fieldvalexist = this.check_fieldvalexistsinArray(fieldname, selval);
+       // console.log('val exist', chk_fieldvalexist);
         if (chk_fieldvalexist[0]['indx'] !== -1) {
           this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].splice(chk_fieldvalexist[0]['key'], 1);
-          if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']].length === 0) {
+          console.log('count', this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].length);
+          /*if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']].length === 0) {
+            this.searchrefineresult_arr.splice(chk_fieldvalexist[0]['indx'], 1);
+          }*/
+          if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].length === 0) {
             this.searchrefineresult_arr.splice(chk_fieldvalexist[0]['indx'], 1);
           }
         } else {
@@ -701,6 +730,7 @@ export class SearchDetailComponent implements OnInit {
       this.searchrefineresult_arr[curi][fieldname] = new Array();
       this.searchrefineresult_arr[curi][fieldname][0] = new Array(selval, fieldtype);
     }
+    console.log('refine filter', this.searchrefineresult_arr);
     if (bypassbuildquery === false) {
       this.buildQuery(false);
     }
@@ -723,7 +753,7 @@ export class SearchDetailComponent implements OnInit {
   check_fieldvalexistsinArray(fieldname, selval) {
     let ret_arr = [{'indx': -1, 'field': '', 'key': ''}];
     for (let i = 0; i < this.searchrefineresult_arr.length; i++ ) {
-     // console.log('inside', this.searchrefineresult_arr[i], fieldname);
+      // console.log('inside', this.searchrefineresult_arr[i], fieldname);
       for (const key in this.searchrefineresult_arr[i][fieldname]) {
        // console.log('inner', this.searchrefineresult_arr[i][fieldname][key]);
         if (this.searchrefineresult_arr[i][fieldname][key][0] === selval) {
@@ -741,7 +771,7 @@ export class SearchDetailComponent implements OnInit {
       for (const field in this.searchrefineresult_arr[i]) {
         if (field) {
           const subst_det = this.getsearchqueryforField(i, field);
-          console.log(field, 'str=', subst_det['retstr'], 'cnt=', subst_det['retcnt']);
+          // console.log(field, 'str=', subst_det['retstr'], 'cnt=', subst_det['retcnt']);
           if (subst_det['retstr'] !== '') {
             if (subst_det['retcnt'] > 1) {
               this.refined_querystr += ' (or ' + subst_det['retstr'] + ')';
@@ -784,7 +814,7 @@ export class SearchDetailComponent implements OnInit {
     let retstr = '';
     let returlstr = '';
     let curcnt = 0;
-    console.log('valcnt', this.searchrefineresult_arr[indx][fieldname].length);
+   // console.log('valcnt', this.searchrefineresult_arr[indx][fieldname].length);
     for (let i = 0; i < this.searchrefineresult_arr[indx][fieldname].length; i++) {
       if (retstr !== '') {
         retstr += ' ';
@@ -850,7 +880,7 @@ export class SearchDetailComponent implements OnInit {
     this.selected_leftsubdomain = '';
     this.domain = domain;
     this.searchfields.domain = this.domain;
-    console.log('domainchange', this.searchfields.domain);
+    // console.log('domainchange', this.searchfields.domain);
     this.showopnow = 1;
     this.change_url_on_criteria_change();
     this.subdomainlist_data = '';
@@ -866,10 +896,10 @@ export class SearchDetailComponent implements OnInit {
         }
       }
     }
-    console.log('subdomains', this.subdomainlist_data);
+   // console.log('subdomains', this.subdomainlist_data);
   }
   handleleftsubdomainchange(subdom) {
-    console.log('selsubdom', subdom);
+  //  console.log('selsubdom', subdom);
     for (const csubdom of this.subdomainlist_data) {
       if (csubdom.subDomain === subdom) {
         this.kwautoname =  csubdom.displayName;
