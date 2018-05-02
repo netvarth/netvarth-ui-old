@@ -9,6 +9,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import { ConsumerRoutingModule } from './consumer-routing.module';
 import { SearchModule } from '../shared/modules/search/search.module';
 import { HeaderModule } from '../shared/modules/header/header.module';
+import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 
 import {ConsumerServices } from './services/consumer-services.service';
 import { ConsumerDataStorageService } from './services/consumer-datastorage.service';
@@ -23,6 +24,7 @@ import { NotificationListBoxComponent} from './shared/component/notification-lis
 import {MembersComponent } from './components/members/members.component';
 import { AddMemberComponent } from './components/add-member/add-member.component';
 
+
 import { projectConstants } from '../shared/constants/project-constants';
 
 @NgModule({
@@ -31,7 +33,8 @@ import { projectConstants } from '../shared/constants/project-constants';
         CommonModule,
         SearchModule,
         SharedModule,
-        HeaderModule
+        HeaderModule,
+        CheckInModule
     ],
     declarations: [
       ConsumerComponent,
