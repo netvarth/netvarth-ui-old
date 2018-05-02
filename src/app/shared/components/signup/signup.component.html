@@ -85,9 +85,10 @@ onSubmit()" (keyup)="resetApiErrors()">
 
 
     <mat-radio-group formControlName="package_id">
-      <ng-container *ngFor="let package of packages">
-        <mat-radio-button value="{{package.pkgId}}" (click)="clickedPackage(package.pkgId)" [class.activepackcls]="isSelectedClass(package.pkgId)" > {{package.displayName}}</mat-radio-button>
-      </ng-container>
+        <mat-radio-button [value]="package.pkgId" *ngFor="let package of packages"
+        (click)="clickedPackage(package.pkgId)" [class.activepackcls]="isSelectedClass(package.pkgId)" >
+         {{package.displayName}}
+        </mat-radio-button>
     </mat-radio-group>
 
   </div>

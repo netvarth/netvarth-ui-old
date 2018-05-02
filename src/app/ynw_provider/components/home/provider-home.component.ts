@@ -202,7 +202,10 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getFutureCheckinCount() {
-    this.provider_services.getWaitlistFutureCount()
+    const filter = {
+      'location-eq' : this.selected_location.id
+    };
+    this.provider_services.getWaitlistFutureCount(filter)
     .subscribe(
       data => {
         this.future_waitlist_count = data || 0 ;
@@ -213,7 +216,10 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getHistoryCheckinCount() {
-    this.provider_services.getwaitlistHistoryCount()
+    const filter = {
+      'location-eq' : this.selected_location.id
+    };
+    this.provider_services.getwaitlistHistoryCount(filter)
     .subscribe(
       data => {
         this.histroy_waitlist_count = data || 0 ;
@@ -224,7 +230,10 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   getTodayCheckinCount() {
-    this.provider_services.getwaitlistTodayCount()
+    const filter = {
+      'location-eq' : this.selected_location.id
+    };
+    this.provider_services.getwaitlistTodayCount(filter)
     .subscribe(
       data => {
         this.today_waitlist_count = data || 0 ;
@@ -263,7 +272,7 @@ export class ProviderHomeComponent implements OnInit {
     .subscribe(
       data => {
         this.check_in_list = this.check_in_filtered_list = data;
-        this.future_waitlist_count = this.check_in_list.length || 0;
+        // this.future_waitlist_count = this.check_in_list.length || 0;
       },
       error => {
         this.load_waitlist = 1;
@@ -514,6 +523,8 @@ export class ProviderHomeComponent implements OnInit {
       }
 
     }
+
+    api_filter['location-eq'] = this.selected_location.id;
 
 
     return api_filter;

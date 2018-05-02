@@ -179,21 +179,24 @@
                                   </td>
                                   <td data-title="Service" class="service">{{checkin.service.name}}</td>
                                   <td data-title="Actions" class="actions">
-                                    <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
-                                    *ngIf="checkin.waitlistStatus == 'checkedIn' &&  time_type!=2">
-                                      <i class="icon-arrived"></i> Arrived
-                                    </span>
 
-                                    <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
-                                    *ngIf="time_type!=2 && (checkin.waitlistStatus == 'checkedIn'
-                                    || checkin.waitlistStatus == 'arrived')">
-                                      <i class="icon-play"></i>Start
-                                    </span>
+                                    <ng-container *ngIf="time_type == 1">
+                                        <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
+                                        *ngIf="checkin.waitlistStatus == 'checkedIn'">
+                                          <i class="icon-arrived"></i> Arrived
+                                        </span>
 
-                                    <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
-                                    *ngIf="checkin.waitlistStatus == 'started'">
-                                      <i class="icon-play"></i>Done
-                                    </span>
+                                        <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
+                                        *ngIf="(checkin.waitlistStatus == 'checkedIn'
+                                        || checkin.waitlistStatus == 'arrived')">
+                                          <i class="icon-play"></i>Start
+                                        </span>
+
+                                        <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
+                                        *ngIf="checkin.waitlistStatus == 'started'">
+                                          <i class="icon-play"></i>Done
+                                        </span>
+                                    </ng-container>
 
                                     </td>
                                   <td data-title="Payment Status" class="payment">

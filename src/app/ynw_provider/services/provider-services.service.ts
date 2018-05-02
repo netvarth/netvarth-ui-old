@@ -419,17 +419,17 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
 
-  getWaitlistFutureCount() {
+  getWaitlistFutureCount(filter = {}) {
     const url = 'provider/waitlist/future/count/';
-    return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url, null, filter);
   }
 
-  getwaitlistTodayCount() {
+  getwaitlistTodayCount(filter = {}) {
     const url = 'provider/waitlist/today/count/';
-    return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url, null , filter);
   }
 
-  getwaitlistHistoryCount() {
+  getwaitlistHistoryCount(filter = {}) {
     const url = 'provider/waitlist/history/count/';
     return this.servicemeta.httpGet(url);
   }

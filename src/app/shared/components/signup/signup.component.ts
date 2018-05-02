@@ -63,6 +63,10 @@ export class SignUpComponent implements OnInit {
         .subscribe(
           data => {
             this.packages = data;
+
+            if (this.packages[0] && this.signupForm.get('package_id')) {
+              this.signupForm.get('package_id').setValue(this.packages[0].pkgId);
+            }
           },
           error => {
 
@@ -336,11 +340,11 @@ export class SignUpComponent implements OnInit {
 
     }
     clickedPackage(e) {
-      console.log('here', e);
+      // console.log('here', e);
       this.selectedpackage = e;
     }
     isSelectedClass(id) {
-      if (id === this.selectedpackage) {
+      if (id === this.signupForm.get('package_id').value) {
         return true;
       } else {
         return false;
