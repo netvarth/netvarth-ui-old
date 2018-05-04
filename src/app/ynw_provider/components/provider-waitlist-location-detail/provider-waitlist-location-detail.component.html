@@ -1,10 +1,10 @@
 
 
     <section>
-        <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+        <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
         <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
     </section>
-    
+
     <section>
         <div class="content loc-list">
             <div class="container" *ngIf="location_data">
@@ -25,9 +25,10 @@
                                         <div class="cop-r">
                                                 <iframe width="100%" height="100%" frameborder="0" style="border:0"
                                                 [src]="mapurl" allowfullscreen *ngIf="mapurl"></iframe>
-                                            <div class="gps">
-                                                Longitude: <span>{{location_data.longitude}}</span> 
-                                                Latitude: <span>{{location_data.lattitude}}</span> 
+                                            <div class="gps" *ngIf="location_data.longitude != '' &&
+                                            location_data.lattitude != ''">
+                                                Longitude: <span>{{location_data.longitude}}</span>
+                                                Latitude: <span>{{location_data.lattitude}}</span>
                                             </div>
                                         </div>
                                         <div class="btm-ctrl" *ngIf="location_data.baseLocation==false">
@@ -41,13 +42,13 @@
                                                 <span class="cs-btn bt8" (click)="changeProviderBaseLocationStatus(location_data)">
                                                     Set as base location
                                                 </span>
-                                            </div>    
+                                            </div>
                                         </div>
-                                    </div>                                
+                                    </div>
                                 </div>
-                                <div class="lbr col-sm-12 col-md-4 col-lg-4">                                
+                                <div class="lbr col-sm-12 col-md-4 col-lg-4">
                                     <div class="cr1">
-                                    <span class="editbt" (click)="editLocation('badge')" *ngIf="objectKeys(location_data.locationVirtualFields).length > 0 || 
+                                    <span class="editbt" (click)="editLocation('badge')" *ngIf="objectKeys(location_data.locationVirtualFields).length > 0 ||
                                     location_data.open24hours ||
                                     location_data.parkingType"></span>
                                         <h5>Location Amenities</h5>
@@ -59,13 +60,13 @@
                                                         <li [matTooltip]="badge_map_arr[locvirtual]" [class]="badgeIcons[locvirtual]['class']"></li>
                                                     </ng-container>
                                                 </ng-container>
-                                               
+
                                             </ul>
-                                        <ng-container *ngIf=" objectKeys(location_data.locationVirtualFields).length == 0 && 
+                                        <ng-container *ngIf=" objectKeys(location_data.locationVirtualFields).length == 0 &&
                                         !location_data.open24hours &&
                                         !location_data.parkingType
                                         ">
-                                            <div class="no-dta" 
+                                            <div class="no-dta"
                                             *ngIf="!image_list_popup || image_list_popup.length == 0">
 
                                                 <p>You haven’t added any Location Aminities. </p>
@@ -75,9 +76,9 @@
                                     </div>
                                 </div>
                         </div>
-                    </div>    
+                    </div>
                 </div>
-                
+
 
                 <mat-accordion  class="row cst-acc">
                     <mat-expansion-panel class="card p0"
@@ -89,7 +90,7 @@
                             <h5>Queues <span class="count">{{queues.length}}</span></h5>
                         </mat-panel-title>
                       </mat-expansion-panel-header>
-                  
+
                       <div class="table-outer q-tbl">
                         <table class="table">
                             <thead>
@@ -97,12 +98,12 @@
                                     <th>Queue</th>
                                     <th>Schedule</th>
                                     <th>Status</th>
-                                    <th><span class="addbt" (click)="addEditProviderQueue('add')"></span></th>                            
+                                    <th><span class="addbt" (click)="addEditProviderQueue('add')"></span></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let queue of queues">
-                                    <td data-title="Queue" class="pointer-cursor" 
+                                    <td data-title="Queue" class="pointer-cursor"
                                     (click)="goQueueDetail(queue)" [class.disabled]="queue.queueState=='DISABLED'">
                                     {{queue.name}}</td>
                                     <td data-title="Shedule">
@@ -130,7 +131,7 @@
                                                 <span>Edit</span>
                                                 </button> -->
                                                 <button type="button" (click)="changeProviderQueueStatus(queue)" mat-menu-item>
-                                                    <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i> 
+                                                    <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
                                                     <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
                                                     <span > {{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</span>
                                                 </button>
@@ -149,9 +150,9 @@
             </div>
             <app-field-error-display [displayError]="true" *ngIf="api_error"
             errorMsg="{{api_error}}"></app-field-error-display>
-            
+
             <app-form-success-display [displayMsg]="true" *ngIf="api_success"
             successMsg="{{api_success}}"></app-form-success-display>
 
-        </div>    
+        </div>
     </section>
