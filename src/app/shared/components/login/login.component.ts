@@ -96,7 +96,9 @@ export class LoginComponent implements OnInit {
     // });
     this.step = 2;
   }
-
+  cancelForgotPassword() {
+    this.step = 1;
+  }
   doSignup() {
     this.dialogRef.close(); // closing the signin window
     const dialogRef = this.dialog.open(SignUpComponent, {

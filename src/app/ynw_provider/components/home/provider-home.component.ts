@@ -402,28 +402,28 @@ export class ProviderHomeComponent implements OnInit {
   changeStatusType(type) {
 
 
-  this.status_type = type;
-  let status: any = this.status_type ;
+    this.status_type = type;
+    let status: any = this.status_type ;
 
-  switch (type) {
-    case 'all' : status = ['checkedIn', 'arrived'];
-  }
+    switch (type) {
+      case 'all' : status = ['checkedIn', 'arrived'];
+    }
 
-  this.check_in_filtered_list = this.check_in_list.filter(
-      check_in => {
-        if (typeof(status) === 'string' &&
-        check_in.waitlistStatus === status) {
-          return check_in;
-        } else if (typeof(status) === 'object') {
-
-          const index = status.indexOf(check_in.waitlistStatus);
-          if (index !== -1) {
+    this.check_in_filtered_list = this.check_in_list.filter(
+        check_in => {
+          if (typeof(status) === 'string' &&
+          check_in.waitlistStatus === status) {
             return check_in;
+          } else if (typeof(status) === 'object') {
+
+            const index = status.indexOf(check_in.waitlistStatus);
+            if (index !== -1) {
+              return check_in;
+            }
+
           }
 
-        }
-
-      });
+        });
   }
 
   changeWaitlistStatus(waitlist, action) {

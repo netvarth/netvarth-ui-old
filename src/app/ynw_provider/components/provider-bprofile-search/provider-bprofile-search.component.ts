@@ -198,8 +198,9 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
   getBusinessProfile() {
     this.bProfile = [];
-    this.provider_services.getBussinessProfile()
-    .subscribe(
+
+    this.getBussinessProfileApi()
+    .then(
       data => {
         this.bProfile = data;
         this.provider_datastorage.set('bProfile', data);
@@ -309,34 +310,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
         // check whether normal privacy settings can be displayed or not
         this.normal_privacy_settings_show = 2;
-        if (this.bProfile.phoneNumbers || this.bProfile.emails) {
-          this.normal_privacy_settings_show = 3;
-          if (this.bProfile.phoneNumbers) {
-            this.phonearr = [];
-            for (let i = 0; i < this.bProfile.phoneNumbers.length; i++) {
-              this.phonearr.push (
-                {
-                  'label': this.bProfile.phoneNumbers[i].label,
-                  'number': this.bProfile.phoneNumbers[i].instance,
-                  'permission': this.bProfile.phoneNumbers[i].permission
-                }
-              );
-            }
-          }
-
-          if (this.bProfile.emails) {
-            this.emailarr = [];
-            for (let i = 0; i < this.bProfile.emails.length; i++) {
-              this.emailarr.push (
-                {
-                  'label': this.bProfile.emails[i].label,
-                  'emailid': this.bProfile.emails[i].instance,
-                  'permission': this.bProfile.emails[i].permission
-                }
-              );
-            }
-          }
-        }
+        this.setPrivacyDetails();
 
         // check whether social media details exists
         this.normal_socialmedia_show = 2;
@@ -362,6 +336,54 @@ export class ProviderBprofileSearchComponent implements OnInit {
       }
     );
 
+  }
+
+  getBussinessProfileApi() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.provider_services.getBussinessProfile()
+      .subscribe(
+        data => {
+          resolve(data);
+        },
+        error => {
+          reject();
+        }
+      );
+
+    });
+  }
+
+  setPrivacyDetails() {
+    if (this.bProfile.phoneNumbers || this.bProfile.emails) {
+      this.normal_privacy_settings_show = 3;
+      if (this.bProfile.phoneNumbers) {
+        this.phonearr = [];
+        for (let i = 0; i < this.bProfile.phoneNumbers.length; i++) {
+          this.phonearr.push (
+            {
+              'label': this.bProfile.phoneNumbers[i].label,
+              'number': this.bProfile.phoneNumbers[i].instance,
+              'permission': this.bProfile.phoneNumbers[i].permission
+            }
+          );
+        }
+      }
+
+      if (this.bProfile.emails) {
+        this.emailarr = [];
+        for (let i = 0; i < this.bProfile.emails.length; i++) {
+          this.emailarr.push (
+            {
+              'label': this.bProfile.emails[i].label,
+              'emailid': this.bProfile.emails[i].instance,
+              'permission': this.bProfile.emails[i].permission
+            }
+          );
+        }
+      }
+    }
   }
 
   getSocialdet(key, field) {
@@ -591,7 +613,12 @@ export class ProviderBprofileSearchComponent implements OnInit {
           if (loc['baseLocation']) {
             this.base_loc = loc;
             // console.log(this.base_loc);
-            this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.base_loc.lattitude + ',' + this.base_loc.longitude + '&key=AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U');
+            this.mapurl = null;
+            if (this.base_loc.lattitude !== '' &&
+            this.base_loc.longitude !== '') {
+              this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.base_loc.lattitude + ',' + this.base_loc.longitude + '&key=AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U');
+            }
+
             // console.log(this. mapurl);
           }
         }
@@ -616,9 +643,11 @@ export class ProviderBprofileSearchComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
+        if (result.message === 'reloadlist') {
+          this.bProfile = result.data;
+          this.setPrivacyDetails();
       }
+      console.log(result);
     }
     });
   }
@@ -968,7 +997,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
       data => {
-        this.getBusinessProfile();
+        this.bProfile = data;
+        this.setPrivacyDetails();
       },
       error => {
         // this.api_error = error.error;
@@ -1142,7 +1172,20 @@ export class ProviderBprofileSearchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
-          this.getBusinessProfile();
+          this.getBussinessProfileApi()
+          .then(
+            data => {
+              this.bProfile = data;
+              if (type === 'domain_questions') {
+                this.domain_fields = this.setFieldValue(this.domain_fields, null);
+              } else {
+                this.subdomain_fields = this.setFieldValue(this.subdomain_fields, this.bProfile['serviceSubSector']['subDomain']);
+              }
+            },
+            error => {
+
+            }
+          );
         }
       }
     });
@@ -1261,4 +1304,5 @@ export class ProviderBprofileSearchComponent implements OnInit {
   addAdwords() {
     alert('Add Adwords clicked');
   }
+
 }

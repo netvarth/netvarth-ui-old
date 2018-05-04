@@ -28,6 +28,7 @@ export class ForgotPasswordComponent  {
   is_provider = 'true';
 
   @Output() onChangePassword: EventEmitter<any> = new EventEmitter();
+  @Output() onCancelForgotPassword: EventEmitter<any> = new EventEmitter();
 
   constructor(
     public dialogRef: MatDialogRef<ForgotPasswordComponent>,
@@ -61,6 +62,9 @@ export class ForgotPasswordComponent  {
       this.dialogRef.close();
     }
 
+    cancelForgotPassword() {
+      this.onCancelForgotPassword.emit();
+    }
 
     onPhoneSubmit(submit_data) {
 

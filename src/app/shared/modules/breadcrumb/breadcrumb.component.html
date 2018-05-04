@@ -6,17 +6,17 @@
                 <span *ngIf="!isLast"
                 (click)="goNavigate(breadcrumb)" [class.pointer-cursor]="breadcrumb.url">
                 {{breadcrumb.title }}
-                </span> 
+                </span>
                 <ng-container
                 *ngIf="isLast">
-                {{breadcrumb.title }} 
+                {{breadcrumb.title }}
             </ng-container>
             </ng-container>
         </ng-container>
         <ng-container *ngIf="moreOptions.show_learnmore">
-        <a href="javascript:void()" (click)="learnmore_clicked()" class="ml-auto cs-btn bt6"><i data-icon="B"></i> Learn More</a>
+        <span (click)="learnmore_clicked()" class="ml-auto cs-btn bt6"><i data-icon="B"></i> Learn More</span>
         </ng-container>
         </div>
-       
+
     </div>
 </div>
