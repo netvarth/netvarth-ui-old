@@ -134,7 +134,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
        this.domainlist_data = this.domainlistpassed;
        this.loadkeywordAPIreponsetoArray();
     } else {
-      // console.log('reached here');
+       console.log('reached here');
         this.getDomainList();
     }
     this.getAllsearchlabels();
