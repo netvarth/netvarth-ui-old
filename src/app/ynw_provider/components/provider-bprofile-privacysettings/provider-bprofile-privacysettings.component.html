@@ -6,11 +6,11 @@
             <input type="text" class="form-control" id="phone1" placeholder="Phone#" [(ngModel)]="phonenumber"  [ngModelOptions]="{standalone: true}">
         </div>
         <div class="form-group">
-           <label class="col-form-label" for="label1">Phone Label * <a [matTooltipClass] = "tooltipcls" [matTooltip]="tooltiphone" href="javascript:void()" data-icon="F"></a></label>
+           <label class="col-form-label" for="label1">Phone Label * <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltiphone"  data-icon="F"></span></label>
            <input type="text" class="form-control" placeholder="Label" [(ngModel)]="phonelabel"  [ngModelOptions]="{standalone: true}">
         </div>
         <div class="form-group">
-                <div> 
+                <div>
                 <label class="col-form-label">This phone number is visible to whom?</label>
                 <mat-radio-group [(ngModel)]="phonepermission" [ngModelOptions]="{standalone: true}">
                         <mat-radio-button value="all" >{{privacypermissiontxt['all']}}</mat-radio-button>
@@ -22,7 +22,7 @@
 
 
         <!-- <div *ngFor="let phone of phone_arr; let i = index">
-         <div><strong>Phone # {{(i+1)}}</strong></div> <div *ngIf="phone_arr.length>1"><button (click)="removePhone(phone, i)" class="btn btn-danger">Remove</button></div>   
+         <div><strong>Phone # {{(i+1)}}</strong></div> <div *ngIf="phone_arr.length>1"><button (click)="removePhone(phone, i)" class="btn btn-danger">Remove</button></div>
         <div class="form-group">
                 <label class="col-form-label" for="label1">Phone Label *</label>
                 <input type="text" class="form-control" placeholder="Label" [(ngModel)]="phone.label"  [ngModelOptions]="{standalone: true}">
@@ -32,7 +32,7 @@
             <input type="text" class="form-control" id="phone1" placeholder="Phone#" [(ngModel)]="phone.number"  [ngModelOptions]="{standalone: true}">
         </div>
         <div class="form-group">
-                <div> 
+                <div>
                 <label class="col-form-label">This phone number is visible to</label>
                 <mat-radio-group [(ngModel)]="phone.permission" [ngModelOptions]="{standalone: true}">
                 <mat-radio-button value="all" >Public</mat-radio-button>
@@ -41,7 +41,7 @@
                 </mat-radio-group>
                 </div>
         </div>
-        
+
         </div>
         <button type="button" (click)="addPhone()" class="btn btn-primary">Add Phone#</button> -->
     </div>
@@ -50,13 +50,13 @@
         <div class="form-group">
                 <label class="col-form-label" for="phone1">Email Id *</label>
                 <input type="text" class="form-control" id="phone1" placeholder="Email Id" [(ngModel)]="emailemailid"  [ngModelOptions]="{standalone: true}">
-        </div>    
+        </div>
         <div class="form-group">
-                <label class="col-form-label" for="label1">Email Label * <a [matTooltipClass] = "tooltipcls" [matTooltip]="tooltemail" href="javascript:void()" data-icon="F"></a></label>
+                <label class="col-form-label" for="label1">Email Label * <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltemail" data-icon="F"></span></label>
                 <input type="text" class="form-control" placeholder="Label" [(ngModel)]="emaillabel"  [ngModelOptions]="{standalone: true}">
         </div>
         <div class="form-group">
-                <div> 
+                <div>
                 <label class="col-form-label">This email id is visible to</label>
                 <mat-radio-group [(ngModel)]="emailpermission" [ngModelOptions]="{standalone: true}">
                 <mat-radio-button value="all" >{{privacypermissiontxt['all']}}</mat-radio-button>
@@ -67,7 +67,7 @@
         </div>
 
             <!-- <div *ngFor="let email of email_arr; let i = index">
-            <div><strong>Email # {{(i+1)}}</strong></div> <div *ngIf="email_arr.length>1"><button (click)="removeEmail(email, i)" class="btn btn-danger">Remove</button></div>   
+            <div><strong>Email # {{(i+1)}}</strong></div> <div *ngIf="email_arr.length>1"><button (click)="removeEmail(email, i)" class="btn btn-danger">Remove</button></div>
             <div class="form-group">
                     <label class="col-form-label" for="label1">Email Label *</label>
                     <input type="text" class="form-control" placeholder="Label" [(ngModel)]="email.label"  [ngModelOptions]="{standalone: true}">
@@ -77,7 +77,7 @@
                 <input type="text" class="form-control" id="phone1" placeholder="Email Id" [(ngModel)]="email.emailid"  [ngModelOptions]="{standalone: true}">
             </div>
             <div class="form-group">
-                    <div> 
+                    <div>
                     <label class="col-form-label">This email id is visible to</label>
                     <mat-radio-group [(ngModel)]="email.permission" [ngModelOptions]="{standalone: true}">
                     <mat-radio-button value="all" >Public</mat-radio-button>
@@ -86,7 +86,7 @@
                     </mat-radio-group>
                     </div>
             </div>
-            
+
             </div>
             <button type="button" (click)="addEmail()" class="btn btn-primary">Add Email</button> -->
     </div>
@@ -94,10 +94,10 @@
 <mat-dialog-actions>
     <button (click)="savePrivacySettings()" type="button" mat-button class="cs-btn bt1">Save</button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-</mat-dialog-actions> 
+</mat-dialog-actions>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error"
    errorMsg="{{api_error}}"></app-field-error-display>
-   
+
 <app-form-success-display [displayMsg]="true" *ngIf="api_success"
 successMsg="{{api_success}}"></app-form-success-display>

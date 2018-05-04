@@ -256,7 +256,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
       data => {
         this.api_success = Messages.BPROFILE_PRIVACY_SAVED;
         setTimeout(() => {
-          this.dialogRef.close('reloadlist');
+          this.dialogRef.close({data: data, message: 'reloadlist'});
           }, projectConstants.TIMEOUT_DELAY);
       },
       error => {

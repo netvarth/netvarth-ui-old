@@ -84,6 +84,8 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
   }
 
   deleteImage(file) {
+
+    this.error_list = [];
     this.provider_services.deleteProviderGalleryImage(file.keyName)
     .subscribe(
       data => {
@@ -92,7 +94,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         // this.getGalleryImages();
       },
       error => {
-
+        this.error_list.push(error.error);
       }
     );
 
@@ -165,6 +167,8 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
 
   uploadApi(submit_data) {
 
+    this.error_list = [];
+
     this.provider_services.uploadGalleryImages(submit_data)
     .subscribe(
       data => {
@@ -176,7 +180,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         this.dialogRef.close('reloadlist');
       },
       error => {
-
+        this.error_list.push(error.error);
       }
     );
 

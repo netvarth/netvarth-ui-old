@@ -22,7 +22,7 @@
                     </div>
                     <div class="card" *ngIf="normal_profile_active==2">
                         <div class="pubs" >
-                            <h2>Public Search <a [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" href="javascript:void()" data-icon="F"></a></h2>
+                            <h2>Public Search <span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span></h2>
                             <div class="wbox" >
                                 <div class="bx-ico"><i data-icon="m"></i></div>
                                 <div class="bx-copy">
@@ -43,7 +43,7 @@
 
                             <div class="ctrl">
                                 <div class="ct-l">
-                                        <h2>Public Search <a matTooltip="{{searchquestiontooltip}}" href="javascript:void()" data-icon="F"></a></h2>
+                                        <h2>Public Search <span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span></h2>
 
                                         <span class="status">Current Status -
                                             <span class="on" *ngIf="normal_search_active">On</span>
@@ -74,7 +74,7 @@
                                 <div class="ad-l">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
                                 <div class="ad-r ml-auto">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre" *ngIf="adwords_remaining>0"><a routerLink="/provider/settings/license">+{{adwords_remaining}} more</a></span>
-                                    <a href="javascript:void(0)" (click)="addAdwords()" class="cs-btn bt8">Add Adwords</a>
+                                    <span  (click)="addAdwords()" class="cs-btn bt8">Add Adwords</span>
                                 </div>
 
                             </div>
@@ -143,7 +143,9 @@
                                             <div class="cop-l" *ngIf="loc_list.length>0">
                                                 <h4>{{base_loc.place}}</h4>
                                                 <span>{{base_loc.address}}</span>
-                                                <span *ngIf="base_loc.pinCode!=''">Pin : {{base_loc.pinCode}}</span>
+                                                <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
+                                                  Pin : {{base_loc.pinCode}}
+                                                </span>
 
                                                 <ul class="info-lst">
                                                     <li>You can add more locations in the <a routerLink="/provider/settings/waitlist-manager/locations">locations</a> page.</li>
@@ -154,8 +156,9 @@
     src="https://www.google.com/maps/embed/v1/view?zoom=11&center=10.5276,76.2144&key=AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U" allowfullscreen></iframe> -->
     <iframe width="100%" height="100%" frameborder="0" style="border:0"
     [src]="mapurl" allowfullscreen *ngIf="mapurl"></iframe>
-                                                <div class="gps">
-                                                    Longitude: <span>{{base_loc.longitude}}</span> Latitude: <span>{{base_loc.lattitude}}</span>
+                                                <div class="gps" *ngIf="base_loc.longitude != '' && base_loc.lattitude != ''">
+                                                    Longitude: <span>{{base_loc.longitude}}</span>
+                                                    Latitude: <span>{{base_loc.lattitude}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -204,7 +207,7 @@
 
                                             <div class="schedule_msgdiv" *ngIf="display_schedule.length > 0">
                                             <ul class="info-lst">
-                                                <li>You can change the working hours by editing the queues of this location. <a href="javascript:void(0)" (click)="editLocation()">Click here</a> to go to view the queues.</li>
+                                                <li>You can change the working hours by editing the queues of this location. <span (click)="editLocation()">Click here</span> to go to view the queues.</li>
                                             </ul>
                                             <!-- <span  class="cs-btn bt3" (click)="change_schedulepopup()">Change</span> -->
                                             </div>
@@ -322,7 +325,7 @@
                             </div>
                             <div class="no-dta" *ngIf="normal_specilization_show==2">
                             <p>You haven’t added any Specializations.</p>
-                            <a href="javascript:void(0)" (click)="handleSpecialization()" class="cs-btn bt3">Add It Now</a>
+                            <span (click)="handleSpecialization()" class="cs-btn bt3">Add It Now</span>
                             </div>
                             <div class="special-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
                                 <span class="editbt" (click)="handleSpecialization()"></span>
@@ -347,7 +350,7 @@
                                 </div>
                                 <div class="no-dta" *ngIf="normal_language_show==2">
                                 <p>You haven’t added any Languages Known.</p>
-                                <a href="javascript:void(0)" (click)="handleSpokenLanguages()" class="cs-btn bt3">Add It Now</a>
+                                <span (click)="handleSpokenLanguages()" class="cs-btn bt3">Add It Now</span>
                                 </div>
 
                                 <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">

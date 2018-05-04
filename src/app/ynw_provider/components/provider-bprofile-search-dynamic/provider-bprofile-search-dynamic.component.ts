@@ -49,7 +49,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
       this.title = this.subdomain_questions[0]['label'] || '';
       this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
     }
-
+    console.log(this.subdomain_questions , this.domain_questions);
     if (this.domain_questions.length === 0 &&
         this.subdomain_questions === 0) {
       this.dialogRef.close('error');
