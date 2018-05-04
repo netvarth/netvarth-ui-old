@@ -128,6 +128,7 @@ header {
             .lgmem {
                 padding-left: 40px;
                 font-size: .875rem;
+                font-weight: 500;
                 display: flex;
                 flex-flow: column;
                 align-items: flex-end;
@@ -160,7 +161,7 @@ header {
                     flex-flow: column;
                 }
                 
-                a {
+                a, span {
                     color: $linkblack;
                     font-size: .875rem;
                     display: block;
@@ -182,9 +183,13 @@ header {
                         color: $linkblue;
                         margin-right: 27px;
                         margin-top: 5px;
+                        cursor: pointer;
                         
                         span {
-                            @include font-bold;
+                            font-weight: 600;
+                            color: $linkblue;
+                            font-size: .75rem;
+                            display: inline-block;
                         }
                         
                         i {
@@ -770,8 +775,19 @@ footer {
                         }
                         
                         .ad-r {
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: flex-end;
+                            
                             @include respond-to(ynw-767){
                                 margin: 10px 0 0 0 !important;
+                                justify-content: flex-start;
+                                
+                                span {
+                                    &:first-child {
+                                        margin-left: 0;
+                                    }
+                                }
                             }
                             
                             span {
@@ -779,9 +795,27 @@ footer {
                                 @include border-radius(20px);
                                 border: 1px solid $cc-mediumgray;
                                 font-size: .75rem;
+                                margin-left: 10px;
+                                margin-bottom: 10px;
+                                
+                                &.mre {
+                                    border-color: $linkblue;
+                                    
+                                    &:hover {
+                                        background: $linkblue;
+                                        
+                                        a {
+                                            color: $white;
+                                        }
+                                    }
+                                }
                             }
                             .bt8 {
                                 margin-left: 10px;
+                                margin-bottom: 0;
+                                padding: 0;
+                                border: none;
+                                align-self: center;
                             }
                         }
                     }

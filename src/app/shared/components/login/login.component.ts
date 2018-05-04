@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   api_error = null;
   is_provider = 'true';
   step = 1;
-
+  moreParams = [];
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,9 +34,11 @@ export class LoginComponent implements OnInit {
         }
 
         this.is_provider = data.is_provider || 'true';
+       // console.log('login data', data);
      }
 
   ngOnInit() {
+    this.moreParams = this.data.moreparams;
     this.createForm();
   }
 
@@ -72,9 +74,10 @@ export class LoginComponent implements OnInit {
         error => { ob.api_error = error.error; }
       );
     } else if (this.data.type === 'consumer') {
-      this.shared_functions.consumerLogin(post_data)
+
+      this.shared_functions.consumerLogin(post_data, this.moreParams)
       .then(
-        success =>  { this.dialogRef.close(); },
+        success =>  { this.dialogRef.close('success'); },
         error => { ob.api_error = error.error; }
       );
     }

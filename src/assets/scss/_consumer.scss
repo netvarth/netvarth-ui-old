@@ -1,7 +1,7 @@
 header {
     &.consumer {
         padding-top: 15px;
-
+        
         .tp-1 {
             width: 100%;
             display: flex;
@@ -51,6 +51,35 @@ header {
 
                     .isprovidertop {
                         margin-top: 5px;
+                    }
+                    
+                    .topsignouter {
+                        .lgmem {
+                            font-size: .875rem;
+                            font-weight: 500;
+                            
+                            .lgin {
+                                button {
+                                    width: 24px;
+                                    height: 24px;
+
+                                    .icon-angle-down {
+                                        font-size: .5rem;
+                                        display: flex;
+                                        width: 24px;
+                                        height: 24px;
+                                        align-content: center;
+                                        justify-content: center;
+
+                                        &:before {
+                                            display: flex;
+                                            align-self: center;
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -466,14 +495,16 @@ header {
     background: $cc-body;
     
     .status-bar {
-        width: 100%;
-        display: flex;
         margin-top: 30px;
+        position: absolute;
+        z-index: 11;
+        height: 20px;
         
         .ct1 {
-            width: 25%;
+            width: 100%;
             position: relative;
             margin-right: 30px;
+            display: flex;
             
             @include respond-to(ynw-767){
                 width: 30%;
@@ -487,75 +518,32 @@ header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
-            .ct-l {
-                position: absolute;
-                width: 30px;
-                height: 20px;
                 
-                @include respond-to(ynw-575){
-                    position: relative;
-                }
-                
-                .mnu {
-                    display: flex;
-                    flex-direction: column;
-                    cursor: pointer;
-                    
-                    span {
-                        background: $cc-gray;
-                        height: 3px;
-                        width: 100%;
-                        @include border-radius(30px);
-                        margin-bottom: 5px;
-                        
-                        &:last-child {
-                            margin-bottom: 0;
-                        }
-                    }
-                }
-            }
-            .ct-r {
-                margin-left: 50px;
-                
-                @include respond-to(ynw-575){
-                    margin-left: 0px;
-                    margin-top: 10px;
-                }
-                
-                .ttle {
-                    font-size: 1rem;
-                    font-weight: 600;
-                    
-                    @include respond-to(ynw-767){
-                        font-size: .875rem;
-                    }
-                }
-            }
-        }
-        
-        .ct2 {
-            display: flex;
-            font-size: .875rem;
-            flex-grow: 1;
-            
-            @include respond-to(ynw-767){
+            .mnu {
+                display: flex;
                 flex-direction: column;
-            }
-            
-            .ct-l {
-                @include respond-to(ynw-767){
-                    order: 2;
-                    margin-top: 10px;
+                cursor: pointer;
+                width: 30px;
+
+                span {
+                    background: $cc-gray;
+                    height: 3px;
+                    width: 100%;
+                    @include border-radius(30px);
+                    margin-bottom: 5px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
                 }
-                .rslts {
-                    @include respond-to(ynw-767){
-                        text-align: right;
-                    }
-                    span {
-                        color: $linkblue;
-                        font-weight: 500;
-                    }
+            }
+            .ttle {
+                font-size: 1rem;
+                font-weight: 600;
+                margin-left: 20px;
+
+                @include respond-to(ynw-767){
+                    font-size: .875rem;
                 }
             }
         }
@@ -564,7 +552,7 @@ header {
     .c-outer {
         display: flex;
         width: 100%;
-        margin-top: 10px;
+        margin-top: 30px;
         position: relative;
         
         .sidebar-overlay {
@@ -585,6 +573,7 @@ header {
             margin-right: 30px;
             font-size: .875rem;
             margin-bottom: 30px;
+            margin-top: 40px;
             
             @include respond-to(ynw-767){
                 position: absolute;
@@ -600,6 +589,89 @@ header {
                 .bx-block {
                     border-bottom: 2px solid $cc-body;
                     
+                    .mat-accordion {
+                        .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
+                                background: $white;
+                            }
+                        
+                        .mat-expansion-panel {
+                            box-shadow: none;
+                            @include font-regular;
+                            
+                            .mat-expansion-panel-header {
+                                @include font-regular;
+                                position: relative;
+                                
+                                .mat-content {
+                                    .mat-expansion-panel-header-title {
+                                        .refine-head {
+                                            font-weight: 600;
+                                            color: $linkblue;
+                                        }
+                                    }
+                                }
+                                .mat-expansion-indicator {
+                                    @include transform(rotate(0deg) !important);
+                                    position: absolute;
+                                    width: 20px;
+                                    height: 20px;
+                                    right: 15px;
+                                    display: flex;
+                                    align-items: center;
+                                    font-weight: 700;
+                                    font-size: .625rem;
+                                    
+                                    &:after {
+                                        color: $linkblue;
+                                        border: none;
+                                        content: "\72";
+                                        position: absolute;
+                                        @include font-custom;
+                                        @include transform(rotate(0deg));
+                                    }
+                                }
+                                
+                                &.mat-expanded {
+                                    .mat-content {
+                                        .mat-expansion-panel-header-title {
+                                            .refine-head {
+                                                color: $linkblack;
+                                            }
+                                        }
+                                    }
+                                    .mat-expansion-indicator {
+                                        
+                                        &:after {
+                                            content: "\66";
+                                            color: $linkblack;
+                                        }
+                                    }
+                                }
+                            }
+                            .mat-expansion-panel-content {
+                                .mat-expansion-panel-body {
+                                    @include font-regular;
+                                    
+                                    .mat-form-field {
+                                        display: block;
+                                        @include font-regular;
+                                        
+                                        .mat-select {
+                                            @include font-regular;
+                                        }
+                                    }
+                                    
+                                    app-rating-star {
+                                        .ynwstar-rating {
+                                            float: none;
+                                            width: 135px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
                     &:last-child {
                         border: none;
                     }
@@ -610,6 +682,76 @@ header {
         .c-body {
             flex-grow: 1;
             position: relative;
+            
+            .ct2 {
+                display: flex;
+                font-size: .875rem;
+                flex-grow: 1;
+                min-height: 40px;
+
+                @include respond-to(ynw-767){
+                    flex-direction: column;
+                }
+
+                .ct-l {
+                    @include respond-to(ynw-767){
+                        order: 2;
+                        margin-top: 10px;
+                    }
+                    .rslts {
+                        @include respond-to(ynw-767){
+                            text-align: right;
+                        }
+                        span {
+                            color: $linkblue;
+                            font-weight: 500;
+                        }
+                    }
+                }
+                .ct-r {
+                    .fltr {
+                        margin-bottom: 10px;
+                        
+                        .search_sort_display {
+                            float: none;
+                            width: auto;
+                            padding-right: 0;
+
+                            .mat-form-field {
+                                .mat-form-field-wrapper {
+                                    padding: 0;
+
+                                    .mat-input-flex {
+                                        .mat-input-infix {
+                                            padding: 0;
+                                            border: none;
+                                            padding: 10px;
+                                            border: 1px solid $cc-mediumgray;
+
+                                            .mat-select {
+                                                @include font-medium;
+
+                                                .mat-select-value {
+                                                    overflow: unset;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .mat-input-underline {
+                                        display: none;
+                                    }
+                                    .mat-input-subscript-wrapper {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.ct2pad {
+                    margin-left: 50px;
+                }
+            }
             
             .srlst {
                 background: $white;
@@ -634,6 +776,7 @@ header {
                     .tp-l {
                         margin-right: 30px;
                         display: flex;
+                        width: 65%;
                         
                         @include respond-to(ynw-767) {
                             margin-right: 0;
@@ -655,6 +798,7 @@ header {
                             @include respond-to(ynw-767) {
                                 order: 2;
                                 margin-right: 0;
+                                width: 25%;
                             }
                             @include respond-to(ynw-575) {
                                 width: 170px;
@@ -663,6 +807,7 @@ header {
                             @include respond-to(ynw-768-991) {
                                 order: 2;
                                 margin-right: 0;
+                                width: 25%;
                             }
                             
                             .pro-img {
@@ -1012,6 +1157,53 @@ header {
                             }
                         }
                     }
+                }
+            }
+            .search_paging {
+                .container {
+                    padding: 0;
+                    
+                    .text-center {
+                        display: flex;
+                        justify-content: flex-end;
+                        margin-bottom: 60px;
+                        
+                        .pagination {
+                            margin: 0px;
+                            display: flex;
+                            flex-wrap: wrap;
+                            
+                            li {
+                                padding: 10px;
+                                font-size: .875rem;
+                                font-weight: 500;
+                                color: $linkblue;
+                                background: $white;
+                                cursor: pointer;
+                                margin-right: 10px;
+                                min-width: 40px;
+                                border: 1px solid $linkblue;
+                                
+                                &.ng-star-inserted {
+                                    border: none;
+                                }
+                                &.disabled {
+                                    background: $cc-ash;
+                                    color: $cc-mediumgray;
+                                    border: none;
+                                    pointer-events: none;
+                                }
+                                &.active {
+                                    background: $linkblue;
+                                    color: $white;
+                                }
+                                &:last-child {
+                                    margin-right: 0;
+                                }
+                            }
+                        }
+                    }
+                    
                 }
             }
         }

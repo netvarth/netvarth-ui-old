@@ -629,6 +629,12 @@
         .newuser {
             color: $cc-black;
             margin-bottom: 0;
+            cursor: default;
+            
+            span {
+                color: $linkblue;
+                cursor: pointer;
+            }
         }
     }
 }

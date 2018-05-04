@@ -13,7 +13,7 @@ import { Subject } from 'rxjs/Subject';
 
 export class SharedFunctions {
 
-    dont_delete_localstorage = []; // ['isBusinessOwner'];
+    dont_delete_localstorage = ['ynw-locdet']; // ['isBusinessOwner'];
 
     private subject = new Subject<any>();
 
@@ -49,16 +49,24 @@ export class SharedFunctions {
          );
       }
 
-     consumerLogin(post_data) {
+     consumerLogin(post_data, moreParams?) {
 
       const promise = new Promise((resolve, reject) => {
         this.shared_service.ConsumerLogin(post_data)
         .subscribe(
             data => {
-                // console.log(data);
+                // console.log('more params', moreParams);
                 resolve(data);
                 this.setLoginData(data, post_data, 'consumer');
-                this.router.navigate(['/consumer']);
+                if (moreParams === undefined) {
+                  this.router.navigate(['/consumer']);
+                } else {
+                  if (moreParams['bypassDefaultredirection'] === 1) {
+                    const mtemp = '1';
+                  } else {
+                    this.router.navigate(['/consumer']);
+                  }
+                }
             },
             error => {
                 if (error.status === 401) {
@@ -154,7 +162,7 @@ export class SharedFunctions {
     public clearLocalstorage() {
 
         for (let index = 0; index < localStorage.length; index++) {
-          if (this.dont_delete_localstorage.indexOf(localStorage.key( index )) === -1) {
+              if (this.dont_delete_localstorage.indexOf(localStorage.key( index )) === -1) {
                localStorage.removeItem( localStorage.key( index ));
                index = index - 1; // manage index after remove
           }
@@ -577,9 +585,10 @@ export class SharedFunctions {
     const pdata = { 'test': 'this is a test' };
     this.sendMessage(pdata);
   }
+
   sendMessage(message: any) {
     this.subject.next(message);
-}
+  }
 
 clearMessage() {
     this.subject.next();

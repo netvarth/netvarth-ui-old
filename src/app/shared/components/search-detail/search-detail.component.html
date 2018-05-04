@@ -6,6 +6,14 @@
         <div class="row">
             <div class="status-bar">
                 <div class="ct1" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
+                    <span class="mnu" (click)="togger_refinesection()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <span class="ttle" *ngIf="showrefinedsection">Refine Search</span>
+                </div>
+                <!-- <div class="ct1" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
                     <div class="ct-l" (click)="togger_refinesection()">
                         <span class="mnu">
                             <span></span>
@@ -14,11 +22,11 @@
                         </span>
                     </div>
                     <div class="ct-r" *ngIf="showrefinedsection"><span class="ttle">Refine Search</span></div>
-                </div>
+                </div> -->
                 
-                <div class="ct2" *ngIf = "search_result_count">
+                <!-- <div class="ct2" *ngIf = "search_result_count">
                     <div class="ct-l">
-                        <div class="rslts">{{ (search_data.hits.found>1) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong> {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ? 'result': ''}} found <!-- for <span>‘Dentists’</span> --></div>
+                        <div class="rslts">{{ (search_data.hits.found>1) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong> {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ? 'result': ''}} found </div>
                     </div>
                     <div class="ct-r ml-auto">
                         <div class="fltr">
@@ -40,17 +48,10 @@
                                     </mat-select>
                                   </mat-form-field>
                                     
-                                <!-- <select name="sortfield" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)">
-                                  <option value="titleasc" [selected]="sortfield==='titleasc'" >Title Ascending</option>
-                                  <option value="titledesc" [selected]="sortfield==='titledesc'" >Title Descending</option>
-                                  <option value="sectorasc" [selected]="sortfield==='sectorasc'">Sector Ascending</option>
-                                  <option value="sectordesc" [selected]="sortfield==='sectordesc'">Sector Descending</option>
-                                </select> -->
-                                <!-- <span class="sorder" (click)="selected_sortorder('asc')">A</span>&nbsp;<span  class="sorder" (click)="selected_sortorder('desc')">D</span> -->
-                              </div>
+                                </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             
             <div class="c-outer">
@@ -61,7 +62,7 @@
                           <div class="bx-block" *ngIf="domainlist_data && kwtyp != 'subdom'">
                               <mat-accordion>
                                 <mat-expansion-panel [expanded]="true">
-                                    <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                                    <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                       <mat-panel-title>
                                       <span class="refine-head">Select Domain</span>
                                       </mat-panel-title>
@@ -83,7 +84,7 @@
 
                               <mat-accordion>
                                   <mat-expansion-panel [expanded]="true">
-                                      <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                                      <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                         <mat-panel-title>
                                         <span class="refine-head">Select Sub Domain</span>
                                         </mat-panel-title>
@@ -114,11 +115,12 @@
                               </mat-form-field> -->
                           </div>    
                   
-                          <div  class="bx-block" *ngFor="let refine_data of searchrefine_arr">
+                          <ng-container *ngFor="let refine_data of searchrefine_arr">
+                          <div  class="bx-block" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean'">
 
-                              <mat-accordion *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean'">
+                              <mat-accordion>
                                   <mat-expansion-panel [expanded]="true">
-                                      <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                                      <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                         <mat-panel-title>
                                         <span class="refine-head">{{refine_data.displayName}}</span>
                                         </mat-panel-title>
@@ -153,11 +155,12 @@
                                   </mat-expansion-panel>
                                 </mat-accordion>
                           </div>
+                        </ng-container>
 
                           <div  class="bx-block">
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="true">
-                                    <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                                    <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                       <mat-panel-title>
                                       <span class="refine-head">Other Filters</span>
                                       </mat-panel-title>
@@ -178,16 +181,50 @@
                         </div>
                     </div>
                 </div>
-                
+               
                 <div class="c-body" *ngIf = "search_result_count">
-
+                    <div class="ct2" [class.ct2pad]="!showrefinedsection">
+                        <div class="ct-l">
+                            <div class="rslts">{{ (search_data.hits.found>10) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong> {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ? 'result': ''}} found <!-- for <span>‘Dentists’</span> --></div>
+                        </div>
+                        <div class="ct-r ml-auto">
+                            <div class="fltr">
+                                <div class="search_sort_display">
+                                    <mat-form-field>
+                                        <mat-select name="sortfield" panelClass ="search_domaindropdown_class" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)" [(ngModel)]="sortfieldsels">
+                                          <mat-option value="titleasc">
+                                            Title (Ascending)
+                                          </mat-option>
+                                          <mat-option value="titledesc">
+                                              Title (Descending)
+                                           </mat-option>
+                                           <mat-option value="sectorasc">
+                                              Sector (Ascending)
+                                            </mat-option>
+                                            <mat-option value="sectordesc">
+                                                Sector (Descending)
+                                             </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+                                        
+                                    <!-- <select name="sortfield" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)">
+                                      <option value="titleasc" [selected]="sortfield==='titleasc'" >Title Ascending</option>
+                                      <option value="titledesc" [selected]="sortfield==='titledesc'" >Title Descending</option>
+                                      <option value="sectorasc" [selected]="sortfield==='sectorasc'">Sector Ascending</option>
+                                      <option value="sectordesc" [selected]="sortfield==='sectordesc'">Sector Descending</option>
+                                    </select> -->
+                                    <!-- <span class="sorder" (click)="selected_sortorder('asc')">A</span>&nbsp;<span  class="sorder" (click)="selected_sortorder('desc')">D</span> -->
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="srlst" *ngFor = "let search_result of search_data.hits.hit">
                         <div class="top-sect">
                             <div class="tp-l">
                                 <div class="tp1">
-                                    <div class="pro-img">
+                                    <div class="pro-img" (click)="providerDetClicked(search_result)">
                                         <img *ngIf="search_result.fields.logo" [src]="search_result.fields.logo" alt="">  
-                                        <img *ngIf="!search_result.fields.logo" src="http://via.placeholder.com/170x150" alt="">  
+                                        <img *ngIf="!search_result.fields.logo" src="./assets/images/img-null.svg" alt="">  
                                     </div>
                                     <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>
@@ -290,8 +327,8 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <div class="ynw-verified"></div>
-                                    <h3>{{search_result.fields.title}}</h3>
+                                    <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div>
+                                    <h3 (click)="providerDetClicked(search_result)">{{search_result.fields.title}}</h3>
                                     <span class="address">{{search_result.fields.place1}}</span>
                                     
                                     <div class="clr">
@@ -317,14 +354,14 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="more-clinics">
-                                        <span><span class="count">2</span> more Clinics</span>
+                                    <div class="more-clinics" *ngIf="search_result.fields.moreclinics>0" (click)="providerDetClicked(search_result)">
+                                        <span><span class="count">{{search_result.fields.moreclinics}}</span> {{ (search_result.fields.moreclinics==1) ? 'more clinic' : 'more Clinics'}}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="tp-r">
                                 <div *ngIf="search_result.fields.ynw_verified==1" class="ynw-verified"></div>
-                                <ul class="badges">
+                                <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
                                     <li *ngIf="search_result.fields.parking_location1==1"><span class="icon-parking"></span></li>
                                     <li *ngIf="search_result.fields.always_open1==1"><span class="icon-open-time"></span></li>
                                     <li *ngIf="search_result.fields.traumacentre_location1==1"><span class="icon-trauma"></span></li>
@@ -334,7 +371,7 @@
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
                                 <span class="communicate">Communicate</span>
-                                <span class="claim-business" (click)="claimBusiness()">Claim my Business</span>
+                                <span class="claim-business" (click)="claimBusiness()" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
                             </div>
                         </div>
                         <div class="bottom-sect">
@@ -342,13 +379,13 @@
                                 <div class="wt-tme" *ngIf="waitlisttime_arr.length">
                                     <div class="o-now" *ngIf="search_result.fields['opennow']">Open Now</div>
                                     <div class="timing" >
-                                        <span class="est-time">{{search_result.fields['estimatedtime_det']['caption']}}</span>
-                                        <span class="time-data">{{search_result.fields['estimatedtime_det']['time']}} <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
+                                        <span class="est-time" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
+                                        <span class="time-data" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['time']}} <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="bt-r" *ngIf="waitlisttime_arr.length">
-                                <span class="cs-btn chk-btn">Check-In</span>
+                                <span class="cs-btn chk-btn" (click)="checkinClicked(search_result)">Check-In</span>
                             </div>    
                         </div>
                     </div>

@@ -25,6 +25,10 @@ app-footer {
     }
 }
 
+.icon-question, [data-icon="F"] {
+    cursor: help;
+}
+
 /*YNW Custom Fonts ####*/
 @font-face {
     font-family: 'Montserrat';
@@ -84,7 +88,7 @@ app-footer {
         font-size: 0.875rem;
         color: $cc-darkgray;
         text-overflow: ellipsis;
-        padding: 0 10px;
+        padding:10px;
         
         &:focus {
             @include box-shadow(0, 0, 1px, $linkblue, inset);
@@ -176,20 +180,36 @@ app-footer {
             display: flex;
             font-size: .875rem;
             font-weight: 500 !important;
-            letter-spacing: .3px;
             height: 40px;
             line-height: 40px;
             align-items: center;
             @include font-regular;
+            color: rgba(0,0,0,.5);
+            
+            @include respond-to(ynw-767) {
+                color: rgba(0,0,0,1);
+                
+                i {
+                    color: rgba(0,0,0,1);
+                }
+            }
             
             i {
                 margin-right: 15px;
                 font-size: 1rem;
                 display: flex;
+                color: rgba(0,0,0,.6);
             }
             
             &:focus {
                 outline: none;
+            }
+            &:hover {
+                color: rgba(0,0,0,1);
+                
+                i {
+                    color: rgba(0,0,0,1); 
+                }
             }
         }
     }
@@ -278,6 +298,7 @@ app-footer {
 .snackbarnormal, .snackbarerror {
     color: $white;
     background: $linkblue;
+    z-index: 999;
     
     .mat-simple-snackbar {
         @include font-medium;

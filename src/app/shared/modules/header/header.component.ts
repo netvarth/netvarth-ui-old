@@ -71,7 +71,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     // subscribe to home component messages
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      // console.log('message', message);
+      console.log('message', message.ttype);
+      if (message.ttype === 'updateuserdetails') {
+        this.getUserdetails();
+        this.handleHeaderclassbasedonURL();
+      }
       this.getBusinessdetFromLocalstorage();
     });
 
@@ -105,6 +109,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.userdet)  {
       // console.log(this.userdet);
       if (this.shared_functions.checkLogin()) {
+        this.ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (this.userdet.isProvider === true) {
           this.provider_loggedin = true;
           this.consumer_loggedin = false;

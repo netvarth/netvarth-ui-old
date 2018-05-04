@@ -16,6 +16,7 @@ import { SearchModule } from './shared/modules/search/search.module';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
+import { CheckInModule } from './shared/modules/check-in/check-in.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
@@ -86,7 +87,8 @@ import 'hammerjs';
     PagerModule,
     SharedModule,
     RatingStarModule,
-    HeaderModule
+    HeaderModule,
+    CheckInModule
   ],
   providers: [
     AuthGuardConsumer,

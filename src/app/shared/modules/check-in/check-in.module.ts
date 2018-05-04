@@ -15,6 +15,9 @@ import { CheckInComponent } from './check-in.component';
         ReactiveFormsModule,
         FormMessageDisplayModule
     ],
+    entryComponents: [
+        CheckInComponent
+    ],
     declarations: [
         CheckInComponent
     ],

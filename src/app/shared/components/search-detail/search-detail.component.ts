@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import 'rxjs/add/operator/filter';
 
 import { Router } from '@angular/router';
@@ -10,6 +11,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
+import { LoginComponent } from '../../components/login/login.component';
 
 import { SearchFields } from '../../modules/search/searchfields';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -17,6 +19,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { CheckInComponent } from '../../modules/check-in/check-in.component';
 @Component({
   selector: 'app-search-detail',
   templateUrl: './search-detail.component.html',
@@ -63,6 +66,7 @@ export class SearchDetailComponent implements OnInit {
   public commonfilters;
   public showopnow = 0;
   public subdomainleft;
+  location_cnt = 0;
   showrefinedsection = true;
   result_provid: any = [];
   waitlisttime_arr: any = [];
@@ -73,7 +77,8 @@ export class SearchDetailComponent implements OnInit {
               private activaterouterobj: ActivatedRoute,
               private shared_service: SharedServices,
               private shared_functions: SharedFunctions,
-              private searchdetailserviceobj: SearchDetailServices ) { }
+              private searchdetailserviceobj: SearchDetailServices,
+              private dialog: MatDialog ) { }
 
   ngOnInit() {
     // this.activaterouterobj.queryParams
@@ -317,7 +322,7 @@ export class SearchDetailComponent implements OnInit {
     this.refined_options_url_str = '';
     this.querystringrefineretain_arr = [];
   }
-  private handlesearchClick(obj) {
+  handlesearchClick(obj) {
     // console.log('from details', obj);
     this.resetRefineVariables(); // calling method to reset the refine variables
 
@@ -508,10 +513,26 @@ export class SearchDetailComponent implements OnInit {
             this.search_data = res;
             this.result_provid = [];
             // console.log('search', this.search_data.hits.hit);
-            const schedule_arr = [];
+            let schedule_arr = [];
+            let locationcnt = 0;
             for (let i = 0 ; i < this.search_data.hits.hit.length ; i++) {
+              locationcnt = 0;
               this.result_provid[i] = this.search_data.hits.hit[i].id;
+              if (this.search_data.hits.hit[i].fields.hasOwnProperty('place2')) {
+                ++locationcnt;
+              }
+              if (this.search_data.hits.hit[i].fields.hasOwnProperty('place3')) {
+                ++locationcnt;
+              }
+              if (this.search_data.hits.hit[i].fields.hasOwnProperty('place4')) {
+                ++locationcnt;
+              }
+              if (this.search_data.hits.hit[i].fields.hasOwnProperty('place5')) {
+                ++locationcnt;
+              }
+              this.search_data.hits.hit[i].fields.moreclinics = locationcnt;
               if (this.search_data.hits.hit[i].fields.business_hours1) {
+                schedule_arr = [];
                 for (let j = 0; j < this.search_data.hits.hit[i].fields.business_hours1.length; j++) {
                   const obt_sch = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[j]);
                  // console.log('business', obt_sch[0].repeatIntervals);
@@ -542,9 +563,10 @@ export class SearchDetailComponent implements OnInit {
     }
   }
   private getWaitingTime(provids) {
+    if (provids.length > 0) {
     this.searchdetailserviceobj.getEstimatedWaitingTime(provids)
       .subscribe (data => {
-        console.log('estimated', data);
+        // console.log('estimated', data);
         this.waitlisttime_arr = data;
         if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
           this.waitlisttime_arr = [];
@@ -590,6 +612,7 @@ export class SearchDetailComponent implements OnInit {
           }
         }
       });
+    }
   }
   formatDate(psdate, params: any = []) { /* convert year-month-day to day-monthname-year*/
     const monthNames = {
@@ -1007,5 +1030,61 @@ export class SearchDetailComponent implements OnInit {
   }
   claimBusiness() {
     alert('Claim Business');
+  }
+
+  checkinClicked(obj) {
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    if (usertype === 'consumer') {
+      this.showCheckin('consumer');
+    } else if (usertype === '') {
+      this.doLogin('consumer');
+    }
+  }
+
+  doLogin(origin?) {
+    this.shared_functions.openSnackBar('You need to login to check in');
+    const dialogRef = this.dialog.open(LoginComponent, {
+       width: '50%',
+       panelClass: 'loginmainclass',
+      data: {
+        type : origin,
+        is_provider : this.checkProvider(origin),
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('login return ', result);
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.shared_functions.sendMessage(pdata);
+        this.showCheckin('consumer');
+      }
+      // this.animal = result;
+    });
+
+  }
+  showCheckin(origin?) {
+    const dialogRef = this.dialog.open(CheckInComponent, {
+       width: '50%',
+       panelClass: 'loginmainclass',
+      data: {
+        type : origin,
+        is_provider : this.checkProvider(origin),
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // this.animal = result;
+    });
+  }
+
+  checkProvider(type) {
+    return  (type === 'consumer') ? 'false' : 'true';
+  }
+
+  providerDetClicked(obj) {
+    console.log(obj);
   }
 }

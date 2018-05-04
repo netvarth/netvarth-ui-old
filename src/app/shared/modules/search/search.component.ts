@@ -623,7 +623,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
  }
 
  do_search(labelq?) {
-   console.log('search clicked');
+   // console.log('search clicked');
     const currenturl = this.routerobj.url.split(';');
 
    /* if (!this.location_latitude) {
@@ -661,7 +661,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
             for (let i = 0; i < this.moreoptions_arr.length; i++) {
               for (const field in this.moreoptions_arr[i]) {
                 if (field) {
-                  console.log('field', field, this.moreoptions_arr[i][field]);
+                 // console.log('field', field, this.moreoptions_arr[i][field]);
                   let valstr = '';
                   for (const fval of this.moreoptions_arr[i][field]) {
                     if (valstr !== '') {
@@ -674,7 +674,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
               }
             }
          }
-         console.log('params', passparam);
+        // console.log('params', passparam);
          this.routerobj.navigate(['/searchdetail', passparam]);
      }
   }
@@ -847,6 +847,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.do_search();
   }
   handle_returntochild(obj) {
-    console.log('reached back');
+   // console.log('reached back');
   }
 }
