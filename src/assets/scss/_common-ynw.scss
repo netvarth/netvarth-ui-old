@@ -84,6 +84,7 @@ app-footer {
         font-size: 0.875rem;
         color: $cc-darkgray;
         text-overflow: ellipsis;
+        padding: 0 10px;
         
         &:focus {
             @include box-shadow(0, 0, 1px, $linkblue, inset);

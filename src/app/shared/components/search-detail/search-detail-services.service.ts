@@ -25,4 +25,16 @@ export class SearchDetailServices {
         }
         return this.servicemetaobj.httpGet(path);
     }
+
+    public getEstimatedWaitingTime(prov_arr) {
+        let str = '';
+        for (let i = 0; i < prov_arr.length; i++) {
+          if (str !== '') {
+            str += '%2C'; // comma
+          }
+          str += prov_arr[i];
+        }
+        const path = 'provider/waitlist/queues/waitingTime/' + str;
+        return this.servicemetaobj.httpGet(path);
+    }
 }

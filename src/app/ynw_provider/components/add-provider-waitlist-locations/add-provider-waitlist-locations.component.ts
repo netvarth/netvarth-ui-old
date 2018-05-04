@@ -64,9 +64,13 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     this.getParkingtypes();
     // get location badges
     // this.getLocationBadges();
-    if (this.data_source !== 'bprofile') {
+    // if (this.data_source !== 'bprofile') {
      // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+    // }
+    if (this.data_source === 'bprofile') {
+       this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     }
+
     this.createForm();
     this.elementRef.nativeElement.focus();
   }

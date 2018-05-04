@@ -649,6 +649,10 @@
                     padding: 15px;
                     border: 2px solid $cc-mediumgray;
                     @include border-radius(5px);
+                    
+                    .mat-radio-label-content {
+                        color: $cc-gray;
+                    }
                 }
 
                 &.mat-radio-checked {
@@ -659,6 +663,15 @@
 
                 &:last-child {
                     margin-right: 0;
+                }
+                
+                &.activepackcls {
+                    .mat-radio-label {
+                        .mat-radio-label-content {
+                            font-weight: 600;
+                            color: $linkblack;
+                        }
+                    }
                 }
             }
 

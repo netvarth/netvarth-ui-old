@@ -38,9 +38,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-more-down:before {
-  content: "\62";
-}
 .icon-search:before {
   content: "\64";
 }
@@ -230,9 +227,6 @@
 .icon-claim:before {
   content: "\39";
 }
-.icon-switch:before {
-  content: "\21";
-}
 .icon-mobile:before {
   content: "\22";
 }
@@ -241,4 +235,13 @@
 }
 .icon-verified:before {
   content: "\24";
+}
+.icon-more-down:before {
+  content: "\62";
+}
+.icon-switch:before {
+  content: "\21";
+}
+.icon-auto-payment:before {
+  content: "\25";
 }

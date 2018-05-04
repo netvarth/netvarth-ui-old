@@ -18,7 +18,7 @@
                 
                 <div class="ct2" *ngIf = "search_result_count">
                     <div class="ct-l">
-                        <div class="rslts">Over <strong>{{search_data.hits.found}}</strong> results found <!-- for <span>‘Dentists’</span> --></div>
+                        <div class="rslts">{{ (search_data.hits.found>1) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong> {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ? 'result': ''}} found <!-- for <span>‘Dentists’</span> --></div>
                     </div>
                     <div class="ct-r ml-auto">
                         <div class="fltr">
@@ -186,28 +186,107 @@
                             <div class="tp-l">
                                 <div class="tp1">
                                     <div class="pro-img">
-                                        <img src="http://via.placeholder.com/170x150" alt="">  
+                                        <img *ngIf="search_result.fields.logo" [src]="search_result.fields.logo" alt="">  
+                                        <img *ngIf="!search_result.fields.logo" src="http://via.placeholder.com/170x150" alt="">  
                                     </div>
-                                    <ul class="gal">
+                                    <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>
                                             <div class="galbx">
-                                                <img src="http://via.placeholder.com/50x50" alt="">
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="galbx">
-                                                <img src="http://via.placeholder.com/50x50" alt="">
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="galbx">
-                                                <div class="overlay">+13</div>
-                                                <img src="http://via.placeholder.com/50x50" alt="">
+                                                <div class="overlay">+{{(search_result.fields.gallery_thumb_nails.length-1)}}</div>
+                                                <img [src]="search_result.fields.gallery_thumb_nails[0]" alt="" style="width:50px;height:auto;">
                                             </div>
                                         </li>
                                     </ul>
                                     <div class="rating-stars">
-                                        Rating Stars goes here...   
+                                        <!-- {{search_result.fields.rating}}  -->
+                                        <ng-container *ngIf="search_result.fields.rating>0">
+                                                <ng-container *ngIf="search_result.fields.rating==.5">
+                                                    <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==1">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==1.5">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+                                                <ng-container *ngIf="search_result.fields.rating==2">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==2.5">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==3">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==3.5">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==4">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==4.5">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                </ng-container>
+                                              
+                                                <ng-container *ngIf="search_result.fields.rating==5">
+                                                    <ng-container *ngFor="let number of [1,2,3,4,5]">
+                                                       <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                    </ng-container>    
+                                                </ng-container>
+
+
+                                        </ng-container> 
+                                        <ng-container *ngIf="search_result.fields.rating==0">
+                                            <ng-container *ngFor="let number of [1,2,3,4,5]">
+
+                                                <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+
+                                            </ng-container>
+                                        </ng-container>
+
                                     </div>
                                 </div>
                                 <div class="tp2">
@@ -218,8 +297,8 @@
                                     <div class="clr">
                                         <div class="otr-elements">
                                             <span class="category">{{search_result.fields.sector}}</span>
-                                            <span class="cert">MBBS, MD</span>
-                                            <span class="exp">10 yrs Experience </span>
+                                            <span class="cert">{{search_result.fields.qualification}}</span>
+                                            <!-- <span class="exp">10 yrs Experience </span> -->
                                         </div>
                                         <div class="schedule" *ngIf="search_result.fields.display_schedule">
                                             <ul>
@@ -231,11 +310,9 @@
                                             </ul>
                                         </div>
 
-                                        <div class="services">
+                                        <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
-                                                <li>Consultation</li>
-                                                <li>X-Ray</li>
-                                                <li>Scanning</li>
+                                                <li *ngFor="let serv of search_result.fields.services">{{serv}}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -246,31 +323,31 @@
                                 </div>
                             </div>
                             <div class="tp-r">
-                                <div class="ynw-verified"></div>
+                                <div *ngIf="search_result.fields.ynw_verified==1" class="ynw-verified"></div>
                                 <ul class="badges">
-                                    <li><span class="icon-parking"></span></li>
+                                    <li *ngIf="search_result.fields.parking_location1==1"><span class="icon-parking"></span></li>
                                     <li *ngIf="search_result.fields.always_open1==1"><span class="icon-open-time"></span></li>
-                                    <li><span class="icon-trauma"></span></li>
-                                    <li><span class="icon-emergency"></span></li>
-                                    <li><span class="icon-first-aid"></span></li>
-                                    <li><span class="icon-ambulance"></span></li>
-                                    <li><span class="icon-payment"></span></li>
+                                    <li *ngIf="search_result.fields.traumacentre_location1==1"><span class="icon-trauma"></span></li>
+                                    <li *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1"><span class="icon-emergency"></span></li>
+                                    <li *ngIf="search_result.fields.firstaid_location1==1"><span class="icon-first-aid"></span></li>
+                                    <!-- <li><span class="icon-ambulance"></span></li>
+                                    <li><span class="icon-payment"></span></li> -->
                                 </ul>
                                 <span class="communicate">Communicate</span>
-                                <span class="claim-business">Claim my Business</span>
+                                <span class="claim-business" (click)="claimBusiness()">Claim my Business</span>
                             </div>
                         </div>
                         <div class="bottom-sect">
                             <div class="bt-l">
-                                <div class="wt-tme">
-                                    <div class="o-now">Open Now</div>
-                                    <div class="timing">
-                                        <span class="est-time">Estimated Waiting Time</span>
-                                        <span class="time-data">15 Min <span class="icon-question"></span></span>
+                                <div class="wt-tme" *ngIf="waitlisttime_arr.length">
+                                    <div class="o-now" *ngIf="search_result.fields['opennow']">Open Now</div>
+                                    <div class="timing" >
+                                        <span class="est-time">{{search_result.fields['estimatedtime_det']['caption']}}</span>
+                                        <span class="time-data">{{search_result.fields['estimatedtime_det']['time']}} <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bt-r">
+                            <div class="bt-r" *ngIf="waitlisttime_arr.length">
                                 <span class="cs-btn chk-btn">Check-In</span>
                             </div>    
                         </div>

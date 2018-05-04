@@ -107,8 +107,6 @@
 .refine_tick {
   float:left;
 }
-.refine_tick_caption {
-}
 .refine_field_subouter {
   width:100%;
 }
@@ -118,4 +116,9 @@
 }
 .example-radio-button {
   margin: 5px;
+}
+
+.ratingstar {
+  width:15px;
+  height:auto;
 }

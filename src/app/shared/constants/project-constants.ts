@@ -139,11 +139,14 @@ MAP_ZOOM: 15,
 MAP_BASE_URL: 'https://www.google.com/maps/place/', // this is used to implement google map related API calls
 LOCATION_BADGE_ICON : { // images to be used for the location badges
                     'physiciansemergencyservices' : {'icon': 'emergency.png', 'class': 'icon-emergency'}, // dynamic
+                    'dentistemergencyservices' : {'icon': 'emergency.png', 'class': 'icon-emergency'}, // dynamic
+                    'altemergencyservices' : {'icon': 'emergency.png', 'class': 'icon-emergency'}, // dynamic
+                    'emergencyservices' : {'icon': 'emergency.png', 'class': 'icon-emergency'}, // dynamic
                     'traumacentre' : {'icon': 'trauma.png', 'class': 'icon-trauma'}, // dynamic
                     'firstaid' : {'icon': 'noimage.png', 'class': 'icon-first-aid'}, // dynamic
                     '24hour': {'icon': 'noimage.png', 'class': 'icon-open-time'},
                     'parkingtype': {'icon': 'noimage.png', 'class': 'icon-parking'},
-                    'dentistemergencyservices' : {'icon': 'emergency.png', 'class': 'icon-emergency'}, // dynamic
+                    'autopaymentoptions': {'icon': 'noimage.png', 'class': 'icon-auto-payment'},
                     'none': {'icon': 'noimage.png', 'class': 'icon-trauma'} // un-identified
 },
 SOCIAL_MEDIA : [
