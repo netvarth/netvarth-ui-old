@@ -125,7 +125,7 @@ export const projectConstants = {
                     'image/bmp',
                     'image/webp'
                  ],
- IMAGE_MAX_SIZE : 1000000, // byte
+ IMAGE_MAX_SIZE : 5000000, // byte
  INTERVAL_TIME: 60000, // byte
  AUTOSUGGEST_MIN_CHAR: 2,  // minimum characters required for autosuggest
  AUTOSUGGEST_LOC_MAX_CNT: 15, // max number of locations that will be displayed in the autosuggestion

@@ -39,7 +39,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   success_error = null;
   error_list = [];
   type = 'add';
-
+  button_title = 'Save';
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
@@ -64,6 +64,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       this.service = this.data.service;
       this.setValue(this.service);
       this.getGalleryImages();
+      this.button_title = 'Update'
      }
   }
 
