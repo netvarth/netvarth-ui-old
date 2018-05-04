@@ -270,7 +270,7 @@ export class SharedFunctions {
     }
 
     getNearByLocation (centerLat: number, centerLon: number) {
-        const d = 5000; // desired distance in meter
+        const d = 15000; // desired distance in meter
         const angle = 45 * Math.PI / 180; // 45 degrees in radians
         const oneDegree = 111319.9; // distance in meters from degree to degree at the equato
         // const maxLat = parseFloat(centerLat) + parseFloat((d / oneDegree) * Math.sin(angle));
@@ -593,6 +593,7 @@ isNumberOnly(str) {
   const pattern = /^\d+$/;
   return pattern.test(str);  // returns a boolean
 }
+
 openSnackBar(message: string, params: any = []) {
   const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
   const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
@@ -616,5 +617,34 @@ redirectto (mod) {
     break;
   }
 }
+
+convertMinutesToHourMinute(mins) {
+  let rethr = '';
+  let retmin = '';
+  if (mins > 0) {
+    const hr = Math.floor(mins / 60);
+    const min = Math.floor ( mins % 60);
+
+    if (hr > 0) {
+      if (hr > 1) {
+        rethr = hr + ' hours';
+      } else {
+        rethr = hr + ' hour';
+      }
+    }
+    if (min > 0) {
+      if (min > 1) {
+        retmin = ' ' + min + ' minute';
+      } else {
+        retmin = ' ' + min + ' minutes';
+      }
+    }
+  } else {
+    retmin = '' + 0 + ' minutes';
+  }
+  return rethr + retmin;
+}
+
+
 
 }

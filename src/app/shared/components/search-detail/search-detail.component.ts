@@ -12,6 +12,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 
 import { SearchFields } from '../../modules/search/searchfields';
+import { Messages } from '../../../shared/constants/project-messages';
 
 
 import { projectConstants } from '../../../shared/constants/project-constants';
@@ -63,6 +64,9 @@ export class SearchDetailComponent implements OnInit {
   public showopnow = 0;
   public subdomainleft;
   showrefinedsection = true;
+  result_provid: any = [];
+  waitlisttime_arr: any = [];
+  waitlistestimatetimetooltip  = Messages.SEARCH_ESTIMATE_TOOPTIP;
   searchfields: SearchFields = new SearchFields();
   constructor(private routerobj: Router,
               private location: Location,
@@ -414,6 +418,7 @@ export class SearchDetailComponent implements OnInit {
       sortval = this.sortfield + ' ' + this.sortorder;
     }
      let q_str = '';
+     // q_str = 'title:\'' + 'sony new business' + '\''; // ***** this line needs to be commented after testing
      if (this.latitude) { // case of location is selected
        // calling shared function to get the coordinates for nearybylocation
        q_str = q_str + 'location1:' + this.shared_functions.getNearByLocation(this.latitude, this.longitude);
@@ -501,9 +506,11 @@ export class SearchDetailComponent implements OnInit {
           this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria)
           .subscribe(res => {
             this.search_data = res;
+            this.result_provid = [];
             // console.log('search', this.search_data.hits.hit);
             const schedule_arr = [];
             for (let i = 0 ; i < this.search_data.hits.hit.length ; i++) {
+              this.result_provid[i] = this.search_data.hits.hit[i].id;
               if (this.search_data.hits.hit[i].fields.business_hours1) {
                 for (let j = 0; j < this.search_data.hits.hit[i].fields.business_hours1.length; j++) {
                   const obt_sch = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[j]);
@@ -524,7 +531,7 @@ export class SearchDetailComponent implements OnInit {
           /*let display_schedule = [];
           display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
           this.queues[ii]['displayschedule'] = display_schedule;*/
-
+            this.getWaitingTime(this.result_provid);
             this.search_result_count = this.search_data.hits.found || 0;
 
             if (this.search_data.hits.found === 0) {
@@ -534,7 +541,77 @@ export class SearchDetailComponent implements OnInit {
       });
     }
   }
+  private getWaitingTime(provids) {
+    this.searchdetailserviceobj.getEstimatedWaitingTime(provids)
+      .subscribe (data => {
+        console.log('estimated', data);
+        this.waitlisttime_arr = data;
+        if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
+          this.waitlisttime_arr = [];
+        }
+        const today = new Date();
+        const dd = today.getDate();
+        const mm = today.getMonth() + 1; // January is 0!
+        const yyyy = today.getFullYear();
+        let cday = '';
+        if (dd < 10) {
+            cday = '0' + dd;
+        } else {
+          cday = '' + dd;
+        }
+        let cmon;
+        if (mm < 10) {
+          cmon = '0' + mm;
+        } else {
+          cmon = '' + mm;
+        }
+        const dtoday = yyyy + '-' + cmon + '-' + cday;
+        const ctoday = cday + '/' + cmon + '/' + yyyy;
+        for (let i = 0; i < this.waitlisttime_arr.length; i++) {
+          this.search_data.hits.hit[i].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+          this.search_data.hits.hit[i].fields['estimatedtime_det'] = [];
 
+          if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            this.search_data.hits.hit[i].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
+            if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+              this.search_data.hits.hit[i].fields['estimatedtime_det']['time'] = this.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                 + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+            } else {
+              this.search_data.hits.hit[i].fields['estimatedtime_det']['time'] = this.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+              + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+            }
+          } else {
+            this.search_data.hits.hit[i].fields['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+            if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+              this.search_data.hits.hit[i].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+            } else {
+              this.search_data.hits.hit[i].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+            }
+          }
+        }
+      });
+  }
+  formatDate(psdate, params: any = []) { /* convert year-month-day to day-monthname-year*/
+    const monthNames = {
+        '01': 'Jan',
+        '02': 'Feb',
+        '03': 'Mar',
+        '04': 'Apr',
+        '05': 'May',
+        '06': 'Jun',
+        '07': 'Jul',
+        '08': 'Aug',
+        '09': 'Sep',
+        '10': 'Oct',
+        '11': 'Nov',
+        '12': 'Dec'
+    };
+    const darr =  psdate.split('-');
+    if (params['rettype'] === 'monthname') {
+      darr[1] = monthNames[darr[1]];
+    }
+    return  darr[1] + ' ' + darr[2];
+  }
   private addZero(i) {
     if (i < 10) {
         i = '0' + i;
@@ -927,5 +1004,8 @@ export class SearchDetailComponent implements OnInit {
 
   togger_refinesection() {
     this.showrefinedsection = !this.showrefinedsection;
+  }
+  claimBusiness() {
+    alert('Claim Business');
   }
 }
