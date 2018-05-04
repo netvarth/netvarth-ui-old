@@ -2125,6 +2125,14 @@ footer {
                 }
             }
             
+            app-provider-waitlist-online-checkin {
+                .bt2 {
+                    background-color: $cc-ash !important;
+                    color: $cc-gray !important;
+                    margin-left: 10px !important;
+                }
+            }
+            
             .copy {
                 padding: 20px 40px;
                 
@@ -3921,6 +3929,363 @@ footer {
                         }
                         &:last-child {
                             border: none;
+                        }
+                    }
+                }
+            }
+            .copy {
+                display: flex;
+                font-size: .875rem;
+                
+                @include respond-to(ynw-767) {
+                    flex-direction: column;
+                }
+                
+                .left {
+                    width: 50%;
+                    margin-right: 20px;
+                    
+                    @include respond-to(ynw-767) {
+                        width: 100%;
+                    }
+                    
+                    .lc11, .lc22, .lc33 {
+                        .lcd {
+                            display: flex;
+                            margin-bottom: 15px;
+                            
+                            .ttle {
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                    .lc11 {
+                        border-bottom: 1px solid $cc-ash;
+                        margin-bottom: 20px;
+                        
+                        .bt8 {
+                            text-transform: none;
+                        }
+                        
+                        .lc1-1 {
+                            .lc-box {
+                                width: 100%;
+                                padding: 20px 20px 20px 20px;
+                                border: 1px solid #a4e3fa;
+                                font-size: 1rem;
+                                position: relative;
+
+                                .tp {
+                                    margin-bottom: 15px;
+                                    
+                                    .ttle {
+                                        font-weight: 500;
+
+                                        .pkg {
+                                            font-weight: 600;
+                                        }
+                                        .warning {
+                                            color: $cc-red;
+                                            display: block;
+                                        }
+                                    }
+                                }
+
+                                /*&:after {
+                                    position: absolute;
+                                    content: "";
+                                    background:url(../images/waves.svg)no-repeat scroll 0 -60px/110%;
+                                    width: 100%;
+                                    height: 80px;
+                                    bottom: 0;
+                                    left: 0;
+                                    @include transform(scaleX(-1));
+                                }*/
+                            }
+                            .lc-buttons {
+                                display: flex;
+                                border: solid 1px #a4e3fa;
+                                border-top: none;
+                                
+                                .bt7 {
+                                    width: 50%;
+                                    border: none;
+                                    color: $linkblue;
+                                    text-transform: none;
+                                    font-weight: 500;
+                                    @include border-radius(0px);
+                                    border-right: 1px solid #a4e3fa;
+                                    
+                                    &:hover {
+                                        background: #a4e3fa;
+                                        color: $linkblack;
+                                    }
+                                    &:last-child {
+                                        border: none;
+                                    }
+                                }
+                            }
+                            .subs {
+                                margin-top: 30px;
+                                text-align: center;
+                                
+                                h4 {
+                                    font-size: .875rem;
+                                    text-transform: uppercase;
+                                    font-weight: 600;
+                                }
+                                
+                                .ttle {
+                                    font-weight: 500;
+                                    margin-bottom: 10px;
+                                    display: block;
+                                }
+                                .subs-box {
+                                    margin-bottom: 20px;
+                                    
+                                    .change {
+                                        margin-top: 15px;
+                                        margin-bottom: 10px;
+                                        display: block;
+                                        font-weight: 500;
+                                    }
+                                    .pack {
+                                        border: 2px solid $cc-ash;
+                                        display: table;
+                                        padding: 15px 20px;
+                                        font-weight: 500;
+                                        @include border-radius(50px);
+                                        width: 300px;
+                                        text-align: center;
+                                        font-size: .75rem;
+                                        cursor: pointer;
+                                        margin: 0 auto;
+
+                                        .icon-tick {
+                                            margin-right: 10px;
+                                            font-size: 1.2rem;
+                                            display: inline-block;
+                                            width: 20px;
+                                            height: 20px;
+
+                                            &:before {
+                                                width: 20px;
+                                                height: 20px;
+                                                display: flex;
+                                                align-items: center
+                                            }
+                                        }
+                                        .price {
+                                            font-weight: 600;
+                                            font-size: 1.2rem;
+                                        }
+
+                                        .discount {
+                                            /*display: block;*/
+                                        }
+                                        
+                                        &.active {
+                                            border: none;
+                                            cursor: default;
+                                        }
+
+                                        &.not-active {
+                                            border-color: $green;
+                                            background: $green;
+                                            color: $white;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .lc1-2{
+                            display: flex;
+                            
+                            .bt7 {
+                                flex-grow: 1;
+                                width: 50%;
+                            }
+                        }
+                        
+                    }
+                    .lc22 {
+                        border-bottom: 1px solid $cc-ash;
+                        margin-bottom: 20px;
+                        
+                        .lcd {
+                            flex-direction: column;
+                            
+                            &.lc2-1 {
+                                flex-direction: row;
+                                
+                                .ttle {
+                                    align-self: center;
+                                    text-transform: uppercase;
+                                    display: flex;
+                                    color: $linkblack;
+                                    
+                                    .addbt {
+                                        margin-left: 20px;
+                                        font-size: 1rem;
+                                    }
+                                }
+                            }
+                            .ttle {
+                                color: $cc-gray;
+                            }
+                        }
+                    }
+                    .lc33 {
+                        margin-bottom: 20px;
+                        
+                        .lcd {                            
+                            &.lc3-1 {
+                                flex-direction: row;
+                                
+                                .ttle {
+                                    align-self: center;
+                                    text-transform: uppercase;
+                                    display: flex;
+                                    color: $linkblack;
+                                    
+                                    .addbt {
+                                        margin-left: 20px;
+                                        font-size: 1rem;
+                                    }
+                                }
+                            }
+                            &.lc3-2 {
+                                border-bottom: 1px solid $cc-body;
+                                padding-bottom: 10px;
+                                
+                                &:last-child {
+                                    border: none;
+                                }
+                            }
+                            .ctrl {
+                                margin-left: auto;
+                            }
+                            .ttle {
+                                color: $cc-gray;
+                            }
+                        }
+                    }
+                }
+                
+                .right {
+                    flex-grow: 1;
+                    
+                    .colum {
+                        .lc44 {
+                            margin-bottom: 20px;
+                            
+                            strong {
+                                font-weight: 600;
+                            }
+                            
+                            .lc4-1 {
+                                display: flex;
+                                
+                                .lt, .rt {
+                                    flex-grow: 1;
+                                    
+                                    span {
+                                        display: table;
+                                        font-weight: 500;
+                                        
+                                        &.amount {
+                                            margin-bottom: 10px;
+                                        }
+                                        
+                                        &.ttle {
+                                            font-weight: 600;
+                                        }
+                                        &.bt8 {
+                                            text-transform: none;
+                                            margin-left: auto;
+                                            font-weight: 500;
+                                        }
+                                        &.bt3 {
+                                            background: $linkblue;
+                                            color: $white;
+                                        }
+                                    }
+                                }
+                            }
+                            .lc4-2 {
+                                .pay-tbl {
+                                    padding: 0;
+                                    margin-top: 20px;
+                                    
+                                    .table {
+                                        margin: 0;
+                                        border: 1px solid $cc-mediumgray;
+                                        font-size: .875rem;
+                                        
+                                        thead {
+                                            tr {
+                                                th {
+                                                    font-weight: 600;
+                                                    border: none;
+                                                    
+                                                    &:last-child {
+                                                        text-align: center;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        tbody {
+                                            tr {
+                                                td {
+                                                    border: none;
+                                                    
+                                                    &:last-child {
+                                                        text-align: center;
+                                                        
+                                                        span {
+                                                            color: $linkblue;
+                                                            font-size: 1rem;
+                                                            cursor: pointer;
+                                                        }
+                                                    }
+                                                }
+                                                &:nth-child(odd) {
+                                                    background: rgba(0,0,0,.03);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .lc4-3 {
+                                text-align: right;
+                                margin-top: 10px;
+                                .bt8 {
+                                    text-transform: none;
+                                    font-weight: 500;
+                                }
+                            }
+                        }
+                        .lc55 {
+                            .lc5-1 {
+                                .ttle {
+                                    font-weight: 600;
+                                }
+                                ul {
+                                    margin: 15px 0 0 0;
+                                    padding: 0;
+                                    
+                                    li {
+                                        list-style: none;
+                                        margin-bottom: 15px;
+                                        
+                                        &:last-child {
+                                            margin-bottom: 0;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

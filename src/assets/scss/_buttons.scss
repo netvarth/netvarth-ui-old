@@ -100,6 +100,13 @@
         }
     }
     
+    &.disabled {
+        background: $cc-ash !important;
+        pointer-events: none;
+        color: $cc-mediumgray !important;
+        border: transparent;
+    }
+    
     &:hover {
         background: $hover-blue;
     }

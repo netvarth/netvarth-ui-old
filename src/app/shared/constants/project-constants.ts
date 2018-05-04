@@ -146,7 +146,7 @@ LOCATION_BADGE_ICON : { // images to be used for the location badges
                     'firstaid' : {'icon': 'noimage.png', 'class': 'icon-first-aid'}, // dynamic
                     '24hour': {'icon': 'noimage.png', 'class': 'icon-open-time'},
                     'parkingtype': {'icon': 'noimage.png', 'class': 'icon-parking'},
-                    'autopaymentoptions': {'icon': 'noimage.png', 'class': 'icon-parking'},
+                    'autopaymentoptions': {'icon': 'noimage.png', 'class': 'icon-auto-payment'},
                     'none': {'icon': 'noimage.png', 'class': 'icon-trauma'} // un-identified
 },
 SOCIAL_MEDIA : [
