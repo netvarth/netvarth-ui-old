@@ -40,7 +40,8 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit {
           width: '50%',
           data: {
             type : 'add'
-          }
+          },
+          panelClass: ['commonpopupmainclass']
         });
 
         dialogRef.afterClosed().subscribe(result => {

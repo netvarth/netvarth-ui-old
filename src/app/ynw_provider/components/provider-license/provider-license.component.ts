@@ -23,6 +23,16 @@ export class ProviderLicenseComponent implements OnInit {
     currentlicense_details: any = [] ;
     metrics: any = [];
 
+    breadcrumbs = [
+      {
+        title: 'Settings',
+        url: '/provider/settings'
+      },
+      {
+      title: 'License & Invoice'
+      }
+    ];
+    license_message = '';
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions) {}
@@ -37,20 +47,38 @@ export class ProviderLicenseComponent implements OnInit {
       this.provider_servicesobj.getLicenseDetails()
         .subscribe(data => {
           this.currentlicense_details = data;
-          // console.log('data', data);
+          console.log('data', data);
+          if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
+
+            const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
+            const end_date =  (data['accountLicense']['expiryDate']) ? moment(data['accountLicense']['expiryDate']) : null;
+            let valid_till = 0;
+            if (start_date != null && end_date != null) {
+              valid_till = end_date.diff(start_date, 'days');
+              valid_till = (valid_till < 0) ?  0 :  valid_till;
+            }
+            this.license_message = valid_till + ' day trial, till ' + end_date.format('ll');
+          }
+
+
+
+
         });
     }
 
     showupgradeLicense() {
         const dialogRef = this.dialog.open(UpgradeLicenseComponent, {
           width: '50%',
+          panelClass: ['commonpopupmainclass'],
           data: {
             type : 'upgrade'
           }
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          this.getLicenseDetails();
+          if (result === 'reloadlist') {
+            this.getLicenseDetails();
+          }
         });
     }
 
@@ -59,11 +87,14 @@ export class ProviderLicenseComponent implements OnInit {
         width: '50%',
         data: {
           type : 'addons'
-        }
+        },
+        panelClass: ['commonpopupmainclass'],
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.getLicenseDetails();
+        if (result === 'reloadlist') {
+          this.getLicenseDetails();
+        }
       });
   }
 
@@ -116,7 +147,8 @@ export class ProviderLicenseComponent implements OnInit {
       width: '50%',
       data: {
         metrics : this.metrics
-      }
+      },
+      panelClass: ['commonpopupmainclass'],
     });
 
     dialogRef.afterClosed().subscribe(result => {
