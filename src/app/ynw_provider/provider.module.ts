@@ -71,6 +71,7 @@ import { AddProviderWaitlistServiceGalleryComponent } from './components/add-pro
 import { ProviderWaitlistCheckInCancelPopupComponent } from './components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddProviderItemImageComponent } from './components/add-provider-item-image/add-provider-item-image.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './components/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { ProviderPaymentHistoryComponent } from './components/provider-payment-history/provider-payment-history.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -166,7 +167,8 @@ import 'mousetrap';
         AddProviderWaitlistServiceGalleryComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         AddProviderItemImageComponent,
-        ProviderWaitlistCheckInConsumerNoteComponent
+        ProviderWaitlistCheckInConsumerNoteComponent,
+        ProviderPaymentHistoryComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -199,7 +201,8 @@ import 'mousetrap';
       AddProviderWaitlistServiceGalleryComponent,
       ProviderWaitlistCheckInCancelPopupComponent,
       AddProviderItemImageComponent,
-      ProviderWaitlistCheckInConsumerNoteComponent
+      ProviderWaitlistCheckInConsumerNoteComponent,
+      ProviderAuditLogComponent
     ],
     providers: [
        AuthGuardProviderHome,

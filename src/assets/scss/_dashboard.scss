@@ -2808,7 +2808,8 @@ footer {
                                         
                                         .day {
                                             font-weight: 600;
-                                            width: 50%;
+                                            width: auto;
+                                            margin-right: 15px;
                                         }
                                         .time {
                                             font-weight: 400;
@@ -3690,6 +3691,7 @@ footer {
             .table-outer {
                 &.q-tbl {
                     padding: 0;
+                    width: 100%;
 
                     table {
                         margin: 0;
@@ -3747,7 +3749,8 @@ footer {
                 }
                 &.q-itm {
                     padding: 0;
-
+                    width: 100%;
+                    
                         table {
                             margin: 0;
 
@@ -3775,7 +3778,7 @@ footer {
                                     td {
                                         &:nth-child(1) {
                                             width: 15%;
-
+                                            cursor: pointer;
                                             
                                             .itm-prdct {
                                                 img {
@@ -3847,6 +3850,7 @@ footer {
             }
             .itm-d {
                 display: flex;
+                width: 100%;
                 font-size: .875rem;
 
                 @include respond-to(ynw-767) {
@@ -3994,7 +3998,6 @@ footer {
                         }
                     }
                     .lc11 {
-                        border-bottom: 1px solid $cc-ash;
                         margin-bottom: 20px;
                         
                         .bt8 {
@@ -4144,8 +4147,11 @@ footer {
                         
                     }
                     .lc22 {
-                        border-bottom: 1px solid $cc-ash;
                         margin-bottom: 20px;
+                        
+                        @include respond-to(ynw-767) {
+                            border-bottom: 1px solid $cc-ash;
+                        }
                         
                         .lcd {
                             flex-direction: column;
@@ -4164,41 +4170,6 @@ footer {
                                         font-size: 1rem;
                                     }
                                 }
-                            }
-                            .ttle {
-                                color: $cc-gray;
-                            }
-                        }
-                    }
-                    .lc33 {
-                        margin-bottom: 20px;
-                        
-                        .lcd {                            
-                            &.lc3-1 {
-                                flex-direction: row;
-                                
-                                .ttle {
-                                    align-self: center;
-                                    text-transform: uppercase;
-                                    display: flex;
-                                    color: $linkblack;
-                                    
-                                    .addbt {
-                                        margin-left: 20px;
-                                        font-size: 1rem;
-                                    }
-                                }
-                            }
-                            &.lc3-2 {
-                                border-bottom: 1px solid $cc-body;
-                                padding-bottom: 10px;
-                                
-                                &:last-child {
-                                    border: none;
-                                }
-                            }
-                            .ctrl {
-                                margin-left: auto;
                             }
                             .ttle {
                                 color: $cc-gray;
@@ -4319,6 +4290,52 @@ footer {
                                         }
                                     }
                                 }
+                            }
+                        }
+                    }
+                    
+                    .lc33 {
+                        margin-bottom: 20px;
+                        
+                        .lcd {                            
+                            &.lc3-1 {
+                                flex-direction: row;
+                                
+                                .ttle {
+                                    align-self: center;
+                                    text-transform: uppercase;
+                                    display: flex;
+                                    color: $linkblack;
+                                    
+                                    .addbt {
+                                        margin-left: 20px;
+                                        font-size: 1rem;
+                                    }
+                                }
+                            }
+                            &.lc3-2 {
+                                border-bottom: 1px solid $cc-body;
+                                padding-bottom: 10px;
+                                
+                                &:last-child {
+                                    border: none;
+                                }
+                            }
+                            .ctrl {
+                                margin-left: auto;
+                            }
+                            .ttle {
+                                color: $cc-gray;
+                            }
+                        }
+                    }
+                    .lc11, .lc22, .lc33 {
+                        .lcd {
+                            display: flex;
+                            margin-bottom: 15px;
+                            
+                            .ttle {
+                                font-weight: 600;
                             }
                         }
                     }

@@ -57,6 +57,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
+          panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
           data: {
             'message' : Messages.ADWORD_DELETE.replace('[adword]', '"' + adword.name + '"')
           }
@@ -72,6 +73,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit {
         .subscribe(
           data => {
             this.getAdwords();
+            this.sharedfunctionObj.openSnackBar(Messages.ADWORD_DELETE_SUCCESS);
           },
           error => {
 

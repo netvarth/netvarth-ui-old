@@ -33,41 +33,30 @@
                                           <span class="ttle">You have currently enrolled to</span>
 
                                           <div class="subs-box">
-                                              <div class="pack active">
-                                                  <span class="icon-tick"></span><span class="price">₹500</span> / month
+                                              <div class="pack active" *ngIf="license_upgarde_sub['price']">
+                                                  <span class="icon-tick"></span>
+                                                  <span class="price">
+                                                    {{license_upgarde_sub['price'] | currency:'INR':'symbol':'.2-2'}}</span> / {{license_upgarde_sub['current_sub']}}
+                                                    <span class="icon-question" *ngIf="license_upgarde_sub['next_sub'] == null"
+                                                    matTooltip="Please contact youneverwait.com to change subscription type"></span>
                                               </div>
+                                              <ng-container *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
+                                                  <span class="change">Change plan to</span>
 
-                                              <span class="change">Change plan to</span>
+                                                  <div class="pack not-active" *ngFor="let sub of license_upgarde_sub['next_sub']"
+                                                  (click)="updateSubscription(sub['value'])">
+                                                      <span class="price">{{sub['amount'] | currency:'INR':'symbol':'.2-2'}}</span> / {{sub['type']}}
+                                                      <span class="discount" *ngIf="sub['discount_per'] != 0">
+                                                         ( {{sub['discount_per']}}% discount )
+                                                      </span>
+                                                  </div>
+                                              </ng-container>
 
-                                              <div class="pack not-active">
-                                                  <span class="price">₹5000</span> / year <span class="discount"> (20% discount)</span>
-                                              </div>
                                           </div>
 
                                       </div>
                                   </div>
                               </div>
-                              <div class="lc22">
-                                  <div class="lc2-1 lcd">
-                                      <div class="ttle">Add-on
-                                        <span class="addbt" (click)="showadd_addons()"></span></div>
-                                  </div>
-                                  <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
-
-                                      <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">
-                                          <div class="ttle">{{addon.name}}</div>
-                                          <div class="add-details">{{addon.description}}</div>
-                                      </div>
-
-                                  </ng-container>
-                                  <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
-                                      <div class="lc2-2 lcd">
-                                          <div class="ttle">No addons exists</div>
-                                      </div>
-                                  </ng-container>
-
-                              </div>
-                              <app-provider-bprofile-search-adwords></app-provider-bprofile-search-adwords>
 
                           </div>
                           <div class="right">
@@ -78,17 +67,17 @@
                                               <span class="amount">Due Amount : <strong>
                                                 {{currentlicense_details.dueAmount | currency:'INR':'symbol':'.2-2'}}</strong>
                                               </span>
-                                              <span class="amount">Next Payment On : <strong>
+                                              <span class="amount" *ngIf="invoices.length != 0">Next Payment On : <strong>
                                                 {{currentlicense_details.nextPaymentOn}}</strong>
                                               </span>
                                           </div>
-                                          <div class="rt">
+                                          <div class="rt"  *ngIf="invoices.length != 0">
                                               <span class="cs-btn bt3 ml-auto">Pay</span>
                                           </div>
                                       </div>
-                                      <div class="lc4-2">
+                                      <div class="lc4-2" >
                                           <div class="pay-tbl">
-                                              <table class="table">
+                                              <table class="table"  *ngIf="invoices.length != 0">
                                                   <thead>
                                                       <tr>
                                                           <th>Date</th>
@@ -139,10 +128,37 @@
                                           </div>
                                       </div>
                                       <div class="lc4-3">
-                                          <span class="cs-btn bt8">Payment History</span>
+                                          <span class="cs-btn bt8" (click)="goPaymentHistory()">Payment History</span>
                                       </div>
                                   </div>
                               </div>
+                          </div>
+                      </div>
+                      <div class="copy">
+                          <div class="left">
+                              <div class="lc22">
+                                  <div class="lc2-1 lcd">
+                                      <div class="ttle">Add-on
+                                        <span class="addbt" (click)="showadd_addons()"></span></div>
+                                  </div>
+                                  <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
+
+                                      <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">
+                                          <div class="ttle">{{addon.name}}</div>
+                                          <div class="add-details">{{addon.description}}</div>
+                                      </div>
+
+                                  </ng-container>
+                                  <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
+                                      <div class="lc2-2 lcd">
+                                          <div class="ttle">No addons exists</div>
+                                      </div>
+                                  </ng-container>
+
+                              </div>
+                          </div>
+                          <div class="right">
+                              <app-provider-bprofile-search-adwords></app-provider-bprofile-search-adwords>
                           </div>
                       </div>
                   </div>
