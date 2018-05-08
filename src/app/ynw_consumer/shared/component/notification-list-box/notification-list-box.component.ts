@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { SharedServices } from '../../../../shared/services/shared-services';

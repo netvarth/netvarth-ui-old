@@ -24,7 +24,7 @@ export class OtpFormComponent  implements OnInit {
 
   @Input()  submitdata;
   @Input()  type;
-  @Output() onOtpSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() retonOtpSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   @Output() resendOtp: EventEmitter<any> = new EventEmitter();
 
@@ -47,7 +47,8 @@ export class OtpFormComponent  implements OnInit {
   }
 
   doOnOtpSubmit(value) {
-    this.onOtpSubmit.emit(value);
+    console.log('here');
+    this.retonOtpSubmit.emit(value);
   }
 
   doResetApiErrors() {

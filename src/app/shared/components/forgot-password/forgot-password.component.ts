@@ -7,11 +7,23 @@ import {FormMessageDisplayService} from '../../modules/form-message-display/form
 import {projectConstants} from '../../../shared/constants/project-constants';
 import {Messages} from '../../constants/project-messages';
 
+export class ForgotPasswordModel {
+  constructor(
+    public phonenumber: number = null,
+    public phone_otp: string  = null,
+    public password: string  = null,
+    public confirm_password: string = null
+  ) {  }
+
+}
+
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   // styleUrls: ['./home.component.scss']
 })
+
+
 export class ForgotPasswordComponent  {
 
 
@@ -27,8 +39,8 @@ export class ForgotPasswordComponent  {
   submit_data = {};
   is_provider = 'true';
 
-  @Output() onChangePassword: EventEmitter<any> = new EventEmitter();
-  @Output() onCancelForgotPassword: EventEmitter<any> = new EventEmitter();
+  @Output() retonChangePassword: EventEmitter<any> = new EventEmitter();
+  @Output() retonCancelForgotPassword: EventEmitter<any> = new EventEmitter();
 
   constructor(
     public dialogRef: MatDialogRef<ForgotPasswordComponent>,
@@ -63,7 +75,7 @@ export class ForgotPasswordComponent  {
     }
 
     cancelForgotPassword() {
-      this.onCancelForgotPassword.emit();
+      this.retonCancelForgotPassword.emit();
     }
 
     onPhoneSubmit(submit_data) {
@@ -109,7 +121,7 @@ export class ForgotPasswordComponent  {
             this.api_success = 'Password changed successfully .. you will be redirected to the login page now';
             setTimeout(() => {
 
-              this.onChangePassword.emit();
+              this.retonChangePassword.emit();
              }, projectConstants.TIMEOUT_DELAY);
 
           },
@@ -158,12 +170,4 @@ export class ForgotPasswordComponent  {
 
 }
 
-export class ForgotPasswordModel {
-    constructor(
-      public phonenumber: number = null,
-      public phone_otp: string  = null,
-      public password: string  = null,
-      public confirm_password: string = null
-    ) {  }
 
-}

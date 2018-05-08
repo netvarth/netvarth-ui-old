@@ -103,13 +103,13 @@ onSubmit()" (keyup)="resetApiErrors()">
   </div>
 </form>
 <div class="example-container" *ngIf="step==2">
-  <app-otp-form [type]="'signup'" [submitdata]="user_details" (onOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
+  <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
   (resendOtp)="resendOtp($event)"></app-otp-form>
 </div>
 
 
 <div class="example-container" *ngIf="step==3">
-  <app-sp-form (onPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"></app-sp-form>
+  <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"></app-sp-form>
 </div>
 <div *ngIf="api_error">
     <app-field-error-display [displayError]="true"

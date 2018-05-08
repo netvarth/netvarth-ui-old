@@ -21,7 +21,7 @@ export class VirtualFieldsComponent implements OnInit {
 
 
   bProfile = null;
-  questions= [];
+  questions = [];
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,

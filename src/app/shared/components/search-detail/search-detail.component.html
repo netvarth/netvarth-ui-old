@@ -13,49 +13,10 @@
                     </span>
                     <span class="ttle" *ngIf="showrefinedsection">Refine Search</span>
                 </div>
-                <!-- <div class="ct1" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
-                    <div class="ct-l" (click)="togger_refinesection()">
-                        <span class="mnu">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </span>
-                    </div>
-                    <div class="ct-r" *ngIf="showrefinedsection"><span class="ttle">Refine Search</span></div>
-                </div> -->
-                
-                <!-- <div class="ct2" *ngIf = "search_result_count">
-                    <div class="ct-l">
-                        <div class="rslts">{{ (search_data.hits.found>1) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong> {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ? 'result': ''}} found </div>
-                    </div>
-                    <div class="ct-r ml-auto">
-                        <div class="fltr">
-                            <div class="search_sort_display">
-                                <mat-form-field>
-                                    <mat-select name="sortfield" panelClass ="search_domaindropdown_class" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)" [(ngModel)]="sortfieldsels">
-                                      <mat-option value="titleasc">
-                                        Title (Ascending)
-                                      </mat-option>
-                                      <mat-option value="titledesc">
-                                          Title (Descending)
-                                       </mat-option>
-                                       <mat-option value="sectorasc">
-                                          Sector (Ascending)
-                                        </mat-option>
-                                        <mat-option value="sectordesc">
-                                            Sector (Descending)
-                                         </mat-option>
-                                    </mat-select>
-                                  </mat-form-field>
-                                    
-                                </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
             
             <div class="c-outer">
-                <div class="sidebar-overlay" *ngIf="showrefinedsection"></div>
+                <div class="sidebar-overlay" *ngIf="showrefinedsection" (click)="togger_refinesection()"></div>
                 <div class="sidebar" *ngIf="showrefinedsection">
                     <div class="rs-box">
                         <div  *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
@@ -182,7 +143,7 @@
                     </div>
                 </div>
                
-                <div class="c-body" *ngIf = "search_result_count">
+                <div class="c-body" [class.hideme]="showrefinedsection" *ngIf = "search_result_count">
                     <div class="ct2" [class.ct2pad]="!showrefinedsection">
                         <div class="ct-l">
                             <div class="rslts">{{ (search_data.hits.found>10) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong> {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ? 'result': ''}} found <!-- for <span>‘Dentists’</span> --></div>
@@ -205,16 +166,8 @@
                                                 Sector (Descending)
                                              </mat-option>
                                         </mat-select>
-                                      </mat-form-field>
-                                        
-                                    <!-- <select name="sortfield" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)">
-                                      <option value="titleasc" [selected]="sortfield==='titleasc'" >Title Ascending</option>
-                                      <option value="titledesc" [selected]="sortfield==='titledesc'" >Title Descending</option>
-                                      <option value="sectorasc" [selected]="sortfield==='sectorasc'">Sector Ascending</option>
-                                      <option value="sectordesc" [selected]="sortfield==='sectordesc'">Sector Descending</option>
-                                    </select> -->
-                                    <!-- <span class="sorder" (click)="selected_sortorder('asc')">A</span>&nbsp;<span  class="sorder" (click)="selected_sortorder('desc')">D</span> -->
-                                  </div>
+                                    </mat-form-field>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -224,7 +177,7 @@
                                 <div class="tp1">
                                     <div class="pro-img" (click)="providerDetClicked(search_result)">
                                         <img *ngIf="search_result.fields.logo" [src]="search_result.fields.logo" alt="">  
-                                        <img *ngIf="!search_result.fields.logo" src="./assets/images/img-null.svg" alt="">  
+                                        <!-- <img *ngIf="!search_result.fields.logo" src="./assets/images/img-null.svg" alt="">   -->
                                     </div>
                                     <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>

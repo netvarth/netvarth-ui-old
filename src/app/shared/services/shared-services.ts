@@ -182,13 +182,13 @@ export class SharedServices {
       let url = '';
       switch (src) {
         case 'consumer':
-          url = 'consumers/login/s3Url';
+          url = 'consumer/login/s3Url';
         break;
         case 'provider':
           url = 'provider/login/s3Url';
         break;
         default: // case if parameter is blank
-          url = 'consumers/login/s3Url';
+          url = 'consumer/login/s3Url';
         break;
       }
       return this.servicemeta.httpGet(url);

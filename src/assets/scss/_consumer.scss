@@ -500,24 +500,17 @@ header {
         z-index: 11;
         height: 20px;
         
+        @include respond-to(ynw-767){
+            position: relative;
+            width: 50%;
+            height: auto;
+        }
+        
         .ct1 {
             width: 100%;
             position: relative;
             margin-right: 30px;
             display: flex;
-            
-            @include respond-to(ynw-767){
-                width: 30%;
-                display: flex;
-                align-items: flex-end;
-            }
-            @include respond-to(ynw-575){
-                width: 120px;
-                margin-right: 10px;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-            }
                 
             .mnu {
                 display: flex;
@@ -552,7 +545,8 @@ header {
     .c-outer {
         display: flex;
         width: 100%;
-        margin-top: 30px;
+        margin-top: 20px;
+        margin-bottom: 30px;
         position: relative;
         
         .sidebar-overlay {
@@ -573,13 +567,23 @@ header {
             margin-right: 30px;
             font-size: .875rem;
             margin-bottom: 30px;
-            margin-top: 40px;
+            margin-top: 48px;
+            @include transition(all 300ms);
             
             @include respond-to(ynw-767){
-                position: absolute;
+                position: relative;
                 width: 50%;
                 z-index: 1002;
                 margin-right: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            
+            @include respond-to(ynw-575){
+                width: 75%;
+            }
+            @include respond-to(ynw-768-991){
+                width: 30%;
             }
             
             .rs-box {
@@ -658,6 +662,7 @@ header {
                                         
                                         .mat-select {
                                             @include font-regular;
+                                            font-weight: 500;
                                         }
                                     }
                                     
@@ -665,6 +670,18 @@ header {
                                         .ynwstar-rating {
                                             float: none;
                                             width: 135px;
+                                        }
+                                    }
+                                    
+                                    .mat-checkbox {
+                                        @include font-regular;
+                                        font-weight: 500;
+                                    }
+                                    
+                                    .mat-slide-toggle {
+                                        .mat-slide-toggle-content {
+                                            @include font-regular;
+                                            font-weight: 500;
                                         }
                                     }
                                 }
@@ -682,26 +699,25 @@ header {
         .c-body {
             flex-grow: 1;
             position: relative;
+            @include transition(all 300ms);
             
             .ct2 {
                 display: flex;
                 font-size: .875rem;
                 flex-grow: 1;
                 min-height: 40px;
-
-                @include respond-to(ynw-767){
-                    flex-direction: column;
-                }
+                margin-bottom: 10px;
 
                 .ct-l {
+                    display: flex;
+                    align-items: center;
+                    
                     @include respond-to(ynw-767){
-                        order: 2;
-                        margin-top: 10px;
+                        width: 70%;
                     }
                     .rslts {
-                        @include respond-to(ynw-767){
-                            text-align: right;
-                        }
+                        font-weight: 500;
+                        
                         span {
                             color: $linkblue;
                             font-weight: 500;
@@ -710,8 +726,6 @@ header {
                 }
                 .ct-r {
                     .fltr {
-                        margin-bottom: 10px;
-                        
                         .search_sort_display {
                             float: none;
                             width: auto;
@@ -750,6 +764,11 @@ header {
                 }
                 &.ct2pad {
                     margin-left: 50px;
+                    
+                    @include respond-to(ynw-767){
+                        margin-left: 0px;
+                        
+                    }
                 }
             }
             
@@ -812,13 +831,26 @@ header {
                             
                             .pro-img {
                                 margin-bottom: 10px;
+                                background-color: $cc-lightgray;
+                                display: flex;                    
+                                justify-content: center;
+                                align-items: center;
+                                position: relative;
+                                overflow: hidden;
+                                width: 170px;
+                                height: 150px;
                                 
                                 img {
                                     width: 170px;
                                     height: 150px;
+                                    position: relative;
+                                    z-index: 12;
                                 }
                                 
                                 @include respond-to(ynw-767) {
+                                    width: 100%;
+                                    height: 100px;
+                                    
                                     img {
                                         width: 100%;
                                         height: 100px;
@@ -830,10 +862,23 @@ header {
                                 }
                                 
                                 @include respond-to(ynw-768-991) {
+                                    width: 100%;
+                                    height: 100px;
+                                    
                                     img {
                                         width: 100%;
                                         height: 100px;
                                     }
+                                }
+                                
+                                &:after {
+                                    content: "";
+                                    background: url(../images/img-null.svg) no-repeat scroll 0 0;
+                                    position: absolute;
+                                    width: 120px;
+                                    height: 120px;
+                                    opacity: .3;
+                                    z-index: 10;
                                 }
                             }
                             .gal {
@@ -924,13 +969,19 @@ header {
                                             display: flex;
                                             margin-bottom: 5px;
                                             
+                                            @include respond-to(ynw-767) {
+                                                flex-direction: column;
+                                            }
+                                            @include respond-to(ynw-768-991) {
+                                                flex-direction: column;
+                                            }
                                             @include respond-to(ynw-992-1199) {
                                                 flex-direction: column;
                                             }
 
                                             .day {
                                                 font-weight: 600;
-                                                width: 40%;
+                                                width: auto;
                                                 margin-right: 10px;
                                             }
                                             .time {
@@ -1206,6 +1257,17 @@ header {
                     
                 }
             }
+            &.hideme {
+                @include respond-to(ynw-767) {
+                    display: none;
+                }
+            }
+        }
+        
+        .no-search-result {
+            font-size: .875rem;
+            font-weight: 500;
+            padding-top: 60px;
         }
     }
     

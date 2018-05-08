@@ -5,6 +5,6 @@ import { routerTransition } from './../router.animations';
     selector: 'app-not-found',
     templateUrl: './not-found.component.html',
     styleUrls: ['not-found.component.scss'],
-    //animations: [routerTransition()]
+    // animations: [routerTransition()]
 })
 export class NotFoundComponent { }

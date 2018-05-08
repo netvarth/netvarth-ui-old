@@ -266,6 +266,12 @@
                                                                         </button>
                                                                     </mat-menu>
                                                                 </span>
+                                                                <div class="ctd">
+                                                                    <span class="mbt-mobile-show">
+                                                                        <button class="editcls" type="button" (click)="handlePrivacysettings('phone', i)">Edit</button>
+                                                                        <button class="deletecls" type="button" (click)="deletePrivacysettings('phone', i)">Delete</button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </li>
                                                     </ng-container>
@@ -302,6 +308,12 @@
                                                                     </mat-menu>
 
                                                                 </span>
+                                                                <div class="ctd">
+                                                                <span class="mbt-mobile-show">
+                                                                    <button class="editcls" type="button" (click)="handlePrivacysettings('email', i)">Edit</button>
+                                                                    <button class="deletecls" type="button" (click)="deletePrivacysettings('email', i)">Delete</button>
+                                                                </span>
+                                                                </div>
                                                             </div>
                                                         </li>
                                                      </ng-container>

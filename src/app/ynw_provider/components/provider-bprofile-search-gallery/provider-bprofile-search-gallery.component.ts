@@ -40,6 +40,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
   imagePointer = 0;
   savedisabled = false;
   img_save_caption = 'Save';
+  error_msg = '';
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -49,7 +50,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
     private dialog: MatDialog) {}
 
   ngOnInit() {
-    this.getGalleryImages();
+    // this.getGalleryImages();
   }
 
   resetVariables() {
@@ -121,6 +122,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         } else {
          // console.log(this.success_error);
           this.error_list.push(this.success_error);
+          this.error_msg = 'Please upload images with size < 5mb';
         }
 
 
@@ -181,6 +183,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
       },
       error => {
         this.error_list.push(error.error);
+        this.error_msg = error.error;
       }
     );
 

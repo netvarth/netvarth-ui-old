@@ -17,7 +17,5 @@ export class SearchDataStorageService {
   set(data) {
     this.storage.searchlabels = data;
   }
-  
-
 }
 

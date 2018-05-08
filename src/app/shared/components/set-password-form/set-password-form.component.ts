@@ -13,7 +13,7 @@ export class SetPasswordFormComponent  implements OnInit {
 
   spForm: FormGroup;
 
-  @Output() onPasswordSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
 
   constructor(private fb: FormBuilder,
@@ -37,7 +37,7 @@ export class SetPasswordFormComponent  implements OnInit {
   }
 
   doOnPasswordSubmit(value) {
-    this.onPasswordSubmit.emit(value);
+    this.retonPasswordSubmit.emit(value);
   }
 
   doResetApiErrors() {

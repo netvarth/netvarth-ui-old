@@ -64,7 +64,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       this.service = this.data.service;
       this.setValue(this.service);
       this.getGalleryImages();
-      this.button_title = 'Update'
+      this.button_title = 'Update';
      }
   }
 
@@ -88,7 +88,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     description: [''],
     serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
     totalAmount: ['', Validators.compose([Validators.pattern(this.number_decimal_pattern)])],
-    enabled_prepayment: [{'value': false , 'disabled': this.base_licence }],
+    isPrePayment: [{'value': false , 'disabled': this.base_licence }],
     // taxable: [false],
     notification: [false]
     });
@@ -101,7 +101,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       'description': data['description'] || this.amForm.get('description').value,
       'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
       'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
-      'enabled_prepayment': (!this.base_licence && data['minPrePaymentAmount'] &&
+      'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
                               data['minPrePaymentAmount'] !== 0
                               ) ? true : false,
       // 'taxable': data['taxable'] || this.amForm.get('taxable').value,
@@ -115,8 +115,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   onSubmit (form_data) {
 
     form_data.bType = 'Waitlist';
-    form_data.minPrePaymentAmount = (!form_data.enabled_prepayment || form_data.enabled_prepayment === false) ?
+    form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
                                      0 : form_data.minPrePaymentAmount;
+    form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
     if (this.data.type === 'add') {
        this.createService(form_data);
     } else if (this.data.type === 'edit') {
@@ -176,7 +177,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   changePrepayment() {
-    if (this.amForm.get('enabled_prepayment').value === false) {
+    if (this.amForm.get('isPrePayment').value === false) {
       this.amForm.removeControl('minPrePaymentAmount');
     } else {
       const value = (this.data.type === 'edit' && this.service['minPrePaymentAmount']) ?

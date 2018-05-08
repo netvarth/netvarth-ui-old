@@ -137,6 +137,9 @@
                                                 </button>
                                             </mat-menu>
                                         </span>
+                                        <span class="mbt-mobile-show">
+                                            <button [class.enableicon]="queue.queueState=='DISABLED'" [class.disableicon]="queue.queueState=='ENABLED'" type="button" (click)="changeProviderQueueStatus(queue)">{{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</button>
+                                        </span>
                                     </td>
                                 </tr>
                             </tbody>

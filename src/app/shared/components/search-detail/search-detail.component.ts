@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
@@ -26,8 +26,10 @@ import { CheckInComponent } from '../../modules/check-in/check-in.component';
   styleUrls: ['./search-detail.component.css']
 })
 
+@HostListener('window:resize', ['$event'])
 
 export class SearchDetailComponent implements OnInit {
+
   public domainlist_data;
   public domain;
   public subdomainlist_data;
@@ -68,17 +70,24 @@ export class SearchDetailComponent implements OnInit {
   public subdomainleft;
   location_cnt = 0;
   showrefinedsection = true;
+  current_provider;
   result_provid: any = [];
   waitlisttime_arr: any = [];
+  sidebarheight = '';
   waitlistestimatetimetooltip  = Messages.SEARCH_ESTIMATE_TOOPTIP;
   searchfields: SearchFields = new SearchFields();
+  screenHeight;
+  screenWidth;
+
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
               private shared_service: SharedServices,
               private shared_functions: SharedFunctions,
               private searchdetailserviceobj: SearchDetailServices,
-              private dialog: MatDialog ) { }
+              private dialog: MatDialog ) {
+                this.onResize();
+               }
 
   ngOnInit() {
     // this.activaterouterobj.queryParams
@@ -90,7 +99,16 @@ export class SearchDetailComponent implements OnInit {
     });
     this.sortfieldsels = 'titleasc';
     this.nosearch_results = false;
+
   }
+  onResize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+      this.showrefinedsection = false;
+    }
+    console.log('here', this.screenWidth, this.screenHeight);
+}
   private getDomainList() {
     this.shared_service.bussinessDomains()
     .subscribe (
@@ -426,7 +444,9 @@ export class SearchDetailComponent implements OnInit {
      // q_str = 'title:\'' + 'sony new business' + '\''; // ***** this line needs to be commented after testing
      if (this.latitude) { // case of location is selected
        // calling shared function to get the coordinates for nearybylocation
-       q_str = q_str + 'location1:' + this.shared_functions.getNearByLocation(this.latitude, this.longitude);
+       const coordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude);
+       const locstr = 'location1:' + coordinates + ' ' + 'location2:' + coordinates + 'location3:' + coordinates + 'location4:' + coordinates + 'location5:' + coordinates;
+       q_str = q_str + ' ( or ' + locstr + ')';
      }
 
      if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
@@ -1033,6 +1053,7 @@ export class SearchDetailComponent implements OnInit {
   }
 
   checkinClicked(obj) {
+    this.current_provider = obj;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (usertype === 'consumer') {
       this.showCheckin('consumer');
@@ -1071,7 +1092,8 @@ export class SearchDetailComponent implements OnInit {
       data: {
         type : origin,
         is_provider : this.checkProvider(origin),
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
+        srchprovider: this.current_provider
       }
     });
 

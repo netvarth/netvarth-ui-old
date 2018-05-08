@@ -56,7 +56,7 @@ export class AddProviderCouponsComponent implements OnInit {
           this.api_error = 'Please enter a numeric coupon amount';
           return;
         } else {
-            if (form_data.discValue == 0) {
+            if (form_data.discValue === 0) {
               this.api_error = 'Please enter the coupon value';
               return;
             }

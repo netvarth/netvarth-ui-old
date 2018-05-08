@@ -12,7 +12,7 @@ import { FormControlService } from './form-control.service';
 export class DynamicFormComponent implements OnInit {
 
   @Input() questions: FormBase<any>[] = [];
-  @Output() onFormSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() retonFormSubmit: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
   messages = [];
@@ -29,6 +29,6 @@ export class DynamicFormComponent implements OnInit {
   onSubmit() {
     // this.payLoad = JSON.stringify(this.form.value);
     // console.log(this.form.value);
-    this.onFormSubmit.emit(this.form.value);
+    this.retonFormSubmit.emit(this.form.value);
   }
 }

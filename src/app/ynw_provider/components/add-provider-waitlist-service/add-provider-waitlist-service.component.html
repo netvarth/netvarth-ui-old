@@ -52,12 +52,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
   <label class="col-form-label">Enable prepayment</label>
   <mat-slide-toggle
   class="example-margin"
-  formControlName="enabled_prepayment"
+  formControlName="isPrePayment"
   (change)="changePrepayment()">
 
   </mat-slide-toggle>
   </div>
-  <div class="form-group" *ngIf="amForm.get('enabled_prepayment').value === true">
+  <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
     <label class="col-form-label" for="prepayment_amount">Prepayment Amount *</label>
     <input type="text" class="form-control" id="prepayment_amount" placeholder="Prepayment Amount"
     formControlName="minPrePaymentAmount">
@@ -168,7 +168,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 </mat-dialog-actions>
 
-<app-field-error-display [displayError]="(error_list.length > 0) ? true : false"  errorMsg="Please upload images with size < 1mb">
+<app-field-error-display [displayError]="(error_list.length > 0) ? true : false"  errorMsg="Please upload images with size < 5mb">
 </app-field-error-display>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error"

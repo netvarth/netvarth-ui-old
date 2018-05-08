@@ -28,7 +28,7 @@
                                                         <span class="ttle">Price</span>
                                                         <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                                                     </div>
-                                                    <div class="item">
+                                                    <div class="item" *ngIf="service_data.isPrePayment">
                                                         <span class="ttle">Prepayment Amount</span>
                                                         <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                                                     </div>

@@ -1,12 +1,20 @@
-<h1 class="mat-dialog-title">Check in
+<h1 class="mat-dialog-title" *ngIf="search_obj">Check-in - {{search_obj.fields.title}}
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
   <mat-dialog-content>
-  This section is Under Construction
+      <div class="locationouter" >
+          <div class="location_head">
+              Check-in Location
+          </div>
+        <mat-chip-list *ngIf="locationjson.length > 0">
+                <mat-chip *ngFor="let loc of locationjson" (click)="handleLocationSel(loc)" [selected] ="isSelectedLoc(loc.id)">{{loc.place}}</mat-chip>
+        </mat-chip-list>
+      </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-  <!-- <button  type="submit" mat-button class="cs-btn bt1" disabled>Save</button> -->
+  <button  type="submit" mat-button class="cs-btn bt1" *ngIf="checkinenable">Check-In</button>
+  <div class="disable-msg" *ngIf="!checkinenable && checkindisablemsg !=''">{{checkindisablemsg}}</div>
   <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
   </mat-dialog-actions>

@@ -38,7 +38,7 @@ import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin } f
 import { SharedServices } from './shared/services/shared-services';
 import { SharedFunctions } from './shared/functions/shared-functions';
 import { MatDialogModule } from '@angular/material';
-import { EqualValidator } from './shared/directives/equal-validator.directive';
+// import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayModule } from './shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
@@ -54,7 +54,7 @@ import 'hammerjs';
     HomeComponent,
     LogoutComponent,
     ForgotPasswordComponent,
-    EqualValidator,
+   // EqualValidator,
     SignUpComponent,
     // OtpFormComponent,
     SetPasswordFormComponent,

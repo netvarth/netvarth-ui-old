@@ -32,6 +32,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
   image_list: any = [];
   success_error = null;
   error_list = [];
+  error_msg = '';
   api_success = '';
   imagesArray: Array<Image>;
   images: Observable<Array<Image>>;
@@ -97,6 +98,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
         } else {
          // console.log(this.success_error);
           this.error_list.push(this.success_error);
+          this.error_msg = 'Please upload images with size < 5mb';
         }
 
 
@@ -115,6 +117,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
 
   saveImages() {
     // console.log(this.item_pic);
+    this.error_msg = '';
     this.savedisabled = true;
     this.img_save_caption = 'Uploading .. ';
     const submit_data: FormData = new FormData();
@@ -142,7 +145,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
   }
 
   uploadApi(submit_data) {
-
+  this.error_msg = '';
     this.provider_services.uploadServiceGallery(this.service_id, submit_data)
     .subscribe(
       data => {
@@ -153,7 +156,10 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
         this.dialogRef.close('reloadlist');
       },
       error => {
-
+        this.error_list.push('error');
+        this.img_save_caption = 'Save';
+        this.savedisabled = false;
+        this.error_msg = error.error;
       }
     );
 

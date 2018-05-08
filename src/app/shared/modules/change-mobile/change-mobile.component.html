@@ -33,7 +33,7 @@
         </div>
 
         <div class="example-container" *ngIf="step==2">
-          <app-otp-form [type]="'forgot_password'" [submitdata]="submit_data"  (onOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
+          <app-otp-form [type]="'forgot_password'" [submitdata]="submit_data"  (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
           (resendOtp)="resendOtp($event)"></app-otp-form>
         </div>
 
