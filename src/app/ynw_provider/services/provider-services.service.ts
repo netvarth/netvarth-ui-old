@@ -541,4 +541,25 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, message);
   }
 
+  getInvoicesWithStatus(status = 'NotPaid') {
+    const url = 'provider/license/invoices/' + status + '/status';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getLicenseSubscription() {
+    const url = 'provider/license/getSubscription';
+    return this.servicemeta.httpGet(url);
+  }
+
+  changeLicenseSubscription(type) {
+    const url = 'provider/license/changeSubscription/' + type;
+    return this.servicemeta.httpPut(url);
+  }
+
+  getPaymentHistory(provider_id) {
+    const url = 'provider/payment/' + provider_id;
+    return this.servicemeta.httpGet(url);
+  }
+
+
 }

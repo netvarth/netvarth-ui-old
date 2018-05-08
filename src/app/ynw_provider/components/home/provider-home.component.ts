@@ -104,8 +104,9 @@ export class ProviderHomeComponent implements OnInit {
           }
         } else {
           this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
+          this.getQueueList();
         }
-        this.getQueueList();
+
       },
       error => {
         this.load_locations = 1;
@@ -191,6 +192,7 @@ export class ProviderHomeComponent implements OnInit {
     this.loadApiSwitch('changeLocation');
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
 
+    this.getQueueList();
     this.getFutureCheckinCount();
     this.getTodayCheckinCount();
     // this.getHistoryCheckinCount();

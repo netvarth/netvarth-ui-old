@@ -25,6 +25,7 @@ import { ProviderWaitlistServicesComponent } from './components/provider-waitlis
 import { ProviderWaitlistServiceDetailComponent } from './components/provider-waitlist-service-detail/provider-waitlist-service-detail.component';
 import { ProviderWaitlistQueuesComponent } from './components/provider-waitlist-queues/provider-waitlist-queues.component';
 import { ProviderWaitlistQueueDetailComponent } from './components/provider-waitlist-queue-detail/provder-waitlist-queue-detail.component';
+import { ProviderPaymentHistoryComponent } from './components/provider-payment-history/provider-payment-history.component';
 
 import { AuthGuardProviderHome, AuthGuardNewProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
 import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
@@ -104,8 +105,13 @@ const routes: Routes = [
       {
         path: 'license',
         children: [
-          { path: 'auditlog',
+          {
+            path: 'auditlog',
             component: ProviderAuditLogComponent
+          },
+          {
+            path: 'paymenthistory',
+            component: ProviderPaymentHistoryComponent
           }
         ]
       }

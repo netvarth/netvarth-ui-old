@@ -59,7 +59,7 @@ export class AddproviderAddonComponent implements OnInit {
         .subscribe (data => {
           this.api_success = Messages.ADDON_ADDED;
           setTimeout(() => {
-           this.dialogRef.close();
+           this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
           },
           error => {

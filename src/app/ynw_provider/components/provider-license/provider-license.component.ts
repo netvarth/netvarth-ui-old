@@ -12,7 +12,7 @@ import { AddProviderItemComponent } from '../add-provider-item/add-provider-item
 import { UpgradeLicenseComponent } from '../upgrade-license/upgrade-license.component';
 import { AddproviderAddonComponent  } from '../add-provider-addons/add-provider-addons.component';
 import { ProviderLicenseUsageComponent } from '../provider-license-usage/provider-license-usage.component';
-
+import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditlogs.component';
 @Component({
   selector: 'app-provider-license',
   templateUrl: './provider-license.component.html',
@@ -22,7 +22,20 @@ export class ProviderLicenseComponent implements OnInit {
 
     currentlicense_details: any = [] ;
     metrics: any = [];
-
+    invoices: any = [];
+    license_sub = null;
+    all_license_metadata: any = [];
+    license_upgarde_sub = {};
+    breadcrumbs = [
+      {
+        title: 'Settings',
+        url: '/provider/settings'
+      },
+      {
+      title: 'License & Invoice'
+      }
+    ];
+    license_message = '';
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions) {}
@@ -30,27 +43,52 @@ export class ProviderLicenseComponent implements OnInit {
     ngOnInit() {
       this.getLicenseDetails();
       this.getLicenseUsage();
+      this.getInvoiceList();
+      this.getSubscriptionDetail();
+
     }
 
 
-    getLicenseDetails() {
+    getLicenseDetails(call_type = 'init') {
       this.provider_servicesobj.getLicenseDetails()
         .subscribe(data => {
           this.currentlicense_details = data;
-          // console.log('data', data);
+          console.log('data', data);
+          if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
+
+            const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
+            const end_date =  (data['accountLicense']['expiryDate']) ? moment(data['accountLicense']['expiryDate']) : null;
+            let valid_till = 0;
+            if (start_date != null && end_date != null) {
+              valid_till = end_date.diff(start_date, 'days');
+              valid_till = (valid_till < 0) ?  0 :  valid_till;
+            }
+            this.license_message = valid_till + ' day trial, till ' + end_date.format('ll');
+          }
+
         });
+
+        if (call_type === 'update') {
+          this.getLicenseUsage();
+          this.getInvoiceList();
+          this.getSubscriptionDetail();
+
+        }
     }
 
     showupgradeLicense() {
         const dialogRef = this.dialog.open(UpgradeLicenseComponent, {
           width: '50%',
+          panelClass: ['commonpopupmainclass'],
           data: {
             type : 'upgrade'
           }
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          this.getLicenseDetails();
+          if (result === 'reloadlist') {
+            this.getLicenseDetails('update');
+          }
         });
     }
 
@@ -59,11 +97,14 @@ export class ProviderLicenseComponent implements OnInit {
         width: '50%',
         data: {
           type : 'addons'
-        }
+        },
+        panelClass: ['commonpopupmainclass'],
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.getLicenseDetails();
+        if (result === 'reloadlist') {
+          this.getLicenseDetails();
+        }
       });
   }
 
@@ -96,7 +137,17 @@ export class ProviderLicenseComponent implements OnInit {
       );
   }*/
   showLicenceHistory() {
-    this.router.navigate(['provider', 'settings', 'license', 'auditlog']);
+    // this.router.navigate(['provider', 'settings', 'license', 'auditlog']);
+    const dialogRef = this.dialog.open(ProviderAuditLogComponent, {
+      width: '50%',
+      data: {
+      },
+      panelClass: ['commonpopupmainclass'],
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
   getLicenseUsage() {
@@ -106,7 +157,7 @@ export class ProviderLicenseComponent implements OnInit {
         this.metrics = data;
       },
       error => {
-
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -116,11 +167,95 @@ export class ProviderLicenseComponent implements OnInit {
       width: '50%',
       data: {
         metrics : this.metrics
-      }
+      },
+      panelClass: ['commonpopupmainclass'],
     });
 
     dialogRef.afterClosed().subscribe(result => {
 
     });
   }
+
+  getInvoiceList() {
+    this.provider_servicesobj.getInvoicesWithStatus()
+    .subscribe(
+      data => {
+        this.invoices = data;
+      },
+      error => {
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      }
+    );
+  }
+
+  getSubscriptionDetail() {
+    this.provider_servicesobj.getLicenseSubscription()
+    .subscribe(
+      data => {
+        this.license_sub = data;
+        this.getLicenseMetaData();
+      },
+      error => {
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      }
+    );
+  }
+
+  getLicenseMetaData() {
+    this.provider_servicesobj.getLicenseMetadata()
+    .subscribe(
+      data => {
+        this.all_license_metadata = data;
+        const license_meta = {};
+        this.license_upgarde_sub = {};
+        for (const meta of this.all_license_metadata) {
+
+          if (meta['pkgId'] === this.currentlicense_details['accountLicense'] ['licPkgOrAddonId']) {
+              license_meta ['price'] = meta ['price'] || 0;
+              license_meta ['discPercFor12Months'] = meta ['discPercFor12Months'] || 0;
+              license_meta ['discPercFor6Months'] = meta ['discPercFor6Months'] || 0;
+              license_meta ['current_sub'] = (this.license_sub === 'Monthly') ? 'month' : 'year';
+              license_meta ['next_sub'] = null;
+
+              if (license_meta ['current_sub'] === 'month') {
+
+                const year_amount =  (license_meta ['price'] * 12);
+                license_meta ['next_sub'] = [
+                  {
+                    'amount' :  year_amount - (year_amount * license_meta ['discPercFor12Months'] / 100),
+                    'discount_per': license_meta ['discPercFor12Months'],
+                    'type': 'year',
+                    'value' : 'Annual'
+                  }
+                ];
+
+              }
+
+              this.license_upgarde_sub = license_meta;
+          }
+        }
+
+      },
+      error => {
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      }
+    );
+  }
+
+  updateSubscription(value) {
+    this.provider_servicesobj.changeLicenseSubscription(value)
+    .subscribe(
+      data => {
+        this.getSubscriptionDetail();
+      },
+      error => {
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      }
+    );
+  }
+
+  goPaymentHistory() {
+    this.router.navigate(['provider' , 'settings', 'license' , 'paymenthistory']);
+  }
+
 }

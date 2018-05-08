@@ -1,18 +1,31 @@
-<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
+<form [formGroup]="amForm"  novalidate
+(ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+<h1 class="mat-dialog-title">Add Adword
+  <button #queue mat-dialog-close class="modal_close">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content>
 
-<div class="form-group">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Adword" formControlName="adwordname">
-  </mat-form-field>
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'adwordname')"
-    errorMsg="Please enter adword">
-   </app-field-error-display> 
+  <div class="form-group">
+    <mat-form-field class="example-full-width">
+      <label class="col-form-label" for="calculationType">Adword</label>
+      <input matInput  formControlName="adwordname">
+    </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'adwordname')"
+      errorMsg="Please enter adword">
+    </app-field-error-display>
   </div>
 
-<button  type="submit" mat-button [disabled]="!amForm.valid">Save</button>
-
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button  type="submit" mat-button [disabled]="!amForm.valid">Save</button>
+  <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+</mat-dialog-actions>
 </form>
+
 <app-field-error-display [displayError]="true" *ngIf="api_error"
 errorMsg="{{api_error}}"></app-field-error-display>
 

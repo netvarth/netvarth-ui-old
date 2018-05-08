@@ -82,6 +82,7 @@ export const Messages = {
   'ADWORD_LISTEMPTY' : 'No adwords exists',
   'ADWORD_CREATED' : 'Adword created successfully',
   'ADWORD_DELETE'  : 'Do you really want to remove the Adword "[adword]"?',
+  'ADWORD_DELETE_SUCCESS'  : 'Adword deleted successfully',
 
   // WaitlistManager
   'ONLINE_CHECKIN_SAVED' : 'Saved successfully',

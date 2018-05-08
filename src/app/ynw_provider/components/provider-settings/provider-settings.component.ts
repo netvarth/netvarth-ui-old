@@ -153,6 +153,9 @@ export class ProviderSettingsComponent implements OnInit {
       case 'waitlistmanager':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager']);
       break;
+      case 'license':
+      this.routerobj.navigate(['provider', 'settings', 'license']);
+      break;
     }
   }
 

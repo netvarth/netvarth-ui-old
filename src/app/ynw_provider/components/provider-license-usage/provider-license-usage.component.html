@@ -1,23 +1,31 @@
-<div>
-  <div class="audit_outer">
-      <div class="" *ngIf="metrics.length>0">
-          <table width="100%">
-              <tr>
-                  <th>Name</th>
-                  <th>Total</th>
-                  <th>Used</th>
-                  <th>Complaince Info</th>
-              </tr>
-              <tr *ngFor="let metric of metrics">
-                  <td>{{metric.metricName}}</td>
-                  <td>{{metric.total }}</td>
-                  <td>{{metric.used }}</td>
-                  <td>{{metric.ComplainceInfo}}</td>
-              </tr>
-          </table>
-      </div>
-      <div class="" *ngIf="metrics.length==0">
-          No metric found
-      </div>
-  </div>
-</div>
+<h1 class="mat-dialog-title">License Usage
+    <button #queue mat-dialog-close class="modal_close">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </h1>
+  <mat-dialog-content>
+      <div>
+          <div class="audit_outer">
+              <div class="" *ngIf="metrics.length>0">
+                  <table width="100%">
+                      <tr>
+                          <th>Name</th>
+                          <th>Total</th>
+                          <th>Used</th>
+                          <th>Complaince Info</th>
+                      </tr>
+                      <tr *ngFor="let metric of metrics">
+                          <td>{{metric.metricName}}</td>
+                          <td>{{metric.total }}</td>
+                          <td>{{metric.used }}</td>
+                          <td>{{metric.ComplainceInfo}}</td>
+                      </tr>
+                  </table>
+              </div>
+              <div class="" *ngIf="metrics.length==0">
+                  No metric found
+              </div>
+          </div>
+        </div>
+  </mat-dialog-content>
+

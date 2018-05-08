@@ -1,4 +1,175 @@
-<app-header [headerTitle] = "'License'"></app-header>
+
+<section>
+  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+  <div class="content comn-cls">
+      <div class="container">
+          <div class="w-dta">
+              <div class="row">
+                  <div class="card">
+                      <div class="copy">
+                          <div class="left">
+                              <div class="lc11">
+                                  <div class="lc1-1">
+                                      <div class="lc-box">
+                                          <div class="tp">
+                                            <span class="ttle" *ngIf="currentlicense_details.accountLicense">
+                                              Your current License Package is <span class="pkg">{{currentlicense_details.accountLicense.name}} <span class="icon-question"></span></span>
+                                               <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span>
+                                            </div>
+
+                                          <div class="bt"><span class="cs-btn bt3" (click)="showupgradeLicense()">
+                                            Upgrade License</span></div>
+                                      </div>
+                                      <div class="lc-buttons">
+                                          <span class="cs-btn bt7" (click)="showLicenceHistory()">License Change History</span>
+                                          <span class="cs-btn bt7" (click)="showLicenseUsage()">License Usage</span>
+                                      </div>
+                                      <div class="subs">
+                                          <h4>Subscription</h4>
+
+                                          <span class="ttle">You have currently enrolled to</span>
+
+                                          <div class="subs-box">
+                                              <div class="pack active" *ngIf="license_upgarde_sub['price']">
+                                                  <span class="icon-tick"></span>
+                                                  <span class="price">
+                                                    {{license_upgarde_sub['price'] | currency:'INR':'symbol':'.2-2'}}</span> / {{license_upgarde_sub['current_sub']}}
+                                                    <span class="icon-question" *ngIf="license_upgarde_sub['next_sub'] == null"
+                                                    matTooltip="Please contact youneverwait.com to change subscription type"></span>
+                                              </div>
+                                              <ng-container *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
+                                                  <span class="change">Change plan to</span>
+
+                                                  <div class="pack not-active" *ngFor="let sub of license_upgarde_sub['next_sub']"
+                                                  (click)="updateSubscription(sub['value'])">
+                                                      <span class="price">{{sub['amount'] | currency:'INR':'symbol':'.2-2'}}</span> / {{sub['type']}}
+                                                      <span class="discount" *ngIf="sub['discount_per'] != 0">
+                                                         ( {{sub['discount_per']}}% discount )
+                                                      </span>
+                                                  </div>
+                                              </ng-container>
+
+                                          </div>
+
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+                          <div class="right">
+                              <div class="colum">
+                                  <div class="lc44">
+                                      <div class="lc4-1">
+                                          <div class="lt">
+                                              <span class="amount">Due Amount : <strong>
+                                                {{currentlicense_details.dueAmount | currency:'INR':'symbol':'.2-2'}}</strong>
+                                              </span>
+                                              <span class="amount" *ngIf="invoices.length != 0">Next Payment On : <strong>
+                                                {{currentlicense_details.nextPaymentOn}}</strong>
+                                              </span>
+                                          </div>
+                                          <div class="rt"  *ngIf="invoices.length != 0">
+                                              <span class="cs-btn bt3 ml-auto">Pay</span>
+                                          </div>
+                                      </div>
+                                      <div class="lc4-2" >
+                                          <div class="pay-tbl">
+                                              <table class="table"  *ngIf="invoices.length != 0">
+                                                  <thead>
+                                                      <tr>
+                                                          <th>Date</th>
+                                                          <th>Amount</th>
+                                                          <th>Period</th>
+                                                          <th>Invoice</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr>
+                                                          <td data-title="Date">20-04-2018</td>
+                                                          <td data-title="Amount">
+                                                              <strong>₹500</strong>
+                                                          </td>
+                                                          <td data-title="Period">
+                                                              20/04/2018 - 19/05/2018
+                                                          </td>
+                                                          <td data-title="Invoice">
+                                                              <span class="icon-invoice"></span>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td data-title="Date">20-04-2018</td>
+                                                          <td data-title="Amount">
+                                                              <strong>₹500</strong>
+                                                          </td>
+                                                          <td data-title="Period">
+                                                              20/04/2018 - 19/05/2018
+                                                          </td>
+                                                          <td data-title="Invoice">
+                                                              <span class="icon-invoice"></span>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td data-title="Date">20-04-2018</td>
+                                                          <td data-title="Amount">
+                                                              <strong>₹500</strong>
+                                                          </td>
+                                                          <td data-title="Period">
+                                                              20/04/2018 - 19/05/2018
+                                                          </td>
+                                                          <td data-title="Invoice">
+                                                              <span class="icon-invoice"></span>
+                                                          </td>
+                                                      </tr>
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                      <div class="lc4-3">
+                                          <span class="cs-btn bt8" (click)="goPaymentHistory()">Payment History</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="copy">
+                          <div class="left">
+                              <div class="lc22">
+                                  <div class="lc2-1 lcd">
+                                      <div class="ttle">Add-on
+                                        <span class="addbt" (click)="showadd_addons()"></span></div>
+                                  </div>
+                                  <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
+
+                                      <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">
+                                          <div class="ttle">{{addon.name}}</div>
+                                          <div class="add-details">{{addon.description}}</div>
+                                      </div>
+
+                                  </ng-container>
+                                  <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
+                                      <div class="lc2-2 lcd">
+                                          <div class="ttle">No addons exists</div>
+                                      </div>
+                                  </ng-container>
+
+                              </div>
+                          </div>
+                          <div class="right">
+                              <app-provider-bprofile-search-adwords></app-provider-bprofile-search-adwords>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+<!-- <app-header [headerTitle] = "'License'"></app-header>
 <table class="table_class">
     <tr>
         <td colspan="2"><strong>Settings / License</strong></td>
@@ -26,13 +197,13 @@
                             <td class="addon_td1">Name</td>
                             <td class="addon_td2">Description</td>
                             <td class="addon_td3">Status</td>
-                           <!-- <td class="addon_td4">Action</td> -->
+                           <td class="addon_td4">Action</td>
                         </tr>
                         <tr *ngFor="let addon of currentlicense_details.addons">
                             <td>{{addon.name}}</td>
                             <td>{{addon.description}}</td>
                             <td>{{addon.status}}</td>
-                            <td class="history_link"><!-- <div (click)="dodelete(addon)">Delete</div>--></td>
+                            <td class="history_link"><div (click)="dodelete(addon)">Delete</div></td>
                         </tr>
                     </table>
                     <table class="table_class" *ngIf="currentlicense_details.addons.length==0">
@@ -49,4 +220,4 @@
         <td></td>
     </tr>
 </table>
-<app-provider-bprofile-search-adwords></app-provider-bprofile-search-adwords>
+<app-provider-bprofile-search-adwords></app-provider-bprofile-search-adwords> -->
