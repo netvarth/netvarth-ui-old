@@ -13,6 +13,9 @@ import { UpgradeLicenseComponent } from '../upgrade-license/upgrade-license.comp
 import { AddproviderAddonComponent  } from '../add-provider-addons/add-provider-addons.component';
 import { ProviderLicenseUsageComponent } from '../provider-license-usage/provider-license-usage.component';
 import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditlogs.component';
+import { projectConstants } from '../../../shared/constants/project-constants';
+import { ProviderInvoiceDetailComponent } from '../provider-invoice-detail/provider-invoice-detail.component';
+
 @Component({
   selector: 'app-provider-license',
   templateUrl: './provider-license.component.html',
@@ -36,6 +39,9 @@ export class ProviderLicenseComponent implements OnInit {
       }
     ];
     license_message = '';
+    unpaid_invoice_show = 0;
+    dateFormat =  projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions) {}
@@ -53,7 +59,7 @@ export class ProviderLicenseComponent implements OnInit {
       this.provider_servicesobj.getLicenseDetails()
         .subscribe(data => {
           this.currentlicense_details = data;
-          console.log('data', data);
+
           if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
 
             const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
@@ -103,7 +109,7 @@ export class ProviderLicenseComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
-          this.getLicenseDetails();
+          this.getLicenseDetails('update');
         }
       });
   }
@@ -217,7 +223,8 @@ export class ProviderLicenseComponent implements OnInit {
               license_meta ['current_sub'] = (this.license_sub === 'Monthly') ? 'month' : 'year';
               license_meta ['next_sub'] = null;
 
-              if (license_meta ['current_sub'] === 'month') {
+              if (license_meta ['current_sub'] === 'month' &&
+              (license_meta ['price'] !== 0 || (license_meta ['price'] === 0 && license_meta ['discPercFor12Months'] === 100) )) {
 
                 const year_amount =  (license_meta ['price'] * 12);
                 license_meta ['next_sub'] = [
@@ -230,7 +237,7 @@ export class ProviderLicenseComponent implements OnInit {
                 ];
 
               }
-
+              // console.log(license_meta);
               this.license_upgarde_sub = license_meta;
           }
         }
@@ -246,7 +253,7 @@ export class ProviderLicenseComponent implements OnInit {
     this.provider_servicesobj.changeLicenseSubscription(value)
     .subscribe(
       data => {
-        this.getSubscriptionDetail();
+        this.getLicenseDetails('update');
       },
       error => {
         this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -258,4 +265,28 @@ export class ProviderLicenseComponent implements OnInit {
     this.router.navigate(['provider' , 'settings', 'license' , 'paymenthistory']);
   }
 
+  showUnpaidInvoice() {
+    if (this.invoices.length === 1) {
+      this.getInvoice(this.invoices[0]);
+    } else {
+      this.unpaid_invoice_show = (this.unpaid_invoice_show) ? 0 : 1;
+    }
+
+  }
+
+  getInvoice (invoice) {
+    // console.log(invoice.ynwUuid);
+    const dialogRef = this.dialog.open(ProviderInvoiceDetailComponent, {
+      width: '50%',
+      data: {
+        invoice : invoice
+      },
+      panelClass: ['commonpopupmainclass'],
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
+  }
 }

@@ -5,7 +5,6 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { ProviderServices } from '../../services/provider-services.service';
 import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-addprovider-bprofile-search-adwords',

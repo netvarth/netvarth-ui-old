@@ -110,6 +110,7 @@ export const Messages = {
   'ADD_DELAY': 'New delay added successfully',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to "[status]"',
+  'PROVIDER_NOTE_ADD': 'Note added successfully',
 
   'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip'
 

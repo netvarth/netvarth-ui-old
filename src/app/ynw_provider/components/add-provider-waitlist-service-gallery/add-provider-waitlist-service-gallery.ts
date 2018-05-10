@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import * as moment from 'moment';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';

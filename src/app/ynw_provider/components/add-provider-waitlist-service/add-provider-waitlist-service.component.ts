@@ -5,7 +5,6 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { ProviderServices } from '../../services/provider-services.service';
 import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
-import * as moment from 'moment';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
 import { Observable } from 'rxjs/Observable';

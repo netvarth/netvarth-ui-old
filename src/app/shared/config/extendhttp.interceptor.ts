@@ -8,6 +8,8 @@ import 'rxjs/add/operator/do';
 
 import { base_url } from './../constants/urls';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { SharedFunctions } from '../functions/shared-functions';
+import { Messages } from '../constants/project-messages';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
@@ -19,7 +21,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                           base_url +   'consumer/login/reset/\d{10,12}'
                        ];
     constructor(private slimLoadingBarService: SlimLoadingBarService,
-    private router: Router) {}
+    private router: Router, private shared_functions: SharedFunctions) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -56,6 +58,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // or show a modal
             } else if (err.status === 0) {
               console.log( 'NETWORK ERROR');
+              this.shared_functions.openSnackBar(Messages.API_ERROR, {'panelClass': 'snackbarerror'});
             }
           }
         });

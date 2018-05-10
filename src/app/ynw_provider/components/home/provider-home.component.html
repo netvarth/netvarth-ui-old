@@ -172,7 +172,7 @@
                                   <td class="online">
                                     <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'"></span>
                                   </td>
-                                  <td data-title="Seq No" class="seq">#{{checkin.token}}</td>
+                                  <td data-title="Seq No" class="seq pointer-cursor" (click)="goCheckinDetail(checkin)">#{{checkin.token}}</td>
                                   <td data-title="Name" class="name" *ngIf="checkin.consumer">
                                     {{checkin.consumer.userProfile.firstName}}  {{checkin.consumer.userProfile.lastName}}
                                     <span class="icon-arrived" title="Arrived"  *ngIf="checkin.waitlistStatus == 'arrived'"></span>
@@ -213,11 +213,15 @@
                                       <i class="icon-note"></i>
                                     </span>
                                   </td>
-                                  <td class="mre"><span class="mbt" *ngIf="checkin.waitlistStatus != 'done'">
+                                  <td class="mre"><span class="mbt">
                                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                           <mat-icon>more_vert</mat-icon>
                                       </button>
                                       <mat-menu #menu="matMenu">
+                                          <button type="button" mat-menu-item
+                                          (click)="addProviderNote(checkin)">
+                                            Add Provider Note
+                                          </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                                           *ngIf="time_type!=0 &&

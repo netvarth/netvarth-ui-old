@@ -6,7 +6,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import * as moment from 'moment';
+
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({

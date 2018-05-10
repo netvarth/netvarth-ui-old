@@ -30,7 +30,7 @@ export class AddProviderCheckinComponent implements OnInit {
   queues: any = [];
   selected_queue = null;
   members: any = null;
-  checkin_date = moment(new Date()).format('YYYY-MM-DD');
+  checkin_date = moment(new Date()).format(projectConstants.POST_DATE_FORMAT);
   waiting_time = null ;
 
   dropdownList = [

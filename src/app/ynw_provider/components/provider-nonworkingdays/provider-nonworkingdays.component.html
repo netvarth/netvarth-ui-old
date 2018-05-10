@@ -1,5 +1,5 @@
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
@@ -21,14 +21,14 @@
                                             <th>Date</th>
                                             <th>Reason</th>
                                             <th>Time</th>
-                                            <th><span class="addbt" (click)="addHolidays()"></span></th>                            
+                                            <th><span class="addbt" (click)="addHolidays()"></span></th>
                                           </tr>
                                       </thead>
                                       <tbody>
                                           <tr *ngFor="let nonworking of nonworking_list">
-                                            <td data-title="Date"  class="td1">{{nonworking.startDay | date: 'dd/MMM/yyyy'}}</td>
-                                            <td data-title="Reason" clas="td2">{{nonworking.description}}</td>        
-                                            <td data-title="Time"  clas="td3">{{nonworking.nonWorkingHours.sTime}} - {{nonworking.nonWorkingHours.eTime}}</td>        
+                                            <td data-title="Date"  class="td1">{{nonworking.startDay | date: dateFormat }}</td>
+                                            <td data-title="Reason" clas="td2">{{nonworking.description}}</td>
+                                            <td data-title="Time"  clas="td3">{{nonworking.nonWorkingHours.sTime}} - {{nonworking.nonWorkingHours.eTime}}</td>
                                             <td class="action">
                                                 <span class="mbt">
                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -36,11 +36,11 @@
                                                     </button>
                                                     <mat-menu #menu="matMenu">
                                                         <button type="button" (click)="editHolidays(nonworking)" mat-menu-item>
-                                                            <i class="icon-edit"></i> 
+                                                            <i class="icon-edit"></i>
                                                             Edit
                                                         </button>
                                                         <button type="button" (click)="doRemoveHolidays(nonworking)" mat-menu-item>
-                                                            <i class="icon-delete"></i> 
+                                                            <i class="icon-delete"></i>
                                                             Delete
                                                         </button>
                                                     </mat-menu>
@@ -50,18 +50,18 @@
                                                         <button class="editcls" type="button" (click)="editHolidays(nonworking)">Edit</button>
                                                         <button class="deletecls" type="button" (click)="doRemoveHolidays(nonworking)">Delete</button>
                                                 </span>
-                                            </td>   
+                                            </td>
                                           </tr>
                                       </tbody>
                                   </table>
                                   <span class="addbt d-block d-md-none" (click)="addHolidays()"></span>
                               </div>
                           </div>
-                      </div>    
+                      </div>
                   </div>
               </div>
           </div>
-      </div>  
+      </div>
 </section>
 
 
@@ -80,11 +80,10 @@
         <td>{{nonworking.startDay | date: 'dd/MMM/yyyy'}}</td>
         <td>{{nonworking.description}}</td>
         <td>{{nonworking.nonWorkingHours.sTime}}</td>
-        <td>{{nonworking.nonWorkingHours.eTime}}</td>        
+        <td>{{nonworking.nonWorkingHours.eTime}}</td>
       <td>&nbsp;<button (click)="editHolidays(nonworking)">Edit</button>&nbsp;<button (click)="doRemoveHolidays(nonworking)">Delete</button>&nbsp;</td>
       </tr>
     </tbody>
   </table>
   <div *ngIf="nonworking_list.length ==0 && query_executed == true">{{emptyMsg}}</div> -->
-  
-  
+

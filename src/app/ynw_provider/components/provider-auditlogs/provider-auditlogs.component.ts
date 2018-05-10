@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import * as moment from 'moment';
 import { Location } from '@angular/common';
 
 import { ProviderServices } from '../../services/provider-services.service';
@@ -20,7 +19,7 @@ export class ProviderAuditLogComponent implements OnInit {
 
     auditlog_details: any = [] ;
     load_complete = 0;
-    dateFormat = projectConstants.DISPLAY_DATE_FORMAT;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions,

@@ -1,0 +1,47 @@
+
+
+    <section>
+        <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    </section>
+
+    <section>
+        <div class="content loc-list">
+            <div class="container" *ngIf="waitlist_data">
+                <div class="row">
+                    <div class="card p0">
+                        <div class="copy locd">
+                                <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                    <div class="cl1">
+
+                                      <p>Name:
+                                        {{waitlist_data.consumer.userProfile.firstName}} {{waitlist_data.consumer.userProfile.lastName}}
+                                      </p>
+
+                                      <p>Date:
+                                        {{waitlist_data.date}}
+                                      </p>
+
+                                      <p>Location:
+                                          {{waitlist_data.queue.location.place}}
+                                      </p>
+
+                                      <p>Service:
+                                          {{waitlist_data.service.name}}
+                                      </p>
+
+                                      <p>Queue:
+                                          {{waitlist_data.queue.id}}
+                                      </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+              </div>
+
+
+
+        </div>
+    </section>

@@ -26,6 +26,7 @@ import { ProviderWaitlistServiceDetailComponent } from './components/provider-wa
 import { ProviderWaitlistQueuesComponent } from './components/provider-waitlist-queues/provider-waitlist-queues.component';
 import { ProviderWaitlistQueueDetailComponent } from './components/provider-waitlist-queue-detail/provder-waitlist-queue-detail.component';
 import { ProviderPaymentHistoryComponent } from './components/provider-payment-history/provider-payment-history.component';
+import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 
 import { AuthGuardProviderHome, AuthGuardNewProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
 import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
@@ -36,6 +37,7 @@ const routes: Routes = [
     {path: '', component: ProviderComponent, children: [
 
     { path: '', component: ProviderHomeComponent, canActivate: [AuthGuardProviderHome] },
+    { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
     { path: 'settings', component: ProviderSettingsComponent },
     {
       path: 'settings',

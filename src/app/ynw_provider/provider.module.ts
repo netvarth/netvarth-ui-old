@@ -72,6 +72,9 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from './components/provid
 import { AddProviderItemImageComponent } from './components/add-provider-item-image/add-provider-item-image.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './components/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ProviderPaymentHistoryComponent } from './components/provider-payment-history/provider-payment-history.component';
+import { ProviderInvoiceDetailComponent } from './components/provider-invoice-detail/provider-invoice-detail.component';
+import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
+import { AddProviderWaitlistCheckInProviderNoteComponent } from './components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -168,7 +171,10 @@ import 'mousetrap';
         ProviderWaitlistCheckInCancelPopupComponent,
         AddProviderItemImageComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
-        ProviderPaymentHistoryComponent
+        ProviderPaymentHistoryComponent,
+        ProviderInvoiceDetailComponent,
+        ProviderWaitlistCheckInDetailComponent,
+        AddProviderWaitlistCheckInProviderNoteComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -202,7 +208,9 @@ import 'mousetrap';
       ProviderWaitlistCheckInCancelPopupComponent,
       AddProviderItemImageComponent,
       ProviderWaitlistCheckInConsumerNoteComponent,
-      ProviderAuditLogComponent
+      ProviderAuditLogComponent,
+      ProviderInvoiceDetailComponent,
+      AddProviderWaitlistCheckInProviderNoteComponent
     ],
     providers: [
        AuthGuardProviderHome,
