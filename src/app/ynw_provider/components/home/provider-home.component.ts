@@ -14,6 +14,7 @@ import { AddProviderCheckinComponent } from '../add-provider-checkin/add-provide
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
+import { AddProviderWaitlistCheckInBillComponent } from '../add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 
 import { SharedServices } from '../../../shared/services/shared-services';
 
@@ -559,6 +560,22 @@ export class ProviderHomeComponent implements OnInit {
       panelClass: ['commonpopupmainclass'],
       data: {
         checkin_id: checkin.ynwUuid
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
+    });
+  }
+
+  addEditBill(checkin) {
+    const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass'],
+      data: {
+        checkin: checkin
       }
     });
 

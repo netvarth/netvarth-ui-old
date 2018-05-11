@@ -586,4 +586,19 @@ export class ProviderServices {
     const url = 'provider/waitlist/' + consumer_id + '/notes';
     return this.servicemeta.httpGet(url);
   }
+
+  getWaitlistBill(uuid) {
+    const url = 'provider/bill/' + uuid ;
+    return this.servicemeta.httpGet(url);
+  }
+
+  createWaitlistBill(uuid, data) {
+    const url = 'provider/bill/' + uuid ;
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  updateWaitlistBill(uuid, data) {
+    const url = 'provider/bill/' + uuid ;
+    return this.servicemeta.httpPut(url, data);
+  }
 }

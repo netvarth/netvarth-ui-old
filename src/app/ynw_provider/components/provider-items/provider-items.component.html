@@ -1,5 +1,5 @@
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
+  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
@@ -22,9 +22,10 @@
                                           <tr>
                                               <th></th>
                                               <th>Name</th>
+                                              <th>Price</th>
                                               <th>Taxable</th>
                                               <th>Status</th>
-                                              <th><span class="addbt" (click)="addItem()"></span></th>                            
+                                              <th><span class="addbt" (click)="addItem()"></span></th>
                                           </tr>
                                       </thead>
                                       <tbody>
@@ -37,9 +38,10 @@
                                                         </td>
                                                       <td data-title="Name"  class="td2" class="pointer-cursor" (click)="showDetails(item.itemId)">{{item.displayName}}
                                                       </td>
-                                                      <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}</td>        
-                                                      <td data-title="Status" clas="td4">{{item.status}}</td>        
-                                                      
+                                                      <td data-title="Status" clas="td4">{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
+                                                      <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}</td>
+                                                      <td data-title="Status" clas="td4">{{item.status}}</td>
+
                                                       <td class="action">
                                                           <span class="mbt">
                                                               <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -47,14 +49,14 @@
                                                               </button>
                                                               <mat-menu #menu="matMenu">
                                                                   <button type="button" (click)="editItem(item)" mat-menu-item>
-                                                                      <i class="icon-edit"></i> 
+                                                                      <i class="icon-edit"></i>
                                                                       Edit
                                                                   </button>
                                                                   <button type="button" (click)="dochangeStatus(item)" mat-menu-item *ngIf="item.status!='ACTIVE'">
-                                                                      <i class="icon-enable" >Enable</i> 
+                                                                      <i class="icon-enable" >Enable</i>
                                                                   </button>
                                                                   <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
-                                                                      <i class="icon-delete"></i> 
+                                                                      <i class="icon-delete"></i>
                                                                       Delete
                                                                   </button>
                                                               </mat-menu>
@@ -65,18 +67,18 @@
                                                                 <button class="enablecls" type="button" (click)="dochangeStatus(item)" *ngIf="item.status!='ACTIVE'">Enable</button>
                                                                 <button class="deletecls" type="button" (click)="doRemoveItem(item)">Delete</button>
                                                         </span>
-                                                      </td>   
+                                                      </td>
                                                   </tr>
                                       </tbody>
                                   </table>
                                   <span class="addbt d-block d-md-none" (click)="addItem()"></span>
                               </div>
                           </div>
-                      </div>    
+                      </div>
                   </div>
               </div>
           </div>
-      </div>  
+      </div>
 </section>
 
 <!-- <button (click)="addItem()">Add Item</button>
@@ -96,8 +98,8 @@
           <div (click)="showDetails(item.itemId)" class="itemdisplayname_anchor">{{item.displayName}}</div>
           {{item.shortDesc}}<br/>
     </td>
-    <td>{{(item.taxable===true)?'Yes':'No'}}</td> 
-    <td>{{item.status}}</td>        
+    <td>{{(item.taxable===true)?'Yes':'No'}}</td>
+    <td>{{item.status}}</td>
     <td><button (click)="showDetails(item.itemId)">View</button>&nbsp;<button (click)="editItem(item)">Edit</button>&nbsp;<button (click)="dochangeStatus(item)" *ngIf="item.status!='ACTIVE'">Enable</button>&nbsp;<button (click)="doRemoveItem(item)">Delete</button>&nbsp;</td>
     </tr>
   </tbody>

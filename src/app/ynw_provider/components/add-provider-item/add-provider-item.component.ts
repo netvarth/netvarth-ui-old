@@ -50,7 +50,8 @@ export class AddProviderItemComponent implements OnInit {
         displayName: ['', Validators.compose([Validators.required])],
         shortDesc: ['', Validators.compose([Validators.required])],
         displayDesc: ['', Validators.compose([Validators.required])],
-        taxable: [false, Validators.compose([Validators.required])] // ,
+        taxable: [false, Validators.compose([Validators.required])],
+        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])] // ,
         /*file: ['', Validators.compose([Validators.required])],*/
         // caption: ['Itempic']
       });
@@ -59,7 +60,8 @@ export class AddProviderItemComponent implements OnInit {
         displayName: ['', Validators.compose([Validators.required])],
         shortDesc: ['', Validators.compose([Validators.required])],
         displayDesc: ['', Validators.compose([Validators.required])],
-        taxable: [false, Validators.compose([Validators.required])]
+        taxable: [false, Validators.compose([Validators.required])],
+        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])]
       });
     }
 
@@ -77,6 +79,7 @@ export class AddProviderItemComponent implements OnInit {
       'displayName': this.data.item.displayName || null,
       'shortDesc': this.data.item.shortDesc || null,
       'displayDesc': this.data.item.displayDesc || null,
+      'price': this.data.item.price || null,
       'taxable': this.holdtaxable
     });
   }
@@ -111,7 +114,8 @@ export class AddProviderItemComponent implements OnInit {
                                 'displayName': form_data.displayName,
                                 'shortDesc': form_data.shortDesc,
                                 'displayDesc': form_data.displayDesc,
-                                'taxable': taxable
+                                'taxable': taxable,
+                                'price': form_data.price
         };
 
         const blob_itemdata = new Blob([JSON.stringify(post_itemdata)], { type: 'application/json' });
@@ -132,7 +136,8 @@ export class AddProviderItemComponent implements OnInit {
             'displayName': form_data.displayName,
             'shortDesc': form_data.shortDesc,
             'displayDesc': form_data.displayDesc,
-            'taxable': taxable
+            'taxable': taxable,
+            'price': form_data.price
           };
           this.editItem(post_itemdata);
     }

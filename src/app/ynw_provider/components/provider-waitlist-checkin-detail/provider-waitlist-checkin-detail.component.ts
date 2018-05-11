@@ -13,6 +13,7 @@ import { FormMessageDisplayService } from '../../../shared/modules/form-message-
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
+import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 
 @Component({
     selector: 'app-provider-waitlist-checkin-detail',
@@ -84,13 +85,29 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
             this.waitlist_notes = data;
           },
           error => {
-            this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+           //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
           }
       );
     }
 
     goBack() {
       this.router.navigate(['provider']);
+    }
+
+    addProviderNote(checkin) {
+      const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass'],
+        data: {
+          checkin_id: checkin.ynwUuid
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+          this.getWaitlistNotes();
+        }
+      });
     }
 
 }

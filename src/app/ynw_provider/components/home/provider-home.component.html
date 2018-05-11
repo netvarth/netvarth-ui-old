@@ -40,10 +40,10 @@
                       [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
                       *ngFor="let queue of queues">
                         <div class="qname"  (click)="selectedQueue(queue)">
-                          <!-- <span class="qtitle"> {{queue.name}}</span> -->
-                          <span class="qtitle" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
+                          <span class="qtitle"> {{queue.name}}</span>
+                          <!-- <span class="qtitle" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
                             {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
-                          </span>
+                          </span> -->
                         </div>
                       </li>
                   </ul>
@@ -196,6 +196,13 @@
                                         *ngIf="checkin.waitlistStatus == 'started'">
                                           <i class="icon-play"></i>Done
                                         </span>
+
+                                        <span class="start cs-btn bt7" (click)="addEditBill(checkin)"
+                                        *ngIf="checkin.waitlistStatus != 'checkedIn' &&
+                                        checkin.waitlistStatus != 'cancelled'">
+                                          <i class="icon-play"></i>Bill
+                                        </span>
+
                                     </ng-container>
 
                                     </td>
