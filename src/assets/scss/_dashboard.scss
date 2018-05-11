@@ -1055,6 +1055,10 @@ footer {
                                             font-size: 1rem;
                                             color: $cc-darkgray;
                                             
+                                            @include respond-to(ynw-767){
+                                                display: none;
+                                            }
+                                            
                                             &:before {
                                                 display: none;
                                             }
@@ -1072,6 +1076,62 @@ footer {
                                             width: 33%;
                                             
                                             @include respond-to(ynw-767){width: 100%;}
+                                            
+                                            .mbt-mobile-show {
+                                                width: 100%;
+                                                display: flex;
+                                                justify-content: flex-end;
+                                                display: none;
+                                                
+                                                @include respond-to(ynw-767){
+                                                    display: block;
+                                                    text-align: right;
+                                                }
+
+                                                .editcls, .deletecls {
+                                                    position: relative;
+                                                    border: none;
+                                                    background: transparent;
+                                                    padding-left: 20px;
+                                                    font-weight: 500;
+                                                    margin-right: 15px;
+                                                    cursor: pointer;
+
+                                                    &:before {
+                                                        @include font-custom;
+                                                        content: "\78";
+                                                        position: absolute;
+                                                        left: 0;
+                                                        font-size: .875rem;
+                                                    }
+                                                }
+
+                                                .deletecls {
+                                                    margin-right: 0;
+
+                                                    &:before {
+                                                        content: "\4b";
+                                                    }
+                                                }
+
+                                                @include respond-to(ynw-768-991) {
+                                                    display: none;
+                                                }
+                                                @include respond-to(ynw-992-1199) {
+                                                    display: none;
+                                                }
+                                                @include respond-to(ynw-1200) {
+                                                    display: none;
+                                                }
+                                            }
+                                            
+                                            &:last-child {
+                                                display: none;
+                                                
+                                                @include respond-to(ynw-767){
+                                                    display: block;
+                                                }
+                                            }
                                             &:nth-child(3) {
                                                 span {
                                                     display: block;
@@ -1268,6 +1328,11 @@ footer {
                                                 height: auto;
                                                 padding: 10px;
                                                 border-bottom: 1px solid $cc-body;
+                                                
+                                                @include respond-to(ynw-575){
+                                                    flex-direction: column;
+                                                    align-items: flex-start;
+                                                }
 
                                                 .day {
                                                     @include font-bold;
@@ -1275,8 +1340,8 @@ footer {
                                                     display: inline-block;
                                                     font-style: normal;
                                                     font-size: .875rem;
-                                                    width: 200px;
-                                                    margin: 0;
+                                                    width: auto;
+                                                    margin: 0 15px 0 0;
                                                 }
                                                 .time {
                                                     font-weight: 500;
@@ -1362,6 +1427,10 @@ footer {
                                             font-size: 1rem;
                                             color: $cc-darkgray;
                                             
+                                            @include respond-to(ynw-767){
+                                                display: none;
+                                            }
+                                            
                                             &:before {
                                                 display: none;
                                             }
@@ -1379,6 +1448,63 @@ footer {
                                             width: 33%;
                                             
                                             @include respond-to(ynw-767){width: 100%;}
+                                            
+                                            .mbt-mobile-show {
+                                                width: 100%;
+                                                display: flex;
+                                                justify-content: flex-end;
+                                                display: none;
+                                                
+                                                @include respond-to(ynw-767){
+                                                    display: block;
+                                                    text-align: right;
+                                                }
+
+                                                .editcls, .deletecls {
+                                                    position: relative;
+                                                    border: none;
+                                                    background: transparent;
+                                                    padding-left: 20px;
+                                                    font-weight: 500;
+                                                    margin-right: 15px;
+                                                    cursor: pointer;
+
+                                                    &:before {
+                                                        @include font-custom;
+                                                        content: "\78";
+                                                        position: absolute;
+                                                        left: 0;
+                                                        font-size: .875rem;
+                                                    }
+                                                }
+
+                                                .deletecls {
+                                                    margin-right: 0;
+
+                                                    &:before {
+                                                        content: "\4b";
+                                                    }
+                                                }
+
+                                                @include respond-to(ynw-768-991) {
+                                                    display: none;
+                                                }
+                                                @include respond-to(ynw-992-1199) {
+                                                    display: none;
+                                                }
+                                                @include respond-to(ynw-1200) {
+                                                    display: none;
+                                                }
+                                            }
+                                            
+                                            &:last-child {
+                                                display: none;
+                                                
+                                                @include respond-to(ynw-767){
+                                                    display: block;
+                                                }
+                                            }
+                                            
                                             &:nth-child(3) {
                                                 span {
                                                     display: block;
@@ -2436,6 +2562,13 @@ footer {
                                     border-top: 1px solid $cc-ash;
                                     /*padding: 0 10px;*/
                                     
+                                    @include respond-to(ynw-400){
+                                        padding: 10px;
+                                        flex-direction: column;
+                                        align-items: flex-start;
+                                        height: 60px;
+                                    }
+                                    
                                     .ctrl {
                                         flex-grow: 1;
                                         
@@ -2444,6 +2577,7 @@ footer {
                                             font-weight: 600;
                                             display: flex;
                                             align-items: center;
+                                            
 
                                             .ttle {
                                                 padding-right: 15px;
@@ -2965,8 +3099,16 @@ footer {
                                 }
                                 
                                 .schtd {
-                                    flex-grow: 2;
-                                    width: 45%;
+                                    display: flex;
+                                    
+                                    @include respond-to(ynw-575) {
+                                        flex-direction: column;
+                                    }
+                                    
+                                    .day {
+                                        font-weight: 600;
+                                        margin-right: 15px;
+                                    }
 
                                     .sch {
                                         display: block;
@@ -2984,10 +3126,57 @@ footer {
                                     right: 5px;
                                     top: 0;
                                     
+                                    @include respond-to(ynw-767) {
+                                        display: none;
+                                    }
+                                    
                                     &:before {
                                         display: none;
                                     }
                                 }
+                                
+                                .mbt-mobile-show {
+                                    width: 55%;
+                                    display: flex;
+                                    justify-content: flex-end;
+
+                                    .enableicon, .disableicon {
+                                        position: relative;
+                                        border: none;
+                                        background: transparent;
+                                        padding-left: 20px;
+                                        font-weight: 500;
+                                        /*margin-right: 15px;*/
+                                        cursor: pointer;
+
+                                        &:before {
+                                            @include font-custom;
+                                            content: "\30";
+                                            position: absolute;
+                                            left: 0;
+                                            font-size: .875rem;
+                                        }
+                                    }
+
+                                    .disableicon {
+                                        margin-right: 0;
+
+                                        &:before {
+                                            content: "\59";
+                                        }
+                                    }
+
+                                    @include respond-to(ynw-768-991) {
+                                        display: none;
+                                    }
+                                    @include respond-to(ynw-992-1199) {
+                                        display: none;
+                                    }
+                                    @include respond-to(ynw-1200) {
+                                        display: none;
+                                    }
+                                }
+                                
                                 &:last-child {
                                     position: relative;
                                 }

@@ -4858,6 +4858,9 @@ footer.dashb .sect3 {
           position: absolute;
           font-size: 1rem;
           color: #4c4c4c; }
+          @media only screen and (max-width: 767px) {
+            .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .mbt {
+              display: none; } }
           .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .mbt:before {
             display: none; }
           @media only screen and (max-width: 767px) {
@@ -4870,6 +4873,47 @@ footer.dashb .sect3 {
           @media only screen and (max-width: 767px) {
             .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd {
               width: 100%; } }
+          .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            display: none; }
+            @media only screen and (max-width: 767px) {
+              .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+                display: block;
+                text-align: right; } }
+            .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .editcls, .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls {
+              position: relative;
+              border: none;
+              background: transparent;
+              padding-left: 20px;
+              font-weight: 500;
+              margin-right: 15px;
+              cursor: pointer; }
+              .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .editcls:before, .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls:before {
+                font-family: "custom-ynw" !important;
+                content: "\78";
+                position: absolute;
+                left: 0;
+                font-size: .875rem; }
+            .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls {
+              margin-right: 0; }
+              .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls:before {
+                content: "\4b"; }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+                display: none; } }
+            @media (min-width: 992px) and (max-width: 1199px) {
+              .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+                display: none; } }
+            @media only screen and (min-width: 1200px) {
+              .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+                display: none; } }
+          .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd:last-child {
+            display: none; }
+            @media only screen and (max-width: 767px) {
+              .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd:last-child {
+                display: block; } }
           .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .ttd .otr .ctd:nth-child(3) span {
             display: block;
             font-size: .75rem;
@@ -5006,6 +5050,10 @@ footer.dashb .sect3 {
             height: auto;
             padding: 10px;
             border-bottom: 1px solid #f2f2f2; }
+            @media only screen and (max-width: 575px) {
+              .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy.wrk-hrs .whrs li {
+                flex-direction: column;
+                align-items: flex-start; } }
             .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy.wrk-hrs .whrs li .day {
               font-family: 'Montserrat', sans-serif;
               font-weight: bold;
@@ -5013,8 +5061,8 @@ footer.dashb .sect3 {
               display: inline-block;
               font-style: normal;
               font-size: .875rem;
-              width: 200px;
-              margin: 0; }
+              width: auto;
+              margin: 0 15px 0 0; }
             .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy.wrk-hrs .whrs li .time {
               font-weight: 500;
               font-style: normal;
@@ -5079,6 +5127,9 @@ footer.dashb .sect3 {
           position: absolute;
           font-size: 1rem;
           color: #4c4c4c; }
+          @media only screen and (max-width: 767px) {
+            .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .mbt {
+              display: none; } }
           .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .mbt:before {
             display: none; }
           @media only screen and (max-width: 767px) {
@@ -5091,6 +5142,47 @@ footer.dashb .sect3 {
           @media only screen and (max-width: 767px) {
             .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd {
               width: 100%; } }
+          .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            display: none; }
+            @media only screen and (max-width: 767px) {
+              .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+                display: block;
+                text-align: right; } }
+            .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .editcls, .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls {
+              position: relative;
+              border: none;
+              background: transparent;
+              padding-left: 20px;
+              font-weight: 500;
+              margin-right: 15px;
+              cursor: pointer; }
+              .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .editcls:before, .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls:before {
+                font-family: "custom-ynw" !important;
+                content: "\78";
+                position: absolute;
+                left: 0;
+                font-size: .875rem; }
+            .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls {
+              margin-right: 0; }
+              .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls:before {
+                content: "\4b"; }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+                display: none; } }
+            @media (min-width: 992px) and (max-width: 1199px) {
+              .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+                display: none; } }
+            @media only screen and (min-width: 1200px) {
+              .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show {
+                display: none; } }
+          .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd:last-child {
+            display: none; }
+            @media only screen and (max-width: 767px) {
+              .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd:last-child {
+                display: block; } }
           .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd:nth-child(3) span {
             display: block;
             font-size: .75rem;
@@ -5816,6 +5908,12 @@ footer.dashb .sect3 {
           width: 100%;
           border-top: 1px solid #dbdbdb;
           /*padding: 0 10px;*/ }
+          @media only screen and (max-width: 400px) {
+            .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl {
+              padding: 10px;
+              flex-direction: column;
+              align-items: flex-start;
+              height: 60px; } }
           .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl {
             flex-grow: 1; }
             .content.loc-list .card .copy.locd .lbl .cl1 .btm-ctrl .ctrl.enable-disable {
@@ -6202,8 +6300,13 @@ footer.dashb .sect3 {
           .content.loc-list .card .q-tbl table tbody tr td[data-title="Queue"]:before {
             color: #222223; }
         .content.loc-list .card .q-tbl table tbody tr td .schtd {
-          flex-grow: 2;
-          width: 45%; }
+          display: flex; }
+          @media only screen and (max-width: 575px) {
+            .content.loc-list .card .q-tbl table tbody tr td .schtd {
+              flex-direction: column; } }
+          .content.loc-list .card .q-tbl table tbody tr td .schtd .day {
+            font-weight: 600;
+            margin-right: 15px; }
           .content.loc-list .card .q-tbl table tbody tr td .schtd .sch {
             display: block;
             border-top: 1px solid #f2f2f2;
@@ -6215,8 +6318,42 @@ footer.dashb .sect3 {
           position: absolute;
           right: 5px;
           top: 0; }
+          @media only screen and (max-width: 767px) {
+            .content.loc-list .card .q-tbl table tbody tr td .mbt {
+              display: none; } }
           .content.loc-list .card .q-tbl table tbody tr td .mbt:before {
             display: none; }
+        .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show {
+          width: 55%;
+          display: flex;
+          justify-content: flex-end; }
+          .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .enableicon, .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon {
+            position: relative;
+            border: none;
+            background: transparent;
+            padding-left: 20px;
+            font-weight: 500;
+            /*margin-right: 15px;*/
+            cursor: pointer; }
+            .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .enableicon:before, .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon:before {
+              font-family: "custom-ynw" !important;
+              content: "\30";
+              position: absolute;
+              left: 0;
+              font-size: .875rem; }
+          .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon {
+            margin-right: 0; }
+            .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon:before {
+              content: "\59"; }
+          @media (min-width: 768px) and (max-width: 991px) {
+            .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show {
+              display: none; } }
+          @media (min-width: 992px) and (max-width: 1199px) {
+            .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show {
+              display: none; } }
+          @media only screen and (min-width: 1200px) {
+            .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show {
+              display: none; } }
         .content.loc-list .card .q-tbl table tbody tr td:last-child {
           position: relative; }
         .content.loc-list .card .q-tbl table tbody tr td.disabled {
