@@ -89,7 +89,7 @@ export class ChangeMobileComponent implements OnInit {
         data => {
           this.step = 2;
           this.submit_data = submit_data;
-          this.api_success = Messages.OTP_SENT_MOBILE;
+          this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', submit_data.phonenumber);
           // this.shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
         },
         error => {

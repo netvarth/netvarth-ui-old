@@ -236,9 +236,9 @@ export class SignUpComponent implements OnInit {
             if (user_details.userProfile &&
               user_details.userProfile.email) {
 
-                this.setMessage('email');
+                this.setMessage('email', user_details.userProfile.email);
               } else {
-                this.setMessage('mobile');
+                this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
               }
         },
         error => {
@@ -351,12 +351,14 @@ export class SignUpComponent implements OnInit {
       }
     }
 
-    setMessage (type) {
+    setMessage (type, data) {
 
       if (type === 'email') {
-        this.api_success  = Messages.OTP_SENT_EMAIL;
+        const email = (data) ? data : 'your email';
+        this.api_success  = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
       } else if (type === 'mobile') {
-        this.api_success = Messages.OTP_SENT_MOBILE;
+        const phonenumber = (data) ? data : 'your mobile number';
+        this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
       }
 
     }

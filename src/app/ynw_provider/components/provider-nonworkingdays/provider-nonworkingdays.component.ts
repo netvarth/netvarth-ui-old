@@ -11,6 +11,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { AddProviderNonworkingdaysComponent } from '../add-provider-nonworkingdays/add-provider-nonworkingdays.component';
 import {Messages} from '../../../shared/constants/project-messages';
+import {projectConstants} from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-nonworkingdays',
@@ -21,6 +22,8 @@ export class ProviderNonworkingdaysComponent implements OnInit {
     nonworking_list: any = [] ;
     query_executed = false;
     emptyMsg = Messages.HOLIDAY_LISTEMPTY;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+
     breadcrumbs_init = [
       {
         url: '/provider/settings',
@@ -84,7 +87,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
           return false;
         }
         const date =  new Date(holiday.startDay);
-        const date_format = moment(date).format('DD/MM/YYYY');
+        const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
         const dialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass : ['commonpopupmainclass', 'confirmationmainclass'],

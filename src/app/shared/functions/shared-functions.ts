@@ -24,13 +24,13 @@ export class SharedFunctions {
 
     logout() {
         (localStorage.getItem('isBusinessOwner') === 'true') ? this.providerLogout() :  this.consumerLogout();
-        this.clearLocalstorage();
     }
 
     private consumerLogout() {
         this.shared_service.ConsumerLogout()
         .subscribe(data => {
              // console.log(data);
+             this.clearLocalstorage();
         },
         error => {
            // console.log(error);
@@ -42,6 +42,7 @@ export class SharedFunctions {
          this.shared_service.ProviderLogout()
          .subscribe(data => {
               // console.log(data);
+              this.clearLocalstorage();
          },
          error => {
             // console.log(error);

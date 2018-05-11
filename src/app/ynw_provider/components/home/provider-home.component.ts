@@ -13,6 +13,8 @@ import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-de
 import { AddProviderCheckinComponent } from '../add-provider-checkin/add-provider-checkin.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
+import { AddProviderWaitlistCheckInBillComponent } from '../add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 
 import { SharedServices } from '../../../shared/services/shared-services';
 
@@ -23,6 +25,7 @@ import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
 import {FormControl} from '@angular/forms';
 import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-provider-home',
@@ -47,7 +50,7 @@ export class ProviderHomeComponent implements OnInit {
   check_in_list: any = [];
   check_in_filtered_list: any = [];
   status_type = 'all';
-  queue_date = moment(new Date()).format('YYYY-MM-DD');
+  queue_date = moment(new Date()).format(projectConstants.POST_DATE_FORMAT);
   edit_location = 0;
 
   load_locations = 0;
@@ -545,6 +548,42 @@ export class ProviderHomeComponent implements OnInit {
       check_in_date: null,
       location_id: 'all'
     };
+  }
+
+  goCheckinDetail(checkin) {
+    this.router.navigate(['provider', 'checkin-detail', checkin.ynwUuid]);
+  }
+
+  addProviderNote(checkin) {
+    const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass'],
+      data: {
+        checkin_id: checkin.ynwUuid
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
+    });
+  }
+
+  addEditBill(checkin) {
+    const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass'],
+      data: {
+        checkin: checkin
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
+    });
   }
 
 }

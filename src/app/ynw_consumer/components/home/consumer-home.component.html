@@ -41,7 +41,7 @@
 
 <div *ngFor="let waitlist of history">
 
-    <h4  (click)="goWaitlistDetail(waitlist)">{{waitlist.createdDate | date:'dd-MM-yyyy'}} {{waitlist.provider.businessName}} -{{waitlist.service.name}}</h4>
+    <h4  (click)="goWaitlistDetail(waitlist)">{{waitlist.createdDate | date: dateFormat}} {{waitlist.provider.businessName}} -{{waitlist.service.name}}</h4>
 
     <!-- <button [disabled]="waitlist.messages.length == 0" (click)="openNotification(waitlist.messages)">Notification
       <span *ngIf="waitlist.messages.length >0"> ({{waitlist.messages.length}})</span>

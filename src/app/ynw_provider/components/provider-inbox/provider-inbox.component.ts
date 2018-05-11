@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import * as moment from 'moment';
+
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 import { AddProviderInboxMessageComponent } from '../add-provider-inbox-message/add-provider-inbox-message.component';
 
@@ -19,6 +20,8 @@ import { AddProviderInboxMessageComponent } from '../add-provider-inbox-message/
 export class ProviderInboxComponent implements OnInit {
 
   messages: any = [];
+  dateFormat = projectConstants.DISPLAY_DATE_FORMAT;
+
   constructor( private provider_services: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private shared_functions: SharedFunctions) {}

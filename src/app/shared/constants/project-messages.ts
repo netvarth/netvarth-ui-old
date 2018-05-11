@@ -1,7 +1,7 @@
 export const Messages = {
 
-  'OTP_SENT_EMAIL': 'OTP has been sent to your email. Please enter your OTP.',
-  'OTP_SENT_MOBILE': 'OTP has been sent to your mobile. Please enter your OTP.',
+  'OTP_SENT_EMAIL': 'OTP has been sent to  [your_email]. Please enter your OTP.',
+  'OTP_SENT_MOBILE': 'OTP has been sent to [your_mobile]. Please enter your OTP.',
   'PROFILE_UPDATE': 'Profile has been updated successfully',
   'PASSWORD_MISMATCH': 'Password and Confirm password do not match',
   'PASSWORD_CHANGED': 'Password has been changed successfully',
@@ -110,6 +110,7 @@ export const Messages = {
   'ADD_DELAY': 'New delay added successfully',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to "[status]"',
+  'PROVIDER_NOTE_ADD': 'Note added successfully',
 
   'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip'
 

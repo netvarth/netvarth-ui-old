@@ -556,10 +556,49 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
 
-  getPaymentHistory(provider_id) {
-    const url = 'provider/payment/' + provider_id;
+
+  getInvoice(uuid) {
+    const url = 'provider/license/invoices/' + uuid ;
     return this.servicemeta.httpGet(url);
   }
 
+  getPaymentModes() {
+    const url = 'provider/payment/modes/subscription';
+    return this.servicemeta.httpGet(url);
+  }
 
+  getPaymentDetail(uuid) {
+    const url = 'provider/payment/' + uuid ;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getProviderWaitlistDetailById(uuid) {
+    const url = 'provider/waitlist/' + uuid ;
+    return this.servicemeta.httpGet(url);
+  }
+
+  addProviderWaitlistNote(uuid, message) {
+    const url = 'provider/waitlist/notes/' + uuid;
+    return this.servicemeta.httpPost(url, message);
+  }
+
+  getProviderWaitlistNotes(consumer_id) {
+    const url = 'provider/waitlist/' + consumer_id + '/notes';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getWaitlistBill(uuid) {
+    const url = 'provider/bill/' + uuid ;
+    return this.servicemeta.httpGet(url);
+  }
+
+  createWaitlistBill(uuid, data) {
+    const url = 'provider/bill/' + uuid ;
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  updateWaitlistBill(uuid, data) {
+    const url = 'provider/bill/' + uuid ;
+    return this.servicemeta.httpPut(url, data);
+  }
 }

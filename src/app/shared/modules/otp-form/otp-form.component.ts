@@ -47,7 +47,6 @@ export class OtpFormComponent  implements OnInit {
   }
 
   doOnOtpSubmit(value) {
-    console.log('here');
     this.retonOtpSubmit.emit(value);
   }
 
@@ -90,23 +89,25 @@ export class OtpFormComponent  implements OnInit {
       // delete this.submitdata.userProfile.email;
 
     }
-    this.setMessage('email');
+    this.setMessage('email', email_form.otp_email);
   }
 
   setMessageType() {
     if (this.type === 'change_email') {
-      this.setMessage('email');
+      this.setMessage('email', this.submitdata.email);
     } else {
-      this.setMessage('mobile');
+      this.setMessage('mobile', this.submitdata.phonenumber);
     }
   }
 
-  setMessage (type) {
+  setMessage (type, data) {
 
     if (type === 'email') {
-      this.message  = Messages.OTP_SENT_EMAIL;
+      const email = (data) ? data : 'your email';
+      this.message  = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
     } else if (type === 'mobile') {
-      this.message = Messages.OTP_SENT_MOBILE;
+      const phonenumber = (data) ? data : 'your mobile number';
+      this.message = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
     }
 
   }

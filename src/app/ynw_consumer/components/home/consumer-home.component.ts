@@ -11,6 +11,8 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 
+import { projectConstants } from '../../../shared/constants/project-constants';
+
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -22,6 +24,8 @@ export class ConsumerHomeComponent implements OnInit {
   fav_providers ;
   history ;
   fav_providers_id_list = [];
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+
   public searchfields: SearchFields = new SearchFields();
 
   constructor(private consumer_services: ConsumerServices,
@@ -55,7 +59,7 @@ export class ConsumerHomeComponent implements OnInit {
   }
 
   getHistroy() {
-      const date = moment().format('YYYY-MM-DD');
+      const date = moment().format(projectConstants.POST_DATE_FORMAT);
       const params = {'count': 10,
       'date-le': date,
       'sort_id': 'desc',
@@ -73,7 +77,7 @@ export class ConsumerHomeComponent implements OnInit {
   }
 
   getHistoryCount() {
-    const date = moment().format('YYYY-MM-DD');
+    const date = moment().format(projectConstants.POST_DATE_FORMAT);
     const params = {
     'date-le': date,
     'waitlistStatus-neq': 'waitlisted,arrived'

@@ -97,7 +97,7 @@ export class EditProfileComponent implements OnInit {
     if (sub_data.dob != null) {
 
       const date =  new Date(sub_data.dob);
-      date_format = moment(date).format('YYYY-MM-DD');
+      date_format = moment(date).format(projectConstants.POST_DATE_FORMAT);
 
     }
     let post_data;

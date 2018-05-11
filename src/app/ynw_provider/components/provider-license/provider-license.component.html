@@ -33,11 +33,11 @@
                                           <span class="ttle">You have currently enrolled to</span>
 
                                           <div class="subs-box">
-                                              <div class="pack active" *ngIf="license_upgarde_sub['price']">
+                                              <div class="pack active">
                                                   <span class="icon-tick"></span>
                                                   <span class="price">
                                                     {{license_upgarde_sub['price'] | currency:'INR':'symbol':'.2-2'}}</span> / {{license_upgarde_sub['current_sub']}}
-                                                    <span class="icon-question" *ngIf="license_upgarde_sub['next_sub'] == null"
+                                                    <span class="icon-question" *ngIf="license_upgarde_sub['current_sub'] != 'month'"
                                                     matTooltip="Please contact youneverwait.com to change subscription type"></span>
                                               </div>
                                               <ng-container *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
@@ -68,16 +68,16 @@
                                                 {{currentlicense_details.dueAmount | currency:'INR':'symbol':'.2-2'}}</strong>
                                               </span>
                                               <span class="amount" *ngIf="invoices.length != 0">Next Payment On : <strong>
-                                                {{currentlicense_details.nextPaymentOn}}</strong>
+                                                {{currentlicense_details.nextPaymentOn | date: dateFormat }}</strong>
                                               </span>
                                           </div>
                                           <div class="rt"  *ngIf="invoices.length != 0">
-                                              <span class="cs-btn bt3 ml-auto">Pay</span>
+                                              <span class="cs-btn bt3 ml-auto" (click)="showUnpaidInvoice()">Pay</span>
                                           </div>
                                       </div>
                                       <div class="lc4-2" >
                                           <div class="pay-tbl">
-                                              <table class="table"  *ngIf="invoices.length != 0">
+                                              <table class="table"  *ngIf="invoices.length != 0 && unpaid_invoice_show == 1">
                                                   <thead>
                                                       <tr>
                                                           <th>Date</th>
@@ -87,40 +87,16 @@
                                                       </tr>
                                                   </thead>
                                                   <tbody>
-                                                      <tr>
-                                                          <td data-title="Date">20-04-2018</td>
+                                                      <tr *ngFor="let invoice of invoices">
+                                                          <td data-title="Date">{{invoice.createdDate | date: dateFormat }}</td>
                                                           <td data-title="Amount">
-                                                              <strong>₹500</strong>
+                                                              <strong>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</strong>
                                                           </td>
                                                           <td data-title="Period">
-                                                              20/04/2018 - 19/05/2018
+                                                              {{invoice.periodFrom | date: dateFormat }} - {{invoice.periodTo | date: dateFormat }}
                                                           </td>
                                                           <td data-title="Invoice">
-                                                              <span class="icon-invoice"></span>
-                                                          </td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td data-title="Date">20-04-2018</td>
-                                                          <td data-title="Amount">
-                                                              <strong>₹500</strong>
-                                                          </td>
-                                                          <td data-title="Period">
-                                                              20/04/2018 - 19/05/2018
-                                                          </td>
-                                                          <td data-title="Invoice">
-                                                              <span class="icon-invoice"></span>
-                                                          </td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td data-title="Date">20-04-2018</td>
-                                                          <td data-title="Amount">
-                                                              <strong>₹500</strong>
-                                                          </td>
-                                                          <td data-title="Period">
-                                                              20/04/2018 - 19/05/2018
-                                                          </td>
-                                                          <td data-title="Invoice">
-                                                              <span class="icon-invoice"></span>
+                                                              <span class="icon-invoice" (click)="getInvoice(invoice)"></span>
                                                           </td>
                                                       </tr>
                                                   </tbody>

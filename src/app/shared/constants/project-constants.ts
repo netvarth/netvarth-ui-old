@@ -77,7 +77,9 @@ export const projectConstants = {
                 { name: 'others', items: [ '-' ] }
 
               ],
-  DISPLAY_DATE_FORMAT : 'dd/MMM/yyyy',
+  DISPLAY_DATE_FORMAT : 'DD/MM/YYYY',
+  PIPE_DISPLAY_DATE_FORMAT : 'dd/MM/y',
+  POST_DATE_FORMAT : 'YYYY-MM-DD',
   BASE_SCHEDULE: [
     {
       day: 4,

@@ -40,10 +40,10 @@
                       [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
                       *ngFor="let queue of queues">
                         <div class="qname"  (click)="selectedQueue(queue)">
-                          <!-- <span class="qtitle"> {{queue.name}}</span> -->
-                          <span class="qtitle" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
+                          <span class="qtitle"> {{queue.name}}</span>
+                          <!-- <span class="qtitle" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
                             {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
-                          </span>
+                          </span> -->
                         </div>
                       </li>
                   </ul>
@@ -172,7 +172,7 @@
                                   <td class="online">
                                     <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'"></span>
                                   </td>
-                                  <td data-title="Seq No" class="seq">#{{checkin.token}}</td>
+                                  <td data-title="Seq No" class="seq pointer-cursor" (click)="goCheckinDetail(checkin)">#{{checkin.token}}</td>
                                   <td data-title="Name" class="name" *ngIf="checkin.consumer">
                                     {{checkin.consumer.userProfile.firstName}}  {{checkin.consumer.userProfile.lastName}}
                                     <span class="icon-arrived" title="Arrived"  *ngIf="checkin.waitlistStatus == 'arrived'"></span>
@@ -196,6 +196,13 @@
                                         *ngIf="checkin.waitlistStatus == 'started'">
                                           <i class="icon-play"></i>Done
                                         </span>
+
+                                        <span class="start cs-btn bt7" (click)="addEditBill(checkin)"
+                                        *ngIf="checkin.waitlistStatus != 'checkedIn' &&
+                                        checkin.waitlistStatus != 'cancelled'">
+                                          <i class="icon-play"></i>Bill
+                                        </span>
+
                                     </ng-container>
 
                                     </td>
@@ -213,11 +220,15 @@
                                       <i class="icon-note"></i>
                                     </span>
                                   </td>
-                                  <td class="mre"><span class="mbt" *ngIf="checkin.waitlistStatus != 'done'">
+                                  <td class="mre"><span class="mbt">
                                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                           <mat-icon>more_vert</mat-icon>
                                       </button>
                                       <mat-menu #menu="matMenu">
+                                          <button type="button" mat-menu-item
+                                          (click)="addProviderNote(checkin)">
+                                            Add Provider Note
+                                          </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                                           *ngIf="time_type!=0 &&
