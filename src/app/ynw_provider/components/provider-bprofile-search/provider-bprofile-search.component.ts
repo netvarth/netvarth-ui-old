@@ -522,7 +522,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
-      autoFocus: false,
+      autoFocus: true,
       data: {
         type : 'edit',
         bprofile: this.bProfile
@@ -585,7 +585,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
-      autoFocus: false,
+      autoFocus: true,
       data: {
         // location : this.base_loc,
         badges: this.loc_badges,
@@ -634,7 +634,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       width: '50%',
       // panelClass: 'privacysettingsmainclass',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
-      autoFocus: false,
+      autoFocus: true,
       data: {
         bprofile : this.bProfile,
         editindx : peditindx,
@@ -659,7 +659,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       width: '50%',
       // panelClass: 'socialmediamainclass',
       panelClass: 'commonpopupmainclass',
-      autoFocus: false,
+      autoFocus: true,
       data: {
         bprofile : this.bProfile,
         editkey : key || ''
@@ -1162,6 +1162,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      autoFocus: true,
       data: {
         type: type,
         questions: field,

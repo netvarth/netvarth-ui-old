@@ -385,6 +385,40 @@
     cursor: default !important;
 }
 
+.closebtn {
+    position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    color: $linkblack;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include transition(all 300ms);
+    @include border-radius(30px);
+
+    &:before {
+        @include font-custom;
+        content: "\69";
+        position: absolute;
+        left: 0;
+        font-size: .875rem;
+        font-weight: 700;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    &:hover {
+        background: $cc-ash;
+        color: $linkblue;
+    }
+}
+
 
 
 

@@ -1,7 +1,7 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Location <span *ngIf="forbadge">Amenities</span> <button #loc mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title">Location <span *ngIf="forbadge">Amenities</span> <button #loc mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
     <ng-container *ngIf=" data && !forbadge">
         <div class="form-group mapselection">

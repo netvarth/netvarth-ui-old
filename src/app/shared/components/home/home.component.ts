@@ -13,6 +13,7 @@ import {ForgotPasswordComponent} from '../forgot-password/forgot-password.compon
 import { SearchFields } from '../../modules/search/searchfields';
 
 import { ViewChild } from '@angular/core';
+import { projectConstants } from '../../constants/project-constants';
 // import { } from '@types/googlemaps';
 
 @Component({
@@ -115,13 +116,35 @@ export class HomeComponent implements OnInit {
     }
 
     getDomainList() {
-      this.shared_service.bussinessDomains()
-      .subscribe (
-        res => {
-          this.domainlist_data = res;
+      const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+      let run_api = true;
+      if (bconfig) { // case if data is there in local storage
+        const bdate = bconfig.cdate;
+        const bdata = bconfig.bdata;
+        const saveddate = new Date(bdate);
+        const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+        console.log('diff hours', diff['hours']);
+        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+          run_api = false;
+          this.domainlist_data = bdata;
           this.domain_obtained = true;
         }
-      );
+      }
+      if (run_api) { // case if data is not there in data
+        this.shared_service.bussinessDomains()
+        .subscribe (
+          res => {
+            this.domainlist_data = res;
+            this.domain_obtained = true;
+            const today = new Date();
+            const postdata = {
+              cdate: today,
+              bdata: this.domainlist_data
+            };
+            this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+          }
+        );
+      }
     }
     handle_home_domain_click(obj) {
       this.keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': ''};

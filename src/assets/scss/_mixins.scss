@@ -181,7 +181,7 @@
 // scale
 @mixin scale($scale) {
 	 @include transform(scale($scale));
-} 
+}
 // translate
 @mixin translate ($x, $y) {
    @include transform(translate($x, $y));
@@ -190,6 +190,14 @@
 @mixin skew ($x, $y) {
    @include transform(skew(#{$x}deg, #{$y}deg));
 }
+// transform style
+@mixin transform-style ($style) {
+    moz-transform-style: $style;
+	     -o-transform-style: $style;
+	    -ms-transform-style: $style;
+	-webkit-transform-style: $style;
+          transform-style: $style;
+} 
 //transform origin
 @mixin transform-origin ($origin) {
     moz-transform-origin: $origin;

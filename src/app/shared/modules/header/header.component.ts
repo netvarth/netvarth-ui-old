@@ -26,6 +26,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @Input() headerTitle: string;
   @Input() includedfrom: string;
+  @Input() passedDomain: string;
+  @Input() passedkwdet: any =  [];
   @Output() searchclick = new EventEmitter<any>();
   userdet: any = [];
   headercls = '';
@@ -48,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
   keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': ''};
   selected_domain = '';
-
+  avoidClear = 1;
 
   constructor(
     private dialog: MatDialog,
@@ -71,7 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     // subscribe to home component messages
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      console.log('message', message.ttype);
+     // console.log('message', message.ttype);
       if (message.ttype === 'updateuserdetails') {
         this.getUserdetails();
         this.handleHeaderclassbasedonURL();
@@ -82,6 +84,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('passeddomain', this.passedDomain);
+    console.log('passedkw', this.passedkwdet);
     this.getUserdetails();
     this.getBusinessdetFromLocalstorage();
     // this.handleHeaderclassbasedonURL();

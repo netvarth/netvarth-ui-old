@@ -654,6 +654,55 @@ convertMinutesToHourMinute(mins) {
   return rethr + retmin;
 }
 
+getdaysdifffromDates(date1, date2) {
+  let firstdate;
+  let seconddate;
+  if (date1 === 'now') {
+    firstdate =  new Date();
+  } else {
+    firstdate =  new Date(date1);
+  }
+  seconddate = new Date(date2);
+  const timediff = Math.abs(firstdate.getTime() - seconddate.getTime());
+  const hours = Math.abs(firstdate.getTime() - seconddate.getTime()) / 36e5; // 36e5 is the scientific notation for 60*60*1000
+  return {'hours' : hours};
+}
 
+Lbase64Encode(str) {
+  let retstr = '';
+  /* // retstr = str.replace(/'/g, '~');
+  retstr = encodeURI(str);
+  if (str !== '' && str !== undefined) {
+    retstr = atob(retstr);
+  }
+  return retstr; */
+  // return str;
+  if (str !== '' && str !== undefined) {
+    retstr = str.replace('(', '~');
+    retstr = retstr.replace(')', '~~');
+    return retstr;
+  } else {
+    return str;
+  }
+}
+
+Lbase64Decode(str) {
+  let retstr = '';
+   /*if (str !== '' && str !== undefined) {
+    // retstr = btoa(str);
+    retstr = btoa(str);
+    // retstr = retstr.replace(/~/g, '\'');
+    retstr = decodeURI(retstr);
+  }
+   return retstr;*/
+ // return str;
+ if (str !== '' && str !== undefined) {
+  retstr = str.replace('~~', ')');
+  retstr = retstr.replace('~', '(');
+  return retstr;
+ } else {
+   return str;
+ }
+}
 
 }

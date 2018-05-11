@@ -45,7 +45,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   @Input() subdomainpassedfromrefined: any;
   @Input() domainlistpassed: any = [];
   @Input() includedfrom: any;
-
+  @Input() passedDomain: string;
+  @Input() passedkwdet: any =  [];
   @Output() searchclick = new EventEmitter<any>();
 
   myControl_prov: FormControl = new FormControl();
@@ -85,6 +86,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   public show_searchlabellist;
   public commonfilters;
   public insidelocloop;
+  curlabel = {typ: '', query: ''};
 
   moreoptions_arr: any = [];
   location_arr: any = [];
@@ -106,6 +108,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   subdomainList: Keywordscls[] = [];
   holdisplaylist: Keywordscls[] = [];
   specilizationList: Keywordscls[] = [] ;
+  titleobj: Keywordscls[] = [] ;
 
   keywordgroupList: Keywordsgroupcls[] = [];
 
@@ -128,13 +131,20 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
 
   ngOnInit() {
+    // console.log('srch pass kw', this.passedkwdet);
+    if (this.passedkwdet.kwtyp === 'label') {
+      if (this.passedkwdet.kwdomain !== '' && this.passedkwdet.kwdomain !== undefined) {
+        this.curlabel.typ = 'label';
+        this.curlabel.query = this.passedkwdet.kwdomain;
+      }
+    }
     // console.log('included from', this.includedfrom);
     this.selected_domain = 'All';
     if (this.domainlistpassed.length > 0) {
        this.domainlist_data = this.domainlistpassed;
        this.loadkeywordAPIreponsetoArray();
     } else {
-       console.log('reached here');
+       // console.log('reached here');
         this.getDomainList();
     }
     this.getAllsearchlabels();
@@ -232,7 +242,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       if (result) {
         if (result.length > 0) { // custom filter selected from more options page
           this.moreoptions_arr = result;
-          console.log('moreoption returned', this.moreoptions_arr);
+          // console.log('moreoption returned', this.moreoptions_arr);
           this.do_search('');
         }
     }
@@ -361,9 +371,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
        this.searchfields.kwtyp = '';
 
      } else {
+
        if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
         const hold_criteria = criteria.toLowerCase();
         let curcnt = 1;
+        this.displaykeywordList.push({autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle'});
         for (const kw of this.keywordList) {
           const holdkeyword = kw.autoname.toLowerCase();
            if (holdkeyword.includes(hold_criteria)) {
@@ -376,15 +388,20 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
         this.holdisplaylist['subdom'] = new Array();
         this.holdisplaylist['special'] = new Array();
+        this.holdisplaylist['kwtitle'] = new Array();
 
         for (const kw of this.displaykeywordList) {
+
+          if (kw.typ === 'kwtitle') {
+            this.holdisplaylist['kwtitle'].push(kw);
+          }
           // case of subdomain header row
           if (kw.typ === 'subdom') {
             this.holdisplaylist['subdom'].push(kw);
           }
 
            // case of specialization header row
-           if (kw.typ === 'special') {
+          if (kw.typ === 'special') {
             this.holdisplaylist['special'].push(kw);
           }
         }
@@ -393,6 +410,14 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
      // Defining the types of details that will be displayed for keywords autocomplete
     const keywordgroup_val = [];
+
+    // Check whether the title is to be displayed
+    if (this.holdisplaylist['kwtitle']) {
+      if (this.holdisplaylist['kwtitle'].length > 0) {
+        const groupdomainobj = {displayname: 'Business Name as', name: 'kwtitle'};
+        keywordgroup_val.push(groupdomainobj);
+      }
+    }
     // Check whether the subdomain heading is to be displayed
     if (this.holdisplaylist['subdom']) {
       if (this.holdisplaylist['subdom'].length > 0) {
@@ -414,7 +439,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         const holdkeyword = label.displayname.toLowerCase();
         if (label.displayname !== '') {
           if (holdkeyword.includes(this.keyssearchcriteria)) {
-            const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: label.query, typ: 'label' };
+            const lbl = label.query.split('&');
+            const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
             this.holdisplaylist['label'].push(labelspec);
           }
         }
@@ -458,6 +484,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     if (this.searchfields.domain) {
       this.selected_domain = this.searchfields.domain;
     }
+    if (this.passedDomain !== undefined && this.passedDomain !== '') { // case if domain details passed to this component via input variable
+      this.selected_domain = this.passedDomain;
+    }
     if (this.searchfields.sortfield) {
       this.sortfield = this.searchfields.sortfield;
     }
@@ -479,25 +508,68 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.keywordholder.subdomain = this.searchfields.kwsubdomain;
       this.keywordholder.typ = this.searchfields.kwtyp;
     }
+
+    if (this.passedkwdet && this.passedkwdet.kw !== undefined) { // case if kw details passed to this component via input variable
+      this.kw_autoname = this.passedkwdet.kwautoname;
+      this.keywordholder.autoname = this.passedkwdet.kwautoname;
+      this.keywordholder.name = this.passedkwdet.kw;
+      this.keywordholder.domain = this.passedkwdet.kwdomain;
+      this.keywordholder.subdomain = this.passedkwdet.kwsubdomain;
+      this.keywordholder.typ = this.passedkwdet.kwtyp;
+    }
     if (this.searchfields.commonfilters) {
       this.commonfilters = this.searchfields.commonfilters;
     }
   }
-  private getDomainList() {
+  /*private getDomainList() {
     this.shared_service.bussinessDomains()
     .subscribe (
-      res => {this.domainlist_data = res;
+      res => {
+         this.domainlist_data = res;
          this.loadkeywordAPIreponsetoArray();
       }
     );
+  }*/
+
+  getDomainList() {
+    const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    let run_api = true;
+    if (bconfig) { // case if data is there in local storage
+      const bdate = bconfig.cdate;
+      const bdata = bconfig.bdata;
+      const saveddate = new Date(bdate);
+      const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+      // console.log('diff hours search', diff['hours']);
+      if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+        run_api = false;
+        this.domainlist_data = bdata;
+        this.loadkeywordAPIreponsetoArray();
+      }
+    }
+    if (run_api) { // case if data is not there in data
+      this.shared_service.bussinessDomains()
+      .subscribe (
+        res => {
+          this.domainlist_data = res;
+          this.loadkeywordAPIreponsetoArray();
+          const today = new Date();
+          const postdata = {
+            cdate: today,
+            bdata: this.domainlist_data
+          };
+          this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+        }
+      );
+    }
   }
+
   getAllsearchlabels() {
     this.shared_service.getAllSearchlabels()
     .subscribe (
       res => {
         this.searchlabels_data = res || [];
         this.searchdataserviceobj.set(this.searchlabels_data);
-        this.handledomainchange(this.selected_domain);
+        this.handledomainchange(this.selected_domain, 1);
       }
     );
   }
@@ -603,12 +675,17 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
                               typ: kw.typ
                             };
   }
-   //  console.log(this.keywordholder);
+   // console.log('kwholder', this.keywordholder);
    if (kw.typ === 'label') {
+    this.curlabel.typ = 'label';
+    this.curlabel.query = kw.domain;
     const passkw = {query: kw.domain}; // kw.domain holds the hardcoded query for the search labels
     if (kw.domain !== '') {
       this.searchlabels_clicked(passkw);
     }
+   } else {
+    this.curlabel.typ = '';
+    this.curlabel.query = '';
    }
 
  }
@@ -621,10 +698,38 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
        typ: kw.typ || ''
     };
  }
+ kwtyping(val) {
+  this.keywordholder.name = val;
+  this.keywordholder.autoname = val;
+  this.keywordholder.domain = '';
+  this.keywordholder.subdomain = '';
+  this.keywordholder.typ = 'kwtitle';
+ }
+ do_search(labelqpassed?) {
+   // // console.log('search clicked');
 
- do_search(labelq?) {
-   // console.log('search clicked');
-    const currenturl = this.routerobj.url.split(';');
+   // done to handle the case if something is typed in the last text box and nothing else is selected by consumer, but some text is there
+   // in such as case the text will be used to search against the index "title"
+   // console.log('kwauto', this.kw_autoname);
+   if (this.kw_autoname !== '' && this.kw_autoname !== undefined) {
+    if (this.keywordholder.typ === '' || this.keywordholder.typ === undefined || this.keywordholder.typ === 'kwtitle') {
+        this.keywordholder.name = this.kw_autoname;
+        this.keywordholder.autoname = this.kw_autoname;
+        this.keywordholder.domain = '';
+        this.keywordholder.subdomain = '';
+        this.keywordholder.typ = 'kwtitle';
+    }
+  }
+
+   let labelq = labelqpassed;
+   if (labelq === '' || labelq === undefined) {
+      if (this.curlabel.typ === 'label') {
+          if (this.curlabel.query !== '') {
+            labelq = this.curlabel.query;
+          }
+      }
+    }
+   const currenturl = this.routerobj.url.split(';');
 
    /* if (!this.location_latitude) {
       this.location_name = '';
@@ -743,8 +848,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       }
       if (ret_arr['subsector'] !== '') {
         const ret = this.getdomainofaSubdomain(ret_arr['subsector']);
-        ret_arr['subdom_dispname'] = ret['subdom_dispname'];
+        ret_arr['subdom_dispname'] = ret['subdom_dispname'] || ret_arr['subsector'];
         if (ret_arr['sector'] === '') { // sector not mentioned in the search label condition
+          if (ret['dom'] === '') {
+            ret['dom'] = 'All';
+          }
           ret_arr['dom'] = ret['dom'];
           this.searchfields.domain = ret['dom'];
            // console.log('retdom', ret);
@@ -763,37 +871,39 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.searchclick.emit(this.searchfields);
   }
   getdomainofaSubdomain(subdomname) {
+    let retarr = { 'dom': '', 'subdom_dispname': ''};
     if (this.domainlist_data) {
       for (let i = 0; i < this.domainlist_data.length; i++) {
         for (const subdom of this.domainlist_data[i].subDomains) {
           if (subdom.subDomain === subdomname) {
-            const retarr = { 'dom': this.domainlist_data[i].domain, 'subdom_dispname': subdom.displayName};
+            retarr = { 'dom': this.domainlist_data[i].domain, 'subdom_dispname': subdom.displayName};
             return retarr;
           }
         }
       }
-    } else {
-      const retarr = { 'dom': '', 'subdom_dispname': ''};
+    } // else {
+      // retarr = { 'dom': '', 'subdom_dispname': ''};
       return retarr;
-    }
+    // }
   }
   getdomainofaSpecialization(specialization) {
     //  console.log('domain list', this.domainlist_data);
+    let retarr = { 'dom': '', 'special_dispname': ''};
     if (this.domainlist_data) {
       for (let i = 0; i < this.domainlist_data.length; i++) {
         for (const subdom of this.domainlist_data[i].subDomains) {
           for (const specilization of subdom.specializations) {
             if (specilization.name === specialization) {
-              const retarr = { 'dom': this.domainlist_data[i].domain, 'special_dispname': specilization.displayName};
+              retarr = { 'dom': this.domainlist_data[i].domain, 'special_dispname': specilization.displayName};
               return retarr;
             }
           }
         }
       }
-    } else {
-      const retarr = { 'dom': '', 'special_dispname': ''};
+    } // else {
+      retarr = { 'dom': '', 'special_dispname': ''};
       return retarr;
-    }
+    // }
   }
   // function which parse the querystring from search leabels
   parsesearchLabelsQuerystring (str = null) {
@@ -818,12 +928,25 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
   }
 
-  handledomainchange(domain) {
+  handledomainchange(domain, avoidclear?) {
     // setting the domain in the selected_domain holder variable
     if (domain === 'All') {
      // domain = '';
     }
     this.selected_domain = domain;
+
+    if (avoidclear === 1) {
+    } else {
+      this.kw_autoname = '';
+      this.keywordholder = {
+                                autoname: '',
+                                name: '',
+                                domain: '',
+                                subdomain: '',
+                                typ: ''
+      };
+      this.curlabel = {typ: '', query: ''};
+    }
     this.keyssearchcriteria = '';
     this.prov_name = '';
    // console.log('seldomain', this.selected_domain);

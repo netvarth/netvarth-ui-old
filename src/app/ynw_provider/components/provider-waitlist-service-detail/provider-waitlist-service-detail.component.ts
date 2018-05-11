@@ -251,6 +251,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
+            autoFocus: true,
             data: {
             type : 'edit',
             service: this.service_data

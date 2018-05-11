@@ -5,6 +5,7 @@ header {
         .tp-1 {
             width: 100%;
             display: flex;
+            position: relative;
 
             .tp-l {
                 margin-right: 20px;
@@ -485,6 +486,45 @@ header {
 
                 }
             }
+            
+            /* More Options Dropdown */
+            .more-opt {
+                position: absolute;
+                width: 100%;
+                font-size: .875rem;
+                z-index: 200;
+                top: 132px;
+                visibility: hidden;
+                perspective: 1300px;
+                
+                .closebtn {
+                    position: absolute;
+                    right: 5px;
+                    top: 5px;
+                    z-index: 201;
+                }
+                
+                .mo-content {
+                    background: $white;
+                    padding: 20px;
+                    opacity: 0;
+                    @include transform(rotateX(-60deg));
+                    @include transform-origin(50% 0);
+                    @include transform-style(preserve-3d);
+                    @include transition(all 0.3s);
+                    @include box-shadow(0, 20px, 30px, rgba(0,0,0,.1) !important);
+                    
+                }
+                
+                &.show {
+                    visibility: visible;
+                    
+                    .mo-content {
+                        opacity: 1;
+                        @include transform(rotateX(0deg));
+                    }
+                }
+            }
         }
 
     }
@@ -676,6 +716,20 @@ header {
                                     .mat-checkbox {
                                         @include font-regular;
                                         font-weight: 500;
+                                        display: flex;
+                                        
+                                        .mat-checkbox-layout {
+                                            display: flex;
+                                            width: 100%;
+                                            
+                                            .mat-checkbox-inner-container {
+                                                margin-left: 0;
+                                                margin-top: 3px;
+                                            }
+                                            .mat-checkbox-label {
+                                                white-space: normal;
+                                            }
+                                        }
                                     }
                                     
                                     .mat-slide-toggle {
@@ -913,6 +967,9 @@ header {
                                         }
                                     }
                                 }
+                            }
+                            .rating-stars {
+                                text-align: left;
                             }
                         }
                         .tp2 {

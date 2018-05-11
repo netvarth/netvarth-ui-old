@@ -159,7 +159,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
-      autoFocus: false,
+      autoFocus: true,
       data: {
         type : 'add',
         source: 'waitlist'

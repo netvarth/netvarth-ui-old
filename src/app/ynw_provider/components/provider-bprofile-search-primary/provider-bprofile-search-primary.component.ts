@@ -48,7 +48,7 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     this.bProfile = this.provider_datastorageobj.get('bProfile');
     // calling method to create the form
     this.createForm();
-    this.elementRef.nativeElement.focus();
+   // this.elementRef.nativeElement.focus();
   }
 
   // Creates the form element

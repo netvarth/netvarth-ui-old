@@ -68,6 +68,7 @@ export class SearchDetailComponent implements OnInit {
   public commonfilters;
   public showopnow = 0;
   public subdomainleft;
+  specialization_exists = false;
   location_cnt = 0;
   showrefinedsection = true;
   current_provider;
@@ -78,6 +79,10 @@ export class SearchDetailComponent implements OnInit {
   searchfields: SearchFields = new SearchFields();
   screenHeight;
   screenWidth;
+  kwdet: any = [];
+  refined_domain = '';
+  refined_subdomain = '';
+  specialization_hide = false;
 
   constructor(private routerobj: Router,
               private location: Location,
@@ -94,7 +99,7 @@ export class SearchDetailComponent implements OnInit {
     this.activaterouterobj.params
           .subscribe(paramsv => {
             this.setSearchfields (paramsv, 1);
-            this.getDomainList();
+            this.getDomainList(false);
             // this.do_search();
     });
     this.sortfieldsels = 'titleasc';
@@ -107,18 +112,13 @@ export class SearchDetailComponent implements OnInit {
     if (this.screenWidth <= 767) {
       this.showrefinedsection = false;
     }
-    console.log('here', this.screenWidth, this.screenHeight);
+   // console.log('here', this.screenWidth, this.screenHeight);
 }
-  private getDomainList() {
+ /*private getDomainList() {
     this.shared_service.bussinessDomains()
     .subscribe (
       res => {
         this.domainlist_data = res;
-       // console.log('domainlist', this.domainlist_data);
-        if (this.domain) {
-          this.getlistofSubdomains();
-        }
-       // console.log('subsector', this.subsector);
         if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
           const domainobtain = this.getdomainofaSubdomain(this.subsector);
           if (domainobtain !== undefined && domainobtain) {
@@ -128,12 +128,121 @@ export class SearchDetailComponent implements OnInit {
           this.kwsubdomain = '';
           this.kwtyp = 'subdom';
         }
+        let fetchsubdom = true;
+       if (this.domain) {
+           if (this.kw) {
+              if (this.kwtyp === 'subdom') {
+                fetchsubdom = false;
+              }
+              if (this.kwtyp === 'special') {
+                if (this.kwsubdomain !== '') {
+                  fetchsubdom = false;
+                }
+              }
+           }
+           if (fetchsubdom) {
+            this.getlistofSubdomains(this.domain);
+           }
+        }
         this.showsearchsection = true;
         this.setfields();
         this.getRefinedSearch(true);
       }
     );
+ }*/
+
+  getDomainList(bypassotherfunction?) {
+    const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    let run_api = true;
+    if (bconfig) { // case if data is there in local storage
+      const bdate = bconfig.cdate;
+      const bdata = bconfig.bdata;
+      const saveddate = new Date(bdate);
+      const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+      // console.log('diff hours search', diff['hours']);
+      if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+        run_api = false;
+        this.domainlist_data = bdata;
+        if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
+          const domainobtain = this.getdomainofaSubdomain(this.subsector);
+          if (domainobtain !== undefined && domainobtain) {
+            this.kwautoname = domainobtain['subdom_dispname'] || '';
+            this.kwdomain = domainobtain['dom'] || '';
+          }
+          this.kwsubdomain = '';
+          this.kwtyp = 'subdom';
+        }
+        let fetchsubdom = true;
+        if (this.domain) {
+           if (this.kw) {
+              if (this.kwtyp === 'subdom') {
+                fetchsubdom = false;
+              }
+              if (this.kwtyp === 'special') {
+                if (this.kwsubdomain !== '') {
+                  fetchsubdom = false;
+                }
+                this.specialization_exists = true;
+              }
+           }
+           if (fetchsubdom) {
+            this.getlistofSubdomains(this.domain);
+           }
+        }
+        this.showsearchsection = true;
+        if (!bypassotherfunction) {
+          this.setfields();
+          this.getRefinedSearch(true);
+        }
+      }
+    }
+    if (run_api) { // case if data is not there in data
+      this.shared_service.bussinessDomains()
+      .subscribe (
+        res => {
+          this.domainlist_data = res;
+          const today = new Date();
+          const postdata = {
+            cdate: today,
+            bdata: this.domainlist_data
+          };
+          this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+          if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
+            const domainobtain = this.getdomainofaSubdomain(this.subsector);
+            if (domainobtain !== undefined && domainobtain) {
+              this.kwautoname = domainobtain['subdom_dispname'] || '';
+              this.kwdomain = domainobtain['dom'] || '';
+            }
+            this.kwsubdomain = '';
+            this.kwtyp = 'subdom';
+          }
+          let fetchsubdom = true;
+          if (this.domain) {
+              if (this.kw) {
+                  if (this.kwtyp === 'subdom') {
+                    fetchsubdom = false;
+                  }
+                  if (this.kwtyp === 'special') {
+                    if (this.kwsubdomain !== '') {
+                      fetchsubdom = false;
+                    }
+                    this.specialization_exists = true;
+                  }
+              }
+              if (fetchsubdom) {
+                this.getlistofSubdomains(this.domain);
+              }
+            }
+            this.showsearchsection = true;
+            if (!bypassotherfunction) {
+              this.setfields();
+              this.getRefinedSearch(true);
+            }
+        }
+      );
+    }
   }
+
   setSearchfields(obj, src) {
    // console.log('src', src, 'details', obj);
     if (src === 1) { // case from ngoninit
@@ -147,18 +256,44 @@ export class SearchDetailComponent implements OnInit {
       this.kwdomain = obj.kwdomain;
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;
-      this.labelq = obj.lq || '';
+      this.labelq = this.shared_functions.Lbase64Decode(obj.lq) || '';
       this.commonfilters = obj.cfilter || '';
 
+      this.kwdet = {
+        kw: this.kw,
+        kwautoname: this.kwautoname,
+        kwdomain: this.kwdomain,
+        kwsubdomain: this.kwsubdomain,
+        kwtyp : this.kwtyp
+      };
+
       if (this.kwtyp === 'special') {
-        if (this.domain === '' || this.domain === undefined || this.domain === 'undefined') {
+       // if (this.domain === '' || this.domain === undefined || this.domain === 'undefined') {
           if (this.kwdomain !== '') {
             this.domain = this.kwdomain;
+           // this.getlistofSubdomains(this.domain);
             // console.log('reached here');
           }
-        }
+          if (this.kwsubdomain !== '') {
+            this.selected_leftsubdomain = this.kwsubdomain;
+           }
+       // }
+       this.specialization_hide = true;
       }
 
+      if (this.kwtyp === 'subdom') {
+        // if (this.domain === '' || this.domain === undefined || this.domain === 'undefined') {
+           if (this.kwdomain !== '') {
+             this.domain = this.kwdomain;
+             // this.getlistofSubdomains(this.domain);
+             // console.log('reached here');
+           }
+           // console.log('subdom', this.kw);
+           if (this.kw !== '') {
+            this.selected_leftsubdomain = this.kw;
+           }
+        // }
+       }
       // calling method to parse refine filters in query string to respective array
       this.parseRefinedfiltersQueryString(obj);
       // console.log('ref_query', this.refined_querystr);
@@ -182,7 +317,10 @@ export class SearchDetailComponent implements OnInit {
       }
     } else if (src === 2) { // case of setting values in response to call from the searchdetails page
       // console.log('details obj', obj);
-     // console.log('src2');
+      this.refined_domain = '';
+      this.refined_subdomain = '';
+      this.subsector = '';
+
       this.domain = obj.domain;
       this.locname = obj.location;
       this.locautoname = obj.locationautoname;
@@ -194,11 +332,44 @@ export class SearchDetailComponent implements OnInit {
       this.kwdomain = obj.kwdomain;
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;
-      this.getlistofSubdomains();
-     // console.log('typ', obj);
+      this.getlistofSubdomains(this.domain);
+     // console.log('kwtyp', this.kwtyp);
+     // console.log('obj', obj);
       if (this.kwtyp === 'subdom') {
         this.subsector = this.kw;
+        if (this.kwdomain !== '') {
+          this.domain = this.kwdomain;
+        }
+        if (this.domain === '' || this.domain === 'All') {
+          const domdet = this.getdomainofaSubdomain(this.kw);
+          if (domdet) {
+            this.domain = domdet.dom;
+          } else {
+            this.domain = 'All';
+          }
+        }
+        this.getlistofSubdomains(this.domain);
       }
+
+      if (this.kwtyp === 'special') {
+        if (this.kwdomain !== '') {
+          this.domain = this.kwdomain;
+        }
+        if (this.kwsubdomain !== '') {
+          this.subsector = this.kwsubdomain;
+          // this.selected_leftsubdomain = this.kwsubdomain;
+          const domdet = this.getdomainofaSubdomain(this.kwsubdomain);
+          if (domdet.dom !== '') {
+            this.domain = domdet.dom;
+          } else {
+            this.domain = 'All';
+          }
+        }
+        this.specialization_hide = true;
+        this.specialization_exists = true;
+        // console.log('reached here');
+       }
+
       if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
         if (this.kwtyp === 'label') {
           this.kwtyp = 'subdom';
@@ -209,7 +380,7 @@ export class SearchDetailComponent implements OnInit {
         this.sortfield = obj.sortfield;
         this.sortorder = obj.sortorder;
       }
-      this.labelq = obj.labelq || '';
+      this.labelq = this.shared_functions.Lbase64Decode(obj.labelq) || '';
       this.commonfilters = obj.commonfilters || '';
 
       if (this.labelq !== '') { // if came to details page by clicking the search labels
@@ -303,6 +474,7 @@ export class SearchDetailComponent implements OnInit {
       }
       if (str.match(/specialization:'(.*?)'/) !== null) {
         retarr['specialization'] = str.match(/specialization:'(.*?)'/)[1];
+        this.specialization_exists = true;
       }
       this.setvariablesbasedonSearchlabel(retarr);
     }
@@ -326,7 +498,17 @@ export class SearchDetailComponent implements OnInit {
         // this.kwsubdomain = '';
         this.kwtyp = 'subdom';
         // this.showsearchsection = true;
+      } else {
+          if (this.domain !== '' && this.domain !== 'All' && this.specialization !== '') {
+           // console.log('special reached here', this.specialization, this.domain);
+            const obtarr = this.getSubdomainofaSpecialization(this.specialization, this.domain);
+           // console.log('returned subdom', obtarr);
+            this.subsector = obtarr['subdom_name'];
+            this.kwsubdomain = this.subsector;
+            this.specialization_hide = true;
+          }
       }
+      this.getRefinedSearch(false);
   }
   goback() {
     this.routerobj.navigateByUrl('');
@@ -362,7 +544,7 @@ export class SearchDetailComponent implements OnInit {
     let urlstr = '';
     // if (this.labelq) { // if clicked on searchlabels consider that only
       if (this.labelq) {
-        urlstr = 'lq=' + this.labelq.replace('?q=', '');
+        urlstr = 'lq=' + this.shared_functions.Lbase64Encode(this.labelq.replace('?q=', ''));
       }
     // } else { // search by clicking on the search button
       if (this.domain) {
@@ -445,10 +627,16 @@ export class SearchDetailComponent implements OnInit {
      if (this.latitude) { // case of location is selected
        // calling shared function to get the coordinates for nearybylocation
        const coordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude);
-       const locstr = 'location1:' + coordinates + ' ' + 'location2:' + coordinates + 'location3:' + coordinates + 'location4:' + coordinates + 'location5:' + coordinates;
-       q_str = q_str + ' ( or ' + locstr + ')';
+       // const locstr = 'location1:' + coordinates + ' ' + 'location2:' + coordinates + 'location3:' + coordinates + 'location4:' + coordinates + 'location5:' + coordinates;
+       // q_str = q_str + ' ( or ' + locstr + ')';
+
+       const locstr = 'location1:' + coordinates;
+       q_str = q_str + locstr;
      }
 
+     if (this.kwtyp === 'kwtitle') {
+        q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
+     }
      if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
        q_str = q_str + 'sector:\'' + this.domain + '\'';
      } else {
@@ -483,7 +671,7 @@ export class SearchDetailComponent implements OnInit {
      }
     // console.log('Iamhere', this.labelq);
      if (this.labelq) { // if label search then bypass all other criteria
-      //  console.log('labelq', this.labelq);
+        // console.log('labelq', this.labelq);
        const labelqarr = this.labelq.split('&');
        q_str = labelqarr[0].replace('?q=', '');
 
@@ -492,8 +680,8 @@ export class SearchDetailComponent implements OnInit {
         q_str = q_str + '( and location1:' + this.shared_functions.getNearByLocation(this.latitude, this.longitude) + ')';
       }*/
       // console.log('labelarr', labelqarr);
-       projectConstants.searchpass_criteria.parser = labelqarr[1].replace('q.parser=', '');
-       projectConstants.searchpass_criteria.return = labelqarr[2].replace('return=', '');
+       // projectConstants.searchpass_criteria.parser = labelqarr[1].replace('q.parser=', '');
+       // projectConstants.searchpass_criteria.return = labelqarr[2].replace('return=', '');
      } else {
         // if (this.latitude || this.domain || this.labelq || this.refined_querystr) {
         if (this.latitude || this.domain || this.labelq || time_qstr) {
@@ -739,13 +927,18 @@ export class SearchDetailComponent implements OnInit {
   }
 
   // method which get the refined filters
-  getRefinedSearch(call_dosearch?) {
+  getRefinedSearch(call_dosearch?, fromrefine?) {
     let subdom = '';
     this.searchrefine_arr = '';
     if (this.kw !== '') {
        if (this.kwtyp === 'subdom') {
          subdom = this.kw;
+       } else if (this.kwtyp === 'special') {
+         subdom = this.kwsubdomain;
        }
+    }
+    if (this.kwtyp === 'label') {
+      subdom = this.kwsubdomain;
     }
     // console.log('obtained domain prefix', subdom, this.domain, this.kwtyp);
     if (subdom !== '' && (this.domain === '' || this.domain === undefined)) {
@@ -756,10 +949,31 @@ export class SearchDetailComponent implements OnInit {
         this.kwautoname = domdet['subdom_dispname'];
       }
     }
-    this.searchdetailserviceobj.getRefinedSearch(this.domain, subdom)
+    let pasdomain = (this.domain !== 'All') ? this.domain : '';
+    if (subdom === '') {
+      pasdomain = '';
+    }
+    // console.log('pass dom subdom', pasdomain, subdom);
+    if (fromrefine === 1) { // case of coming to this function from left side domain or subdomain selection
+      if (this.refined_domain !== '' && this.refined_domain !== 'All') {
+        pasdomain = this.refined_domain;
+      }
+      if (pasdomain === '') {
+        if (this.domain !== '' && this.domain !== 'All') {
+          pasdomain = this.domain;
+        }
+      }
+      if (this.refined_subdomain !== '') {
+        subdom = this.refined_subdomain;
+      }
+      if (subdom === '') {
+        pasdomain = '';
+      }
+    }
+    this.searchdetailserviceobj.getRefinedSearch(pasdomain, subdom)
       .subscribe( data => {
          // console.log(this.domain, this.kw);
-          if (this.domain && this.kw) { // case if domain and subdomain are available
+          if (pasdomain && subdom) { // case if domain and subdomain are available
             if (data['refinedFilters']) {
               this.searchrefine_arr = data['refinedFilters'];
             }
@@ -814,6 +1028,37 @@ export class SearchDetailComponent implements OnInit {
       return retarr;
     }
   }
+  getSubdomainofaSpecialization(special, domain) {
+    let retarr = { 'dom': '', 'subdom_name': '', 'subdom_dispname': ''};
+    // console.log('domainlist', this.domainlist_data);
+    if (this.domainlist_data === undefined) {
+      const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+      // console.log('subdomspec', bconfig);
+      if (bconfig) { // case if data is there in local storage
+        this.domainlist_data = bconfig.bdata;
+      }
+    }
+    if (this.domainlist_data) {
+      for (let i = 0; i < this.domainlist_data.length; i++) {
+       if (this.domainlist_data[i].domain === domain) {
+          for (const subdom of this.domainlist_data[i].subDomains) {
+            if (subdom.specializations.length > 0) {
+              for (const spec of subdom.specializations) {
+                // console.log('spec name', spec.name.toLowerCase(), special.toLowerCase());
+                if (spec.name.toLowerCase() === special.toLowerCase()) {
+                  retarr = { 'dom': this.domainlist_data[i].domain, 'subdom_name': subdom.subDomain, 'subdom_dispname': subdom.displayName};
+                  return retarr;
+                }
+              }
+            }
+          }
+        }
+      }
+    }//  else {
+      retarr = { 'dom': '', 'subdom_name': '', 'subdom_dispname': ''};
+      return retarr;
+    // }
+  }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
    // console.log('click', fieldname, fieldtype, selval);
@@ -832,7 +1077,7 @@ export class SearchDetailComponent implements OnInit {
        // console.log('val exist', chk_fieldvalexist);
         if (chk_fieldvalexist[0]['indx'] !== -1) {
           this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].splice(chk_fieldvalexist[0]['key'], 1);
-          console.log('count', this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].length);
+        //  console.log('count', this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].length);
           /*if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']].length === 0) {
             this.searchrefineresult_arr.splice(chk_fieldvalexist[0]['indx'], 1);
           }*/
@@ -850,7 +1095,7 @@ export class SearchDetailComponent implements OnInit {
       this.searchrefineresult_arr[curi][fieldname] = new Array();
       this.searchrefineresult_arr[curi][fieldname][0] = new Array(selval, fieldtype);
     }
-    console.log('refine filter', this.searchrefineresult_arr);
+   // console.log('refine filter', this.searchrefineresult_arr);
     if (bypassbuildquery === false) {
       this.buildQuery(false);
     }
@@ -887,6 +1132,12 @@ export class SearchDetailComponent implements OnInit {
   buildQuery(bypassdosearch?) {
     this.refined_querystr = '';
     this.refined_options_url_str = '';
+    if (this.refined_domain !== '' && this.refined_domain !== 'All') {
+      this.refined_querystr = ' sector:\'' + this.refined_domain + '\'';
+    }
+    if (this.refined_subdomain !== '') {
+      this.refined_querystr = this.refined_querystr + ' sub_sector:\'' + this.refined_subdomain + '\'';
+    }
     for (let i = 0; i < this.searchrefineresult_arr.length; i++ ) {
       for (const field in this.searchrefineresult_arr[i]) {
         if (field) {
@@ -992,7 +1243,7 @@ export class SearchDetailComponent implements OnInit {
     }
   }
 
-  handleleftdomainchange(domain) {
+ /* handleleftdomainchange(domain) {
     // setting the domain in the selected_domain holder variable
     if (domain === 'All') {
       domain = '';
@@ -1006,10 +1257,12 @@ export class SearchDetailComponent implements OnInit {
     this.subdomainlist_data = '';
     this.getlistofSubdomains();
     // this.loadkeywordAPIreponsetoArray();
-  }
-  getlistofSubdomains() {
-    const curdomain = this.domain;
-    if (curdomain) {
+  }*/
+  getlistofSubdomains(curdomain) {
+    // const curdomain = this.refined_domain;
+   // console.log('psubdomain', curdomain, this.domainlist_data);
+    this.subdomainlist_data = [];
+    if (curdomain !== '' && curdomain !== 'All') {
       for (const domains of this.domainlist_data) {
         if (domains.domain === curdomain) {
           this.subdomainlist_data = domains.subDomains;
@@ -1018,7 +1271,7 @@ export class SearchDetailComponent implements OnInit {
     }
    // console.log('subdomains', this.subdomainlist_data);
   }
-  handleleftsubdomainchange(subdom) {
+  /* handleleftsubdomainchange(subdom) {
   //  console.log('selsubdom', subdom);
     for (const csubdom of this.subdomainlist_data) {
       if (csubdom.subDomain === subdom) {
@@ -1040,7 +1293,7 @@ export class SearchDetailComponent implements OnInit {
         this.getRefinedSearch(true);
       }
     }
-  }
+  }*/
   handleratingClick(obj) {
     this.handle_optionclick(obj.cloudindex, 'Rating', obj.selectedrating, false);
   }
@@ -1107,6 +1360,20 @@ export class SearchDetailComponent implements OnInit {
   }
 
   providerDetClicked(obj) {
-    console.log(obj);
+   // console.log(obj);
+  }
+
+  handlerefineddomainchange(val) {
+   // console.log('refineddomain', val);
+    this.refined_domain = val;
+    this.refined_subdomain = '';
+    this.getlistofSubdomains(val);
+    this.getRefinedSearch(false, 1);
+  }
+
+  handlerefinedsubdomainchange(val) {
+   // console.log('refinedSubdomain', val);
+    this.refined_subdomain = val;
+    this.getRefinedSearch(true, 1);
   }
 }
