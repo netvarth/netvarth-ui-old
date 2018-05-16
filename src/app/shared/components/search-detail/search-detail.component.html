@@ -350,15 +350,19 @@
                         </div>
                         <div class="bottom-sect">
                             <div class="bt-l">
-                                <div class="wt-tme" *ngIf="waitlisttime_arr.length">
-                                    <div class="o-now" *ngIf="search_result.fields['opennow']">Open Now</div>
+                                <div class="wt-tme" *ngIf="waitlisttime_arr.length && search_result.fields.services?.length>0">
+                                    <div class="o-now" *ngIf="search_result.fields['opennow']==true">Open Now</div>
                                     <div class="timing" >
                                         <span class="est-time" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
                                         <span class="time-data" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['time']}} <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
                                     </div>
                                 </div>
+
+                                <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0)">
+                                    Sorry!! Check-ins not allowed
+                                </div>
                             </div>
-                            <div class="bt-r" *ngIf="waitlisttime_arr.length">
+                            <div class="bt-r" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields.services?.length>0">
                                 <span class="cs-btn chk-btn" (click)="checkinClicked(search_result)">Check-In</span>
                             </div>    
                         </div>

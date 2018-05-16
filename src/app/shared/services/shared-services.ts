@@ -218,4 +218,19 @@ export class SharedServices {
       return this.servicemeta.httpGet(path);
     }
 
+    getServicesByLocationId(locid) {
+      if (locid) {
+        const url = 'consumer/waitlist/services/' + locid;
+        return this.servicemeta.httpGet(url);
+      }
+    }
+    getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+      const dd = (pdate !== undefined) ? '/' + pdate + '?account=' + accountid  : '';
+      const url = 'consumer/waitlist/queues/' + locid + '/' + servid + dd;
+      return this.servicemeta.httpGet(url);
+    }
+
+    addCheckin(accountid, postData) {
+      return this.servicemeta.httpPost('consumer/waitlist?account=' + accountid, postData);
+    }
 }

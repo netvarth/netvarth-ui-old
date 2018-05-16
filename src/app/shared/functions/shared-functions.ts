@@ -705,5 +705,32 @@ Lbase64Decode(str) {
    return str;
  }
 }
+formatDate(psdate, params: any = []) { /* convert year-month-day to day-monthname-year*/
+  const monthNames = {
+      '01': 'Jan',
+      '02': 'Feb',
+      '03': 'Mar',
+      '04': 'Apr',
+      '05': 'May',
+      '06': 'Jun',
+      '07': 'Jul',
+      '08': 'Aug',
+      '09': 'Sep',
+      '10': 'Oct',
+      '11': 'Nov',
+      '12': 'Dec'
+  };
+  const darr =  psdate.split('-');
+  if (params['rettype'] === 'monthname') {
+    darr[1] = monthNames[darr[1]];
+  }
+  return  darr[1] + ' ' + darr[2];
+}
+addZero(i) {
+  if (i < 10) {
+      i = '0' + i;
+  }
+  return i;
+}
 
 }
