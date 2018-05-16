@@ -19,35 +19,79 @@ export class SharedFunctions {
 
     constructor(private shared_service: SharedServices, private router: Router,
       private dialog: MatDialog,
-      private snackBar: MatSnackBar
+      private snackBar: MatSnackBar,
     ) {}
 
     logout() {
-        (localStorage.getItem('isBusinessOwner') === 'true') ? this.providerLogout() :  this.consumerLogout();
+      this.doLogout()
+      .then(
+        data => {
+          console.log('here2');
+          this.router.navigate(['/home']);
+        },
+        error => {
+        }
+      );
     }
 
+    doLogout() {
+      const promise = new Promise((resolve, reject) => {
+        if (localStorage.getItem('ynw-user')) {
+          if (localStorage.getItem('isBusinessOwner') === 'true') {
+            this.providerLogout()
+            .then(
+              data => {
+                console.log('here');
+                resolve();
+              }
+            );
+          } else {
+            this.consumerLogout()
+            .then(
+              data => {
+                resolve();
+              }
+            );
+          }
+        } else {
+          reject();
+        }
+      });
+      return promise;
+    }
     private consumerLogout() {
+      const promise = new Promise((resolve, reject) => {
         this.shared_service.ConsumerLogout()
         .subscribe(data => {
              // console.log(data);
              this.clearLocalstorage();
+             resolve();
         },
         error => {
            // console.log(error);
+           resolve();
         }
         );
+      });
+       return promise;
     }
 
      private providerLogout() {
+      const promise = new Promise((resolve, reject) => {
          this.shared_service.ProviderLogout()
          .subscribe(data => {
               // console.log(data);
               this.clearLocalstorage();
+              console.log('here1');
+              resolve();
          },
          error => {
             // console.log(error);
+            resolve();
          }
          );
+        });
+        return promise;
       }
 
      consumerLogin(post_data, moreParams?) {

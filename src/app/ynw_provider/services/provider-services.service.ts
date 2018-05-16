@@ -592,13 +592,15 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
 
-  createWaitlistBill(uuid, data) {
-    const url = 'provider/bill/' + uuid ;
+  createWaitlistBill(data) {
+    const url = 'provider/bill/'  ;
     return this.servicemeta.httpPost(url, data);
   }
 
-  updateWaitlistBill(uuid, data) {
-    const url = 'provider/bill/' + uuid ;
+  updateWaitlistBill(data) {
+    const url = 'provider/bill/'  ;
     return this.servicemeta.httpPut(url, data);
   }
+
+
 }
