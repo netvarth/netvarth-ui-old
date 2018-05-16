@@ -7,11 +7,11 @@
    background-color: #000;
    color: #FFF !important;
    font-weight: bold;
- } 
+ }
  .width-100 {
    width: 100%;
  }
- 
+
  #pac-input{
     margin: 10px 14px;
     height: 30px;
@@ -19,7 +19,7 @@
 
  .pac-container{
     z-index: 9999!important;
-    
+
     position: fixed!important;
   }
 
@@ -63,3 +63,7 @@
   }
 
   /* image upload */
+
+  .commonpopupmainclass.width-100 {
+    width: 100% !important;
+  }

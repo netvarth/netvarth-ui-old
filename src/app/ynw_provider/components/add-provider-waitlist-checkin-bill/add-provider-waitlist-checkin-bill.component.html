@@ -1,5 +1,4 @@
-<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-  <h1 class="mat-dialog-title">Bill
+ <h1 class="mat-dialog-title">Bill
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -10,16 +9,111 @@
       <p>Time : {{today  | date: timeFormat}}</p><br>
 
       <div class="form-group">
-          <label class="col-form-label" for="displayName">Message*</label>
-          <textarea class="form-control" id="message" placeholder="Message" formControlName="message">
+        <mat-form-field class="example-full-width">
+          <label class="col-form-label" for="displayName">Search for Items/Services</label>
+          <input type="text" #itemservicesearch aria-label="Number" matInput
+          [formControl]="itemServiceSearch" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-optgroup *ngFor="let group of ItemServiceGroupOptions | async" [label]="group.type">
+              <mat-option *ngFor="let value of group.values; let i = index" [value]="value" (click)="itemServiceSelected(group.type, i)">
+                {{ value }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="table-outer q-tbl">
+          <table class="table">
+              <thead>
+                <th>Service/Item</th>
+                <th>Quantity</th>
+                <th>StdRate</th>
+                <th>Discount</th>
+                <th>Coupon</th>
+                <th>Tax-GST</th>
+                <th>Tax-CGST</th>
+                <th>Net-Rate</th>
+                <th>Delete</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of cart.items; let i = index">
+                  <td>{{item.name}}</td>
+                  <td> <input type="number" min="1" [(ngModel)]="cart.items[i].quantity"
+                    [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)"> </td>
+                  <td>{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
+                  <td>
+                    <div class="form-group" *ngIf="discounts.length >0">
+                    <mat-form-field>
+                      <mat-select [(ngModel)]="cart.items[i].discount" [ngModelOptions]="{standalone: true}"
+                      (selectionChange)="itemDiscountChange(i)">
+                        <mat-option value="null">Select one </mat-option>
+                        <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
+                          {{ discount.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
 
-          </textarea>
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter message.">
-        </app-field-error-display>
+                    </div>
+                  </td>
+                  <td>
+                      <div class="form-group" *ngIf="coupons.length > 0">
+                          <mat-form-field>
+                             <mat-select [(ngModel)]="cart.items[i].coupon" [ngModelOptions]="{standalone: true}"
+                              (selectionChange)="itemCouponChange(i)">
+                                <mat-option value="null">Select one </mat-option>
+                                <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
+                                  {{ coupon.name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                      </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td>{{item.subtotal | currency:'INR':'symbol':'.2-2'}}</td>
+                  <td><button (click)="deleteCartItem(i)">Delete</button></td>
+                </tr>
+                <tr *ngIf="bill_load_complete && cart.items.length == 0">
+                  <td colspan="9">No items added</td>
+                </tr>
+              </tbody>
+          </table>
+
+          <p>Total : {{cart.sub_total | currency:'INR':'symbol':'.2-2'}}</p>
+          <div class="form-group" *ngIf="discounts.length >0">
+              <mat-form-field>
+                  <label class="col-form-label" for="displayName">Discounts</label>
+                  <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
+                  (selectionChange)="discountChange()">
+                    <mat-option value="null">Select one </mat-option>
+                    <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
+                      {{ discount.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+          </div>
+
+          <div class="form-group" *ngIf="coupons.length > 0">
+              <mat-form-field>
+                  <label class="col-form-label" for="displayName">Coupons</label>
+                  <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
+                  (selectionChange)="couponChange()">
+                    <mat-option value="null">Select one </mat-option>
+                    <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
+                      {{ coupon.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+          </div>
+
+          <p>Amount to pay : {{cart.total | currency:'INR':'symbol':'.2-2'}}</p>
       </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-      <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
+      <button  type="button" mat-button class="cs-btn bt1" [disabled]="cart.items.length < 0"
+      (click)="submitBill()">Save</button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
   </mat-dialog-actions>
   <app-field-error-display [displayError]="true" *ngIf="api_error"
@@ -27,4 +121,4 @@
 
   <app-form-success-display [displayMsg]="true" *ngIf="api_success"
   successMsg="{{api_success}}"></app-form-success-display>
-  </form>
+

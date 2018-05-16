@@ -573,7 +573,7 @@ export class ProviderHomeComponent implements OnInit {
   addEditBill(checkin) {
     const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'width-100'],
       data: {
         checkin: checkin
       }
