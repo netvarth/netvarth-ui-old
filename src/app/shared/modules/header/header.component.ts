@@ -84,8 +84,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('passeddomain', this.passedDomain);
-    console.log('passedkw', this.passedkwdet);
+   // console.log('passeddomain', this.passedDomain);
+   // console.log('passedkw', this.passedkwdet);
     this.getUserdetails();
     this.getBusinessdetFromLocalstorage();
     // this.handleHeaderclassbasedonURL();

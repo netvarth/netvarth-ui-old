@@ -377,7 +377,27 @@
     &:hover {
         background: $hover-blue !important;
     }
+    
+    &.confirmbtn {
+        background: $green !important;
+        font-weight: 600;
+    }
+    
+    &.backbtn {
+        margin-left: 0px !important;
+        margin-right: 10px;
+        border: 2px solid $linkblue !important;
+        background: $white !important;
+        color: $linkblue !important;
+        line-height: 16px !important;
+        
+        &:hover {
+            background: $linkblue !important;
+            color: $white !important;
+        }
+    }
 }
+
 
 .mat-button:disabled {
     background: black !important;
@@ -404,7 +424,7 @@
         content: "\69";
         position: absolute;
         left: 0;
-        font-size: .875rem;
+        font-size: .775rem;
         font-weight: 700;
         width: 30px;
         height: 30px;
@@ -414,7 +434,6 @@
     }
     
     &:hover {
-        background: $cc-ash;
         color: $linkblue;
     }
 }

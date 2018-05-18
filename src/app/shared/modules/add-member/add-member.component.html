@@ -1,0 +1,37 @@
+<!-- <form [formGroup]="amForm"  novalidate
+(ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" (keyup)="resetApiErrors()"> -->
+<div *ngIf="calledFrom=='checkin'" class="addmem-head">Please fill in the following details</div>
+<div class="form-group">
+    <label class="col-form-label" for="first_name">First Name *</label>
+    <input type="text" [(ngModel)] = "firstname" (keyup)="valuechange()" class="form-control" id="first_name" placeholder="First Name" >
+    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
+    errorMsg="Please enter the first name.">
+   </app-field-error-display> -->
+</div>
+
+<div class="form-group">
+    <label class="col-form-label" for="last_name">Last Name *</label>
+    <input type="text" [(ngModel)] = "lastname" (keyup)="valuechange()" class="form-control" id="last_name" placeholder="Last Name">
+    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
+    errorMsg="Please enter the last name.">
+   </app-field-error-display> -->
+</div>
+<div class="form-group">
+    <label class="col-form-label" for="mobile">Mobile Number *</label>
+    <input type="text" [(ngModel)] = "mobile" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number">
+    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
+    errorMsg="Please enter the mobile number.">
+   </app-field-error-display> -->
+</div>
+
+<!-- <button  type="submit" mat-button
+[disabled]="!amForm.valid" *ngIf="calledFrom!='checkin'">Submit</button>
+
+</form> -->
+
+<!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display> -->

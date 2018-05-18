@@ -52,13 +52,13 @@ export class ConsumerServices {
     return this.servicemeta.httpDelete(path);
   }
 
-  addMembers(data) {
+ /* addMembers(data) {
     return this.servicemeta.httpPost('consumer/familyMember', data);
   }
 
   editMember(data) {
     return this.servicemeta.httpPut('consumer/familyMember', data);
-  }
+  } */
 
 
 }

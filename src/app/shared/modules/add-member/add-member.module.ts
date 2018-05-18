@@ -4,9 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../common/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
-import { AddMemberModule } from '../../../shared/modules/add-member/add-member.module';
 
-import { CheckInComponent } from './check-in.component';
+import { AddMemberComponent } from './add-member.component';
 
 @NgModule({
     imports: [
@@ -15,16 +14,15 @@ import { CheckInComponent } from './check-in.component';
         MaterialModule,
         ReactiveFormsModule,
         FormMessageDisplayModule,
-        FormsModule,
-        AddMemberModule
+        FormsModule
     ],
     entryComponents: [
-        CheckInComponent
+        AddMemberComponent
     ],
     declarations: [
-        CheckInComponent
+        AddMemberComponent
     ],
-    exports: [CheckInComponent]
+    exports: [AddMemberComponent]
 })
-export class CheckInModule {
+export class AddMemberModule {
 }

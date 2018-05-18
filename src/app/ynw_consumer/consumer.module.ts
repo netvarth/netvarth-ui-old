@@ -10,6 +10,7 @@ import { ConsumerRoutingModule } from './consumer-routing.module';
 import { SearchModule } from '../shared/modules/search/search.module';
 import { HeaderModule } from '../shared/modules/header/header.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
+// import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
 
 import {ConsumerServices } from './services/consumer-services.service';
 import { ConsumerDataStorageService } from './services/consumer-datastorage.service';
@@ -22,7 +23,7 @@ import {WaitlistComponent} from './components/waitlist/waitlist.component';
 import { ConfirmBoxComponent} from './shared/component/confirm-box/confirm-box.component';
 import { NotificationListBoxComponent} from './shared/component/notification-list-box/notification-list-box.component';
 import {MembersComponent } from './components/members/members.component';
-import { AddMemberComponent } from './components/add-member/add-member.component';
+// import { AddMemberComponent } from './components/add-member/add-member.component';
 
 
 import { projectConstants } from '../shared/constants/project-constants';
@@ -42,14 +43,15 @@ import { projectConstants } from '../shared/constants/project-constants';
       ConfirmBoxComponent,
       WaitlistComponent,
       NotificationListBoxComponent,
-      MembersComponent,
-      AddMemberComponent
+      MembersComponent
+      /*,
+      AddMemberComponent*/
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
       ConfirmBoxComponent,
-      NotificationListBoxComponent,
-      AddMemberComponent
+      NotificationListBoxComponent /*,
+      AddMemberComponent*/
     ],
     providers: [
       SharedServices,

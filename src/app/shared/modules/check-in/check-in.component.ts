@@ -24,6 +24,7 @@ export class CheckInComponent implements OnInit {
     settingsjson: any = [];
     locationjson: any = [];
     queuejson: any = [];
+    familymembers: any = [];
     sel_loc;
     sel_ser;
     sel_ser_det: any = [];
@@ -47,8 +48,12 @@ export class CheckInComponent implements OnInit {
     retval;
     futuredate_allowed = false;
     step;
-    waitlist_for;
+    waitlist_for: any = [];
+    holdwaitlist_for: any = [];
     loggedinuser;
+    maxsize;
+    paytype = '';
+    addmemberobj = {'fname': '', 'lname': '', 'mobile': ''};
     constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -57,13 +62,15 @@ export class CheckInComponent implements OnInit {
     public dialogRef: MatDialogRef<CheckInComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-     console.log('check-inpassed data', data);
+      // console.log('check-inpassed data', data);
     }
 
     ngOnInit() {
+      this.maxsize = 1;
       this.step = 1;
       this.loggedinuser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
       this.gets3curl();
+      this.getFamilyMembers();
       this.consumerNote = '';
       this.today = new Date();
       this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
@@ -72,7 +79,7 @@ export class CheckInComponent implements OnInit {
       this.provider_id = this.search_obj.fields.unique_id;
       const providarr = this.search_obj.id.split('-');
       this.account_id = providarr[0];
-      this.waitlist_for = {id: this.loggedinuser.id, name: 'Self'};
+      this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
       this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
       // this.sel_queue_name = this.search_obj.fields.waitingtime_res.nextAvailableQueue.name || '';
       this.sel_loc = this.search_obj.fields.location_id1;
@@ -83,7 +90,15 @@ export class CheckInComponent implements OnInit {
       this.showfuturediv = false;
       this.revealphonenumber = true;
     }
-
+    getFamilyMembers() {
+      this.shared_services.getConsumerFamilyMembers()
+        .subscribe( data => {
+          this.familymembers = data;
+         // console.log('family', this.familymembers);
+        },
+        error => {
+        });
+    }
     gets3curl() {
       this.retval = this.sharedFunctionobj.getS3Url()
                   .then(
@@ -122,6 +137,10 @@ export class CheckInComponent implements OnInit {
             case 'settings': {
               this.settingsjson = res;
               this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+              this.maxsize = this.settingsjson.maxPartySize;
+              if (this.maxsize === undefined) {
+                this.maxsize = 1;
+              }
               // this.getbusinessprofiledetails_json('services', true);
             break;
             }
@@ -158,7 +177,7 @@ export class CheckInComponent implements OnInit {
         });
     }
     setServiceDetails(serv) {
-      console.log('serdet', serv);
+     // console.log('serdet', serv);
       this.sel_ser_det = [];
       if (serv.serviceDuration) {
         this.sel_ser_det = {
@@ -253,23 +272,38 @@ export class CheckInComponent implements OnInit {
       cmonth = '0' + obtmonth;
     }
     const seldate = e._i.year + '-' + cmonth + '-' + e._i.date;
-    console.log('date changed', seldate, e);
+    // console.log('date changed', seldate, e);
     this.sel_checkindate = seldate;
     this.handleFuturetoggle();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
   handleServiceForWhom() {
-
+    this.holdwaitlist_for = this.waitlist_for;
+    this.step = 3;
   }
   handleCheckinClicked() {
-    this.resetApiErrors();
+    this.resetApi();
+    let error = '';
     if (this.step === 1) {
       this.step = 2;
     } else if (this.step === 2) {
-      this.saveCheckin();
+      if (this.sel_ser_det.isPrePayment) {
+        if (this.paytype === '') {
+          error = 'Please select the payment mode';
+        }
+      }
+      if (error === '') {
+        this.saveCheckin();
+      } else {
+        this.api_error = error;
+      }
     }
   }
   saveCheckin() {
+    const waitlistarr = [];
+    for (let i = 0; i < this.waitlist_for.length; i++) {
+      waitlistarr.push({id: this.waitlist_for[i].id});
+    }
     const post_Data = {
         'queue': {
           'id': this.sel_queue_id
@@ -279,16 +313,30 @@ export class CheckInComponent implements OnInit {
           'id': this.sel_ser
         },
         'consumerNote': this.consumerNote,
-        'waitlistingFor': [
-          {
-            'id': this.waitlist_for.id
-          }
-        ],
+        'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
         'revealPhone': this.revealphonenumber
     };
+    // console.log('postdata', post_Data);
+const test = {
+  'queue': {
+    'id': 1
+  },
+  'date': '2017-11-27',
+  'service': {
+    'id': 1
+  },
+  'consumerNote': 'hai',
+  'waitlistingFor': [
+    {
+      'id': 1
+    }
+  ],
+  'revealPhone': false
+};
+    // console.log('test', test);
     this.shared_services.addCheckin(this.account_id, post_Data)
       .subscribe(data => {
-        console.log('check-in returned', data);
+        // console.log('check-in returned', data);
         this.api_success = 'Check in saved successfully';
         setTimeout(() => {
           this.dialogRef.close('reloadlist');
@@ -299,20 +347,140 @@ export class CheckInComponent implements OnInit {
       });
   }
   handleGoBack(cstep) {
+    this.resetApi();
     this.step = cstep;
+    if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
+      this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+    }
   }
   showCheckinButtonCaption() {
     let caption = '';
     if (this.step === 1) {
-      caption = 'Check in';
+      caption = 'Proceed to Check-in';
     } else if (this.step === 2) {
-      caption = 'Confirm';
+      caption = 'Confirm Check-in';
     }
     return caption;
   }
 
-  resetApiErrors() {
+  handleMemberSelect(id, name, obj) {
+    this.resetApi();
+   // console.log('mem select', obj);
+   // console.log('changed');
+    if (this.waitlist_for.length === 0) {
+      this.waitlist_for.push({ id: id, name: name });
+    } else {
+      let exists = false;
+      let existindx = -1;
+      for (let i = 0; i < this.waitlist_for.length; i++) {
+        if (this.waitlist_for[i].id === id) {
+          exists = true;
+          existindx = i;
+        }
+      }
+      if (exists) {
+        this.waitlist_for.splice(existindx, 1);
+      } else {
+        if (this.ismoreMembersAllowedtopush()) {
+          this.waitlist_for.push({ id: id, name: name });
+        } else {
+          obj.source.checked = false; // preventing the current checkbox from being checked
+          if  (this.maxsize > 1) {
+            this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
+          } else if (this.maxsize === 1) {
+            this.api_error = 'Only ' + this.maxsize + ' member can be selected';
+          }
+        }
+      }
+    }
+    // console.log('selected members', this.waitlist_for);
+  }
+ ismoreMembersAllowedtopush() {
+    if (this.maxsize > this.waitlist_for.length) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  isChecked(id) {
+    let retval = false;
+
+    if (this.waitlist_for.length > 0) {
+      for (let i = 0; i < this.waitlist_for.length; i++) {
+        if (this.waitlist_for[i].id === id) {
+         // console.log('ischecked');
+          retval = true;
+        }
+      }
+    }
+    return retval;
+  }
+
+  addMember() {
+    this.resetApi();
+    this.step = 4; // show add member section
+  }
+
+  resetApi() {
     this.api_error = null;
     this.api_success = null;
+  }
+
+  handleReturnDetails(obj) {
+    this.resetApi();
+    this.addmemberobj.fname = obj.fname || '';
+    this.addmemberobj.lname = obj.lname || '';
+    this.addmemberobj.mobile = obj.mobile || '';
+    console.log('add member return', this.addmemberobj);
+  }
+  handleSaveMember() {
+    this.resetApi();
+    let derror = '';
+    const namepattern =   new RegExp(projectConstants.VALIDATOR_CHARONLY);
+    const phonepattern =   new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+    const phonecntpattern =   new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+
+    if (!namepattern.test(this.addmemberobj.fname)) {
+      derror = 'Please enter a valid first name';
+    }
+
+    if (derror === '' && !namepattern.test(this.addmemberobj.lname)) {
+      derror = 'Please enter a valid last name';
+    }
+
+    if (derror === '') {
+      if (!phonepattern.test(this.addmemberobj.mobile)) {
+        derror = 'Phone number should have only numbers';
+      } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
+        derror = 'Phone number should have 10 digits';
+      }
+    }
+
+    if (derror === '') {
+      console.log('Valid Data');
+      const post_data = {
+        'userProfile': {
+                          'firstName': this.addmemberobj.fname,
+                          'lastName':  this.addmemberobj.lname,
+                          'primaryMobileNo': this.addmemberobj.mobile,
+                          'countryCode': '+91',
+                        }
+        };
+
+        this.shared_services.addMembers(post_data)
+        .subscribe(data => {
+            this.api_success = Messages.MEMBER_CREATED;
+            this.getFamilyMembers();
+            setTimeout(() => {
+              this.handleGoBack(3);
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          error => {
+            this.api_error = error.error;
+          } );
+
+    } else {
+       this.api_error = derror;
+    }
   }
 }

@@ -7,7 +7,8 @@ export const projectConstants = {
     'size': 10,
     'parser': 'structured', // 'q.parser'
     'options': '', // 'q.options'
-    'sort': ''
+    'sort': '',
+    'distance': ''
   },
   myweekdays: [
     'sunday',
@@ -181,5 +182,9 @@ WAITLIST_CANCEL_RESON: [ { title : 'No Show Up', value: 'noshowup'},
                          {title : 'Blocked', value: 'blocked'},
                          {title : 'Closing Soon', value: 'closingSoon'},
                          {title : 'Too Full', value: 'tooFull'}],
-DOMAINLIST_APIFETCH_HOURS: 1 // hours which decides whether domain list api should be execured or not
+DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
+REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 10,
+DISTANCE_STATE: 100, // in Km
+DISTANCE_CITY: 25, // in Km
+DISTANCE_AREA: 5, // in Km
 };

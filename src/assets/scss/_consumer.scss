@@ -23,6 +23,13 @@ header {
                     @include respond-to(ynw-767) {
                         padding-top: 0;
                     }
+                    @include respond-to(ynw-575) {
+                        width: 120px;
+                        
+                        img {
+                            width: 100%;
+                        }
+                    }
                     @include respond-to(ynw-768-991) {
                         padding-top: 0;
                     }
@@ -40,11 +47,11 @@ header {
                         height: 70px;
                     }
                     @include respond-to(ynw-400) {
-                        margin-top: 80px;
+                        margin-top: 12px;
                         height: auto;
                     }
                     @include respond-to(ynw-575) {
-                        padding-top: 20px;
+                        padding-top: 0px;
                     }
                     @include respond-to(ynw-768-991) {
                         height: 70px;
@@ -322,7 +329,7 @@ header {
                                     height: 50px;
                                     padding: 15px;
                                     @include font-regular;
-                                    font-weight: 600;
+                                    font-weight: 500;
                                     font-size: 0.875rem;
                                     color: $cc-black;
 
@@ -595,7 +602,7 @@ header {
             height: 100%;
             background: rgba(0,0,0,.9);
             display: none;
-            z-index: 1001;
+            z-index: 101;
 
             @include respond-to(ynw-767){
                 display: block;
@@ -613,7 +620,7 @@ header {
             @include respond-to(ynw-767){
                 position: relative;
                 width: 50%;
-                z-index: 1002;
+                z-index: 102;
                 margin-right: 0;
                 margin-top: 0;
                 margin-bottom: 0;
@@ -736,6 +743,41 @@ header {
                                         .mat-slide-toggle-content {
                                             @include font-regular;
                                             font-weight: 500;
+                                        }
+                                    }
+                                    
+                                    .refine_field_subouter {
+                                        .refinemore {
+                                            text-transform: uppercase;
+                                            font-weight: 600;
+                                            font-size: 0.625rem;
+                                            color: $linkblue;
+                                            display: inline;
+                                            cursor: pointer;
+                                            position: relative;
+                                            
+                                            &:after {
+                                                position: absolute;
+                                                content: "\72";
+                                                @include font-custom;
+                                                color: $linkblue;
+                                                right: -15px;
+                                                top: 0;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                width: 10px;
+                                                height: 10px;
+                                                font-size: .525rem;
+                                                font-weight: 700;
+                                                text-transform: none;
+                                            }
+                                            
+                                            &.showless {
+                                                &:after {
+                                                    content: "\66";
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -960,7 +1002,8 @@ header {
                                             align-items: center;
                                             justify-content: center;
                                             color: $white;
-                                            font-weight: 500;
+                                            font-weight: 600;
+                                            font-size: 1.125rem;
                                         }
                                         img {
                                             height: 100% !important;
@@ -1323,8 +1366,11 @@ header {
         
         .no-search-result {
             font-size: .875rem;
-            font-weight: 500;
+            font-weight: 500;            
+            flex-grow: 1;
             padding-top: 60px;
+            /*background: url(../images/no-results.svg) no-repeat scroll center top /70%;
+            text-indent: -9999px;*/
         }
     }
     

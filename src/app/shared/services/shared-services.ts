@@ -130,7 +130,8 @@ export class SharedServices {
         'size': params.size ,
         'q.parser': params.parser, // 'q.parser'
         'q.options': params.options, // 'q.options'
-        'sort': params.sort
+        'q.sort': 'distance asc,' + params.sort,
+        'expr.distance': params.distance
       };
       return this.servicemeta.httpGet(url, '', pass_params);
     }
@@ -232,5 +233,14 @@ export class SharedServices {
 
     addCheckin(accountid, postData) {
       return this.servicemeta.httpPost('consumer/waitlist?account=' + accountid, postData);
+    }
+    getConsumerFamilyMembers() {
+      return this.servicemeta.httpGet('consumer/familyMember');
+    }
+    addMembers(data) {
+      return this.servicemeta.httpPost('consumer/familyMember', data);
+    }
+    editMember(data) {
+      return this.servicemeta.httpPut('consumer/familyMember', data);
     }
 }

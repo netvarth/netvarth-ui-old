@@ -362,6 +362,19 @@
   transition: all 300ms; }
   .mat-button:hover {
     background: #1873f2 !important; }
+  .mat-button.confirmbtn {
+    background: #00cc96 !important;
+    font-weight: 600; }
+  .mat-button.backbtn {
+    margin-left: 0px !important;
+    margin-right: 10px;
+    border: 2px solid #00aef2 !important;
+    background: #fff !important;
+    color: #00aef2 !important;
+    line-height: 16px !important; }
+    .mat-button.backbtn:hover {
+      background: #00aef2 !important;
+      color: #fff !important; }
 
 .mat-button:disabled {
   background: black !important;
@@ -392,7 +405,7 @@
     content: "\69";
     position: absolute;
     left: 0;
-    font-size: .875rem;
+    font-size: .775rem;
     font-weight: 700;
     width: 30px;
     height: 30px;
@@ -400,7 +413,6 @@
     justify-content: center;
     align-items: center; }
   .closebtn:hover {
-    background: #dbdbdb;
     color: #00aef2; }
 
 @font-face {
@@ -1302,7 +1314,7 @@ header {
 .moreoptionsmainclass,
 .forgotpasswordmainclass,
 .commonpopupmainclass,
-.googlemainmappopup, .outer-card {
+.googlemainmappopup, .outer-card, .consumerpopupmainclass {
   width: 600px !important; }
   .signupmainclass div,
   .signupmainclass label,
@@ -1323,7 +1335,9 @@ header {
   .googlemainmappopup label,
   .googlemainmappopup input, .outer-card div,
   .outer-card label,
-  .outer-card input {
+  .outer-card input, .consumerpopupmainclass div,
+  .consumerpopupmainclass label,
+  .consumerpopupmainclass input {
     font-family: 'Montserrat', sans-serif;
     font-weight: normal;
     font-size: .875rem;
@@ -1347,7 +1361,9 @@ header {
     .googlemainmappopup label .mat-slide-toggle-content,
     .googlemainmappopup input .mat-slide-toggle-content, .outer-card div .mat-slide-toggle-content,
     .outer-card label .mat-slide-toggle-content,
-    .outer-card input .mat-slide-toggle-content {
+    .outer-card input .mat-slide-toggle-content, .consumerpopupmainclass div .mat-slide-toggle-content,
+    .consumerpopupmainclass label .mat-slide-toggle-content,
+    .consumerpopupmainclass input .mat-slide-toggle-content {
       font-family: 'Montserrat', sans-serif;
       font-weight: normal;
       font-weight: 500; }
@@ -1356,7 +1372,7 @@ header {
   .moreoptionsmainclass .mat-dialog-title,
   .forgotpasswordmainclass .mat-dialog-title,
   .commonpopupmainclass .mat-dialog-title,
-  .googlemainmappopup .mat-dialog-title, .outer-card .mat-dialog-title {
+  .googlemainmappopup .mat-dialog-title, .outer-card .mat-dialog-title, .consumerpopupmainclass .mat-dialog-title {
     margin: 0;
     padding: 15px 20px;
     font-family: 'Montserrat', sans-serif;
@@ -1386,7 +1402,7 @@ header {
     .moreoptionsmainclass .mat-dialog-title .modal_close,
     .forgotpasswordmainclass .mat-dialog-title .modal_close,
     .commonpopupmainclass .mat-dialog-title .modal_close,
-    .googlemainmappopup .mat-dialog-title .modal_close, .outer-card .mat-dialog-title .modal_close {
+    .googlemainmappopup .mat-dialog-title .modal_close, .outer-card .mat-dialog-title .modal_close, .consumerpopupmainclass .mat-dialog-title .modal_close {
       position: absolute;
       background: none;
       border: none;
@@ -1404,14 +1420,14 @@ header {
       .moreoptionsmainclass .mat-dialog-title .modal_close i,
       .forgotpasswordmainclass .mat-dialog-title .modal_close i,
       .commonpopupmainclass .mat-dialog-title .modal_close i,
-      .googlemainmappopup .mat-dialog-title .modal_close i, .outer-card .mat-dialog-title .modal_close i {
+      .googlemainmappopup .mat-dialog-title .modal_close i, .outer-card .mat-dialog-title .modal_close i, .consumerpopupmainclass .mat-dialog-title .modal_close i {
         display: flex; }
         .signupmainclass .mat-dialog-title .modal_close i:before,
         .loginmainclass .mat-dialog-title .modal_close i:before,
         .moreoptionsmainclass .mat-dialog-title .modal_close i:before,
         .forgotpasswordmainclass .mat-dialog-title .modal_close i:before,
         .commonpopupmainclass .mat-dialog-title .modal_close i:before,
-        .googlemainmappopup .mat-dialog-title .modal_close i:before, .outer-card .mat-dialog-title .modal_close i:before {
+        .googlemainmappopup .mat-dialog-title .modal_close i:before, .outer-card .mat-dialog-title .modal_close i:before, .consumerpopupmainclass .mat-dialog-title .modal_close i:before {
           font-family: "custom-ynw" !important;
           content: "\69";
           font-size: 1rem !important;
@@ -1423,7 +1439,7 @@ header {
   .moreoptionsmainclass .mat-dialog-content,
   .forgotpasswordmainclass .mat-dialog-content,
   .commonpopupmainclass .mat-dialog-content,
-  .googlemainmappopup .mat-dialog-content, .outer-card .mat-dialog-content {
+  .googlemainmappopup .mat-dialog-content, .outer-card .mat-dialog-content, .consumerpopupmainclass .mat-dialog-content {
     margin: 0;
     padding: 20px;
     overflow: auto; }
@@ -1432,7 +1448,7 @@ header {
     .moreoptionsmainclass .mat-dialog-content .form-group .sts-msg,
     .forgotpasswordmainclass .mat-dialog-content .form-group .sts-msg,
     .commonpopupmainclass .mat-dialog-content .form-group .sts-msg,
-    .googlemainmappopup .mat-dialog-content .form-group .sts-msg, .outer-card .mat-dialog-content .form-group .sts-msg {
+    .googlemainmappopup .mat-dialog-content .form-group .sts-msg, .outer-card .mat-dialog-content .form-group .sts-msg, .consumerpopupmainclass .mat-dialog-content .form-group .sts-msg {
       font-weight: 500;
       font-size: .625rem;
       padding: 5px;
@@ -1443,21 +1459,21 @@ header {
       .moreoptionsmainclass .mat-dialog-content .form-group .sts-msg.error,
       .forgotpasswordmainclass .mat-dialog-content .form-group .sts-msg.error,
       .commonpopupmainclass .mat-dialog-content .form-group .sts-msg.error,
-      .googlemainmappopup .mat-dialog-content .form-group .sts-msg.error, .outer-card .mat-dialog-content .form-group .sts-msg.error {
+      .googlemainmappopup .mat-dialog-content .form-group .sts-msg.error, .outer-card .mat-dialog-content .form-group .sts-msg.error, .consumerpopupmainclass .mat-dialog-content .form-group .sts-msg.error {
         color: #f24949; }
     .signupmainclass .mat-dialog-content .form-group .mat-form-field,
     .loginmainclass .mat-dialog-content .form-group .mat-form-field,
     .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field,
     .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field,
     .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field,
-    .googlemainmappopup .mat-dialog-content .form-group .mat-form-field, .outer-card .mat-dialog-content .form-group .mat-form-field {
+    .googlemainmappopup .mat-dialog-content .form-group .mat-form-field, .outer-card .mat-dialog-content .form-group .mat-form-field, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field {
       width: 100%; }
       .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
       .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
       .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
       .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
       .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper,
-      .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper {
+      .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper {
         padding: 0;
         margin: 0; }
         .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
@@ -1465,7 +1481,7 @@ header {
         .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
         .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
         .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
-        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
+        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
           margin: 0;
           padding: 0;
           border: none; }
@@ -1474,14 +1490,14 @@ header {
           .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
           .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
           .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
-          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
             display: none; }
           .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
-          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
             padding: 10px;
             height: 40px;
             background: #e6e6e6; }
@@ -1490,14 +1506,14 @@ header {
         .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
         .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
         .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
-        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
+        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
           display: none; }
     .signupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .loginmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .moreoptionsmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .forgotpasswordmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .commonpopupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
-    .googlemainmappopup .mat-dialog-content .form-group .example-section mat-checkbox label, .outer-card .mat-dialog-content .form-group .example-section mat-checkbox label {
+    .googlemainmappopup .mat-dialog-content .form-group .example-section mat-checkbox label, .outer-card .mat-dialog-content .form-group .example-section mat-checkbox label, .consumerpopupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label {
       margin-bottom: 0; }
     .signupmainclass .mat-dialog-content .form-group .service-section, .signupmainclass .mat-dialog-content .form-group .schedule-section,
     .loginmainclass .mat-dialog-content .form-group .service-section,
@@ -1509,7 +1525,7 @@ header {
     .commonpopupmainclass .mat-dialog-content .form-group .service-section,
     .commonpopupmainclass .mat-dialog-content .form-group .schedule-section,
     .googlemainmappopup .mat-dialog-content .form-group .service-section,
-    .googlemainmappopup .mat-dialog-content .form-group .schedule-section, .outer-card .mat-dialog-content .form-group .service-section, .outer-card .mat-dialog-content .form-group .schedule-section {
+    .googlemainmappopup .mat-dialog-content .form-group .schedule-section, .outer-card .mat-dialog-content .form-group .service-section, .outer-card .mat-dialog-content .form-group .schedule-section, .consumerpopupmainclass .mat-dialog-content .form-group .service-section, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section {
       display: flex;
       flex-wrap: wrap; }
     .signupmainclass .mat-dialog-content .form-group .startendtime,
@@ -1517,7 +1533,7 @@ header {
     .moreoptionsmainclass .mat-dialog-content .form-group .startendtime,
     .forgotpasswordmainclass .mat-dialog-content .form-group .startendtime,
     .commonpopupmainclass .mat-dialog-content .form-group .startendtime,
-    .googlemainmappopup .mat-dialog-content .form-group .startendtime, .outer-card .mat-dialog-content .form-group .startendtime {
+    .googlemainmappopup .mat-dialog-content .form-group .startendtime, .outer-card .mat-dialog-content .form-group .startendtime, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime {
       margin-bottom: 20px;
       display: flex;
       flex-wrap: wrap; }
@@ -1531,7 +1547,7 @@ header {
       .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv,
       .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv,
       .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv,
-      .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv {
+      .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv {
         flex-grow: 1; }
         .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
         .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
@@ -1543,7 +1559,7 @@ header {
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control,
-        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control {
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control {
           -webkit-border-radius: 0;
           border-radius: 0;
           background-clip: padding-box;
@@ -1564,7 +1580,7 @@ header {
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .form-control:focus, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .form-control:focus {
             -webkit-box-shadow: 0 0 1px #00aef2 inset;
             -moz-box-shadow: 0 0 1px #00aef2 inset;
             box-shadow: 0 0 1px #00aef2 inset;
@@ -1594,7 +1610,9 @@ header {
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"], .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
         .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"], .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
-        .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"] {
+        .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"], .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
+        .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"], .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
+        .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"] {
           background: #e6e6e6; }
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
@@ -1620,7 +1638,9 @@ header {
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
           .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
-          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus {
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus {
             -webkit-box-shadow: 0 0 1px #00aef2 inset;
             -moz-box-shadow: 0 0 1px #00aef2 inset;
             box-shadow: 0 0 1px #00aef2 inset;
@@ -1650,7 +1670,9 @@ header {
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
         .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
-        .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link {
+        .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link,
+        .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link,
+        .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link {
           display: flex; }
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
@@ -1676,7 +1698,9 @@ header {
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
           .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
-          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
             width: 16px;
             height: 16px; }
             .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
@@ -1703,7 +1727,9 @@ header {
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
             .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
-            .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
+            .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
+            .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
               border: none;
               content: "\66";
               font-family: "custom-ynw" !important;
@@ -1737,7 +1763,9 @@ header {
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
           .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
-          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
             width: 16px;
             height: 16px; }
             .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
@@ -1764,7 +1792,9 @@ header {
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
             .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
             .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
-            .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
+            .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
+            .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
               border: none;
               content: "\72";
               font-family: "custom-ynw" !important;
@@ -1845,7 +1875,13 @@ header {
           .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
           .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
           .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
-          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active {
+          .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus,
+          .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active {
             text-decoration: none; }
         .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
         .loginmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
@@ -1857,7 +1893,7 @@ header {
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary,
-        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary {
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary {
           border-color: #00aef2;
           color: #00aef2;
           font-weight: 600;
@@ -1872,7 +1908,7 @@ header {
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover {
             background: #00aef2;
             color: #fff; }
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
@@ -1885,7 +1921,7 @@ header {
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
           .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
           .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus,
-          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus {
+          .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus {
             outline: none;
             box-shadow: none; }
         .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
@@ -1898,14 +1934,14 @@ header {
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
         .commonpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child,
         .googlemainmappopup .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child,
-        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child {
+        .googlemainmappopup .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child, .outer-card .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child, .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset:first-child, .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset:first-child {
           margin-bottom: 15px; }
     .signupmainclass .mat-dialog-content .form-group.inline,
     .loginmainclass .mat-dialog-content .form-group.inline,
     .moreoptionsmainclass .mat-dialog-content .form-group.inline,
     .forgotpasswordmainclass .mat-dialog-content .form-group.inline,
     .commonpopupmainclass .mat-dialog-content .form-group.inline,
-    .googlemainmappopup .mat-dialog-content .form-group.inline, .outer-card .mat-dialog-content .form-group.inline {
+    .googlemainmappopup .mat-dialog-content .form-group.inline, .outer-card .mat-dialog-content .form-group.inline, .consumerpopupmainclass .mat-dialog-content .form-group.inline {
       display: flex;
       align-items: center; }
       .signupmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
@@ -1913,28 +1949,28 @@ header {
       .moreoptionsmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
       .forgotpasswordmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
       .commonpopupmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle,
-      .googlemainmappopup .mat-dialog-content .form-group.inline .mat-slide-toggle, .outer-card .mat-dialog-content .form-group.inline .mat-slide-toggle {
+      .googlemainmappopup .mat-dialog-content .form-group.inline .mat-slide-toggle, .outer-card .mat-dialog-content .form-group.inline .mat-slide-toggle, .consumerpopupmainclass .mat-dialog-content .form-group.inline .mat-slide-toggle {
         margin-left: 15px; }
     .signupmainclass .mat-dialog-content .form-group.bold label,
     .loginmainclass .mat-dialog-content .form-group.bold label,
     .moreoptionsmainclass .mat-dialog-content .form-group.bold label,
     .forgotpasswordmainclass .mat-dialog-content .form-group.bold label,
     .commonpopupmainclass .mat-dialog-content .form-group.bold label,
-    .googlemainmappopup .mat-dialog-content .form-group.bold label, .outer-card .mat-dialog-content .form-group.bold label {
+    .googlemainmappopup .mat-dialog-content .form-group.bold label, .outer-card .mat-dialog-content .form-group.bold label, .consumerpopupmainclass .mat-dialog-content .form-group.bold label {
       font-weight: 600; }
     .signupmainclass .mat-dialog-content .mat-form-field,
     .loginmainclass .mat-dialog-content .mat-form-field,
     .moreoptionsmainclass .mat-dialog-content .mat-form-field,
     .forgotpasswordmainclass .mat-dialog-content .mat-form-field,
     .commonpopupmainclass .mat-dialog-content .mat-form-field,
-    .googlemainmappopup .mat-dialog-content .mat-form-field, .outer-card .mat-dialog-content .mat-form-field {
+    .googlemainmappopup .mat-dialog-content .mat-form-field, .outer-card .mat-dialog-content .mat-form-field, .consumerpopupmainclass .mat-dialog-content .mat-form-field {
       width: 100%; }
       .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
       .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
       .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
       .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
       .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper,
-      .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper {
+      .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper {
         padding: 0;
         margin: 0; }
         .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg,
@@ -1942,14 +1978,14 @@ header {
         .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg,
         .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg,
         .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg,
-        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg {
+        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .error-msg {
           color: #f24949; }
         .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
         .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
         .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
         .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
         .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix,
-        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix {
+        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix {
           margin: 0;
           padding: 0;
           border: none; }
@@ -1958,14 +1994,14 @@ header {
           .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
           .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
           .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
-          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
             display: none; }
           .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
-          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element {
+          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element {
             padding: 10px;
             background: #e6e6e6;
             height: 40px; }
@@ -1974,7 +2010,7 @@ header {
             .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus,
             .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus,
             .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus,
-            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus {
+            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus {
               -webkit-box-shadow: 0 0 1px #00aef2 inset;
               -moz-box-shadow: 0 0 1px #00aef2 inset;
               box-shadow: 0 0 1px #00aef2 inset;
@@ -1985,7 +2021,7 @@ header {
           .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
           .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
-          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+          .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
             padding: 10px;
             height: 40px;
             background: #e6e6e6; }
@@ -1994,7 +2030,7 @@ header {
             .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
             .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
             .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
-            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
+            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
               color: #222223;
               border: none;
               position: relative;
@@ -2010,7 +2046,7 @@ header {
               .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
               .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
               .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
-              .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after {
+              .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after {
                 font-family: "custom-ynw" !important;
                 content: "\72";
                 position: absolute;
@@ -2020,21 +2056,21 @@ header {
         .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
         .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
         .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
-        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline {
+        .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline {
           display: none; }
     .signupmainclass .mat-dialog-content .form-group-packages .col-form-label,
     .loginmainclass .mat-dialog-content .form-group-packages .col-form-label,
     .moreoptionsmainclass .mat-dialog-content .form-group-packages .col-form-label,
     .forgotpasswordmainclass .mat-dialog-content .form-group-packages .col-form-label,
     .commonpopupmainclass .mat-dialog-content .form-group-packages .col-form-label,
-    .googlemainmappopup .mat-dialog-content .form-group-packages .col-form-label, .outer-card .mat-dialog-content .form-group-packages .col-form-label {
+    .googlemainmappopup .mat-dialog-content .form-group-packages .col-form-label, .outer-card .mat-dialog-content .form-group-packages .col-form-label, .consumerpopupmainclass .mat-dialog-content .form-group-packages .col-form-label {
       font-weight: 600; }
     .signupmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
     .loginmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
     .moreoptionsmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
     .forgotpasswordmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
     .commonpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group,
-    .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group {
+    .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group, .consumerpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -2044,7 +2080,7 @@ header {
       .moreoptionsmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button,
       .forgotpasswordmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button,
       .commonpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button,
-      .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button {
+      .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button, .consumerpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button {
         margin-right: 0;
         padding: 10px; }
         .signupmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label,
@@ -2052,7 +2088,7 @@ header {
         .moreoptionsmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label,
         .forgotpasswordmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label,
         .commonpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label,
-        .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label {
+        .googlemainmappopup .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label, .outer-card .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label, .consumerpopupmainclass .mat-dialog-content .form-group-packages .mat-radio-group .mat-radio-button .mat-radio-label {
           border: none;
           padding: 0; }
     .signupmainclass .mat-dialog-content .itemtopouter,
@@ -2060,7 +2096,7 @@ header {
     .moreoptionsmainclass .mat-dialog-content .itemtopouter,
     .forgotpasswordmainclass .mat-dialog-content .itemtopouter,
     .commonpopupmainclass .mat-dialog-content .itemtopouter,
-    .googlemainmappopup .mat-dialog-content .itemtopouter, .outer-card .mat-dialog-content .itemtopouter {
+    .googlemainmappopup .mat-dialog-content .itemtopouter, .outer-card .mat-dialog-content .itemtopouter, .consumerpopupmainclass .mat-dialog-content .itemtopouter {
       margin-bottom: 1.25em;
       display: flex; }
       .signupmainclass .mat-dialog-content .itemtopouter .galul,
@@ -2068,28 +2104,28 @@ header {
       .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul,
       .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul,
       .commonpopupmainclass .mat-dialog-content .itemtopouter .galul,
-      .googlemainmappopup .mat-dialog-content .itemtopouter .galul, .outer-card .mat-dialog-content .itemtopouter .galul {
+      .googlemainmappopup .mat-dialog-content .itemtopouter .galul, .outer-card .mat-dialog-content .itemtopouter .galul, .consumerpopupmainclass .mat-dialog-content .itemtopouter .galul {
         margin-right: 15px; }
         .signupmainclass .mat-dialog-content .itemtopouter .galul li,
         .loginmainclass .mat-dialog-content .itemtopouter .galul li,
         .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul li,
         .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul li,
         .commonpopupmainclass .mat-dialog-content .itemtopouter .galul li,
-        .googlemainmappopup .mat-dialog-content .itemtopouter .galul li, .outer-card .mat-dialog-content .itemtopouter .galul li {
+        .googlemainmappopup .mat-dialog-content .itemtopouter .galul li, .outer-card .mat-dialog-content .itemtopouter .galul li, .consumerpopupmainclass .mat-dialog-content .itemtopouter .galul li {
           width: auto; }
           .signupmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
           .loginmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
           .moreoptionsmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
           .forgotpasswordmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
           .commonpopupmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer,
-          .googlemainmappopup .mat-dialog-content .itemtopouter .galul li .galimg_outer, .outer-card .mat-dialog-content .itemtopouter .galul li .galimg_outer {
+          .googlemainmappopup .mat-dialog-content .itemtopouter .galul li .galimg_outer, .outer-card .mat-dialog-content .itemtopouter .galul li .galimg_outer, .consumerpopupmainclass .mat-dialog-content .itemtopouter .galul li .galimg_outer {
             padding: 0; }
       .signupmainclass .mat-dialog-content .itemtopouter .upload-doc,
       .loginmainclass .mat-dialog-content .itemtopouter .upload-doc,
       .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc,
       .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc,
       .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc,
-      .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc, .outer-card .mat-dialog-content .itemtopouter .upload-doc {
+      .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc, .outer-card .mat-dialog-content .itemtopouter .upload-doc, .consumerpopupmainclass .mat-dialog-content .itemtopouter .upload-doc {
         flex-grow: 1;
         display: flex;
         justify-content: center; }
@@ -2098,7 +2134,7 @@ header {
         .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc label,
         .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc label,
         .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc label,
-        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc label, .outer-card .mat-dialog-content .itemtopouter .upload-doc label {
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc label, .outer-card .mat-dialog-content .itemtopouter .upload-doc label, .consumerpopupmainclass .mat-dialog-content .itemtopouter .upload-doc label {
           margin-bottom: 0px;
           cursor: pointer; }
         .signupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
@@ -2106,7 +2142,7 @@ header {
         .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
         .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
         .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper,
-        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper, .outer-card .mat-dialog-content .itemtopouter .upload-doc .select-wrapper {
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper, .outer-card .mat-dialog-content .itemtopouter .upload-doc .select-wrapper, .consumerpopupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper {
           width: auto;
           height: auto;
           margin: 0 0 0 15px; }
@@ -2115,14 +2151,14 @@ header {
           .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
           .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
           .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before,
-          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before, .outer-card .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before {
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before, .outer-card .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before, .consumerpopupmainclass .mat-dialog-content .itemtopouter .upload-doc .select-wrapper:before {
             height: 20px; }
         .signupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
         .loginmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
         .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
         .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
         .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist,
-        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist {
+        .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist, .consumerpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist {
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -2132,14 +2168,14 @@ header {
           .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
           .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
           .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label,
-          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist label, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist label {
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist label, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist label, .consumerpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist label {
             margin-bottom: 20px; }
           .signupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
           .loginmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
           .moreoptionsmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
           .forgotpasswordmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
           .commonpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper,
-          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper {
+          .googlemainmappopup .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper, .outer-card .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper, .consumerpopupmainclass .mat-dialog-content .itemtopouter .upload-doc.imageexist .select-wrapper {
             width: 30px;
             height: 30px; }
       .signupmainclass .mat-dialog-content .itemtopouter > div,
@@ -2147,14 +2183,14 @@ header {
       .moreoptionsmainclass .mat-dialog-content .itemtopouter > div,
       .forgotpasswordmainclass .mat-dialog-content .itemtopouter > div,
       .commonpopupmainclass .mat-dialog-content .itemtopouter > div,
-      .googlemainmappopup .mat-dialog-content .itemtopouter > div, .outer-card .mat-dialog-content .itemtopouter > div {
+      .googlemainmappopup .mat-dialog-content .itemtopouter > div, .outer-card .mat-dialog-content .itemtopouter > div, .consumerpopupmainclass .mat-dialog-content .itemtopouter > div {
         width: 40%; }
     .signupmainclass .mat-dialog-content .custom-select,
     .loginmainclass .mat-dialog-content .custom-select,
     .moreoptionsmainclass .mat-dialog-content .custom-select,
     .forgotpasswordmainclass .mat-dialog-content .custom-select,
     .commonpopupmainclass .mat-dialog-content .custom-select,
-    .googlemainmappopup .mat-dialog-content .custom-select, .outer-card .mat-dialog-content .custom-select {
+    .googlemainmappopup .mat-dialog-content .custom-select, .outer-card .mat-dialog-content .custom-select, .consumerpopupmainclass .mat-dialog-content .custom-select {
       background-color: #e6e6e6;
       border-radius: 0;
       border: 0;
@@ -2164,75 +2200,85 @@ header {
       .moreoptionsmainclass .mat-dialog-content .custom-select option,
       .forgotpasswordmainclass .mat-dialog-content .custom-select option,
       .commonpopupmainclass .mat-dialog-content .custom-select option,
-      .googlemainmappopup .mat-dialog-content .custom-select option, .outer-card .mat-dialog-content .custom-select option {
+      .googlemainmappopup .mat-dialog-content .custom-select option, .outer-card .mat-dialog-content .custom-select option, .consumerpopupmainclass .mat-dialog-content .custom-select option {
         padding: 10px; }
     .signupmainclass .mat-dialog-content .form-check,
     .loginmainclass .mat-dialog-content .form-check,
     .moreoptionsmainclass .mat-dialog-content .form-check,
     .forgotpasswordmainclass .mat-dialog-content .form-check,
     .commonpopupmainclass .mat-dialog-content .form-check,
-    .googlemainmappopup .mat-dialog-content .form-check, .outer-card .mat-dialog-content .form-check {
+    .googlemainmappopup .mat-dialog-content .form-check, .outer-card .mat-dialog-content .form-check, .consumerpopupmainclass .mat-dialog-content .form-check {
       margin-bottom: 10px; }
       .signupmainclass .mat-dialog-content .form-check label,
       .loginmainclass .mat-dialog-content .form-check label,
       .moreoptionsmainclass .mat-dialog-content .form-check label,
       .forgotpasswordmainclass .mat-dialog-content .form-check label,
       .commonpopupmainclass .mat-dialog-content .form-check label,
-      .googlemainmappopup .mat-dialog-content .form-check label, .outer-card .mat-dialog-content .form-check label {
+      .googlemainmappopup .mat-dialog-content .form-check label, .outer-card .mat-dialog-content .form-check label, .consumerpopupmainclass .mat-dialog-content .form-check label {
         cursor: pointer; }
     .signupmainclass .mat-dialog-content .custom-control,
     .loginmainclass .mat-dialog-content .custom-control,
     .moreoptionsmainclass .mat-dialog-content .custom-control,
     .forgotpasswordmainclass .mat-dialog-content .custom-control,
     .commonpopupmainclass .mat-dialog-content .custom-control,
-    .googlemainmappopup .mat-dialog-content .custom-control, .outer-card .mat-dialog-content .custom-control {
+    .googlemainmappopup .mat-dialog-content .custom-control, .outer-card .mat-dialog-content .custom-control, .consumerpopupmainclass .mat-dialog-content .custom-control {
       padding-left: 0; }
     .signupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .loginmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .moreoptionsmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .forgotpasswordmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .commonpopupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
-    .googlemainmappopup .mat-dialog-content .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .mat-radio-group .mat-radio-button {
+    .googlemainmappopup .mat-dialog-content .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .mat-radio-group .mat-radio-button, .consumerpopupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button {
       margin-left: 10px; }
     .signupmainclass .mat-dialog-content .pickerouter,
     .loginmainclass .mat-dialog-content .pickerouter,
     .moreoptionsmainclass .mat-dialog-content .pickerouter,
     .forgotpasswordmainclass .mat-dialog-content .pickerouter,
     .commonpopupmainclass .mat-dialog-content .pickerouter,
-    .googlemainmappopup .mat-dialog-content .pickerouter, .outer-card .mat-dialog-content .pickerouter {
+    .googlemainmappopup .mat-dialog-content .pickerouter, .outer-card .mat-dialog-content .pickerouter, .consumerpopupmainclass .mat-dialog-content .pickerouter {
       display: flex; }
       .signupmainclass .mat-dialog-content .pickerouter input[type="text"],
       .loginmainclass .mat-dialog-content .pickerouter input[type="text"],
       .moreoptionsmainclass .mat-dialog-content .pickerouter input[type="text"],
       .forgotpasswordmainclass .mat-dialog-content .pickerouter input[type="text"],
       .commonpopupmainclass .mat-dialog-content .pickerouter input[type="text"],
-      .googlemainmappopup .mat-dialog-content .pickerouter input[type="text"], .outer-card .mat-dialog-content .pickerouter input[type="text"] {
+      .googlemainmappopup .mat-dialog-content .pickerouter input[type="text"], .outer-card .mat-dialog-content .pickerouter input[type="text"], .consumerpopupmainclass .mat-dialog-content .pickerouter input[type="text"] {
         width: 120px; }
       .signupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
       .loginmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
       .moreoptionsmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
       .forgotpasswordmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
       .commonpopupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle,
-      .googlemainmappopup .mat-dialog-content .pickerouter .mat-datepicker-toggle, .outer-card .mat-dialog-content .pickerouter .mat-datepicker-toggle {
-        border: 1px solid #00aef2;
-        -webkit-border-radius: 0.25rem;
-        border-radius: 0.25rem;
-        background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */
+      .googlemainmappopup .mat-dialog-content .pickerouter .mat-datepicker-toggle, .outer-card .mat-dialog-content .pickerouter .mat-datepicker-toggle, .consumerpopupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle {
         margin-right: 15px; }
+        .signupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button,
+        .loginmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button,
+        .moreoptionsmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button,
+        .forgotpasswordmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button,
+        .commonpopupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button,
+        .googlemainmappopup .mat-dialog-content .pickerouter .mat-datepicker-toggle button, .outer-card .mat-dialog-content .pickerouter .mat-datepicker-toggle button, .consumerpopupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button {
+          height: 38px;
+          background: #00aef2; }
+          .signupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button svg,
+          .loginmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button svg,
+          .moreoptionsmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button svg,
+          .forgotpasswordmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button svg,
+          .commonpopupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button svg,
+          .googlemainmappopup .mat-dialog-content .pickerouter .mat-datepicker-toggle button svg, .outer-card .mat-dialog-content .pickerouter .mat-datepicker-toggle button svg, .consumerpopupmainclass .mat-dialog-content .pickerouter .mat-datepicker-toggle button svg {
+            fill: #fff; }
     .signupmainclass .mat-dialog-content > .ng-star-inserted,
     .loginmainclass .mat-dialog-content > .ng-star-inserted,
     .moreoptionsmainclass .mat-dialog-content > .ng-star-inserted,
     .forgotpasswordmainclass .mat-dialog-content > .ng-star-inserted,
     .commonpopupmainclass .mat-dialog-content > .ng-star-inserted,
-    .googlemainmappopup .mat-dialog-content > .ng-star-inserted, .outer-card .mat-dialog-content > .ng-star-inserted {
+    .googlemainmappopup .mat-dialog-content > .ng-star-inserted, .outer-card .mat-dialog-content > .ng-star-inserted, .consumerpopupmainclass .mat-dialog-content > .ng-star-inserted {
       margin-bottom: 20px; }
       .signupmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
       .loginmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
       .moreoptionsmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
       .forgotpasswordmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
       .commonpopupmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader,
-      .googlemainmappopup .mat-dialog-content > .ng-star-inserted .refine_subheader, .outer-card .mat-dialog-content > .ng-star-inserted .refine_subheader {
+      .googlemainmappopup .mat-dialog-content > .ng-star-inserted .refine_subheader, .outer-card .mat-dialog-content > .ng-star-inserted .refine_subheader, .consumerpopupmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader {
         font-weight: 600;
         margin-bottom: 10px; }
   .signupmainclass .mat-dialog-actions,
@@ -2240,7 +2286,7 @@ header {
   .moreoptionsmainclass .mat-dialog-actions,
   .forgotpasswordmainclass .mat-dialog-actions,
   .commonpopupmainclass .mat-dialog-actions,
-  .googlemainmappopup .mat-dialog-actions, .outer-card .mat-dialog-actions {
+  .googlemainmappopup .mat-dialog-actions, .outer-card .mat-dialog-actions, .consumerpopupmainclass .mat-dialog-actions {
     border-top: 1px solid #dbdbdb;
     display: block;
     margin-bottom: 0; }
@@ -2249,21 +2295,21 @@ header {
     .moreoptionsmainclass .mat-dialog-actions .bt1,
     .forgotpasswordmainclass .mat-dialog-actions .bt1,
     .commonpopupmainclass .mat-dialog-actions .bt1,
-    .googlemainmappopup .mat-dialog-actions .bt1, .outer-card .mat-dialog-actions .bt1 {
+    .googlemainmappopup .mat-dialog-actions .bt1, .outer-card .mat-dialog-actions .bt1, .consumerpopupmainclass .mat-dialog-actions .bt1 {
       margin-right: 10px; }
     .signupmainclass .mat-dialog-actions .resendouter,
     .loginmainclass .mat-dialog-actions .resendouter,
     .moreoptionsmainclass .mat-dialog-actions .resendouter,
     .forgotpasswordmainclass .mat-dialog-actions .resendouter,
     .commonpopupmainclass .mat-dialog-actions .resendouter,
-    .googlemainmappopup .mat-dialog-actions .resendouter, .outer-card .mat-dialog-actions .resendouter {
+    .googlemainmappopup .mat-dialog-actions .resendouter, .outer-card .mat-dialog-actions .resendouter, .consumerpopupmainclass .mat-dialog-actions .resendouter {
       margin-top: 15px; }
       .signupmainclass .mat-dialog-actions .resendouter span,
       .loginmainclass .mat-dialog-actions .resendouter span,
       .moreoptionsmainclass .mat-dialog-actions .resendouter span,
       .forgotpasswordmainclass .mat-dialog-actions .resendouter span,
       .commonpopupmainclass .mat-dialog-actions .resendouter span,
-      .googlemainmappopup .mat-dialog-actions .resendouter span, .outer-card .mat-dialog-actions .resendouter span {
+      .googlemainmappopup .mat-dialog-actions .resendouter span, .outer-card .mat-dialog-actions .resendouter span, .consumerpopupmainclass .mat-dialog-actions .resendouter span {
         display: table;
         margin-bottom: 10px;
         color: #00aef2;
@@ -2274,14 +2320,14 @@ header {
         .moreoptionsmainclass .mat-dialog-actions .resendouter span:last-child,
         .forgotpasswordmainclass .mat-dialog-actions .resendouter span:last-child,
         .commonpopupmainclass .mat-dialog-actions .resendouter span:last-child,
-        .googlemainmappopup .mat-dialog-actions .resendouter span:last-child, .outer-card .mat-dialog-actions .resendouter span:last-child {
+        .googlemainmappopup .mat-dialog-actions .resendouter span:last-child, .outer-card .mat-dialog-actions .resendouter span:last-child, .consumerpopupmainclass .mat-dialog-actions .resendouter span:last-child {
           margin-bottom: 0; }
     .signupmainclass .mat-dialog-actions:last-child,
     .loginmainclass .mat-dialog-actions:last-child,
     .moreoptionsmainclass .mat-dialog-actions:last-child,
     .forgotpasswordmainclass .mat-dialog-actions:last-child,
     .commonpopupmainclass .mat-dialog-actions:last-child,
-    .googlemainmappopup .mat-dialog-actions:last-child, .outer-card .mat-dialog-actions:last-child {
+    .googlemainmappopup .mat-dialog-actions:last-child, .outer-card .mat-dialog-actions:last-child, .consumerpopupmainclass .mat-dialog-actions:last-child {
       margin: 0;
       padding: 20px; }
   .signupmainclass app-field-error-display .sts-msg.error,
@@ -2289,7 +2335,7 @@ header {
   .moreoptionsmainclass app-field-error-display .sts-msg.error,
   .forgotpasswordmainclass app-field-error-display .sts-msg.error,
   .commonpopupmainclass app-field-error-display .sts-msg.error,
-  .googlemainmappopup app-field-error-display .sts-msg.error, .outer-card app-field-error-display .sts-msg.error {
+  .googlemainmappopup app-field-error-display .sts-msg.error, .outer-card app-field-error-display .sts-msg.error, .consumerpopupmainclass app-field-error-display .sts-msg.error {
     padding: 10px 15px;
     background: #f24949;
     color: #fff;
@@ -2301,7 +2347,7 @@ header {
   .moreoptionsmainclass app-field-error-display .sts-msg.success,
   .forgotpasswordmainclass app-field-error-display .sts-msg.success,
   .commonpopupmainclass app-field-error-display .sts-msg.success,
-  .googlemainmappopup app-field-error-display .sts-msg.success, .outer-card app-field-error-display .sts-msg.success {
+  .googlemainmappopup app-field-error-display .sts-msg.success, .outer-card app-field-error-display .sts-msg.success, .consumerpopupmainclass app-field-error-display .sts-msg.success {
     padding: 10px 15px;
     background: #00cc96;
     color: #fff;
@@ -2313,7 +2359,7 @@ header {
   .moreoptionsmainclass app-form-success-display .sts-msg.success,
   .forgotpasswordmainclass app-form-success-display .sts-msg.success,
   .commonpopupmainclass app-form-success-display .sts-msg.success,
-  .googlemainmappopup app-form-success-display .sts-msg.success, .outer-card app-form-success-display .sts-msg.success {
+  .googlemainmappopup app-form-success-display .sts-msg.success, .outer-card app-form-success-display .sts-msg.success, .consumerpopupmainclass app-form-success-display .sts-msg.success {
     padding: 10px 15px;
     background: #00cc96;
     color: #fff;
@@ -2325,16 +2371,266 @@ header {
   .moreoptionsmainclass .otpbottom .mat-dialog-content,
   .forgotpasswordmainclass .otpbottom .mat-dialog-content,
   .commonpopupmainclass .otpbottom .mat-dialog-content,
-  .googlemainmappopup .otpbottom .mat-dialog-content, .outer-card .otpbottom .mat-dialog-content {
+  .googlemainmappopup .otpbottom .mat-dialog-content, .outer-card .otpbottom .mat-dialog-content, .consumerpopupmainclass .otpbottom .mat-dialog-content {
     padding-top: 0; }
     .signupmainclass .otpbottom .mat-dialog-content .form-group,
     .loginmainclass .otpbottom .mat-dialog-content .form-group,
     .moreoptionsmainclass .otpbottom .mat-dialog-content .form-group,
     .forgotpasswordmainclass .otpbottom .mat-dialog-content .form-group,
     .commonpopupmainclass .otpbottom .mat-dialog-content .form-group,
-    .googlemainmappopup .otpbottom .mat-dialog-content .form-group, .outer-card .otpbottom .mat-dialog-content .form-group {
+    .googlemainmappopup .otpbottom .mat-dialog-content .form-group, .outer-card .otpbottom .mat-dialog-content .form-group, .consumerpopupmainclass .otpbottom .mat-dialog-content .form-group {
       margin-bottom: 0; }
 
+/* ###### Consumer popups  #####*/
+.consumerpopupmainclass {
+  width: 700px !important; }
+  .consumerpopupmainclass .mat-dialog-title {
+    margin: 0;
+    padding: 20px 20px 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: transparent;
+    color: #222223;
+    position: relative;
+    z-index: 5; }
+    .consumerpopupmainclass .mat-dialog-title .modal_close {
+      position: absolute;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: #fff;
+      right: 20px;
+      top: 50%;
+      margin-top: -10px;
+      z-index: 121;
+      width: 20px;
+      height: 20px;
+      -moz-transition: all 300ms;
+      -o-transition: all 300ms;
+      -webkit-transition: all 300ms;
+      transition: all 300ms;
+      -webkit-border-radius: 30px;
+      border-radius: 30px;
+      background-clip: padding-box;
+      /* stops bg color from leaking outside the border: */ }
+      .consumerpopupmainclass .mat-dialog-title .modal_close i {
+        display: flex; }
+        .consumerpopupmainclass .mat-dialog-title .modal_close i:before {
+          font-family: "custom-ynw" !important;
+          content: "\69";
+          font-size: .875rem !important;
+          width: 20px;
+          height: 20px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center; }
+      .consumerpopupmainclass .mat-dialog-title .modal_close:hover {
+        background: #fff;
+        color: #00aef2; }
+    .consumerpopupmainclass .mat-dialog-title:after {
+      position: absolute;
+      content: "";
+      background: url(../images/c-popup-bg.svg) no-repeat scroll 0 0;
+      height: 83px;
+      top: -8px;
+      right: -3px;
+      left: 0;
+      width: auto;
+      z-index: -1;
+      pointer-events: none; }
+      @media only screen and (max-width: 767px) {
+        .consumerpopupmainclass .mat-dialog-title:after {
+          width: 750px;
+          left: auto;
+          right: -10px; } }
+  .consumerpopupmainclass .mat-dialog-content {
+    margin: 0;
+    padding: 20px;
+    overflow: auto;
+    position: relative;
+    z-index: 6; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .main-head, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
+      margin-bottom: 15px;
+      color: #666;
+      font-size: 1rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepaymin-cls {
+        color: #222223;
+        font-weight: 600; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prov_name {
+        font-weight: 700; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .loc_name {
+        font-size: .875rem; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer {
+      font-size: .875rem;
+      border-bottom: 1px dashed #dbdbdb;
+      padding-bottom: 15px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date {
+        margin-bottom: 5px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-text {
+        display: table;
+        cursor: pointer;
+        color: #00aef2;
+        text-decoration: underline;
+        font-weight: 500;
+        font-size: .75rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer {
+        margin-top: 5px; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group {
+          margin-bottom: 0px;
+          display: flex; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .col-form-label {
+            font-weight: 500;
+            margin-right: 10px;
+            align-self: center; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .pickerouter .mat-datepicker-toggle {
+            margin-right: 0; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .pickerouter .form-control {
+            background: #fff; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer {
+      border-bottom: 1px dashed #dbdbdb;
+      padding-bottom: 15px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-head, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-head {
+        font-size: .875rem;
+        margin-bottom: 5px;
+        color: #222223;
+        font-weight: 600; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper {
+        margin-bottom: 5px; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary {
+          font-weight: 600;
+          background: #00cc96;
+          color: #fff; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
+          padding: 5px 10px;
+          margin-right: 5px;
+          margin-left: 0;
+          margin-bottom: 5px;
+          cursor: pointer; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus {
+            box-shadow: none; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr {
+        display: flex; }
+        @media only screen and (max-width: 575px) {
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr {
+            flex-direction: column; } }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-duration, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-duration {
+          width: 200px; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-duration .min-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-duration .min-cls {
+            font-weight: 600;
+            color: #222223; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price {
+          flex-grow: 1; }
+          @media only screen and (max-width: 575px) {
+            .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price {
+              margin-top: 10px; } }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price .price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price .price {
+            font-weight: 600;
+            color: #222223; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price .taxable, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price .taxable {
+            font-size: .75rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-desc, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-desc {
+        margin-top: 5px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-ser, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-que, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-ser, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-que {
+        margin-bottom: 5px; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-ser .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-que .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-ser .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-que .selected-ser-name {
+          font-weight: 600;
+          color: #222223; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-waitingdiv .queue-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-waitingdiv .queue-head {
+        font-weight: 500;
+        color: #666; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-waitingdiv .queue-head .queue-avail-date, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-waitingdiv .queue-head .queue-avail-date {
+          font-weight: 600;
+          color: #222223; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .no-queue-available, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .no-queue-available {
+        font-size: .875rem; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .service-availer {
+      color: #222223;
+      font-weight: 600; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .change-button {
+      cursor: pointer;
+      display: table;
+      color: #00aef2;
+      font-size: .75rem;
+      text-decoration: underline; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer.btborder {
+      border-bottom: 1px dashed #dbdbdb;
+      padding-bottom: 15px; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv {
+      margin-top: 15px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv .form-group {
+        margin-bottom: 0; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv .form-group .mat-checkbox .mat-checkbox-layout .mat-checkbox-label {
+          white-space: pre-wrap; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group {
+      margin-bottom: 0px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group .col-form-label {
+        font-weight: 500;
+        color: #666; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
+      margin-bottom: 0;
+      margin-top: 15px;
+      padding: 20px 15px 15px;
+      background: #f8f8f8;
+      /* Old browsers */
+      background: -moz-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+      /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8f8f8), color-stop(100%, #fff));
+      /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+      /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+      /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+      /* IE10+ */
+      background: linear-gradient(to bottom, #f8f8f8 0%, #fff 100%);
+      /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
+      /* IE6-9 */ }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-amt {
+        margin-bottom: 15px;
+        font-size: .875rem;
+        font-weight: 600;
+        color: #222223; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-amt .prepaymin-cls {
+          font-weight: 700;
+          color: #00cc96;
+          font-size: 1rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-gateway-outer .prepay-head {
+        margin-bottom: 5px;
+        color: #222223;
+        font-weight: 600; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-gateway-outer .mat-radio-group .mat-radio-button {
+        color: #222223; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-head {
+      margin-bottom: 15px; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-ul {
+      margin: 0 0 0 20px;
+      padding: 0; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-ul li {
+        list-style: none; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-add {
+      margin-left: 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      display: table;
+      font-size: .75rem;
+      color: #00aef2;
+      text-decoration: underline;
+      font-weight: 500; }
+  .consumerpopupmainclass .mat-dialog-actions {
+    padding: 20px; }
+    @media only screen and (max-width: 767px) {
+      .consumerpopupmainclass .mat-dialog-actions .mat-button .backbtn, .consumerpopupmainclass .mat-dialog-actions .bt2 {
+        padding: 10px 15px !important; } }
+    @media only screen and (max-width: 575px) {
+      .consumerpopupmainclass .mat-dialog-actions button {
+        margin-bottom: 5px; } }
+
+/* ##### Consumer Popup Ends ### */
 .loginmainclass .mat-dialog-actions {
   display: block;
   padding: 20px; }
@@ -2720,6 +3016,9 @@ header {
       .srch .sa {
         padding-top: 30px;
         padding-bottom: 30px; } }
+    @media only screen and (max-width: 575px) {
+      .srch .sa {
+        padding-top: 10px; } }
     @media (min-width: 768px) and (max-width: 991px) {
       .srch .sa {
         padding-top: 60px; } }
@@ -2730,6 +3029,11 @@ header {
       @media only screen and (max-width: 767px) {
         .srch .sa h1 {
           font-size: 2.5rem; } }
+      @media only screen and (max-width: 575px) {
+        .srch .sa h1 {
+          font-size: 1.875rem;
+          margin-bottom: 20px;
+          padding-top: 10px; } }
     .srch .sa .sa-fld {
       width: 100%;
       position: relative;
@@ -2918,7 +3222,7 @@ header {
               padding: 15px;
               font-family: 'Montserrat', sans-serif;
               font-weight: normal;
-              font-weight: 600;
+              font-weight: 500;
               font-size: 0.875rem;
               color: #222223; }
               @media only screen and (max-width: 767px) {
@@ -4086,9 +4390,15 @@ footer.itl-steps .sect3 {
     padding: 20px 0; } }
 @media only screen and (max-width: 575px) {
   header.dashb .lgo {
-    width: 100%;
+    width: 120px;
     text-align: center;
-    margin-bottom: 15px; } }
+    margin-bottom: 0;
+    padding: 0; }
+    header.dashb .lgo img {
+      width: 100%; } }
+header.dashb .tc1 {
+  margin-left: 0px;
+  margin-top: 0px; }
 header.dashb .lg-opt {
   display: flex;
   justify-content: center;
@@ -6575,7 +6885,6 @@ footer.dashb .sect3 {
           background-color: #dbdbdb;
           text-align: center;
           font-weight: 600;
-          height: 40px;
           cursor: pointer;
           font-size: .875rem;
           padding: 5px; }
@@ -7304,6 +7613,11 @@ header.consumer {
         @media only screen and (max-width: 767px) {
           header.consumer .tp-1 .tp-l.lgo {
             padding-top: 0; } }
+        @media only screen and (max-width: 575px) {
+          header.consumer .tp-1 .tp-l.lgo {
+            width: 120px; }
+            header.consumer .tp-1 .tp-l.lgo img {
+              width: 100%; } }
         @media (min-width: 768px) and (max-width: 991px) {
           header.consumer .tp-1 .tp-l.lgo {
             padding-top: 0; } }
@@ -7317,11 +7631,11 @@ header.consumer {
             height: 70px; } }
         @media only screen and (max-width: 400px) {
           header.consumer .tp-1 .tp-r .tc1 {
-            margin-top: 80px;
+            margin-top: 12px;
             height: auto; } }
         @media only screen and (max-width: 575px) {
           header.consumer .tp-1 .tp-r .tc1 {
-            padding-top: 20px; } }
+            padding-top: 0px; } }
         @media (min-width: 768px) and (max-width: 991px) {
           header.consumer .tp-1 .tp-r .tc1 {
             height: 70px; } }
@@ -7537,7 +7851,7 @@ header.consumer {
                 padding: 15px;
                 font-family: 'Montserrat', sans-serif;
                 font-weight: normal;
-                font-weight: 600;
+                font-weight: 500;
                 font-size: 0.875rem;
                 color: #222223; }
                 @media only screen and (max-width: 767px) {
@@ -7757,7 +8071,7 @@ header.consumer {
       height: 100%;
       background: rgba(0, 0, 0, 0.9);
       display: none;
-      z-index: 1001; }
+      z-index: 101; }
       @media only screen and (max-width: 767px) {
         .content .c-outer .sidebar-overlay {
           display: block; } }
@@ -7775,7 +8089,7 @@ header.consumer {
         .content .c-outer .sidebar {
           position: relative;
           width: 50%;
-          z-index: 1002;
+          z-index: 102;
           margin-right: 0;
           margin-top: 0;
           margin-bottom: 0; } }
@@ -7866,6 +8180,31 @@ header.consumer {
                 font-family: 'Montserrat', sans-serif;
                 font-weight: normal;
                 font-weight: 500; }
+              .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .refine_field_subouter .refinemore {
+                text-transform: uppercase;
+                font-weight: 600;
+                font-size: 0.625rem;
+                color: #00aef2;
+                display: inline;
+                cursor: pointer;
+                position: relative; }
+                .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .refine_field_subouter .refinemore:after {
+                  position: absolute;
+                  content: "\72";
+                  font-family: "custom-ynw" !important;
+                  color: #00aef2;
+                  right: -15px;
+                  top: 0;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 10px;
+                  height: 10px;
+                  font-size: .525rem;
+                  font-weight: 700;
+                  text-transform: none; }
+                .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .refine_field_subouter .refinemore.showless:after {
+                  content: "\66"; }
           .content .c-outer .sidebar .rs-box .bx-block:last-child {
             border: none; }
     .content .c-outer .c-body {
@@ -8032,7 +8371,8 @@ header.consumer {
                       align-items: center;
                       justify-content: center;
                       color: #fff;
-                      font-weight: 500; }
+                      font-weight: 600;
+                      font-size: 1.125rem; }
                     .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li .galbx img {
                       height: 100% !important; }
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .rating-stars {
@@ -8303,7 +8643,10 @@ header.consumer {
     .content .c-outer .no-search-result {
       font-size: .875rem;
       font-weight: 500;
-      padding-top: 60px; }
+      flex-grow: 1;
+      padding-top: 60px;
+      /*background: url(../images/no-results.svg) no-repeat scroll center top /70%;
+      text-indent: -9999px;*/ }
 
 /***** Common Pages #### */
 .content.see-pages .outer-card {

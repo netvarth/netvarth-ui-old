@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
-import { ConsumerServices } from '../../services/consumer-services.service';
+// import { ConsumerServices } from '../../services/consumer-services.service';
+import { SharedServices } from '../../services/shared-services';
 import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
 
@@ -14,24 +15,29 @@ import {projectConstants} from '../../../shared/constants/project-constants';
 })
 export class AddMemberComponent implements OnInit {
 
-
+  firstname = '';
+  lastname = '';
+  mobile = '';
   amForm: FormGroup;
   api_error = null;
   api_success = null;
   parent_id ;
+  @Input() calledFrom: any;
+  @Output() returnDetails = new EventEmitter<any>();
 
   constructor(
     public dialogRef: MatDialogRef<AddMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public consumer_services: ConsumerServices
+    public sharedservice: SharedServices
     ) {
         console.log(data);
      }
 
   ngOnInit() {
-    this.createForm();
+    console.log('called from', this.calledFrom);
+    // this.createForm();
   }
 
   createForm() {
@@ -75,7 +81,7 @@ export class AddMemberComponent implements OnInit {
   editMember(post_data) {
 
     post_data.user =  this.data.member.user;
-    this.consumer_services.editMember(post_data)
+    this.sharedservice.editMember(post_data)
     .subscribe(
       data => {
         this.api_success = Messages.MEMBER_UPDATED;
@@ -91,7 +97,7 @@ export class AddMemberComponent implements OnInit {
 
   addMember(post_data) {
 
-    this.consumer_services.addMembers(post_data)
+    this.sharedservice.addMembers(post_data)
     .subscribe(
       data => {
        this.api_success = Messages.MEMBER_CREATED;
@@ -104,7 +110,15 @@ export class AddMemberComponent implements OnInit {
       }
     );
   }
-
+  valuechange() {
+    // console.log('value change', this.firstname, this.lastname, this.mobile);
+    const retobj = {
+      'fname': this.firstname,
+      'lname': this.lastname,
+      'mobile': this.mobile
+    };
+    this.returnDetails.emit(retobj);
+  }
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;

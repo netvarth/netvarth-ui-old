@@ -284,6 +284,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.setNulllocationvalues('');
       this.searchfields.location = '';
       this.searchfields.locationautoname = '';
+      this.searchfields.locationtype = '';
       this.searchfields.latitude = undefined;
       this.searchfields.longitude = undefined;
       } else {
@@ -496,6 +497,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     if (this.searchfields.location) { // set the location related fields to the respective holders
       this.location_name = this.searchfields.locationautoname;
       this.locationholder.autoname = this.searchfields.locationautoname;
+      this.locationholder.typ = this.searchfields.locationtype;
       this.locationholder.name = this.searchfields.location;
       this.locationholder.lat = this.searchfields.latitude;
       this.locationholder.lon = this.searchfields.longitude;
@@ -752,6 +754,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           la: this.locationholder.lat || '',
           lo: this.locationholder.lon || '',
           lon: this.locationholder.name || '',
+          lontyp: this.locationholder.typ || '',
           lonauto: this.locationholder.autoname || '',
           kw: this.keywordholder.name || '',
           kwauto: this.keywordholder.autoname || '',
@@ -794,13 +797,16 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     if (this.locationholder.name === '') {
       this.locationholder.lat = undefined;
       this.locationholder.lon = undefined;
+      this.locationholder.typ = '';
       this.searchfields.location = '';
       this.searchfields.locationautoname = '';
+      this.searchfields.locationtype = '';
       this.searchfields.latitude = undefined;
       this.searchfields.longitude = undefined;
     } else {
       this.searchfields.location = this.locationholder.name;
       this.searchfields.locationautoname = this.locationholder.autoname;
+      this.searchfields.locationtype = this.locationholder.typ;
       this.searchfields.latitude = this.locationholder.lat;
       this.searchfields.longitude = this.locationholder.lon;
     }

@@ -11,6 +11,9 @@
             padding-top: 30px;
             padding-bottom: 30px;
         }
+        @include respond-to(ynw-575) {
+            padding-top: 10px;
+        }
         @include respond-to(ynw-768-991) {
             padding-top: 60px;
         }
@@ -22,6 +25,11 @@
 
             @include respond-to(ynw-767) {
                 font-size: 2.5rem;    
+            }
+            @include respond-to(ynw-575) {
+                font-size: 1.875rem;
+                margin-bottom: 20px;
+                padding-top: 10px;
             }
         }
         .sa-fld {
@@ -245,7 +253,7 @@
                             height: 90px;
                             padding: 15px;
                             @include font-regular;
-                            font-weight: 600;
+                            font-weight: 500;
                             font-size: 0.875rem;
                             color: $cc-black;
                             

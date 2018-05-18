@@ -8,10 +8,20 @@ header {
         }
         .lgo {
             @include respond-to(ynw-575) {
-                width: 100%;
+                width: 120px;
                 text-align: center;
-                margin-bottom: 15px;
+                margin-bottom: 0;
+                padding: 0;
+                
+                img {
+                    width: 100%;
+                }
             }
+        }
+        
+        .tc1 {
+            margin-left: 0px;
+            margin-top: 0px;
         }
 
         .lg-opt {
@@ -3423,7 +3433,6 @@ footer {
                             background-color: $cc-ash;
                             text-align: center;
                             font-weight: 600;
-                            height: 40px;
                             cursor: pointer;
                             font-size: .875rem;
                             padding: 5px;

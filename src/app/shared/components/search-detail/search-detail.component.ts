@@ -36,6 +36,7 @@ export class SearchDetailComponent implements OnInit {
   public selected_leftsubdomain;
   public locname;
   public locautoname;
+  loctype;
   public latitude;
   public longitude;
   public kw;
@@ -73,6 +74,7 @@ export class SearchDetailComponent implements OnInit {
   showrefinedsection = true;
   current_provider;
   result_provid: any = [];
+  result_providdet: any = [];
   waitlisttime_arr: any = [];
   sidebarheight = '';
   waitlistestimatetimetooltip  = Messages.SEARCH_ESTIMATE_TOOPTIP;
@@ -83,6 +85,7 @@ export class SearchDetailComponent implements OnInit {
   refined_domain = '';
   refined_subdomain = '';
   specialization_hide = false;
+  showmore_defaultcnt = projectConstants.REFINE_ENUMLIST_DEFAULT_SHOW_CNT;
 
   constructor(private routerobj: Router,
               private location: Location,
@@ -249,6 +252,7 @@ export class SearchDetailComponent implements OnInit {
       this.domain = obj.do;
       this.locname = obj.lon;
       this.locautoname = obj.lonauto;
+      this.loctype = obj.lontyp;
       this.latitude = obj.la;
       this.longitude = obj.lo;
       this.kw = obj.kw;
@@ -324,6 +328,7 @@ export class SearchDetailComponent implements OnInit {
       this.domain = obj.domain;
       this.locname = obj.location;
       this.locautoname = obj.locationautoname;
+      this.loctype = obj.locationtype;
       this.latitude = obj.latitude;
       this.longitude = obj.longitude;
       this.kw = obj.kw;
@@ -523,7 +528,7 @@ export class SearchDetailComponent implements OnInit {
     this.querystringrefineretain_arr = [];
   }
   handlesearchClick(obj) {
-    // console.log('from details', obj);
+   // console.log('from details', obj);
     this.resetRefineVariables(); // calling method to reset the refine variables
 
     this.setSearchfields(obj, 2);
@@ -578,6 +583,13 @@ export class SearchDetailComponent implements OnInit {
         }
         urlstr += 'lonauto=' + this.locautoname;
       }
+      if (this.loctype) {
+        if (urlstr !== '') {
+          urlstr += ';';
+        }
+        urlstr += 'lontyp=' + this.loctype;
+      }
+
       // console.log('kw' + this.kw);
       if (this.kw !== '' && this.kw !== undefined && this.kw !== 'undefined') {
         if (urlstr !== '') {
@@ -623,14 +635,17 @@ export class SearchDetailComponent implements OnInit {
       sortval = this.sortfield + ' ' + this.sortorder;
     }
      let q_str = '';
+     let locstr = '';
      // q_str = 'title:\'' + 'sony new business' + '\''; // ***** this line needs to be commented after testing
      if (this.latitude) { // case of location is selected
        // calling shared function to get the coordinates for nearybylocation
-       const coordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude);
+       const retcoordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude, this.loctype);
+       // console.log('loctype', this.loctype);
+       const coordinates = retcoordinates['locationRange'];
        // const locstr = 'location1:' + coordinates + ' ' + 'location2:' + coordinates + 'location3:' + coordinates + 'location4:' + coordinates + 'location5:' + coordinates;
        // q_str = q_str + ' ( or ' + locstr + ')';
-
-       const locstr = 'location1:' + coordinates;
+       projectConstants.searchpass_criteria.distance = 'haversin(' + retcoordinates['lowerRightLat'] + ',' + retcoordinates['lowerRightLon'] + ',location1.latitude,location1.longitude)';
+       locstr = 'location1:' + coordinates;
        q_str = q_str + locstr;
      }
 
@@ -674,6 +689,7 @@ export class SearchDetailComponent implements OnInit {
         // console.log('labelq', this.labelq);
        const labelqarr = this.labelq.split('&');
        q_str = labelqarr[0].replace('?q=', '');
+       q_str = q_str.replace('[loc_details]', locstr);
 
       /*if (this.latitude) { // case of location is selected
         // calling shared function to get the coordinates for nearybylocation
@@ -720,6 +736,7 @@ export class SearchDetailComponent implements OnInit {
           .subscribe(res => {
             this.search_data = res;
             this.result_provid = [];
+            this.result_providdet = [];
             // console.log('search', this.search_data.hits.hit);
             let schedule_arr = [];
             let locationcnt = 0;
@@ -727,7 +744,12 @@ export class SearchDetailComponent implements OnInit {
               locationcnt = 0;
               const providarr = this.search_data.hits.hit[i].id.split('-');
               // this.result_provid[i] = this.search_data.hits.hit[i].id;
-              this.result_provid[i] = providarr[0]; // this.search_data.hits.hit[i].id;
+              if (this.search_data.hits.hit[i].fields.claimable !== '1') {
+                // this.result_provid[i] = providarr[0]; // this.search_data.hits.hit[i].id;
+                this.result_providdet.push({'provid': providarr[0], 'searchindx': i});
+              } else {
+                console.log('claimable', this.search_data.hits.hit[i].fields.claimable );
+              }
               if (this.search_data.hits.hit[i].fields.hasOwnProperty('place2')) {
                 ++locationcnt;
               }
@@ -762,9 +784,8 @@ export class SearchDetailComponent implements OnInit {
           /*let display_schedule = [];
           display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
           this.queues[ii]['displayschedule'] = display_schedule;*/
-            this.getWaitingTime(this.result_provid);
+            this.getWaitingTime(this.result_providdet);
             this.search_result_count = this.search_data.hits.found || 0;
-
             if (this.search_data.hits.found === 0) {
               this.nosearch_results = true;
             }
@@ -774,7 +795,13 @@ export class SearchDetailComponent implements OnInit {
   }
   private getWaitingTime(provids) {
     if (provids.length > 0) {
-    this.searchdetailserviceobj.getEstimatedWaitingTime(provids)
+      const post_provids: any = [];
+      for (let i = 0; i < provids.length; i++) {
+          // if (provids[i] !== undefined) {
+              post_provids.push(provids[i].provid);
+         // }
+      }
+    this.searchdetailserviceobj.getEstimatedWaitingTime(post_provids)
       .subscribe (data => {
         // console.log('estimated', data);
         this.waitlisttime_arr = data;
@@ -799,32 +826,35 @@ export class SearchDetailComponent implements OnInit {
         }
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         const ctoday = cday + '/' + cmon + '/' + yyyy;
+        let srchindx;
         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
-          this.search_data.hits.hit[i].fields['waitingtime_res'] = this.waitlisttime_arr[i];
-          this.search_data.hits.hit[i].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
-          this.search_data.hits.hit[i].fields['estimatedtime_det'] = [];
+          srchindx = provids[i].searchindx;
+          this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
+          this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+          this.search_data.hits.hit[srchindx].fields['estimatedtime_det'] = [];
 
           if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-            this.search_data.hits.hit[i].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
+            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
             if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              this.search_data.hits.hit[i].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
                  + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
             } else {
-              this.search_data.hits.hit[i].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
               + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
             }
           } else {
-            this.search_data.hits.hit[i].fields['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
             if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              this.search_data.hits.hit[i].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
             } else {
-              this.search_data.hits.hit[i].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
             }
           }
         }
       });
     }
   }
+
   private showproviderlogoicon(logo) {
     return this.shared_functions.showlogoicon(logo);
   }
@@ -838,6 +868,7 @@ export class SearchDetailComponent implements OnInit {
           domain: this.domain,
           location: this.locname,
           locationautoname: this.locautoname,
+          locationtype: this.loctype,
           latitude: this.latitude,
           longitude: this.longitude,
           sortfield: this.sortfield,
@@ -975,12 +1006,14 @@ export class SearchDetailComponent implements OnInit {
           Object.keys(this.querystringrefineretain_arr).forEach(key => {
             const obtainedobj = this.getSearchrefineFieldDetails(key, this.querystringrefineretain_arr[key]);
             // console.log('obtained', obtainedobj);
-            if (obtainedobj.dataType === 'TEXT' || obtainedobj.dataType === 'TEXT_MED') {
-              this.handleTextrefineblur(obtainedobj.cloudSearchIndex	, this.querystringrefineretain_arr[key], obtainedobj.dataType, true);
-            } else if (obtainedobj.dataType === 'EnumList' || obtainedobj.dataType === 'Enum' || obtainedobj.dataType === 'Boolean' || obtainedobj.dataType === 'Rating') {
-              Object.keys(this.querystringrefineretain_arr[key]).forEach(qkey => {
-                this.handle_optionclick(obtainedobj.cloudSearchIndex	, obtainedobj.dataType, this.querystringrefineretain_arr[key][qkey], true);
-              });
+            if (obtainedobj) {
+              if (obtainedobj.dataType === 'TEXT' || obtainedobj.dataType === 'TEXT_MED') {
+                this.handleTextrefineblur(obtainedobj.cloudSearchIndex	, this.querystringrefineretain_arr[key], obtainedobj.dataType, true);
+              } else if (obtainedobj.dataType === 'EnumList' || obtainedobj.dataType === 'Enum' || obtainedobj.dataType === 'Boolean' || obtainedobj.dataType === 'Rating') {
+                Object.keys(this.querystringrefineretain_arr[key]).forEach(qkey => {
+                  this.handle_optionclick(obtainedobj.cloudSearchIndex	, obtainedobj.dataType, this.querystringrefineretain_arr[key][qkey], true);
+                });
+              }
             }
           });
           if (call_dosearch === true) {
@@ -1317,7 +1350,7 @@ export class SearchDetailComponent implements OnInit {
   showCheckin(origin?) {
     const dialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
-       panelClass: 'loginmainclass',
+       panelClass: 'consumerpopupmainclass',
       data: {
         type : origin,
         is_provider : this.checkProvider(origin),
@@ -1344,12 +1377,19 @@ export class SearchDetailComponent implements OnInit {
     this.refined_domain = val;
     this.refined_subdomain = '';
     this.getlistofSubdomains(val);
-    this.getRefinedSearch(false, 1);
+    this.getRefinedSearch(true, 1);
   }
 
   handlerefinedsubdomainchange(val) {
    // console.log('refinedSubdomain', val);
     this.refined_subdomain = val;
     this.getRefinedSearch(true, 1);
+  }
+
+  showmore(indx) {
+    this.searchrefine_arr[indx]['showhiddendet'] = true;
+  }
+  hidemore(indx) {
+    this.searchrefine_arr[indx]['showhiddendet'] = false;
   }
 }

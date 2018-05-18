@@ -6,7 +6,7 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 import { ConsumerDataStorageService } from '../../services/consumer-datastorage.service';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
-import { AddMemberComponent } from '../add-member/add-member.component';
+// import { AddMemberComponent } from '../add-member/add-member.component';
 
 @Component({
   selector: 'app-consumer-members',
@@ -72,11 +72,10 @@ export class MembersComponent implements OnInit {
     );
   }
 
-  addMember() {
+  /*addMember() {
     const dialogRef = this.dialog.open(AddMemberComponent, {
       width: '50%',
       data: {
-        /*member : this.member_list[0],*/
         type : 'add'
       }
     });
@@ -98,7 +97,7 @@ export class MembersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.getMembers();
     });
-  }
+  }*/
 
 
 }

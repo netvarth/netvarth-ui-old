@@ -2,6 +2,7 @@ export class SearchFields {
   domain: string;
   location: string;
   locationautoname: string;
+  locationtype: string;
   latitude: string;
   longitude: string;
   kw: string;
@@ -21,6 +22,7 @@ export class SearchFields {
       domain: '',
       location: '',
       locationautoname: '',
+      locationtype: '',
       latitude: undefined,
       longitude: undefined,
       sortfield: 'title',

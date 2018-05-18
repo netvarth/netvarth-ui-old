@@ -322,7 +322,7 @@ export class SharedFunctions {
       return promise;
     }
 
-    getNearByLocation (centerLat: number, centerLon: number) {
+    /*getNearByLocation (centerLat: number, centerLon: number) {
         const d = 15000; // desired distance in meter
         const angle = 45 * Math.PI / 180; // 45 degrees in radians
         const oneDegree = 111319.9; // distance in meters from degree to degree at the equato
@@ -335,7 +335,39 @@ export class SharedFunctions {
         //  const minLon = centerLon - (d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle);
         const locationRange = '[\'' + maxLat + ',' + maxLon + '\',\'' + centerLat + ',' + centerLon + '\']';
         return locationRange;
-    }
+    }*/
+    getNearByLocation (centerLat: number, centerLon: number, loctype?) {
+      let distance = 0;
+     // if (loctype === undefined || loctype === '') {
+     //   distance = 5; // in KM
+     // } else {
+          switch (loctype) {
+            case 'state':
+              distance = projectConstants.DISTANCE_STATE;
+            break;
+            case 'city':
+              distance = projectConstants.DISTANCE_CITY;
+            break;
+            case 'area':
+              distance = projectConstants.DISTANCE_AREA;
+            break;
+            default:
+              distance = projectConstants.DISTANCE_AREA;
+            break;
+          }
+      // }
+      console.log('Distance for Cloud', distance, loctype);
+      const distInDegree = distance / 111;
+      // console.log(distInDegree);
+      const upperLeftLat = Number(centerLat) - Number(distInDegree);
+      const upperLeftLon = Number(centerLon) + Number(distInDegree);
+      const lowerRightLat = Number(centerLat) + Number(distInDegree);
+      const lowerRightLon = Number(centerLon) - Number(distInDegree);
+      const locationRange = '[\'' + lowerRightLat + ',' + lowerRightLon + '\',\'' + upperLeftLat + ',' + upperLeftLon + '\']';
+      // console.log(locationRange);
+      const retarr = {'locationRange': locationRange, 'upperLeftLat': upperLeftLat, 'upperLeftLon': upperLeftLon, 'lowerRightLat': lowerRightLat, 'lowerRightLon': lowerRightLon};
+      return retarr;
+  }
 
     getS3Url(src?) {
       const promise = new Promise((resolve, reject) => {
