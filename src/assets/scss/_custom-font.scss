@@ -107,9 +107,6 @@
 .icon-membership:before {
   content: "\49";
 }
-.icon-inbox:before {
-  content: "\48";
-}
 .icon-profile:before {
   content: "\6c";
 }
@@ -244,4 +241,19 @@
 }
 .icon-auto-payment:before {
   content: "\25";
+}
+.icon-favourite:before {
+  content: "\26";
+}
+.icon-favourite-filled:before {
+  content: "\27";
+}
+.icon-history:before {
+  content: "\28";
+}
+.icon-inbox:before {
+  content: "\48";
+}
+.icon-reply:before {
+  content: "\29";
 }

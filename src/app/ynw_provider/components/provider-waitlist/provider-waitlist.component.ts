@@ -57,7 +57,9 @@ export class ProviderWaitlistComponent implements OnInit {
     .subscribe(
       data => {
         this.waitlist_manager = data;
-        this.online_checkin = data['enabledWaitlist'];
+        // this.online_checkin = data['enabledWaitlist'];
+        this.online_checkin = data['onlineCheckIns'];
+
         console.log(this.online_checkin);
         this.provider_datastorage.set('waitlistManage', data);
       },

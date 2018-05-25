@@ -11,7 +11,9 @@
             Check-in at <span class="pro-loc"><span class='prov_name'>{{search_obj.fields.title}},</span> <span class="loc_name">{{search_obj.fields.place1}}</span></span>
           </div>
           <div class="date-outer" *ngIf="step==1">
-            Check-in Date: <span class="selected-date">  {{sel_checkindate | date: dateFormat}}</span> <span class="future-text" (click)="handleFuturetoggle()" *ngIf="futuredate_allowed">Do you want to Check in for a Different Date / Time ?</span>
+            Check-in Date: <span class="selected-date">  {{sel_checkindate | date: dateFormat}}</span> 
+            <!-- <span class="future-text" (click)="handleFuturetoggle()" *ngIf="futuredate_allowed && isFuturedate">Do you want to Check in for a Different Date / Time ?</span> -->
+            <span class="future-text" (click)="handleFuturetoggle()" *ngIf="futuredate_allowed && data.datechangereq">Do you want to Check in for a Different Date / Time ?</span>
 
             <div class="future-date-outer" *ngIf="showfuturediv">
                 <div class="form-group">
@@ -54,7 +56,10 @@
                 
                 <ng-container *ngIf="queuejson.length > 0">
                 <mat-chip-list *ngIf="step==1">
-                <mat-chip *ngFor="let que of queuejson" (click)="handleQueueSel(que)" [selected] ="isSelectedQueue(que.id)">{{que.name}}</mat-chip>
+                <mat-chip *ngFor="let que of queuejson" (click)="handleQueueSel(que)" [selected] ="isSelectedQueue(que.id)">
+                    <span class="qname">{{que.name}}</span>
+                    <span class="qtime">&nbsp; [ {{que.queueSchedule.timeSlots[0].sTime}} - {{que.queueSchedule.timeSlots[0].eTime}} ]</span>
+                </mat-chip>
                 </mat-chip-list>
 
                 <ng-container *ngIf="step==2">

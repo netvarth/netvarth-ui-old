@@ -53,6 +53,7 @@ export class CheckInComponent implements OnInit {
     loggedinuser;
     maxsize;
     paytype = '';
+    isFuturedate = false;
     addmemberobj = {'fname': '', 'lname': '', 'mobile': ''};
     constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -74,6 +75,24 @@ export class CheckInComponent implements OnInit {
       this.consumerNote = '';
       this.today = new Date();
       this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
+
+      const dd = this.today.getDate();
+      const mm = this.today.getMonth() + 1; // January is 0!
+      const yyyy = this.today.getFullYear();
+      let cday = '';
+      if (dd < 10) {
+          cday = '0' + dd;
+      } else {
+        cday = '' + dd;
+      }
+      let cmon;
+      if (mm < 10) {
+        cmon = '0' + mm;
+      } else {
+        cmon = '' + mm;
+      }
+      const dtoday = yyyy + '-' + cmon + '-' + cday;
+
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
       this.search_obj = this.data.srchprovider;
       this.provider_id = this.search_obj.fields.unique_id;
@@ -85,6 +104,10 @@ export class CheckInComponent implements OnInit {
       this.sel_loc = this.search_obj.fields.location_id1;
       this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
       this.getServicebyLocationId (this.search_obj.fields.location_id1, this.sel_checkindate);
+      // console.log('selcheckindate', this.sel_checkindate);
+      if (this.sel_checkindate !== dtoday) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+        this.isFuturedate = true;
+      }
       // const retdatedet = this.getQueueDateTimeDetails(this.search_obj.fields.waitingtime_res.nextAvailableQueue);
      // this.sel_queue_det = retdatedet;
       this.showfuturediv = false;

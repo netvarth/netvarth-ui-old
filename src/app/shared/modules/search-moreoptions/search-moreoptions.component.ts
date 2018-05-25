@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -6,7 +6,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { SearchDetailServices } from '../search-detail/search-detail-services.service';
+import { SearchDetailServices } from '../../../shared/components/search-detail/search-detail-services.service' ; //  ../search-detail/search-detail-services.service';
 
 @Component({
   selector: 'app-search-moreoptions',
@@ -18,6 +18,9 @@ export class SearchMoreOptionsComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
+  @Output() searchmoreclick = new EventEmitter<any>();
+  @Output() closemoreclick = new EventEmitter<any>();
+
   searchrefineresult_arr: any = [];
 
   obtainedaddons = false;
@@ -28,8 +31,8 @@ export class SearchMoreOptionsComponent implements OnInit {
   file_error_msg = '';
   rating = 2.8;
   constructor(
-    public dialogRef: MatDialogRef<SearchMoreOptionsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+   /// public dialogRef: MatDialogRef<SearchMoreOptionsComponent>,
+   /// @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public sharedfunctionObj: SharedFunctions,
@@ -55,7 +58,8 @@ export class SearchMoreOptionsComponent implements OnInit {
       });
   }
   handle_morebuttonclick () {
-    this.dialogRef.close(this.searchrefineresult_arr);
+    this.searchmoreclick.emit(this.searchrefineresult_arr);
+    /// this.dialogRef.close(this.searchrefineresult_arr);
   }
 
   // method which is invoked on clicking the checkboxes or boolean fields
@@ -136,4 +140,7 @@ export class SearchMoreOptionsComponent implements OnInit {
   handleratingClick(obj) {
     this.handle_optionclick(obj.cloudindex, 'Rating', obj.selectedrating);
   }
+  // clickedoutside(e: Event) {
+  //   this.closemoreclick.emit(e);
+  // }
 }

@@ -601,7 +601,14 @@ export class ProviderServices {
     const url = 'provider/bill/'  ;
     return this.servicemeta.httpPut(url, data);
   }
-
+  getTaxpercentage() {
+    const url = 'provider/payment/tax/';
+    return this.servicemeta.httpGet(url);
+  }
+  setTaxpercentage(tax) {
+    const url = 'provider/payment/tax/' + tax;
+    return this.servicemeta.httpPut(url);
+  }
   settleWaitlistBill(uuid) {
     const url = 'provider/bill/settlebill/' + uuid ;
     return this.servicemeta.httpPut(url);
