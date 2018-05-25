@@ -2735,7 +2735,7 @@ footer {
                             }
                         }
                         .lbr {
-                            background: #fbfbfb;
+                            background: $cc-detailgray;
                             @include border-right-radius(5px);
                             
                             @include respond-to(ynw-767){
@@ -3294,7 +3294,7 @@ footer {
             .head {
                 display: flex;
                 height: 50px;
-                border-bottom: 1px solid $cc-ash;
+                border-bottom: 1px solid $cc-body;
                 position: relative;
                 align-items: center;
                 justify-content: center;
@@ -3318,17 +3318,92 @@ footer {
                     font-weight: 600;
                     font-size: .875rem;
                     
+                    .mat-form-field {                        
+                        .mat-input-wrapper {
+                            padding-bottom: 0px;
+
+                            .mat-input-underline, .mat-input-subscript-wrapper, .mat-form-field-label-wrapper {
+                                display: none;
+                            }
+
+                            .mat-input-flex {
+                                height: 40px;
+
+                                .mat-form-field-infix {
+                                    padding: 0;
+                                    border: none;
+
+                                    .mat-input-element {
+                                        @include border-radius(0);
+                                        background: $cc-formbg;
+                                        border: 1px solid transparent;
+                                        @include font-regular;
+                                        font-size: 0.875rem;
+                                        color: $cc-darkgray;
+                                        text-overflow: ellipsis;
+                                        padding:10px;
+                                        height: 40px;
+
+                                        &:focus {
+                                            @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                            border: 1px solid $linkblue;
+                                            background: $white;
+                                        }
+                                    }
+
+                                    .mat-select {
+                                        height: 40px;
+                                        padding: 10px;
+                                        @include font-regular;
+                                        border: 1px solid $cc-formbg;
+                                        display: flex;
+                                        align-items: center;
+                                        
+                                        .mat-select-value-text {
+                                            font-weight: 500;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    .icon-close {
+                        height: 40px;
+                        cursor: pointer;
+                        @include transition(all 300ms);
+                        padding: 10px;
+                        background: $cc-formbg;
+                        color: $linkblack;
+                        font-weight: 700;
+                        
+                        &:before {
+                            font-size: .875rem !important;
+                            width: 20px;
+                            height: 20px;
+                            font-weight: 600;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            
+                        }
+                        
+                        &:hover {
+                            color: $linkblue;
+                        }
+                    }
+                    
                     @include respond-to(ynw-767){
                         position: relative;
                         width: 100%;
-                        border-bottom: 1px solid $cc-ash;
+                        border-bottom: 1px solid $cc-body;
                         height: 50px;
                         justify-content: center;
                     }
                     @include respond-to(ynw-768-991){
                         position: relative;
                         width: 100%;
-                        border-bottom: 1px solid $cc-ash;
+                        border-bottom: 1px solid $cc-body;
                         height: 50px;
                         justify-content: center;
                     }
@@ -3345,7 +3420,7 @@ footer {
                     display: flex;
                     
                     .lnk {
-                        border-left: 1px solid $cc-ash;
+                        border-left: 1px solid $cc-body;
                         padding: 0 30px;
                         height: 50px;
                         align-self: center;
@@ -3400,7 +3475,7 @@ footer {
                             }
                         }
                         &:last-child {
-                            border-right: 1px solid $cc-ash;
+                            border-right: 1px solid $cc-body;
                         }    
                         &:hover {
                             color: $linkblue;
@@ -4546,12 +4621,517 @@ footer {
 }
 
 
+/* ##### Payment Settings *****/
+
+.mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
+    background: transparent;
+}
+
+.paysettings-tab {
+    padding: 20px;
+    @include box-shadow(0, 0, 10px, rgba(0,0,0,.05) !important);
+    @include border-radius(5px);
+    border:none !important;
+    width: 100%;
+    background: $white;
+    @include font-regular;
+    margin-bottom: 50px;
+    
+    .mat-tab-header {
+        margin-bottom: 20px;
+        border-bottom: none;
+        
+        .mat-tab-label-container {
+            
+            .mat-tab-list {
+                .mat-tab-labels {
+                    border-bottom: 1px solid $cc-body;
+                    
+                    .mat-tab-label {
+                        opacity: 1;
+                        height: 50px;
+                        padding-left: 20px;
+                        padding-right: 20px;
+                        
+                        .mat-tab-label-content {
+                            @include font-regular;
+                            color: $cc-mediumgray;
+                            font-weight: 500;  
+                        }
+                        
+                        &.mat-tab-label-active {
+                            .mat-tab-label-content {
+                                font-weight: 600;
+                                color: $linkblue;
+                            }
+                        }
+                    }
+                }
+                .mat-ink-bar {
+                    bottom: -1px;
+                    height: 3px;
+                }
+            }
+        }
+    }
+    
+    .mat-tab-body-wrapper{
+        .mat-tab-body {
+            .mat-tab-body-content {
+                .outermost {
+                    padding-left: 20px;
+                    
+                    @include respond-to(ynw-575) {
+                        padding-left: 0;
+                    }
+                    
+                    .pay-outer {
+                        display: flex;
+                        font-weight: 500;
+                        font-size: .875rem;
+                        margin-bottom: 20px;
+
+                        .ttle {
+                            color: $linkblack;
+                            padding-right: 20px;
+
+                            .sts {
+                                display: block;
+                                color: $cc-mediumgray;
+                            }
+                        }
+                        .ctrl {
+                            color: $cc-mediumgray;
+                        }
+                    }
+                    
+                    .paytm-outer , .cc-outer {
+                        .form-group {
+                            .pay-chk {
+                                .mat-checkbox-layout {
+                                    margin-bottom: 0;
+                                }
+                            }
+                            .not-verified, .verified {
+                                position: relative;
+                                color: $cc-mediumgray;
+                                font-size: .75rem;
+                                padding-left: 20px;
+                                margin-left: 5px;
+
+                                &:before {
+                                    position: absolute;
+                                    left: 0;
+                                    @include font-custom;
+                                    content: "\24";
+                                    left: 0;
+                                    top: 0;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    height: 18px;
+                                    font-size: .875rem;
+                                }
+                            }
+                            .verified {
+                                color: $green;
+                            }
+                        }
+                    }
+                    
+                    .paytm-det, .cc-det, .taxouter {
+                        padding-left: 28px;
+
+                        .form-group {
+                            display: flex;
+                            flex-direction: column;
+
+                            .caption {
+                                margin-bottom: 5px;
+                            }
+
+                            mat-form-field {
+                                width: 280px;
+                                
+                                @include respond-to(ynw-575) {
+                                    width: 100%;
+                                }
+                                
+                                .mat-input-wrapper {
+                                    margin-bottom: 5px;
+                                    padding-bottom: 0px;
+
+                                    .mat-input-underline, .mat-input-subscript-wrapper {
+                                        display: none;
+                                    }
+
+                                    .mat-input-flex {
+                                        height: 40px;
+
+                                        .mat-form-field-infix {
+                                            padding: 0;
+                                            border: none;
+
+                                            .mat-input-element {
+                                                @include border-radius(0);
+                                                background: $cc-formbg;
+                                                border: 1px solid transparent;
+                                                @include font-regular;
+                                                font-size: 0.875rem;
+                                                color: $cc-darkgray;
+                                                text-overflow: ellipsis;
+                                                padding:10px;
+                                                height: 40px;
+
+                                                &:focus {
+                                                    @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                                    border: 1px solid $linkblue;
+                                                    background: $white;
+                                                }
+                                            }
+
+                                            .mat-select {
+                                                height: 40px;
+                                                padding: 10px;
+                                                @include font-regular;
+                                                border: 1px solid $cc-formbg;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            app-field-error-display {
+                                .sts-msg {
+                                    font-weight: 500;
+                                    font-size: .625rem;
+                                    padding: 5px;
+                                    background: transparent;
+                                    text-align: left;
+
+                                    &.error {
+                                        color: $cc-red;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    .cc-det {
+                        display: flex;
+                        
+                        @include respond-to(ynw-767) {
+                            flex-direction: column;
+                        }
+                        
+                        .pan-outer {
+                            order: 2;
+                        }
+                        .bank-outer {
+                            flex-grow: 1;
+                            order: 1;
+                            margin-right: 30px;
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: space-between;
+                            
+                            @include respond-to(ynw-767) {
+                                margin-left: 0;
+                                margin-right: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                flex-direction: column;
+                            }
+                            
+                            .form-group {
+                                width: 49%;
+                                
+                                @include respond-to(ynw-767) {
+                                    width: 100%;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    width: 100%;
+                                }
+                                
+                                mat-form-field {
+                                    width: 100%;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        width: 280px;
+                                    }
+                                    @include respond-to(ynw-575) {
+                                        width: 100%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    .taxouter {
+                        padding-left: 0px;
+                        
+                        .form-group {
+                            mat-form-field {
+                                width: 62px;
+
+                                .mat-form-field-flex {
+                                    display: flex;
+                                    align-items: center;
+
+                                    .mat-input-suffix {
+                                        margin-left: 5px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .actiondiv {
+                    margin-top: 30px;
+                    padding-left: 20px;
+                    
+                    @include respond-to(ynw-575) {
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+    }
+}
 
 
+/* ##### Inbox *****/
 
+.content {
+    .card {
+        margin-bottom: 50px;
+        padding: 0;
+        
+        .copy {
+            .inbox-table {
+                margin: 0;
+                padding: 0;
+                @include border-radius(5px);
+                
+                li {
+                    list-style: none;
+                    font-size: .875rem;
+                    border-bottom: 2px solid $cc-body;
 
+                    .outer {
+                        display: flex;
+                        
+                        @include respond-to(ynw-767) {
+                            flex-direction: column;
+                        }
 
+                        .th, .td {
+                            flex-grow: 1;
+                            font-weight: 600;
+                            padding: 15px;
+                            color: $linkblue;
 
+                            &.th1, &.td1 {
+                                width: 15%;
+                                flex-grow: 0;
+                            }
+                            &.th2, &.td2 {
+                                width: 20%;
+                                flex-grow: 0;
+                            }
+                            &.th3, &.td3 {
+                                width: 15%;
+                                flex-grow: 0;
+                            }
+                            &.th4, &.td4 {
+                                width: 40%;
+                                flex-grow: 0;
+                            }
+                            &.th5, &.td5 {
+                                width: 10%;
+                                flex-grow: 0;
+                                text-align: center;
+                            }
+                            &.td5 {
+                                span {
+                                    cursor: pointer;
+                                    @include transition(all 300ms);
+                                    font-size: 1rem;
+                                    
+                                    &:hover {
+                                        color: $cc-red;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .td {
+                            font-weight: 500;
+                            color: $cc-gray;
+                            
+                            @include respond-to(ynw-767) {
+                                &.td1, &.td2, &.td3, &.td4, &.td5 {
+                                    width: 100%;
+                                }
+                                &.td5 {
+                                    display: none;
+                                }
+                            }
+                            
+                            .label {
+                                display: none;
+                                font-weight: 600;
+                                
+                                @include respond-to(ynw-767) {
+                                    display: block;
+                                }
+                            }
+                            .result {                                
+                                .more {
+                                    color: $linkblue;
+                                }
+                                
+                            }
+                            
+                        }
+                    }
+                    
+                    .details, .actions {
+                        padding: 15px;
+                        
+                        .action {
+                            padding-bottom: 10px;
+                            
+                            @include respond-to(ynw-767) {
+                                border-bottom: 1px solid $cc-body;
+                            }
+                            
+                            
+                            [class^="icon-"], [class*=" icon-"] {
+                                display: inline-block;
+                                padding: 0 10px;
+                                align-items: center;
+                                cursor: pointer;
+                                font-weight: 500;
+                                padding-left: 30px;
+                                position: relative;
+                                margin-right: 5px;
+                                @include transition(all 300ms);
+                                
+                                &:before {
+                                    position: absolute;
+                                    left: 10px;
+                                    top: 6px;
+                                    width: 14px;
+                                    height: 14px;
+                                    font-size: .75rem;
+                                    align-items: center;
+                                }
+                                
+                                &:hover {
+                                    color: $linkblue;
+                                }
+                            }
+                        }
+                    }
+                    
+                    .details {
+                        padding-top: 0;
+                        line-height: 1.8;
+                        
+                        @include respond-to(ynw-767) {
+                            padding-bottom: 0;
+                        }
+                        
+                        .result, .action {
+                            padding: 10px;
+                            background: $cc-body;
+                            @include border-radius(10px);
+                        }
+                        .action {
+                            background: none;
+                        }
+                    }
+                    
+                    .actions {
+                        text-align: right;
+                        display: none;
+                        font-weight: 500;
+                        
+                        @include respond-to(ynw-767) {
+                            display: block;
+                        }
+                        
+                        .icon-delete {
+                            display: inline-block;
+                            padding: 0 10px;
+                            align-items: center;
+                            cursor: pointer;
+                            font-weight: 500;
+                            padding-left: 30px;
+                            position: relative;
+                            margin-right: 5px;
+                            @include transition(all 300ms);
+
+                            &:before {
+                                position: absolute;
+                                left: 10px;
+                                top: 4px;
+                                width: 14px;
+                                height: 14px;
+                                font-size: .75rem;
+                                align-items: center;
+                            }
+
+                            &:hover {
+                                color: $cc-red;
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                    &.tth {
+                        
+                        
+                        @include respond-to(ynw-767) {
+                            display: none;
+                        }
+                    }
+                    &.ttd {
+                        &.new{
+                            border-bottom: 2px solid $cc-body;
+                            background: #f0ffcc;
+                            
+                            .outer {
+                                .td {
+                                    font-weight: 600;
+                                    color: $linkblack;
+                                }
+                            }
+                            
+                            .details, .actions {
+                                .action {
+                                    @include respond-to(ynw-767) {
+                                        border-bottom: 1px solid $cc-ash;
+                                    }
+                                    
+                                    [class^="icon-"], [class*=" icon-"] {
+                                        &:before {
+                                            border-color: $cc-ash;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &:last-child {
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 

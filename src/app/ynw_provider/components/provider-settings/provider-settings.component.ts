@@ -21,6 +21,8 @@ export class ProviderSettingsComponent implements OnInit {
   waitlist_statusstr = 'Off';
   search_status = 2;
   search_statusstr = 'Off';
+  payment_settings: any = [];
+  payment_settingsdet: any = [];
   payment_status = false;
   payment_statusstr = 'Off';
   discount_list ;
@@ -58,7 +60,8 @@ export class ProviderSettingsComponent implements OnInit {
     .subscribe(
       data => {
 
-        this.waitlist_status = data['enabledWaitlist'] || false;
+        // this.waitlist_status = data['enabledWaitlist'] || false;
+        this.waitlist_status = data['onlineCheckIns'] || false;
         this.waitlist_statusstr = (this.waitlist_status) ? 'On' : 'Off';
       },
       error => {}
@@ -67,7 +70,8 @@ export class ProviderSettingsComponent implements OnInit {
   }
   handle_waitliststatus(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
-    this.provider_services.setWaitlistMgrStatus(is_check)
+    // this.provider_services.setWaitlistMgrStatus(is_check)
+    this.provider_services.setAcceptOnlineCheckin(is_check)
     .subscribe(
       data => {
         this.getWaitlistMgr();
@@ -81,6 +85,7 @@ export class ProviderSettingsComponent implements OnInit {
     this.provider_services.getPaymentSettings()
     .subscribe(
       data => {
+        this.payment_settings = data;
 
         this.payment_status = data['onlinePayment'] || false;
         this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
@@ -90,11 +95,63 @@ export class ProviderSettingsComponent implements OnInit {
 
   }
   handle_paymentstatus(event) {
+
+    let dataHolder = '';
     const is_check = (event.checked) ? true : false;
-    const payment_data = {
-      'onlinePayment' : is_check
-    };
-    this.provider_services.setPaymentSettings(payment_data)
+
+    dataHolder = '"onlinePayment": ' + is_check;
+    if (this.payment_settings.hasOwnProperty('payTm')) {
+      dataHolder += ', "payTm": ' + this.payment_settings['payTm'];
+      // post_Data.payTm = this.payment_settings['payTm'];
+    }
+    if (this.payment_settings.hasOwnProperty('payTmLinkedPhoneNumber')) {
+      dataHolder += ', "payTmLinkedPhoneNumber": ' + '"' + this.payment_settings['payTmLinkedPhoneNumber'] + '"';
+      // post_Data.payTmLinkedPhoneNumber = this.payment_settings['payTmLinkedPhoneNumber'];
+    }
+    if (this.payment_settings.hasOwnProperty('dcOrCcOrNb')) {
+      dataHolder += ', "dcOrCcOrNb": ' + this.payment_settings['dcOrCcOrNb'];
+     // post_Data.dcOrCcOrNb = this.payment_settings['dcOrCcOrNb'];
+    }
+    if (this.payment_settings.hasOwnProperty('panCardNumber')) {
+      dataHolder += ', "panCardNumber": ' + '"' + this.payment_settings['panCardNumber'] + '"';
+      // post_Data.panCardNumber = this.payment_settings['panCardNumber'];
+    }
+    if (this.payment_settings.hasOwnProperty('bankAccountNumber')) {
+      dataHolder += ', "bankAccountNumber": ' + '"' + this.payment_settings['bankAccountNumber'] + '"';
+      // post_Data.bankAccountNumber = this.payment_settings['bankAccountNumber'];
+    }
+    if (this.payment_settings.hasOwnProperty('bankName')) {
+      dataHolder += ', "bankName": ' + '"' + this.payment_settings['bankName'] + '"';
+      // post_Data.bankName = this.payment_settings['bankName'];
+    }
+    if (this.payment_settings.hasOwnProperty('ifscCode')) {
+      dataHolder += ', "ifscCode": ' + '"' + this.payment_settings['ifscCode'] + '"';
+      // post_Data.ifscCode = this.payment_settings['ifscCode'];
+    }
+    if (this.payment_settings.hasOwnProperty('nameOnPanCard')) {
+      dataHolder += ', "nameOnPanCard": ' + '"' + this.payment_settings['nameOnPanCard'] + '"';
+     // post_Data.nameOnPanCard = this.payment_settings['nameOnPanCard'];
+    }
+    if (this.payment_settings.hasOwnProperty('accountHolderName')) {
+      dataHolder += ', "accountHolderName": ' + '"' + this.payment_settings['accountHolderName'] + '"';
+      // post_Data.accountHolderName = this.payment_settings['accountHolderName'];
+    }
+    if (this.payment_settings.hasOwnProperty('branchCity')) {
+      dataHolder += ', "branchCity": ' + '"' + this.payment_settings['branchCity'] + '"';
+      // post_Data.branchCity = this.payment_settings['branchCity'];
+    }
+    if (this.payment_settings.hasOwnProperty('businessFilingStatus')) {
+      dataHolder += ', "businessFilingStatus": ' + '"' + this.payment_settings['businessFilingStatus'] + '"';
+     // post_Data.businessFilingStatus = this.payment_settings['businessFilingStatus'];
+    }
+    if (this.payment_settings.hasOwnProperty('accountType')) {
+      dataHolder += ', "accountType": ' + '"' + this.payment_settings['accountType'] + '"';
+      // post_Data.accountType = this.payment_settings['accountType'];
+    }
+    const post_Data = '{' + dataHolder + '}';
+    console.log('post', JSON.parse(post_Data));
+
+    this.provider_services.setPaymentSettings(JSON.parse(post_Data))
     .subscribe(
       data => {
         this.getpaymentDetails();
@@ -155,6 +212,12 @@ export class ProviderSettingsComponent implements OnInit {
       break;
       case 'license':
       this.routerobj.navigate(['provider', 'settings', 'license']);
+      break;
+      case 'paymentsettings':
+        this.routerobj.navigate(['provider', 'settings', 'paymentsettings']);
+      break;
+      case 'taxsettings':
+        this.routerobj.navigate(['provider', 'settings', 'paymentsettings', {id: 1}]);
       break;
     }
   }

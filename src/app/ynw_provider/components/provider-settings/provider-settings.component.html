@@ -90,10 +90,10 @@
                                     <span class="ctrl"><mat-slide-toggle [checked]="payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle></span>
                                 </li>
                                 <li>
-                                    <span class="lnk">Paytm</span>
+                                    <span class="lnk" (click)="redirecTo('paymentsettings')">Payment Settings</span>
                                 </li>
                                 <li>
-                                    <span class="lnk">CC / DC / Net Banking</span>
+                                    <span class="lnk" (click)="redirecTo('taxsettings')">Tax Settings</span>
                                 </li>
                             </ul>
                         </div>

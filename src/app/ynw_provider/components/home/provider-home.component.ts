@@ -88,8 +88,70 @@ export class ProviderHomeComponent implements OnInit {
 
 
   ngOnInit() {
+    this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '');
+    this.getBusinessProfile();
     this.getLocationList();
     this.getServiceList();
+  }
+
+  getBusinessProfile() {
+    let bProfile: any = [];
+
+    this.getBussinessProfileApi()
+    .then(
+      data => {
+        bProfile = data;
+        if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
+          // calling function which saves the business related details to show in the header
+          this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
+           || '', bProfile['serviceSector']['displayName'] || '', '');
+           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '');
+          }
+      },
+      error => {
+
+      }
+    );
+
+  }
+
+  getBussinessProfileApi() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.provider_services.getBussinessProfile()
+      .subscribe(
+        data => {
+          resolve(data);
+        },
+        error => {
+          reject();
+        }
+      );
+
+    });
+  }
+   // get the logo url for the provider
+   getProviderLogo(bname = '', bsector = '') {
+    let blogo;
+    this.provider_services.getProviderLogo()
+      .subscribe(
+      data => {
+        blogo = data;
+        // console.log('here logo', this.blogo);
+        let logo = '';
+        if (blogo[0]) {
+          logo = blogo[0].url;
+        } else {
+          logo = '';
+        }
+        // calling function which saves the business related details to show in the header
+        this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', logo );
+      },
+      error => {
+
+      }
+      );
   }
 
   getLocationList() {

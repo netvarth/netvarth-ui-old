@@ -20,7 +20,13 @@ import { AddProviderInboxMessageComponent } from '../add-provider-inbox-message/
 export class ProviderInboxComponent implements OnInit {
 
   messages: any = [];
-  dateFormat = projectConstants.DISPLAY_DATE_FORMAT;
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  breadcrumbs = [
+    {
+      title: 'Inbox'
+    }
+  ];
+  selectedMsg = -1;
 
   constructor( private provider_services: ProviderServices,
     private router: Router, private dialog: MatDialog,
@@ -61,8 +67,11 @@ export class ProviderInboxComponent implements OnInit {
   replyMessage(message) {
     const dialogRef = this.dialog.open(AddProviderInboxMessageComponent, {
       width: '50%',
+      panelClass: 'commonpopupmainclass',
+      autoFocus: true,
       data: {
-        message: message
+        message: message,
+        heading: 'Send Reply'
       }
     });
 
@@ -72,5 +81,10 @@ export class ProviderInboxComponent implements OnInit {
       }
     });
   }
-
+  showMsg(indx) {
+    this.selectedMsg = indx;
+  }
+  closeMsg() {
+    this.selectedMsg = -1;
+  }
 }

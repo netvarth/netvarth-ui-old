@@ -1,10 +1,13 @@
-<div mat-dialog-title>More Search Options <button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></div>
+<div mat-dialog-title>More Search Options 
+  <!-- <button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button> -->
+</div>
 
       <div *ngIf="searchrefine_arr.length>0" mat-dialog-content>
        
-        <div *ngFor="let refine_data of searchrefine_arr">
-            <div class="refine_subheader">{{refine_data.displayName}}</div>
-              <div class="refine_fieldlist">
+        <ng-container *ngFor="let refine_data of searchrefine_arr">
+        <div class="more-box" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean'">
+            <div class="refine_subheader" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean'">{{refine_data.displayName}}</div>
+              <div class="refine_fieldlist" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean'">
                 
                 
                 <!-- <div *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'" >
@@ -25,9 +28,9 @@
                     </div>
                 </div> 
 
-                <div *ngIf="refine_data.dataType=='Boolean'">
+                <!-- <div *ngIf="refine_data.dataType=='Boolean'">
                   <mat-slide-toggle #{{refine_data.name}}  (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1)">{{refine_data.displayName}}</mat-slide-toggle>
-                </div> 
+                </div>  -->
 
                 <ng-container *ngIf="refine_data.dataType=='Rating'">
                 <app-rating-star  [cloudindex]="refine_data.cloudSearchIndex" [ratingval]='' (ratingreturn)="handleratingClick($event)"></app-rating-star>
@@ -35,6 +38,17 @@
                 
               </div>
         </div>
+        </ng-container>
+        <div class="more-box">
+            <div class="refine_subheader">Other Filters</div>
+              <div class="refine_fieldlist" *ngFor="let refine_data of searchrefine_arr">
+                <div *ngIf="refine_data.dataType=='Boolean'">
+                  <mat-slide-toggle #{{refine_data.name}}  (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1)">{{refine_data.displayName}}</mat-slide-toggle>
+                </div> 
+              </div>
+        </div>
+
+        
       </div>
       <mat-dialog-actions><button mat-button (click)="handle_morebuttonclick()" *ngIf="searchrefine_arr.length>0">Search</button></mat-dialog-actions>
       <div *ngIf="searchrefine_arr.length==0"><mat-spinner strokeWidth="5" diameter="50" style="margin: 0 auto;"></mat-spinner></div>

@@ -112,7 +112,23 @@ export const Messages = {
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to "[status]"',
   'PROVIDER_NOTE_ADD': 'Note added successfully',
 
-  'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip'
+  'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
 
-
+  // Payment Setting
+  'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',
+  'PAYSETTING_SAV_PAYSTATUS': 'Payment Status updated successfully',
+  'PAYSETTING_ONLYNUM': 'Only numbers are allowed in mobile field',
+  'PAYSETTING_MOB10': 'Mobile number should have 10 digits',
+  'PAYSETTING_PAN': 'Pan number is required',
+  'PAYSETTING_ACCNO': 'Account number is required',
+  'PAYSETTING_BANKNAME': 'Bank name is required',
+  'PAYSETTING_IFSC': 'IFSC code is required',
+  'PAYSETTING_PANNAME': 'Name on pancard is required',
+  'PAYSETTING_ACMNAME': 'Account holder Name in required',
+  'PAYSETTING_BRANCH': 'Branch in required',
+  'PAYSETTING_FILING': 'Filing status in required',
+  'PAYSETTING_ACTYPE': 'Account type in required',
+  'PAYSETTING_TAXPER': 'Please enter a valid tax percentage',
+  'PAYSETTING_SAV_TAXPER': 'Tax percentage updated successfully',
+  'PAYSETTING_CONTACTADMIN': 'Contact Administrator to verify your payment modes'
 };

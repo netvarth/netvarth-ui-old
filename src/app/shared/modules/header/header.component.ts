@@ -73,7 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     // subscribe to home component messages
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-     // console.log('message', message.ttype);
+      // console.log('message', message.ttype);
       if (message.ttype === 'updateuserdetails') {
         this.getUserdetails();
         this.handleHeaderclassbasedonURL();
@@ -99,7 +99,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
      this.subscription.unsubscribe();
   }
 
-  getBusinessdetFromLocalstorage() {
+ getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
@@ -111,7 +111,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getUserdetails() {
     this.userdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
     if (this.userdet)  {
-      // console.log(this.userdet);
+     //  console.log(this.userdet);
       if (this.shared_functions.checkLogin()) {
         this.ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (this.userdet.isProvider === true) {
@@ -188,7 +188,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     alert('Upgrade Membership');
   }
   inboxiconClick() {
-    alert('Inbox');
+    this.redirectto('inbox');
   }
 
   redirectto (mod) {
@@ -205,6 +205,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       break;
       case 'change-email':
         this.router.navigate([usertype, 'change-email']);
+      break;
+      case 'inbox':
+        this.router.navigate(['provider', 'inbox']);
       break;
     }
   }

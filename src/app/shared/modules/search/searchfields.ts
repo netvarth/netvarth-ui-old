@@ -17,6 +17,7 @@ export class SearchFields {
   specialization: string;
   rating: string;
   commonfilters: string;
+  passrefinedfilters: any [];
   constructor() {
     const obj = {
       domain: '',
@@ -36,7 +37,8 @@ export class SearchFields {
       subsector: '',
       specialization: '',
       rating: '',
-      commonfilters: ''
+      commonfilters: '',
+      passrefinedfilters: []
     };
     return obj;
   }

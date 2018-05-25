@@ -496,41 +496,7 @@ header {
             
             /* More Options Dropdown */
             .more-opt {
-                position: absolute;
-                width: 100%;
-                font-size: .875rem;
-                z-index: 200;
-                top: 132px;
-                visibility: hidden;
-                perspective: 1300px;
-                
-                .closebtn {
-                    position: absolute;
-                    right: 5px;
-                    top: 5px;
-                    z-index: 201;
-                }
-                
-                .mo-content {
-                    background: $white;
-                    padding: 20px;
-                    opacity: 0;
-                    @include transform(rotateX(-60deg));
-                    @include transform-origin(50% 0);
-                    @include transform-style(preserve-3d);
-                    @include transition(all 0.3s);
-                    @include box-shadow(0, 20px, 30px, rgba(0,0,0,.1) !important);
-                    
-                }
-                
-                &.show {
-                    visibility: visible;
-                    
-                    .mo-content {
-                        opacity: 1;
-                        @include transform(rotateX(0deg));
-                    }
-                }
+                top: 50px;
             }
         }
 
@@ -797,6 +763,37 @@ header {
             position: relative;
             @include transition(all 300ms);
             
+            .bk-ctrl {
+                margin-bottom: 20px;
+                font-size: .875rem;
+                
+                .backtoresults {
+                    cursor: pointer;
+                    display: table;
+                    position: relative;
+                    padding-left: 30px;
+                    
+                    .strong {
+                        font-weight: 600;
+                    }
+                    
+                    &:before {
+                        @include font-custom;
+                        content: "\61";
+                        position: absolute;
+                        left: 0;
+                        top: 4px;
+                        width: 14px;
+                        height: 14px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: .65rem;
+                    }
+                }
+                
+            }
+            
             .ct2 {
                 display: flex;
                 font-size: .875rem;
@@ -916,8 +913,9 @@ header {
                                 width: 25%;
                             }
                             @include respond-to(ynw-575) {
-                                width: 170px;
-                                margin-top: 15px;
+                                width: 100%;
+                                margin-top: 0;
+                                display: flex;
                             }
                             @include respond-to(ynw-768-991) {
                                 order: 2;
@@ -953,8 +951,9 @@ header {
                                     }
                                 }
                                 @include respond-to(ynw-575) {
-                                    width: 170px;
-                                    margin-right: 0;
+                                    width: 160px;
+                                    margin-bottom: 0;
+                                    margin-right: 5px;
                                 }
                                 
                                 @include respond-to(ynw-768-991) {
@@ -982,9 +981,13 @@ header {
                                 padding: 0;
                                 display: flex;
                                 
+                                @include respond-to(ynw-575) {
+                                    margin-bottom: 0;
+                                    margin-right: 5px;
+                                }
+                                
                                 li {
                                     list-style: none;
-                                    margin-right: 10px;
                                     height: 50px;
                                         
                                     .galbx {
@@ -1013,6 +1016,10 @@ header {
                             }
                             .rating-stars {
                                 text-align: left;
+                                
+                                img {
+                                    width: 12px;
+                                }
                             }
                         }
                         .tp2 {
@@ -1023,6 +1030,7 @@ header {
                                 width: 65px;
                                 height: 20px;
                                 display: none;
+                                margin-left: -3px;
                                 
                                 @include respond-to(ynw-767) {
                                     display: block;
@@ -1034,7 +1042,7 @@ header {
                             
                             h3 {
                                 font-size: 1rem;
-                                font-weight: 600;
+                                font-weight: 700;
                                 margin-bottom: 5px;
                             }
                             
@@ -1224,7 +1232,6 @@ header {
                     }
                 }
                 .bottom-sect {
-                    padding: 20px;
                     display: flex;
                     
                     @include respond-to(ynw-575) {
@@ -1233,9 +1240,589 @@ header {
                     
                     .bt-l {
                         flex-grow: 1;
+                        padding: 20px;
                         
                         @include respond-to(ynw-575) {
                             margin-bottom: 20px;
+                        }
+                        
+                        .wt-tme {
+                            display: flex;
+                            align-items: center;
+                            
+                            @include respond-to(ynw-575) {
+                                justify-content: center;
+                            }
+                            
+                            .o-now {
+                                display: flex;
+                                align-items: center;
+                                background: $green;
+                                height: 50px;
+                                padding: 0px 10px;
+                                position: relative;
+                                color: $white;
+                                font-weight: 600;
+                                margin-right: 30px;
+                                
+                                @include respond-to(ynw-768-991) {
+                                    width: 60px;
+                                }
+                                
+                                &:after {
+                                    position: absolute;
+                                    content: "";
+                                    right: -15px;
+                                    top: 0;
+                                    z-index: 2;
+                                    width: 10px;
+                                    height: 50px;
+                                    border-top: 25px solid transparent;
+                                    border-bottom: 25px solid transparent;  
+                                    border-left: 15px solid $green;
+                                }
+                            }
+                            .timing {
+                                display: flex;
+                                flex-direction: column;
+                                
+                                
+                                .est-time {
+                                    color: $cc-mediumgray;
+                                }
+                                .time-data {
+                                    font-weight: 600;
+                                    position: relative;
+                                    padding-left: 20px;
+                                    
+                                    &:before {
+                                        position: absolute;
+                                        content: "\31";
+                                        @include font-custom;
+                                        left: 0;
+                                        top: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .bt-r {
+                        padding: 20px;
+                        width: 30%;
+                        
+                        @include respond-to(ynw-767) {
+                            width: 100%;
+                            text-align: left;
+                            padding-top: 0;
+                        }
+                        @include respond-to(ynw-575) {
+                            text-align: center;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 30%;
+                        }
+                        
+                        .chk-btn {
+                            margin-bottom: 10px;
+                            width: 100%;
+                            
+                            @include respond-to(ynw-767) {
+                                width: 250px;
+                                margin-right: auto;
+                            }
+                            @include respond-to(ynw-575) {
+                                width: auto;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                width: 100%;
+                            }
+                        }
+                        
+                        .bt10 {
+                            text-align: right;
+                            margin-right: 15px;
+                            display: block;
+                            
+                            @include respond-to(ynw-767) {
+                                margin-right: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                margin-right: 0;
+                            }
+                            
+                            &.blk {
+                                color: $cc-darkgray;
+                                margin-bottom: 10px;
+                            }
+                            
+                            &:hover {
+                                text-decoration-line: underline;
+                            }
+                        }
+                    }
+                }
+                
+                
+                /* ### Service Provider Detail Page Styles */
+                &.details {
+                    margin-bottom: 40px;
+                    
+                    .top-sect {
+                        padding: 0;
+                        border: none;
+                        
+                        .tp-l {
+                            padding: 20px;
+                            margin-right: 0;
+                            width: 75%;
+                            
+                            @include respond-to(ynw-767) {
+                                width: 100%;
+                                margin-bottom: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                width: 100%;
+                                margin-bottom: 0;
+                            }
+                            
+                            .tp1 {
+                                @include respond-to(ynw-767) {
+                                    margin-left: 15px;
+                                    width: 170px;
+                                }
+                                @include respond-to(ynw-575) {
+                                    margin-left: 0;
+                                    display: flex;
+                                    width: 100%;
+                                    
+                                    .pro-img {
+                                        margin-bottom: 0;
+                                    }
+                                    
+                                    .gal {
+                                        margin-bottom: 0;
+                                    }
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    order: 1;
+                                    width: 170px;
+                                    margin-right: 15px;
+                                }
+                            }
+                            
+                            .tp2 {
+                                @include respond-to(ynw-767) {
+                                    width: 70%;
+                                }
+                                @include respond-to(ynw-575) {
+                                    width: 100%;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    order: 2;
+                                    width: 70%;
+                                }
+                                
+                                .category {
+                                    font-weight: 600;
+                                    margin-bottom: 15px;
+                                    display: table;
+                                }
+                                
+                                .clr {
+                                    .pro-desc {
+                                        margin-bottom: 15px;
+                                        
+                                        .more {
+                                            font-size: .75rem;
+                                            color: $linkblue;
+                                            cursor: pointer;
+                                        }
+                                    }
+                                    .services {
+                                        margin-bottom: 0;
+                                        
+                                        .sub-title {
+                                            margin-bottom: 3px;
+                                            color: $cc-mediumgray;
+                                            display: block;
+                                            font-size: .75rem;
+                                            font-weight: 600;
+                                        }
+                                        
+                                        ul {
+                                            li {
+                                                &:last-child {
+                                                    border: none;
+                                                    
+                                                    span {
+                                                        color: $linkblue;
+                                                        font-size: .75rem;
+                                                        cursor: pointer;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .tp-r{
+                            padding: 20px;
+                            background: $cc-detailgray;
+                            
+                            .ynw-verified {
+                                margin-left: 0;
+                                margin-bottom: 20px;
+                            }
+                            
+                            .side-menu {
+                                margin: 0 0 0 5px;
+                                padding: 0;
+                                
+                                li {
+                                    list-style: none;
+                                    text-align: left;
+                                    margin-bottom: 25px;
+                                    
+                                    span[class^="icon-"], span[class*=" icon-"] {
+                                        cursor: pointer;
+                                        padding-left: 30px;
+                                        @include transition(all 300ms);
+                                        position: relative;
+                                        
+                                        .count {
+                                            background: $green;
+                                            color: $white;
+                                            font-weight: 600;
+                                            font-size: .75rem;
+                                            padding: 4px 7px;
+                                            margin-left: 5px;
+                                            @include border-radius(50px);
+                                        }
+                                        
+                                        &:before {
+                                            position: absolute;
+                                            font-size: 1.125rem;
+                                            font-weight: 700;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            left: 0;
+                                            height: 20px;
+                                        }
+                                        
+                                        &:hover {
+                                            color: $linkblue;
+                                        }
+                                        &.icon-favourite-filled {
+                                            &:before {
+                                                color: $cc-red;
+                                            }
+                                        }
+                                    }
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+            /* ### Service Provider Detail Page Styles */
+            .location {
+                background: $white;
+                font-size: .875rem;
+                font-weight: 500;
+                @include box-shadow(0, 20px, 30px, rgba(0,0,0,.03) !important);
+                margin-bottom: 20px;
+                
+                .top-sect {
+                    display: flex;
+                    width: 100%;
+                    padding: 20px;
+                    border-bottom: 2px solid $cc-body;
+                    
+                    .tp-l {
+                        margin-right: 30px;
+                        display: flex;
+                        width: 75%;
+                        
+                        @include respond-to(ynw-767) {
+                            margin-right: 0;
+                            margin-bottom: 20px;
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            margin-right: 0;
+                            margin-bottom: 20px;
+                            width: 100%;
+                        }
+                        
+                        .tp2 {
+                            flex-grow: 1;
+                            
+                            .ynw-verified {
+                                background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
+                                width: 65px;
+                                height: 20px;
+                                display: none;
+                                
+                                @include respond-to(ynw-767) {
+                                    display: block;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    display: block;
+                                }
+                            }
+                            
+                            h3 {
+                                font-size: 1rem;
+                                font-weight: 600;
+                                margin-bottom: 5px;
+                            }
+                            
+                            .directions {
+                                margin-bottom: 15px;
+                                display: inline-block;
+                                color: $linkblue;
+                                cursor: pointer;
+                                position: relative;
+                                padding-left: 20px;
+                                font-weight: 600;
+                                
+                                &:before {
+                                    display: flex;
+                                    position: absolute;
+                                    @include font-custom;
+                                    content: "\6a";
+                                    left: 0;
+                                    align-items: center;
+                                }
+                            }
+                            
+                            .clr {
+                                color: $cc-gray;
+                                
+                                .otr-elements {
+                                    margin-bottom: 15px;
+                                    display: flex;
+                                    flex-direction: column;
+
+                                    .span {
+                                        display: inline-block;
+                                        margin-bottom: 3px;         
+                                    }
+                                }
+
+                                .schedule {
+                                    margin-bottom: 15px;
+                                    
+                                    .sub-title {
+                                        margin-bottom: 3px;
+                                        color: $cc-mediumgray;
+                                        display: block;
+                                        font-size: .75rem;
+                                        font-weight: 600;
+                                    }
+                                    
+                                    ul {
+                                        margin: 0;
+                                        padding: 0;
+
+                                        li {
+                                            list-style: none;
+                                            display: flex;
+                                            margin-bottom: 5px;
+                                            
+                                            @include respond-to(ynw-767) {
+                                                flex-direction: column;
+                                            }
+                                            @include respond-to(ynw-768-991) {
+                                                flex-direction: column;
+                                            }
+                                            @include respond-to(ynw-992-1199) {
+                                                flex-direction: column;
+                                            }
+
+                                            .day {
+                                                font-weight: 600;
+                                                width: auto;
+                                                margin-right: 10px;
+                                            }
+                                            .time {
+                                                flex-grow: 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                .services {
+                                    margin-bottom: 0;
+                                    
+                                    .sub-title {
+                                        margin-bottom: 3px;
+                                        color: $cc-mediumgray;
+                                        display: block;
+                                        font-size: .75rem;
+                                        font-weight: 600;
+                                    }
+                                    
+                                    ul {
+                                        margin: 0;
+                                        padding: 0;
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        
+                                        li {
+                                            list-style: none;
+                                            margin-right: 10px;
+                                            border: 1px solid $cc-gray;
+                                            font-size: .75rem;
+                                            padding: 0 5px;
+                                            @include border-radius(20px);
+                                            cursor: pointer;
+                                            margin-bottom: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            .more-clinics {
+                                span {
+                                    color: $linkblue;
+                                    @include anchor-border;
+                                }
+                            }
+                        }
+                    }
+                    .tp-r {
+                        flex-grow: 1;
+                        text-align: right;
+                        width: 25%;
+                        
+                        .ynw-verified {
+                            background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
+                            width: 110px;
+                            height: 32px;
+                            margin-left: auto;
+                            margin-bottom: 15px;
+                            
+                            @include respond-to(ynw-767) {
+                                display: none;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                display: none;
+                            }
+                        }
+                        
+                        .badges {
+                            margin: 0 0 15px 0;
+                            padding: 0;
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: flex-end;
+                            
+                            @include respond-to(ynw-767) {
+                                justify-content: flex-end;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                justify-content: flex-end;
+                            }
+                            
+                            li {
+                                list-style: none;
+                                font-size: 1.625rem;
+                                margin-left: 30px;
+                                
+                                @include respond-to(ynw-767) {
+                                    margin-left: 20px;
+                                    margin-right: 0px;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    margin-left: 20px;
+                                    margin-right: 0px;
+                                }
+                            }
+                        }
+                        
+                        .communicate {
+                            position: relative;
+                            text-align: right;
+                            color: $linkblue;
+                            padding-left: 20px;
+                            display: table;
+                            margin-bottom: 10px;
+                            margin-left: auto;
+                            cursor: pointer;
+                            
+                            @include respond-to(ynw-767) {
+                                margin-left: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                margin-left: 0;
+                            }
+                            
+                            &:before {
+                                position: absolute;
+                                content: "\53";
+                                @include font-custom;
+                                left: 0;
+                                top: 0;
+                            }
+                        }
+                        
+                        .claim-business {
+                            position: relative;
+                            text-align: right;
+                            color: $cc-warning;
+                            padding-left: 20px;
+                            display: table;
+                            margin-left: auto;
+                            cursor: pointer;
+                            
+                            @include respond-to(ynw-767) {
+                                margin-left: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                margin-left: 0;
+                            }
+                            
+                            &:before {
+                                position: absolute;
+                                content: "\39";
+                                @include font-custom;
+                                left: 0;
+                                top: 0;
+                            }
+                        }
+                    }
+                }
+                .bottom-sect {
+                    display: flex;
+                    
+                    @include respond-to(ynw-767) {
+                        flex-direction: column;
+                    }
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
+                    }
+                    
+                    .bt-l {
+                        flex-grow: 1;
+                        padding: 20px;
+                        
+                        @include respond-to(ynw-767) {
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 70%;
                         }
                         
                         .wt-tme {
@@ -1293,23 +1880,135 @@ header {
                                 }
                             }
                         }
+                        
+                        .c-checkin {
+                            .ch-l {
+                                .ch-title {
+                                    font-size: 1rem;
+                                    font-weight: 500;
+                                    margin-bottom: 15px;
+                                    display: block;
+                                    
+                                    .count {
+                                        font-weight: 700;
+                                    }
+                                }
+                            }
+                            .ch-r {
+                                .check-list {
+                                    margin: 0;
+                                    padding: 0;
+                                    counter-reset: my-counter;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        padding-bottom: 20px;
+                                        border-bottom: dashed 1px $cc-ash;
+                                    }
+                                    
+                                    li {
+                                        position: relative;
+                                        margin-bottom: 10px;
+                                        color: $cc-gray;
+                                        padding-left: 30px;
+                                        list-style: none;
+                                        
+                                        .service {
+                                            color: $linkblue;
+                                            font-weight: 700;
+                                        }
+                                        .service-for {
+                                            font-weight: 600;
+                                            color: $linkblack;
+                                        }
+                                        .schedule, .est-time {
+                                            font-weight: 600;
+                                            color: $green;
+                                        }
+                                        
+                                        &:before {
+                                            position: absolute;
+                                            content: counter(my-counter);
+                                            counter-increment: my-counter;
+                                            list-style-type: decimal;
+                                            color: $linkblack;
+                                            left: 0;
+                                            top: 0px;
+                                            width: 18px;
+                                            height: 18px;
+                                            background: $linkblue;
+                                            @include border-radius(50px);
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            color: $white;
+                                            font-weight: 600;
+                                            font-size: .65rem;
+                                        }
+                                        &:last-child {
+                                            margin-bottom: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     .bt-r {
+                        padding: 20px;
+                        width: 25%;
+                        
+                        @include respond-to(ynw-767) {
+                            width: 100%;
+                            text-align: left;
+                            padding-top: 0;
+                        }
+                        @include respond-to(ynw-575) {
+                            text-align: center;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 30%;
+                        }
+                        
                         .chk-btn {
+                            margin-bottom: 10px;
+                            width: 100%;
                             
                             @include respond-to(ynw-767) {
-                                width: 150px;
+                                width: 250px;
+                                margin-right: auto;
                             }
                             @include respond-to(ynw-575) {
                                 width: auto;
                             }
                             @include respond-to(ynw-768-991) {
-                                width: 150px;
+                                width: 100%;
+                            }
+                        }
+                        
+                        .bt10 {
+                            text-align: right;
+                            margin-right: 15px;
+                            
+                            @include respond-to(ynw-767) {
+                                margin-right: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                margin-right: 0;
+                            }
+                            
+                            &.blk {
+                                color: $cc-darkgray;
+                                margin-bottom: 10px;
+                            }
+                            
+                            &:hover {
+                                text-decoration-line: underline;
                             }
                         }
                     }
                 }
             }
+            
+            
             .search_paging {
                 .container {
                     padding: 0;

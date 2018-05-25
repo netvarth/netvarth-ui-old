@@ -39,7 +39,6 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            padding: 0 20px;
             
             @include respond-to(ynw-767) {
                 flex-direction: column;
@@ -418,6 +417,11 @@
                         }
                     }
                 }
+            }
+            
+            /* More Options Dropdown */
+            .more-opt {
+                top: 90px;
             }
         }
         .sa-ps {

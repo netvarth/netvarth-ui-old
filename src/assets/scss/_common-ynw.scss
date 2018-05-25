@@ -274,6 +274,91 @@ app-footer {
     }
 }
 
+/* More Options Dropdown */
+.more-opt {
+    position: absolute;
+    width: 100%;
+    font-size: .875rem;
+    z-index: 200;
+    top: 0px;
+    visibility: hidden;
+    perspective: 1300px;
+    border-top: 3px solid $linkblue;
+
+    .closebtn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 201;
+    }
+
+    .mo-content {
+        background: $white;
+        padding: 20px;
+        opacity: 0;
+        @include transform(rotateX(-60deg));
+        @include transform-origin(50% 0);
+        @include transform-style(preserve-3d);
+        @include transition(all 0.3s);
+        @include box-shadow(0, 20px, 30px, rgba(0,0,0,.1) !important);
+        
+        .mat-dialog-title {
+            @include font-medium;
+            font-size: 1.125rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1rem;
+        }
+        
+        .mat-dialog-content {
+            @include clearfix();
+            
+            .more-box {
+                float: left;
+                width: 25%;
+                
+                @include respond-to(ynw-767){
+                    width: 33.33%;
+                }
+                @include respond-to(ynw-575){
+                    width: 50%;
+                }
+                @include respond-to(ynw-400){
+                    width: 100%;
+                    margin-bottom: 15px
+                }
+                
+                .refine_subheader {
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+                &:last-child {
+                    margin: 0;
+                }
+                
+                .mat-slide-toggle-content {
+                    @include font-medium;
+                    font-size: .875rem;
+                }
+            }
+        }
+        .mat-dialog-actions {
+            margin-top: 20px;
+            display: block;
+        }
+
+    }
+
+    &.show {
+        visibility: visible;
+
+        .mo-content {
+            opacity: 1;
+            @include transform(rotateX(0deg));
+        }
+    }
+}
+
 /*information notification ####*/
 .info-lst {
     margin: 0;
@@ -365,4 +450,10 @@ app-footer {
             }
         }
     }
+}
+
+/* #### Common Styles to apply everywhere  ####*/
+
+.mat-checkbox {
+    @include font-medium;
 }

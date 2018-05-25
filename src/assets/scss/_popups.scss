@@ -532,6 +532,14 @@
                 }
             }
         }
+        
+        .audit_outer {
+            border: 1px solid $cc-ash;
+
+            .table {
+                margin-bottom: 0;
+            }
+        }
 
         > .ng-star-inserted {
             margin-bottom: 20px;
@@ -771,6 +779,8 @@
                             font-weight: 600;
                             background: $green;
                             color: $white;
+                            border: none;
+                            border: 1px solid $green;
                         }
                         
                         .mat-chip {
@@ -779,6 +789,8 @@
                             margin-left: 0;
                             margin-bottom: 5px;
                             cursor: pointer;
+                            background: $white;
+                            border: 1px solid $cc-mediumgray;
                             
                             &:focus {
                                 box-shadow: none;
@@ -849,6 +861,18 @@
                     font-size: .875rem;
                 }
             }
+            
+            .queue-outer {
+                .mat-chip-list {
+                    .mat-chip-list-wrapper {
+                        .mat-chip {
+                            border: none;
+                            background: $cc-body;
+                        }
+                    }
+                }
+            }
+            
             .servicefor-outer {
                 .service-availer {
                     color: $linkblack;

@@ -33,6 +33,7 @@ import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profil
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
+import { ProviderPaymentSettingsComponent } from './components/provider-payment-settings/provider-payment-settings.component';
 const routes: Routes = [
     {path: '', component: ProviderComponent, children: [
 
@@ -116,8 +117,15 @@ const routes: Routes = [
             component: ProviderPaymentHistoryComponent
           }
         ]
+      }/*,
+      {
+        path: 'paymentsettings',
+        component: ProviderPaymentSettingsComponent
+      }*/,
+      {
+        path: 'paymentsettings',
+        component: ProviderPaymentSettingsComponent
       }
-
       ]
     },
     { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },

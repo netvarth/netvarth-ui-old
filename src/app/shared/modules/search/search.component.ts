@@ -8,7 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDataStorageService } from '../../services/search-datastorage.services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { SearchMoreOptionsComponent } from '../../components/search-moreoptions/search-moreoptions.component';
+// import { SearchMoreOptionsComponent } from '../../components/search-moreoptions/search-moreoptions.component';
 
 import { SearchFields } from './searchfields';
 import { base_url } from '../../constants/urls';
@@ -114,6 +114,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   locationholder: Locscls;
   keywordholder: Keywordscls;
+  showmoreoptionsSec = false;
 
   constructor (
     private shared_service: SharedServices,
@@ -228,9 +229,26 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.sortorder = this.searchfields.sortorder;
     }
   }
-
+ /* clickedoutsider(e) {
+    console.log('clicked outside', e);
+    const targetid = e.target.id;
+    if (targetid !== undefined) {
+      if (targetid !== 'morefiltericon') {
+       // this.closeMoreoptions();
+      }
+    }
+  }*/
+  closeMoreoptions() {
+    this.showmoreoptionsSec = false;
+  }
   showMoreOptions() {
-    const dialogRef = this.dialog.open(SearchMoreOptionsComponent, {
+    if (this.showmoreoptionsSec) {
+      this.showmoreoptionsSec = false;
+    } else {
+      this.showmoreoptionsSec = true;
+    }
+
+    /*const dialogRef = this.dialog.open(SearchMoreOptionsComponent, {
       width: '50%',
       panelClass: 'moreoptionsmainclass',
       data: {
@@ -246,8 +264,16 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           this.do_search('');
         }
     }
-    });
+    });*/
   }
+  handleSearchmoreSearchClick(result) {
+    // console.log('more returned', result);
+    this.moreoptions_arr = result;
+    this.showmoreoptionsSec = false;
+    // console.log('moreoption returned', this.moreoptions_arr);
+    this.do_search('');
+  }
+
   // method with decides whether the more option link is to be display
   chk_moreoptionshow() {
     if ((this.selected_domain !== '' && this.selected_domain !== undefined
@@ -708,6 +734,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   this.keywordholder.typ = 'kwtitle';
  }
  do_search(labelqpassed?) {
+   this.closeMoreoptions();
    // // console.log('search clicked');
 
    // done to handle the case if something is typed in the last text box and nothing else is selected by consumer, but some text is there
@@ -742,6 +769,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
     if (currenturl[0] === '/searchdetail') { // if clicked search button from the search result page itself
         this.onsearchclick(labelq);
+       // window.location.reload();
     } else { // clicked search button from home page
 
       /*this.routerobj.navigate(['/searchdetail'], { queryParams: { do: this.selected_domain, la: this.location_latitude,
@@ -873,6 +901,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         // this.kw_autoname = this.searchfields.kw;
         this.kw_autoname = ret_arr['subdom_dispname'];
       }
+    }
+    if (this.moreoptions_arr.length > 0) {
+      this.searchfields.passrefinedfilters = this.moreoptions_arr;
+    } else {
+      this.searchfields.passrefinedfilters = [];
     }
     this.searchclick.emit(this.searchfields);
   }

@@ -67,8 +67,10 @@ export class SearchDetailComponent implements OnInit {
   public showsearchsection = false;
   public arraycreatedfromquerystring = false;
   public commonfilters;
+  public passrefinedfilters;
   public showopnow = 0;
   public subdomainleft;
+  changedate_req = false;
   specialization_exists = false;
   location_cnt = 0;
   showrefinedsection = true;
@@ -387,7 +389,32 @@ export class SearchDetailComponent implements OnInit {
       }
       this.labelq = this.shared_functions.Lbase64Decode(obj.labelq) || '';
       this.commonfilters = obj.commonfilters || '';
+      this.passrefinedfilters = obj.passrefinedfilters || [];
+      if (this.passrefinedfilters.length > 0) {
 
+        const  passparam1 = {};
+          for (let i = 0; i < this.passrefinedfilters.length; i++) {
+            for (const field in this.passrefinedfilters[i]) {
+              if (field) {
+               // console.log('field', field, this.moreoptions_arr[i][field]);
+                let valstr = '';
+                for (const fval of this.passrefinedfilters[i][field]) {
+                  if (valstr !== '') {
+                    valstr += '~';
+                  }
+                  valstr += fval[0];
+                }
+                passparam1['myref_' + field.toString()] = valstr;
+              }
+            }
+          }
+          this.parseRefinedfiltersQueryString(passparam1);
+          // console.log('passparam1', passparam1);
+
+
+
+      }
+      // console.log('passed refine filter', this.passrefinedfilters);
       if (this.labelq !== '') { // if came to details page by clicking the search labels
         this.parsesearchLabelsQuerystring(this.labelq); // function which parse and set the respective public variable
       }
@@ -763,7 +790,7 @@ export class SearchDetailComponent implements OnInit {
                 ++locationcnt;
               }
               this.search_data.hits.hit[i].fields.moreclinics = locationcnt;
-              if (this.search_data.hits.hit[i].fields.business_hours1) {
+              /*if (this.search_data.hits.hit[i].fields.business_hours1) {
                 schedule_arr = [];
                 for (let j = 0; j < this.search_data.hits.hit[i].fields.business_hours1.length; j++) {
                   const obt_sch = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[j]);
@@ -778,7 +805,26 @@ export class SearchDetailComponent implements OnInit {
                     }
                     this.search_data.hits.hit[i].fields['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
                 }
+              }*/
+
+              if (this.search_data.hits.hit[i].fields.business_hours1) {
+                schedule_arr = [];
+                const business_hours = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[0]);
+                for (let j = 0; j < business_hours.length; j++) {
+                  const obt_sch = business_hours[j];
+                 // console.log('business', obt_sch[0].repeatIntervals);
+                    for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+                      // pushing the schedule details to the respective array to show it in the page
+                      schedule_arr.push({
+                          day: obt_sch.repeatIntervals[k],
+                          sTime: obt_sch.timeSlots[0].sTime,
+                          eTime: obt_sch.timeSlots[0].eTime
+                      });
+                    }
+                    this.search_data.hits.hit[i].fields['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+                }
               }
+
             }
             // console.log('search after', this.search_data.hits.hit);
           /*let display_schedule = [];
@@ -835,6 +881,7 @@ export class SearchDetailComponent implements OnInit {
 
           if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
             this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
+            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 1;
             if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
                  + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
@@ -844,6 +891,7 @@ export class SearchDetailComponent implements OnInit {
             }
           } else {
             this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 2;
             if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
             } else {
@@ -882,7 +930,8 @@ export class SearchDetailComponent implements OnInit {
           subsector: this.subsector,
           specialization: this.specialization,
           rating: this.rating,
-          commonfilters: this.commonfilters || ''
+          commonfilters: this.commonfilters || '',
+          passrefinedfilters: []
         };
 
         // console.log('ret search fields', this.searchfields);
@@ -1197,17 +1246,21 @@ export class SearchDetailComponent implements OnInit {
    // console.log('valcnt', this.searchrefineresult_arr[indx][fieldname].length);
     for (let i = 0; i < this.searchrefineresult_arr[indx][fieldname].length; i++) {
       if (retstr !== '') {
-        retstr += ' ';
+        retstr += '';
       }
       if (returlstr !== '') {
         returlstr += '~';
       }
       const if_special = fieldname.substr(-10);
       if (if_special === '_location*') {
-        for (let j = 1; j <= 5; j++) {
+       // for (let j = 1; j <= 1; j++) {
+          retstr += ' ' + fieldname.replace('_location*', '_location1') + ':' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
+       //   curcnt++;
+       // }
+        /*for (let j = 1; j <= 5; j++) {
           retstr += ' ' + fieldname.replace('_location*', '_location' + j) + ':' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
           curcnt++;
-        }
+        }*/
         /*if (curcnt === this.searchrefineresult_arr[indx][fieldname].length) {} {
           retstr = ' ( or ' + retstr + ') ';
         }*/
@@ -1314,8 +1367,9 @@ export class SearchDetailComponent implements OnInit {
     alert('Claim Business');
   }
 
-  checkinClicked(obj) {
+  checkinClicked(obj, chdatereq) {
     this.current_provider = obj;
+    this.changedate_req = chdatereq;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (usertype === 'consumer') {
       this.showCheckin('consumer');
@@ -1355,7 +1409,8 @@ export class SearchDetailComponent implements OnInit {
         type : origin,
         is_provider : this.checkProvider(origin),
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
-        srchprovider: this.current_provider
+        srchprovider: this.current_provider,
+        datechangereq: this.changedate_req
       }
     });
 

@@ -42,7 +42,7 @@ import { MatDialogModule } from '@angular/material';
 import { FormMessageDisplayModule } from './shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
-import { SearchMoreOptionsComponent } from './shared/components/search-moreoptions/search-moreoptions.component';
+// import { SearchMoreOptionsComponent } from './shared/components/search-moreoptions/search-moreoptions.component';
 
 import { projectConstants } from './shared/constants/project-constants';
 
@@ -64,15 +64,15 @@ import 'hammerjs';
     // ChangePasswordComponent,
     // ChangeMobileComponent,
    // ChangeEmailComponent,
-    ConfirmBoxComponent,
-    SearchMoreOptionsComponent
+    ConfirmBoxComponent/*,
+    SearchMoreOptionsComponent*/
   ],
   entryComponents: [
     ForgotPasswordComponent,
     SignUpComponent,
     LoginComponent,
     ConfirmBoxComponent,
-    SearchMoreOptionsComponent
+    /*SearchMoreOptionsComponent*/
   ],
   imports: [
     BrowserModule,

@@ -1,39 +1,70 @@
+<section>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
 
-
-<mat-accordion>
-    <mat-expansion-panel disabled>
-        <mat-expansion-panel-header>
-          <div class="width-20">
-            Date
-          </div>
-          <div class="width-20">
-              Service
-          </div>
-          <div class="width-20">
-              Name
-          </div>
-          <div  class="width-40">
-              Message
-          </div>
-        </mat-expansion-panel-header>
-    </mat-expansion-panel>
-  <mat-expansion-panel *ngFor="let message of messages">
-    <mat-expansion-panel-header>
-      <div class="width-20">
-        {{message.timeStamp | date: dateFormat}}
-      </div>
-      <div class="width-20">
-
-      </div>
-      <div class="width-20">
-        {{message.owner.userName}}
-      </div>
-      <div  class="width-40">
-        {{ (message.msg.length>20)? (message.msg | slice:0:20)+'..':(message.msg) }}
-      </div>
-    </mat-expansion-panel-header>
-
-    {{ message.msg }}
-    <div (click)="replyMessage(message)"><mat-icon>reply</mat-icon></div>
-  </mat-expansion-panel>
-</mat-accordion>
+<section>
+    <div class="content comn-cls">
+        <div class="container">
+            <div class="row">
+                <div class="card">
+                    <div class="copy">
+                            <ul class="inbox-table" *ngIf="messages.length>0">
+                                    <li class="tth">
+                                        <div class="outer">
+                                            <div class="th th1">Date</div>
+                                            <div class="th th2">Service</div>
+                                            <div class="th th3">Name</div>
+                                            <div class="th th4">Message</div>
+                                            <div class="th th5"></div>
+                                        </div>
+                                    </li>
+                                   
+                                    <li class="ttd" *ngFor="let message of messages; let i = index">
+                                        <div class="outer" (click)="showMsg(i)">
+                                            <div class="td td1">
+                                                <div class="label">Date</div>
+                                                <div class="result">{{message.timeStamp | date: dateFormat}}</div>
+                                            </div>
+                                            <div class="td td2">
+                                                <div class="label">Service</div>
+                                                <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
+                                            </div>
+                                            <div class="td td3">
+                                                <div class="label">Name</div>
+                                                <div class="result">{{message.owner.userName}}</div>
+                                            </div>
+                                            <div class="td td4">
+                                                <div class="label">Message</div>
+                                                <div class="result">{{ (message.msg.length>20)? (message.msg | slice:0:20)+'..':(message.msg) }}
+                                                </div>
+                                            </div>
+                                            <div class="td td5">
+                                                <div class="result"><!-- <span class="icon-delete"></span>--></div>
+                                            </div>
+                                        </div>
+                                        <div class="details" [class.show]="selectedMsg==i" *ngIf="selectedMsg==i">
+                                            <div class="result">
+                                                {{message.msg}}
+                                            </div>
+                                            <div class="action">
+                                                <span class="icon-reply" (click)="replyMessage(message)">
+                                                    Reply
+                                                </span>
+                                                <span class="icon-close" (click)="closeMsg()">
+                                                    Close
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="actions">
+                                            <span class="icon-delete"> Delete Message</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                               <div class="no-msg" *ngIf="messages.length==0">No Messages exists</div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>    
+</section>
