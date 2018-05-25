@@ -1,0 +1,97 @@
+<h1 class="mat-dialog-title">View Bill
+     <button #queue mat-dialog-close class="modal_close">
+         <i class="fa fa-window-close" aria-hidden="true"></i>
+     </button>
+   </h1>
+   <mat-dialog-content>
+      <p>Bill Id / No : {{bill_data.id}}</p><br>
+       <p>Customer name : {{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.firstName}}</p><br>
+       <p>Date : {{today  | date: dateFormat}}</p><br>
+       <p>Time : {{today  | date: timeFormat}}</p><br>
+
+
+       <div class="table-outer q-tbl">
+           <table class="table">
+               <thead>
+                 <th>Service/Item</th>
+                 <th>Quantity</th>
+                 <th>StdRate</th>
+                 <th>Discount</th>
+                 <th>Coupon</th>
+                 <th>Tax-GST</th>
+                 <th>Tax-CGST</th>
+                 <th>Net-Rate</th>
+               </thead>
+               <tbody>
+                 <tr *ngFor="let service of bill_data.service; let i = index">
+                   <td>{{service.serviceName}}</td>
+                   <td>{{service.quantity}}</td>
+                   <td>{{service.price | currency:'INR':'symbol':'.2-2'}}</td>
+                   <td>
+                      {{service.discountValue | currency:'INR':'symbol':'.2-2'}}
+                   </td>
+                   <td>
+                      {{service.couponValue | currency:'INR':'symbol':'.2-2'}}
+                   </td>
+                   <td>{{service.GSTpercentage/2}} %</td>
+                   <td>{{service.GSTpercentage/2 }} %</td>
+                   <td>{{service.netRate | currency:'INR':'symbol':'.2-2'}}</td>
+                </tr>
+                <tr *ngFor="let item of bill_data.items; let i = index">
+                    <td>{{item.itemName}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
+                    <td>
+                       {{item.discountValue | currency:'INR':'symbol':'.2-2'}}
+                    </td>
+                    <td>
+                       {{item.couponValue | currency:'INR':'symbol':'.2-2'}}
+                    </td>
+                    <td>{{item.GSTpercentage/2}} %</td>
+                    <td>{{item.GSTpercentage/2 }} %</td>
+                    <td>{{item.netRate | currency:'INR':'symbol':'.2-2'}}</td>
+                 </tr>
+               </tbody>
+           </table>
+
+           <div class="table-outer q-tbl">
+              <p>Pre-Payment Logs</p>
+              <p *ngIf="pre_payment_log.length == 0">
+                No pre payments found
+              </p>
+
+              <table class="table" *ngIf="pre_payment_log.length > 0">
+                <thead>
+                  <th>Date and Time</th>
+                  <th>Amount</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let payment of pre_payment_log; let i = index">
+                    <td>{{payment.paymentOn}}</td>
+                    <td>{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+           </div>
+
+           <p>Total : {{bill_data.netRate | currency:'INR':'symbol':'.2-2'}}</p>
+
+           <p>Discount: {{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</p>
+           <p>Coupon: {{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</p>
+           <p>Pre-paid amount: {{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</p>
+           <p>Amount to pay : {{bill_data.netTotal | currency:'INR':'symbol':'.2-2'}}</p>
+       </div>
+   </mat-dialog-content>
+   <mat-dialog-actions>
+      <button  type="button" mat-button class="cs-btn bt1"
+      *ngIf="bill_data.billStatus == 'New'" (click)="updateBill()">Update Bill</button>
+      <button  type="button" mat-button class="cs-btn bt1"
+      *ngIf="bill_data.billStatus == 'New'" (click)="settleBill()">Settle Bill</button>
+      <button  type="button" mat-button class="cs-btn bt1"
+      *ngIf="bill_data.billStatus == 'Settled'" >Print Bill</button>
+      <button  type="button" mat-button class="cs-btn bt1"
+      *ngIf="bill_data.billStatus == 'Settled'" (click)="emailBill()">Email Bill</button>
+      <button  type="button" mat-button class="cs-btn bt1"
+      *ngIf="bill_data.billStatus == 'Settled'">Accept Payment</button>
+     </mat-dialog-actions>
+

@@ -52,7 +52,7 @@ import { AddProviderWaitlistServiceComponent } from './components/add-provider-w
 import { ProviderLicenseUsageComponent } from './components/provider-license-usage/provider-license-usage.component';
 import { AddProviderWaitlistQueuesComponent } from './components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 import { ProviderInboxComponent } from './components/provider-inbox/provider-inbox.component';
-import { ProviderInboxReplyComponent } from './components/provider-inbox-reply/provider-inbox-reply.component';
+// import { ProviderInboxReplyComponent } from './components/provider-inbox-reply/provider-inbox-reply.component';
 import { AddProviderInboxMessageComponent } from './components/add-provider-inbox-message/add-provider-inbox-message.component';
 import { AdjustQueueDelayComponent } from './components/adjust-queue-delay/adjust-queue-delay.component';
 import { AddProviderCheckinComponent } from './components/add-provider-checkin/add-provider-checkin.component';
@@ -78,6 +78,7 @@ import { ProviderWaitlistCheckInDetailComponent } from './components/provider-wa
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { ProviderPaymentSettingsComponent  } from './components/provider-payment-settings/provider-payment-settings.component';
+import { ViewProviderWaitlistCheckInBillComponent } from './components/view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -179,7 +180,8 @@ import 'mousetrap';
         ProviderWaitlistCheckInDetailComponent,
         AddProviderWaitlistCheckInProviderNoteComponent,
         AddProviderWaitlistCheckInBillComponent,
-        ProviderPaymentSettingsComponent
+        ProviderPaymentSettingsComponent,
+        ViewProviderWaitlistCheckInBillComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -216,7 +218,8 @@ import 'mousetrap';
       ProviderAuditLogComponent,
       ProviderInvoiceDetailComponent,
       AddProviderWaitlistCheckInProviderNoteComponent,
-      AddProviderWaitlistCheckInBillComponent
+      AddProviderWaitlistCheckInBillComponent,
+      ViewProviderWaitlistCheckInBillComponent
     ],
     providers: [
        AuthGuardProviderHome,

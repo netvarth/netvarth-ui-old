@@ -609,5 +609,25 @@ export class ProviderServices {
     const url = 'provider/payment/tax/' + tax;
     return this.servicemeta.httpPut(url);
   }
+  settleWaitlistBill(uuid) {
+    const url = 'provider/bill/settlebill/' + uuid ;
+    return this.servicemeta.httpPut(url);
+  }
+
+  emailWaitlistBill(uuid) {
+    const url = 'provider/bill/email/' + uuid ;
+    return this.servicemeta.httpPost(url);
+  }
+
+
+  getProviderTax() {
+    const url = 'provider/payment/tax' ;
+    return this.servicemeta.httpGet(url);
+  }
+
+  getProviderWaitlistHistroy(uuid) {
+    const url = 'provider/waitlist/states/' + uuid ;
+    return this.servicemeta.httpGet(url);
+  }
 
 }

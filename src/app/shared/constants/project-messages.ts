@@ -130,5 +130,13 @@ export const Messages = {
   'PAYSETTING_ACTYPE': 'Account type in required',
   'PAYSETTING_TAXPER': 'Please enter a valid tax percentage',
   'PAYSETTING_SAV_TAXPER': 'Tax percentage updated successfully',
-  'PAYSETTING_CONTACTADMIN': 'Contact Administrator to verify your payment modes'
+  'PAYSETTING_CONTACTADMIN': 'Contact Administrator to verify your payment modes',
+  // Provider Bill
+
+  'PROVIDER_BILL_CREATE' : 'Bill created successfully',
+  'PROVIDER_BILL_UPDATE' : 'Bill updated successfully',
+  'PROVIDER_BILL_SETTLE' : 'Bill settled successfully',
+  'PROVIDER_BILL_EMAIL' : 'Bill emailed successfully',
+
+
 };

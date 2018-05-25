@@ -15,6 +15,7 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlis
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { AddProviderWaitlistCheckInBillComponent } from '../add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
+import { ViewProviderWaitlistCheckInBillComponent } from '../view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
 
 import { SharedServices } from '../../../shared/services/shared-services';
 
@@ -266,6 +267,7 @@ export class ProviderHomeComponent implements OnInit {
   selectedQueue(selected_queue) {
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
+    this.getTodayCheckinCount();
   }
 
   getFutureCheckinCount() {
@@ -473,7 +475,7 @@ export class ProviderHomeComponent implements OnInit {
     let status: any = this.status_type ;
 
     switch (type) {
-      case 'all' : status = ['checkedIn', 'arrived'];
+      case 'all' : status = ['checkedIn', 'arrived', 'prepaymentPending'];
     }
 
     this.check_in_filtered_list = this.check_in_list.filter(
@@ -533,7 +535,7 @@ export class ProviderHomeComponent implements OnInit {
         this.provider_shared_functions.openSnackBar (msg);
       },
       error => {
-        this.provider_shared_functions.openSnackBar (error.error);
+        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -632,18 +634,55 @@ export class ProviderHomeComponent implements OnInit {
     });
   }
 
-  addEditBill(checkin) {
+  getWaitlistBill(checkin) {
+    this.provider_services.getWaitlistBill(checkin.ynwUuid)
+    .subscribe(
+      data => {
+        this.viewBill(checkin , data);
+      },
+      error => {
+        console.log(error);
+        if (error.status === 422 && this.time_type === 1) {
+          this.addEditBill(checkin , null);
+        } else {
+          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        }
+      },
+      () => {
+      }
+    );
+  }
+
+  addEditBill(checkin, bill_data) {
     const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
       data: {
-        checkin: checkin
+        checkin: checkin,
+        bill_data: bill_data
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
+      }
+    });
+  }
+
+  viewBill(checkin, bill_data) {
+    const dialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'width-100'],
+      data: {
+        checkin: checkin,
+        bill_data: bill_data
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'updateBill') {
+        this.addEditBill(checkin, bill_data);
       }
     });
   }
