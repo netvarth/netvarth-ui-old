@@ -40,7 +40,7 @@ export class ProviderAuditLogComponent implements OnInit {
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-
+          this.load_complete = 1;
         },
       () => {
         this.load_complete = 1;

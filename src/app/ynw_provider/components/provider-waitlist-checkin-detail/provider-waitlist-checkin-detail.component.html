@@ -8,38 +8,61 @@
     <section>
         <div class="content loc-list">
             <div class="container" *ngIf="waitlist_data">
-                <div class="row">
-                    <div class="card p0">
-                        <div class="copy locd">
-                                <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                                    <div class="cl1">
+              <div class="row">
+                  <div class="card p0">
+                      <div class="copy locd">
+                              <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                  <div class="cl1">
 
-                                      <p>Name:
-                                        {{waitlist_data.consumer.userProfile.firstName}} {{waitlist_data.consumer.userProfile.lastName}}
-                                      </p>
+                                    <p>Name:
+                                      {{waitlist_data.consumer.userProfile.firstName}} {{waitlist_data.consumer.userProfile.lastName}}
+                                    </p>
 
-                                      <p>Date:
-                                        {{waitlist_data.date}}
-                                      </p>
+                                    <p>Date:
+                                      {{waitlist_data.date}}
+                                    </p>
 
-                                      <p>Location:
-                                          {{waitlist_data.queue.location.place}}
-                                      </p>
+                                    <p>Location:
+                                        {{waitlist_data.queue.location.place}}
+                                    </p>
 
-                                      <p>Service:
-                                          {{waitlist_data.service.name}}
-                                      </p>
+                                    <p>Service:
+                                        {{waitlist_data.service.name}}
+                                    </p>
 
-                                      <p>Queue:
-                                          {{waitlist_data.queue.id}}
-                                      </p>
+                                    <p>Queue:
+                                        {{waitlist_data.queue.id}}
+                                    </p>
 
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                </div>
+                                  </div>
+                              </div>
+                          </div>
+                  </div>
               </div>
+            </div>
+
+
+            <p>Check In History</p>
+
+            <div *ngFor="let history of waitlist_history">
+              <span>Time: {{ history.time}}</span>
+              <span>Status: {{ history.waitlistStatus}}</span>
+            </div>
+            <div *ngIf="waitlist_history.length == 0"> No history found</div>
+
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Provider Notes
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div *ngFor="let note of waitlist_notes">
+                  <p>Message: {{note.note}}</p>
+                  <p>time: {{note.timeStamp | date: dateFormat}}</p>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
 
               <button (click)="addProviderNote(waitlist_data)" >Add Provider note</button>
 

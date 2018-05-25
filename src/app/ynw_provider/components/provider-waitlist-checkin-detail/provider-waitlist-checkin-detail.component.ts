@@ -25,6 +25,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     waitlist_id = null;
     waitlist_data;
     waitlist_notes: any = [];
+    waitlist_history: any = [];
     breadcrumbs_init = [
         {
           title: 'Dashboard',
@@ -37,6 +38,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     api_success = null;
     api_error = null;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
     constructor(
         private provider_services: ProviderServices,
@@ -70,6 +72,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
           data => {
             this.waitlist_data = data;
             this.getWaitlistNotes();
+            this.getCheckInHistory(this.waitlist_data.ynwUuid);
           },
           error => {
             this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -83,6 +86,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
       .subscribe(
           data => {
             this.waitlist_notes = data;
+          },
+          error => {
+           //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          }
+      );
+    }
+
+    getCheckInHistory(uuid) {
+      this.provider_services.getProviderWaitlistHistroy(uuid)
+      .subscribe(
+          data => {
+            this.waitlist_history = data;
           },
           error => {
            //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});

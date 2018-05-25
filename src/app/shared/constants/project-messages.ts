@@ -112,7 +112,14 @@ export const Messages = {
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to "[status]"',
   'PROVIDER_NOTE_ADD': 'Note added successfully',
 
-  'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip'
+  'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
+
+  // Provider Bill
+
+  'PROVIDER_BILL_CREATE' : 'Bill created successfully',
+  'PROVIDER_BILL_UPDATE' : 'Bill updated successfully',
+  'PROVIDER_BILL_SETTLE' : 'Bill settled successfully',
+  'PROVIDER_BILL_EMAIL' : 'Bill emailed successfully',
 
 
 };

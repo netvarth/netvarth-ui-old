@@ -29,7 +29,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   api_error = null;
   api_success = null;
   checkin = null;
-  bill_data = null;
+  bill_data: any = [];
   message = '';
   source = 'add';
   today = new Date();
@@ -60,6 +60,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     'total': 0
   };
   bill_load_complete = 0;
+  item_service_tax: any = 0;
+  pre_payment_log: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
@@ -71,6 +73,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     ) {
         this.checkin = this.data.checkin || null;
+        this.bill_data = this.data.bill_data || [];
         console.log(this.checkin);
         if ( !this.checkin) {
           setTimeout(() => {
@@ -78,10 +81,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             }, projectConstants.TIMEOUT_DELAY);
         }
 
-        this.getWaitlistBill();
+        // this.getWaitlistBill();
+
         this.getPrePaymentDetails();
         this.getCoupons();
         this.getDiscounts();
+        this.getTaxDetails();
         this.getServiceList();
         this.getItemsList();
 
@@ -125,7 +130,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         this.bill_data = data;
       },
       error => {
-        if (error.status === '422') { this.bill_data = null; }
+        if (error.status === 422) { this.bill_data = []; }
+        this.bill_load_complete = 1;
       },
       () => {
         this.bill_load_complete = 1;
@@ -141,6 +147,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         const services = this.services.map((ob) => ob.name );
 
         this.itemServicesGroup[0]['values'] = services;
+
+        if (this.bill_data.service && this.bill_data.service.length > 0) {
+          this.addSavedServiceToCart(this.bill_data.service);
+        }
+
       },
       error => {
 
@@ -180,6 +191,22 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         const items = this.items.map((ob) => ob.displayName );
         console.log(items);
         this.itemServicesGroup[1]['values'] = items;
+
+        if (this.bill_data.items && this.bill_data.items.length > 0) {
+          this.addSavedItemToCart(this.bill_data.items);
+        }
+      },
+      error => {
+
+      }
+    );
+  }
+
+  getTaxDetails() {
+    this.provider_services.getProviderTax()
+    .subscribe(
+      data => {
+        this.item_service_tax = data;
       },
       error => {
 
@@ -202,9 +229,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   addCartItem(item, type) {
     console.log(item);
+    this.pushCartItem(item, type);
+    this.calculateItemTotal(this.cart.items.length - 1);
+    this.calculateTotal();
+  }
+
+  pushCartItem(item, type) {
+
     let selected_item = {
     };
-
+    const tax = (item.taxable) ? this.item_service_tax : 0;
     switch (type) {
       case 'Services' :  selected_item = {
                                 'name' : item.name,
@@ -214,7 +248,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
                                 'subtotal': item.totalAmount,
                                 'discount': null,
                                 'coupon': null,
-                                'type' : type
+                                'gst_percentage': tax / 2,
+                                'cgst_percentage': tax / 2,
+                                'type' : type,
+                                'taxable':  item.taxable
                               };
                               break;
 
@@ -226,14 +263,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
                                 'subtotal': item.price,
                                 'discount': null,
                                 'coupon': null,
-                                'type' : type
+                                'gst_percentage': tax / 2,
+                                'cgst_percentage': tax / 2,
+                                'type' : type,
+                                'taxable':  item.taxable
                               };
                               break;
     }
 
     this.cart.items.push(selected_item);
     this.selectedItems.push(item);
-    this.calculateTotal();
+
   }
 
   deleteCartItem(i) {
@@ -265,6 +305,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.cart['items'][i]['subtotal'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
     this.reduceItemDiscount(i);
     this.reduceItemCoupon(i);
+    if (this.cart['items'][i]['taxable']) {
+
+      this.applyTax(i);
+    }
     this.calculateTotal();
   }
 
@@ -290,6 +334,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   }
 
+  applyTax(i) {
+    this.cart['items'][i].subtotal = this.cart['items'][i].subtotal + (this.cart['items'][i].subtotal * this.item_service_tax / 100);
+  }
+
   discountChange() {
     this.calculateTotal();
   }
@@ -311,6 +359,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.cart.total = total;
     this.reduceDiscount();
     this.reduceCoupon();
+    this.reducePrePaidAmount();
 
   }
 
@@ -349,6 +398,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
 
+  reducePrePaidAmount() {
+    let pre_total = 0;
+    for (const pay of this.pre_payment_log) {
+      pre_total = pre_total + pay.amount;
+    }
+    this.cart.total = this.cart.total - pre_total;
+    this.cart.total = (this.cart.total > 0) ? this.cart.total : 0;
+  }
+
   submitBill() {
 
     const item_array = [];
@@ -357,10 +415,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     for ( const item of  this.cart.items) {
       const ob = {
         'reason': '',
-        'price': item.subtotal,
+        'price': item.price,
         'quantity': item.quantity,
       };
-      console.log(ob);
+      console.log(item, ob);
       if (item.coupon != null) {
         ob['couponId'] = this.coupons[item.coupon]['id'];
       }
@@ -402,11 +460,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       post_data['discountId'] = this.discounts[this.cart.discount]['id'];
     }
 
-    if (this.bill_data == null) {
+    if (this.bill_data.length === 0) {
       this.provider_services.createWaitlistBill(post_data)
       .subscribe(
         data => {
           console.log(data);
+          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_CREATE);
+          this.dialogRef.close('reloadlist');
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -417,6 +477,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          if (data) {
+            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_UPDATE);
+            this.dialogRef.close('reloadlist');
+          }
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -429,12 +493,68 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
     .subscribe(
       data => {
-        console.log(data);
+        this.pre_payment_log = data;
       },
       error => {
 
       }
     );
+  }
+
+  addSavedServiceToCart(services) {
+
+    for (const service of services) {
+      this.services
+      .map((ob) => {
+
+        if (ob.id === service.serviceId) {
+          this.pushCartItem(ob, 'Services');
+          this.cart.items[this.cart.items.length - 1] ['quantity']  = service.quantity;
+          if (service.discountId !== 0) {
+            this.cart.items[this.cart.items.length - 1] ['discount'] = service.discountId;
+          }
+
+          if (service.couponId !== 0) {
+            this.cart.items[this.cart.items.length - 1] ['coupon'] = service.discountId;
+          }
+          this.calculateItemTotal(this.cart.items.length - 1);
+        }
+
+      });
+
+    }
+
+    this.calculateTotal();
+
+
+  }
+
+  addSavedItemToCart(items) {
+
+    for (const item of items) {
+      this.items
+      .map((ob) => {
+
+        if (ob.itemId === item.itemId) {
+          this.pushCartItem(ob, 'Items');
+          this.cart.items[this.cart.items.length - 1] ['quantity']  = item.quantity;
+          if (item.discountId !== 0) {
+            this.cart.items[this.cart.items.length - 1] ['discount'] = item.discountId;
+          }
+
+          if (item.couponId !== 0) {
+            this.cart.items[this.cart.items.length - 1] ['coupon'] = item.discountId;
+          }
+          this.calculateItemTotal(this.cart.items.length - 1);
+        }
+
+      });
+
+    }
+
+    this.calculateTotal();
+
+
   }
 
 }

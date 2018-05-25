@@ -1,4 +1,6 @@
- <h1 class="mat-dialog-title">Bill
+ <h1 class="mat-dialog-title">
+   <ng-container *ngIf="bill_load_complete && bill_data == null">New </ng-container>
+    Bill
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -46,7 +48,7 @@
                     <mat-form-field>
                       <mat-select [(ngModel)]="cart.items[i].discount" [ngModelOptions]="{standalone: true}"
                       (selectionChange)="itemDiscountChange(i)">
-                        <mat-option value="null">Select one </mat-option>
+                        <mat-option [value]="null">Select one </mat-option>
                         <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
                           {{ discount.name }}
                         </mat-option>
@@ -60,7 +62,7 @@
                           <mat-form-field>
                              <mat-select [(ngModel)]="cart.items[i].coupon" [ngModelOptions]="{standalone: true}"
                               (selectionChange)="itemCouponChange(i)">
-                                <mat-option value="null">Select one </mat-option>
+                                <mat-option [value]="null">Select one </mat-option>
                                 <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
                                   {{ coupon.name }}
                                 </mat-option>
@@ -68,8 +70,8 @@
                             </mat-form-field>
                       </div>
                   </td>
-                  <td></td>
-                  <td></td>
+                  <td>{{item.gst_percentage}} %</td>
+                  <td>{{item.cgst_percentage}} %</td>
                   <td>{{item.subtotal | currency:'INR':'symbol':'.2-2'}}</td>
                   <td><button (click)="deleteCartItem(i)">Delete</button></td>
                 </tr>
@@ -77,6 +79,24 @@
                   <td colspan="9">No items added</td>
                 </tr>
               </tbody>
+          </table>
+
+          <p>Pre-Payment Logs</p>
+          <p *ngIf="pre_payment_log.length == 0">
+            No pre payments found
+          </p>
+
+          <table class="table" *ngIf="pre_payment_log.length > 0">
+            <thead>
+              <th>Date and Time</th>
+              <th>Amount</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let payment of pre_payment_log; let i = index">
+                <td>{{payment.paymentOn}}</td>
+                <td>{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
+              </tr>
+            </tbody>
           </table>
 
           <p>Total : {{cart.sub_total | currency:'INR':'symbol':'.2-2'}}</p>

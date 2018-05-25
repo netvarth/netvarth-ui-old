@@ -76,6 +76,7 @@ import { ProviderInvoiceDetailComponent } from './components/provider-invoice-de
 import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
+import { ViewProviderWaitlistCheckInBillComponent } from './components/view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -176,7 +177,8 @@ import 'mousetrap';
         ProviderInvoiceDetailComponent,
         ProviderWaitlistCheckInDetailComponent,
         AddProviderWaitlistCheckInProviderNoteComponent,
-        AddProviderWaitlistCheckInBillComponent
+        AddProviderWaitlistCheckInBillComponent,
+        ViewProviderWaitlistCheckInBillComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -213,7 +215,8 @@ import 'mousetrap';
       ProviderAuditLogComponent,
       ProviderInvoiceDetailComponent,
       AddProviderWaitlistCheckInProviderNoteComponent,
-      AddProviderWaitlistCheckInBillComponent
+      AddProviderWaitlistCheckInBillComponent,
+      ViewProviderWaitlistCheckInBillComponent
     ],
     providers: [
        AuthGuardProviderHome,

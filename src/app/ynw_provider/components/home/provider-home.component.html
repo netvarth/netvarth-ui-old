@@ -197,13 +197,25 @@
                                           <i class="icon-play"></i>Done
                                         </span>
 
-                                        <span class="start cs-btn bt7" (click)="addEditBill(checkin)"
-                                        *ngIf="checkin.waitlistStatus != 'checkedIn' &&
-                                        checkin.waitlistStatus != 'cancelled'">
-                                          <i class="icon-play"></i>Bill
-                                        </span>
-
                                     </ng-container>
+
+                                    <span class="start cs-btn bt7" (click)="getWaitlistBill(checkin)"
+                                    *ngIf="checkin.waitlistStatus != 'checkedIn' &&
+                                    checkin.waitlistStatus != 'cancelled'">
+                                     <ng-container *ngIf="checkin.billStatus== 'New'">
+                                        <i class="icon-play" ></i>Bill
+                                     </ng-container>
+                                     <ng-container *ngIf="checkin.billStatus== 'Settled'">
+                                        <i class="icon-play" ></i>View Bill
+                                     </ng-container>
+
+                                    </span>
+
+                                    <span class="start cs-btn bt7"
+                                    *ngIf="checkin.billStatus== 'Settled'">
+                                     <i class="icon-play" ></i>Accept payment
+
+                                    </span>
 
                                     </td>
                                   <td data-title="Payment Status" class="payment">
