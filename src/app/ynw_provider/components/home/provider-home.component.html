@@ -202,10 +202,10 @@
                                     <span class="start cs-btn bt7" (click)="getWaitlistBill(checkin)"
                                     *ngIf="checkin.waitlistStatus != 'checkedIn' &&
                                     checkin.waitlistStatus != 'cancelled'">
-                                     <ng-container *ngIf="checkin.billStatus== 'New'">
+                                     <ng-container>
                                         <i class="icon-play" ></i>Bill
                                      </ng-container>
-                                     <ng-container *ngIf="checkin.billStatus== 'Settled'">
+                                     <ng-container *ngIf="checkin.billStatus== 'Settled' || checkin.billStatus== 'New'">
                                         <i class="icon-play" ></i>View Bill
                                      </ng-container>
 
