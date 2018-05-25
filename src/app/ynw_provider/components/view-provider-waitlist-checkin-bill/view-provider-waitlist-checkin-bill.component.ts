@@ -34,6 +34,7 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
   discounts: any = [];
   items: any = [];
   pre_payment_log: any = [];
+  close_msg = 'close';
 
   selectedItems = [];
   cart = {
@@ -64,11 +65,16 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
             }, projectConstants.TIMEOUT_DELAY);
         }
 
-        this.getWaitlistBill();
+
+        this.bill_load_complete = 1;
+        this.getPrePaymentDetails();
 
      }
 
   ngOnInit() {
+    this.dialogRef.backdropClick().subscribe(result => {
+      this.dialogRef.close(this.close_msg);
+    });
   }
 
 
@@ -79,9 +85,18 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
     this.api_success = null;
   }
 
-  getWaitlistBill() {
-    this.bill_load_complete = 1;
-    this.getPrePaymentDetails();
+  getWaitlistBill(checkin) {
+    this.provider_services.getWaitlistBill(checkin.ynwUuid)
+    .subscribe(
+      data => {
+        this.bill_data = data;
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+      }
+    );
   }
 
   getPrePaymentDetails() {
@@ -104,6 +119,8 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.settleWaitlistBill(this.checkin.ynwUuid)
     .subscribe(
       data => {
+        this.getWaitlistBill(this.checkin);
+        this.close_msg = 'reloadlist';
         this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_SETTLE);
       },
       error => {

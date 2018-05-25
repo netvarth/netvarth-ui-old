@@ -603,7 +603,7 @@ export class ProviderHomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
+        this.reloadAPIs();
       }
     });
   }
@@ -612,6 +612,7 @@ export class ProviderHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
+      disableClose: true,
       data: {
         checkin: checkin,
         bill_data: bill_data
@@ -619,8 +620,11 @@ export class ProviderHomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       if (result === 'updateBill') {
         this.addEditBill(checkin, bill_data);
+      } else if (result === 'reloadlist') {
+        this.reloadAPIs();
       }
     });
   }
