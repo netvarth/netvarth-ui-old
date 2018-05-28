@@ -410,14 +410,14 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
 
-  getProviderInbox() {
-    return this.servicemeta.httpGet('provider/communications');
-  }
+  // getProviderInbox() {
+  //   return this.servicemeta.httpGet('provider/communications');
+  // }
 
-  postProviderInboxReply(consumerId, data) {
-    const url = 'provider/communications/' + consumerId;
-    return this.servicemeta.httpPost(url, data);
-  }
+  // postProviderInboxReply(consumerId, data) {
+  //   const url = 'provider/communications/' + consumerId;
+  //   return this.servicemeta.httpPost(url, data);
+  // }
 
   getWaitlistFutureCount(filter = {}) {
     const url = 'provider/waitlist/future/count/';

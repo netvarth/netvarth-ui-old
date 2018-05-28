@@ -10,6 +10,7 @@ import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profil
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
+import { InboxModule } from '../shared/modules/inbox/inbox.module';
 
 import { WaitlistDetailResolver } from './services/waitlist-detail-resolver.service';
 const routes: Routes = [
@@ -22,7 +23,11 @@ const routes: Routes = [
     { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin]},
-    { path: 'members', component: MembersComponent}
+    { path: 'members', component: MembersComponent},
+    {
+      path: 'inbox',
+      loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
+    },
   ]}
 ];
 

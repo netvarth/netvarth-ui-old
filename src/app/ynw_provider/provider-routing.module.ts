@@ -17,7 +17,7 @@ import { ProviderSettingsComponent } from './components/provider-settings/provid
 import { ProviderBprofileSearchComponent } from './components/provider-bprofile-search/provider-bprofile-search.component';
 import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fields.component';
 import { ProviderWaitlistComponent } from './components/provider-waitlist/provider-waitlist.component';
-import { ProviderInboxComponent } from './components/provider-inbox/provider-inbox.component';
+// import { ProviderInboxComponent } from './components/provider-inbox/provider-inbox.component';
 import { ProviderbWizardComponent } from './components/provider-bwizard/provider-bwizard.component';
 import { ProviderWaitlistLocationsComponent } from './components/provider-waitlist-locations/provider-waitlist-locations.component';
 import { ProviderWaitlistLocationDetailComponent } from './components/provider-waitlist-location-detail/provider-waitlist-location-detail.component';
@@ -132,11 +132,11 @@ const routes: Routes = [
     { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin]},
-    // { path: 'tour', component: ProviderTourComponent },
-   // { path: 'profile', component: ProviderProfileComponent },
     { path: 'members', component: ProviderMembersComponent },
-    // { path: 'fields', component: VirtualFieldsComponent},
-    { path: 'inbox', component: ProviderInboxComponent },
+    {
+      path: 'inbox',
+      loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
+    },
     { path: 'bwizard', component: ProviderbWizardComponent }
   ]}
 ];

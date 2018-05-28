@@ -51,9 +51,9 @@ import { AddProviderWaitlistLocationsComponent } from './components/add-provider
 import { AddProviderWaitlistServiceComponent } from './components/add-provider-waitlist-service/add-provider-waitlist-service.component';
 import { ProviderLicenseUsageComponent } from './components/provider-license-usage/provider-license-usage.component';
 import { AddProviderWaitlistQueuesComponent } from './components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
-import { ProviderInboxComponent } from './components/provider-inbox/provider-inbox.component';
+// import { ProviderInboxComponent } from './components/provider-inbox/provider-inbox.component';
 // import { ProviderInboxReplyComponent } from './components/provider-inbox-reply/provider-inbox-reply.component';
-import { AddProviderInboxMessageComponent } from './components/add-provider-inbox-message/add-provider-inbox-message.component';
+// import { AddProviderInboxMessageComponent } from './components/add-provider-inbox-message/add-provider-inbox-message.component';
 import { AdjustQueueDelayComponent } from './components/adjust-queue-delay/adjust-queue-delay.component';
 import { AddProviderCheckinComponent } from './components/add-provider-checkin/add-provider-checkin.component';
 import { GoogleMapComponent } from './components/googlemap/googlemap.component';
@@ -156,8 +156,8 @@ import 'mousetrap';
         ProviderLicenseUsageComponent,
         AddProviderWaitlistServiceComponent,
         AddProviderWaitlistQueuesComponent,
-        ProviderInboxComponent,
-        AddProviderInboxMessageComponent,
+        // ProviderInboxComponent,
+        // AddProviderInboxMessageComponent,
         AdjustQueueDelayComponent,
         AddProviderCheckinComponent,
         GoogleMapComponent,
@@ -199,7 +199,7 @@ import 'mousetrap';
       AddProviderWaitlistServiceComponent,
       ProviderLicenseUsageComponent,
       AddProviderWaitlistQueuesComponent,
-      AddProviderInboxMessageComponent,
+      // AddProviderInboxMessageComponent,
       AdjustQueueDelayComponent,
       AddProviderCheckinComponent,
       GoogleMapComponent,

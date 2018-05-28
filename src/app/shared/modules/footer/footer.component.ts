@@ -26,4 +26,8 @@ export class FooterComponent implements OnInit {
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     public router: Router) {}
+
+    showAuditlog() {
+      
+    }
 }

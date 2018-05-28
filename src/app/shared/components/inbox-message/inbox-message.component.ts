@@ -3,27 +3,27 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
-import { ProviderServices } from '../../services/provider-services.service';
+import { InboxServices } from '../../modules/inbox/inbox.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
-  selector: 'app-provider-inbox-message',
-  templateUrl: './add-provider-inbox-message.component.html'
+  selector: 'app-inbox-message',
+  templateUrl: './inbox-message.component.html'
 })
-export class AddProviderInboxMessageComponent implements OnInit {
+export class InboxMessageComponent implements OnInit {
 
   amForm: FormGroup;
   api_error = null;
   api_success = null;
   message = [];
   constructor(
-    public dialogRef: MatDialogRef<AddProviderInboxMessageComponent>,
+    public dialogRef: MatDialogRef<InboxMessageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices,
+    public inbox_services: InboxServices,
     public sharedfunctionObj: SharedFunctions,
 
     ) {
@@ -44,11 +44,12 @@ export class AddProviderInboxMessageComponent implements OnInit {
     });
   }
   onSubmit (form_data) {
+  const usertype = this.sharedfunctionObj.isBusinessOwner('returntyp');
    const post_data =  {
       'communicationMessage': form_data.message
     };
-    this.provider_services.postProviderInboxReply(this.message['owner']['id'],
-    post_data)
+    this.inbox_services.postInboxReply(this.message['owner']['id'],
+    post_data, usertype)
     .subscribe(
       data => {
         this.api_success = Messages.MESSAGE_SENT;

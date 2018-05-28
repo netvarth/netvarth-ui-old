@@ -207,7 +207,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigate([usertype, 'change-email']);
       break;
       case 'inbox':
-        this.router.navigate(['provider', 'inbox']);
+        this.router.navigate([usertype, 'inbox']);
       break;
     }
   }
