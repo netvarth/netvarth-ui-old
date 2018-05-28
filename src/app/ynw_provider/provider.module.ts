@@ -79,6 +79,7 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from './components/ad
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { ProviderPaymentSettingsComponent  } from './components/provider-payment-settings/provider-payment-settings.component';
 import { ViewProviderWaitlistCheckInBillComponent } from './components/view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
+import { ProviderWaitlistCheckInPaymentComponent } from './components/provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -181,7 +182,8 @@ import 'mousetrap';
         AddProviderWaitlistCheckInProviderNoteComponent,
         AddProviderWaitlistCheckInBillComponent,
         ProviderPaymentSettingsComponent,
-        ViewProviderWaitlistCheckInBillComponent
+        ViewProviderWaitlistCheckInBillComponent,
+        ProviderWaitlistCheckInPaymentComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -219,7 +221,8 @@ import 'mousetrap';
       ProviderInvoiceDetailComponent,
       AddProviderWaitlistCheckInProviderNoteComponent,
       AddProviderWaitlistCheckInBillComponent,
-      ViewProviderWaitlistCheckInBillComponent
+      ViewProviderWaitlistCheckInBillComponent,
+      ProviderWaitlistCheckInPaymentComponent
     ],
     providers: [
        AuthGuardProviderHome,

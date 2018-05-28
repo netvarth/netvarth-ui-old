@@ -137,6 +137,7 @@ export const Messages = {
   'PROVIDER_BILL_UPDATE' : 'Bill updated successfully',
   'PROVIDER_BILL_SETTLE' : 'Bill settled successfully',
   'PROVIDER_BILL_EMAIL' : 'Bill emailed successfully',
+  'PROVIDER_BILL_PAYMENT': 'Payment completed successfully'
 
 
 };

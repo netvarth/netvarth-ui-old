@@ -16,6 +16,7 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitli
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { AddProviderWaitlistCheckInBillComponent } from '../add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { ViewProviderWaitlistCheckInBillComponent } from '../view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
+import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
 
 import { SharedServices } from '../../../shared/services/shared-services';
 
@@ -634,11 +635,15 @@ export class ProviderHomeComponent implements OnInit {
     });
   }
 
-  getWaitlistBill(checkin) {
+  getWaitlistBill(checkin, type = 'bill') {
     this.provider_services.getWaitlistBill(checkin.ynwUuid)
     .subscribe(
       data => {
-        this.viewBill(checkin , data);
+        if (type === 'bill') {
+          this.viewBill(checkin , data);
+        } else {
+          this.makePayment(checkin , data);
+        }
       },
       error => {
         console.log(error);
@@ -687,7 +692,25 @@ export class ProviderHomeComponent implements OnInit {
         this.addEditBill(checkin, bill_data);
       } else if (result === 'reloadlist') {
         this.reloadAPIs();
+      } else if ( result === 'makePayment') {
+        this.makePayment(checkin, bill_data);
       }
+    });
+  }
+
+  makePayment(checkin, bill_data) {
+    const dialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'width-100'],
+      disableClose: true,
+      data: {
+        checkin: checkin,
+        bill_data: bill_data
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.reloadAPIs();
     });
   }
 

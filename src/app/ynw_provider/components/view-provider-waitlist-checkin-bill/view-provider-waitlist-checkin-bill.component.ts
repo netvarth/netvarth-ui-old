@@ -115,6 +115,10 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
     this.dialogRef.close('updateBill');
   }
 
+  makePayment() {
+    this.dialogRef.close('makePayment');
+  }
+
   settleBill() {
     this.provider_services.settleWaitlistBill(this.checkin.ynwUuid)
     .subscribe(
