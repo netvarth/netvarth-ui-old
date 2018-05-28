@@ -201,7 +201,8 @@
 
                                     <span class="start cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
                                     *ngIf="checkin.waitlistStatus != 'checkedIn' &&
-                                    checkin.waitlistStatus != 'cancelled'">
+                                    checkin.waitlistStatus != 'cancelled' && time_type !== 2
+                                    && ((time_type === 0 && checkin.billStatus) || time_type != 0)">
                                      <ng-container *ngIf="!checkin.billStatus">
                                         <i class="icon-play" ></i>New Bill
                                      </ng-container>
@@ -310,82 +311,3 @@
       </div>
   </div>
 </section>
-
-
-
-<!-- <h1>Provider Home</h1>
-<app-header [headerTitle]="'Provider Header'"></app-header>
-<a routerLink="/provider/settings/bprofile-search" routerLinkActive="active">Go to Bprofile</a>
-<a routerLink="/provider/bwizard" routerLinkActive="active">Go to Bwizard</a>
-<div class="p-20">
-  <div class="float-right  mr-20">
-    <button (click)="goCheckIn()">Check In</button>
-    <button (click)="goPatient()" >Patient</button></div>
-</div>
-
-<div class="p-20">
-    <div class="float-left">
-      Location
-      <select (change)="onChangeLocationSelect($event)">
-        <option *ngFor="let location of locations; let i = index" [value]="i"
-        [selected]="selected_location && selected_location.id == location.id">
-          {{location.place}}
-        </option>
-      </select>
-    </div>
-    <div class="float-right  mr-20">
-      <button (click)="setTimeType(1)" [ngClass]="{'selected': time_type==1}">Today ({{today_waitlist_count}})</button>
-      <button (click)="setTimeType(2)" [ngClass]="{'selected': time_type==2}">Future  ({{future_waitlist_count}})</button>
-      <button (click)="setTimeType(0)" [ngClass]="{'selected': time_type==0}">Histroy ({{histroy_waitlist_count}})</button>
-    </div>
-</div>
-
-<div class="clr-both p-20">
-  <div  *ngFor="let queue of queues" class="float-left mr-20 ">
-    <button [ngClass]="{'selected': (selected_queue && queue.id == selected_queue.id )}" (click)="selectedQueue(queue)">
-      {{queue.name}}
-    </button>
-  </div>
-</div>
-
-<div  class="clr-both p-20">
-
-  <div class="clr-both"*ngIf="time_type == 1">
-    <div class="float-left" >
-      <button>Check-Ins</button>
-      <button>Started</button>
-      <button>Completed</button>
-    </div>
-    <div class="float-right  mr-20">
-      <button (click)="showAdjustDelay()">Adjust Delay</button>
-    </div>
-  </div>
-
-  <div class="clr-both mt-20">
-    <table class="table">
-      <thead>
-        <th>Token</th>
-        <th>Name / Approx Service Time</th>
-        <th>Service</th>
-        <th>Notes Patient</th>
-        <th>Bill</th>
-        <th>Change Check-In Status
-          Cancel | Message | Arrived | Status
-
-        </th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let checkin of check_in_list">
-
-          <td>{{checkin.token}}</td>
-          <td>{{checkin.service.name}}</td>
-          <td>{{checkin.service.name}}</td>
-          <td></td>
-          <td></td>
-          <td>{{checkin.waitlistStatus}}</td>
-
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div> -->
