@@ -84,14 +84,16 @@
    </mat-dialog-content>
    <mat-dialog-actions>
       <button  type="button" mat-button class="cs-btn bt1"
-      *ngIf="bill_data.billStatus == 'New'" (click)="updateBill()">Update Bill</button>
+      *ngIf="bill_data.billPaymentStatus!='FullyPaid' &&
+        bill_data.billStatus == 'New'" (click)="updateBill()">Update Bill</button>
       <button  type="button" mat-button class="cs-btn bt1"
-      *ngIf="bill_data.billStatus == 'New'" (click)="settleBill()">Settle Bill</button>
+      *ngIf="bill_data.billStatus != 'Settled'" (click)="settleBill()">Settle Bill</button>
       <button  type="button" mat-button class="cs-btn bt1"
       *ngIf="bill_data.billStatus == 'Settled'" >Print Bill</button>
       <button  type="button" mat-button class="cs-btn bt1"
       *ngIf="bill_data.billStatus == 'Settled'" (click)="emailBill()">Email Bill</button>
       <button  type="button" mat-button class="cs-btn bt1"
-      *ngIf="bill_data.billStatus == 'Settled'">Accept Payment</button>
+      *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
+      && bill_data.billStatus != 'Settled'" (click)="makePayment()">Accept Payment</button>
      </mat-dialog-actions>
 

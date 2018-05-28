@@ -630,4 +630,9 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
 
+  acceptPayment(data) {
+    const url = 'provider/bill/acceptPayment';
+    return this.servicemeta.httpPost(url, data);
+  }
+
 }

@@ -199,7 +199,7 @@
 
                                     </ng-container>
 
-                                    <span class="start cs-btn bt7" (click)="getWaitlistBill(checkin)"
+                                    <span class="start cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
                                     *ngIf="checkin.waitlistStatus != 'checkedIn' &&
                                     checkin.waitlistStatus != 'cancelled'">
                                      <ng-container *ngIf="!checkin.billStatus">
@@ -212,7 +212,7 @@
                                     </span>
 
                                     <span class="start cs-btn bt7"
-                                    *ngIf="checkin.billStatus== 'Settled'">
+                                    *ngIf="checkin.billStatus== 'New' && checkin.billPaymentStatus!='FullyPaid' " (click)="getWaitlistBill(checkin, 'payment')">
                                      <i class="icon-play" ></i>Accept payment
 
                                     </span>
