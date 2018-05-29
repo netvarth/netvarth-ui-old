@@ -34,6 +34,7 @@ import { ChangePasswordComponent } from '../shared/modules/change-password/chang
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
 import { ProviderPaymentSettingsComponent } from './components/provider-payment-settings/provider-payment-settings.component';
+import { ProviderSystemAuditLogComponent } from './components/provider-system-auditlogs/provider-system-auditlogs.component';
 const routes: Routes = [
     {path: '', component: ProviderComponent, children: [
 
@@ -108,10 +109,10 @@ const routes: Routes = [
       {
         path: 'license',
         children: [
-          {
-            path: 'auditlog',
-            component: ProviderAuditLogComponent
-          },
+          // {
+          //   path: 'auditlog',
+          //   component: ProviderAuditLogComponent
+          // },
           {
             path: 'paymenthistory',
             component: ProviderPaymentHistoryComponent
@@ -136,6 +137,9 @@ const routes: Routes = [
     {
       path: 'inbox',
       loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
+    },
+    {
+      path: 'auditlog', component: ProviderSystemAuditLogComponent
     },
     { path: 'bwizard', component: ProviderbWizardComponent }
   ]}

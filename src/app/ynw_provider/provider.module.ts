@@ -80,6 +80,7 @@ import { AddProviderWaitlistCheckInBillComponent } from './components/add-provid
 import { ProviderPaymentSettingsComponent  } from './components/provider-payment-settings/provider-payment-settings.component';
 import { ViewProviderWaitlistCheckInBillComponent } from './components/view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
 import { ProviderWaitlistCheckInPaymentComponent } from './components/provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
+import { ProviderSystemAuditLogComponent  } from './components/provider-system-auditlogs/provider-system-auditlogs.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -183,7 +184,8 @@ import 'mousetrap';
         AddProviderWaitlistCheckInBillComponent,
         ProviderPaymentSettingsComponent,
         ViewProviderWaitlistCheckInBillComponent,
-        ProviderWaitlistCheckInPaymentComponent
+        ProviderWaitlistCheckInPaymentComponent,
+        ProviderSystemAuditLogComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [

@@ -1,0 +1,94 @@
+<section>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  </section>
+  <section>
+    <div class="content comn-cls">
+        <div class="container">
+            <div class="logfil-outer">
+                <div class="form-group">
+                    <label class="col-form-label">Category</label>
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="logSelcat" (change)="selectCategory()">
+                            <mat-option value = ""> -- Select --</mat-option>
+                            <mat-option *ngFor="let cat of logCategories; let i = index" [value]="i">
+                            {{ cat.displayName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label">Sub Category</label>
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="logSelsubcat">
+                            <mat-option value = ""> -- Select --</mat-option>
+                            <mat-option *ngFor="let scat of logSubcategories" [value]="scat.name">
+                            {{ scat.dispName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Action</label>
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="logSelaction">
+                            <mat-option value = ""> -- Select --</mat-option>
+                            <mat-option *ngFor="let act of logActions" [value]="act.name">
+                            {{ act.dispName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                        <label for="reason" class="col-form-label">Select Date</label>
+                         <div class="pickerouter">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker> 
+                          <input class="form-control" name="datepicker" [(ngModel)]="logSeldate" type="text" matInput [matDatepicker]="picker">
+                        </div> 
+                </div>
+                <div class='actions-div'>
+                    <button type="button"  class="cs-btn bt1 mat-button" (click)="do_search()">Search</button>
+                </div>
+            </div>
+
+            <div class="audit" *ngIf="showAuditDiv">
+                <div class="table-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="action-head">
+                                <div class="th th1">Action</div>
+                                <div class="th th2">User Name</div>
+                                <div class="th th3">Date</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="copy" *ngIf="auditStatus==1">
+                            <div class="pubs">
+                                    <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
+                            </div>
+                            </div>
+                            <div class="notfound" *ngIf="auditStatus==2">
+                                   Sorry! No logs found
+                            </div>
+                            <ul class="stp-list" *ngIf="auditStatus==3">
+                                <ng-container *ngFor="let log of auditlog_details; let i=index">
+                                <li *ngIf="i < auditCnt">
+                                    <div class="td td1">{{log.Action}}</div>
+                                    <div class="td td2">{{log.userName}}</div>
+                                    <div class="td td3">{{log.date | date:dateFormat}}</div>
+                                </li>
+                                </ng-container>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

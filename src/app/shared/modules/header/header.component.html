@@ -74,7 +74,7 @@
                     <div class="tc1 ml-auto">
                         <div class="topsignouter">
                         <span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> <span *ngIf="!shared_functions.checkLogin()">/</span> <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span>
-                        <!-- <ng-container *ngIf="ctype=='consumer'">
+                        <ng-container *ngIf="ctype=='consumer'">
                             <div class="bnps" *ngIf="headercls=='dashb'">
                                 <div class="inbx" (click)="inboxiconClick()">
                                     <div class="ot-bx">
@@ -84,7 +84,7 @@
                                 </div>
             
                             </div>
-                        </ng-container> -->
+                        </ng-container>
                         <div class="lgmem" *ngIf="ctype=='consumer'">
                                 <span class="lgin">
                                 {{userdet.userName}}

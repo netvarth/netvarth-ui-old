@@ -100,6 +100,7 @@ header {
                 
                 .inbx {
                     padding-left: 30px;
+                    cursor: pointer;
 
                     .ot-bx {
                         width: 50px;
@@ -220,25 +221,322 @@ header {
     }    
 }
 
+/* ##### Overlay for System Tray Panel ****/
+.overlay {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: rgba(0,0,0,.3);
+    left: 50%;
+    margin-left: -150px;
+    bottom: 0;
+    z-index: 9900;
+    @include border-radius(500px);
+    visibility: hidden;
+    @include transition(all 200ms);
+    
+    &.show {
+        visibility: visible;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        margin-left: 0;
+        border-radius: 0px;
+    }
+    
+}
+/* ##### Ends Overlay for System Tray Panel ****/
+
 footer {
     &.dashb {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        z-index: 9999;
+
         .sect1, .sect2 {
             display: none;
         }
         .sect3 {
             background: $footer-darkgray;
-            height: 40px;
-            padding: 10px 0;
             display: block;
-            /*position: fixed;*/
             width: 100%;
             bottom: 0;
             z-index: 2018;
+            font-size: .875rem;
+            position: relative;
+            z-index: 300;
             
-            p {
-                margin: 0;
-                font-size: .75rem;
-                opacity: .6;
+            .copy-text {
+                display: flex;
+                align-items: center;
+                
+                p {
+                    margin: 0;
+                    font-size: .75rem;
+                    opacity: .6;
+                }
+            }
+            
+            .spt-controls {
+                .list {
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    
+                    li {
+                        list-style: none;
+                        @include transition(all 300ms);
+                        
+                        [class^="icon-"], [class*=" icon-"] {
+                            font-size: 1.5rem;
+                            padding: 10px 15px;
+                            display: block;
+                            height: 50px;
+                            cursor: pointer;
+                        }
+                        
+                        &:hover {
+                            background: rgba(255,255,255,.1);
+                        }
+                        
+                        &.active {
+                            [class^="icon-"], [class*=" icon-"] {
+                                background: $white;
+                                color: $linkblue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .stp-box {
+            background: $white;
+            color: $linkblack;
+            padding-top: 15px;
+            @include box-shadow(0, -20px, 30px, rgba(0,0,0,.1) !important);
+            max-height: 400px;
+            @include transition(all 300ms);
+            margin-bottom: -80px;
+            visibility: hidden;
+            
+            .stp-header {
+                margin-bottom: 15px;
+                .outer {
+                    display: flex;
+                    width: 100%;
+                    
+                    .left {
+                        h1 {
+                            font-size: 1.125rem;
+                            margin-bottom: 0;
+                            font-weight: 600;
+                            color: $linkblue;
+                        }
+                    }
+                    
+                    .right {
+                        margin-left: auto;
+                        
+                        .stp-action {
+                            margin: 0;
+                            padding: 0;
+                            display: flex;
+                            
+                            li {
+                                list-style: none;
+                                font-weight: 700;
+                                font-size: .75rem;
+                                margin-left: 20px;
+                                
+                                .icon-minimize {
+                                    position: relative;
+                                    display: flex;
+                                    align-items: center;
+                                    cursor: pointer;
+                                    @include transition(all 300ms);
+                                    
+                                    &:before {
+                                        position: absolute;
+                                        content: "";
+                                        height: 1px;
+                                        width: 12px;
+                                        @include border-radius(10px);
+                                        background: $linkblack;
+                                    }
+                                    
+                                    &:hover {
+                                        &:before {
+                                            background: $linkblue;
+                                        }
+                                    }
+                                }
+                                
+                                [class^="icon-"], [class*=" icon-"] {
+                                    @include transition(all 300ms);
+                                    cursor: pointer;
+                                    width: 25px;
+                                    height: 25px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    padding: 5px;
+                                    background: $cc-body;
+                                    @include border-radius(25px);
+                                    
+                                    &:before {
+                                        font-size: .800rem;
+                                    }
+                                    
+                                    &:hover {
+                                        &:before {
+                                            color: $linkblue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .audit, .alerts, .o-checkin {
+                .table-header {
+                    .action-head {
+                        display: flex;
+                        width: 100%;
+
+                        .th {
+                            font-weight: 600;
+                            color: $linkblack;
+                            padding: 10px;
+                            font-size: .875rem;
+                            border-bottom: 2px solid $cc-body;
+
+                            &.th1 {
+                                width: 50%;
+                            }
+                            &.th2 {
+                                width: 30%;
+                            }
+                            &.th3 {
+                                width: 20%;
+                            }
+                        }
+                    }
+                }
+
+                .table-body {
+                    .stp-list {
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                        overflow: auto;
+                        max-height: 400px;
+
+                        li {
+                            list-style: none;
+                            display: flex;
+
+                            .td {
+                                padding: 10px;
+                                font-size: .875rem;
+                                font-weight: 500;
+
+                                &.td1 {
+                                    width: 50%;
+                                }
+                                &.td2 {
+                                    width: 30%;
+                                }
+                                &.td3 {
+                                    width: 20%;
+                                }
+                            }
+
+                            &:nth-child(even) {
+                                background: $cc-body;
+                            }
+                        }
+                    }
+                    
+                    .copy {
+                        font-size: .875rem;
+                        padding: 0px 0 15px 0;
+                        width: 100%;
+                        font-weight: 500;
+                        
+                        .checkin-bx {
+                            display: flex;
+                            
+                            .ttle {
+                                color: $linkblack;
+                                padding-right: 20px;
+
+                                .sts {
+                                    display: block;
+                                    color: $cc-mediumgray;
+                                }
+                            }
+                            .ctrl {
+                                color: $cc-mediumgray;
+                            }
+
+                            .lnk {
+                                color: $linkblue;
+                                cursor: pointer;
+                                @include anchor-border;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .alerts {
+                .table-body {
+                    .stp-list {
+                        li {
+                            border-bottom: 1px solid $cc-body;
+                            .td {
+                                font-weight: 500;
+                                
+                                &.td1 {
+                                    width: 93%;
+                                }
+                                &.td2 {
+                                    width: 7%;
+                                    text-align: right;
+                                    
+                                    .icon-delete {
+                                        cursor: pointer;
+                                        
+                                        &:hover {
+                                            color: $cc-red;
+                                        }
+                                    }
+                                }
+                                
+                                &.success {
+                                    color: $green;
+                                }
+                                &.warning {
+                                    color: $cc-warning;
+                                }
+                                &.error {
+                                    color: $cc-red;
+                                }
+                            }
+                            &:nth-child(even) {
+                                background: $white;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &.show {
+                margin-bottom: 0;
+                visibility: visible;
             }
         }
     }
@@ -3700,7 +3998,7 @@ footer {
                                         }
                                     }
                                     &.payment {
-                                        text-align: center;
+                                        text-align: left;
                                         
                                         .paid-n, .paid-h, .paid-f {
                                             padding: 2px 4px;
@@ -3754,7 +4052,7 @@ footer {
                                         }
                                     }
                                     &.message {
-                                        text-align: center;
+                                        text-align: left;
                                         
                                         span {
                                             cursor: pointer;
@@ -3776,6 +4074,15 @@ footer {
                                             
                                             &:hover {
                                                 color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                    &.mre {
+                                        .mbt {
+                                            top: -10px;
+                                            
+                                            &:before {
+                                                display: none;
                                             }
                                         }
                                     }
@@ -4263,7 +4570,7 @@ footer {
                     .lc11, .lc22, .lc33 {
                         .lcd {
                             display: flex;
-                            margin-bottom: 15px;
+                            padding: 15px 0;
                             
                             .ttle {
                                 font-weight: 600;
@@ -4293,6 +4600,10 @@ footer {
 
                                         .pkg {
                                             font-weight: 600;
+                                            
+                                            .icon-question {
+                                                font-size: .75rem;
+                                            }
                                         }
                                         .warning {
                                             color: $cc-red;
@@ -4365,18 +4676,21 @@ footer {
                                         padding: 15px 20px;
                                         font-weight: 500;
                                         @include border-radius(50px);
-                                        width: 300px;
                                         text-align: center;
                                         font-size: .75rem;
                                         cursor: pointer;
                                         margin: 0 auto;
+                                        position: relative;
+                                        color: $green;
 
                                         .icon-tick {
-                                            margin-right: 10px;
                                             font-size: 1.2rem;
-                                            display: inline-block;
                                             width: 20px;
                                             height: 20px;
+                                            position: absolute;
+                                            left: -10px;
+                                            top: 50%;
+                                            margin-top: -10px;
 
                                             &:before {
                                                 width: 20px;
@@ -4421,6 +4735,8 @@ footer {
                     }
                     .lc22 {
                         margin-bottom: 20px;
+                        padding-top: 15px;
+                        border-top: 1px solid $cc-body;
                         
                         @include respond-to(ynw-767) {
                             border-bottom: 1px solid $cc-ash;
@@ -4569,6 +4885,8 @@ footer {
                     
                     .lc33 {
                         margin-bottom: 20px;
+                        padding-top: 15px;
+                        border-top: 1px solid $cc-body;
                         
                         .lcd {                            
                             &.lc3-1 {
@@ -4589,13 +4907,27 @@ footer {
                             &.lc3-2 {
                                 border-bottom: 1px solid $cc-body;
                                 padding-bottom: 10px;
+                                @include transition(all 300ms);
                                 
                                 &:last-child {
                                     border: none;
                                 }
+                                
+                                &:hover {
+                                    color: $linkblack;
+                                }
                             }
                             .ctrl {
                                 margin-left: auto;
+                                
+                                .icon-delete {
+                                    @include transition(all 300ms);
+                                    cursor: pointer;
+                                    
+                                    &:hover {
+                                        color: $cc-red;
+                                    }
+                                }
                             }
                             .ttle {
                                 color: $cc-gray;
@@ -4605,7 +4937,7 @@ footer {
                     .lc11, .lc22, .lc33 {
                         .lcd {
                             display: flex;
-                            margin-bottom: 15px;
+                            padding: 15px 0;
                             
                             .ttle {
                                 font-weight: 600;
@@ -4904,7 +5236,6 @@ footer {
 .content {
     .card {
         margin-bottom: 50px;
-        padding: 0;
         
         .copy {
             .inbox-table {

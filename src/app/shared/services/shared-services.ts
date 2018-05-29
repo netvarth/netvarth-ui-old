@@ -243,4 +243,41 @@ export class SharedServices {
     editMember(data) {
       return this.servicemeta.httpPut('consumer/familyMember', data);
     }
+    getAuditLogs(cat, subcat, action, sdate) {
+      let param = '';
+      if (cat !== '') {
+        param += 'category-eq=' + cat;
+      }
+      if (subcat !== '') {
+        if (param !== '') {
+          param += '&';
+        }
+        param += 'subCategory-eq=' + subcat;
+      }
+      if (action !== '') {
+        if (param !== '') {
+          param += '&';
+        }
+        param += 'action-eq=' + action;
+      }
+      if (sdate !== '') {
+        if (param !== '') {
+          param += '&';
+        }
+        param += 'date-eq=' + sdate;
+      }
+      if (param !== '') {
+        param = '?' + param;
+      }
+      const url = 'provider/auditlogs' + param;
+      return this.servicemeta.httpGet(url);
+    }
+    setAcceptOnlineCheckin(status) {
+      const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;
+      return this.servicemeta.httpPut(url);
+    }
+    getWaitlistMgr() {
+      const url = 'provider/settings/waitlistMgr/';
+      return this.servicemeta.httpGet(url);
+    }
 }

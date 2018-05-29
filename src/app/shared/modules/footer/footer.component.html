@@ -1,9 +1,7 @@
-<footer [class.dashb]="shared_functions.checkLogin()">
-    <section class="sect1">
+<div class="overlay" [class.show]="showbottompopup" (click)="closebottompopup()"></div>
+<footer [class.dashb]="ctype=='provider'" [class.consumer]="ctype!='provider'">
+    <section class="sect1" *ngIf="ctype!='provider'">
         <div class="container">
-                <!-- <div class="row">
-                    <span (click)="showAuditlog()">Audit log</span> <span (click)="showAlert()">Alerts</span> <span (click)="showCheckinED()">Check in Enable/Disable</span> <span (click)="showLicense()">License</span>
-                </div> -->
         <div class="row">
             <div class="col-12">
                 <div class="lgo-btm">
@@ -43,7 +41,7 @@
     </div>    
     </section>
     
-    <section class="sect2">
+    <!-- <section class="sect2">
         <div class="container">
             <div class="row">
             <div class="col-12">
@@ -58,10 +56,163 @@
             </div>
         </div>
         </div>
-    </section>
-    <section class="sect3">
+    </section> -->
+    <div class="bottompopup" *ngIf="showbottompopup1" style="height:300px; width:auto; background-color: #000; color: #fff;border: solid 1px #FF0000; scroll-behavior:auto;">
+        <div (click)="maximizeAuditlog()">Maximize</div><div (click)="closebottompopup()">Close</div>
+        <div class="log-outer">
+            <div class="log-headouter">
+                <div class="loghead1">Action</div>
+                <div class="loghead2">User Name</div>
+                <div class="loghead3">Date</div>
+            </div>
+            <div class="log-rowouter" *ngFor="let log of auditlog; let i=index">
+                <ng-container *ngIf="i < auditCnt">
+                <div class="logtd1">{{log.Action}}</div>
+                <div class="logtd2">{{log.userName}}</div>
+                <div class="logtd3">{{log.date | date:dateFormat}}</div>
+            </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="stp-box" [class.show]="showbottompopup">
+            <div class="stp-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="outer">
+                            <div class="left">
+                                <h1>{{bottomdivHeader}}</h1>
+                            </div>
+                            <div class="right">
+                                <ul class="stp-action">
+                                    <li><span class="icon-minimize" (click)="closebottompopup()"></span></li>
+                                    <li><span class="icon-maximize" (click)="handleMaximize()"></span></li>
+                                    <li><span class="icon-close" (click)="closebottompopup()"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!--Audit Log-->
+            <div class="audit" *ngIf="showAuditDiv">
+                <div class="table-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="action-head">
+                                <div class="th th1">Action</div>
+                                <div class="th th2">User Name</div>
+                                <div class="th th3">Date</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="copy" *ngIf="auditStatus==1">
+                            <div class="pubs">
+                                    <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
+                            </div>
+                            </div>
+                            <div class="notfound" *ngIf="auditStatus==2">
+                                   Sorry! No logs found
+                            </div>
+                            <ul class="stp-list" *ngIf="auditStatus==3">
+                                <ng-container *ngFor="let log of auditlog; let i=index">
+                                <li *ngIf="i < auditCnt">
+                                    <div class="td td1">{{log.Action}}</div>
+                                    <div class="td td2">{{log.userName}}</div>
+                                    <div class="td td3">{{log.date | date:dateFormat}}</div>
+                                </li>
+                                </ng-container>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- // Audit Log-->
+            
+            <!--Alerts-->
+            <div class="alerts" *ngIf="showAlertDiv">
+                <div class="table-body">
+                    <div class="container">
+                        <div class="row">
+                                <div class="copy" *ngIf="alertStatus==1">
+                                <div class="pubs" >
+                                        <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
+                                </div>
+                                </div>
+                            <ul class="stp-list">
+                                <li>
+                                    <div class="td td1 success">Success! This alert box indicates a scuccess message.</div>
+                                    <div class="td td2"><span class="icon-delete"></span></div>
+                                </li>
+                                <li>
+                                    <div class="td td1 warning">Warning! This alert box indicates a warning message.</div>
+                                    <div class="td td2"><span class="icon-delete"></span></div>
+                                </li>
+                                <li>
+                                    <div class="td td1 error">Error! This alert box indicates a error message.</div>
+                                    <div class="td td2"><span class="icon-delete"></span></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- // Alerts-->
+            
+            <!--Online Chekin-->
+            <div class="o-checkin" *ngIf="showCheckinDiv">
+                <div class="table-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="copy">
+                                <div class="pubs" *ngIf="checkinStatus==1">
+                                        <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
+                                </div>
+                                <div class="notfound" *ngIf="checkinStatus==2">
+                                        Sorry! settings not found
+                                 </div>
+                                <div class="checkin-bx" *ngIf="checkinStatus==3">
+                                    <span class="ttle">
+                                        Accept Online Check-in 
+                                        <mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns" (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle><span class="sts" [class.active]="waitlistmgr.onlineCheckIns">{{(waitlistmgr.onlineCheckIns)? 'On': 'Off'}}</span>
+                                    </span>
+                                    <span class="ctrl"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- // Online Checkin-->
+        </div>
+
+
+
+    <!-- <section class="sect3" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
         <div class="container">
-             <div class="row"><p>&copy; {{curyear}} youneverwait</p></div>
-         </div>        
+                <div class="row">
+                        <span (click)="showAuditlog()">Audit log</span> || <span (click)="showAlert()">Alerts</span> ||  <span (click)="showCheckinED()">Check in Enable/Disable</span> || <span (click)="showLicense()">License</span>
+                </div>
+         </div>
+     </section> -->
+     <section class="sect3">
+             <div class="container">
+                 <div class="row">
+                    <div class="copy-text">&copy; {{curyear}} youneverwait</div>
+                    <div class="spt-controls ml-auto" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
+                        <ul class="list">
+                            <li [class.active]="selOpt=='Audit'" (click)="showAuditlog()"><span class="icon-audit" matTooltip="Audit Log"></span></li>
+                            <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="icon-bell" matTooltip="Alerts"></span></li>
+                            <li [class.active]="selOpt=='Checkin'" (click)="showCheckinED()"><span class="icon-checkin" matTooltip="Enable / Disable Check-in"></span></li>
+                            <li [class.active]="selOpt=='License'" (click)="showLicense()"><span class="icon-license" matTooltip="License Details"></span></li>
+                        </ul>
+                    </div>
+                </div>
+             </div>        
      </section>
 </footer>

@@ -187,4 +187,61 @@ REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 10,
 DISTANCE_STATE: 100, // in Km
 DISTANCE_CITY: 25, // in Km
 DISTANCE_AREA: 5, // in Km
+AUDITLOG_CNT: 10,
+AUDITLOG_FILTER_CATEGORIES: [
+  {
+    name: 'SETTINGS',
+    displayName: 'Settings',
+    subcat: [
+                    { name: 'LOCATION', dispName: 'Location'},
+                    { name: 'QUEUE', dispName: 'Queue' },
+                    { name: 'SERVICE', dispName: 'Service' },
+                    { name: 'HOLIDAY', dispName: 'Holiday' },
+                    { name: 'WAITLIST', dispName: 'Waitlist' },
+                    { name: 'PAYMENT', dispName: 'Payment' },
+                    { name: 'COUPOUN', dispName: 'Coupon' },
+                    { name: 'ITEM', dispName: 'Item' },
+                    { name: 'ADDWORD', dispName: 'Adword' },
+                    { name: 'TAX', dispName: 'Tax' },
+                    { name: 'DISCOUNT', dispName: 'Discount' },
+                    { name: 'ACCOUNT', dispName: 'Account' }
+                   ]
+  },
+  {
+    name: 'WAITLIST',
+    displayName: 'Waitlist',
+    subcat: [
+                    { name: 'CANCEL', dispName: 'Cancel'},
+                    { name: 'WAIT', dispName: 'Wait' },
+                    { name: 'DELAY', dispName: 'Delay' },
+                    { name: 'WAITLIST', dispName: 'Waitlist' },
+                    { name: 'RATING', dispName: 'Rating' },
+                    { name: 'BILL', dispName: 'Bill' }
+                   ]
+  },
+  {
+    name: 'LICENSE',
+    displayName: 'License',
+    subcat: [
+                    { name: 'ADDON', dispName: 'Addon'},
+                    { name: 'INVOICE', dispName: 'Invoice' },
+                    { name: 'LICENSE', dispName: 'License' }
+                   ]
+  },
+  {
+    name: 'SIGNUP',
+    displayName: 'Signup',
+    subcat: [
+                    { name: 'PROVIDER', dispName: 'Provider'},
+                    { name: 'CONSUMER', dispName: 'Consumer' }
+                   ]
+  }
+],
+AUDITLOG_FILTER_ACTION: [
+  { name: 'ADD', dispName: 'Add'},
+  { name: 'DELETE', dispName: 'Delete'},
+  { name: 'EDIT', dispName: 'Edit'},
+  { name: 'COPY', dispName: 'Copy'},
+  { name: 'VIEW', dispName: 'View'}
+]
 };
