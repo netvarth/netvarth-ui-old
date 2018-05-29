@@ -73,7 +73,7 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from './components/provid
 import { AddProviderItemImageComponent } from './components/add-provider-item-image/add-provider-item-image.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './components/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ProviderPaymentHistoryComponent } from './components/provider-payment-history/provider-payment-history.component';
-import { ProviderInvoiceDetailComponent } from './components/provider-invoice-detail/provider-invoice-detail.component';
+import {ProviderLicenceInvoiceDetailComponent } from './components/provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
@@ -178,7 +178,7 @@ import 'mousetrap';
         AddProviderItemImageComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         ProviderPaymentHistoryComponent,
-        ProviderInvoiceDetailComponent,
+        ProviderLicenceInvoiceDetailComponent,
         ProviderWaitlistCheckInDetailComponent,
         AddProviderWaitlistCheckInProviderNoteComponent,
         AddProviderWaitlistCheckInBillComponent,
@@ -220,7 +220,7 @@ import 'mousetrap';
       AddProviderItemImageComponent,
       ProviderWaitlistCheckInConsumerNoteComponent,
       ProviderAuditLogComponent,
-      ProviderInvoiceDetailComponent,
+      ProviderLicenceInvoiceDetailComponent,
       AddProviderWaitlistCheckInProviderNoteComponent,
       AddProviderWaitlistCheckInBillComponent,
       ViewProviderWaitlistCheckInBillComponent,

@@ -14,7 +14,7 @@ import { AddproviderAddonComponent  } from '../add-provider-addons/add-provider-
 import { ProviderLicenseUsageComponent } from '../provider-license-usage/provider-license-usage.component';
 import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditlogs.component';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { ProviderInvoiceDetailComponent } from '../provider-invoice-detail/provider-invoice-detail.component';
+import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 
 @Component({
   selector: 'app-provider-license',
@@ -276,7 +276,7 @@ export class ProviderLicenseComponent implements OnInit {
 
   getInvoice (invoice) {
     // console.log(invoice.ynwUuid);
-    const dialogRef = this.dialog.open(ProviderInvoiceDetailComponent, {
+    const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
       width: '50%',
       data: {
         invoice : invoice

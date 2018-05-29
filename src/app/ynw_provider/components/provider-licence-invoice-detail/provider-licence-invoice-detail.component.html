@@ -1,0 +1,47 @@
+<h1 class="mat-dialog-title">Invoice<button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<mat-dialog-content>
+  <!-- <p>Account Id: {{invoice.accountId}}</p> -->
+  <p>Provider Name: {{invoice.accountId}}</p>
+  <p>Service Period: {{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date: dateFormat}} </p>
+<p>Services</p>
+<div *ngIf="invoice.licensePkgDetails">
+    <p>{{invoice.licensePkgDetails.licenseName}}</p>
+    <p>{{invoice.licensePkgDetails.amount  | currency:'INR':'symbol':'.2-2'}}</p>
+</div>
+
+<div *ngFor="let addon of invoice.addonDetails">
+    <p>{{addon.addonName}}</p>
+    <p>{{addon.amount  | currency:'INR':'symbol':'.2-2'}}</p>
+</div>
+
+<ng-container *ngIf="payment_status === 'NotPaid'">
+  <p>Payment Options</p>
+  <div>
+    <mat-radio-group [(ngModel)]="pay_data.paymentMode">
+      <mat-radio-button [value]="opt.name"
+      *ngFor="let opt of payment_modes">{{opt.Displayname}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+</ng-container>
+
+<p>Amount to pay: {{invoice.amount | currency:'INR':'symbol':'.2-2'}}</p>
+
+<div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button  type="button" mat-button class="cs-btn bt1"
+    [disabled]="!pay_data.amount || pay_data.amount == 0 ||
+    !pay_data.uuid || !pay_data.paymentMode"
+    (click)="makePayment()">Make Payment</button>
+     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+</mat-dialog-actions>
+
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+   errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>
+
+

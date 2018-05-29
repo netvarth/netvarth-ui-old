@@ -635,4 +635,8 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
 
+  providerPayment(data) {
+    const url = 'provider/payment';
+    return this.servicemeta.httpPost(url, data);
+  }
 }

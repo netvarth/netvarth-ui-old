@@ -59,6 +59,8 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
         this.checkin = this.data.checkin || null;
         this.bill_data = this.data.bill_data || null;
 
+        this.bill_data.amount_to_pay = this.bill_data.netRate -  this.bill_data.totalAmountPaid;
+
         if ( !this.checkin) {
           setTimeout(() => {
             this.dialogRef.close('error');

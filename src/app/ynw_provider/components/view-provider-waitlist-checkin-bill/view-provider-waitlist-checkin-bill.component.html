@@ -55,9 +55,9 @@
            </table>
 
            <div class="table-outer q-tbl">
-              <p>Pre-Payment Logs</p>
+              <p>Payment Logs</p>
               <p *ngIf="pre_payment_log.length == 0">
-                No pre payments found
+                No  payments found
               </p>
 
               <table class="table" *ngIf="pre_payment_log.length > 0">
@@ -79,7 +79,7 @@
            <p>Discount: {{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</p>
            <p>Coupon: {{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</p>
            <p>Pre-paid amount: {{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</p>
-           <p>Amount to pay : {{bill_data.netTotal | currency:'INR':'symbol':'.2-2'}}</p>
+           <p>Amount to pay : {{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</p>
        </div>
    </mat-dialog-content>
    <mat-dialog-actions>
