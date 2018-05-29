@@ -9,7 +9,7 @@ import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { ProviderInvoiceDetailComponent } from '../provider-invoice-detail/provider-invoice-detail.component';
+import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 
 
 @Component({
@@ -66,7 +66,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
 
     getInvoice (invoice) {
       // console.log(invoice.ynwUuid);
-      const dialogRef = this.dialog.open(ProviderInvoiceDetailComponent, {
+      const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
         width: '50%',
         data: {
           invoice : invoice
