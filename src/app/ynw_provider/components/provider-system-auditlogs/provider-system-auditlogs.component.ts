@@ -29,7 +29,16 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     logSelsubcat = '';
     logSeldate = '';
     logSelaction = '';
+
+    holdlogSelcat = '';
+    holdlogSelsubcat = '';
+    holdlogSeldate = '';
+    holdlogSelaction = '';
+
     auditStatus = 1;
+    startpageval;
+    totalCnt;
+    perPage = projectConstants.PERPAGING_LIMIT;
     breadcrumbs = [
         {
           title: 'Dashboard',
@@ -47,28 +56,58 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-      // this.getAuditList();
+      const tday = new Date();
+      const mon = (tday.getMonth() < 9) ? '0' + tday.getMonth() : tday.getMonth();
+      const today = tday.getFullYear() + '-' + mon + '-' + tday.getDate();
+      const today1 =  tday.getDate() + '-' + mon + '-' + tday.getFullYear();
       this.logSelcat = '';
       this.logSelsubcat = '';
-      this.logSeldate = '';
+      this.logSeldate = today1;
       this.logSelaction = '';
       this.setSubcategories('');
-      this.auditStatus = 3;
+      this.auditStatus = 4;
+      console.log(this.logSeldate);
+      this.holdlogSelcat = this.logSelcat;
+      this.holdlogSelsubcat = this.logSelsubcat;
+      this.holdlogSeldate = this.logSeldate;
+      this.holdlogSelaction = this.logSelaction;
+      // this.getAuditListTotalCnt('', '' , '', '');
     }
+    getAuditListTotalCnt(cat, subcat, action, sdate) {
+      this.shared_services.getAuditLogsTotalCnt(cat, subcat, action, sdate)
+        .subscribe(data => {
+          this.totalCnt = data;
+          if (this.totalCnt === 0) {
+            this.auditStatus = 2;
+          } else {
+            this.auditStatus = 1;
+            this.getAuditList(cat, subcat, action, sdate);
+          }
+        },
+      error => {
 
+      });
+    }
     getAuditList(cat, subcat, action, sdate) {
-      this.shared_services.getAuditLogs(cat, subcat, action, sdate)
+      let pageval;
+      if (this.startpageval) {
+          pageval = (this.startpageval - 1) * this.perPage;
+      } else {
+          pageval = 0;
+      }
+      this.auditlog_details = [];
+      this.shared_services.getAuditLogs(cat, subcat, action, sdate, Number(pageval), this.perPage)
         .subscribe(data => {
           this.auditlog_details = data;
+          this.auditStatus = 3;
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-          this.load_complete = 1;
-        },
-      () => {
-        this.load_complete = 1;
-      });
+          this.load_complete = 2;
+          this.auditStatus = 0;
+        });
     }
+
     goback() {
       this.locationobj.back();
     }
@@ -91,23 +130,54 @@ export class ProviderSystemAuditLogComponent implements OnInit {
         }
       }
     }
-    do_search() {
+    do_search(pagecall) {
+
+      if (pagecall === false) {
+        console.log('search false');
+        this.holdlogSelcat = this.logSelcat;
+        this.holdlogSelsubcat = this.logSelsubcat;
+        this.holdlogSeldate = this.logSeldate;
+        this.holdlogSelaction = this.logSelaction;
+        // this.startpageval = 1;
+      }
       let seldate = '';
-      if (this.logSeldate) {
-        const mon = this.logSeldate['_i']['month'] + 1 ;
+      if (this.holdlogSeldate) {
+        const mon = this.holdlogSeldate['_i']['month'] + 1 ;
         let mn = '';
         if (mon < 10) {
           mn = '0' + mon;
         } else {
           mn = mon;
         }
-        seldate = this.logSeldate['_i']['year'] + '-' + mn + '-' + this.logSeldate['_i']['date'];
+        seldate = this.holdlogSeldate['_i']['year'] + '-' + mn + '-' + this.holdlogSeldate['_i']['date'];
       }
-      if (this.logSelcat === '' && this.logSelsubcat === '' && this.logSelaction === '' && seldate === '') {
+      if (this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
         this.sharedfunctionObj.openSnackBar('Please select atleast one option', {'panelClass': 'snackbarerror'});
       } else {
-        this.getAuditList(this.logCategories[this.logSelcat].name, this.logSelsubcat, this.logSelaction, seldate);
+        let ccat = '';
+        if (this.holdlogSelcat !== '') {
+          ccat = this.logCategories[this.holdlogSelcat].name;
+        }
+        if (pagecall === false) {
+          this.getAuditListTotalCnt(ccat || '', this.holdlogSelsubcat || '', this.holdlogSelaction || '', seldate);
+        } else {
+          this.getAuditList(ccat || '', this.holdlogSelsubcat || '', this.holdlogSelaction || '', seldate);
+        }
       }
-      console.log('search', this.logSelcat, this.logSelsubcat, this.logSelaction, 'seldate', seldate);
+      // console.log('search', this.logSelcat, this.logSelsubcat, this.logSelaction, 'seldate', seldate, this.startpageval);
+    }
+    handle_pageclick(pg) {
+      this.startpageval = pg;
+      console.log('page', pg);
+      this.do_search(true);
+    }
+    getperPage() {
+      return this.perPage;
+    }
+    gettotalCnt() {
+      return this.totalCnt;
+    }
+    getcurpageVal() {
+      return this.startpageval;
     }
 }

@@ -38,6 +38,7 @@ export class PagerComponent implements OnInit {
         }
         // get pager object from service
         this.pager = this.pagerService.getPager(this.total_pages, page, this.pagesize);
+        // console.log('pager', this.pager);
         // calling function to emit details to the parent
         // if(redirect) { this.onpagerclick(); }
     }
@@ -46,6 +47,7 @@ export class PagerComponent implements OnInit {
         if (pg < 1 || pg > this.pager.totalPages) {
             return;
         }
+        // this.pager.currentPage = pg;
         this.pagerclick.emit(pg);
     }
 }

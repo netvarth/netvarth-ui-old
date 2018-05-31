@@ -42,6 +42,11 @@ export class FooterComponent implements OnInit {
     public router: Router) {}
 
     showAuditlog() {
+      if (this.showAuditDiv === true) {
+        this.showbottompopup = false;
+        this.clearDivs();
+        return;
+      }
       this.clearDivs();
       this.auditStatus = 1;
       this.showbottompopup = true;
@@ -49,7 +54,7 @@ export class FooterComponent implements OnInit {
       this.bottomdivHeader = 'Audit Logs';
       this.selOpt = 'Audit';
       this.auditlog = [];
-      this.shared_services.getAuditLogs('', '', '', '')
+      this.shared_services.getAuditLogs('', '', '', '', 0, projectConstants.PERPAGING_LIMIT)
         .subscribe(data => {
           this.auditlog = data;
           if (this.auditlog.length > 0) {
@@ -63,6 +68,11 @@ export class FooterComponent implements OnInit {
       });
     }
     showAlert() {
+      if (this.showAlertDiv === true) {
+        this.showbottompopup = false;
+        this.clearDivs();
+        return;
+      }
       this.clearDivs();
       this.showbottompopup = true;
       this.showAlertDiv = true;
@@ -77,6 +87,11 @@ export class FooterComponent implements OnInit {
       });*/
     }
     showCheckinED() {
+      if (this.showCheckinDiv === true) {
+        this.showbottompopup = false;
+        this.clearDivs();
+        return;
+      }
       this.clearDivs();
       this.showbottompopup = true;
       this.showCheckinDiv = true;

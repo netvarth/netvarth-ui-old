@@ -59,7 +59,7 @@ header {
                     align-items: center;
                     position: relative;
                     overflow: hidden;
-                    margin-right: 5px;
+                    margin-right: 10px;
                     
                     img {
                         width: 50px;
@@ -224,24 +224,24 @@ header {
 /* ##### Overlay for System Tray Panel ****/
 .overlay {
     position: fixed;
-    width: 300px;
-    height: 300px;
     background: rgba(0,0,0,.3);
-    left: 50%;
-    margin-left: -150px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-left: 0;
     bottom: 0;
-    z-index: 9900;
-    @include border-radius(500px);
+    z-index: 950;
+    opacity: 0;
     visibility: hidden;
-    @include transition(all 200ms);
+    @include transition(all 300ms);
     
     &.show {
         visibility: visible;
+        opacity: 1;
         left: 0;
         width: 100%;
         height: 100%;
         margin-left: 0;
-        border-radius: 0px;
     }
     
 }
@@ -252,7 +252,7 @@ footer {
         width: 100%;
         position: fixed;
         bottom: 0;
-        z-index: 9999;
+        z-index: 951;
 
         .sect1, .sect2 {
             display: none;
@@ -262,7 +262,6 @@ footer {
             display: block;
             width: 100%;
             bottom: 0;
-            z-index: 2018;
             font-size: .875rem;
             position: relative;
             z-index: 300;
@@ -316,7 +315,7 @@ footer {
             padding-top: 15px;
             @include box-shadow(0, -20px, 30px, rgba(0,0,0,.1) !important);
             max-height: 400px;
-            @include transition(all 300ms);
+            @include transition(all 500ms);
             margin-bottom: -80px;
             visibility: hidden;
             
@@ -3597,6 +3596,7 @@ footer {
                 align-items: center;
                 justify-content: center;
                 font-size: 1rem;
+                margin-bottom: 20px;
                 
                 @include respond-to(ynw-767){
                     flex-direction: column;
@@ -3789,7 +3789,7 @@ footer {
             }
             
             .qlst {
-                padding: 20px;
+                padding: 0 20px 20px 20px;
                 overflow: auto;
                 
                 ul {
@@ -3802,13 +3802,13 @@ footer {
                         margin-right: 10px;
                         
                         .qname {
-                            @include border-radius(3px);
-                            background-color: $cc-ash;
+                            @include border-radius(100px);
+                            background-color: $cc-body;
                             text-align: center;
-                            font-weight: 600;
+                            font-weight: 500;
                             cursor: pointer;
-                            font-size: .875rem;
-                            padding: 5px;
+                            font-size: .75rem;
+                            padding: 5px 10px;
                             
                             .qtitle, .wlst {
                                 display: block;
@@ -3822,14 +3822,19 @@ footer {
                         
                         &.active {
                             .qname {
-                                background-color: $linkblue;
+                                background-color: $green;
                                 color: $white;
+                                font-weight: 600;
                             }
                         }
                         &:last-child {
                             margin-right: 0;
                         }
                     }
+                }
+                &.no-dta {
+                    padding: 20px;
+                    font-weight: 500;
                 }
             }
             
@@ -3870,7 +3875,7 @@ footer {
                             }
                             
                             span {
-                                height: 50px;
+                                height: 40px;
                                 cursor: pointer;
                                 background-color: $cc-lightgray;
                                 padding: 0 30px;
@@ -3932,7 +3937,100 @@ footer {
                         
                         i {
                             color: $white;
-                            font-size: 1.35rem;
+                            width: 20px;
+                            height: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: .875rem;
+                            
+                            &:before {
+                                animation: rotatereverse 300ms linear 1;
+                            }
+                        }
+                    }
+                }
+                
+                .mat-accordion {
+                    .mat-expansion-panel {
+                        .mat-expansion-panel-header {
+                            min-height: 40px;
+                            
+                            &.mat-expanded {
+                                .mat-content {
+                                i {
+                                    width: 20px;
+                                    height: 20px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: .875rem;
+                                    
+                                    &:before {
+                                        content: "\69";
+                                        animation:rotate 300ms linear 1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .mat-expansion-panel-content {
+                            .mat-expansion-panel-body {
+                                padding: 20px;
+                                
+                                .form-group {
+                                    .col-form-label {
+                                        @include font-medium;
+                                        padding: 0;
+                                        margin-bottom: 5px;
+                                    }
+                                    
+                                    mat-form-field {
+                                        width: 280px;
+
+                                        @include respond-to(ynw-575) {
+                                            width: 100%;
+                                        }
+
+                                        .mat-input-wrapper {
+                                            margin-bottom: 5px;
+                                            padding-bottom: 0px;
+
+                                            .mat-input-underline, .mat-input-subscript-wrapper {
+                                                display: none;
+                                            }
+
+                                            .mat-input-flex {
+
+                                                .mat-form-field-infix {
+                                                    padding: 0;
+                                                    border: none;
+
+
+                                                    .mat-input-element {
+                                                        @include border-radius(0);
+                                                        background: $cc-formbg;
+                                                        border: 1px solid transparent;
+                                                        @include font-regular;
+                                                        font-size: 0.875rem;
+                                                        color: $cc-darkgray;
+                                                        text-overflow: ellipsis;
+                                                        padding:10px;
+                                                        height: 40px;
+
+                                                        &:focus {
+                                                            @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                                            border: 1px solid $linkblue;
+                                                            background: $white;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                            }
                         }
                     }
                 }
@@ -3962,7 +4060,7 @@ footer {
                                         }
                                     }
                                     &.name {
-                                        font-weight: 500;
+                                        font-weight: 600;
                                         
                                         span {
                                             color: $green;
@@ -3970,6 +4068,9 @@ footer {
                                             vertical-align: middle;
                                             margin-left: 5px;
                                         }
+                                    }
+                                    &.service, &.seq {
+                                        font-weight: 500;
                                     }
                                     &.actions {
                                         display: flex;
@@ -4005,7 +4106,8 @@ footer {
                                             background: $cc-lightgray;
                                             color: $linkblack;
                                             position: relative;
-                                            font-weight: 500;
+                                            font-weight: 600;
+                                            font-size: .75rem;
                                             
                                             .text {
                                                 position: relative;
@@ -4014,7 +4116,8 @@ footer {
                                         }
                                         
                                         .paid-n {
-                                            color: $white;
+                                            color: $cc-red;
+                                            
                                             &:after {
                                                 width: 100%;
                                                 height: 100%;
@@ -4022,11 +4125,12 @@ footer {
                                                 content: "";
                                                 left: 0;
                                                 top: 0;
-                                                background: $cc-red;
+                                                background: transparent;
                                                 z-index: 0;
                                             }
                                         }
-                                        .paid-h {                                            
+                                        .paid-h {                                     color: #e2aa00;   
+                                            
                                             &:after {
                                                 width: 50%;
                                                 height: 100%;
@@ -4034,11 +4138,12 @@ footer {
                                                 content: "";
                                                 left: 0;
                                                 top: 0;
-                                                background: #cdef59;
+                                                background: transparent;
                                                 z-index: 0;
                                             }
                                         }
-                                        .paid-f {                           color: $white;                 
+                                        .paid-f {                                     color: $green;
+                                            
                                             &:after {
                                                 width: 100%;
                                                 height: 100%;
@@ -4046,7 +4151,7 @@ footer {
                                                 content: "";
                                                 left: 0;
                                                 top: 0;
-                                                background: $green;
+                                                background: transparent;
                                                 z-index: 0;
                                             }
                                         }

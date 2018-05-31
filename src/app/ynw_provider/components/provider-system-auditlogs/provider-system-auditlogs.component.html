@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <label class="col-form-label">Category</label>
                     <mat-form-field>
-                        <mat-select [(ngModel)]="logSelcat" (change)="selectCategory()">
+                        <mat-select [(ngModel)]="logSelcat" name="catg" (change)="selectCategory()">
                             <mat-option value = ""> -- Select --</mat-option>
                             <mat-option *ngFor="let cat of logCategories; let i = index" [value]="i">
                             {{ cat.displayName }}
@@ -45,15 +45,15 @@
                          <div class="pickerouter">
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker></mat-datepicker> 
-                          <input class="form-control" name="datepicker" [(ngModel)]="logSeldate" type="text" matInput [matDatepicker]="picker">
+                          <input class="form-control" name="audit-datepicker" [(ngModel)]="logSeldate" type="text" matInput [matDatepicker]="picker">
                         </div> 
                 </div>
-                <div class='actions-div'>
-                    <button type="button"  class="cs-btn bt1 mat-button" (click)="do_search()">Search</button>
+                <div class="actions-div">
+                    <button type="button"  class="cs-btn bt1 mat-button" (click)="do_search(false)">Search</button>
                 </div>
             </div>
 
-            <div class="audit" *ngIf="showAuditDiv">
+            <div class="audit">
                 <div class="table-header">
                     <div class="container">
                         <div class="row">
@@ -78,13 +78,16 @@
                             </div>
                             <ul class="stp-list" *ngIf="auditStatus==3">
                                 <ng-container *ngFor="let log of auditlog_details; let i=index">
-                                <li *ngIf="i < auditCnt">
+                                <li>
                                     <div class="td td1">{{log.Action}}</div>
                                     <div class="td td2">{{log.userName}}</div>
                                     <div class="td td3">{{log.date | date:dateFormat}}</div>
                                 </li>
                                 </ng-container>
                             </ul>
+                            <div class="search_paging" *ngIf="auditlog_details.length>0">
+                                <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
+                            </div>
                         </div>
                     </div>
                 </div>

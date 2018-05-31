@@ -1,0 +1,11 @@
+/* All Keyframes */
+
+@keyframes rotate{
+	from{transform: rotate(0deg);}
+	to{transform: rotate(90deg)}
+}
+
+@keyframes rotatereverse{
+	from{transform: rotate(90deg);}
+	to{transform: rotate(0deg)}
+}

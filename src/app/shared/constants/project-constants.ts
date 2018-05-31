@@ -1,4 +1,5 @@
 export const projectConstants = {
+  PERPAGING_LIMIT: 10,
   searchpass_criteria : {
     'start': 0,
     'return': 'title,sector,logo,place1,business_phone_no,unique_id',
