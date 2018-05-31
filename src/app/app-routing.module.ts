@@ -7,6 +7,7 @@ import {LogoutComponent} from './shared/components/logout/logout.component';
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider, AuthGuardLogin } from './shared/guard/auth.guard';
 import { SearchDetailComponent } from './shared/components/search-detail/search-detail.component';
 import { ProviderDetailComponent } from './shared/components/provider-detail/provider-detail.component';
+import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 // import {EditProfileComponent } from './shared/components/edit-profile/edit-profile.component';
 // import {ChangePasswordComponent} from './shared/components/change-password/change-password.component';
 // import { ChangeMobileComponent } from './shared/components/change-mobile/change-mobile.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
     { path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
     { path: 'searchdetail', component: SearchDetailComponent },
     { path: 'searchdetail/:id', component: ProviderDetailComponent },
+    { path: 'payment-return/:id', component: ReturnPaymentComponent },
    // { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin]},
     // { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin]},
    // { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},

@@ -1,11 +1,15 @@
  <h1 class="mat-dialog-title">
-   <ng-container *ngIf="bill_load_complete && bill_data == null">New </ng-container>
+   <ng-container *ngIf="bill_data == null">New </ng-container>
     Bill
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
-  <mat-dialog-content>
+  <mat-dialog-content >
+    <app-innerloading-spinner *ngIf="!bill_load_complete"></app-innerloading-spinner>
+
+    <ng-container *ngIf="bill_load_complete">
+
       <p>Customer name : {{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.firstName}}</p><br>
       <p>Date : {{today  | date: dateFormat}}</p><br>
       <p>Time : {{today  | date: timeFormat}}</p><br>
@@ -130,10 +134,12 @@
 
           <p>Amount to pay : {{cart.total | currency:'INR':'symbol':'.2-2'}}</p>
       </div>
+
+    </ng-container>
   </mat-dialog-content>
   <mat-dialog-actions>
       <button  type="button" mat-button class="cs-btn bt1" [disabled]="cart.items.length < 0"
-      (click)="submitBill()">Save</button>
+      (click)="submitBill()" *ngIf="bill_load_complete">Save</button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
   </mat-dialog-actions>
   <app-field-error-display [displayError]="true" *ngIf="api_error"

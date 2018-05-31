@@ -83,12 +83,47 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
         // this.getWaitlistBill();
 
-        this.getPrePaymentDetails();
-        this.getCoupons();
-        this.getDiscounts();
-        this.getTaxDetails();
-        this.getServiceList();
-        this.getItemsList();
+        this.getPrePaymentDetails()
+        .then(
+          (result) => {
+
+            this.getCoupons()
+            .then(
+              () => {
+
+                this.getDiscounts()
+                .then(
+                  () => {
+
+                    this.getTaxDetails()
+                    .then(
+                      () => {
+
+                          this.getServiceList();
+                          this.getItemsList();
+
+                          this.bill_load_complete = 1;
+                      },
+                      (error) => {
+                        this.bill_load_complete = 0;
+                      });
+
+                  },
+                  (error) => {
+                    this.bill_load_complete = 0;
+                  });
+
+                },
+                (error) => {
+                  this.bill_load_complete = 0;
+                });
+          },
+          (error) => {
+            this.bill_load_complete = 0;
+          }
+        );
+
+
 
      }
 
@@ -154,33 +189,54 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
       },
       error => {
-
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       }
     );
   }
 
   getCoupons() {
-    this.provider_services.getProviderCoupons()
-    .subscribe(
-      data => {
-        this.coupons = data;
-      },
-      error => {
+    return new Promise((resolve, reject) => {
+      this.provider_services.getProviderCoupons()
+      .subscribe(
+        data => {
+          this.coupons = data;
 
-      }
-    );
+          if (this.bill_data.couponId) {
+            this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.couponId);
+          }
+          resolve();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          reject(error.error);
+        }
+      );
+    });
+
   }
 
   getDiscounts() {
-    this.provider_services.getProviderDiscounts()
-    .subscribe(
-      data => {
-        this.discounts = data;
-      },
-      error => {
 
-      }
-    );
+    return new Promise((resolve, reject) => {
+      this.provider_services.getProviderDiscounts()
+      .subscribe(
+        data => {
+          this.discounts = data;
+
+          if (this.bill_data.discountId) {
+            this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discountId);
+          }
+
+          resolve();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          reject(error.error);
+        }
+      );
+     });
+
+
   }
 
   getItemsList() {
@@ -197,21 +253,28 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       },
       error => {
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
 
       }
     );
   }
 
   getTaxDetails() {
-    this.provider_services.getProviderTax()
-    .subscribe(
-      data => {
-        this.item_service_tax = data;
-      },
-      error => {
+    return new Promise((resolve, reject) => {
+      this.provider_services.getProviderTax()
+      .subscribe(
+        data => {
+          this.item_service_tax = data;
+          resolve();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
 
-      }
-    );
+          reject(error.error);
+        }
+      );
+    });
+
   }
 
   itemServiceSelected(type, index) {
@@ -490,15 +553,21 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   getPrePaymentDetails() {
-    this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
-    .subscribe(
-      data => {
-        this.pre_payment_log = data;
-      },
-      error => {
+    return new Promise((resolve, reject) => {
+      this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
+      .subscribe(
+        data => {
+          this.pre_payment_log = data;
+          resolve();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
 
-      }
-    );
+          reject(error.error);
+        }
+      );
+    });
+
   }
 
   addSavedServiceToCart(services) {
@@ -511,11 +580,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.pushCartItem(ob, 'Services');
           this.cart.items[this.cart.items.length - 1] ['quantity']  = service.quantity;
           if (service.discountId !== 0) {
-            this.cart.items[this.cart.items.length - 1] ['discount'] = service.discountId;
+            this.cart.items[this.cart.items.length - 1] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
           }
 
           if (service.couponId !== 0) {
-            this.cart.items[this.cart.items.length - 1] ['coupon'] = service.discountId;
+            this.cart.items[this.cart.items.length - 1] ['coupon'] = this.getIndexFromId(this.coupons, service.couponId);
           }
           this.calculateItemTotal(this.cart.items.length - 1);
         }
@@ -539,11 +608,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.pushCartItem(ob, 'Items');
           this.cart.items[this.cart.items.length - 1] ['quantity']  = item.quantity;
           if (item.discountId !== 0) {
-            this.cart.items[this.cart.items.length - 1] ['discount'] = item.discountId;
+            this.cart.items[this.cart.items.length - 1] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
           }
 
           if (item.couponId !== 0) {
-            this.cart.items[this.cart.items.length - 1] ['coupon'] = item.discountId;
+            this.cart.items[this.cart.items.length - 1] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
           }
           this.calculateItemTotal(this.cart.items.length - 1);
         }
@@ -556,6 +625,18 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
 
   }
+
+  getIndexFromId(array, id) {
+    let index = null;
+    array
+    .map((ob, i) => {
+      if (ob.id === id) {
+        index = i;
+      }
+    });
+    return index;
+  }
+
 
 }
 

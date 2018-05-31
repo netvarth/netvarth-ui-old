@@ -866,7 +866,7 @@
                 .mat-chip-list {
                     .mat-chip-list-wrapper {
                         .mat-chip {
-                            border: none;
+                            border-color: $cc-body;
                             background: $cc-body;
                         }
                     }

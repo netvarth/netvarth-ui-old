@@ -77,18 +77,18 @@
                   </div> -->
                   <mat-accordion >
                     <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
-                      <mat-expansion-panel-header class="fltr">
+                      <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
                           <span (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
                       </mat-expansion-panel-header>
 
-                      <div class="form-group">
+                      <div class="form-group first_name">
                         <mat-form-field class="example-full-width">
                           <label class="col-form-label">First name</label>
                           <input matInput [(ngModel)]="filter.first_name"  (blur)="doSearch()">
                         </mat-form-field>
                       </div>
 
-                      <div class="form-group" *ngIf="time_type !== 1">
+                      <div class="form-group queues" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Queues</label>
                         <mat-chip-list>
                           <mat-chip
@@ -106,7 +106,7 @@
                         </mat-chip-list>
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group services">
                         <label class="col-form-label" for="displayName">Services</label>
                         <mat-chip-list>
                           <mat-chip
@@ -123,7 +123,7 @@
                         </mat-chip-list>
                       </div>
 
-                      <div class="form-group" *ngIf="time_type !== 1">
+                      <div class="form-group waitlist_status" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Waitlist Status</label>
                         <mat-chip-list>
                           <mat-chip
@@ -140,11 +140,11 @@
                         </mat-chip-list>
                       </div>
 
-                      <div class="form-group" *ngIf="time_type !== 1">
+                      <div class="check_in_date" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Check-In Date</label>
                         <mat-form-field>
                             <input matInput [(ngModel)]="filter.check_in_date" [matDatepicker]="picker"
-                            (dateChange)="doSearch()" [min]="filter_date_min" [max]="filter_date_max" placeholder="Choose a date">
+                            (dateChange)="doSearch()" [min]="filter_date_min" [max]="filter_date_max">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>
@@ -293,6 +293,12 @@
                               </tr> -->
                           </tbody>
                       </table>
+
+
+                    <div class="search_paging">
+                      <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
+                    </div>
+
                   </div>
                   <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
                     <div class="qlst no-dta" *ngIf="load_waitlist ==1 && check_in_filtered_list.length == 0">

@@ -280,4 +280,9 @@ export class SharedServices {
       const url = 'provider/settings/waitlistMgr/';
       return this.servicemeta.httpGet(url);
     }
+
+    getPaymentStatus() {
+      return ;
+    }
+
 }
