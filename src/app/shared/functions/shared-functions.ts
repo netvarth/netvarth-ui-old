@@ -683,6 +683,7 @@ isNumberOnly(str) {
 openSnackBar(message: string, params: any = []) {
   const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
   const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
+  // const snackBarRef = this.snackBar.open(message, '', {duration: 100000, panelClass: panelclass });
   return snackBarRef;
 }
 

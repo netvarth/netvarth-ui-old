@@ -179,9 +179,9 @@
                                 <div class="checkin-bx" *ngIf="checkinStatus==3">
                                     <span class="ttle">
                                         Accept Online Check-in 
-                                        <mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns" (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle><span class="sts" [class.active]="waitlistmgr.onlineCheckIns">{{(waitlistmgr.onlineCheckIns)? 'On': 'Off'}}</span>
+                                        <span class="sts" [class.active]="waitlistmgr.onlineCheckIns">{{(waitlistmgr.onlineCheckIns)? 'On': 'Off'}}</span>
                                     </span>
-                                    <span class="ctrl"></span>
+                                    <span class="ctrl"><mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns" (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle></span>
                                 </div>
                             </div>
                         </div>

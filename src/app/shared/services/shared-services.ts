@@ -243,7 +243,35 @@ export class SharedServices {
     editMember(data) {
       return this.servicemeta.httpPut('consumer/familyMember', data);
     }
-    getAuditLogs(cat, subcat, action, sdate) {
+    getAuditLogs(cat, subcat, action, sdate, startfrom, limit) {
+      let retparam = this.buildAuditlogParams(cat, subcat, action, sdate);
+      if (startfrom !== '') {
+        if (retparam !== '') {
+          retparam += '&';
+        }
+        retparam += 'from=' + startfrom;
+      }
+      if (limit !== '') {
+        if (retparam !== '') {
+          retparam += '&';
+        }
+        retparam += 'count=' + limit;
+      }
+      if (retparam !== '') {
+        retparam = '?' + retparam;
+      }
+      const url = 'provider/auditlogs' + retparam;
+      return this.servicemeta.httpGet(url);
+    }
+    getAuditLogsTotalCnt(cat, subcat, action, sdate) {
+      let retparam = this.buildAuditlogParams(cat, subcat, action, sdate);
+      if (retparam !== '') {
+        retparam = '?' + retparam;
+      }
+      const url = 'provider/auditlogs/count' + retparam;
+      return this.servicemeta.httpGet(url);
+    }
+    buildAuditlogParams(cat, subcat , action, sdate) {
       let param = '';
       if (cat !== '') {
         param += 'category-eq=' + cat;
@@ -266,11 +294,7 @@ export class SharedServices {
         }
         param += 'date-eq=' + sdate;
       }
-      if (param !== '') {
-        param = '?' + param;
-      }
-      const url = 'provider/auditlogs' + param;
-      return this.servicemeta.httpGet(url);
+      return param;
     }
     setAcceptOnlineCheckin(status) {
       const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;

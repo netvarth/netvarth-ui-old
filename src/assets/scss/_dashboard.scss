@@ -12,13 +12,13 @@ header {
                 text-align: center;
                 margin-bottom: 0;
                 padding: 0;
-                
+
                 img {
                     width: 100%;
                 }
             }
         }
-        
+
         .tc1 {
             margin-left: 0px;
             margin-top: 0px;
@@ -28,7 +28,7 @@ header {
             display: flex;
             justify-content: center;
             align-items: center;
-            
+
             @include respond-to(ynw-767){
                 flex-flow: column;
                 margin: 0;
@@ -44,30 +44,30 @@ header {
             .bnps {
                 display: flex;
                 color: $cc-gray;
-                
+
                 @include respond-to(ynw-767){
                     margin-bottom: 15px;
                 }
-                
+
                 .pro-pic {
                     width: 50px;
                     height: 50px;
                     @include border-radius(50px);
                     background-color: $cc-lightgray;
-                    display: flex;                    
+                    display: flex;
                     justify-content: center;
                     align-items: center;
                     position: relative;
                     overflow: hidden;
                     margin-right: 10px;
-                    
+
                     img {
                         width: 50px;
                         height: 50px;
                         position: relative;
                         z-index: 11;
                     }
-                    
+
                     &:after {
                         content: "";
                         background: url(../images/img-null.svg) no-repeat scroll 0 0;
@@ -78,12 +78,12 @@ header {
                         z-index: 10;
                     }
                 }
-                
+
                 .mn-title{
                     display: flex;
                     align-items: center;
                     flex-direction: column;
-                    
+
                     .title-bn, .title-ps {
                         display: block;
                         font-size: 1rem;
@@ -97,7 +97,7 @@ header {
                         font-weight: 400;
                     }
                 }
-                
+
                 .inbx {
                     padding-left: 30px;
                     cursor: pointer;
@@ -107,7 +107,7 @@ header {
                         height: 50px;
                         @include border-radius(50px);
                         background-color: $cc-lightgray;
-                        display: flex;                    
+                        display: flex;
                         justify-content: center;
                         align-items: center;
                         position: relative;
@@ -135,7 +135,7 @@ header {
                     }
                 }
             }
-            
+
             .lgmem {
                 padding-left: 40px;
                 font-size: .875rem;
@@ -143,12 +143,12 @@ header {
                 display: flex;
                 flex-flow: column;
                 align-items: flex-end;
-                
+
                 .lgin {
                     button {
                         width: 24px;
                         height: 24px;
-                        
+
                         .icon-angle-down {
                             font-size: .5rem;
                             display: flex;
@@ -156,11 +156,11 @@ header {
                             height: 24px;
                             align-content: center;
                             justify-content: center;
-                            
+
                             &:before {
                                 display: flex;
                                 align-self: center;
-                               
+
                             }
                         }
                     }
@@ -171,13 +171,13 @@ header {
                     display: flex;
                     flex-flow: column;
                 }
-                
+
                 a, span {
                     color: $linkblack;
                     font-size: .875rem;
                     display: block;
                     text-align: right;
-                    
+
                     @include respond-to(ynw-575) {
                         text-align: center;
                     }
@@ -185,31 +185,31 @@ header {
                     i {
                         font-size: 0.525rem;
                         margin-left: 3px;
-                        
+
                         @include respond-to(ynw-575) {margin: 0;}
                     }
-                    
+
                     &.membership {
                         font-size: .75rem;
                         color: $linkblue;
                         margin-right: 27px;
                         margin-top: 5px;
                         cursor: pointer;
-                        
+
                         span {
                             font-weight: 600;
                             color: $linkblue;
                             font-size: .75rem;
                             display: inline-block;
                         }
-                        
+
                         i {
                             font-size: 1.375rem;
                             vertical-align: middle;
                             display: none;
                         }
                     }
-                    
+
                     &:first-child {
                         @include respond-to(ynw-575) {
                             order: 2;
@@ -218,7 +218,7 @@ header {
                 }
             }
         }
-    }    
+    }
 }
 
 /* ##### Overlay for System Tray Panel ****/
@@ -234,7 +234,7 @@ header {
     opacity: 0;
     visibility: hidden;
     @include transition(all 300ms);
-    
+
     &.show {
         visibility: visible;
         opacity: 1;
@@ -243,7 +243,7 @@ header {
         height: 100%;
         margin-left: 0;
     }
-    
+
 }
 /* ##### Ends Overlay for System Tray Panel ****/
 
@@ -265,28 +265,28 @@ footer {
             font-size: .875rem;
             position: relative;
             z-index: 300;
-            
+
             .copy-text {
                 display: flex;
                 align-items: center;
-                
+
                 p {
                     margin: 0;
                     font-size: .75rem;
                     opacity: .6;
                 }
             }
-            
+
             .spt-controls {
                 .list {
                     margin: 0;
                     padding: 0;
                     display: flex;
-                    
+
                     li {
                         list-style: none;
                         @include transition(all 300ms);
-                        
+
                         [class^="icon-"], [class*=" icon-"] {
                             font-size: 1.5rem;
                             padding: 10px 15px;
@@ -294,11 +294,11 @@ footer {
                             height: 50px;
                             cursor: pointer;
                         }
-                        
+
                         &:hover {
                             background: rgba(255,255,255,.1);
                         }
-                        
+
                         &.active {
                             [class^="icon-"], [class*=" icon-"] {
                                 background: $white;
@@ -318,13 +318,13 @@ footer {
             @include transition(all 500ms);
             margin-bottom: -80px;
             visibility: hidden;
-            
+
             .stp-header {
                 margin-bottom: 15px;
                 .outer {
                     display: flex;
                     width: 100%;
-                    
+
                     .left {
                         h1 {
                             font-size: 1.125rem;
@@ -333,28 +333,28 @@ footer {
                             color: $linkblue;
                         }
                     }
-                    
+
                     .right {
                         margin-left: auto;
-                        
+
                         .stp-action {
                             margin: 0;
                             padding: 0;
                             display: flex;
-                            
+
                             li {
                                 list-style: none;
                                 font-weight: 700;
                                 font-size: .75rem;
                                 margin-left: 20px;
-                                
+
                                 .icon-minimize {
                                     position: relative;
                                     display: flex;
                                     align-items: center;
                                     cursor: pointer;
                                     @include transition(all 300ms);
-                                    
+
                                     &:before {
                                         position: absolute;
                                         content: "";
@@ -363,14 +363,14 @@ footer {
                                         @include border-radius(10px);
                                         background: $linkblack;
                                     }
-                                    
+
                                     &:hover {
                                         &:before {
                                             background: $linkblue;
                                         }
                                     }
                                 }
-                                
+
                                 [class^="icon-"], [class*=" icon-"] {
                                     @include transition(all 300ms);
                                     cursor: pointer;
@@ -382,11 +382,11 @@ footer {
                                     padding: 5px;
                                     background: $cc-body;
                                     @include border-radius(25px);
-                                    
+
                                     &:before {
                                         font-size: .800rem;
                                     }
-                                    
+
                                     &:hover {
                                         &:before {
                                             color: $linkblue;
@@ -398,7 +398,7 @@ footer {
                     }
                 }
             }
-            
+
             .audit, .alerts, .o-checkin {
                 .table-header {
                     .action-head {
@@ -458,16 +458,16 @@ footer {
                             }
                         }
                     }
-                    
+
                     .copy {
                         font-size: .875rem;
                         padding: 0px 0 15px 0;
                         width: 100%;
                         font-weight: 500;
-                        
+
                         .checkin-bx {
                             display: flex;
-                            
+
                             .ttle {
                                 color: $linkblack;
                                 padding-right: 20px;
@@ -490,7 +490,7 @@ footer {
                     }
                 }
             }
-            
+
             .alerts {
                 .table-body {
                     .stp-list {
@@ -498,23 +498,23 @@ footer {
                             border-bottom: 1px solid $cc-body;
                             .td {
                                 font-weight: 500;
-                                
+
                                 &.td1 {
                                     width: 93%;
                                 }
                                 &.td2 {
                                     width: 7%;
                                     text-align: right;
-                                    
+
                                     .icon-delete {
                                         cursor: pointer;
-                                        
+
                                         &:hover {
                                             color: $cc-red;
                                         }
                                     }
                                 }
-                                
+
                                 &.success {
                                     color: $green;
                                 }
@@ -532,7 +532,7 @@ footer {
                     }
                 }
             }
-            
+
             &.show {
                 margin-bottom: 0;
                 visibility: visible;
@@ -546,28 +546,28 @@ footer {
 
 .tp-pnl {
     @include linear-gradient(#b5b5b5,#e0e0e0);
-    
+
     .top-mnu {
         display: flex;
         justify-content: flex-end;
         margin: 20px 0;
         width: 100%;
-        
+
         @include respond-to(ynw-575) {
             justify-content: flex-start;
             flex-flow: column;
-            
-            .bt5 {                
+
+            .bt5 {
                 &:before {
                     display: none;
                 }
             }
-            
+
         }
-        
+
         .bt4, .bt5 {
             margin-left: 10px;
-            
+
             @include respond-to(ynw-575) {
                 margin: 0;
                 @include border-radius(0);
@@ -577,12 +577,12 @@ footer {
         .bt5 {
             position: relative;
             /*margin-left: 20px;*/
-            
+
             @include respond-to(ynw-575) {
                 margin: 0;
                 border-bottom: none;
             }
-            
+
             &:before {
                 position: absolute;
                 content: "";
@@ -599,7 +599,7 @@ footer {
 
 .m-nav {
     position: relative;
-    
+
     a {
         @include border-top-radius(5px);
         display: flex;
@@ -610,36 +610,36 @@ footer {
         font-size: 1.125rem;
         @include font-medium;
         color: $cc-black;
-        
+
         i {
             font-size: 1.5rem;
             height: 24px;
             margin-right: 10px;
         }
-        
+
         &.active {
             background: $linkblue;
             color: $white;
         }
-        
+
         &:hover {
             color: $linkblue;
-            
+
             &.active {
                 color: $white;
             }
         }
     }
-    
+
     .nav01 {
-        
+
         @include respond-to(ynw-767) {
             padding: 0;
-            
+
             a {
                 border-radius: 0;
                 border-left: 1px solid $cc-ash;
-                
+
                 &.active {
                     border: none;
                 }
@@ -648,37 +648,37 @@ footer {
         @include respond-to(ynw-575) {
             width: auto;
             flex-grow: 1;
-            
+
             a {
                 border-left: none;
                 border-bottom: 1px solid $cc-ash;
                 display: flex;
                 flex-direction: column;
                 font-size: 1rem;
-                
+
                 i {
                     margin-right: 0;
                 }
             }
-            
+
         }
         @include respond-to(ynw-768-991) {
             padding: 0;
-            
+
             a {
                 border-radius: 0;
                 border-left: 1px solid $cc-ash;
-                
+
                 &.active {
                     border: none;
                 }
             }
         }
-        
+
         &:first-child {
             a {
                 border: none;
-                
+
                 @include respond-to(ynw-575) {
                     border-bottom: 1px solid $cc-ash;
                 }
@@ -693,7 +693,7 @@ footer {
         left: 0;
         width: 100%;
         height: 5px;
-        
+
     }
 }
 
@@ -711,7 +711,7 @@ footer {
     padding-left: 20px;
     padding-right: 20px;
     font-weight: 600;
-    
+
     @include respond-to(ynw-767) {
         font-size: .875rem;
     }
@@ -719,7 +719,7 @@ footer {
         border: none;
         font-size: .75rem;
     }
-    
+
     a, span {
         color: $cc-black;
         position: relative;
@@ -730,7 +730,7 @@ footer {
         display: block;
         font-weight: 500;
         cursor: pointer;
-        
+
         &:after {
             position: absolute;
             content: "\67";
@@ -743,7 +743,7 @@ footer {
             align-items: center;
             height: 100%;
         }
-        
+
         &:hover {
             color: $cc-black;
             &:before {
@@ -756,19 +756,19 @@ footer {
                 position: absolute;
             }
         }
-        
+
         &.bt6 {
             margin-right: 0;
             padding-right: 10px;
             display: flex;
-            
+
             &:after {
                 display: none;
             }
-            
+
             &:hover {
                 color: $white;
-                
+
                 &:before {
                     display: none;
                 }
@@ -787,21 +787,21 @@ footer {
         display: flex;
         justify-content: center;
         align-items: center;
-        
+
         @include respond-to(ynw-575) {height: 60px;}
-        
+
         h1 {
             @include font-medium;
             font-size: 1.75rem;
             margin-bottom: 0;
             font-weight: 500 !important;
-            
+
             @include respond-to(ynw-767) {
                 font-size: 1.5rem;
             }
         }
     }
-    
+
     .col-a, .col-b {
         &.pl0, &.pr0 {
             @include respond-to(ynw-767) {
@@ -866,7 +866,7 @@ footer {
                     text-align: left;
                 }
 
-                .basic-i {                    
+                .basic-i {
                     .warning {
                         width: 100%;
                         text-align: center;
@@ -967,7 +967,7 @@ footer {
                                     font-size: 1.5rem;
                                 }
                             }
-                            
+
                             &:last-child {
                                 border: none;
                             }
@@ -976,7 +976,7 @@ footer {
                 }
             }
         }
-    }  
+    }
 }
 
 /*profile & search ####*/
@@ -990,17 +990,17 @@ footer {
                     font-size: .875rem;
                     border-bottom: 1px solid $cc-ash;
                     margin-bottom: 0px;
-                    
+
                     .ctrl {
                         display: flex;
-                        
+
                         .ct-l {
                             width: 50%;
-                            
+
                             @include respond-to(ynw-767){
                                 width: 55%;
                             }
-                            
+
                             h2 {
                                 margin-bottom: 5px;
                                 font-size: 1.125rem;
@@ -1011,7 +1011,7 @@ footer {
                                 @include font-medium;
                                 margin-bottom: 10px;
                                 display: block;
-                                
+
                                 .on {
                                     @include font-bold;
                                     color: $green;
@@ -1023,33 +1023,33 @@ footer {
                             }
                             .error {
                                 color: $cc-red;
-                                
+
                                 i {
                                     margin-right: 5px;
                                 }
                             }
                         }
-                        
+
                         .ct-r {
                             width: 30%;
                             text-align: right;
-                            
+
                             @include respond-to(ynw-575){
                                width: auto;
                             }
-                            
+
                             .bt3 {
                                 padding-left: 30px;
                                 padding-right: 30px;
                                 margin-bottom: 10px;
                             }
-                            
+
                             span {
                                 display: block;
                                 color: $cc-red;
                                 font-size: .75rem;
                                 @include font-medium;
-                                
+
                                 i {
                                     margin-right: 5px;
                                     font-size: 1rem;
@@ -1060,43 +1060,43 @@ footer {
                     }
                 }
             }
-            
+
             .adwds {
                 &.w-dta {
                     padding: 20px;
                     font-size: .875rem;
                     @include font-medium;
-                    
+
                     h2 {
                         position: relative;
                         margin-bottom: 10px;
                         font-size: 1.125rem;
                         font-weight: 500;
                     }
-                    
+
                     .ad-tble {
                         display: flex;
-                        
+
                         @include respond-to(ynw-767){
                             flex-direction: column;
                         }
-                        
+
                         .ad-r {
                             display: flex;
                             flex-wrap: wrap;
                             justify-content: flex-end;
-                            
+
                             @include respond-to(ynw-767){
                                 margin: 10px 0 0 0 !important;
                                 justify-content: flex-start;
-                                
+
                                 span {
                                     &:first-child {
                                         margin-left: 0;
                                     }
                                 }
                             }
-                            
+
                             span {
                                 padding: 3px 5px;
                                 @include border-radius(20px);
@@ -1104,13 +1104,13 @@ footer {
                                 font-size: .75rem;
                                 margin-left: 10px;
                                 margin-bottom: 10px;
-                                
+
                                 &.mre {
                                     border-color: $linkblue;
-                                    
+
                                     &:hover {
                                         background: $linkblue;
-                                        
+
                                         a {
                                             color: $white;
                                         }
@@ -1128,9 +1128,9 @@ footer {
                     }
                 }
             }
-            
+
             &.w-dta {
-                
+
                 &.active {
                     h2 {
                         color: $linkblue;
@@ -1166,32 +1166,32 @@ footer {
                                 font-weight: 600;
                             }
                         }
-                        
+
                         .basic-i {
                             position: relative;
                             display: flex;
-                            
+
                             @include respond-to(ynw-575){
                                 flex-direction: column;
                             }
-                            
+
                             .editbt {
                                 position: absolute;
                                 right: 0px;
                                 top: 0;
-                                
+
                                 &:hover {
                                     background: $cc-ash;
                                 }
                             }
-                            
+
                             .bi-l {
                                 margin-right: 20px;
-                                
+
                                 @include respond-to(ynw-575){
                                     margin: 0;
                                 }
-                                
+
                                 .pro-pic {
                                     width: 180px;
                                     height: 180px;
@@ -1202,20 +1202,20 @@ footer {
                                     align-items: center;
                                     overflow: hidden;
                                     position: relative;
-                                    
+
                                     @include respond-to(ynw-575){
                                         margin: 0 auto;
                                         width: 120px;
                                         height: 120px;
                                     }
-                                    
+
                                     .pro-pic-img {
                                         img {
                                             width: 180px;
                                             height: 180px;
                                         }
                                     }
-                                    
+
                                     .change {
                                         opacity: 0;
                                         visibility: hidden;
@@ -1227,7 +1227,7 @@ footer {
                                         position: absolute;
                                         @include transition(all 300ms);
                                     }
-                                    
+
                                     .add, .change {
                                         text-align: center;
                                         @include font-bold;
@@ -1243,7 +1243,7 @@ footer {
                                         align-items: center;
                                         position: relative;
                                         z-index: 1;
-                                        
+
                                         span {
                                             width: 100%;
                                             height: 100%;
@@ -1253,7 +1253,7 @@ footer {
                                             color: $linkblue;
                                         }
                                     }
-                                    
+
                                     &.yes {
                                         .add {
                                             opacity: 0;
@@ -1271,7 +1271,7 @@ footer {
                                                 justify-content: center;
                                                 align-items: center;
                                                 position: absolute;
-                                                
+
                                                 span {
                                                     width: 100%;
                                                     height: 100%;
@@ -1280,13 +1280,13 @@ footer {
                                                     align-items: center;
                                                     color: $white;
                                                 }
-                                            } 
+                                            }
                                         }
-                                        
+
                                         &:before {display: none;}
                                     }
-                                    
-                                    &:before {                                        
+
+                                    &:before {
                                         content: "";
                                         background: url(../images/img-null.svg) no-repeat scroll 0 0;
                                         position: absolute;
@@ -1294,7 +1294,7 @@ footer {
                                         height: 200px;
                                         opacity: .3;
                                         z-index: 0;
-                                        
+
                                         @include respond-to(ynw-575){
                                             width: 140px;
                                             height: 140px;
@@ -1302,14 +1302,14 @@ footer {
                                     }
                                 }
                             }
-                            
+
                             .bi-r {
-                                
+
                                 @include respond-to(ynw-575){
                                     text-align: center;
                                     margin-top: 20px;
                                 }
-                                
+
                                 h3 {
                                     font-size: 1.125rem;
                                     @include font-medium;
@@ -1317,16 +1317,16 @@ footer {
                                 }
                             }
                         }
-                        
-                        .phtbl {                            
+
+                        .phtbl {
                             .tbl-list {
                                 min-width: 100%;
                                 .tth {
-                                    .otr {                                        
+                                    .otr {
                                         .cth {
                                             font-weight: 600;
                                             font-size: 1rem;
-                                            
+
                                             .addbt {
                                                 position: relative;
                                                 display: inline-block;
@@ -1344,15 +1344,15 @@ footer {
                                 .ttd {
                                     font-size: .875rem;
                                     font-weight: 500;
-                                    
+
                                     .otr {
                                         align-items: center;
-                                        
+
                                         @include respond-to(ynw-767){
                                             flex-flow: column;
                                             align-items: flex-start;
                                         }
-                                        
+
                                         .mbt {
                                             right: -20px;
                                             /*opacity: 0;*/
@@ -1361,35 +1361,35 @@ footer {
                                             position: absolute;
                                             font-size: 1rem;
                                             color: $cc-darkgray;
-                                            
+
                                             @include respond-to(ynw-767){
                                                 display: none;
                                             }
-                                            
+
                                             &:before {
                                                 display: none;
                                             }
-                                            
+
                                             @include respond-to(ynw-767){
                                                 opacity: 1;
                                             }
-                                            
+
                                             &:hover {
                                                 color: $linkblue;
                                             }
                                         }
-                                        
+
                                         .ctd {
                                             width: 33%;
-                                            
+
                                             @include respond-to(ynw-767){width: 100%;}
-                                            
+
                                             .mbt-mobile-show {
                                                 width: 100%;
                                                 display: flex;
                                                 justify-content: flex-end;
                                                 display: none;
-                                                
+
                                                 @include respond-to(ynw-767){
                                                     display: block;
                                                     text-align: right;
@@ -1431,10 +1431,10 @@ footer {
                                                     display: none;
                                                 }
                                             }
-                                            
+
                                             &:last-child {
                                                 display: none;
-                                                
+
                                                 @include respond-to(ynw-767){
                                                     display: block;
                                                 }
@@ -1449,7 +1449,7 @@ footer {
                                             }
                                         }
                                     }
-                                    
+
                                     /*&:hover {
                                         .otr {
                                             .mbt {
@@ -1461,16 +1461,16 @@ footer {
                             }
                         }
                     }
-                    
+
                     .cd-b {
                         padding: 20px;
-                        
+
                         .loc-i {
                             .loc-panl {
                                 position: relative;
                                 margin-bottom: 20px;
                                 border: 1px solid $cc-body;
-                                
+
                                 .editbt {
                                     position: absolute;
                                     right: 10px;
@@ -1480,7 +1480,7 @@ footer {
                                         background: $cc-ash;
                                     }
                                 }
-                                
+
                                 .title {
                                     height: auto;
                                     background: $cc-body;
@@ -1488,44 +1488,44 @@ footer {
                                     justify-content: flex-start;
                                     padding: 10px 20px;
                                     @include border-radius(0);
-                                    
+
                                     h3 {
-                                        margin: 0;                                        
+                                        margin: 0;
                                         font-size: 1.125rem;
                                         color: $cc-darkgray;
                                         font-weight: 600;
                                     }
                                 }
-                                
+
                                 .copy {
                                     padding: 20px;
                                     display: flex;
                                     font-size: .875rem;
                                     font-weight: 500;
-                                    
+
                                     @include respond-to(ynw-767){
                                         flex-direction: column;
                                     }
-                                    
+
                                     .cop-l {
                                         width: 50%;
-                                        
+
                                         @include respond-to(ynw-767){
                                             width: 100%;
                                             margin-bottom: 10px;
                                         }
-                                        
+
                                         h4 {
                                             color: $cc-darkgray;
                                             font-size: 1.125rem;
                                             @include font-medium;
                                         }
-                                        
+
                                         span {
                                             display: block;
                                             margin-bottom: 5px;
                                             width: 80%;
-                                            
+
                                             @include respond-to(ynw-767) {
                                                 width: 40%;
                                             }
@@ -1533,12 +1533,12 @@ footer {
                                                 width: 100%;
                                             }
                                         }
-                                        
+
                                         .info-lst {
                                             width: 80%;
                                             margin-top: 20px;
                                             min-height: 26px;
-                                            
+
                                             li{
                                                 font-size: inherit;
                                                 font-size: .75rem;
@@ -1548,27 +1548,27 @@ footer {
                                     .cop-r {
                                         width: 50%;
                                         display: table;
-                                        
+
                                         @include respond-to(ynw-767){
                                             width: 100%;
                                         }
-                                        
+
                                         iframe {min-height: 200px;}
-                                        
+
                                         .gps {
                                             position: relative;
                                             padding-left: 26px;
                                             line-height: 1.8;
-                                            
+
                                             span {
                                                 font-weight: 600;
                                                 margin-right: 20px;
-                                                
+
                                                 &:last-child {
                                                     margin: 0;
                                                 }
                                             }
-                                            
+
                                             &:before {
                                                 position: absolute;
                                                 @include font-custom;
@@ -1578,13 +1578,13 @@ footer {
                                             }
                                         }
                                     }
-                                    
+
                                     .amt-list {
                                         display: flex;
                                         flex-wrap: wrap;
                                         margin: 0;
                                         padding: 0;
-                                        
+
                                         li {
                                             list-style: none;
                                             font-size: 1.5rem;
@@ -1594,10 +1594,10 @@ footer {
                                             margin-bottom: 10px;
                                             width: 24px;
                                             height: 24px;
-                                            
+
                                             &:last-child {
                                                 margin-left: 20px;
-                                                
+
                                                 &:before {
                                                     position: absolute;
                                                     width: 1px;
@@ -1607,7 +1607,7 @@ footer {
                                                     left: -20px;
                                                     top: 0px;
                                                 }
-                                                
+
                                                 .editbt {
                                                     font-size: 1rem;
                                                     top: -4px;
@@ -1618,7 +1618,7 @@ footer {
                                     }
                                     &.wrk-hrs {
                                         display: block;
-                                        
+
                                         .whrs {
                                             margin: 0 0 10px 0;
                                             padding: 0;
@@ -1635,7 +1635,7 @@ footer {
                                                 height: auto;
                                                 padding: 10px;
                                                 border-bottom: 1px solid $cc-body;
-                                                
+
                                                 @include respond-to(ynw-575){
                                                     flex-direction: column;
                                                     align-items: flex-start;
@@ -1671,7 +1671,7 @@ footer {
                                         }
                                     }
                                 }
-                                
+
                                 h5 {
                                     text-transform: uppercase;
                                     font-weight: 600;
@@ -1682,23 +1682,23 @@ footer {
                                     border-bottom: 1px solid $cc-body;
                                     margin:0;
                                 }
-                                
+
                                 &:last-child {
                                     margin-bottom: 0;
                                 }
                             }
                         }
-                        
-                        .emltbl {                            
+
+                        .emltbl {
                             .tbl-list {
                                 min-width: 100%;
-                                
+
                                 .tth {
                                     .otr {
                                         .cth {
                                             font-weight: 600;
                                             font-size: 1rem;
-                                            
+
                                             .addbt {
                                                 position: relative;
                                                 display: inline-block;
@@ -1716,15 +1716,15 @@ footer {
                                 .ttd {
                                     font-size: .875rem;
                                     font-weight: 500;
-                                    
+
                                     .otr {
                                         align-items: center;
-                                        
+
                                         @include respond-to(ynw-767){
                                             flex-flow: column;
                                             align-items: flex-start;
                                         }
-                                        
+
                                         .mbt {
                                             right: -20px;
                                             /*opacity: 0;*/
@@ -1733,35 +1733,35 @@ footer {
                                             position: absolute;
                                             font-size: 1rem;
                                             color: $cc-darkgray;
-                                            
+
                                             @include respond-to(ynw-767){
                                                 display: none;
                                             }
-                                            
+
                                             &:before {
                                                 display: none;
                                             }
-                                            
+
                                             @include respond-to(ynw-767){
                                                 opacity: 1;
                                             }
-                                            
+
                                             &:hover {
                                                 color: $linkblue;
                                             }
                                         }
-                                        
+
                                         .ctd {
                                             width: 33%;
-                                            
+
                                             @include respond-to(ynw-767){width: 100%;}
-                                            
+
                                             .mbt-mobile-show {
                                                 width: 100%;
                                                 display: flex;
                                                 justify-content: flex-end;
                                                 display: none;
-                                                
+
                                                 @include respond-to(ynw-767){
                                                     display: block;
                                                     text-align: right;
@@ -1803,15 +1803,15 @@ footer {
                                                     display: none;
                                                 }
                                             }
-                                            
+
                                             &:last-child {
                                                 display: none;
-                                                
+
                                                 @include respond-to(ynw-767){
                                                     display: block;
                                                 }
                                             }
-                                            
+
                                             &:nth-child(3) {
                                                 span {
                                                     display: block;
@@ -1822,7 +1822,7 @@ footer {
                                             }
                                         }
                                     }
-                                    
+
                                     /*&:hover {
                                         .otr {
                                             .mbt {
@@ -1834,7 +1834,7 @@ footer {
                             }
                         }
                     }
-                    
+
                     .ai-table {
                         .tbl-ai {
                             margin: 0;
@@ -1998,7 +1998,7 @@ footer {
                     }
                 }
             }
-            
+
             &.spc-extra, &.add-extra {
                 .mat-accordion {
                     .acc-cont {
@@ -2007,37 +2007,37 @@ footer {
                         border: 1px solid $cc-body;
                         border-bottom: none;
 
-                        .mat-accordion {                            
-                            width: 100%;                            
+                        .mat-accordion {
+                            width: 100%;
                             border-radius: 0;
-                            
+
                             .mat-expansion-panel {
                                 border-radius: 0;
                                 background: transparent;
-                                
+
                                 .mat-expansion-panel-header {
                                     min-height: 40px;
                                     padding: 0 10px;
                                     height: 40px !important;
                                     @include transition(all 300ms);
-                                    
+
                                     .mat-content {
                                         mat-panel-title {
                                             font-size: .875rem;
                                             text-transform: uppercase;
                                             font-weight: 500;
                                         }
-                                        
+
                                         mat-panel-description {
                                             margin-right: 0;
-                                            
+
                                             .material-icons {
                                                 font-size: 1.5rem;
                                                 color: $linkblue;
                                             }
                                         }
                                     }
-                                    
+
                                     &:hover {
                                         background: $cc-body;
                                     }
@@ -2045,15 +2045,15 @@ footer {
                                 .mat-expansion-panel-content {
                                     .mat-expansion-panel-body {
                                         padding-bottom: 0;
-                                        
+
                                         .cont-btn {
                                             padding: 20px;
                                             position: relative;
-                                            
+
                                             p {
                                                 float: none;
                                             }
-                                            
+
                                             .editbt {
                                                 font-size: 1rem;
                                                 top: -35px;
@@ -2061,18 +2061,18 @@ footer {
                                                 color: $linkblue;
                                                 position: absolute;
                                                 width: 30px;
-                                                height: 30px;    
+                                                height: 30px;
                                                 @include border-radius(50%);
                                                 @include transition(all 300ms);
                                                 /*opacity: 0;*/
-                                                
+
                                                 /*@include respond-to(ynw-767){
                                                     opacity: 1;
                                                 }
                                                 @include respond-to(ynw-768-991){
                                                     opacity: 1;
                                                 }*/
-                                                
+
                                                 &:hover {
                                                     background: $cc-ash;
                                                 }
@@ -2080,11 +2080,11 @@ footer {
                                         }
                                     }
                                 }
-                                
+
                                 &.mat-expanded {
                                     .mat-expansion-panel-header {
                                         background: $cc-body;
-                                        
+
                                         .mat-content {
                                             mat-panel-title {
                                                 color: $linkblue;
@@ -2104,7 +2104,7 @@ footer {
                                     .mat-expansion-panel-header{
                                         position: relative;
 
-                                        .mat-content {                                            
+                                        .mat-content {
                                             mat-panel-title {
                                                 padding-left: 20px;
                                             }
@@ -2115,8 +2115,8 @@ footer {
                                         }
                                     }
                                 }
-                                
-                                
+
+
                             }
                             &:hover {
                                 .mat-expansion-panel {
@@ -2141,13 +2141,13 @@ footer {
                     }
                 }
             }
-            
+
             .special-dta, .lang-dta {
                 position: relative;
                 margin: 0 20px;
                 display: flex;
                 flex-wrap: wrap;
-                
+
                 .editbt {
                     position: absolute;
                     right: 0;
@@ -2158,12 +2158,12 @@ footer {
                     height: 30px;
                     @include border-radius(50%);
                     @include transition(all 300ms);
-                    
+
                     &:hover {
                         background: $cc-ash;
                     }
                 }
-                
+
                 div {
                     @include border-radius(30px);
                     border:1px solid $cc-mediumgray;
@@ -2173,7 +2173,7 @@ footer {
                     margin-bottom: 10px;
                 }
             }
-            
+
             .lang-dta {
                 div {
                     @include border-radius(0px);
@@ -2203,11 +2203,11 @@ footer {
                             font-weight: 600;
                         }
                     }
-                    
+
                     .ph-gal-bx {
                         padding-left: 20px;
                         padding-right: 20px;
-                        
+
                         .ph-gal {
                             display: flex;
                             align-items: center;
@@ -2220,23 +2220,23 @@ footer {
 
                             li {
                                 list-style: none;
-                                flex-grow: 1;                                
-                                margin-right: 10px;                                
+                                flex-grow: 1;
+                                margin-right: 10px;
                                 background: $cc-lightgray;
                                 margin-top: 10px;
-                                
+
                                 @include respond-to(ynw-767){
                                     margin-top: 0;
                                 }
                                 @include respond-to(ynw-768-991){
                                     margin-top: 0;
                                 }
-                                
+
                                 .galbx {
                                     position: relative;
                                     width: 100%;
                                     height: 100px;
-                                    
+
                                     @include respond-to(ynw-767){
                                         height: 100px;
                                     }
@@ -2249,7 +2249,7 @@ footer {
                                     @include respond-to(ynw-992-1199){
                                         height: 80px;
                                     }
-                                    
+
                                     .mbt {
                                         position: absolute;
                                         right: 0;
@@ -2260,11 +2260,11 @@ footer {
                                         opacity: 0;
                                         color: $white;
                                         @include transition(all 300ms);
-                                        
+
                                         &:before {
                                             display: none;
                                         }
-                                        
+
                                         @include respond-to(ynw-767){
                                             opacity: 1;
                                         }
@@ -2272,7 +2272,7 @@ footer {
                                             opacity: 1;
                                         }
                                     }
-                                    
+
                                     .img-h {
                                         position: absolute;
                                         width: 100%;
@@ -2280,7 +2280,7 @@ footer {
                                         top: 0;
                                         left: 0;
                                         z-index: 2;
-                                        
+
                                         .overlay-y {
                                             position: absolute;
                                             opacity: 0;
@@ -2290,28 +2290,28 @@ footer {
                                             height: 100%;
                                             z-index: 3;
                                         }
-                                        
+
                                         img {
                                             width: 100%;
                                             height: 100%;
                                         }
                                     }
-                                    
+
                                     &:hover {
                                         cursor: pointer;
-                                        
+
                                         .img-h {
                                             .overlay-y {
                                                 opacity: 1;
                                             }
                                         }
-                                        
+
                                         .mbt {
                                             opacity: 1;
                                         }
                                     }
-                                    
-                                    &:before {                                        
+
+                                    &:before {
                                         content: "";
                                         background: url(../images/img-null.svg) no-repeat scroll center center/ 80%;
                                         position: absolute;
@@ -2327,25 +2327,25 @@ footer {
                                     height: 200px;
                                     margin-top: 0px;
                                     margin-right: 0;
-                                    
+
                                     @include respond-to(ynw-767){
                                         height: inherit;
                                         width: auto;
                                         margin-bottom: 0;
                                         margin-right: 10px;
-                                        flex-grow: 1; 
+                                        flex-grow: 1;
                                     }
                                     @include respond-to(ynw-768-991){
                                         height: inherit;
                                         width: auto;
                                         margin-bottom: 0;
                                         margin-right: 10px;
-                                        flex-grow: 1; 
+                                        flex-grow: 1;
                                     }
-                                    
+
                                     .galbx {
                                         height: 200px;
-                                        
+
                                         @include respond-to(ynw-767){
                                             height: 100px;
                                         }
@@ -2359,7 +2359,7 @@ footer {
                                 }
                                 &:last-child {
                                     margin-right: 0;
-                                    
+
                                     .galbx {
                                         .mre {
                                             position: absolute;
@@ -2385,10 +2385,10 @@ footer {
                                     height: auto;
                                     width: auto;
                                     margin-top: 0;
-                                    
+
                                     .galbx {
                                         height: 100px;
-                                        
+
                                         @include respond-to(ynw-767){
                                             height: 100px;
                                         }
@@ -2396,13 +2396,13 @@ footer {
                                             height: 150px;
                                         }
                                     }
-                                    
+
                                     &:first-child {
                                         margin-right: 10px;
-                                        
+
                                         .galbx {
                                             height: 100px;
-                                            
+
                                             @include respond-to(ynw-767){
                                                 height: 100px;
                                             }
@@ -2423,7 +2423,7 @@ footer {
                             color: $linkblue;
                         }
                     }
-                    
+
                     .cd-t {
                         padding-bottom: 20px;
                         padding-top: 0;
@@ -2431,7 +2431,7 @@ footer {
                             .sbl {
                                 margin: 0 0 20px 0;
                                 padding: 0;
-                                
+
                                 li {
                                     list-style: none;
                                     position: relative;
@@ -2439,7 +2439,7 @@ footer {
                                     align-items: center;
                                     font-size: .875rem;
                                     height: 40px;
-                                    
+
                                     a {
                                         color: $linkblack;
                                         @include font-regular;
@@ -2455,12 +2455,12 @@ footer {
                                         text-overflow: ellipsis;
                                         white-space: nowrap;
                                         overflow: hidden;
-                                        
+
                                         &:hover {
                                             color: $linkblue;
                                         }
                                     }
-                                    
+
                                     .mbt {
                                         right: 25px;
                                         top: 0;
@@ -2473,11 +2473,11 @@ footer {
                                         font-size: 1rem;
                                         z-index: 4;
                                         overflow: visible;
-                                        
+
                                         &:before {
                                             display: none;
                                         }
-                                        
+
                                         @include respond-to(ynw-767){
                                             opacity: 1;
                                         }
@@ -2485,19 +2485,19 @@ footer {
                                             opacity: 1;
                                         }
                                     }
-                                    
+
                                     &:before {
                                         font-size: 1.5rem;
                                         position: absolute;
                                         z-index: 0;
                                     }
-                                    
+
                                     &:hover {
                                         .mbt {
                                             opacity: 1;
                                         }
                                     }
-                                    
+
                                     &.fb{
                                         &:before {
                                             color: #627aac;
@@ -2540,11 +2540,11 @@ footer {
                             }
                         }
                     }
-                    
+
                     .cd-b {
                         padding: 20px;
                         padding-bottom: 0px;
-                        
+
                         .info-lst {
                             min-height: 24px;
                             li {
@@ -2567,23 +2567,23 @@ footer {
             width: 100%;
             margin-bottom: 30px;
             font-size: .875rem;
-            
+
             .hd-t {
                 padding: 20px;
                 display: flex;
                 align-items: center;
                 border-bottom: 1px solid $cc-ash;
-                
+
                 h2 {
                     font-size: 1.25rem;
                     font-weight: 500 !important;
                     margin-bottom: 0;
                 }
-                
+
                 .ctrl {
                     margin-left: 20px;
                 }
-                
+
                 .info {
                     i {
                         font-size: 1.25rem;
@@ -2591,7 +2591,7 @@ footer {
                     }
                 }
             }
-            
+
             app-provider-waitlist-online-checkin {
                 .bt2 {
                     background-color: $cc-ash !important;
@@ -2599,31 +2599,31 @@ footer {
                     margin-left: 10px !important;
                 }
             }
-            
+
             .copy {
                 padding: 20px 40px;
-                
+
                 @include respond-to(ynw-575){
                     padding: 20px 10px;
                 }
-                
+
                 .row {
                     margin-bottom: 20px;
                     margin-left: 0;
                     margin-right: 0;
                 }
-                
+
                 .lbl {
-                    
+
                     @include respond-to(ynw-767){
                         margin-bottom: 15px;
                     }
-                    
+
                     @include respond-to(ynw-575){
                         padding-left: 0;
                         padding-right: 0;
                     }
-                    
+
                     label {
                         font-weight: 600;
                         margin-bottom: 0;
@@ -2639,14 +2639,14 @@ footer {
                             margin-left: 10px;
                             margin-bottom: 0;
                         }
-                        
+
                         &.fxd {
-                            
+
                             .form-group {
                                 display: flex;
                                 height: 40px;
                                 align-items: center;
-                                
+
                                 input[type="number"] {
                                     width: 100px;
                                     margin-left: 15px;
@@ -2657,14 +2657,14 @@ footer {
                     }
                 }
             }
-            
+
             .b-link {
                 padding: 20px;
                 border: 1px solid $linkblue;
                 @include border-radius(5px);
                 cursor: pointer;
                 @include transition(all 300ms);
-                
+
                 h2 {
                     margin-bottom: 0;
                     font-size: 1.25rem;
@@ -2672,7 +2672,7 @@ footer {
                     display: flex;
                     align-items: center;
                     color: $linkblue;
-                    
+
                     span {
                         @include border-radius(24px);
                         width: 20px;
@@ -2688,14 +2688,14 @@ footer {
                         justify-content: center;
                     }
                 }
-                
+
                 &:hover {
                     background: $hover-blue;
                     border-color: transparent;
-                    
+
                     h2 {
                         color: $white;
-                        
+
                         span {
                             background: $white;
                             color: $linkblue;
@@ -2703,12 +2703,12 @@ footer {
                     }
                 }
             }
-            
+
             .mat-button {
                 margin-left: 50px;
                 margin-bottom: 20px;
             }
-            
+
             app-form-success-display {
                 .sts-msg {
                     @include border-bottom-radius(5px);
@@ -2730,22 +2730,22 @@ footer {
 
 .content {
     &.loc-list {
-        
+
         .n-loc {
             width: 100%;
             position: relative;
-            
+
             .add-nloc {
                 position: absolute;
                 top: -43px;
                 right: 20px;
-                
+
                 @include respond-to(ynw-575){
                     height: auto;
                     position: static;
                     margin-bottom: 20px;
                 }
-                
+
                 &:hover {
                     background: $linkblue;
                 }
@@ -2753,21 +2753,21 @@ footer {
         }
         .card {
             margin-bottom: 30px;
-            
+
             .copy {
                 position: relative;
-                
+
                 .mbt {
                     right: 0;
                     position: absolute;
                     top: 0px;
                     z-index: 51;
-                    
+
                     &:before {
                         display: none;
                     }
                 }
-                
+
                 h3 {
                     font-size: 1.125rem;
                     font-weight: 500 !important;
@@ -2775,39 +2775,39 @@ footer {
                     color: $linkblue;
                     display: inline-block;
                 }
-                
+
                 p{
                     &:last-child {
                         margin-bottom: 0;
                     }
                 }
-                
+
                 .it-des {
                     margin-bottom: 20px;
                 }
-                
+
                 .c-ot {
                     display: flex;
                     font-size: .875rem;
                     margin-bottom: 20px;
-                    
+
                     @include respond-to(ynw-575){
                         flex-direction: column;
                     }
-                    
+
                     .item {
                         font-weight: 600;
                         width: 30%;
-                        
+
                         @include respond-to(ynw-575){
                             margin-bottom: 15px;
                             width: 100%;
-                            
+
                             &:last-child {
                                 margin-bottom: 0;
                             }
                         }
-                        
+
                         .ttle {
                             color: $cc-mediumgray;
                             display: block;
@@ -2816,13 +2816,13 @@ footer {
                         .noti-it {
                             font-weight: 500;
                         }
-                        
+
                         [class^="icon-"], [class*=" icon-"] {
                             padding-left: 20px;
                             position: relative;
                             display: flex;
                             align-items: center;
-                            
+
                             &:before {
                                 position: absolute;
                                 left: 0;
@@ -2835,29 +2835,29 @@ footer {
                         margin: 0;
                     }
                 }
-                
+
                 &.locd {
                     display: flex;
                     font-size: .875rem;
-                    
+
                     @include respond-to(ynw-767){
                         flex-direction: column;
                     }
-                    
+
                         .lbl {
                             .cl1 {
                                 padding: 20px 0;
                                 display: flex;
                                 position: relative;
                                 padding-bottom: 60px;
-                                
+
                                 @include respond-to(ynw-767){
                                     flex-direction: column;
                                 }
                                 @include respond-to(ynw-768-991){
                                     flex-direction: column;
                                 }
-                                
+
                                 .btm-ctrl {
                                     position: absolute;
                                     left: 0;
@@ -2868,23 +2868,23 @@ footer {
                                     width: 100%;
                                     border-top: 1px solid $cc-ash;
                                     /*padding: 0 10px;*/
-                                    
+
                                     @include respond-to(ynw-400){
                                         padding: 10px;
                                         flex-direction: column;
                                         align-items: flex-start;
                                         height: 60px;
                                     }
-                                    
+
                                     .ctrl {
                                         flex-grow: 1;
-                                        
-                                        &.enable-disable {       
+
+                                        &.enable-disable {
                                             font-size: .75rem;
                                             font-weight: 600;
                                             display: flex;
                                             align-items: center;
-                                            
+
 
                                             .ttle {
                                                 padding-right: 15px;
@@ -2902,33 +2902,33 @@ footer {
                                             text-align: right;
                                         }
                                     }
-                                    
+
                                 }
-                                
+
                                 .editbt {
                                     position: absolute;
                                     right: 0px;
                                     top: 15px;
                                     z-index: 11;
                                 }
-                                
+
                                 .ot-it {
                                     width: 100%;
-                                    
+
                                     h4 {
                                         font-size: 1.125rem;
                                         font-weight: 500 !important;
                                     }
-                                    
+
                                     &.que {
                                         .c-ot {
                                             .item {
                                                 width: 50%;
-                                                
+
                                                 @include respond-to(ynw-575){
                                                     width: 100%;
                                                 }
-                                                
+
                                                 .it0 {
                                                     border: 1px solid $cc-ash;
                                                     padding: 3px 8px;
@@ -2942,18 +2942,18 @@ footer {
                                         }
                                     }
                                 }
-                                
+
                                 .cop-l {
                                     flex-grow: 1;
                                     width: 70%;
-                                    
+
                                     @include respond-to(ynw-767){
                                         width: 100%;
                                     }
                                     @include respond-to(ynw-768-991){
                                         width: 100%;
                                     }
-                                    
+
                                     .bse-lcn-label {
                                         font-size: .75rem;
                                         font-weight: 600;
@@ -2962,7 +2962,7 @@ footer {
                                         display: table;
                                         padding-left: 16px;
                                         margin-bottom: 2px;
-                                        
+
                                         &:before {
                                             position: absolute;
                                             left: 0;
@@ -2972,7 +2972,7 @@ footer {
                                             height: 14px;
                                         }
                                     }
-                                    
+
                                     h4 {
                                         font-size: 1.125rem;
                                         font-weight: 500 !important;
@@ -2989,7 +2989,7 @@ footer {
                                     padding-right: 50px;
                                     position: relative;
                                     display: table;
-                                    
+
                                     @include respond-to(ynw-767){
                                         width: 100%;
                                         padding-right: 0;
@@ -3000,11 +3000,11 @@ footer {
                                         padding-right: 0;
                                         margin-top: 20px;
                                     }
-                                    
+
                                     iframe {
                                         min-height: 200px;
                                     }
-                                    
+
                                     .gps {
                                         padding-left: 26px;
                                         position: relative;
@@ -3028,36 +3028,36 @@ footer {
                                     }
                                 }
 
-                                
+
                             }
                         }
                         .lbr {
                             background: $cc-detailgray;
                             @include border-right-radius(5px);
-                            
+
                             @include respond-to(ynw-767){
                                 @include border-right-radius(0px);
                                 @include border-bottom-radius(5px);
                             }
-                            
+
                             .cr1 {
                                 padding: 20px 0;
                                 position: relative;
-                                
+
                                 .editbt {
                                     position: absolute;
                                     right: 0px;
                                     top: 15px;
                                     z-index: 11;
                                 }
-                                
+
                                 h5 {
                                     text-transform: uppercase;
                                     font-size: .875rem;
                                     font-weight: 600;
                                     margin-bottom: 20px;
                                 }
-                                
+
                                 .amt-list {
                                     display: flex;
                                     flex-wrap: wrap;
@@ -3075,7 +3075,7 @@ footer {
                                         height: 30px;
                                     }
                                 }
-                                
+
                                 .ph-gal-bx {
                                     .ph-gal {
                                         display: flex;
@@ -3196,7 +3196,7 @@ footer {
                                                     }
                                                 }
                                             }
-                                            
+
                                             &:nth-child(1), &:nth-child(2), &:nth-child(3) {
                                                 margin-top: 0;
                                             }
@@ -3239,14 +3239,14 @@ footer {
                                         color: $linkblue;
                                     }
                                 }
-                                
+
                                 .sch-ot {
                                     .sch-rw {
                                         font-size: .875rem;
                                         display: flex;
                                         flex-wrap: wrap;
                                         margin-bottom: 10px;
-                                        
+
                                         .day {
                                             font-weight: 600;
                                             width: auto;
@@ -3259,10 +3259,10 @@ footer {
                                 }
                             }
                         }
-                    
+
                 }
             }
-            
+
             .lc-title {
                 padding: 20px;
                 h5 {
@@ -3271,7 +3271,7 @@ footer {
                     font-size: 1rem;
                     margin-bottom: 0;
                     display: flex;
-                    
+
                     span {
                         @include border-radius(24px);
                         width: 20px;
@@ -3288,7 +3288,7 @@ footer {
                     }
                 }
             }
-            
+
             &.w-dta {
                 &.active {
                     .lc-title {
@@ -3296,11 +3296,11 @@ footer {
                             color: $linkblue;
                         }
                     }
-                    
+
                     .lc-content {
                         .q-tbl {
                             overflow: auto;
-                            
+
                             .tbl-list {
                                 margin-bottom: 20px;
                                 font-size: .875rem;
@@ -3355,33 +3355,33 @@ footer {
                                 }
                             }
                         }
-                        
+
                     }
                 }
             }
-            
+
             .q-tbl {
-                padding: 0;                
+                padding: 0;
                 font-size: .875rem;
-                
+
                 table {
                     border: none;
                     margin-bottom: 0;
-                    
+
                     thead {
-                        background-color: $cc-ash;                        
+                        background-color: $cc-ash;
 
                         tr {
                             th {
                                 color: $linkblack;
-                                
+
                                 .addbt {
                                     margin-left: auto;
                                 }
-                                
+
                                 &:last-child {
                                     position: relative;
-                                    
+
                                     .addbt {
                                         position: absolute;
                                         right: 15px;
@@ -3396,22 +3396,22 @@ footer {
                         tr{
                             td {
                                 font-weight: 500;
-                                
+
                                 &[data-title="Queue"] {
                                     color: $linkblue;
-                                    
+
                                     &:before {
                                         color: $linkblack;
                                     }
                                 }
-                                
+
                                 .schtd {
                                     display: flex;
-                                    
+
                                     @include respond-to(ynw-575) {
                                         flex-direction: column;
                                     }
-                                    
+
                                     .day {
                                         font-weight: 600;
                                         margin-right: 15px;
@@ -3432,16 +3432,16 @@ footer {
                                     position: absolute;
                                     right: 5px;
                                     top: 0;
-                                    
+
                                     @include respond-to(ynw-767) {
                                         display: none;
                                     }
-                                    
+
                                     &:before {
                                         display: none;
                                     }
                                 }
-                                
+
                                 .mbt-mobile-show {
                                     width: 55%;
                                     display: flex;
@@ -3483,11 +3483,11 @@ footer {
                                         display: none;
                                     }
                                 }
-                                
+
                                 &:last-child {
                                     position: relative;
                                 }
-                                
+
                                 &.disabled {
                                     color: $linkblack;
                                 }
@@ -3495,7 +3495,7 @@ footer {
                                     [class^="icon-"],[class*=" icon-"] {
                                         display: flex;
                                         align-items: center;
-                                        
+
                                         &:before {
                                             margin-right: 5px;
                                             font-size: 1rem;
@@ -3514,7 +3514,7 @@ footer {
                     }
                 }
             }
-            
+
             &.bse-lcn {
                 .copy {
                     .bse-lcn-label {
@@ -3525,7 +3525,7 @@ footer {
                         display: table;
                         padding-left: 16px;
                         margin-bottom: 3px;
-                        
+
                         &:before {
                             position: absolute;
                             left: 0;
@@ -3541,7 +3541,7 @@ footer {
                 background: #f7f7f7;
             }
         }
-        
+
         .cst-acc {
             .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
                 background: $white;
@@ -3549,15 +3549,15 @@ footer {
             .mat-expansion-panel-header {
                 @include border-radius(5px);
                 background: $white;
-                
+
                 &:hover {
                     background: $white;
-                    
+
                     .mat-content {
                         .mat-expansion-panel-header-title {
                             h5 {
                                 color: $linkblue;
-                                
+
                                 .count {
                                     background: $linkblue;
                                 }
@@ -3568,7 +3568,7 @@ footer {
                 &.mat-expanded {
                     h5 {
                         color: $linkblue;
-                        
+
                         .count {
                             background: $linkblue;
                         }
@@ -3587,7 +3587,7 @@ footer {
         &.w-dta {
             margin: 30px 0;
             font-size: .875rem;
-            
+
             .head {
                 display: flex;
                 height: 50px;
@@ -3597,7 +3597,7 @@ footer {
                 justify-content: center;
                 font-size: 1rem;
                 margin-bottom: 20px;
-                
+
                 @include respond-to(ynw-767){
                     flex-direction: column;
                     height: auto;
@@ -3606,17 +3606,17 @@ footer {
                     flex-direction: column;
                     height: auto;
                 }
-                
+
                 .locn {
                     position: absolute;
                     display: flex;
                     align-items: center;
                     left: 0;
-                    padding: 0px 20px;                    
+                    padding: 0px 20px;
                     font-weight: 600;
                     font-size: .875rem;
-                    
-                    .mat-form-field {                        
+
+                    .mat-form-field {
                         .mat-input-wrapper {
                             padding-bottom: 0px;
 
@@ -3656,7 +3656,7 @@ footer {
                                         border: 1px solid $cc-formbg;
                                         display: flex;
                                         align-items: center;
-                                        
+
                                         .mat-select-value-text {
                                             font-weight: 500;
                                         }
@@ -3665,7 +3665,7 @@ footer {
                             }
                         }
                     }
-                    
+
                     .icon-close {
                         height: 40px;
                         cursor: pointer;
@@ -3674,7 +3674,7 @@ footer {
                         background: $cc-formbg;
                         color: $linkblack;
                         font-weight: 700;
-                        
+
                         &:before {
                             font-size: .875rem !important;
                             width: 20px;
@@ -3683,14 +3683,14 @@ footer {
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            
+
                         }
-                        
+
                         &:hover {
                             color: $linkblue;
                         }
                     }
-                    
+
                     @include respond-to(ynw-767){
                         position: relative;
                         width: 100%;
@@ -3705,7 +3705,7 @@ footer {
                         height: 50px;
                         justify-content: center;
                     }
-                    
+
                     .icon-edit {
                         margin-left: 10px;
                         color: $linkblue;
@@ -3716,7 +3716,7 @@ footer {
                 }
                 .links {
                     display: flex;
-                    
+
                     .lnk {
                         border-left: 1px solid $cc-body;
                         padding: 0 30px;
@@ -3728,7 +3728,7 @@ footer {
                         color: $cc-mediumgray;
                         font-weight: 500;
                         @include transition(all 300ms);
-                        
+
                         @include respond-to(ynw-767){
                             padding: 0 15px;
                             height: 40px;
@@ -3774,7 +3774,7 @@ footer {
                         }
                         &:last-child {
                             border-right: 1px solid $cc-body;
-                        }    
+                        }
                         &:hover {
                             color: $linkblue;
 
@@ -3785,22 +3785,22 @@ footer {
                         }
                     }
                 }
-                
+
             }
-            
+
             .qlst {
                 padding: 0 20px 20px 20px;
                 overflow: auto;
-                
+
                 ul {
                     margin: 0;
                     padding: 0;
                     display: flex;
-                    
+
                     li {
                         list-style: none;
                         margin-right: 10px;
-                        
+
                         .qname {
                             @include border-radius(100px);
                             background-color: $cc-body;
@@ -3809,7 +3809,7 @@ footer {
                             cursor: pointer;
                             font-size: .75rem;
                             padding: 5px 10px;
-                            
+
                             .qtitle, .wlst {
                                 display: block;
                                 line-height: 15px;
@@ -3819,7 +3819,7 @@ footer {
                                 font-weight: 500;
                             }
                         }
-                        
+
                         &.active {
                             .qname {
                                 background-color: $green;
@@ -3837,25 +3837,25 @@ footer {
                     font-weight: 500;
                 }
             }
-            
+
             .dash-list {
                 .ctrls {
                     display: flex;
                     padding: 0 20px;
                     align-items: center;
-                    
+
                     @include respond-to(ynw-767){
                         flex-direction: column;
                     }
                     @include respond-to(ynw-575){
                         padding: 0;
                     }
-                    
+
                     ul {
                         display: flex;
                         margin: 0;
                         padding: 0;
-                        
+
                         @include respond-to(ynw-767){
                             order: 1;
                             flex-wrap: wrap;
@@ -3864,16 +3864,16 @@ footer {
                             flex-direction: column;
                             width: 100%;
                         }
-                        
+
                         li {
                             list-style: none;
                             margin-right: 10px;
-                            
+
                             @include respond-to(ynw-575){
                                 margin-right: 0;
                                 border-bottom: 1px solid $white;
                             }
-                            
+
                             span {
                                 height: 40px;
                                 cursor: pointer;
@@ -3884,7 +3884,7 @@ footer {
                                 text-transform: uppercase;
                                 font-weight: 600;
                                 font-size: .75rem;
-                                
+
                                 @include respond-to(ynw-767){
                                     padding: 0 15px;
                                     height: 40px;
@@ -3894,7 +3894,7 @@ footer {
                                     height: 40px;
                                 }
                             }
-                            
+
                             &:last-child {
                                 margin-right: 0;
                             }
@@ -3906,35 +3906,35 @@ footer {
                             }
                         }
                     }
-                    
+
                     .cs-btn {
                         text-transform: uppercase;
                         font-size: .75rem;
                         font-weight: 600;
-                        
+
                         @include respond-to(ynw-767){
                             margin: 0 auto 20px auto;
                         }
-                        
+
                         i {
                             margin-left: 5px;
                             font-size: 1rem;
                         }
                     }
                 }
-                
+
                 .fltr {
                     padding: 10px 20px;
                     background: $linkblue;
                     display: flex;
                     align-items: center;
-                    
+
                     span {
                         margin-left: auto;
                         width: 24px;
                         height: 24px;
                         cursor: pointer;
-                        
+
                         i {
                             color: $white;
                             width: 20px;
@@ -3943,19 +3943,19 @@ footer {
                             align-items: center;
                             justify-content: center;
                             font-size: .875rem;
-                            
+
                             &:before {
                                 animation: rotatereverse 300ms linear 1;
                             }
                         }
                     }
                 }
-                
+
                 .mat-accordion {
                     .mat-expansion-panel {
                         .mat-expansion-panel-header {
                             min-height: 40px;
-                            
+
                             &.mat-expanded {
                                 .mat-content {
                                 i {
@@ -3965,7 +3965,7 @@ footer {
                                     align-items: center;
                                     justify-content: center;
                                     font-size: .875rem;
-                                    
+
                                     &:before {
                                         content: "\69";
                                         animation:rotate 300ms linear 1;
@@ -3974,7 +3974,7 @@ footer {
                                 }
                             }
                         }
-                        
+
                         .mat-expansion-panel-content {
                             .mat-expansion-panel-body {
                                 padding: 0px;
@@ -3984,7 +3984,7 @@ footer {
                                 border-bottom: none;
                                 display: flex;
                                 flex-wrap: wrap;
-                                
+
                                 .form-group, .check_in_date {
                                     flex-grow: 1;
                                     padding: 10px;
@@ -3992,7 +3992,7 @@ footer {
                                     border-right: none;
                                     border-top: none;
                                     margin: 0;
-                                    
+
                                     .col-form-label {
                                         @include font-medium;
                                         font-weight: 600;
@@ -4000,7 +4000,7 @@ footer {
                                         margin-bottom: 5px;
                                         color: $white;
                                     }
-                                    
+
                                     mat-form-field {
                                         width: 100%;
 
@@ -4044,7 +4044,7 @@ footer {
                                             }
                                         }
                                     }
-                                    
+
                                     mat-chip-list {
                                         .mat-chip-list-wrapper {
                                             .mat-chip {
@@ -4053,7 +4053,7 @@ footer {
                                                 background: transparent;
                                                 border: 2px solid $white;
                                                 color: $white;
-                                                
+
                                                 &.mat-chip-selected {
                                                     background: $white;
                                                     color: $linkblack;
@@ -4062,12 +4062,12 @@ footer {
                                         }
                                     }
                                 }
-                                
+
                                 .check_in_date {
                                     flex-grow: 1;
                                     padding: 10px;
                                     margin: 0;
-                                    
+
                                     mat-form-field {
                                         .mat-input-wrapper {
                                             .mat-input-underline, .mat-input-subscript-wrapper {
@@ -4075,18 +4075,18 @@ footer {
                                                 margin-bottom: -15px;
                                                 opacity: 0;
                                             }
-                                            
+
                                             .mat-input-flex {
                                                 align-items: center;
-                                                
+
                                                 .mat-input-suffix {
                                                     width: 40px;
                                                     height: 40px;
-                                                    
+
                                                     button {
                                                         width: 40px;
                                                         height: 40px;
-                                                        
+
                                                         .mat-datepicker-toggle-default-icon {
                                                             width: 30px;
                                                             height: 30px;
@@ -4098,7 +4098,7 @@ footer {
                                         }
                                     }
                                 }
-                                
+
                             }
                         }
                         &.mat-expanded {
@@ -4109,13 +4109,13 @@ footer {
                         }
                     }
                 }
-                
-                .d-tbl {                    
+
+                .d-tbl {
                     .table {
                         border: none;
-                        
+
                         thead {
-                            background-color: $cc-gray;                        
+                            background-color: $cc-gray;
 
                             tr {
                                 th {
@@ -4126,17 +4126,17 @@ footer {
                         tbody {
                             tr{
                                 td {
-                                    
+
                                     &.online {
                                         text-align: center;
-                                        
+
                                         span {
                                             color: $green;
                                         }
                                     }
                                     &.name {
                                         font-weight: 600;
-                                        
+
                                         span {
                                             color: $green;
                                             font-size: 1rem;
@@ -4150,23 +4150,23 @@ footer {
                                     &.actions {
                                         display: flex;
                                         flex-wrap: wrap;
-                                        
+
                                         span {
                                             @include border-radius(30px);
                                             height: auto;
-                                            text-transform: none;  
+                                            text-transform: none;
                                             padding: 3px 10px;
                                             display: flex;
                                             margin-right: 5px;
                                             margin-bottom: 5px;
-                                            
+
                                             i {
                                                 font-size: .875rem;
                                                 width: 14px;
                                                 height: 14px;
                                                 margin-top: 1px;
                                             }
-                                            
+
                                             &:hover {
                                                 background-color: $linkblue;
                                                 border-color: $linkblue;
@@ -4175,7 +4175,7 @@ footer {
                                     }
                                     &.payment {
                                         text-align: left;
-                                        
+
                                         .paid-n, .paid-h, .paid-f {
                                             padding: 2px 4px;
                                             background: $cc-lightgray;
@@ -4183,16 +4183,16 @@ footer {
                                             position: relative;
                                             font-weight: 600;
                                             font-size: .75rem;
-                                            
+
                                             .text {
                                                 position: relative;
                                                 z-index: 1;
                                             }
                                         }
-                                        
+
                                         .paid-n {
                                             color: $cc-red;
-                                            
+
                                             &:after {
                                                 width: 100%;
                                                 height: 100%;
@@ -4204,8 +4204,8 @@ footer {
                                                 z-index: 0;
                                             }
                                         }
-                                        .paid-h {                                     color: #e2aa00;   
-                                            
+                                        .paid-h {                                     color: #e2aa00;
+
                                             &:after {
                                                 width: 50%;
                                                 height: 100%;
@@ -4218,7 +4218,7 @@ footer {
                                             }
                                         }
                                         .paid-f {                                     color: $green;
-                                            
+
                                             &:after {
                                                 width: 100%;
                                                 height: 100%;
@@ -4233,12 +4233,12 @@ footer {
                                     }
                                     &.message {
                                         text-align: left;
-                                        
+
                                         span {
                                             cursor: pointer;
                                             font-size: 1.3rem;
                                             @include transition(all 300ms);
-                                            
+
                                             &:hover {
                                                 color: $linkblue;
                                             }
@@ -4246,12 +4246,12 @@ footer {
                                     }
                                     &.cnote {
                                         text-align: center;
-                                        
+
                                         span {
                                             cursor: pointer;
                                             font-size: 1.3rem;
                                             @include transition(all 300ms);
-                                            
+
                                             &:hover {
                                                 color: $linkblue;
                                             }
@@ -4260,7 +4260,7 @@ footer {
                                     &.mre {
                                         .mbt {
                                             top: -10px;
-                                            
+
                                             &:before {
                                                 display: none;
                                             }
@@ -4275,7 +4275,7 @@ footer {
                                 }
                             }
                         }
-                    } 
+                    }
                 }
             }
         }
@@ -4290,11 +4290,11 @@ footer {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            
+
             .card {
                 width: 320px;
                 margin-bottom: 50px;
-                
+
                 @include respond-to(ynw-767) {
                     width: 100%;
                     margin-bottom: 30px;
@@ -4302,7 +4302,7 @@ footer {
                 @include respond-to(ynw-992-1199) {
                     width: 30%;
                 }
-                
+
                 .copy {
                     padding: 0 20px;
                     .hd {
@@ -4310,7 +4310,7 @@ footer {
                         align-items: center;
                         border-bottom: 2px solid $cc-body;
                         margin-bottom: 30px;
-                        
+
                         h2 {
                             font-size: 1.125rem;
                             color: $cc-darkgray;
@@ -4320,7 +4320,7 @@ footer {
                             line-height: 60px;
                             position: relative;
                             padding-left: 40px;
-                            
+
                             &:before {
                                 @include font-custom;
                                 content: "\36";
@@ -4337,18 +4337,18 @@ footer {
                         ul {
                             margin: 0;
                             padding: 0;
-                            
+
                             li {
                                 list-style: none;
                                 display: flex;
                                 font-weight: 500;
                                 font-size: .875rem;
                                 margin-bottom: 20px;
-                                
+
                                 .ttle {
                                     color: $linkblack;
                                     padding-right: 20px;
-                                    
+
                                     .sts {
                                         display: block;
                                         color: $cc-mediumgray;
@@ -4357,7 +4357,7 @@ footer {
                                 .ctrl {
                                     color: $cc-mediumgray;
                                 }
-                                
+
                                 .lnk {
                                     color: $linkblue;
                                     cursor: pointer;
@@ -4422,12 +4422,12 @@ footer {
 .comn-cls {
     .no-dta {
         text-align: center;
-        
+
     }
     .w-dta {
         .card {
             margin-bottom: 30px;
-            
+
             .n-btn {
                 width: 100%;
                 position: relative;
@@ -4510,7 +4510,7 @@ footer {
                 &.q-itm {
                     padding: 0;
                     width: 100%;
-                    
+
                         table {
                             margin: 0;
 
@@ -4539,7 +4539,7 @@ footer {
                                         &:nth-child(1) {
                                             width: 15%;
                                             cursor: pointer;
-                                            
+
                                             .itm-prdct {
                                                 img {
                                                     width: 100%;
@@ -4734,24 +4734,24 @@ footer {
             .copy {
                 display: flex;
                 font-size: .875rem;
-                
+
                 @include respond-to(ynw-767) {
                     flex-direction: column;
                 }
-                
+
                 .left {
                     width: 50%;
                     margin-right: 20px;
-                    
+
                     @include respond-to(ynw-767) {
                         width: 100%;
                     }
-                    
+
                     .lc11, .lc22, .lc33 {
                         .lcd {
                             display: flex;
                             padding: 15px 0;
-                            
+
                             .ttle {
                                 font-weight: 600;
                             }
@@ -4759,11 +4759,11 @@ footer {
                     }
                     .lc11 {
                         margin-bottom: 20px;
-                        
+
                         .bt8 {
                             text-transform: none;
                         }
-                        
+
                         .lc1-1 {
                             .lc-box {
                                 width: 100%;
@@ -4774,13 +4774,13 @@ footer {
 
                                 .tp {
                                     margin-bottom: 15px;
-                                    
+
                                     .ttle {
                                         font-weight: 500;
 
                                         .pkg {
                                             font-weight: 600;
-                                            
+
                                             .icon-question {
                                                 font-size: .75rem;
                                             }
@@ -4807,7 +4807,7 @@ footer {
                                 display: flex;
                                 border: solid 1px #a4e3fa;
                                 border-top: none;
-                                
+
                                 .bt7 {
                                     width: 50%;
                                     border: none;
@@ -4816,7 +4816,7 @@ footer {
                                     font-weight: 500;
                                     @include border-radius(0px);
                                     border-right: 1px solid #a4e3fa;
-                                    
+
                                     &:hover {
                                         background: #a4e3fa;
                                         color: $linkblack;
@@ -4829,13 +4829,13 @@ footer {
                             .subs {
                                 margin-top: 30px;
                                 text-align: center;
-                                
+
                                 h4 {
                                     font-size: .875rem;
                                     text-transform: uppercase;
                                     font-weight: 600;
                                 }
-                                
+
                                 .ttle {
                                     font-weight: 500;
                                     margin-bottom: 10px;
@@ -4843,7 +4843,7 @@ footer {
                                 }
                                 .subs-box {
                                     margin-bottom: 20px;
-                                    
+
                                     .change {
                                         margin-top: 15px;
                                         margin-bottom: 10px;
@@ -4887,7 +4887,7 @@ footer {
                                         .discount {
                                             /*display: block;*/
                                         }
-                                        
+
                                         &.active {
                                             border: none;
                                             cursor: default;
@@ -4902,38 +4902,38 @@ footer {
                                 }
                             }
                         }
-                        
+
                         .lc1-2{
                             display: flex;
-                            
+
                             .bt7 {
                                 flex-grow: 1;
                                 width: 50%;
                             }
                         }
-                        
+
                     }
                     .lc22 {
                         margin-bottom: 20px;
                         padding-top: 15px;
                         border-top: 1px solid $cc-body;
-                        
+
                         @include respond-to(ynw-767) {
                             border-bottom: 1px solid $cc-ash;
                         }
-                        
+
                         .lcd {
                             flex-direction: column;
-                            
+
                             &.lc2-1 {
                                 flex-direction: row;
-                                
+
                                 .ttle {
                                     align-self: center;
                                     text-transform: uppercase;
                                     display: flex;
                                     color: $linkblack;
-                                    
+
                                     .addbt {
                                         margin-left: 20px;
                                         font-size: 1rem;
@@ -4946,32 +4946,32 @@ footer {
                         }
                     }
                 }
-                
+
                 .right {
                     flex-grow: 1;
-                    
+
                     .colum {
                         .lc44 {
                             margin-bottom: 20px;
-                            
+
                             strong {
                                 font-weight: 600;
                             }
-                            
+
                             .lc4-1 {
                                 display: flex;
-                                
+
                                 .lt, .rt {
                                     flex-grow: 1;
-                                    
+
                                     span {
                                         display: table;
                                         font-weight: 500;
-                                        
+
                                         &.amount {
                                             margin-bottom: 10px;
                                         }
-                                        
+
                                         &.ttle {
                                             font-weight: 600;
                                         }
@@ -4991,18 +4991,18 @@ footer {
                                 .pay-tbl {
                                     padding: 0;
                                     margin-top: 20px;
-                                    
+
                                     .table {
                                         margin: 0;
                                         border: 1px solid $cc-mediumgray;
                                         font-size: .875rem;
-                                        
+
                                         thead {
                                             tr {
                                                 th {
                                                     font-weight: 600;
                                                     border: none;
-                                                    
+
                                                     &:last-child {
                                                         text-align: center;
                                                     }
@@ -5013,10 +5013,10 @@ footer {
                                             tr {
                                                 td {
                                                     border: none;
-                                                    
+
                                                     &:last-child {
                                                         text-align: center;
-                                                        
+
                                                         span {
                                                             color: $linkblue;
                                                             font-size: 1rem;
@@ -5049,11 +5049,11 @@ footer {
                                 ul {
                                     margin: 15px 0 0 0;
                                     padding: 0;
-                                    
+
                                     li {
                                         list-style: none;
                                         margin-bottom: 15px;
-                                        
+
                                         &:last-child {
                                             margin-bottom: 0;
                                         }
@@ -5062,22 +5062,22 @@ footer {
                             }
                         }
                     }
-                    
+
                     .lc33 {
                         margin-bottom: 20px;
                         padding-top: 15px;
                         border-top: 1px solid $cc-body;
-                        
-                        .lcd {                            
+
+                        .lcd {
                             &.lc3-1 {
                                 flex-direction: row;
-                                
+
                                 .ttle {
                                     align-self: center;
                                     text-transform: uppercase;
                                     display: flex;
                                     color: $linkblack;
-                                    
+
                                     .addbt {
                                         margin-left: 20px;
                                         font-size: 1rem;
@@ -5088,22 +5088,22 @@ footer {
                                 border-bottom: 1px solid $cc-body;
                                 padding-bottom: 10px;
                                 @include transition(all 300ms);
-                                
+
                                 &:last-child {
                                     border: none;
                                 }
-                                
+
                                 &:hover {
                                     color: $linkblack;
                                 }
                             }
                             .ctrl {
                                 margin-left: auto;
-                                
+
                                 .icon-delete {
                                     @include transition(all 300ms);
                                     cursor: pointer;
-                                    
+
                                     &:hover {
                                         color: $cc-red;
                                     }
@@ -5118,7 +5118,7 @@ footer {
                         .lcd {
                             display: flex;
                             padding: 15px 0;
-                            
+
                             .ttle {
                                 font-weight: 600;
                             }
@@ -5127,9 +5127,9 @@ footer {
                 }
             }
         }
-        
+
     }
-    
+
 }
 
 
@@ -5148,29 +5148,29 @@ footer {
     background: $white;
     @include font-regular;
     margin-bottom: 50px;
-    
+
     .mat-tab-header {
         margin-bottom: 20px;
         border-bottom: none;
-        
+
         .mat-tab-label-container {
-            
+
             .mat-tab-list {
                 .mat-tab-labels {
                     border-bottom: 1px solid $cc-body;
-                    
+
                     .mat-tab-label {
                         opacity: 1;
                         height: 50px;
                         padding-left: 20px;
                         padding-right: 20px;
-                        
+
                         .mat-tab-label-content {
                             @include font-regular;
                             color: $cc-mediumgray;
-                            font-weight: 500;  
+                            font-weight: 500;
                         }
-                        
+
                         &.mat-tab-label-active {
                             .mat-tab-label-content {
                                 font-weight: 600;
@@ -5186,17 +5186,17 @@ footer {
             }
         }
     }
-    
+
     .mat-tab-body-wrapper{
         .mat-tab-body {
             .mat-tab-body-content {
                 .outermost {
                     padding-left: 20px;
-                    
+
                     @include respond-to(ynw-575) {
                         padding-left: 0;
                     }
-                    
+
                     .pay-outer {
                         display: flex;
                         font-weight: 500;
@@ -5216,7 +5216,7 @@ footer {
                             color: $cc-mediumgray;
                         }
                     }
-                    
+
                     .paytm-outer , .cc-outer {
                         .form-group {
                             .pay-chk {
@@ -5250,7 +5250,7 @@ footer {
                             }
                         }
                     }
-                    
+
                     .paytm-det, .cc-det, .taxouter {
                         padding-left: 28px;
 
@@ -5264,11 +5264,11 @@ footer {
 
                             mat-form-field {
                                 width: 280px;
-                                
+
                                 @include respond-to(ynw-575) {
                                     width: 100%;
                                 }
-                                
+
                                 .mat-input-wrapper {
                                     margin-bottom: 5px;
                                     padding-bottom: 0px;
@@ -5327,14 +5327,14 @@ footer {
                             }
                         }
                     }
-                    
+
                     .cc-det {
                         display: flex;
-                        
+
                         @include respond-to(ynw-767) {
                             flex-direction: column;
                         }
-                        
+
                         .pan-outer {
                             order: 2;
                         }
@@ -5345,7 +5345,7 @@ footer {
                             display: flex;
                             flex-wrap: wrap;
                             justify-content: space-between;
-                            
+
                             @include respond-to(ynw-767) {
                                 margin-left: 0;
                                 margin-right: 0;
@@ -5353,20 +5353,20 @@ footer {
                             @include respond-to(ynw-768-991) {
                                 flex-direction: column;
                             }
-                            
+
                             .form-group {
                                 width: 49%;
-                                
+
                                 @include respond-to(ynw-767) {
                                     width: 100%;
                                 }
                                 @include respond-to(ynw-768-991) {
                                     width: 100%;
                                 }
-                                
+
                                 mat-form-field {
                                     width: 100%;
-                                    
+
                                     @include respond-to(ynw-767) {
                                         width: 280px;
                                     }
@@ -5377,10 +5377,10 @@ footer {
                             }
                         }
                     }
-                    
+
                     .taxouter {
                         padding-left: 0px;
-                        
+
                         .form-group {
                             mat-form-field {
                                 width: 62px;
@@ -5400,7 +5400,7 @@ footer {
                 .actiondiv {
                     margin-top: 30px;
                     padding-left: 20px;
-                    
+
                     @include respond-to(ynw-575) {
                         padding-left: 0;
                     }
@@ -5416,13 +5416,13 @@ footer {
 .content {
     .card {
         margin-bottom: 50px;
-        
+
         .copy {
             .inbox-table {
                 margin: 0;
                 padding: 0;
                 @include border-radius(5px);
-                
+
                 li {
                     list-style: none;
                     font-size: .875rem;
@@ -5430,7 +5430,7 @@ footer {
 
                     .outer {
                         display: flex;
-                        
+
                         @include respond-to(ynw-767) {
                             flex-direction: column;
                         }
@@ -5467,18 +5467,18 @@ footer {
                                     cursor: pointer;
                                     @include transition(all 300ms);
                                     font-size: 1rem;
-                                    
+
                                     &:hover {
                                         color: $cc-red;
                                     }
                                 }
                             }
                         }
-                        
+
                         .td {
                             font-weight: 500;
                             color: $cc-gray;
-                            
+
                             @include respond-to(ynw-767) {
                                 &.td1, &.td2, &.td3, &.td4, &.td5 {
                                     width: 100%;
@@ -5487,36 +5487,36 @@ footer {
                                     display: none;
                                 }
                             }
-                            
+
                             .label {
                                 display: none;
                                 font-weight: 600;
-                                
+
                                 @include respond-to(ynw-767) {
                                     display: block;
                                 }
                             }
-                            .result {                                
+                            .result {
                                 .more {
                                     color: $linkblue;
                                 }
-                                
+
                             }
-                            
+
                         }
                     }
-                    
+
                     .details, .actions {
                         padding: 15px;
-                        
+
                         .action {
                             padding-bottom: 10px;
-                            
+
                             @include respond-to(ynw-767) {
                                 border-bottom: 1px solid $cc-body;
                             }
-                            
-                            
+
+
                             [class^="icon-"], [class*=" icon-"] {
                                 display: inline-block;
                                 padding: 0 10px;
@@ -5527,7 +5527,7 @@ footer {
                                 position: relative;
                                 margin-right: 5px;
                                 @include transition(all 300ms);
-                                
+
                                 &:before {
                                     position: absolute;
                                     left: 10px;
@@ -5537,22 +5537,22 @@ footer {
                                     font-size: .75rem;
                                     align-items: center;
                                 }
-                                
+
                                 &:hover {
                                     color: $linkblue;
                                 }
                             }
                         }
                     }
-                    
+
                     .details {
                         padding-top: 0;
                         line-height: 1.8;
-                        
+
                         @include respond-to(ynw-767) {
                             padding-bottom: 0;
                         }
-                        
+
                         .result, .action {
                             padding: 10px;
                             background: $cc-body;
@@ -5562,16 +5562,16 @@ footer {
                             background: none;
                         }
                     }
-                    
+
                     .actions {
                         text-align: right;
                         display: none;
                         font-weight: 500;
-                        
+
                         @include respond-to(ynw-767) {
                             display: block;
                         }
-                        
+
                         .icon-delete {
                             display: inline-block;
                             padding: 0 10px;
@@ -5598,12 +5598,12 @@ footer {
                             }
                         }
                     }
-                    
-                    
-                    
+
+
+
                     &.tth {
-                        
-                        
+
+
                         @include respond-to(ynw-767) {
                             display: none;
                         }
@@ -5612,20 +5612,20 @@ footer {
                         &.new{
                             border-bottom: 2px solid $cc-body;
                             background: #f0ffcc;
-                            
+
                             .outer {
                                 .td {
                                     font-weight: 600;
                                     color: $linkblack;
                                 }
                             }
-                            
+
                             .details, .actions {
                                 .action {
                                     @include respond-to(ynw-767) {
                                         border-bottom: 1px solid $cc-ash;
                                     }
-                                    
+
                                     [class^="icon-"], [class*=" icon-"] {
                                         &:before {
                                             border-color: $cc-ash;

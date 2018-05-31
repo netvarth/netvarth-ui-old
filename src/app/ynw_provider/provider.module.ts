@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ProviderRouterModule } from './provider-routing.module';
 import { HeaderModule } from '../shared/modules/header/header.module';
+import { PagerModule } from '../shared/modules/pager/pager.module';
 
 import { ProviderComponent } from './provider.component';
 import { ProviderHomeComponent } from './components/home/provider-home.component';
@@ -111,7 +112,8 @@ import 'mousetrap';
         ModalGalleryModule.forRoot(),
         AngularMultiSelectModule,
         BreadCrumbModule,
-        HeaderModule
+        HeaderModule,
+        PagerModule
     ],
     declarations: [
         ProviderComponent,
