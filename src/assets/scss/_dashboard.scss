@@ -408,11 +408,8 @@ footer {
                     padding: 0;
                     width: 100%;
                     font-size: .875rem;
-<<<<<<< HEAD
                     max-height: 345px;
                     overflow: auto;
-=======
->>>>>>> 424dd08e7000e548633e941cbe251481b5e3d395
 
                     .no-info {
                         text-align: center;
@@ -5779,20 +5776,13 @@ footer {
 }
 
 
-<<<<<<< HEAD
 // ### System Tray Panel Detail Page
-=======
-// ### Footer for Dashboard
->>>>>>> 424dd08e7000e548633e941cbe251481b5e3d395
 .content {
     &.comn-cls {
         .card {
             .logfil-outer {
-<<<<<<< HEAD
                 margin-bottom: 30px;
                 
-=======
->>>>>>> 424dd08e7000e548633e941cbe251481b5e3d395
                 .formgroup-outer {
                     display: flex;
                     
@@ -5821,7 +5811,6 @@ footer {
                                     .mat-form-field-label {
                                         display: none;
                                     }
-<<<<<<< HEAD
 
                                     .mat-select {
                                         padding: 10px;
@@ -5851,37 +5840,6 @@ footer {
                                     height: 38px;
                                     background: $linkblue;
 
-=======
-
-                                    .mat-select {
-                                        padding: 10px;
-                                        height: 40px;
-                                        background: $cc-formbg;
-                                    }
-                                }
-
-                                .mat-input-underline {
-                                    display: none;
-                                }
-                            }
-                        }
-                        
-                        // Select-Date Style
-                        .pickerouter {
-                            display: flex;
-
-                            input[type="text"] {
-                                width: 100%;
-                            }
-
-                            .mat-datepicker-toggle {
-                                margin-right: 15px;
-
-                                button {
-                                    height: 38px;
-                                    background: $linkblue;
-
->>>>>>> 424dd08e7000e548633e941cbe251481b5e3d395
                                     svg {
                                         fill: $white;
                                     }
@@ -5898,7 +5856,6 @@ footer {
                     }
                 }
             }
-<<<<<<< HEAD
             .audit {
                 .search_paging {
                     .container {
@@ -5911,8 +5868,6 @@ footer {
                     
                 }
             }
-=======
->>>>>>> 424dd08e7000e548633e941cbe251481b5e3d395
         }
     }
 }
