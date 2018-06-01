@@ -110,7 +110,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
           setTimeout(() => {
             console.log(this.document.getElementById('payuform'));
-            // this.document.getElementById('payuform').submit();
+            this.document.getElementById('payuform').submit();
           }, 2000);
         },
         error => {
