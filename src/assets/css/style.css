@@ -1689,6 +1689,30 @@ header {
     .googlemainmappopup .mat-dialog-content .form-group .schedule-section, .outer-card .mat-dialog-content .form-group .service-section, .outer-card .mat-dialog-content .form-group .schedule-section, .consumerpopupmainclass .mat-dialog-content .form-group .service-section, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section {
       display: flex;
       flex-wrap: wrap; }
+      .signupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .signupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+      .loginmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+      .loginmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+      .moreoptionsmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+      .moreoptionsmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+      .commonpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+      .commonpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+      .googlemainmappopup .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+      .googlemainmappopup .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container, .outer-card .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .outer-card .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container, .consumerpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container {
+        margin-top: 3px; }
+      .signupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .signupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+      .loginmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+      .loginmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+      .moreoptionsmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+      .moreoptionsmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+      .commonpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+      .commonpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+      .googlemainmappopup .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+      .googlemainmappopup .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label, .outer-card .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .outer-card .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label, .consumerpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label {
+        white-space: pre-wrap; }
     .signupmainclass .mat-dialog-content .form-group .startendtime,
     .loginmainclass .mat-dialog-content .form-group .startendtime,
     .moreoptionsmainclass .mat-dialog-content .form-group .startendtime,
@@ -2688,7 +2712,12 @@ header {
           margin-bottom: 5px;
           cursor: pointer;
           background: #fff;
-          border: 1px solid #999999; }
+          border: 1px solid #999999;
+          display: inline-block; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname {
+            display: inline-block; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime {
+            display: inline-block; }
           .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus {
             box-shadow: none; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr {
@@ -4590,7 +4619,9 @@ footer.itl-steps .sect3 {
   header.dashb .lgo {
     width: 120px;
     text-align: center;
-    margin-bottom: 0;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 0; }
     header.dashb .lgo img {
       width: 100%; } }
@@ -4756,7 +4787,6 @@ header.dashb .lg-opt {
         header.dashb .lg-opt .lgmem a:first-child, header.dashb .lg-opt .lgmem span:first-child {
           order: 2; } }
 
-/* ##### Overlay for System Tray Panel ****/
 .overlay {
   position: fixed;
   background: rgba(0, 0, 0, 0.3);
@@ -4780,12 +4810,11 @@ header.dashb .lg-opt {
     height: 100%;
     margin-left: 0; }
 
-/* ##### Ends Overlay for System Tray Panel ****/
 footer.dashb {
   width: 100%;
   position: fixed;
   bottom: 0;
-  z-index: 951; }
+  z-index: 950; }
   footer.dashb .sect1, footer.dashb .sect2 {
     display: none; }
   footer.dashb .sect3 {
@@ -4795,7 +4824,7 @@ footer.dashb {
     bottom: 0;
     font-size: .875rem;
     position: relative;
-    z-index: 300; }
+    z-index: 951; }
     footer.dashb .sect3 .copy-text {
       display: flex;
       align-items: center;
@@ -4835,7 +4864,9 @@ footer.dashb {
     -webkit-transition: all 500ms;
     transition: all 500ms;
     margin-bottom: -80px;
-    visibility: hidden; }
+    visibility: hidden;
+    opacity: 0;
+    height: 60px; }
     footer.dashb .stp-box .stp-header {
       margin-bottom: 15px; }
       footer.dashb .stp-box .stp-header .outer {
@@ -4899,42 +4930,15 @@ footer.dashb {
                   font-size: .800rem; }
                 footer.dashb .stp-box .stp-header .outer .right .stp-action li [class^="icon-"]:hover:before, footer.dashb .stp-box .stp-header .outer .right .stp-action li [class*=" icon-"]:hover:before {
                   color: #00aef2; }
-    footer.dashb .stp-box .audit .table-header .action-head, footer.dashb .stp-box .alerts .table-header .action-head, footer.dashb .stp-box .o-checkin .table-header .action-head {
-      display: flex;
-      width: 100%; }
-      footer.dashb .stp-box .audit .table-header .action-head .th, footer.dashb .stp-box .alerts .table-header .action-head .th, footer.dashb .stp-box .o-checkin .table-header .action-head .th {
-        font-weight: 600;
-        color: #222223;
-        padding: 10px;
-        font-size: .875rem;
-        border-bottom: 2px solid #f2f2f2; }
-        footer.dashb .stp-box .audit .table-header .action-head .th.th1, footer.dashb .stp-box .alerts .table-header .action-head .th.th1, footer.dashb .stp-box .o-checkin .table-header .action-head .th.th1 {
-          width: 50%; }
-        footer.dashb .stp-box .audit .table-header .action-head .th.th2, footer.dashb .stp-box .alerts .table-header .action-head .th.th2, footer.dashb .stp-box .o-checkin .table-header .action-head .th.th2 {
-          width: 30%; }
-        footer.dashb .stp-box .audit .table-header .action-head .th.th3, footer.dashb .stp-box .alerts .table-header .action-head .th.th3, footer.dashb .stp-box .o-checkin .table-header .action-head .th.th3 {
-          width: 20%; }
-    footer.dashb .stp-box .audit .table-body .stp-list, footer.dashb .stp-box .alerts .table-body .stp-list, footer.dashb .stp-box .o-checkin .table-body .stp-list {
-      margin: 0;
+    footer.dashb .stp-box .audit .stp-tbl, footer.dashb .stp-box .alerts .stp-tbl, footer.dashb .stp-box .o-checkin .stp-tbl {
       padding: 0;
       width: 100%;
-      overflow: auto;
-      max-height: 400px; }
-      footer.dashb .stp-box .audit .table-body .stp-list li, footer.dashb .stp-box .alerts .table-body .stp-list li, footer.dashb .stp-box .o-checkin .table-body .stp-list li {
-        list-style: none;
-        display: flex; }
-        footer.dashb .stp-box .audit .table-body .stp-list li .td, footer.dashb .stp-box .alerts .table-body .stp-list li .td, footer.dashb .stp-box .o-checkin .table-body .stp-list li .td {
-          padding: 10px;
-          font-size: .875rem;
-          font-weight: 500; }
-          footer.dashb .stp-box .audit .table-body .stp-list li .td.td1, footer.dashb .stp-box .alerts .table-body .stp-list li .td.td1, footer.dashb .stp-box .o-checkin .table-body .stp-list li .td.td1 {
-            width: 50%; }
-          footer.dashb .stp-box .audit .table-body .stp-list li .td.td2, footer.dashb .stp-box .alerts .table-body .stp-list li .td.td2, footer.dashb .stp-box .o-checkin .table-body .stp-list li .td.td2 {
-            width: 30%; }
-          footer.dashb .stp-box .audit .table-body .stp-list li .td.td3, footer.dashb .stp-box .alerts .table-body .stp-list li .td.td3, footer.dashb .stp-box .o-checkin .table-body .stp-list li .td.td3 {
-            width: 20%; }
-        footer.dashb .stp-box .audit .table-body .stp-list li:nth-child(even), footer.dashb .stp-box .alerts .table-body .stp-list li:nth-child(even), footer.dashb .stp-box .o-checkin .table-body .stp-list li:nth-child(even) {
-          background: #f2f2f2; }
+      font-size: .875rem; }
+      footer.dashb .stp-box .audit .stp-tbl .no-info, footer.dashb .stp-box .alerts .stp-tbl .no-info, footer.dashb .stp-box .o-checkin .stp-tbl .no-info {
+        text-align: center;
+        font-weight: 500;
+        display: block;
+        padding: 15px; }
     footer.dashb .stp-box .audit .table-body .copy, footer.dashb .stp-box .alerts .table-body .copy, footer.dashb .stp-box .o-checkin .table-body .copy {
       font-size: .875rem;
       padding: 0px 0 15px 0;
@@ -4972,36 +4976,26 @@ footer.dashb {
                 left: 0;
                 position: absolute;
             }*/ }
-    footer.dashb .stp-box .alerts .table-body .stp-list li {
-      border-bottom: 1px solid #f2f2f2; }
-      footer.dashb .stp-box .alerts .table-body .stp-list li .td {
+    footer.dashb .stp-box .alerts .stp-tbl .table tr {
+      border: 1px solid #f2f2f2; }
+      footer.dashb .stp-box .alerts .stp-tbl .table tr td {
         font-weight: 500; }
-        footer.dashb .stp-box .alerts .table-body .stp-list li .td.td1 {
-          width: 93%; }
-        footer.dashb .stp-box .alerts .table-body .stp-list li .td.td2 {
-          width: 7%;
-          text-align: right; }
-          footer.dashb .stp-box .alerts .table-body .stp-list li .td.td2 .icon-delete {
-            cursor: pointer; }
-            footer.dashb .stp-box .alerts .table-body .stp-list li .td.td2 .icon-delete:hover {
-              color: #f24949; }
-        footer.dashb .stp-box .alerts .table-body .stp-list li .td.info {
-          color: #00aef2; }
-        footer.dashb .stp-box .alerts .table-body .stp-list li .td.success {
-          color: #00cc96; }
-        footer.dashb .stp-box .alerts .table-body .stp-list li .td.warning {
-          color: #fda60d; }
-        footer.dashb .stp-box .alerts .table-body .stp-list li .td.high {
-          color: #f24949; }
-        footer.dashb .stp-box .alerts .table-body .stp-list li .td.error {
-          color: #f24949; }
-      footer.dashb .stp-box .alerts .table-body .stp-list li:nth-child(even) {
-        background: #fff; }
-    footer.dashb .stp-box.show {
-      margin-bottom: 0;
-      visibility: visible; }
+      footer.dashb .stp-box .alerts .stp-tbl .table tr.info td {
+        color: #00aef2; }
+      footer.dashb .stp-box .alerts .stp-tbl .table tr.success td {
+        color: #00cc96; }
+      footer.dashb .stp-box .alerts .stp-tbl .table tr.warning td {
+        color: #fda60d; }
+      footer.dashb .stp-box .alerts .stp-tbl .table tr.high td {
+        color: #f24949; }
+      footer.dashb .stp-box .alerts .stp-tbl .table tr.error td {
+        color: #f24949; }
+  footer.dashb.show .stp-box {
+    margin-bottom: 0;
+    visibility: visible;
+    opacity: 1;
+    height: auto; }
 
-/*profile & search --- no-data styles ***/
 .tp-pnl {
   background: #b5b5b5;
   /* Old browsers */
@@ -5342,7 +5336,6 @@ footer.dashb {
         .content .col-a .card .ai-table .tbl-dta .tbl-ai li:last-child, .content .col-b .card .ai-table .tbl-dta .tbl-ai li:last-child {
           border: none; }
 
-/*profile & search ####*/
 .content .col-a .card .pubs.w-dta {
   padding: 20px;
   font-size: .875rem;
@@ -6468,7 +6461,6 @@ footer.dashb {
       font-weight: 500;
       padding-top: 3px; }
 
-/* waitlist-manager ####*/
 .content.w-manager .card {
   width: 100%;
   margin-bottom: 30px;
@@ -6585,7 +6577,6 @@ footer.dashb {
       font-weight: 500;
       text-align: center; }
 
-/* waitlist-manager-locations ####*/
 .content.loc-list .n-loc {
   width: 100%;
   position: relative; }
@@ -7178,7 +7169,6 @@ footer.dashb {
     .content.loc-list .cst-acc .mat-expansion-panel-header.mat-expanded h5 .count {
       background: #00aef2; }
 
-/*dashboard - today ####*/
 .dashboard .card.w-dta {
   margin: 30px 0;
   font-size: .875rem; }
@@ -7608,15 +7598,24 @@ footer.dashb {
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived {
       vertical-align: top; }
       .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived {
-        -webkit-border-radius: 20px;
-        border-radius: 20px;
-        background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */
-        background: #61f2aa;
-        color: #0a7d44;
-        padding: 3px 5px;
+        color: #00cc96;
+        padding: 2px 5px 2px 14px;
         font-size: .65rem;
-        font-weight: 600; }
+        font-weight: 600;
+        position: relative; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived:before {
+          position: absolute;
+          content: "";
+          background: #00cc96;
+          width: 6px;
+          height: 6px;
+          -webkit-border-radius: 10px;
+          border-radius: 10px;
+          background-clip: padding-box;
+          /* stops bg color from leaking outside the border: */
+          top: 50%;
+          left: 4px;
+          margin-top: -4px; }
       .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived:before {
         display: none; }
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
@@ -7644,23 +7643,23 @@ footer.dashb {
           margin-top: 1px;
           display: none; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.arrived {
-          background: #61f2aa;
-          color: #0a7d44; }
+          background: #63f2b2;
+          color: #0b7e4b; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.start {
           background: #61daf2;
           color: #0a6a7d; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.newbill {
-          background: #bc9eff;
-          color: #4100d1; }
+          background: #ff9e9e;
+          color: #d10000; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.viewbill {
           background: #f2cd61;
           color: #7d600a; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.acceptbill {
-          background: #61f2a3;
-          color: #0a7d3e; }
+          background: #1cf3ff;
+          color: #004b4f; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.done {
-          background: #c9f261;
-          color: #5c7d0a; }
+          background: #748eff;
+          color: #001fa7; }
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment {
       text-align: left; }
       .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
@@ -7737,7 +7736,6 @@ footer.dashb {
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:nth-child(even) {
       background: rgba(0, 0, 0, 0.03); }
 
-/*#### Settings Page ***/
 .content.settings .set-otr {
   display: flex;
   flex-wrap: wrap;
@@ -7827,7 +7825,6 @@ footer.dashb {
     .content.settings .set-otr .card.set06 .copy h2:before {
       content: "\34"; }
 
-/*#### Settings - Billing Sub Pages ***/
 .comn-cls .no-dta {
   text-align: center; }
 .comn-cls .w-dta .card {
@@ -8278,7 +8275,79 @@ footer.dashb {
         .comn-cls .w-dta .card .copy .right .lc11 .lcd .ttle, .comn-cls .w-dta .card .copy .right .lc22 .lcd .ttle, .comn-cls .w-dta .card .copy .right .lc33 .lcd .ttle {
           font-weight: 600; }
 
-/* ##### Payment Settings *****/
+.content.comn-cls .lbl .card {
+  margin-bottom: 30px; }
+  .content.comn-cls .lbl .card .c-details {
+    font-size: .875rem; }
+    .content.comn-cls .lbl .card .c-details h2 {
+      font-size: 1.125rem;
+      margin-bottom: 30px;
+      font-weight: 500; }
+    .content.comn-cls .lbl .card .c-details .tp {
+      border-bottom: 1px solid #f2f2f2;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap; }
+      .content.comn-cls .lbl .card .c-details .tp .item {
+        flex-flow: 1;
+        font-weight: 600;
+        width: 33%;
+        margin-bottom: 20px; }
+        .content.comn-cls .lbl .card .c-details .tp .item .ttle {
+          color: #999999;
+          display: block;
+          font-weight: 500; }
+    .content.comn-cls .lbl .card .c-details .btm {
+      display: flex; }
+      .content.comn-cls .lbl .card .c-details .btm button {
+        margin-right: 10px; }
+.content.comn-cls .lbr .card {
+  margin-bottom: 30px;
+  font-size: .875rem; }
+  .content.comn-cls .lbr .card h2 {
+    font-size: 1.125rem;
+    margin-bottom: 30px;
+    font-weight: 500; }
+  .content.comn-cls .lbr .card .c-history {
+    margin: 0 0 0 10px;
+    padding: 0;
+    position: relative;
+    font-weight: 500; }
+    .content.comn-cls .lbr .card .c-history li {
+      list-style: none;
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 20px; }
+      .content.comn-cls .lbr .card .c-history li .time {
+        color: #999999;
+        font-size: .75rem; }
+      .content.comn-cls .lbr .card .c-history li .action {
+        font-weight: 600; }
+      .content.comn-cls .lbr .card .c-history li:before {
+        position: absolute;
+        content: "";
+        width: 15px;
+        height: 15px;
+        border: 3px solid #fff;
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+        background-clip: padding-box;
+        /* stops bg color from leaking outside the border: */
+        left: -6px;
+        top: 2px; }
+      .content.comn-cls .lbr .card .c-history li.arrived:before {
+        background: #63f2b2; }
+      .content.comn-cls .lbr .card .c-history li.started:before {
+        background: #61daf2; }
+      .content.comn-cls .lbr .card .c-history li.done:before {
+        background: #748eff; }
+    .content.comn-cls .lbr .card .c-history:before {
+      position: absolute;
+      content: "";
+      border-left: 2px dashed #f2f2f2;
+      height: 100%;
+      top: 5px; }
+
 .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
   background: transparent; }
 
@@ -8467,7 +8536,6 @@ footer.dashb {
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .actiondiv {
         padding-left: 0; } }
 
-/* ##### Inbox *****/
 .content .card {
   margin-bottom: 50px; }
   .content .card .copy .inbox-table {
@@ -8623,6 +8691,47 @@ footer.dashb {
           border-color: #dbdbdb; }
       .content .card .copy .inbox-table li:last-child {
         border: none; }
+
+.content.comn-cls .card .logfil-outer .formgroup-outer {
+  display: flex; }
+  .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
+    width: 25%;
+    padding: 10px; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .col-form-label {
+      padding: 0px;
+      margin-bottom: 5px; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field {
+      width: 100%; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper {
+        padding: 0;
+        margin: 0; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
+          margin: 0;
+          padding: 0;
+          border: none; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+            display: none; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+            padding: 10px;
+            height: 40px;
+            background: #e6e6e6; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
+          display: none; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter {
+      display: flex; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter input[type="text"] {
+        width: 100%; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle {
+        margin-right: 15px; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button {
+          height: 38px;
+          background: #00aef2; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button svg {
+            fill: #fff; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
+      padding-left: 0; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
+      padding-right: 0; }
 
 header.consumer {
   padding-top: 15px; }

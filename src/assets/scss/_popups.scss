@@ -162,13 +162,15 @@
             }
         }
     }
+    
     .mat-dialog-content {
         margin: 0;
         padding: 20px;
         overflow: auto;
 
         .form-group {
-
+            
+            // Messages shown under input fields
             .sts-msg {
                 font-weight: 500;
                 font-size: .625rem;
@@ -180,7 +182,8 @@
                     color: $cc-red;
                 }
             }
-
+            
+            // Dropdown Select Box Styles
             .mat-form-field {
                 width: 100%;
 
@@ -209,6 +212,7 @@
                     }
                 }
             }
+            
             .example-section {
                 mat-checkbox {
                     label {
@@ -220,8 +224,18 @@
             .service-section, .schedule-section {
                 display: flex;
                 flex-wrap: wrap;
+                
+                .mat-checkbox {
+                    .mat-checkbox-inner-container {
+                        margin-top: 3px;
+                    }
+                    .mat-checkbox-label {
+                        white-space: pre-wrap;
+                    }
+                }
             }
             
+            // Start and End Time Styles
             .startendtime {
                 margin-bottom: 20px;
                 display: flex;
@@ -791,6 +805,14 @@
                             cursor: pointer;
                             background: $white;
                             border: 1px solid $cc-mediumgray;
+                            display: inline-block;
+                            
+                            .qname {
+                                display: inline-block;
+                            }
+                            .qtime {
+                                display: inline-block;
+                            }
                             
                             &:focus {
                                 box-shadow: none;

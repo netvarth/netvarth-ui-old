@@ -1,3 +1,4 @@
+// ### Header for Dashboard
 header {
     &.dashb {
         @include respond-to(ynw-767) {
@@ -10,7 +11,9 @@ header {
             @include respond-to(ynw-575) {
                 width: 120px;
                 text-align: center;
-                margin-bottom: 0;
+                margin-bottom: 15px;
+                margin-left: auto;
+                margin-right: auto;
                 padding: 0;
                 
                 img {
@@ -221,7 +224,7 @@ header {
     }    
 }
 
-/* ##### Overlay for System Tray Panel ****/
+// ### Overlay for System Tray Panel
 .overlay {
     position: fixed;
     background: rgba(0,0,0,.3);
@@ -245,14 +248,14 @@ header {
     }
     
 }
-/* ##### Ends Overlay for System Tray Panel ****/
 
+// ### Footer for Dashboard
 footer {
     &.dashb {
         width: 100%;
         position: fixed;
         bottom: 0;
-        z-index: 951;
+        z-index: 950;
 
         .sect1, .sect2 {
             display: none;
@@ -264,7 +267,7 @@ footer {
             bottom: 0;
             font-size: .875rem;
             position: relative;
-            z-index: 300;
+            z-index: 951;
             
             .copy-text {
                 display: flex;
@@ -305,6 +308,8 @@ footer {
                 }
             }
         }
+        
+        // System Tray Panel
         .stp-box {
             background: $white;
             color: $linkblack;
@@ -314,6 +319,8 @@ footer {
             @include transition(all 500ms);
             margin-bottom: -80px;
             visibility: hidden;
+            opacity: 0;
+            height: 60px;
             
             .stp-header {
                 margin-bottom: 15px;
@@ -396,65 +403,21 @@ footer {
             }
             
             .audit, .alerts, .o-checkin {
-                .table-header {
-                    .action-head {
-                        display: flex;
-                        width: 100%;
+                
+                .stp-tbl {
+                    padding: 0;
+                    width: 100%;
+                    font-size: .875rem;
 
-                        .th {
-                            font-weight: 600;
-                            color: $linkblack;
-                            padding: 10px;
-                            font-size: .875rem;
-                            border-bottom: 2px solid $cc-body;
-
-                            &.th1 {
-                                width: 50%;
-                            }
-                            &.th2 {
-                                width: 30%;
-                            }
-                            &.th3 {
-                                width: 20%;
-                            }
-                        }
+                    .no-info {
+                        text-align: center;
+                        font-weight: 500;
+                        display: block;
+                        padding: 15px
                     }
                 }
 
-                .table-body {
-                    .stp-list {
-                        margin: 0;
-                        padding: 0;
-                        width: 100%;
-                        overflow: auto;
-                        max-height: 400px;
-
-                        li {
-                            list-style: none;
-                            display: flex;
-
-                            .td {
-                                padding: 10px;
-                                font-size: .875rem;
-                                font-weight: 500;
-
-                                &.td1 {
-                                    width: 50%;
-                                }
-                                &.td2 {
-                                    width: 30%;
-                                }
-                                &.td3 {
-                                    width: 20%;
-                                }
-                            }
-
-                            &:nth-child(even) {
-                                background: $cc-body;
-                            }
-                        }
-                    }
-                    
+                .table-body {                    
                     .copy {
                         font-size: .875rem;
                         padding: 0px 0 15px 0;
@@ -488,64 +451,59 @@ footer {
             }
             
             .alerts {
-                .table-body {
-                    .stp-list {
-                        li {
-                            border-bottom: 1px solid $cc-body;
-                            .td {
+                
+                .stp-tbl {
+                    .table {
+                        tr {
+                            border: 1px solid $cc-body;
+                            
+                            td {
                                 font-weight: 500;
-                                
-                                &.td1 {
-                                    width: 93%;
-                                }
-                                &.td2 {
-                                    width: 7%;
-                                    text-align: right;
-                                    
-                                    .icon-delete {
-                                        cursor: pointer;
-                                        
-                                        &:hover {
-                                            color: $cc-red;
-                                        }
-                                    }
-                                }
-                                
-                                &.info {
+                            }
+                            
+                            &.info {
+                                td {
                                     color: $linkblue;
                                 }
-                                &.success {
+                            }
+                            &.success {
+                                td {
                                     color: $green;
                                 }
-                                &.warning {
+                            } 
+                            &.warning {
+                                td {
                                     color: $cc-warning;
                                 }
-                                &.high {
-                                    color: $cc-red;
-                                }
-                                &.error {
+                            } 
+                            &.high {
+                                td {
                                     color: $cc-red;
                                 }
                             }
-                            &:nth-child(even) {
-                                background: $white;
-                            }
+                            &.error {
+                                td {
+                                    color: $cc-red;
+                                }
+                            } 
                         }
                     }
                 }
             }
-            
-            &.show {
+        }
+        
+        &.show {
+            .stp-box {
                 margin-bottom: 0;
                 visibility: visible;
+                opacity: 1;
+                height: auto;
             }
         }
     }
 }
 
-
-/*profile & search --- no-data styles ***/
-
+// ### Profile & Search -- No-Data Styles
 .tp-pnl {
     @include linear-gradient(#b5b5b5,#e0e0e0);
     
@@ -981,8 +939,7 @@ footer {
     }  
 }
 
-/*profile & search ####*/
-
+// ### Profile & Search
 .content {
     .col-a {
         .card {
@@ -2561,8 +2518,7 @@ footer {
     }
 }
 
-/* waitlist-manager ####*/
-
+// ### Waitlist Manager 
 .content {
     &.w-manager {
         .card {
@@ -2728,8 +2684,7 @@ footer {
     }
 }
 
-/* waitlist-manager-locations ####*/
-
+// ### Waitlist Manager Locations 
 .content {
     &.loc-list {
         
@@ -3581,9 +3536,7 @@ footer {
     }
 }
 
-
-/*dashboard - today ####*/
-
+// ### Dashboard -- Today - Future - History
 .dashboard {
     .card {
         &.w-dta {
@@ -4153,12 +4106,24 @@ footer {
                                             vertical-align: top;
                                             
                                             .arrived {
-                                                @include border-radius(20px);
-                                                background: $arrived;
-                                                color: darken($arrived, 40%);
-                                                padding: 3px 5px;
+                                                
+                                                color: $green;
+                                                padding: 2px 5px 2px 14px;
                                                 font-size: .65rem;
                                                 font-weight: 600;
+                                                position: relative;
+                                                
+                                                &:before {
+                                                    position: absolute;
+                                                    content: "";
+                                                    background: $green;
+                                                    width: 6px;
+                                                    height: 6px;
+                                                    @include border-radius(10px);
+                                                    top: 50%;
+                                                    left: 4px;
+                                                    margin-top: -4px;
+                                                }
                                             }
                                             
                                             &:before {
@@ -4331,8 +4296,7 @@ footer {
     }
 }
 
-/*#### Settings Page ***/
-
+// ### Settings Page
 .content {
     &.settings {
         .set-otr {
@@ -4466,8 +4430,7 @@ footer {
     }
 }
 
-/*#### Settings - Billing Sub Pages ***/
-
+// ### Settings - Billing Sub Pages
 .comn-cls {
     .no-dta {
         text-align: center;
@@ -5181,9 +5144,127 @@ footer {
     
 }
 
+// ### Check-In View Page
+.content {
+    &.comn-cls {
+        .lbl {
+            .card {
+                margin-bottom: 30px;
 
-/* ##### Payment Settings *****/
+                .c-details {
+                    font-size: .875rem;
 
+                    h2 {
+                        font-size: 1.125rem;
+                        margin-bottom: 30px;
+                        font-weight: 500;
+                    }
+
+                    .tp {
+                        border-bottom: 1px solid $cc-body;
+                        margin-bottom: 20px;
+                        display: flex;
+                        flex-wrap: wrap;
+
+                        .item {
+                            flex-flow: 1;
+                            font-weight: 600;
+                            width: 33%;
+                            margin-bottom: 20px;
+
+                            .ttle {
+                                color: $cc-mediumgray;
+                                display: block;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+
+                    .btm {
+                        display: flex;
+                        button {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .lbr {
+            .card {
+                margin-bottom: 30px;
+                font-size: .875rem;
+                
+                h2 {
+                    font-size: 1.125rem;
+                    margin-bottom: 30px;
+                    font-weight: 500;
+                }
+                
+                .c-history {
+                    margin: 0 0 0 10px;
+                    padding: 0;
+                    position: relative;
+                    font-weight: 500;
+                    
+                    li {
+                        list-style: none;
+                        position: relative;
+                        padding-left: 20px;
+                        margin-bottom: 20px;
+                        
+                        .time {
+                            color: $cc-mediumgray;
+                            font-size: .75rem;
+                        }
+                        .action {
+                            font-weight: 600;
+                        }
+                        
+                        &:before {
+                            position: absolute;
+                            content: "";
+                            width: 15px;
+                            height: 15px;
+                            
+                            border: 3px solid $white;
+                            @include border-radius(20px);
+                            left: -6px;
+                            top: 2px;
+                        }
+                        
+                        &.arrived {
+                            &:before {
+                                background: $arrived;
+                            }
+                        }
+                        &.started {
+                            &:before {
+                                background: $start;
+                            }
+                        }
+                        &.done {
+                            &:before {
+                                background: $done;
+                            }
+                        }
+                    }
+                    
+                    &:before {
+                        position: absolute;
+                        content: "";
+                        border-left: 2px dashed $cc-body;
+                        height: 100%;
+                        top: 5px;
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
+// ### Payment Settings
 .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
     background: transparent;
 }
@@ -5460,8 +5541,7 @@ footer {
 }
 
 
-/* ##### Inbox *****/
-
+// ### Inbox
 .content {
     .card {
         margin-bottom: 50px;
@@ -5694,8 +5774,87 @@ footer {
 }
 
 
+// ### Footer for Dashboard
+.content {
+    &.comn-cls {
+        .card {
+            .logfil-outer {
+                .formgroup-outer {
+                    display: flex;
+                    
+                    .form-group {
+                        width: 25%;
+                        padding: 10px;
+                        
+                        .col-form-label {
+                            padding: 0px;
+                            margin-bottom: 5px;
+                        }
+                        
+                        // Dropdown Select Box Styles
+                        .mat-form-field {
+                            width: 100%;
 
+                            .mat-input-wrapper {
+                                padding: 0;
+                                margin: 0;
 
+                                .mat-input-infix {
+                                    margin: 0;
+                                    padding: 0;
+                                    border: none;
+
+                                    .mat-form-field-label {
+                                        display: none;
+                                    }
+
+                                    .mat-select {
+                                        padding: 10px;
+                                        height: 40px;
+                                        background: $cc-formbg;
+                                    }
+                                }
+
+                                .mat-input-underline {
+                                    display: none;
+                                }
+                            }
+                        }
+                        
+                        // Select-Date Style
+                        .pickerouter {
+                            display: flex;
+
+                            input[type="text"] {
+                                width: 100%;
+                            }
+
+                            .mat-datepicker-toggle {
+                                margin-right: 15px;
+
+                                button {
+                                    height: 38px;
+                                    background: $linkblue;
+
+                                    svg {
+                                        fill: $white;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        &:first-child {
+                            padding-left: 0;
+                        }
+                        &:last-child {
+                            padding-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 

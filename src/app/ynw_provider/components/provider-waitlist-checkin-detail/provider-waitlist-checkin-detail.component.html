@@ -1,11 +1,98 @@
 
 
     <section>
-        <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+        <app-provider-subheader [activeTab]="'dashboard'"></app-provider-subheader> <!-- Subheader section -->
         <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
     </section>
 
-    <section>
+  <section>
+      <div class="content comn-cls">
+          <div class="container">
+              <div class="row">
+                  <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                      <div class="card">
+                          <div class="c-details">
+                              <h2>Check-In Details</h2>
+                              <div class="tp">
+                                  <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName}} {{waitlist_data.consumer.userProfile.lastName}}</span></div>
+                                  <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date}}</span></div>
+                                  <div class="item"><span class="ttle">Location:</span><span>{{waitlist_data.queue.location.place}}</span></div>
+                                  <div class="item"><span class="ttle">Service:</span><span> {{waitlist_data.service.name}}</span></div>
+                                  <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_data.queue.name}}</span></div>
+                                  <div class="item"><span class="ttle">Payment Status:</span>
+                                    <ng-container *ngIf="waitlist_data.paymentStatus">
+                                        <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span class="text">Not Paid</span></span>
+                                        <span class="paid-h" *ngIf="waitlist_data.paymentStatus == 'PartiallyPaid'"><span class="text">Partially Paid</span></span>
+                                        <span class="paid-f" *ngIf="waitlist_data.paymentStatus == 'FullyPaid'"><span class="text">Paid</span></span>
+
+                                    </ng-container>
+                                  </div>
+                              </div>
+                              <div class="btm">
+                                  <button class="cs-btn bt3">Communicate</button>
+                                  <button class="cs-btn bt7 cancel">Cancel Check-In</button>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="card p0">
+                          <mat-accordion class="communication-history">
+                            <mat-expansion-panel>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  Communication History
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <div  class="chistory" *ngFor="let note of waitlist_notes">
+                                <p>Message: {{note.note}}</p>
+                                <p>time: {{note.timeStamp | date: dateFormat}}</p>
+                              </div>
+                              <div *ngIf="waitlist_notes.length == 0">
+                                <p>No notes found</p>
+                              </div>
+                            </mat-expansion-panel>
+                          </mat-accordion>
+
+                      </div>
+                      <div class="card p0">
+                          <mat-accordion class="provider-notes">
+                            <mat-expansion-panel>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  Provider Notes
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <div  class="pnotes" *ngFor="let note of waitlist_notes">
+                                <p>Message: {{note.note}}</p>
+                                <p>time: {{note.timeStamp | date: dateFormat}}</p>
+                              </div>
+                              <div *ngIf="waitlist_notes.length == 0">
+                                <p>No notes found</p>
+                              </div>
+                            </mat-expansion-panel>
+                          </mat-accordion>
+                      </div>
+                      <button (click)="addProviderNote(waitlist_data)" >Add Provider note</button>
+
+                  </div>
+                  <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                      <div class="card">
+                          <h2>Check-In History</h2>
+                          <ul class="c-history">
+                              <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
+                                  <div class="time">{{ history.time}}</div>
+                                  <div class="action">{{ history.waitlistStatus}}</div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  </section>
+
+
+    <!-- <section>
         <div class="content loc-list">
             <div class="container" *ngIf="waitlist_data">
               <div class="row">
@@ -31,7 +118,7 @@
                                     </p>
 
                                     <p>Queue:
-                                        {{waitlist_data.queue.id}}
+                                        {{waitlist_data.queue.name}}
                                     </p>
 
                                   </div>
@@ -67,4 +154,4 @@
               <button (click)="addProviderNote(waitlist_data)" >Add Provider note</button>
 
         </div>
-    </section>
+    </section> -->
