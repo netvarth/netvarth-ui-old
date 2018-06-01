@@ -1185,9 +1185,13 @@ export class ProviderBprofileSearchComponent implements OnInit {
             data => {
               this.bProfile = data;
               if (type === 'domain_questions') {
-                this.domain_fields = this.setFieldValue(this.domain_fields, null);
+                  this.getDomainVirtualFields();
+                  // commented bcoz update not effect without refresh
+                // this.domain_fields = this.setFieldValue(this.domain_fields, null);
               } else {
-                this.subdomain_fields = this.setFieldValue(this.subdomain_fields, this.bProfile['serviceSubSector']['subDomain']);
+                 // commented bcoz update not effect without refresh
+                this.getSubDomainVirtualFields();
+                // this.subdomain_fields = this.setFieldValue(this.subdomain_fields, this.bProfile['serviceSubSector']['subDomain']);
               }
             },
             error => {
@@ -1239,7 +1243,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   setFieldValue(data, subdomin) {
 
         let fields = [];
-
+        console.log(data, subdomin);
         if (subdomin) {
           fields = (this.bProfile['subDomainVirtualFields'] &&
           this.bProfile['subDomainVirtualFields'][0]) ?
@@ -1255,9 +1259,12 @@ export class ProviderBprofileSearchComponent implements OnInit {
               const row = data[i];
               if (fields[row.name]) {
                 data[i]['value'] = fields[row.name];
+              } else {
+                delete data[i]['value'] ;
               }
             }
           }
+
           return data;
         } else {
           return data;

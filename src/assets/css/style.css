@@ -4933,9 +4933,13 @@ footer.dashb {
     footer.dashb .stp-box .audit .stp-tbl, footer.dashb .stp-box .alerts .stp-tbl, footer.dashb .stp-box .o-checkin .stp-tbl {
       padding: 0;
       width: 100%;
+<<<<<<< HEAD
       font-size: .875rem;
       max-height: 345px;
       overflow: auto; }
+=======
+      font-size: .875rem; }
+>>>>>>> 424dd08e7000e548633e941cbe251481b5e3d395
       footer.dashb .stp-box .audit .stp-tbl .no-info, footer.dashb .stp-box .alerts .stp-tbl .no-info, footer.dashb .stp-box .o-checkin .stp-tbl .no-info {
         text-align: center;
         font-weight: 500;
@@ -8694,6 +8698,7 @@ footer.dashb {
       .content .card .copy .inbox-table li:last-child {
         border: none; }
 
+<<<<<<< HEAD
 .content.comn-cls .card .logfil-outer {
   margin-bottom: 30px; }
   .content.comn-cls .card .logfil-outer .formgroup-outer {
@@ -8740,6 +8745,48 @@ footer.dashb {
   padding: 0; }
   .content.comn-cls .card .audit .search_paging .container .text-center {
     display: flex; }
+=======
+.content.comn-cls .card .logfil-outer .formgroup-outer {
+  display: flex; }
+  .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
+    width: 25%;
+    padding: 10px; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .col-form-label {
+      padding: 0px;
+      margin-bottom: 5px; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field {
+      width: 100%; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper {
+        padding: 0;
+        margin: 0; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
+          margin: 0;
+          padding: 0;
+          border: none; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+            display: none; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+            padding: 10px;
+            height: 40px;
+            background: #e6e6e6; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
+          display: none; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter {
+      display: flex; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter input[type="text"] {
+        width: 100%; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle {
+        margin-right: 15px; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button {
+          height: 38px;
+          background: #00aef2; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button svg {
+            fill: #fff; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
+      padding-left: 0; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
+      padding-right: 0; }
+>>>>>>> 424dd08e7000e548633e941cbe251481b5e3d395
 
 header.consumer {
   padding-top: 15px; }
