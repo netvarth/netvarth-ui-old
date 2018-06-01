@@ -193,7 +193,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     let schedulejson: any = [];
     // Check whether atleast one service is selected
     if (this.selservice_arr.length === 0) {
-      this.api_error = 'Please select services';
+      const error = 'Please select services';
+      this.sharedfunctionObj.apiErrorAutoHide(this, error);
       return;
     } else {
       for (const sel of this.selservice_arr) {
@@ -202,34 +203,41 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     }
     // Check whether atleast one day is selected
     if (this.selday_arr.length === 0) {
-      this.api_error = 'Please select the days';
+      const error  = 'Please select the days';
+      this.sharedfunctionObj.apiErrorAutoHide(this, error);
       return;
     } else {
       // Numeric validation
       if (isNaN(form_data.qcapacity)) {
-        this.api_error = 'Please enter a numeric value for capacity';
+        const error  = 'Please enter a numeric value for capacity';
+        this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       }
       if (!this.sharedfunctionObj.checkIsInteger(form_data.qcapacity)) {
-        this.api_error = 'Please enter an integer value for capacity';
+        const error  = 'Please enter an integer value for capacity';
+        this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       } else {
         if (form_data.qcapacity === 0) {
-          this.api_error = 'Maximum Capacity should be greater than 0';
+          const error  = 'Maximum Capacity should be greater than 0';
+          this.sharedfunctionObj.apiErrorAutoHide(this, error);
           return;
         }
       }
       // Numeric validation
       if (isNaN(form_data.qserveonce)) {
-        this.api_error = 'Please enter a numeric value for Number of customers served at a time';
+        const error  = 'Please enter a numeric value for Number of customers served at a time';
+        this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       }
       if (!this.sharedfunctionObj.checkIsInteger(form_data.qserveonce)) {
-        this.api_error = 'Please enter an integer value for Number of customers served at a time';
+        const error = 'Please enter an integer value for Number of customers served at a time';
+        this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       } else {
         if (form_data.qserveonce === 0) {
-          this.api_error = 'Number of customers served at a time should be greater than 0';
+          const error = 'Number of customers served at a time should be greater than 0';
+          this.sharedfunctionObj.apiErrorAutoHide(this, error);
           return;
         }
       }
@@ -248,7 +256,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       }
       // check whether the start and end times are selected
       if (!this.dstart_time || !this.dend_time) {
-        this.api_error = Messages.WAITLIST_QUEUE_SELECTTIME;
+        // this.api_error = Messages.WAITLIST_QUEUE_SELECTTIME;
+        this.sharedfunctionObj.apiErrorAutoHide(this, Messages.WAITLIST_QUEUE_SELECTTIME);
         return;
       }
       // today
@@ -258,7 +267,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       // console.log('compare', this.sharedfunctionObj.getminutesOfDay(this.dstart_time),
       // this.sharedfunctionObj.getminutesOfDay(this.dend_time));
       if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
-        this.api_error = Messages.WAITLIST_QUEUE_STIMEERROR;
+        // this.api_error = Messages.WAITLIST_QUEUE_STIMEERROR;
+        this.sharedfunctionObj.apiErrorAutoHide(this, Messages.WAITLIST_QUEUE_STIMEERROR);
         return;
       }
       // convert start time to 12 hour format
@@ -316,7 +326,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
            }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            // this.api_error = error.error;
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
           }
         );
   }
@@ -333,7 +344,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            // this.api_error = error.error;
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
           }
     );
   }

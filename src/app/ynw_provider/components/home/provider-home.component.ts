@@ -73,11 +73,20 @@ export class ProviderHomeComponent implements OnInit {
     service: 'all',
     waitlist_status: 'all',
     check_in_date: null,
-    location_id: 'all'
+    location_id: 'all',
+    page_count: projectConstants.PERPAGING_LIMIT,
+    page: 1
   }; // same in resetFilter Fn
 
   filter_date_max = moment(new Date()).add(-1, 'days');
   filter_date_min = moment(new Date()).add(+1, 'days');
+
+  pagination: any  = {
+    startpageval: 1,
+    totalCnt : 0,
+    perPage : this.filter.page_count
+  };
+
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -260,62 +269,108 @@ export class ProviderHomeComponent implements OnInit {
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
 
     this.getQueueList();
-    this.getFutureCheckinCount();
-    this.getTodayCheckinCount();
+
+    this.getFutureCheckinCount()
+    .then(
+      (result) => {
+        this.future_waitlist_count = result;
+      }
+    );
+
+    this.getTodayCheckinCount()
+    .then(
+      result => {
+        this.today_waitlist_count = result;
+      }
+    );
     // this.getHistoryCheckinCount();
   }
 
   selectedQueue(selected_queue) {
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
-    this.getTodayCheckinCount();
+    this.getTodayCheckinCount()
+      .then(
+        result => {
+          this.today_waitlist_count = result;
+        }
+      );
   }
 
-  getFutureCheckinCount() {
-    const filter = {
-      'location-eq' : this.selected_location.id
-    };
-    this.provider_services.getWaitlistFutureCount(filter)
-    .subscribe(
-      data => {
-        this.future_waitlist_count = data || 0 ;
-      },
-      error => {
+  getFutureCheckinCount(filter = null) {
 
-      });
+
+    if (!filter) {
+      filter = {
+        'location-eq' : this.selected_location.id
+      };
+    }
+
+    return new Promise((resolve, reject) => {
+      this.provider_services.getWaitlistFutureCount(filter)
+      .subscribe(
+        data => {
+          resolve(data);
+        },
+        error => {
+
+        });
+    });
+
+
   }
 
-  getHistoryCheckinCount() {
-    const filter = {
-      'location-eq' : this.selected_location.id
-    };
+  getHistoryCheckinCount(filter = null) {
+
+    if (!filter) {
+      filter = {
+        'location-eq' : this.selected_location.id
+      };
+    }
+    console.log(filter);
+    return new Promise((resolve, reject) => {
+
     this.provider_services.getwaitlistHistoryCount(filter)
     .subscribe(
       data => {
-        this.histroy_waitlist_count = data || 0 ;
+        resolve(data);
       },
       error => {
 
       });
+
+    });
   }
 
-  getTodayCheckinCount() {
-    const filter = {
-      'location-eq' : this.selected_location.id
-    };
-    this.provider_services.getwaitlistTodayCount(filter)
-    .subscribe(
-      data => {
-        this.today_waitlist_count = data || 0 ;
-      },
-      error => {
+  getTodayCheckinCount(filter = null) {
 
-      });
+    if (!filter) {
+      filter = {
+        'location-eq' : this.selected_location.id
+      };
+    }
+
+    return new Promise((resolve, reject) => {
+
+      this.provider_services.getwaitlistTodayCount(filter)
+      .subscribe(
+        data => {
+          resolve(data);
+        },
+        error => {
+
+        });
+
+    });
   }
 
   getTodayCheckIn() {
     this.load_waitlist = 0;
     const filter = this.setFilterForApi();
+    this.resetPaginationData();
+
+    this.pagination.startpageval =  1;
+    this.pagination.totalCnt = 0; // no need of pagination in today
 
     this.provider_services.getTodayWaitlist(filter)
     .subscribe(
@@ -337,35 +392,61 @@ export class ProviderHomeComponent implements OnInit {
 
   getFutureCheckIn() {
     this.load_waitlist = 0;
-    const filter = this.setFilterForApi();
-    this.provider_services.getFutureWaitlist(filter)
-    .subscribe(
-      data => {
-        this.check_in_list = this.check_in_filtered_list = data;
-        // this.future_waitlist_count = this.check_in_list.length || 0;
-      },
-      error => {
-        this.load_waitlist = 1;
-      },
-      () => {
-        this.load_waitlist = 1;
+    let filter = this.setFilterForApi();
+
+
+    const promise = this.getFutureCheckinCount(filter);
+
+    promise.then(
+      result => {
+        this.pagination.totalCnt = result;
+        filter = this.setPaginationFilter(filter);
+
+        this.provider_services.getFutureWaitlist(filter)
+        .subscribe(
+          data => {
+            this.check_in_list = this.check_in_filtered_list = data;
+            // this.future_waitlist_count = this.check_in_list.length || 0;
+          },
+          error => {
+            this.load_waitlist = 1;
+          },
+          () => {
+            this.load_waitlist = 1;
+          });
+
       });
+
   }
 
   getHistoryCheckIn() {
     this.load_waitlist = 0;
-    const filter = this.setFilterForApi();
-    this.provider_services.getHistroryWaitlist(filter)
-    .subscribe(
-      data => {
-        this.check_in_list = this.check_in_filtered_list = data;
-      },
-      error => {
-        this.load_waitlist = 1;
-      },
-      () => {
-        this.load_waitlist = 1;
-      });
+    let filter = this.setFilterForApi();
+
+    const promise = this.getHistoryCheckinCount(filter);
+
+    promise.then(
+      result => {
+        this.pagination.totalCnt = result;
+        filter = this.setPaginationFilter(filter);
+
+        this.provider_services.getHistroryWaitlist(filter)
+        .subscribe(
+          data => {
+            this.check_in_list = this.check_in_filtered_list = data;
+          },
+          error => {
+            this.load_waitlist = 1;
+          },
+          () => {
+            this.load_waitlist = 1;
+          });
+
+      }
+    );
+
+
+
   }
 
   setTimeType(time_type) {
@@ -563,6 +644,7 @@ export class ProviderHomeComponent implements OnInit {
 
   setFilterData(type, value) {
     this.filter[type] = value;
+    this.resetPaginationData();
     this.doSearch();
   }
 
@@ -596,6 +678,13 @@ export class ProviderHomeComponent implements OnInit {
 
     api_filter['location-eq'] = this.selected_location.id;
 
+    return api_filter;
+  }
+
+  setPaginationFilter(api_filter) {
+
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
 
     return api_filter;
   }
@@ -611,7 +700,9 @@ export class ProviderHomeComponent implements OnInit {
       service: 'all',
       waitlist_status: 'all',
       check_in_date: null,
-      location_id: 'all'
+      location_id: 'all',
+      page_count: projectConstants.PERPAGING_LIMIT,
+      page: 0
     };
   }
 
@@ -713,5 +804,18 @@ export class ProviderHomeComponent implements OnInit {
       this.reloadAPIs();
     });
   }
+
+  resetPaginationData() {
+    this.filter.page = 1;
+    this.pagination.startpageval = 1;
+  }
+
+  handle_pageclick(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    console.log('page', pg);
+    this.doSearch();
+  }
+
 
 }

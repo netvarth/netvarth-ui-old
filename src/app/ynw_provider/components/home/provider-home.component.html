@@ -175,7 +175,9 @@
                                   <td data-title="Seq No" class="seq pointer-cursor" (click)="goCheckinDetail(checkin)">#{{checkin.token}}</td>
                                   <td data-title="Name" class="name" *ngIf="checkin.consumer">
                                     {{checkin.consumer.userProfile.firstName}}  {{checkin.consumer.userProfile.lastName}}
-                                    <span class="icon-arrived" title="Arrived"  *ngIf="checkin.waitlistStatus == 'arrived'"></span>
+                                    <span class="icon-arrived" title="Arrived"  *ngIf="checkin.waitlistStatus == 'arrived'">
+                                      <span class="arrived">Arrived</span>
+                                    </span>
                                   </td>
                                   <td data-title="Service" class="service">{{checkin.service.name}}</td>
                                   <td data-title="Actions" class="actions">
@@ -192,17 +194,19 @@
                                           <i class="icon-play"></i>Start
                                         </span>
 
-                                        <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
+                                        <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
                                         *ngIf="checkin.waitlistStatus == 'started'">
                                           <i class="icon-play"></i>Done
                                         </span>
 
                                     </ng-container>
 
-                                    <span class="start cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
+                                    <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
                                     *ngIf="checkin.waitlistStatus != 'checkedIn' &&
                                     checkin.waitlistStatus != 'cancelled' && time_type !== 2
-                                    && ((time_type === 0 && checkin.billStatus) || time_type != 0)">
+                                    && ((time_type === 0 && checkin.billStatus) || time_type != 0)"
+                                    [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }">
+
                                      <ng-container *ngIf="!checkin.billStatus">
                                         <i class="icon-play" ></i>New Bill
                                      </ng-container>
@@ -212,7 +216,7 @@
 
                                     </span>
 
-                                    <span class="start cs-btn bt7"
+                                    <span class="acceptbill cs-btn bt7"
                                     *ngIf="checkin.billStatus== 'New' && checkin.billPaymentStatus!='FullyPaid' " (click)="getWaitlistBill(checkin, 'payment')">
                                      <i class="icon-play" ></i>Accept payment
 
@@ -296,7 +300,7 @@
 
 
                     <div class="search_paging">
-                      <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
+                      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
                     </div>
 
                   </div>

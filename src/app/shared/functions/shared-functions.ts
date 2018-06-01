@@ -26,7 +26,6 @@ export class SharedFunctions {
       this.doLogout()
       .then(
         data => {
-          console.log('here2');
           this.router.navigate(['/home']);
         },
         error => {
@@ -36,12 +35,11 @@ export class SharedFunctions {
 
     doLogout() {
       const promise = new Promise((resolve, reject) => {
-        if (localStorage.getItem('ynw-user')) {
+        // if (localStorage.getItem('ynw-user')) {
           if (localStorage.getItem('isBusinessOwner') === 'true') {
             this.providerLogout()
             .then(
               data => {
-                console.log('here');
                 resolve();
               }
             );
@@ -53,9 +51,9 @@ export class SharedFunctions {
               }
             );
           }
-        } else {
-          reject();
-        }
+        // } else {
+        //   reject();
+        // }
       });
       return promise;
     }
@@ -82,7 +80,6 @@ export class SharedFunctions {
          .subscribe(data => {
               // console.log(data);
               this.clearLocalstorage();
-              console.log('here1');
               resolve();
          },
          error => {
@@ -457,6 +454,8 @@ export class SharedFunctions {
   getApiError(error) {
     if ( error.error && typeof error.error === 'string') {
       return  error.error;
+    } else if (typeof error === 'string') {
+        return error;
     } else {
       return Messages.API_ERROR;
     }

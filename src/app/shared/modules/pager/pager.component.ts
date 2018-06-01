@@ -14,7 +14,7 @@ import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
     templateUrl: 'pager.component.html'
 })
 
-export class PagerComponent implements OnInit {
+export class PagerComponent implements OnInit, OnChanges {
     constructor(private pagerService: PagerService) { }
 
     // array of all items to be paged
@@ -32,6 +32,11 @@ export class PagerComponent implements OnInit {
     ngOnInit() {
        this.setPage(this.curpage, false);
     }
+
+    ngOnChanges() {
+      this.setPage(this.curpage, false);
+    }
+
     setPage(page: number, redirect: boolean = true) {
         if (page < 1 || page > this.pager.totalPages) {
             return;
