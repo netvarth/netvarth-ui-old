@@ -366,4 +366,8 @@ export class SharedServices {
       return ;
     }
 
+    getInboxUnreadCount(typ) {
+      const url = typ + '/communications/unreadCount';
+      return this.servicemeta.httpGet(url);
+    }
 }

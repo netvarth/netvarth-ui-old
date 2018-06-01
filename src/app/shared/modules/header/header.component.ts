@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   bname;
   bsector;
   blogo;
+  inboxUnreadCnt;
   urls_class = [
     {url: '\/provider\/bwizard' , class: 'itl-steps'},
     {url: '\/provider\/settings\/.+' , class: 'dashb'},
@@ -91,6 +92,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.handleHeaderclassbasedonURL();
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
+    this.getInboxUnreadCnt();
   }
 
   ngOnDestroy() {
@@ -250,5 +252,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   handlesearchClick(ob) {
      this.searchclick.emit(ob);
+  }
+  getInboxUnreadCnt() {
+    const usertype = this.ctype;
+    this.shared_service.getInboxUnreadCount(usertype)
+      .subscribe (data => {
+        console.log('inboxcnt', data);
+        this.inboxUnreadCnt = data;
+      },
+    error => {
+    });
   }
 }
