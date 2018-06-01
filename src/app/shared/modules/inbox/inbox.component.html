@@ -48,7 +48,7 @@
                                                 {{message.msg}}
                                             </div>
                                             <div class="action">
-                                                <span class="icon-reply" (click)="replyMessage(message)">
+                                                <span class="icon-reply" (click)="replyMessage(message)" *ngIf="userDet.id != message.owner.id">
                                                     Reply
                                                 </span>
                                                 <span class="icon-close" (click)="closeMsg()">

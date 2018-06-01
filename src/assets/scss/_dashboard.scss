@@ -5245,6 +5245,11 @@ footer {
                                 background: $start;
                             }
                         }
+                        &.checkedIn {
+                            &:before {
+                                background: $start;
+                            }
+                        }
                         &.done {
                             &:before {
                                 background: $done;
@@ -5863,6 +5868,10 @@ footer {
                         
                         .text-center {
                             display: flex;
+                            
+                            .paginghead-outer, .pagination {
+                                flex-grow: 1;
+                            }
                         }
                     }
                     

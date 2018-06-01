@@ -137,4 +137,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     getcurpageVal() {
       return this.startpageval;
     }
+    alertAcknowledge(obj) {
+
+    }
 }

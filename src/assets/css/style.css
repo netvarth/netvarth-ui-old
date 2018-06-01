@@ -8341,6 +8341,8 @@ footer.dashb {
         background: #63f2b2; }
       .content.comn-cls .lbr .card .c-history li.started:before {
         background: #61daf2; }
+      .content.comn-cls .lbr .card .c-history li.checkedIn:before {
+        background: #61daf2; }
       .content.comn-cls .lbr .card .c-history li.done:before {
         background: #748eff; }
     .content.comn-cls .lbr .card .c-history:before {
@@ -8740,6 +8742,8 @@ footer.dashb {
   padding: 0; }
   .content.comn-cls .card .audit .search_paging .container .text-center {
     display: flex; }
+    .content.comn-cls .card .audit .search_paging .container .text-center .paginghead-outer, .content.comn-cls .card .audit .search_paging .container .text-center .pagination {
+      flex-grow: 1; }
 
 header.consumer {
   padding-top: 15px; }
@@ -8773,7 +8777,7 @@ header.consumer {
       flex-grow: 1; }
       header.consumer .tp-1 .tp-r .tc1 {
         margin-top: 0;
-        margin-bottom: 15px; }
+        margin-bottom: 10px; }
         @media only screen and (max-width: 767px) {
           header.consumer .tp-1 .tp-r .tc1 {
             height: 70px; } }
@@ -8789,22 +8793,68 @@ header.consumer {
             height: 70px; } }
         header.consumer .tp-1 .tp-r .tc1 .isprovidertop {
           margin-top: 5px; }
-        header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem {
-          font-size: .875rem;
-          font-weight: 500; }
-          header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button {
-            width: 24px;
-            height: 24px; }
-            header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down {
-              font-size: .5rem;
-              display: flex;
-              width: 24px;
-              height: 24px;
-              align-content: center;
-              justify-content: center; }
-              header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down:before {
+        header.consumer .tp-1 .tp-r .tc1 .topsignouter {
+          display: flex;
+          align-items: center; }
+          header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps {
+            display: flex;
+            color: #666;
+            margin-left: auto;
+            margin-right: 15px; }
+            @media only screen and (max-width: 767px) {
+              header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps {
+                margin-bottom: 15px; } }
+            header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx {
+              padding-left: 30px;
+              cursor: pointer; }
+              header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx {
+                width: 40px;
+                height: 40px;
+                -webkit-border-radius: 50px;
+                border-radius: 50px;
+                background-clip: padding-box;
+                /* stops bg color from leaking outside the border: */
                 display: flex;
-                align-self: center; }
+                justify-content: center;
+                align-items: center;
+                position: relative; }
+                header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx .noti-no {
+                  position: absolute;
+                  width: 20px;
+                  height: 20px;
+                  -webkit-border-radius: 10px;
+                  border-radius: 10px;
+                  background-clip: padding-box;
+                  /* stops bg color from leaking outside the border: */
+                  background-color: #00cc96;
+                  color: #fff;
+                  text-align: center;
+                  font-family: 'Montserrat', sans-serif;
+                  font-weight: bold;
+                  font-size: .75rem;
+                  top: 0px;
+                  right: 0px;
+                  vertical-align: middle; }
+                header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx i {
+                  font-size: 1.25rem;
+                  vertical-align: middle;
+                  margin-top: 9px; }
+          header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem {
+            font-size: .875rem;
+            font-weight: 500; }
+            header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button {
+              width: 24px;
+              height: 24px; }
+              header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down {
+                font-size: .5rem;
+                display: flex;
+                width: 24px;
+                height: 24px;
+                align-content: center;
+                justify-content: center; }
+                header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down:before {
+                  display: flex;
+                  align-self: center; }
       header.consumer .tp-1 .tp-r .tp-srch {
         width: 100%;
         position: relative;

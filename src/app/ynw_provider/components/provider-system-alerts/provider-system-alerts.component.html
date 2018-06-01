@@ -85,7 +85,7 @@
                                         [class.info]="alrt.severity.name=='Info'" 
                                         [class.warning]="alrt.severity.name=='Warning'" 
                                         [class.high]="alrt.severity.name=='High'" 
-                                        [class.error]="alrt.severity.name=='Critical'"><span class="icon-delete" *ngIf="alrt.ackStatus==false && alrt.ackRequired==true" (click)="alertAcknowlege(alrt)"></span></td>
+                                        [class.error]="alrt.severity.name=='Critical'"><span class="icon-delete" *ngIf="alrt.ackStatus==false && alrt.ackRequired==true" (click)="alertAcknowledge(alrt)"></span></td>
                                 </tr>
                                 </ng-container>
                             </tbody>

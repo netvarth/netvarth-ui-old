@@ -31,12 +31,15 @@ export class InboxComponent implements OnInit {
     }
   ];
   selectedMsg = -1;
+  userDet;
 
   constructor( private inbox_services: InboxServices,
     private router: Router, private dialog: MatDialog,
     private shared_functions: SharedFunctions) {}
 
   ngOnInit() {
+    this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    console.log('user', this.userDet);
     this.getInboxMessages();
   }
 
@@ -80,6 +83,7 @@ export class InboxComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
+        this.selectedMsg = -1;
         this.getInboxMessages();
       }
     });
