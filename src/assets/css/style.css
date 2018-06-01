@@ -962,7 +962,7 @@ app-footer {
       align-items: center;
       font-family: 'Montserrat', sans-serif;
       font-weight: normal;
-      color: rgba(0, 0, 0, 0.5);
+      color: rgba(0, 0, 0, 0.7);
       -moz-transition: all 300ms;
       -o-transition: all 300ms;
       -webkit-transition: all 300ms;
@@ -1146,7 +1146,8 @@ app-footer {
   color: #fff;
   background: #00aef2;
   padding: 15px 24px;
-  position: relative; }
+  position: relative;
+  z-index: 1010; }
   .mat-snack-bar-container .mat-simple-snackbar {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500; }
@@ -2595,7 +2596,7 @@ header {
         .consumerpopupmainclass .mat-dialog-title .modal_close i:before {
           font-family: "custom-ynw" !important;
           content: "\69";
-          font-size: .875rem !important;
+          font-size: .75rem !important;
           width: 20px;
           height: 20px;
           font-weight: 600;
@@ -4797,11 +4798,9 @@ footer.dashb {
     z-index: 300; }
     footer.dashb .sect3 .copy-text {
       display: flex;
-      align-items: center; }
-      footer.dashb .sect3 .copy-text p {
-        margin: 0;
-        font-size: .75rem;
-        opacity: .6; }
+      align-items: center;
+      font-size: .75rem;
+      opacity: .6; }
     footer.dashb .sect3 .spt-controls .list {
       margin: 0;
       padding: 0;
@@ -4986,10 +4985,14 @@ footer.dashb {
             cursor: pointer; }
             footer.dashb .stp-box .alerts .table-body .stp-list li .td.td2 .icon-delete:hover {
               color: #f24949; }
+        footer.dashb .stp-box .alerts .table-body .stp-list li .td.info {
+          color: #00aef2; }
         footer.dashb .stp-box .alerts .table-body .stp-list li .td.success {
           color: #00cc96; }
         footer.dashb .stp-box .alerts .table-body .stp-list li .td.warning {
           color: #fda60d; }
+        footer.dashb .stp-box .alerts .table-body .stp-list li .td.high {
+          color: #f24949; }
         footer.dashb .stp-box .alerts .table-body .stp-list li .td.error {
           color: #f24949; }
       footer.dashb .stp-box .alerts .table-body .stp-list li:nth-child(even) {
@@ -7486,6 +7489,7 @@ footer.dashb {
   .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
     padding: 0px;
     margin: 10px;
+    margin-top: 0;
     border: 1px solid #b6ffec6e;
     border-left: none;
     border-bottom: none;
@@ -7530,8 +7534,8 @@ footer.dashb {
               font-size: 0.875rem;
               color: #4c4c4c;
               text-overflow: ellipsis;
-              padding: 10px;
-              height: 40px; }
+              padding: 0px 10px;
+              height: 30px; }
               .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-input-element:focus, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-input-element:focus {
                 -webkit-box-shadow: 0 0 1px #fff inset;
                 -moz-box-shadow: 0 0 1px #fff inset;
@@ -7540,13 +7544,18 @@ footer.dashb {
                 background: #fff; }
       .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-chip-list .mat-chip-list-wrapper .mat-chip, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-chip-list .mat-chip-list-wrapper .mat-chip {
         cursor: pointer;
-        padding: 8px 12px;
+        padding: 3px 12px;
         background: transparent;
         border: 2px solid #fff;
-        color: #fff; }
+        color: #fff;
+        margin-bottom: 5px;
+        margin-left: 0;
+        margin-right: 5px; }
         .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected {
           background: #fff;
           color: #222223; }
+      .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group.first_name mat-form-field, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date.first_name mat-form-field {
+        max-width: 320px; }
     .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date {
       flex-grow: 1;
       padding: 10px;
@@ -7586,7 +7595,8 @@ footer.dashb {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
     /* IE6-9 */ }
   .dashboard .card.w-dta .dash-list .d-tbl .table {
-    border: none; }
+    border: none;
+    margin-bottom: 0; }
     .dashboard .card.w-dta .dash-list .d-tbl .table thead {
       background-color: #666; }
       .dashboard .card.w-dta .dash-list .d-tbl .table thead tr th {
@@ -7595,14 +7605,21 @@ footer.dashb {
       text-align: center; }
       .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online span {
         color: #00cc96; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name {
-      font-weight: 600; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name span {
-        color: #00cc96;
-        font-size: 1rem;
-        vertical-align: middle;
-        margin-left: 5px; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
+    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived {
+      vertical-align: top; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived {
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+        background-clip: padding-box;
+        /* stops bg color from leaking outside the border: */
+        background: #61f2aa;
+        color: #0a7d44;
+        padding: 3px 5px;
+        font-size: .65rem;
+        font-weight: 600; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived:before {
+        display: none; }
+    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
       font-weight: 500; }
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
       display: flex;
@@ -7617,20 +7634,38 @@ footer.dashb {
         padding: 3px 10px;
         display: flex;
         margin-right: 5px;
-        margin-bottom: 5px; }
+        margin-bottom: 5px;
+        border: none;
+        align-items: center; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span i {
           font-size: .875rem;
           width: 14px;
           height: 14px;
-          margin-top: 1px; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span:hover {
-          background-color: #00aef2;
-          border-color: #00aef2; }
+          margin-top: 1px;
+          display: none; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.arrived {
+          background: #61f2aa;
+          color: #0a7d44; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.start {
+          background: #61daf2;
+          color: #0a6a7d; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.newbill {
+          background: #bc9eff;
+          color: #4100d1; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.viewbill {
+          background: #f2cd61;
+          color: #7d600a; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.acceptbill {
+          background: #61f2a3;
+          color: #0a7d3e; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.done {
+          background: #c9f261;
+          color: #5c7d0a; }
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment {
       text-align: left; }
       .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
-        padding: 2px 4px;
-        background: #f8f8f8;
+        padding: 2px 0px;
+        /*background: $cc-lightgray;*/
         color: #222223;
         position: relative;
         font-weight: 600;
@@ -9582,6 +9617,10 @@ header.consumer {
                   font-weight: 600;
                   position: relative;
                   padding-left: 20px; }
+                  .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .timing .time-data .icon-question {
+                    vertical-align: middle;
+                    height: 16px;
+                    display: inline-block; }
                   .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .timing .time-data:before {
                     position: absolute;
                     content: "\31";

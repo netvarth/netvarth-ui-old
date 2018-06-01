@@ -56,22 +56,19 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-      const tday = new Date();
-      const mon = (tday.getMonth() < 9) ? '0' + tday.getMonth() : tday.getMonth();
-      const today = tday.getFullYear() + '-' + mon + '-' + tday.getDate();
-      const today1 =  tday.getDate() + '-' + mon + '-' + tday.getFullYear();
+      // this.getAuditList();
       this.logSelcat = '';
       this.logSelsubcat = '';
-      this.logSeldate = today1;
+      this.logSeldate = '';
       this.logSelaction = '';
       this.setSubcategories('');
       this.auditStatus = 4;
-      console.log(this.logSeldate);
+
       this.holdlogSelcat = this.logSelcat;
       this.holdlogSelsubcat = this.logSelsubcat;
       this.holdlogSeldate = this.logSeldate;
       this.holdlogSelaction = this.logSelaction;
-      // this.getAuditListTotalCnt('', '' , '', '');
+      this.getAuditListTotalCnt('', '' , '', '');
     }
     getAuditListTotalCnt(cat, subcat, action, sdate) {
       this.shared_services.getAuditLogsTotalCnt(cat, subcat, action, sdate)
@@ -151,7 +148,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
         }
         seldate = this.holdlogSeldate['_i']['year'] + '-' + mn + '-' + this.holdlogSeldate['_i']['date'];
       }
-      if (this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
+      if (pagecall === false && this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
         this.sharedfunctionObj.openSnackBar('Please select atleast one option', {'panelClass': 'snackbarerror'});
       } else {
         let ccat = '';

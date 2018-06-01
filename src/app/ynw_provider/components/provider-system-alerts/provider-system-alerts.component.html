@@ -1,0 +1,96 @@
+<section>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  </section>
+  <section>
+    <div class="content comn-cls">
+        <div class="container">
+            <div class="logfil-outer">
+                <div class="form-group">
+                    <label class="col-form-label">Acknowledgement Status</label>
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="alertSelAck" name="catg">
+                            <mat-option value = ""> -- Any --</mat-option>
+                            <mat-option value = "true">Acknowledged</mat-option>
+                            <mat-option value = "false">Not Acknowledged</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                        <label for="reason" class="col-form-label">Select Date</label>
+                         <div class="pickerouter">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker> 
+                          <input class="form-control1" name="alert-datepicker" [(ngModel)]="alertSeldate" [value]="alertSeldate" type="text" matInput [matDatepicker]="picker">
+                        </div> 
+                </div>
+                <div class="actions-div">
+                    <button type="button"  class="cs-btn bt1 mat-button" (click)="do_search(false)">Search</button>
+                </div>
+            </div>
+
+            <div class="audit">
+                    <div class="table-outer d-tbl">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Details</th>
+                                    <th>Acknowledged</th>
+                                    <th>Date</th>
+                                    <th>Action</th>         
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="alertStatus==1">
+                                <tr>
+                                    <td class="spinner" colspan="5">
+                                        <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
+                                    </td>
+                                </tr>
+                                </ng-container>
+                                <ng-container *ngIf="alertStatus==2" colspan="5">
+                                <tr>
+                                    <td class="nodata">Sorry! No alerts found</td>
+                                </tr>
+                                </ng-container>
+                                <ng-container *ngIf="alertStatus==3">
+                                <tr *ngFor="let alrt of alert_details">
+                                    <td data-title="Subject" class="td1" 
+                                        [class.info]="alrt.severity.name=='Info'" 
+                                        [class.warning]="alrt.severity.name=='Warning'" 
+                                        [class.high]="alrt.severity.name=='High'" 
+                                        [class.error]="alrt.severity.name=='Critical'">{{alrt.subject}}</td>
+                                    <td data-title="Details" class="td2" 
+                                        [class.info]="alrt.severity.name=='Info'" 
+                                        [class.warning]="alrt.severity.name=='Warning'" 
+                                        [class.high]="alrt.severity.name=='High'" 
+                                        [class.error]="alrt.severity.name=='Critical'">{{alrt.text}}</td>
+                                    <td data-title="Act Status" class="td3" 
+                                        [class.info]="alrt.severity.name=='Info'" 
+                                        [class.warning]="alrt.severity.name=='Warning'" 
+                                        [class.high]="alrt.severity.name=='High'" 
+                                        [class.error]="alrt.severity.name=='Critical'">{{ (alrt.ackStatus) ? 'Yes' : 'No'}}</td>
+                                    <td data-title="Date" class="td4" 
+                                    [class.info]="alrt.severity.name=='Info'" 
+                                        [class.warning]="alrt.severity.name=='Warning'" 
+                                        [class.high]="alrt.severity.name=='High'" 
+                                        [class.error]="alrt.severity.name=='Critical'">{{alrt.createdOn | date:dateFormat}}</td>
+                                    <td data-title="Action" class="td5" 
+                                        [class.info]="alrt.severity.name=='Info'" 
+                                        [class.warning]="alrt.severity.name=='Warning'" 
+                                        [class.high]="alrt.severity.name=='High'" 
+                                        [class.error]="alrt.severity.name=='Critical'"><span class="icon-delete" *ngIf="alrt.ackStatus==false && alrt.ackRequired==true" (click)="alertAcknowlege(alrt)"></span></td>
+                                </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                        <div class="search_paging" *ngIf="alert_details.length>0">
+                            <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>

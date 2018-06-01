@@ -45,7 +45,7 @@
                          <div class="pickerouter">
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker></mat-datepicker> 
-                          <input class="form-control" name="audit-datepicker" [(ngModel)]="logSeldate" type="text" matInput [matDatepicker]="picker">
+                          <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" matInput [matDatepicker]="picker">
                         </div> 
                 </div>
                 <div class="actions-div">
@@ -53,44 +53,45 @@
                 </div>
             </div>
 
+
+
+
             <div class="audit">
-                <div class="table-header">
-                    <div class="container">
-                        <div class="row">
-                            <div class="action-head">
-                                <div class="th th1">Action</div>
-                                <div class="th th2">User Name</div>
-                                <div class="th th3">Date</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="copy" *ngIf="auditStatus==1">
-                            <div class="pubs">
-                                    <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
-                            </div>
-                            </div>
-                            <div class="notfound" *ngIf="auditStatus==2">
-                                   Sorry! No logs found
-                            </div>
-                            <ul class="stp-list" *ngIf="auditStatus==3">
-                                <ng-container *ngFor="let log of auditlog_details; let i=index">
-                                <li>
-                                    <div class="td td1">{{log.Action}}</div>
-                                    <div class="td td2">{{log.userName}}</div>
-                                    <div class="td td3">{{log.date | date:dateFormat}}</div>
-                                </li>
+                    <div class="table-outer d-tbl">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>User Name</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="auditStatus==1">
+                                <tr>
+                                    <td class="spinner" colspan="3">
+                                        <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
+                                    </td>
+                                </tr>
                                 </ng-container>
-                            </ul>
-                            <div class="search_paging" *ngIf="auditlog_details.length>0">
-                                <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
-                            </div>
+                                <ng-container *ngIf="auditStatus==2" colspan="3">
+                                <tr>
+                                    <td class="nodata">Sorry! No logs found</td>
+                                </tr>
+                                </ng-container>
+                                <ng-container *ngIf="auditStatus==3">
+                                <tr *ngFor="let log of auditlog_details; let i=index">
+                                    <td data-title="Action" class="td1">{{log.Action}}</td>
+                                    <td data-title="User Name" class="td2">{{log.userName}}</td>
+                                    <td data-title="Date" class="td4">{{log.date | date:dateFormat}}</td>
+                                </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                        <div class="search_paging" *ngIf="auditlog_details.length>0">
+                            <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

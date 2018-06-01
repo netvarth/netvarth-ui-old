@@ -244,5 +244,6 @@ AUDITLOG_FILTER_ACTION: [
   { name: 'EDIT', dispName: 'Edit'},
   { name: 'COPY', dispName: 'Copy'},
   { name: 'VIEW', dispName: 'View'}
-]
+],
+ALERT_CNT: 10,
 };
