@@ -639,4 +639,7 @@ export class ProviderServices {
     const url = 'provider/payment';
     return this.servicemeta.httpPost(url, data);
   }
+  acknowledgeAlert(id) {
+    return this.servicemeta.httpPut('provider/alerts/' + id);
+  }
 }

@@ -10,6 +10,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-system-alerts',
@@ -138,6 +139,15 @@ export class ProviderSystemAlertComponent implements OnInit {
       return this.startpageval;
     }
     alertAcknowledge(obj) {
+      this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC + obj.id);
+      return ;
+      this.provider_servicesobj.acknowledgeAlert(obj.id)
+        .subscribe (data => {
+          this.sharedfunctionObj.openSnackBar('Acknowledge Successfull');
+        },
+      error => {
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      });
 
     }
 }

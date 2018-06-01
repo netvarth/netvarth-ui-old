@@ -4,6 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
@@ -86,9 +87,12 @@ export class FooterComponent implements OnInit {
     alertAcknowlege(alert) {
       this.shared_services.acknowledgeAlert(alert.id)
         .subscribe (data => {
-          // console.log('ack', data);
-          this.getAlerts();
-        });
+          this.shared_functions.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
+           this.getAlerts();
+        },
+      error => {
+        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      });
     }
     getAlerts() {
       this.alerts = [];
