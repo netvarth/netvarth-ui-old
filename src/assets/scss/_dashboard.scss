@@ -408,6 +408,8 @@ footer {
                     padding: 0;
                     width: 100%;
                     font-size: .875rem;
+                    max-height: 345px;
+                    overflow: auto;
 
                     .no-info {
                         text-align: center;
@@ -5243,6 +5245,11 @@ footer {
                                 background: $start;
                             }
                         }
+                        &.checkedIn {
+                            &:before {
+                                background: $start;
+                            }
+                        }
                         &.done {
                             &:before {
                                 background: $done;
@@ -5774,11 +5781,13 @@ footer {
 }
 
 
-// ### Footer for Dashboard
+// ### System Tray Panel Detail Page
 .content {
     &.comn-cls {
         .card {
             .logfil-outer {
+                margin-bottom: 30px;
+                
                 .formgroup-outer {
                     display: flex;
                     
@@ -5850,6 +5859,22 @@ footer {
                             padding-right: 0;
                         }
                     }
+                }
+            }
+            .audit {
+                .search_paging {
+                    .container {
+                        padding: 0;
+                        
+                        .text-center {
+                            display: flex;
+                            
+                            .paginghead-outer, .pagination {
+                                flex-grow: 1;
+                            }
+                        }
+                    }
+                    
                 }
             }
         }

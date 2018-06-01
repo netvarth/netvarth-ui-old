@@ -4933,7 +4933,9 @@ footer.dashb {
     footer.dashb .stp-box .audit .stp-tbl, footer.dashb .stp-box .alerts .stp-tbl, footer.dashb .stp-box .o-checkin .stp-tbl {
       padding: 0;
       width: 100%;
-      font-size: .875rem; }
+      font-size: .875rem;
+      max-height: 345px;
+      overflow: auto; }
       footer.dashb .stp-box .audit .stp-tbl .no-info, footer.dashb .stp-box .alerts .stp-tbl .no-info, footer.dashb .stp-box .o-checkin .stp-tbl .no-info {
         text-align: center;
         font-weight: 500;
@@ -8339,6 +8341,8 @@ footer.dashb {
         background: #63f2b2; }
       .content.comn-cls .lbr .card .c-history li.started:before {
         background: #61daf2; }
+      .content.comn-cls .lbr .card .c-history li.checkedIn:before {
+        background: #61daf2; }
       .content.comn-cls .lbr .card .c-history li.done:before {
         background: #748eff; }
     .content.comn-cls .lbr .card .c-history:before {
@@ -8692,46 +8696,54 @@ footer.dashb {
       .content .card .copy .inbox-table li:last-child {
         border: none; }
 
-.content.comn-cls .card .logfil-outer .formgroup-outer {
-  display: flex; }
-  .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
-    width: 25%;
-    padding: 10px; }
-    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .col-form-label {
-      padding: 0px;
-      margin-bottom: 5px; }
-    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field {
-      width: 100%; }
-      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper {
-        padding: 0;
-        margin: 0; }
-        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
-          margin: 0;
-          padding: 0;
-          border: none; }
-          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
-            display: none; }
-          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
-            padding: 10px;
-            height: 40px;
-            background: #e6e6e6; }
-        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
-          display: none; }
-    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter {
-      display: flex; }
-      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter input[type="text"] {
+.content.comn-cls .card .logfil-outer {
+  margin-bottom: 30px; }
+  .content.comn-cls .card .logfil-outer .formgroup-outer {
+    display: flex; }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
+      width: 25%;
+      padding: 10px; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .col-form-label {
+        padding: 0px;
+        margin-bottom: 5px; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field {
         width: 100%; }
-      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle {
-        margin-right: 15px; }
-        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button {
-          height: 38px;
-          background: #00aef2; }
-          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button svg {
-            fill: #fff; }
-    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
-      padding-left: 0; }
-    .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
-      padding-right: 0; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper {
+          padding: 0;
+          margin: 0; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
+            margin: 0;
+            padding: 0;
+            border: none; }
+            .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+              display: none; }
+            .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+              padding: 10px;
+              height: 40px;
+              background: #e6e6e6; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
+            display: none; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter {
+        display: flex; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter input[type="text"] {
+          width: 100%; }
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle {
+          margin-right: 15px; }
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button {
+            height: 38px;
+            background: #00aef2; }
+            .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button svg {
+              fill: #fff; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
+        padding-left: 0; }
+      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
+        padding-right: 0; }
+.content.comn-cls .card .audit .search_paging .container {
+  padding: 0; }
+  .content.comn-cls .card .audit .search_paging .container .text-center {
+    display: flex; }
+    .content.comn-cls .card .audit .search_paging .container .text-center .paginghead-outer, .content.comn-cls .card .audit .search_paging .container .text-center .pagination {
+      flex-grow: 1; }
 
 header.consumer {
   padding-top: 15px; }
@@ -8765,7 +8777,7 @@ header.consumer {
       flex-grow: 1; }
       header.consumer .tp-1 .tp-r .tc1 {
         margin-top: 0;
-        margin-bottom: 15px; }
+        margin-bottom: 10px; }
         @media only screen and (max-width: 767px) {
           header.consumer .tp-1 .tp-r .tc1 {
             height: 70px; } }
@@ -8781,22 +8793,68 @@ header.consumer {
             height: 70px; } }
         header.consumer .tp-1 .tp-r .tc1 .isprovidertop {
           margin-top: 5px; }
-        header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem {
-          font-size: .875rem;
-          font-weight: 500; }
-          header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button {
-            width: 24px;
-            height: 24px; }
-            header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down {
-              font-size: .5rem;
-              display: flex;
-              width: 24px;
-              height: 24px;
-              align-content: center;
-              justify-content: center; }
-              header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down:before {
+        header.consumer .tp-1 .tp-r .tc1 .topsignouter {
+          display: flex;
+          align-items: center; }
+          header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps {
+            display: flex;
+            color: #666;
+            margin-left: auto;
+            margin-right: 15px; }
+            @media only screen and (max-width: 767px) {
+              header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps {
+                margin-bottom: 15px; } }
+            header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx {
+              padding-left: 30px;
+              cursor: pointer; }
+              header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx {
+                width: 40px;
+                height: 40px;
+                -webkit-border-radius: 50px;
+                border-radius: 50px;
+                background-clip: padding-box;
+                /* stops bg color from leaking outside the border: */
                 display: flex;
-                align-self: center; }
+                justify-content: center;
+                align-items: center;
+                position: relative; }
+                header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx .noti-no {
+                  position: absolute;
+                  width: 20px;
+                  height: 20px;
+                  -webkit-border-radius: 10px;
+                  border-radius: 10px;
+                  background-clip: padding-box;
+                  /* stops bg color from leaking outside the border: */
+                  background-color: #00cc96;
+                  color: #fff;
+                  text-align: center;
+                  font-family: 'Montserrat', sans-serif;
+                  font-weight: bold;
+                  font-size: .75rem;
+                  top: 0px;
+                  right: 0px;
+                  vertical-align: middle; }
+                header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx i {
+                  font-size: 1.25rem;
+                  vertical-align: middle;
+                  margin-top: 9px; }
+          header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem {
+            font-size: .875rem;
+            font-weight: 500; }
+            header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button {
+              width: 24px;
+              height: 24px; }
+              header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down {
+                font-size: .5rem;
+                display: flex;
+                width: 24px;
+                height: 24px;
+                align-content: center;
+                justify-content: center; }
+                header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down:before {
+                  display: flex;
+                  align-self: center; }
       header.consumer .tp-1 .tp-r .tp-srch {
         width: 100%;
         position: relative;

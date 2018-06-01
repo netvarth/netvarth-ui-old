@@ -370,4 +370,9 @@ export class SharedServices {
       const url = typ + '/communications/unreadCount';
       return this.servicemeta.httpGet(url);
     }
+
+    addConsumertoProviderNote(uuid, message) {
+      const url = 'consumer/communications?account=' + uuid;
+      return this.servicemeta.httpPost(url, message);
+    }
 }

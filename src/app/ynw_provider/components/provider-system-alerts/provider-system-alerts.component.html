@@ -5,7 +5,10 @@
   <section>
     <div class="content comn-cls">
         <div class="container">
+        <div class="row">
+        <div class="card">
             <div class="logfil-outer">
+                <div class="formgroup-outer">
                 <div class="form-group">
                     <label class="col-form-label">Acknowledgement Status</label>
                     <mat-form-field>
@@ -24,6 +27,7 @@
                           <mat-datepicker #picker></mat-datepicker> 
                           <input class="form-control1" name="alert-datepicker" [(ngModel)]="alertSeldate" [value]="alertSeldate" type="text" matInput [matDatepicker]="picker">
                         </div> 
+                </div>
                 </div>
                 <div class="actions-div">
                     <button type="button"  class="cs-btn bt1 mat-button" (click)="do_search(false)">Search</button>
@@ -50,9 +54,9 @@
                                     </td>
                                 </tr>
                                 </ng-container>
-                                <ng-container *ngIf="alertStatus==2" colspan="5">
+                                <ng-container *ngIf="alertStatus==2" >
                                 <tr>
-                                    <td class="nodata">Sorry! No alerts found</td>
+                                    <td class="nodatafound" colspan="5">Sorry! No alerts found</td>
                                 </tr>
                                 </ng-container>
                                 <ng-container *ngIf="alertStatus==3">
@@ -81,7 +85,7 @@
                                         [class.info]="alrt.severity.name=='Info'" 
                                         [class.warning]="alrt.severity.name=='Warning'" 
                                         [class.high]="alrt.severity.name=='High'" 
-                                        [class.error]="alrt.severity.name=='Critical'"><span class="icon-delete" *ngIf="alrt.ackStatus==false && alrt.ackRequired==true" (click)="alertAcknowlege(alrt)"></span></td>
+                                        [class.error]="alrt.severity.name=='Critical'"><span class="icon-delete" *ngIf="alrt.ackStatus==false && alrt.ackRequired==true" (click)="alertAcknowledge(alrt)"></span></td>
                                 </tr>
                                 </ng-container>
                             </tbody>
@@ -91,6 +95,8 @@
                         </div>
                     </div>
             </div>
+        </div>
+        </div>
         </div>
     </div>
 </section>

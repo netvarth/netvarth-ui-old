@@ -96,14 +96,50 @@
             </div>
             
             <!--Audit Log-->
+
             <div class="audit" *ngIf="showAuditDiv">
+                    <div class="container">
+                        <div class="row"> 
+                            <div class="table-outer stp-tbl">
+                                <span class="loading" *ngIf="auditStatus==1">
+                                    <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
+                                </span>
+        
+                                <table class="table" *ngIf="auditStatus==3">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Text</th>
+                                            <th>Subject</th>                            
+                                            <th>User Name</th>                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let log of auditlog; let i=index">
+                                            <td data-title="Date" class="td1">{{log.date | date:dateFormat}} {{log.time}}</td>
+                                            <td data-title="Text" class="td2">{{log.text}}</td>
+                                            <td data-title="Subject" class="td3">{{log.subject}}</td>
+                                            <td data-title="User Name" class="td4">{{log.userName}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <span class="no-info" *ngIf="auditStatus==2">No Audit Logs so far</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            <!-- <div class="audit" *ngIf="showAuditDiv">
                 <div class="table-header">
                     <div class="container">
                         <div class="row">
                             <div class="action-head">
-                                <div class="th th1">Action</div>
-                                <div class="th th2">User Name</div>
-                                <div class="th th3">Date</div>
+                                <div class="th th1">Date</div>
+                                <div class="th th2">Text</div>
+                                <div class="th th3">Subject</div>
+                                <div class="th th4">User Name</div>
+                                
                             </div>
                         </div>
                     </div>
@@ -122,20 +158,45 @@
                             <ul class="stp-list" *ngIf="auditStatus==3">
                                 <ng-container *ngFor="let log of auditlog; let i=index">
                                 <li>
-                                    <div class="td td1">{{log.Action}}</div>
-                                    <div class="td td2">{{log.userName}}</div>
-                                    <div class="td td3">{{log.date | date:dateFormat}}</div>
+                                    <div class="td td1">{{log.date | date:dateFormat}} {{log.time}}</div>
+                                    <div class="td td2">{{log.text}}</div>
+                                    <div class="td td3">{{log.subject}}</div>
+                                    <div class="td td4">{{log.userName}}</div>
                                 </li>
                                 </ng-container>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- // Audit Log-->
             
             <!--Alerts-->
             <div class="alerts" *ngIf="showAlertDiv">
+                    <div class="container">
+                        <div class="row">        
+                            <div class="table-outer stp-tbl">
+                                <span class="loading" *ngIf="alertStatus==1"><app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner></span>
+        
+                                <table class="table" *ngIf="alertStatus==3">
+                                    <tbody>
+                                        <tr [class.info]="alert.severity.name=='Info'" 
+                                            [class.warning]="alert.severity.name=='Warning'" 
+                                            [class.high]="alert.severity.name=='High'" 
+                                            [class.error]="alert.severity.name=='Critical'"
+                                                         *ngFor="let alert of alerts">
+                                            <td class="td1">{{alert.text}}</td>
+                                            <td class="td2"><span class="icon-acknowledge" *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <span class="no-info" *ngIf="alertStatus==2">No Alerts so far</span>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+
+            <!-- <div class="alerts" *ngIf="showAlertDiv">
                 <div class="table-body">
                     <div class="container">
                         <div class="row">
@@ -162,7 +223,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- // Alerts-->
             
             <!--Online Chekin-->

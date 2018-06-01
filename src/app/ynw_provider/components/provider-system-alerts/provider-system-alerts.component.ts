@@ -98,7 +98,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     do_search(pagecall) {
 
       if (pagecall === false) {
-        console.log('search false');
+        // console.log('search false');
         this.holdalertSelAck = this.alertSelAck;
         this.holdalertSeldate = this.alertSeldate;
       }
@@ -125,7 +125,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     }
     handle_pageclick(pg) {
       this.startpageval = pg;
-      console.log('page', pg);
+      // console.log('page', pg);
       this.do_search(true);
     }
     getperPage() {
@@ -136,5 +136,8 @@ export class ProviderSystemAlertComponent implements OnInit {
     }
     getcurpageVal() {
       return this.startpageval;
+    }
+    alertAcknowledge(obj) {
+
     }
 }

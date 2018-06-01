@@ -5,48 +5,52 @@
   <section>
     <div class="content comn-cls">
         <div class="container">
+            <div class="row">
+            <div class="card">
             <div class="logfil-outer">
-                <div class="form-group">
-                    <label class="col-form-label">Category</label>
-                    <mat-form-field>
-                        <mat-select [(ngModel)]="logSelcat" name="catg" (change)="selectCategory()">
-                            <mat-option value = ""> -- Select --</mat-option>
-                            <mat-option *ngFor="let cat of logCategories; let i = index" [value]="i">
-                            {{ cat.displayName }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                <div class="formgroup-outer">
+                    <div class="form-group">
+                        <label class="col-form-label">Category</label>
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="logSelcat" name="catg" (change)="selectCategory()">
+                                <mat-option value = ""> -- Select --</mat-option>
+                                <mat-option *ngFor="let cat of logCategories; let i = index" [value]="i">
+                                {{ cat.displayName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
 
-                <div class="form-group">
-                    <label class="col-form-label">Sub Category</label>
-                    <mat-form-field>
-                        <mat-select [(ngModel)]="logSelsubcat">
-                            <mat-option value = ""> -- Select --</mat-option>
-                            <mat-option *ngFor="let scat of logSubcategories" [value]="scat.name">
-                            {{ scat.dispName }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                    <label class="col-form-label">Action</label>
-                    <mat-form-field>
-                        <mat-select [(ngModel)]="logSelaction">
-                            <mat-option value = ""> -- Select --</mat-option>
-                            <mat-option *ngFor="let act of logActions" [value]="act.name">
-                            {{ act.dispName }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                        <label for="reason" class="col-form-label">Select Date</label>
-                         <div class="pickerouter">
-                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker> 
-                          <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" matInput [matDatepicker]="picker">
-                        </div> 
+                    <div class="form-group">
+                        <label class="col-form-label">Sub Category</label>
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="logSelsubcat">
+                                <mat-option value = ""> -- Select --</mat-option>
+                                <mat-option *ngFor="let scat of logSubcategories" [value]="scat.name">
+                                {{ scat.dispName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Action</label>
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="logSelaction">
+                                <mat-option value = ""> -- Select --</mat-option>
+                                <mat-option *ngFor="let act of logActions" [value]="act.name">
+                                {{ act.dispName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                            <label for="reason" class="col-form-label">Select Date</label>
+                            <div class="pickerouter">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker> 
+                            <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" matInput [matDatepicker]="picker">
+                            </div> 
+                    </div>
                 </div>
                 <div class="actions-div">
                     <button type="button"  class="cs-btn bt1 mat-button" (click)="do_search(false)">Search</button>
@@ -61,29 +65,32 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Action</th>
-                                    <th>User Name</th>
                                     <th>Date</th>
+                                    <th>Text</th>
+                                    <th>Subject</th>
+                                    <th>User Name</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <ng-container *ngIf="auditStatus==1">
                                 <tr>
-                                    <td class="spinner" colspan="3">
+                                    <td class="spinner" colspan="4">
                                         <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
                                     </td>
                                 </tr>
                                 </ng-container>
-                                <ng-container *ngIf="auditStatus==2" colspan="3">
+                                <ng-container *ngIf="auditStatus==2">
                                 <tr>
-                                    <td class="nodata">Sorry! No logs found</td>
+                                    <td class="nodatafound" colspan="4">Sorry! No logs found</td>
                                 </tr>
                                 </ng-container>
                                 <ng-container *ngIf="auditStatus==3">
                                 <tr *ngFor="let log of auditlog_details; let i=index">
-                                    <td data-title="Action" class="td1">{{log.Action}}</td>
-                                    <td data-title="User Name" class="td2">{{log.userName}}</td>
-                                    <td data-title="Date" class="td4">{{log.date | date:dateFormat}}</td>
+                                    <td data-title="Date" class="td1">{{log.date | date:dateFormat}} {{log.time}}</td>
+                                    <td data-title="Text" class="td2">{{log.text}}</td>
+                                    <td data-title="Subject" class="td3">{{log.subject}}</td>
+                                    <td data-title="User Name" class="td4">{{log.userName}}</td>
+                                    
                                 </tr>
                                 </ng-container>
                             </tbody>
@@ -92,6 +99,8 @@
                             <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
                         </div>
                     </div>
+            </div>
+            </div>
             </div>
         </div>
     </div>

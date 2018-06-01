@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -12,7 +12,12 @@ import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import { projectConstants } from '../../constants/project-constants';
+
 import { ViewChild } from '@angular/core';
+// import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 @Component({
     selector: 'app-header',
@@ -40,6 +45,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   bsector;
   blogo;
   inboxUnreadCnt;
+  inboxCntFetched;
+  cronHandle: Subscription;
+  cronStarted;
   urls_class = [
     {url: '\/provider\/bwizard' , class: 'itl-steps'},
     {url: '\/provider\/settings\/.+' , class: 'dashb'},
@@ -47,12 +55,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
   isprovider = false;
   ctype;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
   public searchfields: SearchFields = new SearchFields();
   locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
   keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': ''};
   selected_domain = '';
   avoidClear = 1;
-
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -67,6 +75,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
      }
     });*/
+
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.handleHeaderclassbasedonURL();
@@ -75,10 +84,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // subscribe to home component messages
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       // console.log('message', message.ttype);
-      if (message.ttype === 'updateuserdetails') {
+      switch (message.ttype) {
+        case 'updateuserdetails':
+          this.getUserdetails();
+          this.handleHeaderclassbasedonURL();
+        break;
+      }
+      /*if (message.ttype === 'updateuserdetails') {
         this.getUserdetails();
         this.handleHeaderclassbasedonURL();
-      }
+      }*/
       this.getBusinessdetFromLocalstorage();
     });
 
@@ -92,15 +107,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.handleHeaderclassbasedonURL();
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
+    this.inboxCntFetched = false;
     this.getInboxUnreadCnt();
+
+    // Section which handles the periodic reload
+    if (this.ctype === 'consumer' || this.ctype === 'provider') {
+      this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+        this.reloadHandler();
+      });
+    } else {
+        if (this.cronHandle) {
+          this.cronHandle.unsubscribe();
+        }
+    }
+
   }
 
   ngOnDestroy() {
     this.evnt.unsubscribe();
      // unsubscribe to ensure no memory leaks
      this.subscription.unsubscribe();
+     if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+     }
   }
-
+  reloadHandler() { // this is the function which will be called periodically to refresh the contents in various sections
+    // doSomething();
+    const dd = new Date();
+    this.getInboxUnreadCnt();
+  }
  getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
     if (bdetails) {
@@ -257,7 +292,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const usertype = this.ctype;
     this.shared_service.getInboxUnreadCount(usertype)
       .subscribe (data => {
-        console.log('inboxcnt', data);
+        this.inboxCntFetched = true;
+        // console.log('inboxcnt', data);
         this.inboxUnreadCnt = data;
       },
     error => {

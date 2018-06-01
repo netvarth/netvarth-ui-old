@@ -403,7 +403,7 @@
                                     <!-- <li><span class="icon-ambulance"></span></li>
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
-                                <span class="communicate">Communicate</span>
+                                <span class="communicate" (click)="communicateHandler(search_result.id)" *ngIf="search_result.fields.claimable!=1">Communicate</span>
                                 <span class="claim-business" (click)="claimBusiness()" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
                             </div>
                         </div>
