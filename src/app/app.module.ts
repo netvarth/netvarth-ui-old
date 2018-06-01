@@ -34,6 +34,7 @@ import { SearchDetailServices } from './shared/components/search-detail/search-d
 // import { ChangeEmailComponent } from './shared/components/change-email/change-email.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
+import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
 
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin } from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
@@ -67,13 +68,15 @@ import 'hammerjs';
    // ChangeEmailComponent,
     ConfirmBoxComponent/*,
     SearchMoreOptionsComponent*/,
-    ReturnPaymentComponent
+    ReturnPaymentComponent,
+    AddInboxMessagesComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,
     SignUpComponent,
     LoginComponent,
     ConfirmBoxComponent,
+    AddInboxMessagesComponent
     /*SearchMoreOptionsComponent*/
   ],
   imports: [

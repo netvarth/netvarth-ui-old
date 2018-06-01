@@ -86,7 +86,7 @@ export class FooterComponent implements OnInit {
     alertAcknowlege(alert) {
       this.shared_services.acknowledgeAlert(alert.id)
         .subscribe (data => {
-          console.log('ack', data);
+          // console.log('ack', data);
           this.getAlerts();
         });
     }
@@ -100,7 +100,7 @@ export class FooterComponent implements OnInit {
           } else {
             this.alertStatus = 2;
           }
-          console.log('alerts', this.alerts);
+          // console.log('alerts', this.alerts);
         },
       error => {
 

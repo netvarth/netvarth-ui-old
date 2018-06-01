@@ -20,6 +20,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
+import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 @Component({
   selector: 'app-search-detail',
   templateUrl: './search-detail.component.html',
@@ -88,7 +89,7 @@ export class SearchDetailComponent implements OnInit {
   refined_subdomain = '';
   specialization_hide = false;
   showmore_defaultcnt = projectConstants.REFINE_ENUMLIST_DEFAULT_SHOW_CNT;
-
+  holdprovidforCommunicate = 0;
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
@@ -775,7 +776,7 @@ export class SearchDetailComponent implements OnInit {
                 // this.result_provid[i] = providarr[0]; // this.search_data.hits.hit[i].id;
                 this.result_providdet.push({'provid': providarr[0], 'searchindx': i});
               } else {
-                console.log('claimable', this.search_data.hits.hit[i].fields.claimable );
+                // console.log('claimable', this.search_data.hits.hit[i].fields.claimable );
               }
               if (this.search_data.hits.hit[i].fields.hasOwnProperty('place2')) {
                 ++locationcnt;
@@ -1374,11 +1375,12 @@ export class SearchDetailComponent implements OnInit {
     if (usertype === 'consumer') {
       this.showCheckin('consumer');
     } else if (usertype === '') {
-      this.doLogin('consumer');
+      const passParam = {callback: ''};
+      this.doLogin('consumer', passParam);
     }
   }
 
-  doLogin(origin?) {
+  doLogin(origin?, passParam?) {
     this.shared_functions.openSnackBar('You need to login to check in');
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',
@@ -1395,7 +1397,11 @@ export class SearchDetailComponent implements OnInit {
       if (result === 'success') {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
-        this.showCheckin('consumer');
+        if (passParam['callback'] === 'communicate') {
+          this.showCommunicate(passParam['providerId']);
+        } else {
+          this.showCheckin('consumer');
+        }
       }
       // this.animal = result;
     });
@@ -1446,5 +1452,35 @@ export class SearchDetailComponent implements OnInit {
   }
   hidemore(indx) {
     this.searchrefine_arr[indx]['showhiddendet'] = false;
+  }
+  communicateHandler(obj) {
+    if (obj) {
+      const arr = obj.split('-');
+      const providforCommunicate = arr[0];
+      // check whether logged in as consumer
+      if (this.shared_functions.checkLogin()) {
+        const ctype = this.shared_functions.isBusinessOwner('returntyp');
+        if (ctype === 'consumer') {
+          console.log('communicate provid ', providforCommunicate);
+          this.showCommunicate(providforCommunicate);
+        }
+      } else { // show consumer login
+        const passParam = {callback: 'communicate', providerId: providforCommunicate };
+        this.doLogin('consumer', passParam);
+      }
+    }
+  }
+  showCommunicate(provid) {
+    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+      width: '50%',
+      panelClass: 'consumerpopupmainclass',
+     data: {
+       providerid : provid
+     }
+   });
+
+   dialogRef.afterClosed().subscribe(result => {
+     // this.animal = result;
+   });
   }
 }
