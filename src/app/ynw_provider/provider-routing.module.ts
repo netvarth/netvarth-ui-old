@@ -35,6 +35,7 @@ import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mo
 import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
 import { ProviderPaymentSettingsComponent } from './components/provider-payment-settings/provider-payment-settings.component';
 import { ProviderSystemAuditLogComponent } from './components/provider-system-auditlogs/provider-system-auditlogs.component';
+import { ProviderSystemAlertComponent } from './components/provider-system-alerts/provider-system-alerts.component';
 const routes: Routes = [
     {path: '', component: ProviderComponent, children: [
 
@@ -140,6 +141,9 @@ const routes: Routes = [
     },
     {
       path: 'auditlog', component: ProviderSystemAuditLogComponent
+    },
+    {
+      path: 'alerts', component: ProviderSystemAlertComponent
     },
     { path: 'bwizard', component: ProviderbWizardComponent }
   ]}

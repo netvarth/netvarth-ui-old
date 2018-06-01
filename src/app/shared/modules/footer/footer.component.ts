@@ -18,6 +18,8 @@ export class FooterComponent implements OnInit {
   ctype;
   auditlog: any = [];
   auditCnt = projectConstants.AUDITLOG_CNT;
+  alerts: any = [];
+  alertsCnt = projectConstants.ALERT_CNT;
   showbottompopup = false;
   selOpt;
   showCheckinDiv;
@@ -25,6 +27,7 @@ export class FooterComponent implements OnInit {
   showAuditDiv;
   bottomdivHeader;
   auditStatus = 1;
+  alertStatus = 1;
   checkinStatus = 1;
   waitlistmgr: any = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
@@ -54,7 +57,7 @@ export class FooterComponent implements OnInit {
       this.bottomdivHeader = 'Audit Logs';
       this.selOpt = 'Audit';
       this.auditlog = [];
-      this.shared_services.getAuditLogs('', '', '', '', 0, projectConstants.PERPAGING_LIMIT)
+      this.shared_services.getAuditLogs('', '', '', '', 0, this.auditCnt)
         .subscribe(data => {
           this.auditlog = data;
           if (this.auditlog.length > 0) {
@@ -78,13 +81,30 @@ export class FooterComponent implements OnInit {
       this.showAlertDiv = true;
       this.bottomdivHeader = 'Alerts';
       this.selOpt = 'Alert';
-      /*this.shared_services.getAuditLogs()
+      this.getAlerts();
+    }
+    alertAcknowlege(alert) {
+      this.shared_services.acknowledgeAlert(alert.id)
+        .subscribe (data => {
+          console.log('ack', data);
+          this.getAlerts();
+        });
+    }
+    getAlerts() {
+      this.alerts = [];
+      this.shared_services.getAlerts('false', '', 0, this.alertsCnt)
         .subscribe(data => {
-          this.auditlog = data;
+          this.alerts = data;
+          if (this.alerts.length > 0) {
+            this.alertStatus = 3;
+          } else {
+            this.alertStatus = 2;
+          }
+          console.log('alerts', this.alerts);
         },
       error => {
 
-      });*/
+      });
     }
     showCheckinED() {
       if (this.showCheckinDiv === true) {
@@ -108,6 +128,8 @@ export class FooterComponent implements OnInit {
       });
     }
     showLicense() {
+      this.selOpt = '';
+      this.showbottompopup = false;
       this.clearDivs();
       this.router.navigate(['/provider/settings/license']);
     }

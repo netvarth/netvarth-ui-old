@@ -1,5 +1,5 @@
 <div class="overlay" [class.show]="showbottompopup" (click)="closebottompopup()"></div>
-<footer [class.dashb]="ctype=='provider'" [class.consumer]="ctype!='provider'">
+<footer [class.dashb]="ctype=='provider'" [class.consumer]="ctype!='provider'" [class.show]="showbottompopup">
     <section class="sect1" *ngIf="ctype!='provider'">
         <div class="container">
         <div class="row">
@@ -57,7 +57,7 @@
         </div>
         </div>
     </section> -->
-    <div class="bottompopup" *ngIf="showbottompopup1" style="height:300px; width:auto; background-color: #000; color: #fff;border: solid 1px #FF0000; scroll-behavior:auto;">
+    <!-- <div class="bottompopup" *ngIf="showbottompopup1" style="height:300px; width:auto; background-color: #000; color: #fff;border: solid 1px #FF0000; scroll-behavior:auto;">
         <div (click)="maximizeAuditlog()">Maximize</div><div (click)="closebottompopup()">Close</div>
         <div class="log-outer">
             <div class="log-headouter">
@@ -66,16 +66,16 @@
                 <div class="loghead3">Date</div>
             </div>
             <div class="log-rowouter" *ngFor="let log of auditlog; let i=index">
-                <ng-container *ngIf="i < auditCnt">
+                <ng-container>
                 <div class="logtd1">{{log.Action}}</div>
                 <div class="logtd2">{{log.userName}}</div>
                 <div class="logtd3">{{log.date | date:dateFormat}}</div>
             </ng-container>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="stp-box" [class.show]="showbottompopup">
+    <div class="stp-box">
             <div class="stp-header">
                 <div class="container">
                     <div class="row">
@@ -121,7 +121,7 @@
                             </div>
                             <ul class="stp-list" *ngIf="auditStatus==3">
                                 <ng-container *ngFor="let log of auditlog; let i=index">
-                                <li *ngIf="i < auditCnt">
+                                <li>
                                     <div class="td td1">{{log.Action}}</div>
                                     <div class="td td2">{{log.userName}}</div>
                                     <div class="td td3">{{log.date | date:dateFormat}}</div>
@@ -144,20 +144,21 @@
                                         <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
                                 </div>
                                 </div>
-                            <ul class="stp-list">
-                                <li>
-                                    <div class="td td1 success">Success! This alert box indicates a scuccess message.</div>
-                                    <div class="td td2"><span class="icon-delete"></span></div>
-                                </li>
-                                <li>
-                                    <div class="td td1 warning">Warning! This alert box indicates a warning message.</div>
-                                    <div class="td td2"><span class="icon-delete"></span></div>
-                                </li>
-                                <li>
-                                    <div class="td td1 error">Error! This alert box indicates a error message.</div>
-                                    <div class="td td2"><span class="icon-delete"></span></div>
-                                </li>
-                            </ul>
+                                <div class="notfound" *ngIf="alertStatus==2">
+                                    No alerts to show
+                                </div>
+                                <ul class="stp-list" *ngIf="alertStatus==3">
+                                    <ng-container *ngFor="let alert of alerts">
+                                    <li>
+                                        <div class="td td1" 
+                                        [class.info]="alert.severity.name=='Info'" 
+                                        [class.warning]="alert.severity.name=='Warning'" 
+                                        [class.high]="alert.severity.name=='High'" 
+                                        [class.error]="alert.severity.name=='Critical'">{{alert.text}}</div>
+                                        <div class="td td2"><span class="icon-delete" *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></span></div>
+                                    </li>
+                                    </ng-container>
+                                </ul>
                         </div>
                     </div>
                 </div>

@@ -296,6 +296,63 @@ export class SharedServices {
       }
       return param;
     }
+
+    getAlerts(ackStatus, sdate, startfrom, limit) {
+      let retparam = this.buildAlertsParams(ackStatus, sdate);
+      if (startfrom !== '') {
+        if (retparam !== '') {
+          retparam += '&';
+        }
+        retparam += 'from=' + startfrom;
+      }
+      if (limit !== '') {
+        if (retparam !== '') {
+          retparam += '&';
+        }
+        retparam += 'count=' + limit;
+      }
+      if (retparam !== '') {
+        retparam = '?' + retparam;
+      }
+      const url = 'provider/alerts' + retparam;
+      return this.servicemeta.httpGet(url);
+    }
+    getAlertsTotalCnt(ackStatus, sdate) {
+      let retparam = this.buildAlertsParams(ackStatus, sdate);
+      if (retparam !== '') {
+        retparam = '?' + retparam;
+      }
+      const url = 'provider/alerts/count' + retparam;
+      return this.servicemeta.httpGet(url);
+    }
+    buildAlertsParams(ackStatus, sdate) {
+      let param = '';
+      if (ackStatus !== '') {
+        param += 'ackStatus-eq=' + ackStatus;
+      }
+      /*if (subcat !== '') {
+        if (param !== '') {
+          param += '&';
+        }
+        param += 'subCategory-eq=' + subcat;
+      }
+      if (action !== '') {
+        if (param !== '') {
+          param += '&';
+        }
+        param += 'action-eq=' + action;
+      }*/
+      if (sdate !== '') {
+        if (param !== '') {
+          param += '&';
+        }
+        param += 'createdDate-eq=' + sdate;
+      }
+      return param;
+    }
+    acknowledgeAlert(id) {
+      return this.servicemeta.httpPut('provider/alerts/' + id);
+    }
     setAcceptOnlineCheckin(status) {
       const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;
       return this.servicemeta.httpPut(url);

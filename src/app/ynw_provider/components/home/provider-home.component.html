@@ -295,10 +295,7 @@
                       </table>
 
 
-                    <div class="search_paging">
-                      <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
-                    </div>
-
+                    
                   </div>
                   <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
                     <div class="qlst no-dta" *ngIf="load_waitlist ==1 && check_in_filtered_list.length == 0">

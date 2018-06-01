@@ -63,7 +63,7 @@ export class CheckInComponent implements OnInit {
     public dialogRef: MatDialogRef<CheckInComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-      // console.log('check-inpassed data', data);
+      console.log('check-inpassed data', data);
     }
 
     ngOnInit() {
