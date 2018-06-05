@@ -1394,7 +1394,6 @@ header {
   */
   .table-outer td:before {
     content: attr(data-title); } }
-/*popup styles ####*/
 .cdk-overlay-container .cdk-overlay-dark-backdrop {
   background: rgba(0, 0, 0, 0.6); }
 .cdk-overlay-container .mat-dialog-container {
@@ -2480,6 +2479,13 @@ header {
       .googlemainmappopup .mat-dialog-content > .ng-star-inserted .refine_subheader, .outer-card .mat-dialog-content > .ng-star-inserted .refine_subheader, .consumerpopupmainclass .mat-dialog-content > .ng-star-inserted .refine_subheader {
         font-weight: 600;
         margin-bottom: 10px; }
+    .signupmainclass .mat-dialog-content .q-tbl,
+    .loginmainclass .mat-dialog-content .q-tbl,
+    .moreoptionsmainclass .mat-dialog-content .q-tbl,
+    .forgotpasswordmainclass .mat-dialog-content .q-tbl,
+    .commonpopupmainclass .mat-dialog-content .q-tbl,
+    .googlemainmappopup .mat-dialog-content .q-tbl, .outer-card .mat-dialog-content .q-tbl, .consumerpopupmainclass .mat-dialog-content .q-tbl {
+      padding: 0; }
   .signupmainclass .mat-dialog-actions,
   .loginmainclass .mat-dialog-actions,
   .moreoptionsmainclass .mat-dialog-actions,
@@ -2580,268 +2586,6 @@ header {
     .googlemainmappopup .otpbottom .mat-dialog-content .form-group, .outer-card .otpbottom .mat-dialog-content .form-group, .consumerpopupmainclass .otpbottom .mat-dialog-content .form-group {
       margin-bottom: 0; }
 
-/* ###### Consumer popups  #####*/
-.consumerpopupmainclass {
-  width: 700px !important; }
-  .consumerpopupmainclass .mat-dialog-title {
-    margin: 0;
-    padding: 20px 20px 10px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-size: 1.25rem;
-    font-weight: 600;
-    background: transparent;
-    color: #222223;
-    position: relative;
-    z-index: 5; }
-    .consumerpopupmainclass .mat-dialog-title .modal_close {
-      position: absolute;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      color: #fff;
-      right: 20px;
-      top: 50%;
-      margin-top: -10px;
-      z-index: 121;
-      width: 20px;
-      height: 20px;
-      -moz-transition: all 300ms;
-      -o-transition: all 300ms;
-      -webkit-transition: all 300ms;
-      transition: all 300ms;
-      -webkit-border-radius: 30px;
-      border-radius: 30px;
-      background-clip: padding-box;
-      /* stops bg color from leaking outside the border: */ }
-      .consumerpopupmainclass .mat-dialog-title .modal_close i {
-        display: flex; }
-        .consumerpopupmainclass .mat-dialog-title .modal_close i:before {
-          font-family: "custom-ynw" !important;
-          content: "\69";
-          font-size: .75rem !important;
-          width: 20px;
-          height: 20px;
-          font-weight: 600;
-          display: flex;
-          align-items: center;
-          justify-content: center; }
-      .consumerpopupmainclass .mat-dialog-title .modal_close:hover {
-        background: #fff;
-        color: #00aef2; }
-    .consumerpopupmainclass .mat-dialog-title:after {
-      position: absolute;
-      content: "";
-      background: url(../images/c-popup-bg.svg) no-repeat scroll 0 0;
-      height: 83px;
-      top: -8px;
-      right: -3px;
-      left: 0;
-      width: auto;
-      z-index: -1;
-      pointer-events: none; }
-      @media only screen and (max-width: 767px) {
-        .consumerpopupmainclass .mat-dialog-title:after {
-          width: 750px;
-          left: auto;
-          right: -10px; } }
-  .consumerpopupmainclass .mat-dialog-content {
-    margin: 0;
-    padding: 20px;
-    overflow: auto;
-    position: relative;
-    z-index: 6; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .main-head, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
-      margin-bottom: 15px;
-      color: #666;
-      font-size: 1rem; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepaymin-cls {
-        color: #222223;
-        font-weight: 600; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prov_name {
-        font-weight: 700; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .loc_name {
-        font-size: .875rem; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer {
-      font-size: .875rem;
-      border-bottom: 1px dashed #dbdbdb;
-      padding-bottom: 15px; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date {
-        margin-bottom: 5px; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-text {
-        display: table;
-        cursor: pointer;
-        color: #00aef2;
-        text-decoration: underline;
-        font-weight: 500;
-        font-size: .75rem; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer {
-        margin-top: 5px; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group {
-          margin-bottom: 0px;
-          display: flex; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .col-form-label {
-            font-weight: 500;
-            margin-right: 10px;
-            align-self: center; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .pickerouter .mat-datepicker-toggle {
-            margin-right: 0; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .pickerouter .form-control {
-            background: #fff; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer {
-      border-bottom: 1px dashed #dbdbdb;
-      padding-bottom: 15px; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-head, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-head {
-        font-size: .875rem;
-        margin-bottom: 5px;
-        color: #222223;
-        font-weight: 600; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper {
-        margin-bottom: 5px; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary {
-          font-weight: 600;
-          background: #00cc96;
-          color: #fff;
-          border: none;
-          border: 1px solid #00cc96; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
-          padding: 5px 10px;
-          margin-right: 5px;
-          margin-left: 0;
-          margin-bottom: 5px;
-          cursor: pointer;
-          background: #fff;
-          border: 1px solid #999999;
-          display: inline-block; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname {
-            display: inline-block; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime {
-            display: inline-block; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus {
-            box-shadow: none; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr {
-        display: flex; }
-        @media only screen and (max-width: 575px) {
-          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr {
-            flex-direction: column; } }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-duration, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-duration {
-          width: 200px; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-duration .min-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-duration .min-cls {
-            font-weight: 600;
-            color: #222223; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price {
-          flex-grow: 1; }
-          @media only screen and (max-width: 575px) {
-            .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price {
-              margin-top: 10px; } }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price .price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price .price {
-            font-weight: 600;
-            color: #222223; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price .taxable, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price .taxable {
-            font-size: .75rem; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-desc, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-desc {
-        margin-top: 5px; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-ser, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-que, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-ser, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-que {
-        margin-bottom: 5px; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-ser .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-que .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-ser .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-que .selected-ser-name {
-          font-weight: 600;
-          color: #222223; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-waitingdiv .queue-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-waitingdiv .queue-head {
-        font-weight: 500;
-        color: #666; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-waitingdiv .queue-head .queue-avail-date, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-waitingdiv .queue-head .queue-avail-date {
-          font-weight: 600;
-          color: #222223; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .no-queue-available, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .no-queue-available {
-        font-size: .875rem; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
-      border-color: #f2f2f2;
-      background: #f2f2f2; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .service-availer {
-      color: #222223;
-      font-weight: 600; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .change-button {
-      cursor: pointer;
-      display: table;
-      color: #00aef2;
-      font-size: .75rem;
-      text-decoration: underline; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer.btborder {
-      border-bottom: 1px dashed #dbdbdb;
-      padding-bottom: 15px; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv {
-      margin-top: 15px; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv .form-group {
-        margin-bottom: 0; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv .form-group .mat-checkbox .mat-checkbox-layout .mat-checkbox-label {
-          white-space: pre-wrap; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group {
-      margin-bottom: 0px; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group .col-form-label {
-        font-weight: 500;
-        color: #666; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
-      margin-bottom: 0;
-      margin-top: 15px;
-      padding: 20px 15px 15px;
-      background: #f8f8f8;
-      /* Old browsers */
-      background: -moz-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-      /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8f8f8), color-stop(100%, #fff));
-      /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-      /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-      /* Opera 11.10+ */
-      background: -ms-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-      /* IE10+ */
-      background: linear-gradient(to bottom, #f8f8f8 0%, #fff 100%);
-      /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
-      /* IE6-9 */ }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-amt {
-        margin-bottom: 15px;
-        font-size: .875rem;
-        font-weight: 600;
-        color: #222223; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-amt .prepaymin-cls {
-          font-weight: 700;
-          color: #00cc96;
-          font-size: 1rem; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-gateway-outer .prepay-head {
-        margin-bottom: 5px;
-        color: #222223;
-        font-weight: 600; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-gateway-outer .mat-radio-group .mat-radio-button {
-        color: #222223; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-head {
-      margin-bottom: 15px; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-ul {
-      margin: 0 0 0 20px;
-      padding: 0; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-ul li {
-        list-style: none; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-add {
-      margin-left: 20px;
-      margin-top: 10px;
-      cursor: pointer;
-      display: table;
-      font-size: .75rem;
-      color: #00aef2;
-      text-decoration: underline;
-      font-weight: 500; }
-  .consumerpopupmainclass .mat-dialog-actions {
-    padding: 20px; }
-    @media only screen and (max-width: 767px) {
-      .consumerpopupmainclass .mat-dialog-actions .mat-button .backbtn, .consumerpopupmainclass .mat-dialog-actions .bt2 {
-        padding: 10px 15px !important; } }
-    @media only screen and (max-width: 575px) {
-      .consumerpopupmainclass .mat-dialog-actions button {
-        margin-bottom: 5px; } }
-
-/* ##### Consumer Popup Ends ### */
 .loginmainclass .mat-dialog-actions {
   display: block;
   padding: 20px; }
@@ -2946,7 +2690,6 @@ header {
     text-transform: none;
     margin: 0 auto; }
 
-/* common popup class #### */
 .commonpopupmainclass .mat-dialog-content .schedule_outer {
   font-size: .875rem;
   font-weight: 500; }
@@ -3214,6 +2957,266 @@ header {
   justify-content: center;
   border: none;
   padding-top: 0; }
+
+.consumerpopupmainclass {
+  width: 700px !important; }
+  .consumerpopupmainclass .mat-dialog-title {
+    margin: 0;
+    padding: 20px 20px 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: transparent;
+    color: #222223;
+    position: relative;
+    z-index: 5; }
+    .consumerpopupmainclass .mat-dialog-title .modal_close {
+      position: absolute;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: #fff;
+      right: 20px;
+      top: 50%;
+      margin-top: -10px;
+      z-index: 121;
+      width: 20px;
+      height: 20px;
+      -moz-transition: all 300ms;
+      -o-transition: all 300ms;
+      -webkit-transition: all 300ms;
+      transition: all 300ms;
+      -webkit-border-radius: 30px;
+      border-radius: 30px;
+      background-clip: padding-box;
+      /* stops bg color from leaking outside the border: */ }
+      .consumerpopupmainclass .mat-dialog-title .modal_close i {
+        display: flex; }
+        .consumerpopupmainclass .mat-dialog-title .modal_close i:before {
+          font-family: "custom-ynw" !important;
+          content: "\69";
+          font-size: .75rem !important;
+          width: 20px;
+          height: 20px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center; }
+      .consumerpopupmainclass .mat-dialog-title .modal_close:hover {
+        background: #fff;
+        color: #00aef2; }
+    .consumerpopupmainclass .mat-dialog-title:after {
+      position: absolute;
+      content: "";
+      background: url(../images/c-popup-bg.svg) no-repeat scroll 0 0;
+      height: 83px;
+      top: -8px;
+      right: -3px;
+      left: 0;
+      width: auto;
+      z-index: -1;
+      pointer-events: none; }
+      @media only screen and (max-width: 767px) {
+        .consumerpopupmainclass .mat-dialog-title:after {
+          width: 750px;
+          left: auto;
+          right: -10px; } }
+  .consumerpopupmainclass .mat-dialog-content {
+    margin: 0;
+    padding: 20px;
+    overflow: auto;
+    position: relative;
+    z-index: 6; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .main-head, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
+      margin-bottom: 15px;
+      color: #666;
+      font-size: 1rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prepaymin-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .selected-date, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepaymin-cls {
+        color: #222223;
+        font-weight: 600; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .prov_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prov_name {
+        font-weight: 700; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .main-head .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .loc_name, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .loc_name {
+        font-size: .875rem; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer {
+      font-size: .875rem;
+      border-bottom: 1px dashed #dbdbdb;
+      padding-bottom: 15px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date {
+        margin-bottom: 5px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-text {
+        display: table;
+        cursor: pointer;
+        color: #00aef2;
+        text-decoration: underline;
+        font-weight: 500;
+        font-size: .75rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer {
+        margin-top: 5px; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group {
+          margin-bottom: 0px;
+          display: flex; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .col-form-label {
+            font-weight: 500;
+            margin-right: 10px;
+            align-self: center; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .pickerouter .mat-datepicker-toggle {
+            margin-right: 0; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .pickerouter .form-control {
+            background: #fff; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer {
+      border-bottom: 1px dashed #dbdbdb;
+      padding-bottom: 15px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-head, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-head {
+        font-size: .875rem;
+        margin-bottom: 5px;
+        color: #222223;
+        font-weight: 600; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper {
+        margin-bottom: 5px; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary {
+          font-weight: 600;
+          background: #00cc96;
+          color: #fff;
+          border: none;
+          border: 1px solid #00cc96; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
+          padding: 5px 10px;
+          margin-right: 5px;
+          margin-left: 0;
+          margin-bottom: 5px;
+          cursor: pointer;
+          background: #fff;
+          border: 1px solid #999999;
+          display: inline-block; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname {
+            display: inline-block; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime {
+            display: inline-block; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus {
+            box-shadow: none; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr {
+        display: flex; }
+        @media only screen and (max-width: 575px) {
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr {
+            flex-direction: column; } }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-duration, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-duration {
+          width: 200px; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-duration .min-cls, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-duration .min-cls {
+            font-weight: 600;
+            color: #222223; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price {
+          flex-grow: 1; }
+          @media only screen and (max-width: 575px) {
+            .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price {
+              margin-top: 10px; } }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price .price, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price .price {
+            font-weight: 600;
+            color: #222223; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-dur-pr .service-price .taxable, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-dur-pr .service-price .taxable {
+            font-size: .75rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-details .service-desc, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-details .service-desc {
+        margin-top: 5px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-ser, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-que, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-ser, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-que {
+        margin-bottom: 5px; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-ser .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .selected-que .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-ser .selected-ser-name, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .selected-que .selected-ser-name {
+          font-weight: 600;
+          color: #222223; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-waitingdiv .queue-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-waitingdiv .queue-head {
+        font-weight: 500;
+        color: #666; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-waitingdiv .queue-head .queue-avail-date, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-waitingdiv .queue-head .queue-avail-date {
+          font-weight: 600;
+          color: #222223; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .no-queue-available, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .no-queue-available {
+        font-size: .875rem; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
+      border-color: #f2f2f2;
+      background: #f2f2f2; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .service-availer {
+      color: #222223;
+      font-weight: 600; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .change-button {
+      cursor: pointer;
+      display: table;
+      color: #00aef2;
+      font-size: .75rem;
+      text-decoration: underline; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer.btborder {
+      border-bottom: 1px dashed #dbdbdb;
+      padding-bottom: 15px; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv {
+      margin-top: 15px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv .form-group {
+        margin-bottom: 0; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv .form-group .mat-checkbox .mat-checkbox-layout .mat-checkbox-label {
+          white-space: pre-wrap; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group {
+      margin-bottom: 0px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group .col-form-label {
+        font-weight: 500;
+        color: #666; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
+      margin-bottom: 0;
+      margin-top: 15px;
+      padding: 20px 15px 15px;
+      background: #f8f8f8;
+      /* Old browsers */
+      background: -moz-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+      /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8f8f8), color-stop(100%, #fff));
+      /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+      /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+      /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+      /* IE10+ */
+      background: linear-gradient(to bottom, #f8f8f8 0%, #fff 100%);
+      /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
+      /* IE6-9 */ }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-amt {
+        margin-bottom: 15px;
+        font-size: .875rem;
+        font-weight: 600;
+        color: #222223; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-amt .prepaymin-cls {
+          font-weight: 700;
+          color: #00cc96;
+          font-size: 1rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-gateway-outer .prepay-head {
+        margin-bottom: 5px;
+        color: #222223;
+        font-weight: 600; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-gateway-outer .mat-radio-group .mat-radio-button {
+        color: #222223; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-head {
+      margin-bottom: 15px; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-ul {
+      margin: 0 0 0 20px;
+      padding: 0; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-ul li {
+        list-style: none; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-add {
+      margin-left: 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      display: table;
+      font-size: .75rem;
+      color: #00aef2;
+      text-decoration: underline;
+      font-weight: 500; }
+  .consumerpopupmainclass .mat-dialog-actions {
+    padding: 20px; }
+    @media only screen and (max-width: 767px) {
+      .consumerpopupmainclass .mat-dialog-actions .mat-button .backbtn, .consumerpopupmainclass .mat-dialog-actions .bt2 {
+        padding: 10px 15px !important; } }
+    @media only screen and (max-width: 575px) {
+      .consumerpopupmainclass .mat-dialog-actions button {
+        margin-bottom: 5px; } }
 
 .srch {
   background: #fff; }
@@ -3493,13 +3496,11 @@ header {
         @media only screen and (max-width: 767px) {
           .srch .sa .sa-fld .plr0i #search_button {
             height: 50px;
-            width: 100%;
-            margin-bottom: 10px; } }
+            width: 100%; } }
         @media (min-width: 768px) and (max-width: 991px) {
           .srch .sa .sa-fld .plr0i #search_button {
             height: 50px;
-            width: 100%;
-            margin-bottom: 10px; } }
+            width: 100%; } }
         .srch .sa .sa-fld .plr0i #search_button .icon-search {
           color: #fff;
           font-size: 2.5rem; }
@@ -3524,10 +3525,12 @@ header {
         line-height: 1em; }
         @media only screen and (max-width: 767px) {
           .srch .sa .sa-fld .sa-mo {
-            width: 100%; } }
+            width: 100%;
+            margin-top: 10px; } }
         @media (min-width: 768px) and (max-width: 991px) {
           .srch .sa .sa-fld .sa-mo {
-            width: 100%; } }
+            width: 100%;
+            margin-top: 10px; } }
         .srch .sa .sa-fld .sa-mo .icon-filter {
           font-size: 0.875em;
           color: #222223;
@@ -3560,6 +3563,12 @@ header {
                 top: -30px; } }
       .srch .sa .sa-fld .more-opt {
         top: 90px; }
+        @media only screen and (max-width: 767px) {
+          .srch .sa .sa-fld .more-opt {
+            top: 217px; } }
+        @media (min-width: 768px) and (max-width: 991px) {
+          .srch .sa .sa-fld .more-opt {
+            top: 217px; } }
     .srch .sa .sa-ps {
       clear: left;
       margin-top: 20px;
@@ -4986,6 +4995,8 @@ footer.dashb {
       border: 1px solid #f2f2f2; }
       footer.dashb .stp-box .alerts .stp-tbl .table tr td {
         font-weight: 500; }
+        footer.dashb .stp-box .alerts .stp-tbl .table tr td:before {
+          display: none; }
       footer.dashb .stp-box .alerts .stp-tbl .table tr.info td {
         color: #00aef2; }
       footer.dashb .stp-box .alerts .stp-tbl .table tr.success td {
@@ -7596,151 +7607,225 @@ footer.dashb {
     .dashboard .card.w-dta .dash-list .d-tbl .table thead {
       background-color: #666; }
       .dashboard .card.w-dta .dash-list .d-tbl .table thead tr th {
-        color: #fff; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online {
-      text-align: center; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online span {
-        color: #00cc96; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived {
-      vertical-align: top; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived {
-        color: #00cc96;
-        padding: 2px 5px 2px 14px;
-        font-size: .65rem;
-        font-weight: 600;
-        position: relative; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived:before {
-          position: absolute;
-          content: "";
-          background: #00cc96;
-          width: 6px;
-          height: 6px;
-          -webkit-border-radius: 10px;
-          border-radius: 10px;
+        color: #fff;
+        padding: 10px 8px; }
+    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td {
+      border-top: none;
+      padding: 10px 8px; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online {
+        text-align: center; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online span {
+          color: #00cc96; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived {
+        vertical-align: top; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived {
+          color: #00cc96;
+          padding: 2px 5px 2px 14px;
+          font-size: .65rem;
+          font-weight: 600;
+          position: relative; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived:before {
+            position: absolute;
+            content: "";
+            background: #00cc96;
+            width: 6px;
+            height: 6px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background-clip: padding-box;
+            /* stops bg color from leaking outside the border: */
+            top: 50%;
+            left: 4px;
+            margin-top: -4px; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived:before {
+          display: none; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
+        font-weight: 500; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
+        display: flex;
+        flex-wrap: wrap; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span {
+          -webkit-border-radius: 30px;
+          border-radius: 30px;
           background-clip: padding-box;
           /* stops bg color from leaking outside the border: */
-          top: 50%;
-          left: 4px;
-          margin-top: -4px; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived:before {
-        display: none; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
-      font-weight: 500; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
-      display: flex;
-      flex-wrap: wrap; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span {
-        -webkit-border-radius: 30px;
-        border-radius: 30px;
-        background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */
-        height: auto;
-        text-transform: none;
-        padding: 3px 10px;
-        display: flex;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        border: none;
-        align-items: center; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span i {
-          font-size: .875rem;
-          width: 14px;
-          height: 14px;
-          margin-top: 1px;
-          display: none; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.arrived {
-          background: #63f2b2;
-          color: #0b7e4b; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.start {
-          background: #61daf2;
-          color: #0a6a7d; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.newbill {
-          background: #ff9e9e;
-          color: #d10000; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.viewbill {
-          background: #f2cd61;
-          color: #7d600a; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.acceptbill {
-          background: #1cf3ff;
-          color: #004b4f; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.done {
-          background: #748eff;
-          color: #001fa7; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment {
-      text-align: left; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
-        padding: 2px 0px;
-        /*background: $cc-lightgray;*/
-        color: #222223;
-        position: relative;
-        font-weight: 600;
-        font-size: .75rem; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n .text, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h .text, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f .text {
+          height: auto;
+          text-transform: none;
+          padding: 3px 10px;
+          display: flex;
+          margin-right: 5px;
+          margin-bottom: 5px;
+          border: none;
+          align-items: center;
+          font-weight: 500; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span i {
+            font-size: .875rem;
+            width: 14px;
+            height: 14px;
+            margin-top: 1px;
+            display: none; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.arrived {
+            background: #63f2b2;
+            color: #0b7e4b; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.start {
+            background: #61daf2;
+            color: #0a6a7d; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.newbill {
+            background: #ff9e9e;
+            color: #d10000; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.viewbill {
+            background: #f2cd61;
+            color: #7d600a; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.acceptbill {
+            background: #1cf3ff;
+            color: #004b4f; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.done {
+            background: #748eff;
+            color: #001fa7; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment {
+        text-align: left; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
+          padding: 2px 0px;
+          /*background: $cc-lightgray;*/
+          color: #222223;
           position: relative;
-          z-index: 1; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n {
-        color: #f24949; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n:after {
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          content: "";
-          left: 0;
-          top: 0;
-          background: transparent;
-          z-index: 0; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h {
-        color: #e2aa00; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h:after {
-          width: 50%;
-          height: 100%;
-          position: absolute;
-          content: "";
-          left: 0;
-          top: 0;
-          background: transparent;
-          z-index: 0; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
-        color: #00cc96; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f:after {
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          content: "";
-          left: 0;
-          top: 0;
-          background: transparent;
-          z-index: 0; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message {
-      text-align: left; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message span {
-        cursor: pointer;
-        font-size: 1.3rem;
-        -moz-transition: all 300ms;
-        -o-transition: all 300ms;
-        -webkit-transition: all 300ms;
-        transition: all 300ms; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message span:hover {
-          color: #00aef2; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote {
-      text-align: center; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote span {
-        cursor: pointer;
-        font-size: 1.3rem;
-        -moz-transition: all 300ms;
-        -o-transition: all 300ms;
-        -webkit-transition: all 300ms;
-        transition: all 300ms; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote span:hover {
-          color: #00aef2; }
-    .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.mre .mbt {
-      top: -10px; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.mre .mbt:before {
-        display: none; }
+          font-weight: 600;
+          font-size: .75rem; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n .text, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h .text, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f .text {
+            position: relative;
+            z-index: 1; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n {
+          color: #f24949; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n:after {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            background: transparent;
+            z-index: 0; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h {
+          color: #e2aa00; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h:after {
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            background: transparent;
+            z-index: 0; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
+          color: #00cc96; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f:after {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            background: transparent;
+            z-index: 0; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message {
+        text-align: left; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message span {
+          cursor: pointer;
+          font-size: 1.3rem;
+          -moz-transition: all 300ms;
+          -o-transition: all 300ms;
+          -webkit-transition: all 300ms;
+          transition: all 300ms; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message span:hover {
+            color: #00aef2; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote {
+        text-align: left; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote span {
+          cursor: pointer;
+          font-size: 1.3rem;
+          -moz-transition: all 300ms;
+          -o-transition: all 300ms;
+          -webkit-transition: all 300ms;
+          transition: all 300ms; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote span:hover {
+            color: #00aef2; }
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.mre .mbt {
+        top: -10px; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.mre .mbt:before {
+          display: none; }
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:nth-child(odd) {
       background: transparent; }
     .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:nth-child(even) {
       background: rgba(0, 0, 0, 0.03); }
+  .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container {
+    padding: 15px; }
+    .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center {
+      display: flex; }
+      @media only screen and (max-width: 767px) {
+        .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center {
+          flex-direction: column; } }
+      .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .paginghead-outer {
+        width: 200px; }
+        @media only screen and (max-width: 767px) {
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .paginghead-outer {
+            margin-bottom: 15px; } }
+        .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .paginghead-outer .paging {
+          font-size: .875rem;
+          text-align: left;
+          font-weight: 500; }
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .paginghead-outer .paging .paging-curr, .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .paginghead-outer .paging .paging-max {
+            font-weight: 600;
+            display: inline-block;
+            text-align: center;
+            color: #00aef2;
+            padding: 3px; }
+      .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination {
+        margin: 0px;
+        margin-left: auto;
+        display: flex;
+        flex-wrap: wrap; }
+        .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li {
+          padding: 3px;
+          font-size: .875rem;
+          font-weight: 500;
+          color: #00aef2;
+          background: #fff;
+          cursor: pointer;
+          margin-right: 10px;
+          min-width: 30px;
+          border: 1px solid #00aef2;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          -webkit-border-radius: 30px;
+          border-radius: 30px;
+          background-clip: padding-box;
+          /* stops bg color from leaking outside the border: */
+          margin-bottom: 5px; }
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li.ng-star-inserted {
+            border-color: #f2f2f2; }
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li.disabled {
+            background: #dbdbdb;
+            color: #999999;
+            border: none;
+            pointer-events: none; }
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li.active {
+            background: #00aef2;
+            color: #fff;
+            border-color: #00aef2; }
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li:last-child {
+            margin-right: 0;
+            padding-left: 10px;
+            padding-right: 10px; }
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li:first-child {
+            padding-left: 10px;
+            padding-right: 10px; }
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li:nth-last-child(2) {
+            padding-left: 10px;
+            padding-right: 10px; }
+          .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li:nth-child(2) {
+            padding-left: 10px;
+            padding-right: 10px; }
 
 .content.settings .set-otr {
   display: flex;
@@ -8307,6 +8392,45 @@ footer.dashb {
       display: flex; }
       .content.comn-cls .lbl .card .c-details .btm button {
         margin-right: 10px; }
+  .content.comn-cls .lbl .card .mat-accordion {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */ }
+    .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel {
+      box-shadow: none;
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      background-clip: padding-box;
+      /* stops bg color from leaking outside the border: */ }
+      .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+        background: transparent;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        padding: 0 20px;
+        font-size: 1.125rem;
+        min-height: 40px; }
+        .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
+          width: 14px;
+          height: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center; }
+          .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:after {
+            border-width: 0 1.5px 1.5px 0; }
+      .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content {
+        padding: 0 20px; }
+        .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
+          padding-left: 0px;
+          padding-right: 0px;
+          padding-bottom: 20px;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: normal; }
+          .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .no-dta {
+            padding-left: 20px;
+            padding-right: 20px; }
+            .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .no-dta p {
+              font-size: 1rem; }
 .content.comn-cls .lbr .card {
   margin-bottom: 30px;
   font-size: .875rem; }
@@ -8703,13 +8827,18 @@ footer.dashb {
 .content.comn-cls .card .logfil-outer {
   margin-bottom: 30px; }
   .content.comn-cls .card .logfil-outer .formgroup-outer {
-    display: flex; }
+    display: flex;
+    flex-wrap: wrap; }
     .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
       width: 25%;
       padding: 10px; }
       @media only screen and (max-width: 767px) {
         .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
           width: 50%; } }
+      @media only screen and (max-width: 400px) {
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
+          width: 100%;
+          padding: 0; } }
       .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .col-form-label {
         padding: 0px;
         margin-bottom: 5px; }
@@ -8733,7 +8862,7 @@ footer.dashb {
       .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter {
         display: flex; }
         .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter input[type="text"] {
-          width: 100%; }
+          width: 100px; }
         .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle {
           margin-right: 15px; }
           .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button {
@@ -8743,14 +8872,32 @@ footer.dashb {
               fill: #fff; }
       .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
         padding-left: 0; }
+        @media only screen and (max-width: 767px) {
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
+            padding-left: 10px; } }
+        @media only screen and (max-width: 400px) {
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
+            padding: 0; } }
       .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
         padding-right: 0; }
+        @media only screen and (max-width: 767px) {
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
+            padding-right: 10px; } }
+        @media only screen and (max-width: 400px) {
+          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
+            padding: 0; } }
 .content.comn-cls .card .audit .search_paging .container {
   padding: 0; }
   .content.comn-cls .card .audit .search_paging .container .text-center {
     display: flex; }
+    @media only screen and (max-width: 767px) {
+      .content.comn-cls .card .audit .search_paging .container .text-center {
+        flex-direction: column; } }
     .content.comn-cls .card .audit .search_paging .container .text-center .paginghead-outer {
       width: 200px; }
+      @media only screen and (max-width: 767px) {
+        .content.comn-cls .card .audit .search_paging .container .text-center .paginghead-outer {
+          margin-bottom: 15px; } }
       .content.comn-cls .card .audit .search_paging .container .text-center .paginghead-outer .paging {
         font-size: .875rem;
         text-align: left;

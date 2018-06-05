@@ -24,27 +24,22 @@ import { ProviderDetailService } from '../provider-detail/provider-detail.servic
 })
 export class ProviderDetailComponent implements OnInit {
 
-  public provider_id;
-  public s3url;
-  public retval;
-  public retbus_profile;
-  public ret_fav;
-  public businessjson;
-  public servicesjson;
-  public settingsjson;
-  public locationjson;
-  public galleryjson;
-  public menujson;
-  public terminologiesjson;
-  public accountsjson;
-  public approx_waitingtime;
-  public ret;
-  public mainimage_holder;
-  public weekdayarr = projectConstants.myweekdaysSchedule;
-  public errors;
-  public msg_exists;
-  public msg_type;
-  public isFavourite;
+  s3url;
+  retval;
+  kwdet: any = [];
+  provider_id;
+  settingsjson: any = [];
+  businessjson: any = [];
+  servicesjson: any = [];
+  galleryjson: any = [];
+  locationjson: any = [];
+  terminologiesjson: any = [];
+  futuredate_allowed = false;
+  maxsize = 0;
+  viewallServices = false;
+  showmoreDesc = false;
+  bNameStart = '';
+  bNameEnd = '';
   constructor(
     private routeobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -56,49 +51,50 @@ export class ProviderDetailComponent implements OnInit {
 
   ngOnInit() {
     this.routeobj.paramMap
-    .subscribe(params => this.provider_id = params.get('id'));
-
-    if (this.provider_id) {
+    .subscribe(params => {
+      this.provider_id = params.get('id');
       this.gets3curl();
-    }
-    this.isFavourite = false;
+    });
   }
-
-  // get s3url
+  backtoSearchResult() {
+    this.locationobj.back();
+  }
   gets3curl() {
-    this.retval = this.sharedFunctionobj.getS3Url()
+    this.retval = this.sharedFunctionobj.getS3Url('provider')
                 .then(
                   res => {
-
                     this.s3url = res;
+                    console.log('s3', this.s3url);
                     this.getbusinessprofiledetails_json('businessProfile', true);
                     this.getbusinessprofiledetails_json('services', true);
+                    this.getbusinessprofiledetails_json('gallery', true);
                     this.getbusinessprofiledetails_json('settings', true);
                     this.getbusinessprofiledetails_json('location', true);
-                    this.getbusinessprofiledetails_json('gallery', true);
-                    this.getbusinessprofiledetails_json('menu', true);
-                    this.getbusinessprofiledetails_json('terminologies', false);
-
+                    // this.getbusinessprofiledetails_json('terminologies', true);
                   },
-                  error => { }
+                  error => {
+                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                  }
                 );
   }
-
   // gets the various json files based on the value of "section" parameter
   getbusinessprofiledetails_json(section, modDateReq: boolean) {
-
     let  UTCstring = null ;
     if (modDateReq) {
-       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
-    this.retbus_profile = this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
     .subscribe (res => {
         switch (section) {
-          case 'businessProfile': {
+         case 'businessProfile': {
             this.businessjson = res;
-            this.getapproxWaitingtime(); /* get the appoximate waiting time*/
-            if (this.sharedFunctionobj.checkLogin()) {
-              this.getaccounts_json();
+            const holdbName = this.businessjson.businessDesc;
+            const maxCnt = 20;
+            if (holdbName.length > maxCnt ) {
+              this.bNameStart = holdbName.substr(0, maxCnt);
+              this.bNameEnd = holdbName.substr(maxCnt , holdbName.length);
+            } else {
+              this.bNameStart = holdbName;
             }
           break;
           }
@@ -108,23 +104,29 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'gallery': {
             this.galleryjson = res;
-            if (this.galleryjson) {
+            /*if (this.galleryjson) {
               this.mainimage_holder = this.galleryjson[0].url;
-            }
+            }*/
           break;
           }
           case 'settings': {
             this.settingsjson = res;
+            this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+            this.maxsize = this.settingsjson.maxPartySize;
+            if (this.maxsize === undefined) {
+              this.maxsize = 1;
+            }
+            // this.getbusinessprofiledetails_json('services', true);
           break;
           }
           case 'location': {
             this.locationjson = res;
           break;
           }
-          case 'menu': {
+          /* case 'menu': {
             this.menujson = res;
           break;
-          }
+          }*/
           case 'terminologies': {
             this.terminologiesjson = res;
           break;
@@ -132,84 +134,24 @@ export class ProviderDetailComponent implements OnInit {
         }
     },
     error => {
-      this.errors = error;
+
     }
-   );
+  );
   }
- /* function to show the clicked the image in the image gallery */
-  swap_image(url) {
-    this.mainimage_holder = url;
-  }
-  /* function to generate the week day list of open timings*/
-  getScheduledaysstr(days) {
-    let strs = '';
-    for (let i = 0; i < days.length; i++) {
-        const dayval = days[i];
-        if (strs !== '') {
-          strs = strs + ', ';
-        }
-        strs = strs + this.weekdayarr[dayval];
+
+  showallServices() {
+    if (this.viewallServices) {
+      this.viewallServices = false;
+    } else {
+      this.viewallServices = true;
     }
-    return strs;
   }
-  /* function to take user to the search page*/
-  gobacktoSearch() {
-    // console.log('currentpath', this.locationobj.path);
-     this.locationobj.back();
+  showDesc() {
+    if (this.showmoreDesc) {
+      this.showmoreDesc = false;
+    } else {
+      this.showmoreDesc = true;
+    }
   }
-  /* function to add provider to the fav list */
-  addtoFavourite() {
-    this.retval = this.shared_services.addFavProvider(this.businessjson.id)
-    .subscribe(res => {
-      this.ret_fav = res;
-     // console.log(res);
-      this.isFavourite = true;
-      this.msg_exists = '';
-      this.msg_type = '';
-    },
-    error => {
-      this.msg_exists = error.error;
-      this.msg_type = 'e';
-    });
-  }
- /* function to get the approximate waiting time for current provider*/
-  getapproxWaitingtime() {
-    this.providerdetailserviceobj.getapproxWaitingtime(this.businessjson.id)
-    .subscribe(res => {
-      this.approx_waitingtime = res;
-      if (this.approx_waitingtime == null) {
-        this.approx_waitingtime = 0;
-      }
-      // console.log('approx' + this.approx_waitingtime);
-    });
-  }
-
-  /* function to get the list of existing fav providers */
-  getaccounts_json() {
-    this.shared_services.getFavProvider()
-    .subscribe(data => {
-      this.accountsjson = data;
-      for (const x of this.accountsjson) {
-         if (x.id === this.businessjson.id) {
-           this.isFavourite = true;
-         }
-
-      }
-
-    });
-  }
-
-  // handle_checkinClicked(serviceid) {
-  //   const dialogRef = this.dialogobj.open(CheckinComponent, {
-  //     width: '50%',
-  //     data: {
-  //       serv_id: serviceid
-  //     }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-
-  //   });
-  // }
 }
 

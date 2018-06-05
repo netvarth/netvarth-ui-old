@@ -1381,7 +1381,7 @@ export class SearchDetailComponent implements OnInit {
   }
 
   doLogin(origin?, passParam?) {
-    this.shared_functions.openSnackBar('You need to login to check in');
+    // this.shared_functions.openSnackBar('You need to login to check in');
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',
        panelClass: 'loginmainclass',
@@ -1398,12 +1398,13 @@ export class SearchDetailComponent implements OnInit {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
         if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId']);
+            this.showCommunicate(passParam['providerId']);
+        } if (passParam['callback'] === 'providerdetail') {
+            this.showProviderDetails(passParam['providerId']);
         } else {
-          this.showCheckin('consumer');
+            this.showCheckin('consumer');
         }
       }
-      // this.animal = result;
     });
 
   }
@@ -1421,7 +1422,7 @@ export class SearchDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
+
     });
   }
 
@@ -1430,7 +1431,23 @@ export class SearchDetailComponent implements OnInit {
   }
 
   providerDetClicked(obj) {
-   // console.log(obj);
+    if (obj) {
+      // const arr = obj.id.split('-');
+      const providforDetails = obj.fields.unique_id;
+      // check whether logged in as consumer
+      if (this.shared_functions.checkLogin()) {
+        const ctype = this.shared_functions.isBusinessOwner('returntyp');
+        if (ctype === 'consumer') {
+         this.showProviderDetails(providforDetails);
+        }
+      } else { // show consumer login
+        const passParam = {callback: 'providerdetail', providerId: providforDetails };
+        this.doLogin('consumer', passParam);
+      }
+    }
+  }
+  showProviderDetails(provid) {
+    this.routerobj.navigate(['searchdetail', provid]);
   }
 
   handlerefineddomainchange(val) {
@@ -1481,7 +1498,7 @@ export class SearchDetailComponent implements OnInit {
    });
 
    dialogRef.afterClosed().subscribe(result => {
-     // this.animal = result;
+
    });
   }
 }

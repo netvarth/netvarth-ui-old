@@ -332,12 +332,10 @@
                     @include respond-to(ynw-767) {
                         height: $input-h;
                         width: 100%;
-                        margin-bottom: 10px;
                     }
                     @include respond-to(ynw-768-991) {
                         height: $input-h;
                         width: 100%;
-                        margin-bottom: 10px;
                     }
 
                     .icon-search {
@@ -377,9 +375,11 @@
                 
                 @include respond-to(ynw-767) {
                     width: 100%;
+                    margin-top: 10px;
                 }
                 @include respond-to(ynw-768-991) {
                     width: 100%;
+                    margin-top: 10px;
                 }
 
                 .icon-filter {
@@ -422,6 +422,13 @@
             /* More Options Dropdown */
             .more-opt {
                 top: 90px;
+                
+                @include respond-to(ynw-767) {
+                    top: 217px;
+                }
+                @include respond-to(ynw-768-991) {
+                    top: 217px;
+                }
             }
         }
         .sa-ps {

@@ -140,14 +140,13 @@ export class ProviderSystemAlertComponent implements OnInit {
     }
     alertAcknowledge(obj) {
       this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC + obj.id);
-      return ;
-      // this.provider_servicesobj.acknowledgeAlert(obj.id)
-      //   .subscribe (data => {
-      //     this.sharedfunctionObj.openSnackBar('Acknowledge Successfull');
-      //   },
-      // error => {
-      //   this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-      // });
+      this.provider_servicesobj.acknowledgeAlert(obj.id)
+        .subscribe (data => {
+          this.sharedfunctionObj.openSnackBar('Acknowledge Successfull');
+        },
+      error => {
+        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      });
 
     }
 }

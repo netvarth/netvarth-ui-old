@@ -385,4 +385,14 @@ export class SharedServices {
       const url = 'provider/waitlist/communicate/' + uuid;
       return this.servicemeta.httpPost(url, body);
     }
+
+    getPaymentModesofProvider(provid) {
+      const url = 'consumer/payment/modes/' + provid;
+      return this.servicemeta.httpGet(url);
+    }
+
+    consumerPayment(data) {
+      const url = 'consumer/payment';
+      return this.servicemeta.httpPost(url, data);
+    }
 }

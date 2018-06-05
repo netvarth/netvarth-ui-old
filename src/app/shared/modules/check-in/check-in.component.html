@@ -97,8 +97,7 @@
                 <div class="prepay-gateway-outer">
                     <div class='prepay-head'>Select Payment Mode</div>
                     <mat-radio-group [(ngModel)]="paytype">
-                        <mat-radio-button value="paytm">Paytm</mat-radio-button>
-                        <mat-radio-button value="cc">Credit Card/Debig Card/Netbanking</mat-radio-button>
+                        <mat-radio-button value="paytm" *ngFor="let paym of paymentModes" [value]="paym.name">{{paym.Displayname}}</mat-radio-button>
                     </mat-radio-group>
                 </div>
              </div>
@@ -125,6 +124,8 @@
           <ng-container *ngIf="step==4">
             <app-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)"></app-consumer-add-member>
           </ng-container>
+          <!-- <div [innerHTML]= "payment_popup" #div></div> -->
+          <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>
       </div>
   </mat-dialog-content>
   <mat-dialog-actions>
