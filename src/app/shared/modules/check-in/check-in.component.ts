@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
@@ -50,17 +52,21 @@ export class CheckInComponent implements OnInit {
     step;
     waitlist_for: any = [];
     holdwaitlist_for: any = [];
+    paymentModes: any = [];
     loggedinuser;
     maxsize;
     paytype = '';
     isFuturedate = false;
     addmemberobj = {'fname': '', 'lname': '', 'mobile': ''};
+    payment_popup = null;
     constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
     public router: Router,
     public dialogRef: MatDialogRef<CheckInComponent>,
+    public _sanitizer: DomSanitizer,
+    @Inject(DOCUMENT) public document,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
       console.log('check-inpassed data', data);
@@ -104,6 +110,7 @@ export class CheckInComponent implements OnInit {
       this.sel_loc = this.search_obj.fields.location_id1;
       this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
       this.getServicebyLocationId (this.search_obj.fields.location_id1, this.sel_checkindate);
+      this.getPaymentModesofProvider(this.account_id);
       // console.log('selcheckindate', this.sel_checkindate);
       if (this.sel_checkindate !== dtoday) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
         this.isFuturedate = true;
@@ -112,6 +119,16 @@ export class CheckInComponent implements OnInit {
      // this.sel_queue_det = retdatedet;
       this.showfuturediv = false;
       this.revealphonenumber = true;
+    }
+    getPaymentModesofProvider(provid) {
+      this.shared_services.getPaymentModesofProvider(provid)
+        .subscribe (data => {
+          this.paymentModes = data;
+          console.log ('paymodes', this.paymentModes);
+        },
+      error => {
+        console.log ('error', error);
+      });
     }
     getFamilyMembers() {
       this.shared_services.getConsumerFamilyMembers()
@@ -142,21 +159,6 @@ export class CheckInComponent implements OnInit {
       this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
       .subscribe (res => {
           switch (section) {
-           /* case 'businessProfile': {
-              this.businessjson = res;
-            break;
-            }
-            case 'services': {
-              this.servicesjson = res;
-            break;
-            }
-            case 'gallery': {
-              this.galleryjson = res;
-              if (this.galleryjson) {
-                this.mainimage_holder = this.galleryjson[0].url;
-              }
-            break;
-            }*/
             case 'settings': {
               this.settingsjson = res;
               this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
@@ -164,21 +166,8 @@ export class CheckInComponent implements OnInit {
               if (this.maxsize === undefined) {
                 this.maxsize = 1;
               }
-              // this.getbusinessprofiledetails_json('services', true);
             break;
             }
-            /*case 'location': {
-              this.locationjson = res;
-            break;
-            }
-            case 'menu': {
-              this.menujson = res;
-            break;
-            }
-            case 'terminologies': {
-              this.terminologiesjson = res;
-            break;
-            }*/
           }
       },
       error => {
@@ -311,6 +300,7 @@ export class CheckInComponent implements OnInit {
       this.step = 2;
     } else if (this.step === 2) {
       if (this.sel_ser_det.isPrePayment) {
+        console.log('serv det', this.sel_ser_det);
         if (this.paytype === '') {
           error = 'Please select the payment mode';
         }
@@ -339,31 +329,50 @@ export class CheckInComponent implements OnInit {
         'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
         'revealPhone': this.revealphonenumber
     };
-    // console.log('postdata', post_Data);
-const test = {
-  'queue': {
-    'id': 1
-  },
-  'date': '2017-11-27',
-  'service': {
-    'id': 1
-  },
-  'consumerNote': 'hai',
-  'waitlistingFor': [
-    {
-      'id': 1
-    }
-  ],
-  'revealPhone': false
-};
-    // console.log('test', test);
+    console.log('postdata', JSON.stringify(post_Data));
     this.shared_services.addCheckin(this.account_id, post_Data)
       .subscribe(data => {
-        // console.log('check-in returned', data);
-        this.api_success = 'Check in saved successfully';
-        setTimeout(() => {
-          this.dialogRef.close('reloadlist');
-         }, projectConstants.TIMEOUT_DELAY);
+        const retData = data;
+        console.log('check-in returned', retData);
+        let toKen;
+        let retUUID;
+        Object.keys(retData).forEach(key => {
+          toKen = key;
+          retUUID =  retData[key];
+        });
+        console.log('token', toKen);
+        console.log('uuid', retUUID);
+        if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
+          if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+            const payData = {
+              'amount': this.sel_ser_det.minPrePaymentAmount,
+              'paymentMode': this.paytype,
+              'uuid': retUUID
+            };
+            this.shared_services.consumerPayment(payData)
+              .subscribe (pData => {
+                  if (pData['response']) {
+                    this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                    this.api_success = Messages.CHECKIN_SUCC_REDIRECT;
+                      setTimeout(() => {
+                        this.document.getElementById('payuform').submit();
+                      }, 2000);
+                  } else {
+                    this.api_error = Messages.CHECKIN_ERROR;
+                  }
+              },
+              error => {
+                this.api_error = error.error;
+              });
+          } else {
+            this.api_error = Messages.CHECKIN_ERROR;
+          }
+        } else {
+          this.api_success = Messages.CHECKIN_SUCC;
+          setTimeout(() => {
+            this.dialogRef.close('reloadlist');
+          }, projectConstants.TIMEOUT_DELAY);
+        }
       },
       error => {
          this.api_error = error.error;
@@ -480,7 +489,6 @@ const test = {
     }
 
     if (derror === '') {
-      console.log('Valid Data');
       const post_data = {
         'userProfile': {
                           'firstName': this.addmemberobj.fname,

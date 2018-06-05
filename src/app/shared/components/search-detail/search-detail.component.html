@@ -166,29 +166,6 @@
                                                                 </ng-container>
                                                             </div>
                                                         </ng-container>
-
-                                                        
-
-                                                        <!-- <div class="refine_field_subouter" *ngFor="let refine_field of refine_data.enumeratedConstants; let i=index">
-                                                          <ng-container *ngIf="i<10">
-                                                          <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
-                                                          </ng-container>
-                                                          <ng-container *ngIf="i==10 && (refine_data.showhiddendet == undefine || !refine_data.showhiddendet)">
-                                                              <div class="refinemore" (click)="showmore(refindx)">show more..</div>
-                                                          </ng-container>
-                                                        </div>
-
-                                                        <ng-container *ngIf="refine_data.enumeratedConstants.length>10 && refine_data.showhiddendet != undefine && refine_data.showhiddendet">
-                                                        <div class="refine_field_subouter" *ngFor="let refine_field of refine_data.enumeratedConstants; let i=index">
-                                                            <ng-container *ngIf="i>=10">
-                                                            <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
-                                                            </ng-container>
-                                                            <ng-container *ngIf="i==(refine_data.enumeratedConstants.length-1)">
-                                                                <div class="refinemore" (click)="hidemore(refindx)">hide more..</div>
-                                                            </ng-container>
-                                                        </div>
-                                                        </ng-container> -->
-
                                                     </div>
                                                 </div> 
                                  
@@ -211,9 +188,7 @@
                                         <div *ngIf="refine_data.dataType=='Boolean'">
                                           <mat-slide-toggle #{{refine_data.name}}  [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1,false)">{{refine_data.displayName}}</mat-slide-toggle>
                                         </div>  
-                                        
                                     </ng-container>
-                                    
                                 </mat-expansion-panel>
                               </mat-accordion>
 

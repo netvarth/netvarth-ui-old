@@ -375,4 +375,13 @@ export class SharedServices {
       const url = 'consumer/communications?account=' + uuid;
       return this.servicemeta.httpPost(url, message);
     }
+    getPaymentModesofProvider(provid) {
+      const url = 'consumer/payment/modes/' + provid;
+      return this.servicemeta.httpGet(url);
+    }
+
+    consumerPayment(data) {
+      const url = 'consumer/payment';
+      return this.servicemeta.httpPost(url, data);
+    }
 }

@@ -139,6 +139,11 @@ export const Messages = {
   'PROVIDER_BILL_SETTLE' : 'Bill settled successfully',
   'PROVIDER_BILL_EMAIL' : 'Bill emailed successfully',
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
-  'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull'
+  'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull',
+
+  'CHECKIN_SUCC': 'Check in Saved Successfully',
+  'CHECKIN_SUCC_REDIRECT': 'Check in Saved Successfully. Please wait ... You are being redirected to the Payment Gateway ...',
+  'CHECKIN_ERROR': 'Sorry! an error occured'
+
 
 };

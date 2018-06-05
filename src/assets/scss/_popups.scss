@@ -1,5 +1,4 @@
-/*popup styles ####*/
-
+// #### Popup Styles
 .cdk-overlay-container {
     .cdk-overlay-dark-backdrop {
         background: rgba(0, 0, 0, .6);
@@ -103,6 +102,7 @@
     }
 }
 
+// #### Customized Popups
 .signupmainclass,
 .loginmainclass,
 .moreoptionsmainclass,
@@ -123,7 +123,8 @@
             font-weight: 500;
         }
     }
-
+    
+    // Popup header section
     .mat-dialog-title {
         margin: 0;
         padding: 15px 20px;
@@ -163,6 +164,7 @@
         }
     }
     
+    // Popup body section
     .mat-dialog-content {
         margin: 0;
         padding: 20px;
@@ -526,6 +528,7 @@
             }  
         }
         
+        // Date Picker
         .pickerouter {
             display: flex;
             
@@ -557,12 +560,20 @@
 
         > .ng-star-inserted {
             margin-bottom: 20px;
+            
             .refine_subheader {
                 font-weight: 600;
                 margin-bottom: 10px;
             }
         }
+        
+        // Bill Popup
+        .q-tbl {
+            padding: 0;
+        }
     }
+    
+    // Popup footer section
     .mat-dialog-actions {
         border-top: 1px solid $cc-ash;
         display: block;
@@ -638,388 +649,7 @@
     }
 }
 
-/* ###### Consumer popups  #####*/
-.consumerpopupmainclass {
-    width: 700px !important;
-    
-    .mat-dialog-title {
-        margin: 0;
-        padding: 20px 20px 10px;
-        @include font-medium;
-        font-size: 1.25rem;
-        font-weight: 600;
-        background: transparent;
-        color: $linkblack;
-        position: relative;
-        z-index: 5;
-
-        .modal_close {
-            position: absolute;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            color: $white;
-            right: 20px;
-            top: 50%;
-            margin-top: -10px;
-            z-index: 121;
-            width: 20px;
-            height: 20px;
-            @include transition(all 300ms);
-            @include border-radius(30px);
-
-            i {
-                display: flex;
-
-                &:before {
-                    @include font-custom;
-                    content: "\69";
-                    font-size: .75rem !important;
-                    width: 20px;
-                    height: 20px;
-                    font-weight: 600;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-            }
-            
-            &:hover {
-                background: $white;
-                color: $linkblue;
-            }
-        }
-        &:after {
-            position: absolute;
-            content: "";
-            background: url(../images/c-popup-bg.svg) no-repeat scroll 0 0;
-            height: 83px;
-            top: -8px;
-            right: -3px;
-            left: 0;
-            width: auto;
-            z-index: -1;
-            pointer-events: none;
-            
-            @include respond-to(ynw-767) {
-                width: 750px;
-                left: auto;
-                right: -10px;
-            }
-        }
-    }
-    .mat-dialog-content {
-        margin: 0;
-        padding: 20px;
-        overflow: auto;
-        position: relative;
-        z-index: 6;
-        
-        .mainouter {
-            .main-head, .date-outer, .service-outer, .queue-outer, .prepay-outer {
-                margin-bottom: 15px;
-                color: $cc-gray;
-                font-size: 1rem;
-                
-                .prov_name, .loc_name, .selected-date, .prepaymin-cls {
-                    color: $linkblack;
-                    font-weight: 600;
-                }
-                .prov_name {
-                    font-weight: 700;
-                }
-                .loc_name {
-                    font-size: .875rem;
-                }
-            }
-            .date-outer {
-                font-size: .875rem;
-                border-bottom: 1px dashed $cc-ash;
-                padding-bottom: 15px;
-                
-                .selected-date {
-                    margin-bottom: 5px;
-                }
-                
-                .future-text {
-                    display: table;
-                    cursor: pointer;
-                    color: $linkblue;
-                    text-decoration: underline;
-                    font-weight: 500;
-                    font-size: .75rem;
-                }
-                .future-date-outer {
-                    margin-top: 5px;
-                    
-                    .form-group {
-                        margin-bottom: 0px;
-                        display: flex;
-                        
-                        .col-form-label {
-                            font-weight: 500;
-                            margin-right: 10px;
-                            align-self: center;
-                        }
-                        
-                        .pickerouter {
-                            .mat-datepicker-toggle {
-                                margin-right: 0;
-                            }
-                            .form-control {
-                                background: $white;
-                            }
-                        }
-                    }
-                }
-            }
-            .service-outer, .queue-outer {
-                border-bottom: 1px dashed $cc-ash;
-                padding-bottom: 15px;
-                
-                .service-head, .queue-head {
-                    font-size: .875rem;
-                    margin-bottom: 5px;
-                    color: $linkblack;
-                    font-weight: 600;
-                }
-                
-                .mat-chip-list {
-                    .mat-chip-list-wrapper {
-                        margin-bottom: 5px;
-                        
-                        .mat-chip.mat-chip-selected.mat-primary {
-                            font-weight: 600;
-                            background: $green;
-                            color: $white;
-                            border: none;
-                            border: 1px solid $green;
-                        }
-                        
-                        .mat-chip {
-                            padding: 5px 10px;
-                            margin-right: 5px;
-                            margin-left: 0;
-                            margin-bottom: 5px;
-                            cursor: pointer;
-                            background: $white;
-                            border: 1px solid $cc-mediumgray;
-                            display: inline-block;
-                            
-                            .qname {
-                                display: inline-block;
-                            }
-                            .qtime {
-                                display: inline-block;
-                            }
-                            
-                            &:focus {
-                                box-shadow: none;
-                            }
-                        }
-                    }
-                }
-                
-                .service-details {
-                    .service-dur-pr {
-                        display: flex;
-                        
-                        @include respond-to(ynw-575) {
-                            flex-direction: column;
-                        }
-                        
-                        .service-duration {
-                            width: 200px;
-                            
-                            .min-cls {
-                                font-weight: 600;
-                                color: $linkblack;
-                            }
-                        }
-                        .service-price {
-                            flex-grow: 1;
-                            
-                            @include respond-to(ynw-575) {
-                                margin-top: 10px;
-                            }
-
-                            .price {
-                                font-weight: 600;
-                                color: $linkblack;
-                            }
-                            .taxable {
-                                font-size: .75rem;
-                            }
-                        }
-                    }
-                    .service-desc {
-                        margin-top: 5px;
-                    }
-                }
-                
-                .selected-ser, .selected-que {
-                    margin-bottom: 5px;
-                    
-                    .selected-ser-name {
-                        font-weight: 600;
-                        color: $linkblack;
-                    }
-                }
-                
-                .queue-waitingdiv {
-                    .queue-head {
-                        font-weight: 500;
-                        color: $cc-gray;
-                        
-                        .queue-avail-date {
-                            font-weight: 600;
-                            color: $linkblack;
-                        }
-                    }
-                }
-                
-                .no-queue-available {
-                    font-size: .875rem;
-                }
-            }
-            
-            .queue-outer {
-                .mat-chip-list {
-                    .mat-chip-list-wrapper {
-                        .mat-chip {
-                            border-color: $cc-body;
-                            background: $cc-body;
-                        }
-                    }
-                }
-            }
-            
-            .servicefor-outer {
-                .service-availer {
-                    color: $linkblack;
-                    font-weight: 600;
-                }
-                .change-button {
-                    cursor: pointer;
-                    display: table;
-                    color: $linkblue;
-                    font-size: .75rem;
-                    text-decoration: underline;
-                }
-                
-                &.btborder {
-                    border-bottom: 1px dashed $cc-ash;
-                    padding-bottom: 15px;
-                }
-            }
-            
-            .revealdiv {
-                margin-top: 15px;
-                
-                .form-group {
-                    margin-bottom: 0;
-                    
-                    .mat-checkbox {
-                        .mat-checkbox-layout {
-                            .mat-checkbox-label {
-                                white-space: pre-wrap;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            .consumer-comment {
-                .form-group {
-                    margin-bottom: 0px;
-                    
-                    .col-form-label {
-                        font-weight: 500;
-                        color: $cc-gray;
-                    }
-                }
-            }
-            
-            .prepay-outer {
-                margin-bottom: 0;
-                margin-top: 15px;
-                padding: 20px 15px 15px;
-                @include top-to-bottom(#f8f8f8, #fff);
-                
-                .prepay-amt {
-                    margin-bottom: 15px;
-                    font-size: .875rem;
-                    font-weight: 600;
-                    color: $linkblack;
-                    
-                    .prepaymin-cls {
-                        font-weight: 700;
-                        color: $green;
-                        font-size: 1rem;
-                    }
-                }
-                .prepay-gateway-outer {
-                    
-                    .prepay-head {
-                        margin-bottom: 5px;
-                        color: $linkblack;
-                        font-weight: 600;
-                    }
-                    
-                    .mat-radio-group {
-                        .mat-radio-button {
-                            color: $linkblack;
-                        }
-                    }
-                }
-            }
-            
-            .member-outer {
-                .member-head {
-                    margin-bottom: 15px;
-                }
-                .member-list {
-                    .member-ul {
-                        margin: 0 0 0 20px;
-                        padding: 0;
-                        
-                        li {
-                            list-style: none;
-                        }
-                    }
-                    .member-add {
-                        margin-left: 20px;
-                        margin-top: 10px;
-                        cursor: pointer;
-                        display: table;
-                        font-size: .75rem;
-                        color: $linkblue;
-                        text-decoration: underline;
-                        font-weight: 500;
-                    }
-                }
-            }
-        }
-    }
-    .mat-dialog-actions {
-        padding: 20px;
-        @include respond-to(ynw-767) {
-            .mat-button .backbtn, .bt2 {
-                padding: 10px 15px !important;
-            }
-        }
-        @include respond-to(ynw-575) {
-            button {
-                margin-bottom: 5px;
-            }
-        }
-    }
-    
-}
-
-/* ##### Consumer Popup Ends ### */
-
+// #### Login Popup
 .loginmainclass {
     .mat-dialog-actions {
         display: block;
@@ -1050,6 +680,7 @@
     }
 }
 
+// #### SignUp Popup
 .signupmainclass {
     .mat-dialog-content {
         .mat-radio-group {
@@ -1096,6 +727,7 @@
     }
 }
 
+// #### Google Map Popup
 .googlemainmappopup {
     .mat-dialog-title {
         @include font-regular;
@@ -1179,8 +811,7 @@
     }
 }
 
-/* common popup class #### */
-
+// #### Common Popups
 .commonpopupmainclass {
     .mat-dialog-content {
         .schedule_outer {
@@ -1557,4 +1188,383 @@
             padding-top: 0;
         }
     }
+}
+
+// #### Consumer Popup 
+.consumerpopupmainclass {
+    width: 700px !important;
+    
+    .mat-dialog-title {
+        margin: 0;
+        padding: 20px 20px 10px;
+        @include font-medium;
+        font-size: 1.25rem;
+        font-weight: 600;
+        background: transparent;
+        color: $linkblack;
+        position: relative;
+        z-index: 5;
+
+        .modal_close {
+            position: absolute;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            color: $white;
+            right: 20px;
+            top: 50%;
+            margin-top: -10px;
+            z-index: 121;
+            width: 20px;
+            height: 20px;
+            @include transition(all 300ms);
+            @include border-radius(30px);
+
+            i {
+                display: flex;
+
+                &:before {
+                    @include font-custom;
+                    content: "\69";
+                    font-size: .75rem !important;
+                    width: 20px;
+                    height: 20px;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+            
+            &:hover {
+                background: $white;
+                color: $linkblue;
+            }
+        }
+        &:after {
+            position: absolute;
+            content: "";
+            background: url(../images/c-popup-bg.svg) no-repeat scroll 0 0;
+            height: 83px;
+            top: -8px;
+            right: -3px;
+            left: 0;
+            width: auto;
+            z-index: -1;
+            pointer-events: none;
+            
+            @include respond-to(ynw-767) {
+                width: 750px;
+                left: auto;
+                right: -10px;
+            }
+        }
+    }
+    .mat-dialog-content {
+        margin: 0;
+        padding: 20px;
+        overflow: auto;
+        position: relative;
+        z-index: 6;
+        
+        .mainouter {
+            .main-head, .date-outer, .service-outer, .queue-outer, .prepay-outer {
+                margin-bottom: 15px;
+                color: $cc-gray;
+                font-size: 1rem;
+                
+                .prov_name, .loc_name, .selected-date, .prepaymin-cls {
+                    color: $linkblack;
+                    font-weight: 600;
+                }
+                .prov_name {
+                    font-weight: 700;
+                }
+                .loc_name {
+                    font-size: .875rem;
+                }
+            }
+            .date-outer {
+                font-size: .875rem;
+                border-bottom: 1px dashed $cc-ash;
+                padding-bottom: 15px;
+                
+                .selected-date {
+                    margin-bottom: 5px;
+                }
+                
+                .future-text {
+                    display: table;
+                    cursor: pointer;
+                    color: $linkblue;
+                    text-decoration: underline;
+                    font-weight: 500;
+                    font-size: .75rem;
+                }
+                .future-date-outer {
+                    margin-top: 5px;
+                    
+                    .form-group {
+                        margin-bottom: 0px;
+                        display: flex;
+                        
+                        .col-form-label {
+                            font-weight: 500;
+                            margin-right: 10px;
+                            align-self: center;
+                        }
+                        
+                        .pickerouter {
+                            .mat-datepicker-toggle {
+                                margin-right: 0;
+                            }
+                            .form-control {
+                                background: $white;
+                            }
+                        }
+                    }
+                }
+            }
+            .service-outer, .queue-outer {
+                border-bottom: 1px dashed $cc-ash;
+                padding-bottom: 15px;
+                
+                .service-head, .queue-head {
+                    font-size: .875rem;
+                    margin-bottom: 5px;
+                    color: $linkblack;
+                    font-weight: 600;
+                }
+                
+                .mat-chip-list {
+                    .mat-chip-list-wrapper {
+                        margin-bottom: 5px;
+                        
+                        .mat-chip.mat-chip-selected.mat-primary {
+                            font-weight: 600;
+                            background: $green;
+                            color: $white;
+                            border: none;
+                            border: 1px solid $green;
+                        }
+                        
+                        .mat-chip {
+                            padding: 5px 10px;
+                            margin-right: 5px;
+                            margin-left: 0;
+                            margin-bottom: 5px;
+                            cursor: pointer;
+                            background: $white;
+                            border: 1px solid $cc-mediumgray;
+                            display: inline-block;
+                            
+                            .qname {
+                                display: inline-block;
+                            }
+                            .qtime {
+                                display: inline-block;
+                            }
+                            
+                            &:focus {
+                                box-shadow: none;
+                            }
+                        }
+                    }
+                }
+                
+                .service-details {
+                    .service-dur-pr {
+                        display: flex;
+                        
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
+                        }
+                        
+                        .service-duration {
+                            width: 200px;
+                            
+                            .min-cls {
+                                font-weight: 600;
+                                color: $linkblack;
+                            }
+                        }
+                        .service-price {
+                            flex-grow: 1;
+                            
+                            @include respond-to(ynw-575) {
+                                margin-top: 10px;
+                            }
+
+                            .price {
+                                font-weight: 600;
+                                color: $linkblack;
+                            }
+                            .taxable {
+                                font-size: .75rem;
+                            }
+                        }
+                    }
+                    .service-desc {
+                        margin-top: 5px;
+                    }
+                }
+                
+                .selected-ser, .selected-que {
+                    margin-bottom: 5px;
+                    
+                    .selected-ser-name {
+                        font-weight: 600;
+                        color: $linkblack;
+                    }
+                }
+                
+                .queue-waitingdiv {
+                    .queue-head {
+                        font-weight: 500;
+                        color: $cc-gray;
+                        
+                        .queue-avail-date {
+                            font-weight: 600;
+                            color: $linkblack;
+                        }
+                    }
+                }
+                
+                .no-queue-available {
+                    font-size: .875rem;
+                }
+            }
+            
+            .queue-outer {
+                .mat-chip-list {
+                    .mat-chip-list-wrapper {
+                        .mat-chip {
+                            border-color: $cc-body;
+                            background: $cc-body;
+                        }
+                    }
+                }
+            }
+            
+            .servicefor-outer {
+                .service-availer {
+                    color: $linkblack;
+                    font-weight: 600;
+                }
+                .change-button {
+                    cursor: pointer;
+                    display: table;
+                    color: $linkblue;
+                    font-size: .75rem;
+                    text-decoration: underline;
+                }
+                
+                &.btborder {
+                    border-bottom: 1px dashed $cc-ash;
+                    padding-bottom: 15px;
+                }
+            }
+            
+            .revealdiv {
+                margin-top: 15px;
+                
+                .form-group {
+                    margin-bottom: 0;
+                    
+                    .mat-checkbox {
+                        .mat-checkbox-layout {
+                            .mat-checkbox-label {
+                                white-space: pre-wrap;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .consumer-comment {
+                .form-group {
+                    margin-bottom: 0px;
+                    
+                    .col-form-label {
+                        font-weight: 500;
+                        color: $cc-gray;
+                    }
+                }
+            }
+            
+            .prepay-outer {
+                margin-bottom: 0;
+                margin-top: 15px;
+                padding: 20px 15px 15px;
+                @include top-to-bottom(#f8f8f8, #fff);
+                
+                .prepay-amt {
+                    margin-bottom: 15px;
+                    font-size: .875rem;
+                    font-weight: 600;
+                    color: $linkblack;
+                    
+                    .prepaymin-cls {
+                        font-weight: 700;
+                        color: $green;
+                        font-size: 1rem;
+                    }
+                }
+                .prepay-gateway-outer {
+                    
+                    .prepay-head {
+                        margin-bottom: 5px;
+                        color: $linkblack;
+                        font-weight: 600;
+                    }
+                    
+                    .mat-radio-group {
+                        .mat-radio-button {
+                            color: $linkblack;
+                        }
+                    }
+                }
+            }
+            
+            .member-outer {
+                .member-head {
+                    margin-bottom: 15px;
+                }
+                .member-list {
+                    .member-ul {
+                        margin: 0 0 0 20px;
+                        padding: 0;
+                        
+                        li {
+                            list-style: none;
+                        }
+                    }
+                    .member-add {
+                        margin-left: 20px;
+                        margin-top: 10px;
+                        cursor: pointer;
+                        display: table;
+                        font-size: .75rem;
+                        color: $linkblue;
+                        text-decoration: underline;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+    .mat-dialog-actions {
+        padding: 20px;
+        @include respond-to(ynw-767) {
+            .mat-button .backbtn, .bt2 {
+                padding: 10px 15px !important;
+            }
+        }
+        @include respond-to(ynw-575) {
+            button {
+                margin-bottom: 5px;
+            }
+        }
+    } 
 }

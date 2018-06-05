@@ -1,75 +1,226 @@
-<app-header [headerTitle]="'Header'"></app-header>
-<div class="providerdet_actions_div">
-   <div class="providerdet_favbuttondiv"><button class="btn btn-primary" *ngIf="sharedFunctionobj.checkLogin() && !isFavourite" (click)="addtoFavourite()">Add to Favourites</button></div>
-   <div class="providerdet_backbuttondiv"><button class="btn btn-primary" (click)="gobacktoSearch()">Back to Search</button></div>
-   <div>
-   <div class="btn-danger" *ngIf="msg_exists">{{msg_exists}}</div>
-  </div>
-</div>
-<div class="providerdet_outerdiv">
-  <div class="providerdet_maindetaildiv" *ngIf="businessjson">
-    <div class="providerdet_logodiv">
-      <img src="{{sharedFunctionobj.showlogoicon(businessjson?.logo?.url)}}"/>
-    </div>
-    <div class="providerdet_descriptiondiv">
-      <div class="providerdet_name">{{businessjson.businessName}}</div>
-      <div class="providerdet_phone">{{businessjson.primaryPhoneNo}}</div>
-      <div class="providerdet_desc" [innerHTML]="businessjson.businessDesc"></div>
-    </div>
-  </div>
-</div>
+<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"></app-header>
 
-<mat-tab-group class="demo-tab-group">
-  <mat-tab label="Our Services">
-      <div class="demo-tab-content">
-       <div class="services_outerdiv" *ngIf="servicesjson">
-          <div class="row" *ngFor="let services of servicesjson">
-            <div class="service_logodiv">
-              <img *ngIf="services.servicegallery" src="{{sharedFunctionobj.showlogoicon(services?.servicegallery[0]?.thumbUrl)}}"/>
-              <img *ngIf="!services.servicegallery" src="{{sharedFunctionobj.showlogoicon('')}}"/>
-            </div>
-            <div class="service_nameouterdiv" *ngIf="services.name">
-                <div class="service_name">{{services.name}}</div>
-                <div class="service_desc">{{services.description}}</div>
-            </div>
-            <div class="service_checkinbuttondiv"><button class="btn btn-primary" (click)="handle_checkinClicked(services.id)">Check-in/Order</button></div>
-          </div>
-      </div>
-      </div>
-  </mat-tab>
-  <mat-tab label="Gallery">
-      <div class="demo-tab-content">
-          <div class="gallery_outerdiv" *ngIf="galleryjson">
-            <div class="gallery_mainimagediv"><img src="{{mainimage_holder}}"/></div>
-            <div class="gallery_thumb_outer">
-              <div class="gallery_thumbdiv" *ngFor="let thumbimage of galleryjson">
-                <img src="{{thumbimage.thumbUrl}}" (click)="swap_image(thumbimage.url)"
-                *ngIf="thumbimage.thumbUrl"/>
+<section class="content">
+  <div class="container">
+      <div class="row">
+
+          
+          <div class="c-outer">           
+              <div class="c-body">
+                  <div class="bk-ctrl">
+                      <span class="backtoresults" (click)="backtoSearchResult()">Back to <span class="strong">Results</span></span>
+                  </div>
+                  <div class="srlst details">
+                      <div class="top-sect">
+                          <div class="tp-l">
+                              <div class="tp1">
+                                  <div class="pro-img">
+                                      <ng-container *ngIf="galleryjson.length > 0">
+                                            <ng-container>
+                                                <img [src]="galleryjson[0].thumbUrl" alt="">  
+                                            </ng-container>
+                                        </ng-container>
+                                  </div>
+                                  <ul class="gal" *ngIf="galleryjson.length > 1">
+                                      <li>
+                                          <div class="galbx">
+                                              <div class="overlay">+ {{galleryjson.length - 1 }}</div>
+                                              <img [src]="galleryjson[1].thumbUrl" alt="">
+                                          </div>
+                                      </li>
+                                  </ul>
+                                  <div class="rating-stars">
+                                      Rating Stars goes here...   
+                                  </div>
+                              </div>
+                              <div class="tp2" *ngIf="businessjson">
+                                  <!-- <div class="ynw-verified"></div> -->
+                                  <h3>{{businessjson.businessName}}</h3>
+                                  <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName}}</span>
+                                  
+                                  <div class="clr">
+                                      <div class="otr-elements">
+                                          <span class="exp">10 yrs Experience </span>
+                                          <span class="awards">Awards &amp; Recognition</span>
+                                          <span class="memberships">Memberships</span>
+                                      </div>
+                                      
+                                      <div class="pro-desc">
+                                          <ng-container *ngIf="bNameStart!=''">{{bNameStart}}</ng-container><ng-container *ngIf="bNameEnd!='' && showmoreDesc">{{bNameEnd}}</ng-container> 
+                                          <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">More</span> <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">Less</span>
+                                      </div>
+                                      
+                                      <div class="services" *ngIf="servicesjson.length > 0">
+                                          <span class="sub-title">Services Offered</span>
+                                          <ul>
+                                            <ng-container *ngIf="servicesjson.length <=3">
+                                              <li *ngFor="let serv of servicesjson">{{serv.name}}</li>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="servicesjson.length > 3">
+                                                <ng-container *ngFor="let serv of servicesjson; let i = index">
+                                                <li *ngIf="i<3">{{serv.name}}</li>
+                                                </ng-container>
+                                                <li (click)="showallServices()" *ngIf="!viewallServices"><span>View All</span></li>
+                                                <ng-container *ngIf="viewallServices">
+                                                <ng-container *ngFor="let serv of servicesjson; let j = index" >
+                                                    <li *ngIf="j >= 3">{{serv.name}}</li>
+                                                </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                            
+                                              
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tp-r">
+                              <div class="ynw-verified"></div>
+                              <ul class="side-menu">
+                                  <li><span class="icon-history">History</span></li>
+                                  <li><span class="fav icon-favourite <!--icon-favourite-filled-->">Add to Favourites</span></li>
+                                  <li><span class="icon-inbox">Inbox <span class="count">7</span></span></li>
+                                  <li><span class="icon-message">Communicate</span></li>
+                                  <li><span class="icon-dashboard">Dashboard</span></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="location">
+                      <div class="top-sect">
+                          <div class="tp-l">
+                              <div class="tp2">
+                                  <h3>Chembukkavu PO, Thrissur</h3>
+                                  <span class="directions">Get Directions</span>
+                                  
+                                  <div class="clr">
+                                      <div class="schedule">
+                                          <span class="sub-title">Working Hours</span>
+                                          <ul>
+                                              <li>
+                                                  <div class="day">Mon, Fri</div>
+                                                  <div class="time">09:00AM - 06:00PM</div>
+                                              </li>
+                                              <li>
+                                                  <div class="day">Sat</div>
+                                                  <div class="time">09:00AM - 12:00PM</div>
+                                              </li>
+                                          </ul>
+                                      </div>
+
+                                      <div class="services">
+                                          <span class="sub-title">Services Offered</span>
+                                          <ul>
+                                              <li>Consultation</li>
+                                              <li>X-Ray</li>
+                                              <li>Scanning</li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tp-r">
+                              <ul class="badges">
+                                  <li><span class="icon-parking"></span></li>
+                                  <li><span class="icon-open-time"></span></li>
+                                  <li><span class="icon-trauma"></span></li>
+                                  <li><span class="icon-emergency"></span></li>
+                                  <li><span class="icon-first-aid"></span></li>
+                                  <li><span class="icon-ambulance"></span></li>
+                                  <li><span class="icon-payment"></span></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="bottom-sect">
+                          <div class="bt-l">
+                              <div class="c-checkin">
+                                  <div class="ch-l">
+                                      <span class="ch-title">You have <span class="count">2 Check-ins</span>  at this location</span>
+                                  </div>
+                                  <div class="ch-r">
+                                      <ol class="check-list">
+                                          <li>
+                                              <span class="service">Consultation</span> <span class="service-for">for Ajith,</span> scheduled on  <span class="schedule">Today - 11:00AM</span> Estimated Waiting Time is <span class="est-time">30Min</span>
+                                          </li>
+                                          <li>
+                                              <span class="service">Scanning</span> <span class="service-for">for Mother,</span> scheduled on <span class="schedule">Today - 11:00AM</span>
+                                          </li>
+                                      </ol>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="bt-r">
+                              <span class="cs-btn bt10 blk">Would you like to <span>Cancel Check-ins?</span></span>
+                              <span class="cs-btn chk-btn cancel">Cancel</span>
+                              <span class="cs-btn bt10">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
+                          </div>    
+                      </div>
+                  </div>
+                  
+                  <div class="location">
+                      <div class="top-sect">
+                          <div class="tp-l">
+                              <div class="tp2">
+                                  <h3>Chembukkavu PO, Thrissur</h3>
+                                  <span class="directions">Get Directions</span>
+                                  
+                                  <div class="clr">
+                                      <div class="schedule">
+                                          <span class="sub-title">Working Hours</span>
+                                          <ul>
+                                              <li>
+                                                  <div class="day">Mon, Fri</div>
+                                                  <div class="time">09:00AM - 06:00PM</div>
+                                              </li>
+                                              <li>
+                                                  <div class="day">Sat</div>
+                                                  <div class="time">09:00AM - 12:00PM</div>
+                                              </li>
+                                          </ul>
+                                      </div>
+
+                                      <div class="services">
+                                          <span class="sub-title">Services Offered</span>
+                                          <ul>
+                                              <li>Consultation</li>
+                                              <li>X-Ray</li>
+                                              <li>Scanning</li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tp-r">
+                              <ul class="badges">
+                                  <li><span class="icon-parking"></span></li>
+                                  <li><span class="icon-open-time"></span></li>
+                                  <li><span class="icon-trauma"></span></li>
+                                  <li><span class="icon-ambulance"></span></li>
+                                  <li><span class="icon-payment"></span></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="bottom-sect">
+                          <div class="bt-l">
+                              <div class="wt-tme">
+                                  <div class="o-now">Open Now</div>
+                                  <div class="timing">
+                                      <span class="est-time">Estimated Waiting Time</span>
+                                      <span class="time-data">15 Min <span class="icon-question"></span></span>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="bt-r">
+                              <span class="cs-btn chk-btn">Check-In</span>
+                              <span class="cs-btn bt10">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
+                          </div>    
+                      </div>
+                  </div>
+                  
               </div>
-            </div>
           </div>
-          <div class="gallery_outerdiv" *ngIf="!galleryjson">
-              No Images in gallery
-           </div>
       </div>
-  </mat-tab>
-</mat-tab-group>
-<div class="openinghours_outerdiv" *ngIf="locationjson">
-<div class="openinghours_heading">Opening Hours: </div>
-<div  class="location_containerdiv">
-  <div  *ngFor="let locationdet of locationjson">
-    <div >
-      <div  *ngIf="locationdet.place">{{locationdet.place}}<span *ngIf="locationdet.address">,</span> {{locationdet.address}}</div>
-    </div>
-    <div >
-      <div  *ngIf="locationdet.businessScheduleJson.timespec">
-        <div *ngFor="let slot_display of locationdet.businessScheduleJson.timespec">
-        <div>{{getScheduledaysstr(slot_display.repeatIntervals)}} {{slot_display.timeSlots[0].sTime}} - {{slot_display.timeSlots[0].eTime}}</div>
-      </div>
-    </div>
   </div>
-  </div>
-</div>
-</div>
-
-<div *ngIf="approx_waitingtime">Approximate Waiting Time: {{approx_waitingtime}} </div>
+</section>
