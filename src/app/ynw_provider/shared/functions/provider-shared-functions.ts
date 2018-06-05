@@ -4,6 +4,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import {SharedFunctions} from '../../../shared/functions/shared-functions';
 import { AddProviderWaitlistQueuesComponent } from '../../components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
+import { ProviderWaitlistCheckInCancelPopupComponent } from '../../components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 
 @Injectable()
 export class ProviderSharedFuctions {
@@ -116,5 +117,59 @@ export class ProviderSharedFuctions {
 
   }
 
+  changeWaitlistStatus(ob, waitlist, action) {
+
+    if (action === 'CANCEL') {
+
+      const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass'],
+        data: {
+          waitlist: waitlist
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result && result.cancelReason) {
+          ob.changeWaitlistStatusApi(waitlist, action, result);
+        }
+      });
+
+    } else {
+      ob.changeWaitlistStatusApi(waitlist, action);
+    }
+  }
+  changeWaitlistStatusApi(ob, waitlist, action, post_data = {}) {
+
+    return new Promise((resolve, reject) => {
+
+      ob.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
+      .subscribe(
+        data => {
+
+          resolve('changeWaitlistStatusApi');
+
+          let status_msg = '';
+          switch (action) {
+            case 'REPORT' : status_msg = 'ARRIVED'; break;
+            case 'STARTED' : status_msg = 'STARTED'; break;
+            case 'CANCEL' : status_msg = 'CANCELLED'; break;
+            case 'CHECK_IN' : status_msg = 'CHECK IN'; break;
+            case 'DONE': status_msg = 'COMPLETED'; break;
+          }
+          const msg = Messages.WAITLIST_STATUS_CHANGE.replace('[status]', status_msg);
+          this.openSnackBar (msg);
+        },
+        error => {
+          this.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          reject();
+        }
+      );
+
+    });
+
+
+
+  }
 
 }

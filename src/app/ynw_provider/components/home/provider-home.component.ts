@@ -578,46 +578,14 @@ export class ProviderHomeComponent implements OnInit {
   }
 
   changeWaitlistStatus(waitlist, action) {
-
-    if (action === 'CANCEL') {
-
-      const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass'],
-        data: {
-          waitlist: waitlist
-        }
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result && result.cancelReason) {
-          this.changeWaitlistStatusApi(waitlist, action, result);
-        }
-      });
-
-    } else {
-      this.changeWaitlistStatusApi(waitlist, action);
-    }
+  this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
-    this.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
-    .subscribe(
-      data => {
-        this.loadApiSwitch('changeWaitlistStatusApi');
-        let status_msg = '';
-        switch (action) {
-          case 'REPORT' : status_msg = 'ARRIVED'; break;
-          case 'STARTED' : status_msg = 'STARTED'; break;
-          case 'CANCEL' : status_msg = 'CANCELLED'; break;
-          case 'CHECK_IN' : status_msg = 'CHECK IN'; break;
-          case 'DONE': status_msg = 'COMPLETED'; break;
-        }
-        const msg = Messages.WAITLIST_STATUS_CHANGE.replace('[status]', status_msg);
-        this.provider_shared_functions.openSnackBar (msg);
-      },
-      error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+    this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+    .then(
+      result => {
+        this.loadApiSwitch(result);
       }
     );
   }

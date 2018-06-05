@@ -482,11 +482,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         'quantity': item.quantity,
       };
       console.log(item, ob);
-      if (item.coupon != null) {
+      if (item.coupon != null && this.coupons[item.coupon]) {
         ob['couponId'] = this.coupons[item.coupon]['id'];
       }
 
-      if (item.discount != null) {
+      if (item.discount != null && this.discounts[item.discount]) {
         ob['discountId'] = this.discounts[item.discount]['id'];
       }
 
@@ -515,11 +515,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     //   post_data['items'] = item_array;
     // }
 
-    if (this.cart.coupon != null) {
+    if (this.cart.coupon != null && this.coupons[this.cart.coupon]) {
       post_data['couponId'] = this.coupons[this.cart.coupon]['id'];
     }
 
-    if (this.cart.discount != null) {
+    if (this.cart.discount != null && this.discounts[this.cart.discount]) {
       post_data['discountId'] = this.discounts[this.cart.discount]['id'];
     }
 

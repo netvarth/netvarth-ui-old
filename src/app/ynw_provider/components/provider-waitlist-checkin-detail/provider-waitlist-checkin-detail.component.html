@@ -28,9 +28,11 @@
                                     </ng-container>
                                   </div>
                               </div>
-                              <div class="btm">
-                                  <button class="cs-btn bt3">Communicate</button>
-                                  <button class="cs-btn bt7 cancel">Cancel Check-In</button>
+                              <div class="btm" *ngIf="waitlist_data">
+                                  <button class="cs-btn bt3" (click)="addConsumerInboxMessage()">Communicate</button>
+                                  <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()"
+                                  *ngIf="!waitlist_data.history &&
+                                  ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">Cancel Check-In</button>
                               </div>
                           </div>
                       </div>
@@ -77,12 +79,17 @@
                   <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
                       <div class="card">
                           <h2>Check-In History</h2>
-                          <ul class="c-history">
+                          <div class="c-history-outer">
+                            <ul class="c-history">
                               <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
                                   <div class="time">{{ history.time}}</div>
                                   <div class="action">{{ history.waitlistStatus}}</div>
                               </li>
-                          </ul>
+                            </ul>
+
+                            <p class="no-result" *ngIf="waitlist_history.length == 0">No history found</p>
+                          </div>
+
                       </div>
                   </div>
               </div>

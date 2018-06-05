@@ -19,8 +19,11 @@ export class AddInboxMessagesComponent implements OnInit {
   api_error = null;
   api_success = null;
   provid = null;
+  consumer_id = null;
+  uuid = null;
   message = '';
-  source = 'add';
+  source = null;
+  type = 'send';
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,14 +34,12 @@ export class AddInboxMessagesComponent implements OnInit {
 
     ) {
         this.provid = this.data.providerid || null;
+        this.consumer_id = this.data.consumerid || null;
+        this.uuid = this.data.uuid || null;
         this.message = this.data.message;
-        this.source = this.data.source;
+        this.source = this.data.source || null;
+        this.type = (this.data.type === 'reply') ? 'Send Reply' : 'Send Message';
 
-        if ( !this.provid) {
-          setTimeout(() => {
-            this.dialogRef.close('error');
-            }, projectConstants.TIMEOUT_DELAY);
-        }
      }
 
   ngOnInit() {
@@ -53,20 +54,76 @@ export class AddInboxMessagesComponent implements OnInit {
     const post_data =  {
           communicationMessage: form_data.message
       };
-    this.shared_services.addConsumertoProviderNote(this.provid,
-    post_data)
-    .subscribe(
-      data => {
-        this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
-        setTimeout(() => {
-        this.dialogRef.close('reloadlist');
-        }, projectConstants.TIMEOUT_DELAY);
-      },
-      error => {
-        this.sharedfunctionObj.apiErrorAutoHide(this, error);
-     }
-    );
+
+      switch (this.source) {
+        case 'provider-waitlist' : this.providerToConsumerWaitlistNote(post_data); break;
+        case 'consumer-common' : this.consumerToProviderNoteAdd(post_data); break;
+        case 'provider-common' : this.providerToConsumerNoteAdd(post_data); break;
+      }
   }
+
+  providerToConsumerWaitlistNote(post_data) {
+
+    if (this.uuid !== null) {
+
+      this.shared_services.addProviderWaitlistNote(this.uuid,
+        post_data)
+        .subscribe(
+          data => {
+            this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+            setTimeout(() => {
+            this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          error => {
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+         }
+        );
+    }
+
+
+  }
+
+  providerToConsumerNoteAdd(post_data) {
+    if (this.consumer_id !== null) {
+
+      this.shared_services.addProvidertoConsumerNote(this.consumer_id,
+        post_data)
+        .subscribe(
+          data => {
+            this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+            setTimeout(() => {
+            this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          error => {
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+         }
+        );
+
+    }
+  }
+
+  consumerToProviderNoteAdd(post_data) {
+    if (this.provid) {
+
+      this.shared_services.addConsumertoProviderNote(this.provid,
+        post_data)
+        .subscribe(
+          data => {
+            this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+            setTimeout(() => {
+            this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          error => {
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+         }
+        );
+
+    }
+  }
+
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;

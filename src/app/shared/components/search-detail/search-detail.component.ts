@@ -1475,7 +1475,8 @@ export class SearchDetailComponent implements OnInit {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
      data: {
-       providerid : provid
+       providerid : provid,
+       source: 'consumer-common'
      }
    });
 

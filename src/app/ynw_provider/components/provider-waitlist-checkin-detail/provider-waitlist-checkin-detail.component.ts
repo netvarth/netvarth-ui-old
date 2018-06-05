@@ -14,6 +14,8 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
+import * as moment from 'moment';
+import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 
 @Component({
     selector: 'app-provider-waitlist-checkin-detail',
@@ -39,6 +41,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     api_success = null;
     api_error = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    today = new Date();
 
     constructor(
         private provider_services: ProviderServices,
@@ -71,6 +74,17 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
       .subscribe(
           data => {
             this.waitlist_data = data;
+            const waitlist_date = new Date(this.waitlist_data.date);
+
+            this.today.setHours(0, 0, 0, 0);
+            waitlist_date.setHours(0, 0, 0, 0);
+
+            this.waitlist_data.history = false;
+
+            if (this.today.valueOf() > waitlist_date.valueOf()) {
+              this.waitlist_data.history = true;
+            }
+
             this.getWaitlistNotes();
             this.getCheckInHistory(this.waitlist_data.ynwUuid);
           },
@@ -123,6 +137,39 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
           this.getWaitlistNotes();
         }
       });
+    }
+
+    changeWaitlistStatus() {
+
+      this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'CANCEL');
+
+    }
+
+    changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+      this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+      .then(
+        result => {
+          this.getWaitlistDetail();
+        }
+      );
+    }
+
+    addConsumerInboxMessage() {
+
+      const uuid = this.waitlist_data.ynwUuid || null;
+
+      const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+        width: '50%',
+        panelClass: 'consumerpopupmainclass',
+       data: {
+         uuid : uuid,
+         source: 'provider-waitlist'
+       }
+     });
+
+     dialogRef.afterClosed().subscribe(result => {
+       // this.animal = result;
+     });
     }
 
 }

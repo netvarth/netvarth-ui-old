@@ -9,7 +9,7 @@ import { InboxComponent } from './inbox.component';
 import { InboxServices } from './inbox.service';
 import { InboxRoutingModule } from './inbox-routing.module';
 
- import { InboxMessageComponent } from '../../components/inbox-message/inbox-message.component';
+ import { AddInboxMessagesComponent } from '../../components/add-inbox-messages/add-inbox-messages.component';
 
 @NgModule({
     imports: [
@@ -24,11 +24,11 @@ import { InboxRoutingModule } from './inbox-routing.module';
     ],
     entryComponents: [
         InboxComponent,
-        InboxMessageComponent
+        AddInboxMessagesComponent
     ],
     declarations: [
         InboxComponent,
-        InboxMessageComponent
+        AddInboxMessagesComponent
     ],
     exports: [InboxComponent],
     providers: [

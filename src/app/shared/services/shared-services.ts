@@ -375,4 +375,14 @@ export class SharedServices {
       const url = 'consumer/communications?account=' + uuid;
       return this.servicemeta.httpPost(url, message);
     }
+
+    addProvidertoConsumerNote(uuid, message) {
+      const url = 'provider/communications/' + uuid;
+      return this.servicemeta.httpPost(url, message);
+    }
+
+    addProviderWaitlistNote(uuid, body) {
+      const url = 'provider/waitlist/communicate/' + uuid;
+      return this.servicemeta.httpPost(url, body);
+    }
 }

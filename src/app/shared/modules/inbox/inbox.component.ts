@@ -9,7 +9,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { InboxServices } from './inbox.service';
 
-import { InboxMessageComponent } from '../../components/inbox-message/inbox-message.component';
+import { AddInboxMessagesComponent } from '../../components/add-inbox-messages/add-inbox-messages.component';
 
 @Component({
   selector: 'app-inbox',
@@ -70,8 +70,8 @@ export class InboxComponent implements OnInit {
 
   }
 
-  replyMessage(message) {
-    const dialogRef = this.dialog.open(InboxMessageComponent, {
+  replyMessage(message, type) {
+    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
       autoFocus: true,

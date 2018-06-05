@@ -76,7 +76,15 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       this.provider_services.acceptPayment(this.pay_data)
       .subscribe(
         data => {
-          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          if (this.pay_data.acceptPaymentBy === 'self_pay') {
+
+            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
+
+          } else {
+            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+
+          }
+
           this.dialogRef.close('reloadlist');
         },
         error => {

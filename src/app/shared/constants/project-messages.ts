@@ -139,6 +139,7 @@ export const Messages = {
   'PROVIDER_BILL_SETTLE' : 'Bill settled successfully',
   'PROVIDER_BILL_EMAIL' : 'Bill emailed successfully',
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
+  'PROVIDER_BILL_PAYMENT_SELFPAY': ' An email and push notification will be send to the consumer',
   'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull'
 
 };
