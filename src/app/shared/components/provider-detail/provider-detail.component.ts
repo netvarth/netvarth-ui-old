@@ -15,7 +15,14 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
-// import { CheckinComponent } from '../checkin/checkin.component';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
+import {
+  AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
+  DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
+} from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-provider-detail',
@@ -40,6 +47,31 @@ export class ProviderDetailComponent implements OnInit {
   showmoreDesc = false;
   bNameStart = '';
   bNameEnd = '';
+  image_list: any = [];
+  image_list_popup: Image[];
+  ratingenabledCnt = 0;
+  ratingenabledHalf = false;
+  ratingdisabledCnt = 0;
+  ratingenabledArr;
+  ratingdisabledArr;
+  serMaxcnt = 3;
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy:  ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   constructor(
     private routeobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -64,7 +96,7 @@ export class ProviderDetailComponent implements OnInit {
                 .then(
                   res => {
                     this.s3url = res;
-                    console.log('s3', this.s3url);
+                    // console.log('s3', this.s3url);
                     this.getbusinessprofiledetails_json('businessProfile', true);
                     this.getbusinessprofiledetails_json('services', true);
                     this.getbusinessprofiledetails_json('gallery', true);
@@ -96,6 +128,23 @@ export class ProviderDetailComponent implements OnInit {
             } else {
               this.bNameStart = holdbName;
             }
+            this.ratingenabledCnt = this.businessjson.avgRating || 0;
+            const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
+            if (ratingenabledInt < this.ratingenabledCnt) {
+              this.ratingenabledHalf = true;
+              this.ratingenabledCnt = ratingenabledInt;
+              this.ratingdisabledCnt = 5 - (ratingenabledInt + 1);
+            } else {
+              this.ratingdisabledCnt = 5 - ratingenabledInt;
+            }
+            this.ratingenabledArr = [];
+            this.ratingdisabledArr = [];
+            for (let i = 0; i < this.ratingenabledCnt; i++) {
+              this.ratingenabledArr.push(i);
+            }
+            for (let i = 0; i < this.ratingdisabledCnt; i++) {
+              this.ratingdisabledArr.push(i);
+            }
           break;
           }
           case 'services': {
@@ -104,9 +153,17 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'gallery': {
             this.galleryjson = res;
-            /*if (this.galleryjson) {
-              this.mainimage_holder = this.galleryjson[0].url;
-            }*/
+            this.image_list_popup = [];
+            if (this.galleryjson.length > 0) {
+              for (let i = 0; i < this.galleryjson.length; i++) {
+                  const imgobj = new Image(
+                    i,
+                    { // modal
+                      img: this.galleryjson[i].url
+                    });
+                  this.image_list_popup.push(imgobj);
+                }
+            }
           break;
           }
           case 'settings': {
@@ -121,6 +178,32 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'location': {
             this.locationjson = res;
+            let schedule_arr: any = [];
+            for (let i = 0; i < this.locationjson.length; i++) {
+                  if (this.locationjson[i].bSchedule) {
+                    if (this.locationjson[i].bSchedule.timespec) {
+                      if (this.locationjson[i].bSchedule.timespec.length > 0) {
+                        schedule_arr = [];
+                          // extracting the schedule intervals
+                          for (let j = 0; j < this.locationjson[i].bSchedule.timespec.length; j++) {
+                            for (let k = 0; k < this.locationjson[i].bSchedule.timespec[j].repeatIntervals.length; k++) {
+                              // pushing the schedule details to the respective array to show it in the page
+                              schedule_arr.push({
+                                day: this.locationjson[i].bSchedule.timespec[j].repeatIntervals[k],
+                                sTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].sTime,
+                                eTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].eTime
+                              });
+                            }
+                          }
+                      }
+                    }
+                  }
+                  let display_schedule = [];
+                  display_schedule =  this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
+                  this.locationjson[i]['display_schedule'] = display_schedule;
+                  this.locationjson[i]['services'] = [];
+                  this.getServiceByLocationid(this.locationjson[i].id, i);
+            }
           break;
           }
           /* case 'menu': {
@@ -152,6 +235,26 @@ export class ProviderDetailComponent implements OnInit {
     } else {
       this.showmoreDesc = true;
     }
+  }
+  openImageModalRow(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+
+  getServiceByLocationid(locid, passedIndx) {
+    this.shared_services.getServicesByLocationId(locid)
+      .subscribe (data => {
+        this.locationjson[passedIndx]['services'] = data;
+        console.log('locjson', this.locationjson);
+      },
+      error => {
+        this.sharedFunctionobj.apiErrorAutoHide(this, error);
+      });
   }
 }
 

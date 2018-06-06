@@ -4117,7 +4117,7 @@ footer {
                                             
                                             .arrived {
                                                 
-                                                color: $green;
+                                                color: $arrived;
                                                 padding: 2px 5px 2px 14px;
                                                 font-size: .65rem;
                                                 font-weight: 600;
@@ -4126,7 +4126,7 @@ footer {
                                                 &:before {
                                                     position: absolute;
                                                     content: "";
-                                                    background: $green;
+                                                    background: $arrived;
                                                     width: 6px;
                                                     height: 6px;
                                                     @include border-radius(10px);
@@ -5728,7 +5728,7 @@ footer {
                             flex-grow: 1;
                             font-weight: 600;
                             padding: 15px;
-                            color: $linkblue;
+                            color: $linkblack;
 
                             &.th1, &.td1 {
                                 width: 15%;
@@ -5754,7 +5754,6 @@ footer {
                             &.td5 {
                                 span {
                                     cursor: pointer;
-                                    @include transition(all 300ms);
                                     font-size: 1rem;
                                     
                                     &:hover {
@@ -5837,6 +5836,10 @@ footer {
                     .details {
                         padding-top: 0;
                         line-height: 1.8;
+                        background: $cc-body;
+                        display: none;
+                        margin-bottom: 50px;
+                        @include transition(all 300ms);
                         
                         @include respond-to(ynw-767) {
                             padding-bottom: 0;
@@ -5849,6 +5852,11 @@ footer {
                         }
                         .action {
                             background: none;
+                        }
+                        
+                        &.show {
+                            display: block;
+                            margin-bottom: 0;
                         }
                     }
                     
@@ -5888,16 +5896,19 @@ footer {
                         }
                     }
                     
-                    
-                    
                     &.tth {
-                        
                         
                         @include respond-to(ynw-767) {
                             display: none;
                         }
                     }
                     &.ttd {
+                        .outer {
+                            .td {
+                                @include transition(all 300ms);
+                                cursor: pointer;
+                            }
+                        }
                         &.new{
                             border-bottom: 2px solid $cc-body;
                             background: #f0ffcc;
@@ -5920,6 +5931,14 @@ footer {
                                             border-color: $cc-ash;
                                         }
                                     }
+                                }
+                            }
+                        }
+                        &:hover {
+                            .outer {
+                                .td {
+                                    color: $white;
+                                    background: $linkblue;
                                 }
                             }
                         }

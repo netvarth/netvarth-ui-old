@@ -4,7 +4,7 @@
 <section class="content">
     <div class="container">
         <div class="row">
-            <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
+            <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && search_result_count > 0">
                 <div class="ct1" >
                     <span class="mnu" (click)="togger_refinesection()">
                         <span></span>
@@ -16,8 +16,8 @@
             </div>
             
             <div class="c-outer"> 
-                <div class="sidebar-overlay" *ngIf="showrefinedsection" (click)="togger_refinesection()"></div>
-                <div class="sidebar" *ngIf="showrefinedsection">
+                <div class="sidebar-overlay" *ngIf="showrefinedsection && search_result_count > 0" (click)="togger_refinesection()"></div>
+                <div class="sidebar" *ngIf="showrefinedsection && search_result_count > 0">
                     <div class="rs-box">
                         <div  *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
                           <!-- <div class="bx-block" *ngIf="domainlist_data && kwtyp != 'subdom'"> -->

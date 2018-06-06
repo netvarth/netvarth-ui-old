@@ -2076,6 +2076,8 @@ header {
                         
                         .paginghead-outer {
                             width: 200px;
+                            margin-right: auto;
+                            
                             .paging {
                                 font-size: .875rem;
                                 text-align: left;
@@ -2097,14 +2099,14 @@ header {
                             flex-wrap: wrap;
                             
                             li {
-                                padding: 10px;
+                                padding: 3px 5px;
                                 font-size: .875rem;
                                 font-weight: 500;
                                 color: $linkblue;
                                 background: $white;
                                 cursor: pointer;
                                 margin-right: 10px;
-                                min-width: 40px;
+                                min-width: 30px;
                                 border: 1px solid $linkblue;
                                 margin-bottom: 5px;
                                 

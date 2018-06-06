@@ -568,9 +568,72 @@
         }
         
         // Bill Popup
-        .q-tbl {
-            padding: 0;
+        .group-outer {
+            .bill-basic {
+                border: 1px solid $cc-body;
+                display: flex;
+                flex-wrap: wrap;
+
+                .btl {
+                    flex-grow: 1;
+                    padding: 10px;
+                    border: 1px solid $cc-body;
+
+                    .label {
+                        color: $cc-mediumgray;
+                        display: block;
+                    }
+                    .label-valu {
+                        font-weight: 600;
+                    }
+                }
+            }
+            .search {
+                width: 280px;
+
+                .mat-form-field {
+                    .mat-input-wrapper {
+                        .mat-input-infix {
+                            .col-form-label {
+                                padding: 0px;
+                                margin-bottom: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+            .bill-tbl {
+                padding: 0;
+            }
+            .bill-total {
+                text-align: right;
+
+                .total, .discount, .coupon, .prepaid {
+                    margin-bottom: 5px;
+                    color: $cc-gray;
+                    font-size: .75rem;
+
+                    .label-valu {
+                        font-weight: 600;
+                    }
+                }
+                .total {
+                    color: $linkblack;
+                    font-size: .875rem;
+                }
+                .topay {
+                    margin-top: 15px;
+                    font-size: 1rem;
+
+                    .label-valu {
+                        color: $green;
+                        font-weight: 600;
+                        margin-left: 5px;
+                    }
+                }
+            }
         }
+        
     }
     
     // Popup footer section
@@ -646,6 +709,10 @@
                 margin-bottom: 0;
             }
         }
+    }
+    
+    &.width-100 {
+        width: 100% !important;
     }
 }
 
