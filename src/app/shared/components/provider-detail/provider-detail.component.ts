@@ -23,6 +23,7 @@ import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
+import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 
 @Component({
   selector: 'app-provider-detail',
@@ -55,6 +56,8 @@ export class ProviderDetailComponent implements OnInit {
   ratingenabledArr;
   ratingdisabledArr;
   serMaxcnt = 3;
+  inboxCntFetched = false;
+  inboxUnreadCnt;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -73,16 +76,19 @@ export class ProviderDetailComponent implements OnInit {
     ]
   };
   constructor(
-    private routeobj: ActivatedRoute,
+    private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
     public sharedFunctionobj: SharedFunctions,
     private locationobj: Location,
     private shared_services: SharedServices,
-    private dialogobj: MatDialog
+    private dialogobj: MatDialog,
+    private routerobj: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.routeobj.paramMap
+    this.getInboxUnreadCnt();
+    this.activaterouterobj.paramMap
     .subscribe(params => {
       this.provider_id = params.get('id');
       this.gets3curl();
@@ -280,6 +286,81 @@ export class ProviderDetailComponent implements OnInit {
       }
     }
     return str;
+  }
+  getDateDisplay(dt) {
+    let str = '';
+    const today = new Date();
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+        cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+
+    if (dtoday === dt) {
+      str = 'Today';
+    } else {
+      const dtr = dt.split('-');
+      str = dtr[2] + '-' + dtr[1] + '-' + dtr[0];
+    }
+    return str;
+  }
+  redirectMe(opt) {
+    switch (opt) {
+      case 'dashboard':
+        this.routerobj.navigate(['consumer']);
+      break;
+      case 'inbox':
+        this.routerobj.navigate(['consumer', 'inbox']);
+      break;
+    }
+  }
+  getInboxUnreadCnt() {
+    const usertype = 'consumer';
+    this.shared_services.getInboxUnreadCount(usertype)
+      .subscribe (data => {
+        this.inboxCntFetched = true;
+        // console.log('inboxcnt', data);
+        this.inboxUnreadCnt = data;
+      },
+    error => {
+    });
+  }
+
+  communicateHandler() {
+
+    /*  const providforCommunicate = this.provider_id;
+      // check whether logged in as consumer
+      if (this.sharedFunctionobj.checkLogin()) {
+          this.showCommunicate(providforCommunicate);
+      } else { // show consumer login
+
+      }*/
+  }
+  showCommunicate(provid) {
+    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+      width: '50%',
+      panelClass: 'consumerpopupmainclass',
+     data: {
+       user_id : provid,
+       source: 'consumer-common',
+       type: 'send'
+     }
+   });
+
+   dialogRef.afterClosed().subscribe(result => {
+
+   });
   }
 }
 
