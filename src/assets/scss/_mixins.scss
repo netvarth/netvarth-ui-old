@@ -119,7 +119,7 @@
     }
 }
 
-//lineargradient
+//gradient top-to-bottom
 
 @mixin linear-gradient($top, $bottom) {
     background: $top; /* Old browsers */

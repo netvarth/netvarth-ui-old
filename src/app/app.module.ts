@@ -11,6 +11,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { ModalGalleryModule } from 'angular-modal-gallery';
 
 import { SearchModule } from './shared/modules/search/search.module';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
@@ -93,7 +94,8 @@ import 'hammerjs';
     SharedModule,
     RatingStarModule,
     HeaderModule,
-    CheckInModule
+    CheckInModule,
+    ModalGalleryModule.forRoot()
   ],
   providers: [
     AuthGuardConsumer,

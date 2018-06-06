@@ -17,7 +17,6 @@
     z-index: 2;
     /* user-select: none; */
     
-    
     &:hover {
         text-decoration: none;
     }
@@ -412,6 +411,22 @@
             background: $linkblue !important;
             color: $white !important;
         }
+    }
+    &.update, &.settle, &.accept, &.makepayment, &.print, &.email {
+        padding: 5px 15px !important;
+        margin-left: 0px !important;
+        margin-right: 10px !important;
+        height: auto;
+        @include transition(all 300ms);
+    }
+    &.update, &.print {
+        background: $cc-warning !important;
+    }
+    &.accept {
+        background: $green !important;
+    }
+    &.makepayment {
+        background: $green !important;
     }
 }
 
