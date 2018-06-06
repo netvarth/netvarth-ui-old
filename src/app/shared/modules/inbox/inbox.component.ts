@@ -71,14 +71,26 @@ export class InboxComponent implements OnInit {
   }
 
   replyMessage(message, type) {
+
+    const pass_ob = {};
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    let source = usertype + '-';
+    if (message.waitlistId) {
+      source = source + 'waitlist';
+      pass_ob['uuid'] = message.waitlistId;
+    } else {
+      source = source + 'common';
+    }
+
+    pass_ob['source'] = source;
+    pass_ob['user_id'] = message['owner']['id'];
+    pass_ob['type'] = 'reply';
+
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
       autoFocus: true,
-      data: {
-        message: message,
-        heading: 'Send Reply'
-      }
+      data: pass_ob
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -386,6 +386,11 @@ export class SharedServices {
       return this.servicemeta.httpPost(url, body);
     }
 
+    addConsumerWaitlistNote(uuid, body) {
+      const url = 'consumer/waitlist/communicate/' + uuid;
+      return this.servicemeta.httpPost(url, body);
+    }
+
     getPaymentModesofProvider(provid) {
       const url = 'consumer/payment/modes/' + provid;
       return this.servicemeta.httpGet(url);

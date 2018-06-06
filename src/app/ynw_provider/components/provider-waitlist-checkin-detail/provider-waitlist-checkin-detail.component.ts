@@ -119,6 +119,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
       );
     }
 
+    getCommunicationHistory(uuid) {
+      this.provider_services.getProviderWaitlistHistroy(uuid)
+      .subscribe(
+          data => {
+            this.waitlist_history = data;
+          },
+          error => {
+           //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          }
+      );
+    }
+
     goBack() {
       this.router.navigate(['provider']);
     }
@@ -158,18 +170,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
 
       const uuid = this.waitlist_data.ynwUuid || null;
 
-      const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
-        width: '50%',
-        panelClass: 'consumerpopupmainclass',
-       data: {
-         uuid : uuid,
-         source: 'provider-waitlist'
-       }
-     });
-
-     dialogRef.afterClosed().subscribe(result => {
-       // this.animal = result;
-     });
+      this.provider_shared_functions.addConsumerInboxMessage(uuid);
     }
 
 }

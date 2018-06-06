@@ -30,6 +30,8 @@ export class ServiceMeta {
           });
 
           options.params = httpParams;
+          options.showLoader = true;
+
         }
         return this.http.get(url_path, options);
     }

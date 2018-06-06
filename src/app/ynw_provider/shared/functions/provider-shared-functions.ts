@@ -5,6 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/
 import {SharedFunctions} from '../../../shared/functions/shared-functions';
 import { AddProviderWaitlistQueuesComponent } from '../../components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
+import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 
 @Injectable()
 export class ProviderSharedFuctions {
@@ -170,6 +171,23 @@ export class ProviderSharedFuctions {
 
 
 
+  }
+
+  addConsumerInboxMessage(uuid) {
+
+    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+      width: '50%',
+      panelClass: 'commonpopupmainclass',
+      data: {
+        uuid : uuid,
+        source: 'provider-waitlist',
+        type: 'send'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // this.animal = result;
+    });
   }
 
 }

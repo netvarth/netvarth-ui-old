@@ -231,7 +231,8 @@
 
                                     </ng-container>
                                   </td>
-                                  <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
+                                  <td data-title="Message" class="message">
+                                    <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td>
                                   <td data-title="Consumer Note" class="cnote">
                                     <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
