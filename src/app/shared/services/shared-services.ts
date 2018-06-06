@@ -401,9 +401,9 @@ export class SharedServices {
       return this.servicemeta.httpPost(url, data);
     }
 
-    getExistingCheckinsByLocation(locid, provid) {
-      const stat = 'Checkedin,Arrived';
-      const url = 'consumer/waitlist?location-eq=' + locid + '&waitlistStatus-eq=' + stat + '&account-eq=' + provid;
+    getExistingCheckinsByLocation(locid) {
+      const stat = 'checkedIn,arrived';
+      const url = 'consumer/waitlist?location-eq=' + locid + '&waitlistStatus-eq=' + stat;
       return this.servicemeta.httpGet(url);
     }
 }

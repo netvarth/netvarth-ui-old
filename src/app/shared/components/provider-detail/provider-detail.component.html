@@ -61,7 +61,6 @@
                                             <ng-container *ngIf="servicesjson.length <=serMaxcnt">
                                               <li *ngFor="let serv of servicesjson">{{serv.name}}</li>
                                             </ng-container>
-
                                             <ng-container *ngIf="servicesjson.length > 3">
                                                 <ng-container *ngFor="let serv of servicesjson; let i = index">
                                                 <li *ngIf="i<serMaxcnt">{{serv.name}}</li>
@@ -74,8 +73,6 @@
                                                 <li class="viewall" (click)="showallServices()" *ngIf="viewallServices"><span>Less</span></li>
                                                 </ng-container>
                                             </ng-container>
-                                            
-                                              
                                           </ul>
                                       </div>
                                   </div>
@@ -135,17 +132,14 @@
                       </div>
                       <div class="bottom-sect">
                           <div class="bt-l">
-                              <div class="c-checkin">
+                              <div class="c-checkin" *ngIf="loc.checkins.length>0">
                                   <div class="ch-l">
-                                      <span class="ch-title">You have <span class="count">2 Check-ins</span>  at this location</span>
+                                      <span class="ch-title">You have <span class="count">{{loc.checkins.length}} Check-ins</span>  at this location</span>
                                   </div>
                                   <div class="ch-r">
                                       <ol class="check-list">
-                                          <li>
-                                              <span class="service">Consultation</span> <span class="service-for">for Ajith,</span> scheduled on  <span class="schedule">Today - 11:00AM</span> Estimated Waiting Time is <span class="est-time">30Min</span>
-                                          </li>
-                                          <li>
-                                              <span class="service">Scanning</span> <span class="service-for">for Mother,</span> scheduled on <span class="schedule">Today - 11:00AM</span>
+                                          <li *ngFor="let chkin of loc.checkins">
+                                              <span class="service">{{chkin.service.name}}</span> <span class="service-for">for {{getWaitlistingFor(chkin.waitlistingFor)}},</span> scheduled on  <span class="schedule">{{chkin.date}} - 11:00AM</span> Estimated Waiting Time is <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span>
                                           </li>
                                       </ol>
                                   </div>

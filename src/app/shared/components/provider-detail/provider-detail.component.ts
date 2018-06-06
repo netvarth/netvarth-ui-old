@@ -204,7 +204,7 @@ export class ProviderDetailComponent implements OnInit {
                   this.locationjson[i]['services'] = [];
                   this.getServiceByLocationid(this.locationjson[i].id, i);
                   this.locationjson[i]['checkins'] = [];
-                  this.getExistingCheckinsByLocation(this.locationjson[i].id, this.provider_id, i);
+                  this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
             }
           break;
           }
@@ -259,15 +259,27 @@ export class ProviderDetailComponent implements OnInit {
       });
   }
 
-  getExistingCheckinsByLocation(locid, provid, passedIndx) {
-    this.shared_services.getExistingCheckinsByLocation(locid, provid)
+  getExistingCheckinsByLocation(locid, passedIndx) {
+    this.shared_services.getExistingCheckinsByLocation(locid)
     .subscribe (data => {
       this.locationjson[passedIndx]['checkins'] = data;
-      console.log('locjsoncheckin', this.locationjson);
+      console.log('locjsoncheckin', this.locationjson[passedIndx]['checkins']);
     },
     error => {
       this.sharedFunctionobj.apiErrorAutoHide(this, error);
     });
+  }
+  getWaitlistingFor(obj) {
+    let str = '';
+    if (obj.length > 0) {
+      for (let i = 0; i < obj.length ; i++) {
+        if (str !== '') {
+          str += ', ';
+        }
+        str += obj[i].firstName;
+      }
+    }
+    return str;
   }
 }
 
