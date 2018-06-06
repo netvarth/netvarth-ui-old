@@ -83,9 +83,9 @@
                               <ul class="side-menu">
                                   <li><span class="icon-history">History</span></li>
                                   <li><span class="fav icon-favourite <!--icon-favourite-filled-->">Add to Favourites</span></li>
-                                  <li><span class="icon-inbox">Inbox <span class="count">7</span></span></li>
-                                  <li><span class="icon-message">Communicate</span></li>
-                                  <li><span class="icon-dashboard">Dashboard</span></li>
+                                  <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li>
+                                  <li><span class="icon-message" (click)="communicateHandler()">Communicate</span></li>
+                                  <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li>
                               </ul>
                           </div>
                       </div>
@@ -139,14 +139,14 @@
                                   <div class="ch-r">
                                       <ol class="check-list">
                                           <li *ngFor="let chkin of loc.checkins">
-                                              <span class="service">{{chkin.service.name}}</span> <span class="service-for">for {{getWaitlistingFor(chkin.waitlistingFor)}},</span> scheduled on  <span class="schedule">{{chkin.date}} - 11:00AM</span> Estimated Waiting Time is <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span>
+                                              <span class="service">{{chkin.service.name}}</span> <span class="service-for">for {{getWaitlistingFor(chkin.waitlistingFor)}},</span> scheduled on  <span class="schedule">{{getDateDisplay(chkin.date)}}</span> Estimated Waiting Time is <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span>
                                           </li>
                                       </ol>
                                   </div>
                               </div>
                           </div>
                           <div class="bt-r">
-                              <span class="cs-btn bt10 blk">Would you like to <span>Cancel Check-ins?</span></span>
+                              <span class="cs-btn bt10 blk" *ngIf="loc.checkins.length>0">Would you like to <span>Cancel Check-ins?</span></span>
                               <span class="cs-btn chk-btn cancel">Cancel</span>
                               <span class="cs-btn bt10">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
                           </div>    
