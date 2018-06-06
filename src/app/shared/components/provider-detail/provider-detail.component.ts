@@ -203,6 +203,8 @@ export class ProviderDetailComponent implements OnInit {
                   this.locationjson[i]['display_schedule'] = display_schedule;
                   this.locationjson[i]['services'] = [];
                   this.getServiceByLocationid(this.locationjson[i].id, i);
+                  this.locationjson[i]['checkins'] = [];
+                  this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
             }
           break;
           }
@@ -255,6 +257,29 @@ export class ProviderDetailComponent implements OnInit {
       error => {
         this.sharedFunctionobj.apiErrorAutoHide(this, error);
       });
+  }
+
+  getExistingCheckinsByLocation(locid, passedIndx) {
+    this.shared_services.getExistingCheckinsByLocation(locid)
+    .subscribe (data => {
+      this.locationjson[passedIndx]['checkins'] = data;
+      console.log('locjsoncheckin', this.locationjson[passedIndx]['checkins']);
+    },
+    error => {
+      this.sharedFunctionobj.apiErrorAutoHide(this, error);
+    });
+  }
+  getWaitlistingFor(obj) {
+    let str = '';
+    if (obj.length > 0) {
+      for (let i = 0; i < obj.length ; i++) {
+        if (str !== '') {
+          str += ', ';
+        }
+        str += obj[i].firstName;
+      }
+    }
+    return str;
   }
 }
 

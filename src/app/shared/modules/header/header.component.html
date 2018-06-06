@@ -18,7 +18,7 @@
 
                     <div class="inbx" (click)="inboxiconClick()">
                         <div class="ot-bx">
-                            <div class="noti-no" *ngIf="inboxCntFetched==true">{{inboxUnreadCnt}}</div>
+                            <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</div>
                             <i data-icon="H"></i>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                             <div class="bnps" *ngIf="headercls=='dashb'">
                                 <div class="inbx" (click)="inboxiconClick()">
                                     <div class="ot-bx">
-                                        <div class="noti-no" *ngIf="inboxCntFetched==true">{{inboxUnreadCnt}}</div>
+                                        <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</div>
                                         <i data-icon="H"></i>
                                     </div>
                                 </div>
