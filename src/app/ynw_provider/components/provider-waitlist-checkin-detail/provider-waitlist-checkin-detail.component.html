@@ -44,11 +44,10 @@
                                   Communication History
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
-                              <div  class="chistory" *ngFor="let note of waitlist_notes">
-                                <p>Message: {{note.note}}</p>
-                                <p>time: {{note.timeStamp | date: dateFormat}}</p>
+                              <div  class="chistory" *ngFor="let message of communication_history">
+
                               </div>
-                              <div *ngIf="waitlist_notes.length == 0">
+                              <div *ngIf="communication_history.length == 0">
                                 <p>No notes found</p>
                               </div>
                             </mat-expansion-panel>

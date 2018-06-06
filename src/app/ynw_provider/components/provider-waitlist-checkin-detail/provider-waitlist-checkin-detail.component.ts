@@ -28,6 +28,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     waitlist_data;
     waitlist_notes: any = [];
     waitlist_history: any = [];
+    communication_history: any = [];
     breadcrumbs_init = [
         {
           title: 'Dashboard',
@@ -87,6 +88,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
 
             this.getWaitlistNotes();
             this.getCheckInHistory(this.waitlist_data.ynwUuid);
+            this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           },
           error => {
             this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -120,10 +122,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     }
 
     getCommunicationHistory(uuid) {
-      this.provider_services.getProviderWaitlistHistroy(uuid)
+
+      this.provider_services.getProviderInbox()
       .subscribe(
           data => {
-            this.waitlist_history = data;
+            const history: any = data;
+            this.communication_history = [];
+            for (const his of history) {
+              if (his.waitlistId === uuid) {
+                this.communication_history.push(his);
+              }
+            }
+
           },
           error => {
            //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});

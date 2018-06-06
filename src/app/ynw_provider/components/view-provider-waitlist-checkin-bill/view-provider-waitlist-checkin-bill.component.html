@@ -7,7 +7,7 @@
     <div class="group-outer">
         <div class="form-group bill-basic">
             <div class="btl"><span class="label">Bill Id / No</span> <span class="label-valu">{{bill_data.id}} </span></div>
-            <div class="btl"><span class="label">Customer name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
+            <div class="btl"><span class="label">Customer Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
             <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
             <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div>
          </div>
@@ -60,7 +60,7 @@
                 </tbody>
             </table>
 
-            <div class="table-outer bill-tbl">
+            <div class="table-outer log-tbl">
               <p class="paymentlogs">Payment Logs</p>
               <p *ngIf="pre_payment_log.length == 0">
                 No  payments found
@@ -83,12 +83,33 @@
             </div>
 
             <div class="form-group bill-total">
-            <div class="total btl"><span class="label">Total</span> <span class="label-valu"> {{bill_data.netRate | currency:'INR':'symbol':'.2-2'}} </span></div>
+                <div class="table-outer pay-tbl">
+                    <table class="table">
+                        <tbody>
+                            <tr class="total">
+                                <th>Total</th>
+                                <td> {{bill_data.netRate | currency:'INR':'symbol':'.2-2'}} </td>
+                            </tr>
+                            <tr class="discount">
+                                <th>Discount</th>
+                                <td>{{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</td>
+                            </tr>
+                            <tr class="coupon">
+                                <th>Coupon</th>
+                                <td>{{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</td>
+                            </tr>
+                            <tr class="prepaid">
+                                <th>Pre-paid amount</th>
+                                <td>{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</td>
+                            </tr>
+                            <tr class="topay">
+                                <th>Amount to pay</th>
+                                <td>{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+               </div>
 
-            <div  class="discount btl"><span class="label">Discount</span><span class="label-valu">{{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</span></div>
-            <div  class="coupon btl"><span class="label">Coupon</span><span class="label-valu">{{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</span></div>
-            <div  class="prepaid btl"><span class="label">Pre-paid amount</span><span class="label-valu">{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</span></div>
-            <div  class="topay btl"><span class="label">Amount to pay</span><span class="label-valu">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</span></div>
             </div>
 
           </div>

@@ -410,9 +410,9 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
 
-  // getProviderInbox() {
-  //   return this.servicemeta.httpGet('provider/communications');
-  // }
+  getProviderInbox(filter = {}) {
+    return this.servicemeta.httpGet('provider/communications', null, filter);
+  }
 
   // postProviderInboxReply(consumerId, data) {
   //   const url = 'provider/communications/' + consumerId;
