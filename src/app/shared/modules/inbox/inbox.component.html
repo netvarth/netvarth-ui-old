@@ -16,11 +16,10 @@
                                             <div class="th th2">Service</div>
                                             <div class="th th3">Name</div>
                                             <div class="th th4">Message</div>
-                                            <div class="th th5"></div>
                                         </div>
                                     </li>
                                    
-                                    <li class="ttd" *ngFor="let message of messages; let i = index">
+                                    <li class="ttd" [class.active]="selectedMsg==i" *ngFor="let message of messages; let i = index">
                                         <div class="outer" (click)="showMsg(i)">
                                             <div class="td td1">
                                                 <div class="label">Date</div>
@@ -39,11 +38,8 @@
                                                 <div class="result">{{ (message.msg.length>20)? (message.msg | slice:0:20)+'..':(message.msg) }}
                                                 </div>
                                             </div>
-                                            <div class="td td5">
-                                                <div class="result"><!-- <span class="icon-delete"></span>--></div>
-                                            </div>
                                         </div>
-                                        <div class="details" [class.show]="selectedMsg==i" *ngIf="selectedMsg==i">
+                                        <div class="details" [class.show]="selectedMsg==i">
                                             <div class="result">
                                                 {{message.msg}}
                                             </div>

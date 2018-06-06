@@ -395,4 +395,10 @@ export class SharedServices {
       const url = 'consumer/payment';
       return this.servicemeta.httpPost(url, data);
     }
+
+    getExistingCheckinsByLocation(locid, provid) {
+      const stat = 'Checkedin,Arrived';
+      const url = 'consumer/waitlist?location-eq=' + locid + '&waitlistStatus-eq=' + stat + '&account-eq=' + provid;
+      return this.servicemeta.httpGet(url);
+    }
 }
