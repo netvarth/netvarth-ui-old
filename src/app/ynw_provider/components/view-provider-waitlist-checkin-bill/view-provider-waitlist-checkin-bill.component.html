@@ -4,70 +4,74 @@
      </button>
    </h1>
    <mat-dialog-content>
+    <div class="group-outer">
+        <div class="form-group bill-basic">
+            <div class="btl"><span class="label">Bill Id / No</span> <span class="label-valu">{{bill_data.id}} </span></div>
+            <div class="btl"><span class="label">Customer name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
+            <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
+            <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div>
+         </div>
 
-     <div class="form-group bill-basic">
-        <div><span class="label">Bill Id / No :</span> <span class="label-valu">{{bill_data.id}} </span></div>
-        <div><span class="label">Customer name :</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.firstName}}</span></div>
-        <div><span class="label">Date :</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
-        <div><span class="label">Time :</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div>
-     </div>
 
-
-
-       <div class="table-outer bill-tbl">
-           <table class="table">
-               <thead>
-                 <th>Service/Item</th>
-                 <th>Quantity</th>
-                 <th>StdRate</th>
-                 <th>Discount</th>
-                 <th>Coupon</th>
-                 <th>Tax-SGST</th>
-                 <th>Tax-CGST</th>
-                 <th>Net-Rate</th>
-               </thead>
-               <tbody>
-                 <tr *ngFor="let service of bill_data.service; let i = index">
-                   <td data-title="Service/Item">{{service.serviceName}}</td>
-                   <td data-title="Quantity">{{service.quantity}}</td>
-                   <td data-title="StdRate">{{service.price | currency:'INR':'symbol':'.2-2'}}</td>
-                   <td data-title="Discount">
-                      {{service.discountValue | currency:'INR':'symbol':'.2-2'}}
-                   </td>
-                   <td data-title="Coupon">
-                      {{service.couponValue | currency:'INR':'symbol':'.2-2'}}
-                   </td>
-                   <td data-title="Tax-SGST">{{service.GSTpercentage/2}} %</td>
-                   <td data-title="Tax-CGST">{{service.GSTpercentage/2 }} %</td>
-                   <td data-title="Net-Rate">{{service.netRate | currency:'INR':'symbol':'.2-2'}}</td>
-                </tr>
-                <tr *ngFor="let item of bill_data.items; let i = index">
-                    <td  data-title="Service/Item">{{item.itemName}}</td>
-                    <td  data-title="Quantity">{{item.quantity}}</td>
-                    <td  data-title="StdRate">{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
-                    <td  data-title="Discount">
-                       {{item.discountValue | currency:'INR':'symbol':'.2-2'}}
-                    </td>
-                    <td data-title="Coupon">
-                       {{item.couponValue | currency:'INR':'symbol':'.2-2'}}
-                    </td>
-                    <td  data-title="Tax-SGST">{{item.GSTpercentage/2}} %</td>
-                    <td  data-title="Tax-CGST">{{item.GSTpercentage/2 }} %</td>
-                    <td data-title="Net-Rate">{{item.netRate | currency:'INR':'symbol':'.2-2'}}</td>
-                 </tr>
-               </tbody>
-           </table>
 
            <div class="table-outer bill-tbl">
-              <p>Payment Logs</p>
+            <table class="table">
+                <thead>
+                  <tr>
+                      <th>Service/Item</th>
+                      <th>Quantity</th>
+                      <th>StdRate</th>
+                      <th>Discount</th>
+                      <th>Coupon</th>
+                      <th>Tax-SGST</th>
+                      <th>Tax-CGST</th>
+                      <th>Net-Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let service of bill_data.service; let i = index">
+                    <td data-title="Service/Item">{{service.serviceName}}</td>
+                    <td data-title="Quantity">{{service.quantity}}</td>
+                    <td data-title="StdRate">{{service.price | currency:'INR':'symbol':'.2-2'}}</td>
+                    <td data-title="Discount">
+                      {{service.discountValue | currency:'INR':'symbol':'.2-2'}}
+                    </td>
+                    <td data-title="Coupon">
+                      {{service.couponValue | currency:'INR':'symbol':'.2-2'}}
+                    </td>
+                    <td data-title="Tax-SGST">{{service.GSTpercentage/2}} %</td>
+                    <td data-title="Tax-CGST">{{service.GSTpercentage/2 }} %</td>
+                    <td data-title="Net-Rate">{{service.netRate | currency:'INR':'symbol':'.2-2'}}</td>
+                  </tr>
+                  <tr *ngFor="let item of bill_data.items; let i = index">
+                      <td  data-title="Service/Item">{{item.itemName}}</td>
+                      <td  data-title="Quantity">{{item.quantity}}</td>
+                      <td  data-title="StdRate">{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
+                      <td  data-title="Discount">
+                          {{item.discountValue | currency:'INR':'symbol':'.2-2'}}
+                      </td>
+                      <td data-title="Coupon">
+                          {{item.couponValue | currency:'INR':'symbol':'.2-2'}}
+                      </td>
+                      <td  data-title="Tax-SGST">{{item.GSTpercentage/2}} %</td>
+                      <td  data-title="Tax-CGST">{{item.GSTpercentage/2 }} %</td>
+                      <td data-title="Net-Rate">{{item.netRate | currency:'INR':'symbol':'.2-2'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="table-outer bill-tbl">
+              <p class="paymentlogs">Payment Logs</p>
               <p *ngIf="pre_payment_log.length == 0">
                 No  payments found
               </p>
 
               <table class="table" *ngIf="pre_payment_log.length > 0">
                 <thead>
-                  <th>Date and Time</th>
-                  <th>Amount</th>
+                  <tr>
+                      <th>Date and Time</th>
+                      <th>Amount</th>
+                  </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let payment of pre_payment_log; let i = index">
@@ -76,30 +80,32 @@
                   </tr>
                 </tbody>
               </table>
-           </div>
+            </div>
 
-           <div class="form-group bill-total">
-            <div class="total"><span class="label">Total :</span> <span class="label-valu"> {{bill_data.netRate | currency:'INR':'symbol':'.2-2'}} </span></div>
+            <div class="form-group bill-total">
+            <div class="total btl"><span class="label">Total</span> <span class="label-valu"> {{bill_data.netRate | currency:'INR':'symbol':'.2-2'}} </span></div>
 
-            <div  class="discount"><span class="label">Discount:</span><span class="label-valu">{{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</span></div>
-            <div  class="coupon"><span class="label">Coupon:</span><span class="label-valu">{{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</span></div>
-            <div  class="prepaid"><span class="label">Pre-paid amount:</span><span class="label-valu">{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</span></div>
-            <div  class="topay"><span class="label">Amount to pay :</span><span class="label-valu">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</span></div>
-           </div>
+            <div  class="discount btl"><span class="label">Discount</span><span class="label-valu">{{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</span></div>
+            <div  class="coupon btl"><span class="label">Coupon</span><span class="label-valu">{{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</span></div>
+            <div  class="prepaid btl"><span class="label">Pre-paid amount</span><span class="label-valu">{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</span></div>
+            <div  class="topay btl"><span class="label">Amount to pay</span><span class="label-valu">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</span></div>
+            </div>
 
           </div>
+    </div>
+
    </mat-dialog-content>
    <mat-dialog-actions>
-      <button  type="button" mat-button class="cs-btn bt1"
+      <button  type="button" mat-button class="cs-btn bt1 update"
       *ngIf="bill_data.billPaymentStatus!='FullyPaid' &&
         bill_data.billStatus == 'New'" (click)="updateBill()">Update Bill</button>
-      <button  type="button" mat-button class="cs-btn bt1"
+      <button  type="button" mat-button class="cs-btn bt1 settle"
       *ngIf="bill_data.billStatus != 'Settled'" (click)="settleBill()">Settle Bill</button>
-      <button  type="button" mat-button class="cs-btn bt1"
+      <button  type="button" mat-button class="cs-btn bt1 print"
       *ngIf="bill_data.billStatus == 'Settled'" >Print Bill</button>
-      <button  type="button" mat-button class="cs-btn bt1"
+      <button  type="button" mat-button class="cs-btn bt1 email"
       *ngIf="bill_data.billStatus == 'Settled'" (click)="emailBill()">Email Bill</button>
-      <button  type="button" mat-button class="cs-btn bt1"
+      <button  type="button" mat-button class="cs-btn bt1 accept"
       *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
       && bill_data.billStatus != 'Settled'" (click)="makePayment()">Accept Payment</button>
      </mat-dialog-actions>

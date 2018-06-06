@@ -785,5 +785,12 @@ export class ProviderHomeComponent implements OnInit {
     this.doSearch();
   }
 
+  addConsumerInboxMessage(waitlist) {
+
+    const uuid = waitlist.ynwUuid || null;
+
+    this.provider_shared_functions.addConsumerInboxMessage(uuid);
+  }
+
 
 }

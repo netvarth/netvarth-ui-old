@@ -112,6 +112,7 @@ export const Messages = {
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to "[status]"',
   'PROVIDER_NOTE_ADD': 'Note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Note added successfully',
+  'PROVIDERTOCONSUMER_NOTE_ADD': 'Note added successfully',
 
   'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
 

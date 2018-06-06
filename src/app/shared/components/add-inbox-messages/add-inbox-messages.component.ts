@@ -18,12 +18,13 @@ export class AddInboxMessagesComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
-  provid = null;
-  consumer_id = null;
+
+  user_id = null;
   uuid = null;
   message = '';
   source = null;
-  type = 'send';
+
+  title = 'Send Message';
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,12 +34,11 @@ export class AddInboxMessagesComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
 
     ) {
-        this.provid = this.data.providerid || null;
-        this.consumer_id = this.data.consumerid || null;
+
+        this.user_id = this.data.user_id || null;
         this.uuid = this.data.uuid || null;
-        this.message = this.data.message;
         this.source = this.data.source || null;
-        this.type = (this.data.type === 'reply') ? 'Send Reply' : 'Send Message';
+        this.title = (this.data.type === 'reply') ? 'Send Reply' : 'Send Message';
 
      }
 
@@ -57,6 +57,7 @@ export class AddInboxMessagesComponent implements OnInit {
 
       switch (this.source) {
         case 'provider-waitlist' : this.providerToConsumerWaitlistNote(post_data); break;
+        case 'consumer-waitlist' : this.consumerToProviderWaitlistNote(post_data); break;
         case 'consumer-common' : this.consumerToProviderNoteAdd(post_data); break;
         case 'provider-common' : this.providerToConsumerNoteAdd(post_data); break;
       }
@@ -70,7 +71,7 @@ export class AddInboxMessagesComponent implements OnInit {
         post_data)
         .subscribe(
           data => {
-            this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
@@ -84,14 +85,33 @@ export class AddInboxMessagesComponent implements OnInit {
 
   }
 
-  providerToConsumerNoteAdd(post_data) {
-    if (this.consumer_id !== null) {
+  consumerToProviderWaitlistNote(post_data) {
+    if (this.uuid !== null) {
 
-      this.shared_services.addProvidertoConsumerNote(this.consumer_id,
+      this.shared_services.addConsumerWaitlistNote(this.uuid,
         post_data)
         .subscribe(
           data => {
             this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+            setTimeout(() => {
+            this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          error => {
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          }
+        );
+    }
+  }
+
+  providerToConsumerNoteAdd(post_data) {
+    if (this.user_id !== null) {
+
+      this.shared_services.addProvidertoConsumerNote(this.user_id,
+        post_data)
+        .subscribe(
+          data => {
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
@@ -105,9 +125,9 @@ export class AddInboxMessagesComponent implements OnInit {
   }
 
   consumerToProviderNoteAdd(post_data) {
-    if (this.provid) {
+    if (this.user_id) {
 
-      this.shared_services.addConsumertoProviderNote(this.provid,
+      this.shared_services.addConsumertoProviderNote(this.user_id,
         post_data)
         .subscribe(
           data => {

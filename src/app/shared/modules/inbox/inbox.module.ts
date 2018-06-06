@@ -9,8 +9,6 @@ import { InboxComponent } from './inbox.component';
 import { InboxServices } from './inbox.service';
 import { InboxRoutingModule } from './inbox-routing.module';
 
- // import { AddInboxMessagesComponent } from '../../components/add-inbox-messages/add-inbox-messages.component';
-
 @NgModule({
     imports: [
         CommonModule,
