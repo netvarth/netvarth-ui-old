@@ -117,7 +117,7 @@ export class ProviderItemsComponent implements OnInit {
             this.getitems();
           },
           error => {
-
+            this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
           }
         );
     }
@@ -154,7 +154,7 @@ export class ProviderItemsComponent implements OnInit {
           this.getitems();
         },
         error => {
-
+          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
 

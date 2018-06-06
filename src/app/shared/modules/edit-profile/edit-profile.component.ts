@@ -23,6 +23,7 @@ export class EditProfileComponent implements OnInit {
   api_success = null;
   curtype;
   maxalloweddate = '';
+  tday = new Date();
   breadcrumbs_init = [
     {
       title: 'Dashboard',
@@ -54,15 +55,15 @@ export class EditProfileComponent implements OnInit {
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     const ob = this;
     this.getProfile(this.curtype);
-    const tday = new Date();
-    const month = (tday.getMonth() + 1);
+    // const tday = new Date();
+    const month = (this.tday.getMonth() + 1);
     let dispmonth = '';
     if (month < 10) {
       dispmonth = '0' + month;
     } else {
       dispmonth = month.toString();
     }
-    this.maxalloweddate = tday.getFullYear() + '-' + dispmonth + '-' + tday.getDate();
+    this.maxalloweddate = this.tday.getFullYear() + '-' + dispmonth + '-' + this.tday.getDate();
     // console.log('max', this.maxalloweddate);
   }
 

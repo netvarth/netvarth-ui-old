@@ -760,7 +760,7 @@ export class ProviderHomeComponent implements OnInit {
   makePayment(checkin, bill_data) {
     const dialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'width-100'],
+      panelClass: ['commonpopupmainclass'],
       disableClose: true,
       data: {
         checkin: checkin,

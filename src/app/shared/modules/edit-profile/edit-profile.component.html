@@ -1,7 +1,7 @@
  <section>
    <!-- <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> 
+</section>
 <section>
     <div class="content see-pages">
         <div class="container">
@@ -46,7 +46,7 @@
                 <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
                 errorMsg="Please select the gender.">
                 </app-field-error-display>
-                </div>      
+                </div>
                 <div class="form-group">
                 <label class="col-form-label" for="last_name">Date Of Birth *</label>
                 <!-- <mat-datepicker #picker></mat-datepicker>
@@ -55,9 +55,9 @@
 
                 <div class="pickerouter">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker> 
-                <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="maxalloweddate">
-                </div> 
+                <mat-datepicker #picker></mat-datepicker>
+                <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday">
+                </div>
 
 
                 <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"

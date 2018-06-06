@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
@@ -29,7 +30,8 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices
+    public provider_services: ProviderServices,
+    public shared_functions: SharedFunctions
     ) {
 
      }
@@ -78,13 +80,13 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
       const curtime = today_curtime;
       const selstarttime = form_data.starttime;
       if (selstarttime < curtime) {
-        this.api_error = Messages.HOLIDAY_STIME;
+        this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
         return;
       }
     }
 
     if (form_data.endtime < form_data.starttime) {
-      this.api_error = Messages.HOLIDAY_ETIME;
+      this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
       return;
     }
 
@@ -127,7 +129,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
            }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.shared_functions.apiErrorAutoHide(this, error);
           }
         );
   }
@@ -142,7 +144,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.shared_functions.apiErrorAutoHide(this, error);
           }
     );
   }
