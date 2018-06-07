@@ -182,6 +182,6 @@ export class GoogleMapComponent implements OnInit {
     mapaddress_change(addressR) {
       this.obtained_address = addressR.address;
       this.obtained_pin = addressR.pin;
-      this.mapselectionDone();
+      // this.mapselectionDone();
     }
 }

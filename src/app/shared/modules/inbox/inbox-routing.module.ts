@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import { InboxComponent } from '../inbox/inbox.component';
+import { InboxOuterComponent } from './inbox-outer/inbox-outer.component';
 
 const routes: Routes = [
-    { path: '', component: InboxComponent}
+    { path: '', component: InboxOuterComponent}
 ];
 
 @NgModule({

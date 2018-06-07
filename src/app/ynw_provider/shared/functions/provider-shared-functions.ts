@@ -174,19 +174,24 @@ export class ProviderSharedFuctions {
   }
 
   addConsumerInboxMessage(uuid) {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+        width: '50%',
+        panelClass: 'commonpopupmainclass',
+        data: {
+          uuid : uuid,
+          source: 'provider-waitlist',
+          type: 'send'
+        }
+      });
 
-    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: 'commonpopupmainclass',
-      data: {
-        uuid : uuid,
-        source: 'provider-waitlist',
-        type: 'send'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+          resolve();
+        } else {
+           reject ();
+        }
+      });
     });
   }
 
