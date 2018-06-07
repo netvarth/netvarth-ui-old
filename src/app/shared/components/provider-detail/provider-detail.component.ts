@@ -380,8 +380,9 @@ export class ProviderDetailComponent implements OnInit {
     });
   }
   handle_Fav(mod) {
+    // const accountid ;
     if (mod === 'add') {
-
+      // this.shared_services.addFavProvider()
     } else if (mod === 'remove') {
 
     }

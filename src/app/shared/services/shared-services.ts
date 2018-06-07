@@ -411,4 +411,8 @@ export class SharedServices {
       const url = 'consumer/providers/' + accountid;
       return this.servicemeta.httpPost(url);
     }
+    removeProviderfromFavourite(accountid) {
+      const url = 'consumer/providers/' + accountid;
+      return this.servicemeta.httpDelete(url);
+    }
 }
