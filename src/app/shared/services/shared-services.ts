@@ -172,11 +172,11 @@ export class SharedServices {
     }
 
     addFavProvider(id) {
-      return this.servicemeta.httpPost('consumers/accounts/' + id);
+      return this.servicemeta.httpPost('consumer/accounts/' + id);
     }
 
     getFavProvider() {
-      return this.servicemeta.httpGet('consumers/accounts');
+      return this.servicemeta.httpGet('consumer/providers');
     }
 
     gets3url(src?) {
@@ -405,5 +405,10 @@ export class SharedServices {
       const stat = 'checkedIn,arrived';
       const url = 'consumer/waitlist?location-eq=' + locid + '&waitlistStatus-eq=' + stat;
       return this.servicemeta.httpGet(url);
+    }
+
+    addProvidertoFavourite(accountid) {
+      const url = 'consumer/providers/' + accountid;
+      return this.servicemeta.httpPost(url);
     }
 }

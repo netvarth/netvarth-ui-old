@@ -36,11 +36,14 @@ export class ProviderDetailComponent implements OnInit {
   retval;
   kwdet: any = [];
   provider_id;
+  provider_bussiness_id;
   settingsjson: any = [];
   businessjson: any = [];
   servicesjson: any = [];
   galleryjson: any = [];
   locationjson: any = [];
+  favprovs: any = [];
+  isInFav;
   terminologiesjson: any = [];
   futuredate_allowed = false;
   maxsize = 0;
@@ -88,6 +91,7 @@ export class ProviderDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getInboxUnreadCnt();
+    this.getFavProviders();
     this.activaterouterobj.paramMap
     .subscribe(params => {
       this.provider_id = params.get('id');
@@ -126,6 +130,7 @@ export class ProviderDetailComponent implements OnInit {
         switch (section) {
          case 'businessProfile': {
             this.businessjson = res;
+            this.provider_bussiness_id = this.businessjson.id;
             const holdbName = this.businessjson.businessDesc;
             const maxCnt = 20;
             if (holdbName.length > maxCnt ) {
@@ -338,14 +343,13 @@ export class ProviderDetailComponent implements OnInit {
   }
 
   communicateHandler() {
-
-    /*  const providforCommunicate = this.provider_id;
+      const providforCommunicate = this.provider_bussiness_id;
       // check whether logged in as consumer
       if (this.sharedFunctionobj.checkLogin()) {
           this.showCommunicate(providforCommunicate);
       } else { // show consumer login
 
-      }*/
+      }
   }
   showCommunicate(provid) {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
@@ -361,6 +365,26 @@ export class ProviderDetailComponent implements OnInit {
    dialogRef.afterClosed().subscribe(result => {
 
    });
+  }
+  getFavProviders() {
+    this.shared_services.getFavProvider()
+      .subscribe(data => {
+        this.favprovs = data;
+        if (this.favprovs.length > 0) {
+
+        } else {
+          this.isInFav = false;
+        }
+      }, error => {
+        this.sharedFunctionobj.apiErrorAutoHide(this, error);
+    });
+  }
+  handle_Fav(mod) {
+    if (mod === 'add') {
+
+    } else if (mod === 'remove') {
+
+    }
   }
 }
 
