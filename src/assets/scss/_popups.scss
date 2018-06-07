@@ -604,34 +604,391 @@
             }
             .bill-tbl {
                 padding: 0;
+                
+                .paymentlogs {
+                    margin-bottom: 5px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    color: $linkblue;
+                }
+                
+                .table {
+                    tbody {
+                        tr {
+                            td {
+                                input[type="number"] {
+                                    width: 55px;
+                                    padding: 2px 2px 2px 8px;
+                                    border: 1px solid $linkblue;
+                                }
+                                
+                                .form-group {
+                                    margin-bottom: 0;
+                                    
+                                    .mat-form-field {
+                                        width: 100px;
+
+                                        .mat-input-wrapper {
+                                            padding: 0;
+                                            margin: 0;
+
+                                            .mat-input-infix {
+                                                margin: 0;
+                                                padding: 0;
+                                                border: none;
+
+                                                .mat-form-field-label {
+                                                    display: none;
+                                                }
+
+                                                .mat-select {
+                                                    padding: 10px;
+                                                    height: 30px;
+                                                    background: $cc-formbg;
+                                                    
+                                                    .mat-select-trigger {
+                                                        top: -4px;
+                                                        font-size: .75rem;
+                                                        
+                                                        .mat-select-value {
+                                                            font-size: .75rem;
+                                                        }
+                                                        
+                                                        .mat-select-arrow {
+                                                            top: 1px;
+                                                            
+                                                            &:after {
+                                                               font-size: .5rem; 
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                }
+                                            }
+
+                                            .mat-input-underline {
+                                                display: none;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                &.delete {
+                                    button {
+                                        position: relative;
+                                        border: none;
+                                        background: transparent;
+                                        font-size: .75rem;
+                                        padding: 3px;
+                                        padding-left: 20px;
+                                        cursor: pointer;
+                                        @include transition(all 300ms);
+                                        width: 40px;
+                                        overflow: hidden;
+                                        text-indent: 25px;
+                                        
+                                        &:before {
+                                            @include font-custom;
+                                            content: "\4b";
+                                            position: absolute;
+                                            font-size: 1rem;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            left: 0;
+                                            width: 16px;
+                                            height: 16px;
+                                        }
+                                        
+                                        &:hover {
+                                            color: $cc-red;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .log-tbl {
+                padding: 15px 0 1rem;
+                border-bottom: 1px dashed $cc-ash;
+                
+                p {
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+                
+                .table {
+                    margin-bottom: 0;
+                    
+                    thead {
+                        tr {
+                            th {
+                                &:first-child {
+                                   width: 20%; 
+                                }
+                            }
+                        }
+                    }
+                }
             }
             .bill-total {
-                text-align: right;
-
-                .total, .discount, .coupon, .prepaid {
-                    margin-bottom: 5px;
+                display: flex;
+                margin-bottom: 0;
+                
+                @include respond-to(ynw-767) {
+                    flex-direction: column;
+                }
+                
+                .total, .discount, .coupon, .topay {
                     color: $cc-gray;
                     font-size: .75rem;
-
+                    padding: 10px;
+                    
+                    .col-form-label {
+                        margin-bottom: 5px;
+                        padding: 0;
+                        font-size: .875rem;
+                        font-weight: 500;
+                    }
+                    
+                    .label {
+                        font-size: .875rem;
+                        display: block;
+                    }
                     .label-valu {
                         font-weight: 600;
+                        text-align: left;
+                    }
+                }
+                .discount, .coupon {
+                    width: 200px;
+                    
+                    .mat-form-field {
+
+                        .mat-input-wrapper {
+                            padding: 0;
+                            margin: 0;
+
+                            .mat-input-infix {
+                                margin: 0;
+                                padding: 0;
+                                border: none;
+
+                                .mat-form-field-label {
+                                    display: none;
+                                }
+
+                                .mat-select {
+                                    padding: 10px;
+                                    height: 30px;
+                                    background: $cc-formbg;
+
+                                    .mat-select-trigger {
+                                        top: -4px;
+                                        font-size: .75rem;
+
+                                        .mat-select-value {
+                                            font-size: .75rem;
+                                        }
+
+                                        .mat-select-arrow {
+                                            top: 1px;
+
+                                            &:after {
+                                               font-size: .5rem; 
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            .mat-input-underline {
+                                display: none;
+                            }
+                        }
+                    }
+                    
+                    &.form-group {
+                        margin-bottom: 0;
                     }
                 }
                 .total {
                     color: $linkblack;
                     font-size: .875rem;
-                }
-                .topay {
-                    margin-top: 15px;
-                    font-size: 1rem;
-
+                    padding: 0;
+                    width: 100%;
+                    text-align: right;
+                    
+                    .label {
+                        display: inline-block;
+                    }
                     .label-valu {
-                        color: $green;
-                        font-weight: 600;
                         margin-left: 5px;
                     }
                 }
+                .topay {
+                    margin-bottom: 0;
+                    flex-grow: 1;
+                    text-align: right;
+                    
+                    .label {
+                        font-weight: 600;
+                    }
+                    .label-valu {
+                        color: $green;
+                        font-weight: 600;
+                        font-size: 1.25rem;
+                    }
+                }
+                
+                .pay-tbl {
+                    padding: 0;
+                    width: 100%;
+                    
+                    .table {
+                        margin-bottom: 0;
+                        border: none;
+                        width: 300px;
+                        margin-left: auto;
+                        
+                        tbody {
+                            tr {
+                                @include respond-to(ynw-767) {
+                                    padding: 0;
+                                    display: flex;
+                                }
+                                th, td {
+                                    @include respond-to(ynw-767) {
+                                        display: inline-block;
+                                        min-height: auto;
+                                        
+                                        &:before {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                                th {
+                                    border: none;
+                                    text-align: right;
+                                    font-size: .875rem;
+                                    padding: 8px;
+                                    font-weight: 600;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        width: 60%;
+                                    }
+                                }
+                                td {
+                                    text-align: left;
+                                    border: none;
+                                    font-weight: 600;
+                                    padding: 8px;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        width: 40%;
+                                    }
+                                }
+                                
+                                &:nth-of-type(odd) {
+                                    background: $white;
+                                }
+                                
+                                &.discount, &.coupon, &.prepaid {
+                                    @include respond-to(ynw-767) {
+                                        text-align: right;
+                                        width: 100%;
+                                    }
+                                    th, td {
+                                        font-size: .75rem;
+                                        color: $cc-gray;
+                                    }
+                                }
+                                &.topay {
+                                    th, td {
+                                        font-size: 1rem;
+                                        font-weight: 600;
+                                        color: $linkblack;
+                                    }
+                                    td {
+                                        color: $green;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
+        }
+        
+        //Accept Payment
+        .full-outer {
+            .btl {
+                border-bottom: 1px dashed $cc-ash;
+                padding-bottom: 15px;
+                margin-bottom: 1rem;
+                
+                .label, .label-valu {
+                    display: block;
+                    color: $cc-mediumgray;
+                    margin-bottom: 0;
+                }
+                .label {margin-bottom: 5px;}
+                .label-valu {
+                    font-weight: 600;
+                    color: $linkblack;
+                }
+            }
+            
+            .topay {
+                margin-bottom: 1rem;
+                border-bottom: 1px dashed $cc-ash;
+                padding-bottom: 15px;
+                
+                .label {
+                    display: block;
+                    color: $cc-mediumgray;
+                }
+                .label-valu {
+                    font-weight: 600;
+                }
+            }
+            
+            .form-group {
+                .col-form-label {
+                    padding: 0;
+                    margin-bottom: 5px;
+                }
+                .form-control {
+                    width: 150px;
+                }
+            }
+            .payment-options {
+                .label {
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 5px;
+                }
+                
+                .mat-radio-group {
+                    .mat-radio-button {
+                        margin-left: 0;
+                        margin-right: 20px;
+                        
+                        @include respond-to(ynw-400) {
+                            margin-bottom: 10px;
+                        }
+                        
+                        .mat-radio-label {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+            
         }
         
     }

@@ -118,6 +118,16 @@
     &:hover {
         background: darken($cc-ash, 10%);
     }
+    
+    &.cancel {
+        padding: 5px 15px !important;
+        margin-left: 0px !important;
+        margin-right: 10px !important;
+        height: auto;
+        @include transition(all 300ms);
+        
+        @include respond-to(ynw-575) {margin-bottom: 5px;}
+    }
 }
 
 .bt3 {
@@ -412,12 +422,14 @@
             color: $white !important;
         }
     }
-    &.update, &.settle, &.accept, &.makepayment, &.print, &.email {
+    &.update, &.settle, &.accept, &.makepayment, &.print, &.email, &.save {
         padding: 5px 15px !important;
         margin-left: 0px !important;
         margin-right: 10px !important;
         height: auto;
         @include transition(all 300ms);
+        
+        @include respond-to(ynw-575) {margin-bottom: 5px;}
     }
     &.update, &.print {
         background: $cc-warning !important;

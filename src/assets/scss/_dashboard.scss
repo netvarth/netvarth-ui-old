@@ -117,17 +117,19 @@ header {
 
                         .noti-no {
                             position: absolute;
-                            width: 20px;
-                            height: 20px;
+                            width: auto;
+                            height: auto;
                             @include border-radius(10px);
                             background-color: $green;
                             color: $white;
                             text-align: center;
                             @include font-bold;
-                            font-size: .75rem;
-                            top: 0;
-                            right:0;
+                            font-size: .65rem;
+                            top: -2px;
+                            right:-2px;
                             vertical-align: middle;
+                            padding: 1px 5px;
+                            border: 2px solid $white;
                         }
 
                         i {
@@ -256,10 +258,7 @@ footer {
         position: fixed;
         bottom: 0;
         z-index: 950;
-
-        .sect1, .sect2 {
-            display: none;
-        }
+        
         .sect3 {
             background: $footer-darkgray;
             display: block;
@@ -3700,19 +3699,17 @@ footer {
                         }
 
                         .count {
-                            @include border-radius(24px);
-                            width: 20px;
-                            height: 20px;
-                            background: $cc-mediumgray;
-                            padding: 3px;
+                            width: auto;
+                            height: auto;
+                            @include border-radius(10px);
+                            background-color: $cc-mediumgray;
                             color: $white;
-                            font-size: .75rem;
-                            font-weight: 700;
-                            display: flex;
-                            margin-left: 10px;
-                            align-items: center;
-                            justify-content: center;
-                            @include transition(all 300ms);
+                            text-align: center;
+                            @include font-bold;
+                            font-size: .65rem;
+                            vertical-align: middle;
+                            padding: 1px 5px;
+                            margin-left: 5px;
                         }
 
                         &.active {
@@ -3720,18 +3717,17 @@ footer {
                             font-weight: 600;
 
                             .count {
-                                @include border-radius(24px);
-                                width: 20px;
-                                height: 20px;
-                                background: $linkblue;
-                                padding: 3px;
+                                width: auto;
+                                height: auto;
+                                @include border-radius(10px);
+                                background-color: $linkblue;
                                 color: $white;
-                                font-size: .75rem;
-                                font-weight: 700;
-                                display: flex;
-                                margin-left: 10px;
-                                align-items: center;
-                                justify-content: center;
+                                text-align: center;
+                                @include font-bold;
+                                font-size: .65rem;
+                                vertical-align: middle;
+                                padding: 1px 5px;
+                                margin-left: 5px;
                             }
                         }
                         &:last-child {
@@ -3758,6 +3754,10 @@ footer {
                     margin: 0;
                     padding: 0;
                     display: flex;
+                    
+                    @include respond-to(ynw-767) {
+                        justify-content: space-around;
+                    }
                     
                     li {
                         list-style: none;
@@ -4148,6 +4148,10 @@ footer {
                                         display: flex;
                                         flex-wrap: wrap;
                                         
+                                        @include respond-to(ynw-767) {
+                                            padding-left: 45%;
+                                        }
+                                        
                                         span {
                                             @include border-radius(30px);
                                             height: auto;
@@ -4192,10 +4196,10 @@ footer {
                                                 background: $done;
                                                 color: darken($done, 40%);
                                             }
-                                            
-                                            &:hover {
-                                                
-                                            }
+                                        }
+                                        
+                                        &:before {
+                                            position: absolute;
                                         }
                                     }
                                     &.payment {
@@ -5743,10 +5747,10 @@ footer {
                                 flex-grow: 0;
                             }
                             &.th4, &.td4 {
-                                width: 40%;
+                                width: 50%;
                                 flex-grow: 0;
                             }
-                            &.th5, &.td5 {
+                            /*&.th5, &.td5 {
                                 width: 10%;
                                 flex-grow: 0;
                                 text-align: center;
@@ -5760,7 +5764,7 @@ footer {
                                         color: $cc-red;
                                     }
                                 }
-                            }
+                            }*/
                         }
                         
                         .td {
@@ -5800,10 +5804,6 @@ footer {
                         .action {
                             padding-bottom: 10px;
                             
-                            @include respond-to(ynw-767) {
-                                border-bottom: 1px solid $cc-body;
-                            }
-                            
                             
                             [class^="icon-"], [class*=" icon-"] {
                                 display: inline-block;
@@ -5836,9 +5836,9 @@ footer {
                     .details {
                         padding-top: 0;
                         line-height: 1.8;
-                        background: $cc-body;
                         display: none;
                         margin-bottom: 50px;
+                        height: 0;
                         @include transition(all 300ms);
                         
                         @include respond-to(ynw-767) {
@@ -5857,6 +5857,7 @@ footer {
                         &.show {
                             display: block;
                             margin-bottom: 0;
+                            height: auto;
                         }
                     }
                     
@@ -5866,7 +5867,7 @@ footer {
                         font-weight: 500;
                         
                         @include respond-to(ynw-767) {
-                            display: block;
+                            border-top: 1px solid $cc-body;
                         }
                         
                         .icon-delete {
@@ -5909,13 +5910,21 @@ footer {
                                 cursor: pointer;
                             }
                         }
+                        
+                        &.active {
+                            .outer {
+                                .td {
+                                    color: $linkblue;
+                                }
+                            }
+                        }
                         &.new{
                             border-bottom: 2px solid $cc-body;
-                            background: #f0ffcc;
+                            background: lighten($acceptbill, 10%);
                             
                             .outer {
                                 .td {
-                                    font-weight: 600;
+                                    font-weight: 500;
                                     color: $linkblack;
                                 }
                             }
@@ -5937,8 +5946,7 @@ footer {
                         &:hover {
                             .outer {
                                 .td {
-                                    color: $white;
-                                    background: $linkblue;
+                                    color: $linkblue;
                                 }
                             }
                         }

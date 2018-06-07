@@ -415,4 +415,38 @@ export class SharedServices {
       const url = 'consumer/providers/' + accountid;
       return this.servicemeta.httpDelete(url);
     }
+    getWaitlistHistory(accountid, filter) {
+      const starturl = 'consumer/waitlist/history?account-eq=' + accountid;
+      let returl = this.generateFilter(starturl, filter);
+      if (filter['from']) {
+        returl = returl + '&from=' + filter['from'];
+      }
+      if (filter['perpage']) {
+        returl = returl + '&count=' + filter['perpage'];
+      }
+      return this.servicemeta.httpGet(returl);
+    }
+    getWaitlistHistoryCnt(accountid, filter) {
+      const starturl = 'consumer/waitlist/history/count?account-eq=' + accountid;
+      const returl = this.generateFilter(starturl, filter);
+      return this.servicemeta.httpGet(returl);
+    }
+    generateFilter(url, filter) {
+      if (filter['location']) {
+        url = url + '&location-eq=' + filter['location'];
+      }
+      if (filter['queue']) {
+        url = url + '&queue-eq=' + filter['queue'];
+      }
+      if (filter['service']) {
+        url = url + '&service-eq=' + filter['service'];
+      }
+      if (filter['waitliststatus']) {
+        url = url + '&waitlistStatus-eq=' + filter['waitliststatus'];
+      }
+      if (filter['date']) {
+        url = url + '&date-eq=' + filter['date'];
+      }
+      return url;
+    }
 }

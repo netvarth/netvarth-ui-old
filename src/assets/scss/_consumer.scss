@@ -64,7 +64,15 @@ header {
                     .topsignouter {
                         display: flex;
                         align-items: center;
+                        justify-content: flex-end;
                         
+                        .sgn {
+                            padding-right: 5px;
+                        }
+                        
+                        .jn {
+                            padding-left: 5px;
+                        }
                         .bnps {
                             display: flex;
                             color: $cc-gray;
@@ -80,33 +88,39 @@ header {
                                 cursor: pointer;
 
                                 .ot-bx {
-                                    width: 40px;
-                                    height: 40px;
+                                    width: 35px;
+                                    height: 35px;
                                     @include border-radius(50px);
                                     display: flex;                    
                                     justify-content: center;
                                     align-items: center;
                                     position: relative;
+                                    background: $cc-body;
 
                                     .noti-no {
                                         position: absolute;
-                                        width: 20px;
-                                        height: 20px;
+                                        width: auto;
+                                        height: auto;
                                         @include border-radius(10px);
                                         background-color: $green;
                                         color: $white;
                                         text-align: center;
                                         @include font-bold;
-                                        font-size: .75rem;
-                                        top: 0px;
-                                        right:0px;
+                                        font-size: .65rem;
+                                        top: -5px;
+                                        right:-5px;
                                         vertical-align: middle;
+                                        padding: 1px 5px;
+                                        border: 2px solid $white;
                                     }
 
                                     i {
                                         font-size: 1.25rem;
-                                        vertical-align: middle;
-                                        margin-top: 9px;
+                                        display: flex;
+                                        align-items: center;
+                                        width: 21px;
+                                        height: 17px;
+                                        
                                     }
                                 }
                             }
@@ -460,12 +474,10 @@ header {
                             @include respond-to(ynw-767) {
                                 height: $input-h;
                                 width: 100%;
-                                margin-bottom: 10px;
                             }
                             @include respond-to(ynw-768-991) {
                                 height: $input-h;
                                 width: 100%;
-                                margin-bottom: 10px;
                             }
 
                             .icon-search {
@@ -505,9 +517,11 @@ header {
 
                         @include respond-to(ynw-767) {
                             width: 100%;
+                            margin-top: 10px;
                         }
                         @include respond-to(ynw-768-991) {
                             width: 100%;
+                            margin-top: 10px;
                         }
 
                         .icon-filter {
@@ -531,8 +545,8 @@ header {
                             &:before {
                                 position: absolute;
                                 left: 8px;
-                                top: -10px;
-                                font-size: 1.675rem;
+                                top: -8px;
+                                font-size: 1.25rem;
 
                                 @include respond-to(ynw-768-991) {
                                     left: 0;
@@ -547,12 +561,18 @@ header {
             /* More Options Dropdown */
             .more-opt {
                 top: 50px;
+                
+                @include respond-to(ynw-767) {
+                    top: 217px;
+                }
+                @include respond-to(ynw-768-991) {
+                    top: 217px;
+                }
             }
         }
 
     }
 }
-
 
 .content {
     background: $cc-body;
@@ -2151,27 +2171,6 @@ header {
     
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

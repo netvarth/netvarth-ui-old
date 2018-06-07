@@ -35,7 +35,7 @@
                                             </div>
                                             <div class="td td4">
                                                 <div class="label">Message</div>
-                                                <div class="result">{{ (message.msg.length>20)? (message.msg | slice:0:20)+'..':(message.msg) }}
+                                                <div class="result">{{ (message.msg.length>120)? (message.msg | slice:0:120)+'..':(message.msg) }}
                                                 </div>
                                             </div>
                                         </div>

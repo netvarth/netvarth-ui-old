@@ -3,8 +3,6 @@
 <section class="content">
   <div class="container">
       <div class="row">
-
-          
           <div class="c-outer">           
               <div class="c-body">
                   <div class="bk-ctrl">
@@ -80,8 +78,8 @@
                           </div>
                           <div class="tp-r">
                               <div class="ynw-verified"></div>
-                              <ul class="side-menu">
-                                  <li><span class="icon-history">History</span></li>
+                              <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists">
+                                  <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
                                   <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">Add to Favourites</span></li>
                                   <li><span class ="icon-favourite-filled" *ngIf="isInFav" (click)="handle_Fav('remove')">Remove from Favourites</span></li>
                                   <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li>
@@ -98,7 +96,7 @@
                           <div class="tp-l">
                               <div class="tp2">
                                   <h3>{{loc.place}}</h3>
-                                  <span class="directions">Get Directions</span>
+                                  <a class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">Get Directions</a>
                                   <div class="clr">
                                       <div class="schedule" *ngIf="loc.display_schedule.length > 0">
                                           <span class="sub-title">Working Hours</span>
@@ -148,9 +146,9 @@
                           </div>
                           <div class="bt-r">
                               <span class="cs-btn bt10 blk" *ngIf="loc.checkins.length>0">Would you like to <span>Cancel Check-ins?</span></span>
-                              <span class="cs-btn chk-btn">Check-In</span>
-                              <!-- <span class="cs-btn chk-btn cancel">Cancel</span> -->
-                              <span class="cs-btn bt10">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
+                              <span class="cs-btn chk-btn" (click)="checkinClicked(loc.id, loc.place, false)" *ngIf="showcheckInButton()">Check-In</span>
+                              <!-- <span class="cs-btn chk-btn cancel" *ngIf="!showcheckInButton()">Check-In</span> -->
+                              <span class="cs-btn bt10" *ngIf="showcheckInButton()" (click)="checkinClicked(loc.id, loc.place, true)">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
                           </div>    
                       </div>
                   </div>
@@ -162,3 +160,4 @@
       </div>
   </div>
 </section>
+<app-footer></app-footer>

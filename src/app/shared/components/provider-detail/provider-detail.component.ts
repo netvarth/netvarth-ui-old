@@ -24,6 +24,7 @@ import {
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
+import { CheckInComponent } from '../../modules/check-in/check-in.component';
 
 @Component({
   selector: 'app-provider-detail',
@@ -43,6 +44,11 @@ export class ProviderDetailComponent implements OnInit {
   galleryjson: any = [];
   locationjson: any = [];
   favprovs: any = [];
+  settings_exists = false;
+  business_exists = false;
+  service_exists = false;
+  gallery_exists = false;
+  location_exists = false;
   isInFav;
   terminologiesjson: any = [];
   futuredate_allowed = false;
@@ -61,6 +67,7 @@ export class ProviderDetailComponent implements OnInit {
   serMaxcnt = 3;
   inboxCntFetched = false;
   inboxUnreadCnt;
+  changedate_req = false;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -129,6 +136,7 @@ export class ProviderDetailComponent implements OnInit {
         switch (section) {
          case 'businessProfile': {
             this.businessjson = res;
+            this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             this.getFavProviders();
             const holdbName = this.businessjson.businessDesc;
@@ -160,10 +168,12 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'services': {
             this.servicesjson = res;
+            this.service_exists = true;
           break;
           }
           case 'gallery': {
             this.galleryjson = res;
+            this.gallery_exists = true;
             this.image_list_popup = [];
             if (this.galleryjson.length > 0) {
               for (let i = 0; i < this.galleryjson.length; i++) {
@@ -179,6 +189,7 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'settings': {
             this.settingsjson = res;
+            this.settings_exists = true;
             this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
             this.maxsize = this.settingsjson.maxPartySize;
             if (this.maxsize === undefined) {
@@ -189,6 +200,7 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'location': {
             this.locationjson = res;
+            this.location_exists = true;
             let schedule_arr: any = [];
             for (let i = 0; i < this.locationjson.length; i++) {
                   if (this.locationjson[i].bSchedule) {
@@ -328,6 +340,9 @@ export class ProviderDetailComponent implements OnInit {
       case 'inbox':
         this.routerobj.navigate(['consumer', 'inbox']);
       break;
+      case 'history':
+        this.routerobj.navigate(['searchdetail', this.provider_id, 'history']);
+      break;
     }
   }
   getInboxUnreadCnt() {
@@ -403,6 +418,58 @@ export class ProviderDetailComponent implements OnInit {
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         });
+    }
+  }
+  checkinClicked(locid, locname, chdatereq) {
+    this.changedate_req = chdatereq;
+    this.showCheckin(locid, locname, 'consumer');
+  }
+  showCheckin(locid, locname, origin?) {
+    const  cdate = new Date();
+    const  mn = cdate.getMonth() + 1;
+    const  dy = cdate.getDate();
+    let mon = '';
+    let day = '';
+    if (mn < 10) {
+      mon = '0' + mn;
+    } else {
+      mon = '' + mn;
+    }
+    if (dy < 10) {
+      day = '0' + dy;
+    } else {
+      day = '' + dy;
+    }
+    const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
+    const dialogRef = this.dialog.open(CheckInComponent, {
+       width: '50%',
+       panelClass: 'consumerpopupmainclass',
+      data: {
+        type : origin,
+        is_provider : false,
+        moreparams: { source: 'provdet_checkin',
+                      bypassDefaultredirection: 1,
+                      provider: {
+                                  unique_id: this.provider_id,
+                                  account_id: this.provider_bussiness_id,
+                                  name: this.businessjson.businessName},
+                      location: {
+                                  id: locid,
+                                  name: locname
+                                },
+                      sel_date: curdate
+                    },
+        datechangereq: this.changedate_req
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+  showcheckInButton() {
+    if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.service_exists && this.gallery_exists && this.location_exists) {
+      return true;
     }
   }
 }
