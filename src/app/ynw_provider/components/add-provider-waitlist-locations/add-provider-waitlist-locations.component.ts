@@ -77,7 +77,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     if (this.data.type === 'add') {
       this.amForm = this.fb.group({
         locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_BLANK_FALSE)])],
-        locaddress: [''],
+        locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
         loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
         loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
         locmapurl: [''],
@@ -94,7 +94,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       } else {
         this.amForm = this.fb.group({
           locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_BLANK_FALSE)])],
-          locaddress: [''],
+          locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
           loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
           loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
           locmapurl: [''],

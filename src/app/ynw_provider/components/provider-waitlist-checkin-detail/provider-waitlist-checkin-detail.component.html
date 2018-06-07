@@ -44,30 +44,9 @@
                                   Communication History
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
-                              <div  class="chistory" *ngFor="let message of communication_history">
-                                  <div class="outer">
-                                      <div class="td td1">
-                                          <div class="label">Date</div>
-                                          <div class="result">{{message.timeStamp | date: dateFormat}}</div>
-                                      </div>
-                                      <div class="td td2">
-                                          <div class="label">Service</div>
-                                          <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
-                                      </div>
-                                      <div class="td td3">
-                                          <div class="label">Name</div>
-                                          <div class="result">{{message.owner.userName}}</div>
-                                      </div>
-                                      <div class="td td4">
-                                          <div class="label">Message</div>
-                                          <div class="result">{{ (message.msg.length>20)? (message.msg | slice:0:20)+'..':(message.msg) }}
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div *ngIf="communication_history.length == 0">
-                                <p>No notes found</p>
-                              </div>
+                              <app-inbox-list [messages]="communication_history" [replybutton]="false"
+                               (reloadApi)= "getCommunicationHistory()"></app-inbox-list>
+
                             </mat-expansion-panel>
                           </mat-accordion>
 

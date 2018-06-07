@@ -6,7 +6,8 @@
 <mat-dialog-content>
   <div class="full-outer">
       <div class="btl"><span class="label">Customer Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName}}</span></div>
-      <div class="topay" *ngIf="!pay_data.acceptPaymentBy || pay_data.acceptPaymentBy == 'self_pay'"><span class="label">Amount to pay:</span>
+      <div class="topay" *ngIf="!pay_data.acceptPaymentBy || pay_data.acceptPaymentBy == 'self_pay'">
+        <span class="label">Amount to pay</span>
         <span class="label-valu">
             {{bill_data.netTotal | currency:'INR':'symbol':'.2-2'}}
         </span>

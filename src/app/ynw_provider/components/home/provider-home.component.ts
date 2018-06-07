@@ -789,7 +789,12 @@ export class ProviderHomeComponent implements OnInit {
 
     const uuid = waitlist.ynwUuid || null;
 
-    this.provider_shared_functions.addConsumerInboxMessage(uuid);
+    this.provider_shared_functions.addConsumerInboxMessage(uuid)
+    .then(
+      result => {
+
+      }
+    );
   }
 
 

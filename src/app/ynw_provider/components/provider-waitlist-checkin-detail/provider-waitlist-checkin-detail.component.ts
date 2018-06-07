@@ -133,12 +133,26 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
                 this.communication_history.push(his);
               }
             }
+            this.sortMessages();
 
           },
           error => {
            //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
           }
       );
+    }
+
+    sortMessages() {
+      this.communication_history.sort( function(message1, message2) {
+        if ( message1.timeStamp < message2.timeStamp ) {
+          return 11;
+        } else if ( message1.timeStamp > message2.timeStamp ) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+
     }
 
     goBack() {
@@ -180,7 +194,12 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
 
       const uuid = this.waitlist_data.ynwUuid || null;
 
-      this.provider_shared_functions.addConsumerInboxMessage(uuid);
+      this.provider_shared_functions.addConsumerInboxMessage(uuid)
+      .then(
+        result => {
+          this.getCommunicationHistory(uuid);
+        }
+      );
     }
 
 }

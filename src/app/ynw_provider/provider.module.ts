@@ -100,7 +100,7 @@ import { projectConstants } from '../shared/constants/project-constants';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
 // import { ChangePasswordModule } from '../shared/modules/change-password/change-password.module';
 // import { ChangeMobileModule } from '../shared/modules/change-mobile/change-mobile.module';
-
+import { InboxModule } from '../shared/modules/inbox/inbox.module';
 
 import 'hammerjs';
 import 'mousetrap';
@@ -114,7 +114,8 @@ import 'mousetrap';
         AngularMultiSelectModule,
         BreadCrumbModule,
         HeaderModule,
-        PagerModule
+        PagerModule,
+        InboxModule
     ],
     declarations: [
         ProviderComponent,

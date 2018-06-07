@@ -19,7 +19,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             'required' : 'Please enter the location name',
             'pattern' : 'Please enter the location name'
             })">
-        </app-field-error-display> 
+        </app-field-error-display>
         </div>
         <div class="form-group">
             <mat-form-field class="example-full-width">
@@ -32,7 +32,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             'required' : 'Please enter the latitude',
             'pattern' : 'Please enter a valid lattitude'
             })">
-            </app-field-error-display> 
+            </app-field-error-display>
         </div>
         <div class="form-group">
             <mat-form-field class="example-full-width">
@@ -45,18 +45,22 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             'required' : 'Please enter the longitude',
             'pattern' : 'Please enter a valid longitude'
             })">
-            </app-field-error-display> 
+            </app-field-error-display>
             <!-- <button (click)="showGooglemap()" type="button" mat-button>Show Map</button> -->
         </div>
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <label class="col-form-label">Address</label>
+                <label class="col-form-label">Address *</label>
                 <!-- <input matInput type="text" placeholder="Address" formControlName="locaddress"> -->
                 <textarea matInput formControlName="locaddress" row="4"></textarea>
         </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')"
-            errorMsg="Please enter the address">
-            </app-field-error-display> 
+            [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
+            {
+            'required' : 'Please enter address',
+            'maxlength' : 'Please enter less than 200 characters'
+            })">
+            </app-field-error-display>
             <!-- <button mat-button (click)="getCoordinatesFromAddress()" type="button" [disabled]="checkAddressExists()">Get Map Coordinates</button> -->
         </div>
         <div class="form-group">
@@ -66,7 +70,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locpincode')"
             errorMsg="Please enter the pincode">
-            </app-field-error-display> 
+            </app-field-error-display>
         </div>
         <div class="form-group">
             <mat-form-field class="example-full-width">
@@ -75,14 +79,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </mat-form-field>
         </div>
         <!-- <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">  -->
-        <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'"> 
+        <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">
             <label class="col-form-label">Business Schedules</label>
         </div>
         <!-- <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule> -->
-        <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>    
+        <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>
     </ng-container>
     <ng-container *ngIf="forbadge">
-        
+
         <div class="form-group">
         <mat-checkbox formControlName="loct24hour">24 hours</mat-checkbox>
         </div>
@@ -102,13 +106,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             </mat-select>
         </mat-form-field>
         </div>
-    </ng-container>    
+    </ng-container>
 
 </mat-dialog-content>
 <mat-dialog-actions>
  <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
  <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-</mat-dialog-actions>  
+</mat-dialog-actions>
 <app-field-error-display [displayError]="true" *ngIf="api_error"
 errorMsg="{{api_error}}"></app-field-error-display>
 

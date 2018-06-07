@@ -17,7 +17,7 @@
                         <li><span data-icon="k"></span></li>
                         <li><span data-icon="d"></span></li>
                     </ul>
-                    
+
                     <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">Let's Get Started <i class="icon icon-angle-right"></i>
                     </span>
                     <ul class="status-pnt">
@@ -36,17 +36,17 @@
                     <div class="header">
                         <h1>Profile Name and Summary</h1>
                     </div>
-                    <div class="content">                 
+                    <div class="content">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Bussiness Name</label>
                             <span class="expl">Your customers will view this in public profile</span>
                             <input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="">
                         </div>
                         <div class="form-group">
                             <label>Profile Summary</label>
                             <span class="expl">Your customers will view this in public profile</span>
-                            <textarea class="form-control" id="" rows="3" [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
-                        </div>                    
+                            <textarea class="form-control" id="" rows="3" maxlength="400" [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
+                        </div>
                     </div>
                     <div class="footer">
                         <div class="row">
@@ -74,14 +74,14 @@
                         <div class="header">
                             <h1>Location</h1>
                         </div>
-                        <div class="content">                          
+                        <div class="content">
                             <div class="stik">
                                 <ul class="info-lst">
                                     <li>You can add more locations in the settings.</li>
                                     <li>How to get GPS coordinates click <a href="#">Learn More</a></li>
                                 </ul>
                             </div>
-                            
+
                             <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                                 <div class="form-group">
                                     <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i data-icon="j"></i>Choose your location in the MAP</button>
@@ -115,7 +115,7 @@
                                     <span class="expl">This can be used to find the exact location</span>
                                     <input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder="">
                                 </div>
-                            </div>                                 
+                            </div>
                         </div>
                         <div class="footer">
                             <div class="row">
@@ -136,14 +136,14 @@
                         </div>
                     </form>
                 </div>
-            
+
              <!-- Step 3 -->
              <div *ngIf="active_step==3" class="is-bx step3 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
                     <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                     <div class="header">
                         <h1>Working Hours</h1>
                     </div>
-                    <div class="content">                        
+                    <div class="content">
                         <div class="flds">
                             <div class="form-group" *ngIf="ischange_schedule_clicked == false">
                                 <label class="title16">Working Hours</label>
@@ -156,7 +156,7 @@
                                 <span class="cs-btn bt3" (click)="changeSchedule_clicked()">{{(display_schedule.length>0) ? 'Change Schedule': 'Add Schedule'}}</span>
                             </div>
                             <app-provider-schedule *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)"></app-provider-schedule>
-                        </div>                                 
+                        </div>
                     </div>
                     <div class="footer">
                         <div class="row">
@@ -184,13 +184,13 @@
                     <div class="header">
                         <h1>Public Search</h1>
                     </div>
-                    <div class="content">                          
+                    <div class="content">
                         <div class="stik">
                             <ul class="info-lst">
                                 <li>You can always go to Public Search under settings and Turn it On or Off</li>
                             </ul>
                         </div>
-                        
+
                         <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                             <div class="form-group">
                                 <label class="mb20">Do you want to make your Profile public searchable and viewable?</label>
@@ -211,7 +211,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>                                 
+                        </div>
                     </div>
                     <div class="footer">
                         <div class="row">
@@ -232,7 +232,7 @@
                     </div>
                 </form>
             </div>
-        
+
             <!-- Step 5 -->
             <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
                 <form action="">
@@ -240,13 +240,13 @@
                     <div class="header">
                         <h1>Public Search</h1>
                     </div>
-                    <div class="content">                        
+                    <div class="content">
                         <div class="flds col-12">
                             <div class="wbox">
                                 <div class="bx-ico"><i data-icon="m"></i></div>
                                 <div class="bx-copy">Some of the information is missing, we recommend to visit <span (click)="redirecttoProfile()">Settings</span> page and complete your profile, then you can turn on <strong>Public Search!</strong></div>
                             </div>
-                        </div>                                 
+                        </div>
                     </div>
                     <div class="footer">
                         <div class="row">

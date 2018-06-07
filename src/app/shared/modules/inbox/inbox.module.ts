@@ -5,9 +5,10 @@ import { MaterialModule } from '../common/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { BreadCrumbModule } from '../breadcrumb/breadcrumb.module';
-import { InboxComponent } from './inbox.component';
+import { InboxListComponent } from './inbox-list/inbox-list.component';
 import { InboxServices } from './inbox.service';
 import { InboxRoutingModule } from './inbox-routing.module';
+import { InboxOuterComponent } from './inbox-outer/inbox-outer.component';
 
 @NgModule({
     imports: [
@@ -21,12 +22,13 @@ import { InboxRoutingModule } from './inbox-routing.module';
         InboxRoutingModule
     ],
     entryComponents: [
-        InboxComponent
+      InboxListComponent
     ],
     declarations: [
-        InboxComponent
+      InboxListComponent,
+      InboxOuterComponent
     ],
-    exports: [InboxComponent],
+    exports: [InboxListComponent],
     providers: [
         InboxServices
     ]
