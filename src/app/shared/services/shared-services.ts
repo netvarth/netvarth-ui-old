@@ -171,9 +171,9 @@ export class SharedServices {
       return this.servicemeta.httpPut(path, body);
     }
 
-    addFavProvider(id) {
-      return this.servicemeta.httpPost('consumer/accounts/' + id);
-    }
+    // addFavProvider(id) {
+    //   return this.servicemeta.httpPost('consumer/accounts/' + id);
+    // }
 
     getFavProvider() {
       return this.servicemeta.httpGet('consumer/providers');

@@ -380,9 +380,15 @@ export class ProviderDetailComponent implements OnInit {
     });
   }
   handle_Fav(mod) {
-    // const accountid ;
+    const accountid = this.provider_bussiness_id;
     if (mod === 'add') {
-      // this.shared_services.addFavProvider()
+      this.shared_services.addProvidertoFavourite(accountid)
+        .subscribe (data => {
+          this.isInFav = true;
+        },
+      error => {
+        this.sharedFunctionobj.apiErrorAutoHide(this, error);
+      });
     } else if (mod === 'remove') {
 
     }
