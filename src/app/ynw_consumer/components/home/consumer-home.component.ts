@@ -153,52 +153,52 @@ export class ConsumerHomeComponent implements OnInit {
     );
   }
 
-  doDeleteFavProvider(fav) {
+  // doDeleteFavProvider(fav) {
 
-    if (!fav.id) {
-      return false;
-    }
+  //   if (!fav.id) {
+  //     return false;
+  //   }
 
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      data: {
-        'message' : 'Do you want to remove ' + fav.businessName + '?'
-      }
-    });
+  //   const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+  //     width: '50%',
+  //     data: {
+  //       'message' : 'Do you want to remove ' + fav.businessName + '?'
+  //     }
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
+  //   dialogRef.afterClosed().subscribe(result => {
 
-      if (result) {
-        this.deleteFavProvider(fav.id);
-      }
+  //     if (result) {
+  //       this.deleteFavProvider(fav.id);
+  //     }
 
-    });
-  }
+  //   });
+  // }
 
-  deleteFavProvider(id) {
-    this.consumer_services.deleteFavProvider(id)
-    .subscribe(
-    data => {
-        console.log(data);
-        this.getFavouriteProvider();
-    },
-    error => {
+  // deleteFavProvider(id) {
+  //   this.consumer_services.deleteFavProvider(id)
+  //   .subscribe(
+  //   data => {
+  //       console.log(data);
+  //       this.getFavouriteProvider();
+  //   },
+  //   error => {
 
-    }
-    );
-  }
+  //   }
+  //   );
+  // }
 
-  addFavProvider(id) {
-    this.shared_services.addFavProvider(id)
-    .subscribe(
-    data => {
-        this.getFavouriteProvider();
-    },
-    error => {
+  // addFavProvider(id) {
+  //   this.shared_services.addFavProvider(id)
+  //   .subscribe(
+  //   data => {
+  //       this.getFavouriteProvider();
+  //   },
+  //   error => {
 
-    }
-    );
-  }
+  //   }
+  //   );
+  // }
 
   getAppxTime(time) {
       if (time === 0) {

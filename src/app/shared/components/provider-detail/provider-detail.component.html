@@ -82,9 +82,10 @@
                               <div class="ynw-verified"></div>
                               <ul class="side-menu">
                                   <li><span class="icon-history">History</span></li>
-                                  <li><span class="fav icon-favourite <!--icon-favourite-filled-->">Add to Favourites</span></li>
+                                  <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">Add to Favourites</span></li>
+                                  <li><span class ="icon-favourite-filled" *ngIf="isInFav" (click)="handle_Fav('remove')">Remove from Favourites</span></li>
                                   <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li>
-                                  <li><span class="icon-message" (click)="communicateHandler()">Communicate</span></li>
+                                  <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">Communicate</span></li>
                                   <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li>
                               </ul>
                           </div>
@@ -147,7 +148,8 @@
                           </div>
                           <div class="bt-r">
                               <span class="cs-btn bt10 blk" *ngIf="loc.checkins.length>0">Would you like to <span>Cancel Check-ins?</span></span>
-                              <span class="cs-btn chk-btn cancel">Cancel</span>
+                              <span class="cs-btn chk-btn">Check-In</span>
+                              <!-- <span class="cs-btn chk-btn cancel">Cancel</span> -->
                               <span class="cs-btn bt10">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
                           </div>    
                       </div>
