@@ -91,7 +91,6 @@ export class ProviderDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getInboxUnreadCnt();
-    this.getFavProviders();
     this.activaterouterobj.paramMap
     .subscribe(params => {
       this.provider_id = params.get('id');
@@ -131,6 +130,7 @@ export class ProviderDetailComponent implements OnInit {
          case 'businessProfile': {
             this.businessjson = res;
             this.provider_bussiness_id = this.businessjson.id;
+            this.getFavProviders();
             const holdbName = this.businessjson.businessDesc;
             const maxCnt = 20;
             if (holdbName.length > maxCnt ) {
@@ -370,10 +370,16 @@ export class ProviderDetailComponent implements OnInit {
     this.shared_services.getFavProvider()
       .subscribe(data => {
         this.favprovs = data;
+        this.isInFav = false;
         if (this.favprovs.length > 0) {
-
+          for (let i = 0; i < this.favprovs.length; i++) {
+            console.log('here', this.favprovs[i].id, this.provider_bussiness_id);
+            if (this.favprovs[i].id === this.provider_bussiness_id) {
+              this.isInFav = true;
+            }
+          }
         } else {
-          this.isInFav = false;
+            this.isInFav = false;
         }
       }, error => {
         this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -384,13 +390,19 @@ export class ProviderDetailComponent implements OnInit {
     if (mod === 'add') {
       this.shared_services.addProvidertoFavourite(accountid)
         .subscribe (data => {
-          this.isInFav = true;
+            this.isInFav = true;
         },
       error => {
         this.sharedFunctionobj.apiErrorAutoHide(this, error);
       });
     } else if (mod === 'remove') {
-
+        this.shared_services.removeProviderfromFavourite(accountid)
+        .subscribe (data => {
+          this.isInFav = false;
+        },
+        error => {
+          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+        });
     }
   }
 }
