@@ -23,9 +23,10 @@ export class InboxListComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   selectedMsg = -1;
   userDet;
+  hide_reply_button = false;
 
   @Input() messages: any;
-  @Input() replybutton: any;
+  @Input() fromsource: any;
   @Output() reloadApi = new EventEmitter<any>();
 
   constructor( private inbox_services: InboxServices,
@@ -34,7 +35,11 @@ export class InboxListComponent implements OnInit {
 
   ngOnInit() {
     this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
-
+    if (this.fromsource === 'provider_checkin_detail') {
+      this.hide_reply_button = true;
+    } else {
+      this.hide_reply_button = false;
+    }
   }
 
 
