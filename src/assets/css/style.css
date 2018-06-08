@@ -105,6 +105,18 @@
   color: #666; }
   .bt2:hover {
     background: #c2c2c2; }
+  .bt2.cancel {
+    padding: 5px 15px !important;
+    margin-left: 0px !important;
+    margin-right: 10px !important;
+    height: auto;
+    -moz-transition: all 300ms;
+    -o-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms; }
+    @media only screen and (max-width: 575px) {
+      .bt2.cancel {
+        margin-bottom: 5px; } }
 
 .bt3 {
   height: 30px;
@@ -394,7 +406,7 @@
     .mat-button.backbtn:hover {
       background: #00aef2 !important;
       color: #fff !important; }
-  .mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email {
+  .mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email, .mat-button.save {
     padding: 5px 15px !important;
     margin-left: 0px !important;
     margin-right: 10px !important;
@@ -403,6 +415,9 @@
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
     transition: all 300ms; }
+    @media only screen and (max-width: 575px) {
+      .mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email, .mat-button.save {
+        margin-bottom: 5px; } }
   .mat-button.update, .mat-button.print {
     background: #fda60d !important; }
   .mat-button.accept {
@@ -1049,7 +1064,6 @@ app-footer {
           .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .no-dta p {
             font-size: 1rem; }
 
-/* More Options Dropdown */
 .more-opt {
   position: absolute;
   width: 100%;
@@ -1126,7 +1140,8 @@ app-footer {
         font-size: .875rem; }
     .more-opt .mo-content .mat-dialog-actions {
       margin-top: 20px;
-      display: block; }
+      display: block;
+      margin-bottom: 0; }
   .more-opt.show {
     visibility: visible; }
     .more-opt.show .mo-content {
@@ -2549,59 +2564,429 @@ header {
     .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl,
     .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl, .outer-card .mat-dialog-content .group-outer .bill-tbl, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl {
       padding: 0; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-tbl .paymentlogs,
+      .loginmainclass .mat-dialog-content .group-outer .bill-tbl .paymentlogs,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .paymentlogs,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .paymentlogs,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .paymentlogs,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .paymentlogs, .outer-card .mat-dialog-content .group-outer .bill-tbl .paymentlogs, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .paymentlogs {
+        margin-bottom: 5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #00aef2; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td input[type="number"],
+      .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td input[type="number"],
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td input[type="number"],
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td input[type="number"],
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td input[type="number"],
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td input[type="number"], .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td input[type="number"], .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td input[type="number"] {
+        width: 55px;
+        padding: 2px 2px 2px 8px;
+        border: 1px solid #00aef2; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group,
+      .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group {
+        margin-bottom: 0; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field,
+        .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field {
+          width: 100px; }
+          .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper,
+          .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper {
+            padding: 0;
+            margin: 0; }
+            .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
+            .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix {
+              margin: 0;
+              padding: 0;
+              border: none; }
+              .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+              .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+              .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+              .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+              .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+              .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+                display: none; }
+              .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+              .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+              .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+              .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+              .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+              .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+                padding: 10px;
+                height: 30px;
+                background: #e6e6e6; }
+                .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+                .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+                .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+                .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+                .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+                .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger {
+                  top: -4px;
+                  font-size: .75rem; }
+                  .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                  .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                  .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                  .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                  .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                  .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value {
+                    font-size: .75rem; }
+                  .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                  .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                  .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                  .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                  .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                  .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow {
+                    top: 1px; }
+                    .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                    .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                    .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                    .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                    .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                    .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after {
+                      font-size: .5rem; }
+            .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
+            .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-underline, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
+              display: none; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button,
+      .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button {
+        position: relative;
+        border: none;
+        background: transparent;
+        font-size: .75rem;
+        padding: 3px;
+        padding-left: 20px;
+        cursor: pointer;
+        -moz-transition: all 300ms;
+        -o-transition: all 300ms;
+        -webkit-transition: all 300ms;
+        transition: all 300ms;
+        width: 40px;
+        overflow: hidden;
+        text-indent: 25px; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:before,
+        .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:before,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:before,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:before,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:before,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:before, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:before, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:before {
+          font-family: "custom-ynw" !important;
+          content: "\4b";
+          position: absolute;
+          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          left: 0;
+          width: 16px;
+          height: 16px; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover,
+        .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover {
+          color: #f24949; }
+    .signupmainclass .mat-dialog-content .group-outer .log-tbl,
+    .loginmainclass .mat-dialog-content .group-outer .log-tbl,
+    .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl,
+    .forgotpasswordmainclass .mat-dialog-content .group-outer .log-tbl,
+    .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl,
+    .googlemainmappopup .mat-dialog-content .group-outer .log-tbl, .outer-card .mat-dialog-content .group-outer .log-tbl, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl {
+      padding: 15px 0 1rem;
+      border-bottom: 1px dashed #dbdbdb; }
+      .signupmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
+      .loginmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
+      .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
+      .googlemainmappopup .mat-dialog-content .group-outer .log-tbl p:last-child, .outer-card .mat-dialog-content .group-outer .log-tbl p:last-child, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl p:last-child {
+        margin-bottom: 0; }
+      .signupmainclass .mat-dialog-content .group-outer .log-tbl .table,
+      .loginmainclass .mat-dialog-content .group-outer .log-tbl .table,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl .table,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .log-tbl .table,
+      .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl .table,
+      .googlemainmappopup .mat-dialog-content .group-outer .log-tbl .table, .outer-card .mat-dialog-content .group-outer .log-tbl .table, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl .table {
+        margin-bottom: 0; }
+        .signupmainclass .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child,
+        .loginmainclass .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child,
+        .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child,
+        .googlemainmappopup .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child, .outer-card .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child {
+          width: 20%; }
     .signupmainclass .mat-dialog-content .group-outer .bill-total,
     .loginmainclass .mat-dialog-content .group-outer .bill-total,
     .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total,
     .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total,
     .commonpopupmainclass .mat-dialog-content .group-outer .bill-total,
     .googlemainmappopup .mat-dialog-content .group-outer .bill-total, .outer-card .mat-dialog-content .group-outer .bill-total, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total {
-      text-align: right; }
-      .signupmainclass .mat-dialog-content .group-outer .bill-total .total, .signupmainclass .mat-dialog-content .group-outer .bill-total .discount, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon, .signupmainclass .mat-dialog-content .group-outer .bill-total .prepaid,
+      display: flex;
+      margin-bottom: 0; }
+      @media only screen and (max-width: 767px) {
+        .signupmainclass .mat-dialog-content .group-outer .bill-total,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total, .outer-card .mat-dialog-content .group-outer .bill-total, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total {
+          flex-direction: column; } }
+      .signupmainclass .mat-dialog-content .group-outer .bill-total .total, .signupmainclass .mat-dialog-content .group-outer .bill-total .discount, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon, .signupmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .loginmainclass .mat-dialog-content .group-outer .bill-total .total,
       .loginmainclass .mat-dialog-content .group-outer .bill-total .discount,
       .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon,
-      .loginmainclass .mat-dialog-content .group-outer .bill-total .prepaid,
+      .loginmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .total,
       .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount,
       .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon,
-      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .prepaid,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .total,
       .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount,
       .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon,
-      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .prepaid,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .total,
       .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount,
       .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon,
-      .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .prepaid,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .googlemainmappopup .mat-dialog-content .group-outer .bill-total .total,
       .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount,
       .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon,
-      .googlemainmappopup .mat-dialog-content .group-outer .bill-total .prepaid, .outer-card .mat-dialog-content .group-outer .bill-total .total, .outer-card .mat-dialog-content .group-outer .bill-total .discount, .outer-card .mat-dialog-content .group-outer .bill-total .coupon, .outer-card .mat-dialog-content .group-outer .bill-total .prepaid, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .prepaid {
-        margin-bottom: 5px;
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay, .outer-card .mat-dialog-content .group-outer .bill-total .total, .outer-card .mat-dialog-content .group-outer .bill-total .discount, .outer-card .mat-dialog-content .group-outer .bill-total .coupon, .outer-card .mat-dialog-content .group-outer .bill-total .topay, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay {
         color: #666;
-        font-size: .75rem; }
-        .signupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu, .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .label-valu, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .label-valu, .signupmainclass .mat-dialog-content .group-outer .bill-total .prepaid .label-valu,
+        font-size: .75rem;
+        padding: 10px; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .topay .col-form-label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .col-form-label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .topay .col-form-label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .col-form-label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .topay .col-form-label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .col-form-label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .topay .col-form-label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .col-form-label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .col-form-label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .total .col-form-label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .col-form-label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .col-form-label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay .col-form-label, .outer-card .mat-dialog-content .group-outer .bill-total .total .col-form-label, .outer-card .mat-dialog-content .group-outer .bill-total .discount .col-form-label, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .col-form-label, .outer-card .mat-dialog-content .group-outer .bill-total .topay .col-form-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .col-form-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .col-form-label {
+          margin-bottom: 5px;
+          padding: 0;
+          font-size: .875rem;
+          font-weight: 500; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .total .label, .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .label, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .label, .signupmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .total .label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay .label, .outer-card .mat-dialog-content .group-outer .bill-total .total .label, .outer-card .mat-dialog-content .group-outer .bill-total .discount .label, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .label, .outer-card .mat-dialog-content .group-outer .bill-total .topay .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label {
+          font-size: .875rem;
+          display: block; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu, .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .label-valu, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .label-valu, .signupmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .label-valu,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .label-valu,
-        .loginmainclass .mat-dialog-content .group-outer .bill-total .prepaid .label-valu,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
         .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .label-valu,
         .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .label-valu,
-        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .prepaid .label-valu,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
         .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .label-valu,
         .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .label-valu,
-        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .prepaid .label-valu,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
         .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .label-valu,
         .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .label-valu,
-        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .prepaid .label-valu,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .googlemainmappopup .mat-dialog-content .group-outer .bill-total .total .label-valu,
         .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .label-valu,
         .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .label-valu,
-        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .prepaid .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .total .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .discount .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .prepaid .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .prepaid .label-valu {
-          font-weight: 600; }
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .total .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .discount .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .topay .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu {
+          font-weight: 600;
+          text-align: left; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-total .discount, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon,
+      .loginmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon, .outer-card .mat-dialog-content .group-outer .bill-total .discount, .outer-card .mat-dialog-content .group-outer .bill-total .coupon, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon {
+        width: 200px; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper {
+          padding: 0;
+          margin: 0; }
+          .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix {
+            margin: 0;
+            padding: 0;
+            border: none; }
+            .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
+              display: none; }
+            .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+              padding: 10px;
+              height: 30px;
+              background: #e6e6e6; }
+              .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+              .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger {
+                top: -4px;
+                font-size: .75rem; }
+                .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value,
+                .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-value {
+                  font-size: .75rem; }
+                .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+                .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow {
+                  top: 1px; }
+                  .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                  .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after {
+                    font-size: .5rem; }
+          .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-underline, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-underline,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-underline, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-underline, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-underline {
+            display: none; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .discount.form-group, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon.form-group,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .discount.form-group,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon.form-group,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount.form-group,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon.form-group,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount.form-group,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon.form-group,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount.form-group,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon.form-group,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount.form-group,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon.form-group, .outer-card .mat-dialog-content .group-outer .bill-total .discount.form-group, .outer-card .mat-dialog-content .group-outer .bill-total .coupon.form-group, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount.form-group, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon.form-group {
+          margin-bottom: 0; }
       .signupmainclass .mat-dialog-content .group-outer .bill-total .total,
       .loginmainclass .mat-dialog-content .group-outer .bill-total .total,
       .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .total,
@@ -2609,15 +2994,40 @@ header {
       .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .total,
       .googlemainmappopup .mat-dialog-content .group-outer .bill-total .total, .outer-card .mat-dialog-content .group-outer .bill-total .total, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total {
         color: #222223;
-        font-size: .875rem; }
+        font-size: .875rem;
+        padding: 0;
+        width: 100%;
+        text-align: right; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .total .label, .outer-card .mat-dialog-content .group-outer .bill-total .total .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label {
+          display: inline-block; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .total .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .total .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu {
+          margin-left: 5px; }
       .signupmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .loginmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .topay,
       .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay, .outer-card .mat-dialog-content .group-outer .bill-total .topay, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay {
-        margin-top: 15px;
-        font-size: 1rem; }
+        margin-bottom: 0;
+        flex-grow: 1;
+        text-align: right; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay .label, .outer-card .mat-dialog-content .group-outer .bill-total .topay .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label {
+          font-weight: 600; }
         .signupmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
@@ -2626,7 +3036,286 @@ header {
         .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay .label-valu, .outer-card .mat-dialog-content .group-outer .bill-total .topay .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu {
           color: #00cc96;
           font-weight: 600;
-          margin-left: 5px; }
+          font-size: 1.25rem; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl,
+      .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl {
+        padding: 0;
+        width: 100%; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table,
+        .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table {
+          margin-bottom: 0;
+          border: none;
+          width: 300px;
+          margin-left: auto; }
+          @media only screen and (max-width: 767px) {
+            .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr {
+              padding: 0;
+              display: flex; } }
+          @media only screen and (max-width: 767px) {
+            .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td {
+              display: inline-block;
+              min-height: auto; }
+              .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th:before, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td:before,
+              .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th:before,
+              .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td:before,
+              .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th:before,
+              .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td:before,
+              .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th:before,
+              .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td:before,
+              .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th:before,
+              .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td:before,
+              .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th:before,
+              .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td:before, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th:before, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td:before, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th:before, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td:before {
+                display: none; } }
+          .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th {
+            border: none;
+            text-align: right;
+            font-size: .875rem;
+            padding: 8px;
+            font-weight: 600; }
+            @media only screen and (max-width: 767px) {
+              .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+              .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+              .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+              .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+              .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th,
+              .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr th {
+                width: 60%; } }
+          .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td {
+            text-align: left;
+            border: none;
+            font-weight: 600;
+            padding: 8px; }
+            @media only screen and (max-width: 767px) {
+              .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+              .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+              .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+              .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+              .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td,
+              .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr td {
+                width: 40%; } }
+          .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr:nth-of-type(odd),
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr:nth-of-type(odd),
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr:nth-of-type(odd),
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr:nth-of-type(odd),
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr:nth-of-type(odd),
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr:nth-of-type(odd), .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr:nth-of-type(odd), .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr:nth-of-type(odd) {
+            background: #fff; }
+          @media only screen and (max-width: 767px) {
+            .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid {
+              text-align: right;
+              width: 100%; } }
+          .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount th, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount td, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon th, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon td, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid th, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid td,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount th,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount td,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon th,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon td,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid th,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid td,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount th,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount td,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon th,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon td,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid th,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid td,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount th,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount td,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon th,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon td,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid th,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid td,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount th,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount td,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon th,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon td,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid th,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid td,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount th,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount td,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon th,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon td,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid th,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid td, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount th, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount td, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon th, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon td, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid th, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid td, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount th, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.discount td, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon th, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.coupon td, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid th, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.prepaid td {
+            font-size: .75rem;
+            color: #666; }
+          .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay th, .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay th,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay th,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay th,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay th,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay th,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay th, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay th, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #222223; }
+          .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td,
+          .googlemainmappopup .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td, .outer-card .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl .table tbody tr.topay td {
+            color: #00cc96; }
+    .signupmainclass .mat-dialog-content .full-outer .btl,
+    .loginmainclass .mat-dialog-content .full-outer .btl,
+    .moreoptionsmainclass .mat-dialog-content .full-outer .btl,
+    .forgotpasswordmainclass .mat-dialog-content .full-outer .btl,
+    .commonpopupmainclass .mat-dialog-content .full-outer .btl,
+    .googlemainmappopup .mat-dialog-content .full-outer .btl, .outer-card .mat-dialog-content .full-outer .btl, .consumerpopupmainclass .mat-dialog-content .full-outer .btl {
+      border-bottom: 1px dashed #dbdbdb;
+      padding-bottom: 15px;
+      margin-bottom: 1rem; }
+      .signupmainclass .mat-dialog-content .full-outer .btl .label, .signupmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .loginmainclass .mat-dialog-content .full-outer .btl .label,
+      .loginmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .moreoptionsmainclass .mat-dialog-content .full-outer .btl .label,
+      .moreoptionsmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .forgotpasswordmainclass .mat-dialog-content .full-outer .btl .label,
+      .forgotpasswordmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .commonpopupmainclass .mat-dialog-content .full-outer .btl .label,
+      .commonpopupmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .googlemainmappopup .mat-dialog-content .full-outer .btl .label,
+      .googlemainmappopup .mat-dialog-content .full-outer .btl .label-valu, .outer-card .mat-dialog-content .full-outer .btl .label, .outer-card .mat-dialog-content .full-outer .btl .label-valu, .consumerpopupmainclass .mat-dialog-content .full-outer .btl .label, .consumerpopupmainclass .mat-dialog-content .full-outer .btl .label-valu {
+        display: block;
+        color: #999999;
+        margin-bottom: 0; }
+      .signupmainclass .mat-dialog-content .full-outer .btl .label,
+      .loginmainclass .mat-dialog-content .full-outer .btl .label,
+      .moreoptionsmainclass .mat-dialog-content .full-outer .btl .label,
+      .forgotpasswordmainclass .mat-dialog-content .full-outer .btl .label,
+      .commonpopupmainclass .mat-dialog-content .full-outer .btl .label,
+      .googlemainmappopup .mat-dialog-content .full-outer .btl .label, .outer-card .mat-dialog-content .full-outer .btl .label, .consumerpopupmainclass .mat-dialog-content .full-outer .btl .label {
+        margin-bottom: 5px; }
+      .signupmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .loginmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .moreoptionsmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .forgotpasswordmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .commonpopupmainclass .mat-dialog-content .full-outer .btl .label-valu,
+      .googlemainmappopup .mat-dialog-content .full-outer .btl .label-valu, .outer-card .mat-dialog-content .full-outer .btl .label-valu, .consumerpopupmainclass .mat-dialog-content .full-outer .btl .label-valu {
+        font-weight: 600;
+        color: #222223; }
+    .signupmainclass .mat-dialog-content .full-outer .topay,
+    .loginmainclass .mat-dialog-content .full-outer .topay,
+    .moreoptionsmainclass .mat-dialog-content .full-outer .topay,
+    .forgotpasswordmainclass .mat-dialog-content .full-outer .topay,
+    .commonpopupmainclass .mat-dialog-content .full-outer .topay,
+    .googlemainmappopup .mat-dialog-content .full-outer .topay, .outer-card .mat-dialog-content .full-outer .topay, .consumerpopupmainclass .mat-dialog-content .full-outer .topay {
+      margin-bottom: 1rem;
+      border-bottom: 1px dashed #dbdbdb;
+      padding-bottom: 15px; }
+      .signupmainclass .mat-dialog-content .full-outer .topay .label,
+      .loginmainclass .mat-dialog-content .full-outer .topay .label,
+      .moreoptionsmainclass .mat-dialog-content .full-outer .topay .label,
+      .forgotpasswordmainclass .mat-dialog-content .full-outer .topay .label,
+      .commonpopupmainclass .mat-dialog-content .full-outer .topay .label,
+      .googlemainmappopup .mat-dialog-content .full-outer .topay .label, .outer-card .mat-dialog-content .full-outer .topay .label, .consumerpopupmainclass .mat-dialog-content .full-outer .topay .label {
+        display: block;
+        color: #999999; }
+      .signupmainclass .mat-dialog-content .full-outer .topay .label-valu,
+      .loginmainclass .mat-dialog-content .full-outer .topay .label-valu,
+      .moreoptionsmainclass .mat-dialog-content .full-outer .topay .label-valu,
+      .forgotpasswordmainclass .mat-dialog-content .full-outer .topay .label-valu,
+      .commonpopupmainclass .mat-dialog-content .full-outer .topay .label-valu,
+      .googlemainmappopup .mat-dialog-content .full-outer .topay .label-valu, .outer-card .mat-dialog-content .full-outer .topay .label-valu, .consumerpopupmainclass .mat-dialog-content .full-outer .topay .label-valu {
+        font-weight: 600; }
+    .signupmainclass .mat-dialog-content .full-outer .form-group .col-form-label,
+    .loginmainclass .mat-dialog-content .full-outer .form-group .col-form-label,
+    .moreoptionsmainclass .mat-dialog-content .full-outer .form-group .col-form-label,
+    .forgotpasswordmainclass .mat-dialog-content .full-outer .form-group .col-form-label,
+    .commonpopupmainclass .mat-dialog-content .full-outer .form-group .col-form-label,
+    .googlemainmappopup .mat-dialog-content .full-outer .form-group .col-form-label, .outer-card .mat-dialog-content .full-outer .form-group .col-form-label, .consumerpopupmainclass .mat-dialog-content .full-outer .form-group .col-form-label {
+      padding: 0;
+      margin-bottom: 5px; }
+    .signupmainclass .mat-dialog-content .full-outer .form-group .form-control,
+    .loginmainclass .mat-dialog-content .full-outer .form-group .form-control,
+    .moreoptionsmainclass .mat-dialog-content .full-outer .form-group .form-control,
+    .forgotpasswordmainclass .mat-dialog-content .full-outer .form-group .form-control,
+    .commonpopupmainclass .mat-dialog-content .full-outer .form-group .form-control,
+    .googlemainmappopup .mat-dialog-content .full-outer .form-group .form-control, .outer-card .mat-dialog-content .full-outer .form-group .form-control, .consumerpopupmainclass .mat-dialog-content .full-outer .form-group .form-control {
+      width: 150px; }
+    .signupmainclass .mat-dialog-content .full-outer .payment-options .label,
+    .loginmainclass .mat-dialog-content .full-outer .payment-options .label,
+    .moreoptionsmainclass .mat-dialog-content .full-outer .payment-options .label,
+    .forgotpasswordmainclass .mat-dialog-content .full-outer .payment-options .label,
+    .commonpopupmainclass .mat-dialog-content .full-outer .payment-options .label,
+    .googlemainmappopup .mat-dialog-content .full-outer .payment-options .label, .outer-card .mat-dialog-content .full-outer .payment-options .label, .consumerpopupmainclass .mat-dialog-content .full-outer .payment-options .label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px; }
+    .signupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+    .loginmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+    .moreoptionsmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+    .forgotpasswordmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+    .commonpopupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+    .googlemainmappopup .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button, .consumerpopupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button {
+      margin-left: 0;
+      margin-right: 20px; }
+      @media only screen and (max-width: 400px) {
+        .signupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+        .loginmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+        .moreoptionsmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+        .forgotpasswordmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+        .commonpopupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button,
+        .googlemainmappopup .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button, .consumerpopupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button {
+          margin-bottom: 10px; } }
+      .signupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button .mat-radio-label,
+      .loginmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button .mat-radio-label,
+      .moreoptionsmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button .mat-radio-label,
+      .forgotpasswordmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button .mat-radio-label,
+      .commonpopupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button .mat-radio-label,
+      .googlemainmappopup .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button .mat-radio-label, .outer-card .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button .mat-radio-label, .consumerpopupmainclass .mat-dialog-content .full-outer .payment-options .mat-radio-group .mat-radio-button .mat-radio-label {
+        margin: 0; }
   .signupmainclass .mat-dialog-actions,
   .loginmainclass .mat-dialog-actions,
   .moreoptionsmainclass .mat-dialog-actions,
@@ -4866,8 +5555,8 @@ header.dashb .lg-opt {
         position: relative; }
         header.dashb .lg-opt .bnps .inbx .ot-bx .noti-no {
           position: absolute;
-          width: 20px;
-          height: 20px;
+          width: auto;
+          height: auto;
           -webkit-border-radius: 10px;
           border-radius: 10px;
           background-clip: padding-box;
@@ -4877,10 +5566,12 @@ header.dashb .lg-opt {
           text-align: center;
           font-family: 'Montserrat', sans-serif;
           font-weight: bold;
-          font-size: .75rem;
-          top: 0;
-          right: 0;
-          vertical-align: middle; }
+          font-size: .65rem;
+          top: -2px;
+          right: -2px;
+          vertical-align: middle;
+          padding: 1px 5px;
+          border: 2px solid #fff; }
         header.dashb .lg-opt .bnps .inbx .ot-bx i {
           font-size: 1.625rem;
           vertical-align: middle;
@@ -4972,8 +5663,6 @@ footer.dashb {
   position: fixed;
   bottom: 0;
   z-index: 950; }
-  footer.dashb .sect1, footer.dashb .sect2 {
-    display: none; }
   footer.dashb .sect3 {
     background: #1c1d21;
     display: block;
@@ -7466,44 +8155,40 @@ footer.dashb {
           .dashboard .card.w-dta .head .links .lnk {
             padding: 0 10px; } }
         .dashboard .card.w-dta .head .links .lnk .count {
-          -webkit-border-radius: 24px;
-          border-radius: 24px;
+          width: auto;
+          height: auto;
+          -webkit-border-radius: 10px;
+          border-radius: 10px;
           background-clip: padding-box;
           /* stops bg color from leaking outside the border: */
-          width: 20px;
-          height: 20px;
-          background: #999999;
-          padding: 3px;
+          background-color: #999999;
           color: #fff;
-          font-size: .75rem;
-          font-weight: 700;
-          display: flex;
-          margin-left: 10px;
-          align-items: center;
-          justify-content: center;
-          -moz-transition: all 300ms;
-          -o-transition: all 300ms;
-          -webkit-transition: all 300ms;
-          transition: all 300ms; }
+          text-align: center;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: bold;
+          font-size: .65rem;
+          vertical-align: middle;
+          padding: 1px 5px;
+          margin-left: 5px; }
         .dashboard .card.w-dta .head .links .lnk.active {
           color: #00aef2;
           font-weight: 600; }
           .dashboard .card.w-dta .head .links .lnk.active .count {
-            -webkit-border-radius: 24px;
-            border-radius: 24px;
+            width: auto;
+            height: auto;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
             background-clip: padding-box;
             /* stops bg color from leaking outside the border: */
-            width: 20px;
-            height: 20px;
-            background: #00aef2;
-            padding: 3px;
+            background-color: #00aef2;
             color: #fff;
-            font-size: .75rem;
-            font-weight: 700;
-            display: flex;
-            margin-left: 10px;
-            align-items: center;
-            justify-content: center; }
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: .65rem;
+            vertical-align: middle;
+            padding: 1px 5px;
+            margin-left: 5px; }
         .dashboard .card.w-dta .head .links .lnk:last-child {
           border-right: 1px solid #f2f2f2; }
         .dashboard .card.w-dta .head .links .lnk:hover {
@@ -7518,6 +8203,9 @@ footer.dashb {
       margin: 0;
       padding: 0;
       display: flex; }
+      @media only screen and (max-width: 767px) {
+        .dashboard .card.w-dta .qlst ul {
+          justify-content: space-around; } }
       .dashboard .card.w-dta .qlst ul li {
         list-style: none;
         margin-right: 10px; }
@@ -7767,7 +8455,7 @@ footer.dashb {
       .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived {
         vertical-align: top; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived {
-          color: #5bee6f;
+          color: #79e688;
           padding: 2px 5px 2px 14px;
           font-size: .65rem;
           font-weight: 600;
@@ -7775,7 +8463,7 @@ footer.dashb {
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived:before {
             position: absolute;
             content: "";
-            background: #5bee6f;
+            background: #79e688;
             width: 6px;
             height: 6px;
             -webkit-border-radius: 10px;
@@ -7792,6 +8480,9 @@ footer.dashb {
       .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
         display: flex;
         flex-wrap: wrap; }
+        @media only screen and (max-width: 767px) {
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
+            padding-left: 45%; } }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span {
           -webkit-border-radius: 30px;
           border-radius: 30px;
@@ -7813,14 +8504,14 @@ footer.dashb {
             margin-top: 1px;
             display: none; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.arrived {
-            background: #5bee6f;
-            color: #0c711a; }
+            background: #79e688;
+            color: #177c25; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.start {
             background: #4de2ff;
             color: #006b80; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.newbill {
-            background: #ff9e9e;
-            color: #d10000; }
+            background: #ff8fb8;
+            color: #c20047; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.viewbill {
             background: #f2cd61;
             color: #7d600a; }
@@ -7830,6 +8521,8 @@ footer.dashb {
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.done {
             background: #b9acff;
             color: #2300df; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions:before {
+          position: absolute; }
       .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment {
         text-align: left; }
         .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
@@ -8614,7 +9307,7 @@ footer.dashb {
         left: -6px;
         top: 2px; }
       .content.comn-cls .lbr .card .c-history li.arrived:before {
-        background: #5bee6f; }
+        background: #79e688; }
       .content.comn-cls .lbr .card .c-history li.started:before {
         background: #4de2ff; }
       .content.comn-cls .lbr .card .c-history li.checkedIn:before {
@@ -8838,7 +9531,22 @@ footer.dashb {
           flex-grow: 1;
           font-weight: 600;
           padding: 15px;
-          color: #222223; }
+          color: #222223;
+          /*&.th5, &.td5 {
+              width: 10%;
+              flex-grow: 0;
+              text-align: center;
+          }
+          &.td5 {
+              span {
+                  cursor: pointer;
+                  font-size: 1rem;
+                  
+                  &:hover {
+                      color: $cc-red;
+                  }
+              }
+          }*/ }
           .content .card .copy .inbox-table li .outer .th.th1, .content .card .copy .inbox-table li .outer .th.td1, .content .card .copy .inbox-table li .outer .td.th1, .content .card .copy .inbox-table li .outer .td.td1 {
             width: 15%;
             flex-grow: 0; }
@@ -8849,17 +9557,8 @@ footer.dashb {
             width: 15%;
             flex-grow: 0; }
           .content .card .copy .inbox-table li .outer .th.th4, .content .card .copy .inbox-table li .outer .th.td4, .content .card .copy .inbox-table li .outer .td.th4, .content .card .copy .inbox-table li .outer .td.td4 {
-            width: 40%;
+            width: 50%;
             flex-grow: 0; }
-          .content .card .copy .inbox-table li .outer .th.th5, .content .card .copy .inbox-table li .outer .th.td5, .content .card .copy .inbox-table li .outer .td.th5, .content .card .copy .inbox-table li .outer .td.td5 {
-            width: 10%;
-            flex-grow: 0;
-            text-align: center; }
-          .content .card .copy .inbox-table li .outer .th.td5 span, .content .card .copy .inbox-table li .outer .td.td5 span {
-            cursor: pointer;
-            font-size: 1rem; }
-            .content .card .copy .inbox-table li .outer .th.td5 span:hover, .content .card .copy .inbox-table li .outer .td.td5 span:hover {
-              color: #f24949; }
         .content .card .copy .inbox-table li .outer .td {
           font-weight: 500;
           color: #666; }
@@ -8880,9 +9579,6 @@ footer.dashb {
         padding: 15px; }
         .content .card .copy .inbox-table li .details .action, .content .card .copy .inbox-table li .actions .action {
           padding-bottom: 10px; }
-          @media only screen and (max-width: 767px) {
-            .content .card .copy .inbox-table li .details .action, .content .card .copy .inbox-table li .actions .action {
-              border-bottom: 1px solid #f2f2f2; } }
           .content .card .copy .inbox-table li .details .action [class^="icon-"], .content .card .copy .inbox-table li .details .action [class*=" icon-"], .content .card .copy .inbox-table li .actions .action [class^="icon-"], .content .card .copy .inbox-table li .actions .action [class*=" icon-"] {
             display: inline-block;
             padding: 0 10px;
@@ -8909,9 +9605,9 @@ footer.dashb {
       .content .card .copy .inbox-table li .details {
         padding-top: 0;
         line-height: 1.8;
-        background: #f2f2f2;
         display: none;
         margin-bottom: 50px;
+        height: 0;
         -moz-transition: all 300ms;
         -o-transition: all 300ms;
         -webkit-transition: all 300ms;
@@ -8930,14 +9626,15 @@ footer.dashb {
           background: none; }
         .content .card .copy .inbox-table li .details.show {
           display: block;
-          margin-bottom: 0; }
+          margin-bottom: 0;
+          height: auto; }
       .content .card .copy .inbox-table li .actions {
         text-align: right;
         display: none;
         font-weight: 500; }
         @media only screen and (max-width: 767px) {
           .content .card .copy .inbox-table li .actions {
-            display: block; } }
+            border-top: 1px solid #f2f2f2; } }
         .content .card .copy .inbox-table li .actions .icon-delete {
           display: inline-block;
           padding: 0 10px;
@@ -8970,11 +9667,13 @@ footer.dashb {
         -webkit-transition: all 300ms;
         transition: all 300ms;
         cursor: pointer; }
+      .content .card .copy .inbox-table li.ttd.active .outer .td {
+        color: #00aef2; }
       .content .card .copy .inbox-table li.ttd.new {
         border-bottom: 2px solid #f2f2f2;
-        background: #f0ffcc; }
+        background: #92f6c9; }
         .content .card .copy .inbox-table li.ttd.new .outer .td {
-          font-weight: 600;
+          font-weight: 500;
           color: #222223; }
         @media only screen and (max-width: 767px) {
           .content .card .copy .inbox-table li.ttd.new .details .action, .content .card .copy .inbox-table li.ttd.new .actions .action {
@@ -8982,8 +9681,7 @@ footer.dashb {
         .content .card .copy .inbox-table li.ttd.new .details .action [class^="icon-"]:before, .content .card .copy .inbox-table li.ttd.new .details .action [class*=" icon-"]:before, .content .card .copy .inbox-table li.ttd.new .actions .action [class^="icon-"]:before, .content .card .copy .inbox-table li.ttd.new .actions .action [class*=" icon-"]:before {
           border-color: #dbdbdb; }
       .content .card .copy .inbox-table li.ttd:hover .outer .td {
-        color: #fff;
-        background: #00aef2; }
+        color: #00aef2; }
       .content .card .copy .inbox-table li:last-child {
         border: none; }
 
@@ -9169,7 +9867,12 @@ header.consumer {
           margin-top: 5px; }
         header.consumer .tp-1 .tp-r .tc1 .topsignouter {
           display: flex;
-          align-items: center; }
+          align-items: center;
+          justify-content: flex-end; }
+          header.consumer .tp-1 .tp-r .tc1 .topsignouter .sgn {
+            padding-right: 5px; }
+          header.consumer .tp-1 .tp-r .tc1 .topsignouter .jn {
+            padding-left: 5px; }
           header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps {
             display: flex;
             color: #666;
@@ -9182,8 +9885,8 @@ header.consumer {
               padding-left: 30px;
               cursor: pointer; }
               header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx {
-                width: 40px;
-                height: 40px;
+                width: 35px;
+                height: 35px;
                 -webkit-border-radius: 50px;
                 border-radius: 50px;
                 background-clip: padding-box;
@@ -9191,11 +9894,12 @@ header.consumer {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                position: relative; }
+                position: relative;
+                background: #f2f2f2; }
                 header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx .noti-no {
                   position: absolute;
-                  width: 20px;
-                  height: 20px;
+                  width: auto;
+                  height: auto;
                   -webkit-border-radius: 10px;
                   border-radius: 10px;
                   background-clip: padding-box;
@@ -9205,14 +9909,18 @@ header.consumer {
                   text-align: center;
                   font-family: 'Montserrat', sans-serif;
                   font-weight: bold;
-                  font-size: .75rem;
-                  top: 0px;
-                  right: 0px;
-                  vertical-align: middle; }
+                  font-size: .65rem;
+                  top: -5px;
+                  right: -5px;
+                  vertical-align: middle;
+                  padding: 1px 5px;
+                  border: 2px solid #fff; }
                 header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx i {
                   font-size: 1.25rem;
-                  vertical-align: middle;
-                  margin-top: 9px; }
+                  display: flex;
+                  align-items: center;
+                  width: 21px;
+                  height: 17px; }
           header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem {
             font-size: .875rem;
             font-weight: 500; }
@@ -9483,13 +10191,11 @@ header.consumer {
           @media only screen and (max-width: 767px) {
             header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button {
               height: 50px;
-              width: 100%;
-              margin-bottom: 10px; } }
+              width: 100%; } }
           @media (min-width: 768px) and (max-width: 991px) {
             header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button {
               height: 50px;
-              width: 100%;
-              margin-bottom: 10px; } }
+              width: 100%; } }
           header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button .icon-search {
             color: #fff;
             font-size: 1.5rem; }
@@ -9514,10 +10220,12 @@ header.consumer {
           line-height: 1em; }
           @media only screen and (max-width: 767px) {
             header.consumer .tp-1 .tp-r .tp-srch .sa-mo {
-              width: 100%; } }
+              width: 100%;
+              margin-top: 10px; } }
           @media (min-width: 768px) and (max-width: 991px) {
             header.consumer .tp-1 .tp-r .tp-srch .sa-mo {
-              width: 100%; } }
+              width: 100%;
+              margin-top: 10px; } }
           header.consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter {
             font-size: 0.875em;
             color: #222223;
@@ -9537,13 +10245,19 @@ header.consumer {
             header.consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter:before {
               position: absolute;
               left: 8px;
-              top: -10px;
-              font-size: 1.675rem; }
+              top: -8px;
+              font-size: 1.25rem; }
               @media (min-width: 768px) and (max-width: 991px) {
                 header.consumer .tp-1 .tp-r .tp-srch .sa-mo .icon-filter:before {
                   left: 0; } }
     header.consumer .tp-1 .more-opt {
       top: 50px; }
+      @media only screen and (max-width: 767px) {
+        header.consumer .tp-1 .more-opt {
+          top: 217px; } }
+      @media (min-width: 768px) and (max-width: 991px) {
+        header.consumer .tp-1 .more-opt {
+          top: 217px; } }
 
 .content {
   background: #f2f2f2; }
@@ -10959,7 +11673,8 @@ footer {
                 position: absolute;
             }*/ }
           footer .sect2 .lnks li a:hover {
-            opacity: 1; }
+            opacity: 1;
+            color: #fff; }
         footer .sect2 .lnks li:last-child:after {
           display: none; }
         footer .sect2 .lnks li:after {
@@ -10972,8 +11687,6 @@ footer {
       font-size: 0.75rem;
       font-weight: 600;
       opacity: .7; }
-  footer .sect3 {
-    display: none; }
 
 .text-primary {
   color: #f24949 !important; }

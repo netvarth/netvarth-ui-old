@@ -733,6 +733,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   this.keywordholder.subdomain = '';
   this.keywordholder.typ = 'kwtitle';
  }
+ keyup(kw) {
+   console.log('keyup', kw);
+ }
  do_search(labelqpassed?) {
    this.closeMoreoptions();
    // // console.log('search clicked');

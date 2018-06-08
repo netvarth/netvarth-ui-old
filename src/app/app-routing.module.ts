@@ -8,6 +8,7 @@ import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider, AuthGuardLogin } f
 import { SearchDetailComponent } from './shared/components/search-detail/search-detail.component';
 import { ProviderDetailComponent } from './shared/components/provider-detail/provider-detail.component';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
+import { ConsumerWaitlistHistoryComponent } from './shared/components/consumer-waitlist-history/consumer-waitlist-history.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,7 @@ const routes: Routes = [
     { path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
     { path: 'searchdetail', component: SearchDetailComponent },
     { path: 'searchdetail/:id', component: ProviderDetailComponent },
+    { path: 'searchdetail/:id/history', component: ConsumerWaitlistHistoryComponent },
     { path: 'payment-return/:id', component: ReturnPaymentComponent },
     { path: '**', redirectTo: 'not-found' }
 ];

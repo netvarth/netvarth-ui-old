@@ -283,7 +283,7 @@ app-footer {
     }
 }
 
-/* More Options Dropdown */
+// More Options Dropdown 
 .more-opt {
     position: absolute;
     width: 100%;
@@ -354,6 +354,7 @@ app-footer {
         .mat-dialog-actions {
             margin-top: 20px;
             display: block;
+            margin-bottom: 0;
         }
 
     }

@@ -120,6 +120,7 @@ footer {
                     
                     &:hover {
                         opacity: 1;
+                        color: $white;
                     }
                 }
                 
@@ -144,8 +145,5 @@ footer {
             font-weight: 600;
             opacity: .7;
         }
-    }
-    .sect3 {
-        display: none;
     }
 }

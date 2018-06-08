@@ -41,7 +41,7 @@
     </div>    
     </section>
     
-    <!-- <section class="sect2">
+    <section class="sect2" *ngIf="ctype!='provider'">
         <div class="container">
             <div class="row">
             <div class="col-12">
@@ -56,26 +56,10 @@
             </div>
         </div>
         </div>
-    </section> -->
-    <!-- <div class="bottompopup" *ngIf="showbottompopup1" style="height:300px; width:auto; background-color: #000; color: #fff;border: solid 1px #FF0000; scroll-behavior:auto;">
-        <div (click)="maximizeAuditlog()">Maximize</div><div (click)="closebottompopup()">Close</div>
-        <div class="log-outer">
-            <div class="log-headouter">
-                <div class="loghead1">Action</div>
-                <div class="loghead2">User Name</div>
-                <div class="loghead3">Date</div>
-            </div>
-            <div class="log-rowouter" *ngFor="let log of auditlog; let i=index">
-                <ng-container>
-                <div class="logtd1">{{log.Action}}</div>
-                <div class="logtd2">{{log.userName}}</div>
-                <div class="logtd3">{{log.date | date:dateFormat}}</div>
-            </ng-container>
-            </div>
-        </div>
-    </div> -->
+    </section>
+  
 
-    <div class="stp-box">
+    <div class="stp-box" *ngIf="ctype=='provider'">
             <div class="stp-header">
                 <div class="container">
                     <div class="row">
@@ -262,7 +246,7 @@
                 </div>
          </div>
      </section> -->
-     <section class="sect3">
+     <section class="sect3" *ngIf="ctype=='provider'">
              <div class="container">
                  <div class="row">
                     <div class="copy-text">&copy; {{curyear}} youneverwait</div>

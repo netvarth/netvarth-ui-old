@@ -100,16 +100,39 @@ export class CheckInComponent implements OnInit {
       const dtoday = yyyy + '-' + cmon + '-' + cday;
 
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-      this.search_obj = this.data.srchprovider;
-      this.provider_id = this.search_obj.fields.unique_id;
-      const providarr = this.search_obj.id.split('-');
-      this.account_id = providarr[0];
       this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
-      this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
-      // this.sel_queue_name = this.search_obj.fields.waitingtime_res.nextAvailableQueue.name || '';
-      this.sel_loc = this.search_obj.fields.location_id1;
-      this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
-      this.getServicebyLocationId (this.search_obj.fields.location_id1, this.sel_checkindate);
+
+      if (this.data.moreparams.source === 'searchlist_checkin') { // case check-in from search result page
+
+        this.search_obj = this.data.srchprovider;
+        this.provider_id = this.search_obj.fields.unique_id;
+        const providarr = this.search_obj.id.split('-');
+        this.account_id = providarr[0];
+        this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
+        // this.sel_queue_name = this.search_obj.fields.waitingtime_res.nextAvailableQueue.name || '';
+        this.sel_loc = this.search_obj.fields.location_id1;
+        this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
+
+      } else if (this.data.moreparams.source === 'provdet_checkin') { // case check-in from provider details page
+
+        // this.search_obj = this.data.srchprovider;
+        this.provider_id = this.data.moreparams.provider.unique_id;
+        this.account_id = this.data.moreparams.provider.account_id;
+
+        const srch_fields = {
+                              fields: {
+                                title: this.data.moreparams.provider.name,
+                                place1: this.data.moreparams.location.name,
+                              }
+        };
+        this.search_obj = srch_fields;
+
+        // this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
+        this.sel_loc = this.data.moreparams.location.id;
+        this.sel_checkindate = this.data.moreparams.sel_date;
+
+      }
+      this.getServicebyLocationId (this.sel_loc, this.sel_checkindate);
       this.getPaymentModesofProvider(this.account_id);
       // console.log('selcheckindate', this.sel_checkindate);
       if (this.sel_checkindate !== dtoday) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
