@@ -11,28 +11,34 @@
                       </div>
                   </li>
 
-                  <li class="ttd" [class.active]="selectedMsg==i" *ngFor="let message of messages; let i = index">
+                  <li class="ttd" [class.active]="selectedMsg==i"
+                  [class.outer-received]="userDet.id != message.owner.id"
+                  [class.outer-sent]="userDet.id == message.owner.id"
+                  *ngFor="let message of messages; let i = index">
                       <div class="outer" (click)="showMsg(i)">
-                            <div class="td td0">
-                               <span class="icon-received" *ngIf="userDet.id != message.owner.id"></span>
-                               <span class="icon-sent" *ngIf="userDet.id == message.owner.id"></span>
-                            </div>
-                          <div class="td td1">
-                              <div class="label">Date</div>
-                              <div class="result">{{message.timeStamp | date: dateFormat}}</div>
+                          <div class="td td0">
+                              <span class="icon-received" *ngIf="userDet.id != message.owner.id"></span>
+                              <span class="icon-sent" *ngIf="userDet.id == message.owner.id"></span>
                           </div>
-                          <div class="td td2">
-                              <div class="label">Service</div>
-                              <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
-                          </div>
+
                           <div class="td td3">
-                              <div class="label">Name</div>
-                              <div class="result">{{message.owner.userName}}</div>
+                            <div class="label">From</div>
+                            <div class="result">{{message.owner.userName}}</div>
                           </div>
                           <div class="td td4">
                               <div class="label">Message</div>
                               <div class="result">{{ (message.msg.length>120)? (message.msg | slice:0:120)+'..':(message.msg) }}
                               </div>
+                          </div>
+
+                          <div class="td td2">
+                            <div class="label">Service</div>
+                            <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
+                          </div>
+
+                          <div class="td td1">
+                              <div class="label">Date</div>
+                              <div class="result">{{message.timeStamp | date: dateFormat}}</div>
                           </div>
                       </div>
                       <div class="details" [class.show]="selectedMsg==i">
@@ -40,7 +46,7 @@
                               {{message.msg}}
                           </div>
                           <div class="action">
-                              <span class="icon-reply" (click)="replyMessage(message)" *ngIf="userDet.id != message.owner.id && replybutton">
+                              <span class="icon-reply" (click)="replyMessage(message)" *ngIf="userDet.id != message.owner.id && !hide_reply_button">
                                   Reply
                               </span>
                               <span class="icon-close" (click)="closeMsg()">

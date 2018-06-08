@@ -17,6 +17,7 @@
                                   <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName}} {{waitlist_data.consumer.userProfile.lastName}}</span></div>
                                   <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date}}</span></div>
                                   <div class="item"><span class="ttle">Location:</span><span>{{waitlist_data.queue.location.place}}</span></div>
+
                                   <div class="item"><span class="ttle">Service:</span><span> {{waitlist_data.service.name}}</span></div>
                                   <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_data.queue.name}}</span></div>
                                   <div class="item"><span class="ttle">Payment Status:</span>
@@ -29,7 +30,8 @@
                                   </div>
                               </div>
                               <div class="btm" *ngIf="waitlist_data">
-                                  <button class="cs-btn bt3" (click)="addConsumerInboxMessage()">Communicate</button>
+                                  <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">Communicate</button>
+                                  <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >Add Provider note</button>
                                   <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()"
                                   *ngIf="!waitlist_data.history &&
                                   ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">Cancel Check-In</button>
@@ -44,7 +46,7 @@
                                   Communication History
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
-                              <app-inbox-list [messages]="communication_history" [replybutton]="false"
+                              <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
                                (reloadApi)= "getCommunicationHistory()"></app-inbox-list>
 
                             </mat-expansion-panel>
@@ -69,7 +71,7 @@
                             </mat-expansion-panel>
                           </mat-accordion>
                       </div>
-                      <button (click)="addProviderNote(waitlist_data)" >Add Provider note</button>
+
 
                   </div>
                   <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
