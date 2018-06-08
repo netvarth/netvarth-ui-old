@@ -3,6 +3,7 @@
           <ul class="inbox-table" *ngIf="messages.length>0">
                   <li class="tth">
                       <div class="outer">
+                         <div class="th th0"></div>
                           <div class="th th1">Date</div>
                           <div class="th th2">Service</div>
                           <div class="th th3">Name</div>
@@ -12,6 +13,10 @@
 
                   <li class="ttd" [class.active]="selectedMsg==i" *ngFor="let message of messages; let i = index">
                       <div class="outer" (click)="showMsg(i)">
+                            <div class="td td0">
+                               <span class="icon-received" *ngIf="userDet.id != message.owner.id"></span>
+                               <span class="icon-sent" *ngIf="userDet.id == message.owner.id"></span>
+                            </div>
                           <div class="td td1">
                               <div class="label">Date</div>
                               <div class="result">{{message.timeStamp | date: dateFormat}}</div>
@@ -26,7 +31,7 @@
                           </div>
                           <div class="td td4">
                               <div class="label">Message</div>
-                              <div class="result">{{ (message.msg.length>20)? (message.msg | slice:0:20)+'..':(message.msg) }}
+                              <div class="result">{{ (message.msg.length>120)? (message.msg | slice:0:120)+'..':(message.msg) }}
                               </div>
                           </div>
                       </div>
