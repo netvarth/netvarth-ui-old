@@ -23,6 +23,7 @@ export class InboxListComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   selectedMsg = -1;
   userDet;
+  shownomsgdiv = false;
   hide_reply_button = false;
 
   @Input() messages: any;
