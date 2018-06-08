@@ -722,6 +722,12 @@
 .icon-cloud:before {
   content: "\50"; }
 
+.icon-received:before {
+  content: "\2d"; }
+
+.icon-sent:before {
+  content: "\2e"; }
+
 html {
   font-size: 16px; }
   @media only screen and (max-width: 575px) {
@@ -976,7 +982,6 @@ app-footer {
             position: absolute;
         }*/ }
 
-/***  MENU Style Popup  #####*/
 .mat-menu-panel {
   -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
   -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
@@ -1014,7 +1019,6 @@ app-footer {
         .mat-menu-panel .mat-menu-content .mat-menu-item:hover i {
           color: black; }
 
-/*card style ####*/
 .card {
   padding: 20px;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) !important ;
@@ -2443,7 +2447,7 @@ header {
     .forgotpasswordmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .commonpopupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button,
     .googlemainmappopup .mat-dialog-content .mat-radio-group .mat-radio-button, .outer-card .mat-dialog-content .mat-radio-group .mat-radio-button, .consumerpopupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button {
-      margin-left: 10px; }
+      margin-right: 20px; }
     .signupmainclass .mat-dialog-content .pickerouter,
     .loginmainclass .mat-dialog-content .pickerouter,
     .moreoptionsmainclass .mat-dialog-content .pickerouter,
@@ -9272,6 +9276,232 @@ footer.dashb {
             padding-right: 20px; }
             .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .no-dta p {
               font-size: 1rem; }
+    .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content {
+      padding: 0; }
+      .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table {
+        margin: 0;
+        padding: 0;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background-clip: padding-box;
+        /* stops bg color from leaking outside the border: */ }
+        .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li {
+          list-style: none;
+          font-size: .875rem;
+          border-bottom: 2px solid #f2f2f2; }
+          .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer {
+            display: flex; }
+            @media only screen and (max-width: 767px) {
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer {
+                flex-direction: column; } }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer {
+                flex-direction: column; } }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td {
+              flex-grow: 1;
+              font-weight: 600;
+              padding: 10px 15px;
+              color: #222223;
+                                            /*&.th5, &.td5 {
+                                                width: 10%;
+                                                flex-grow: 0;
+                                                text-align: center;
+                                            }
+                                            &.td5 {
+                                                span {
+                                                    cursor: pointer;
+                                                    font-size: 1rem;
+
+                                                    &:hover {
+                                                        color: $cc-red;
+                                                    }
+                                                }
+                                            }*/ }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.th0, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.td0, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.th0, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0 {
+                width: 5%;
+                flex-grow: 0; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.th1, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.td1, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.th1, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td1 {
+                width: 15%;
+                flex-grow: 0; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.th2, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.td2, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.th2, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td2 {
+                width: 20%;
+                flex-grow: 0; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.th3, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.td3, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.th3, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td3 {
+                width: 15%;
+                flex-grow: 0; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.th4, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .th.td4, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.th4, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td4 {
+                width: 45%;
+                flex-grow: 0; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td {
+              font-weight: 500;
+              color: #666; }
+              @media only screen and (max-width: 767px) {
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td1, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td2, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td3, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td4, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td5 {
+                  width: 100%; }
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td5 {
+                  display: none; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td1, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td2, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td3, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td4, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td5 {
+                  width: 100%; }
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td5 {
+                  display: none; } }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td .label {
+                display: none;
+                font-weight: 600; }
+                @media only screen and (max-width: 767px) {
+                  .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td .label {
+                    display: block; } }
+                @media (min-width: 768px) and (max-width: 991px) {
+                  .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td .label {
+                    display: block; } }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td .result .more {
+                color: #00aef2; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0 {
+                text-align: center; }
+                @media only screen and (max-width: 767px) {
+                  .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0 {
+                    text-align: left; } }
+                @media (min-width: 768px) and (max-width: 991px) {
+                  .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0 {
+                    text-align: left; } }
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0 .icon-received {
+                  color: #00cc96; }
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0 .icon-sent {
+                  color: #00aef2; }
+          .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions {
+            padding: 15px; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action {
+              padding-bottom: 10px; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action [class^="icon-"], .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action [class*=" icon-"], .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action [class^="icon-"], .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action [class*=" icon-"] {
+                display: inline-block;
+                padding: 0 10px;
+                align-items: center;
+                cursor: pointer;
+                font-weight: 500;
+                padding-left: 30px;
+                position: relative;
+                margin-right: 5px;
+                -moz-transition: all 300ms;
+                -o-transition: all 300ms;
+                -webkit-transition: all 300ms;
+                transition: all 300ms; }
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action [class^="icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action [class*=" icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action [class^="icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action [class*=" icon-"]:before {
+                  position: absolute;
+                  left: 10px;
+                  top: 6px;
+                  width: 14px;
+                  height: 14px;
+                  font-size: .75rem;
+                  align-items: center; }
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action [class^="icon-"]:hover, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action [class*=" icon-"]:hover, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action [class^="icon-"]:hover, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action [class*=" icon-"]:hover {
+                  color: #00aef2; }
+          .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details {
+            padding-top: 0;
+            line-height: 1.8;
+            display: none;
+            margin-bottom: 50px;
+            height: 0;
+            -moz-transition: all 300ms;
+            -o-transition: all 300ms;
+            -webkit-transition: all 300ms;
+            transition: all 300ms; }
+            @media only screen and (max-width: 767px) {
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details {
+                padding-bottom: 0; } }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details {
+                padding-bottom: 0; } }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .result {
+              -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
+              -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .result, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action {
+              padding: 10px;
+              background: #f2f2f2;
+              -webkit-border-radius: 5px;
+              border-radius: 5px;
+              background-clip: padding-box;
+              /* stops bg color from leaking outside the border: */ }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action {
+              background: none; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details.show {
+              display: block;
+              margin-bottom: 0;
+              height: auto; }
+          .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions {
+            text-align: right;
+            display: none;
+            font-weight: 500; }
+            @media only screen and (max-width: 767px) {
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions {
+                border-top: 1px solid #f2f2f2; } }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions {
+                border-top: 1px solid #f2f2f2; } }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .icon-delete {
+              display: inline-block;
+              padding: 0 10px;
+              align-items: center;
+              cursor: pointer;
+              font-weight: 500;
+              padding-left: 30px;
+              position: relative;
+              margin-right: 5px;
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .icon-delete:before {
+                position: absolute;
+                left: 10px;
+                top: 4px;
+                width: 14px;
+                height: 14px;
+                font-size: .75rem;
+                align-items: center; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .icon-delete:hover {
+                color: #f24949; }
+          @media only screen and (max-width: 767px) {
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.tth {
+              display: none; } }
+          @media (min-width: 768px) and (max-width: 991px) {
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.tth {
+              display: none; } }
+          .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd {
+            -moz-transition: all 300ms;
+            -o-transition: all 300ms;
+            -webkit-transition: all 300ms;
+            transition: all 300ms; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd .outer .td {
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms;
+              cursor: pointer; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.active .outer .td {
+              color: #00aef2; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.active:hover {
+              background: #fff; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new {
+              border-bottom: 2px solid #f2f2f2;
+              background: #92f6c9; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .outer .td {
+                font-weight: 500;
+                color: #222223; }
+              @media only screen and (max-width: 767px) {
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .details .action, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .actions .action {
+                  border-bottom: 1px solid #dbdbdb; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .details .action, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .actions .action {
+                  border-bottom: 1px solid #dbdbdb; } }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .details .action [class^="icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .details .action [class*=" icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .actions .action [class^="icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .actions .action [class*=" icon-"]:before {
+                border-color: #dbdbdb; }
+            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd:hover {
+              background: #fbfbfb; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd:hover .outer .td {
+                color: #00aef2; }
+          .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li:last-child {
+            border: none; }
 .content.comn-cls .lbr .card {
   margin-bottom: 30px;
   font-size: .875rem; }
@@ -9311,7 +9541,7 @@ footer.dashb {
       .content.comn-cls .lbr .card .c-history li.started:before {
         background: #4de2ff; }
       .content.comn-cls .lbr .card .c-history li.checkedIn:before {
-        background: #4de2ff; }
+        background: #5568ff; }
       .content.comn-cls .lbr .card .c-history li.done:before {
         background: #b9acff; }
     .content.comn-cls .lbr .card .c-history:before {
@@ -9547,6 +9777,9 @@ footer.dashb {
                   }
               }
           }*/ }
+          .content .card .copy .inbox-table li .outer .th.th0, .content .card .copy .inbox-table li .outer .th.td0, .content .card .copy .inbox-table li .outer .td.th0, .content .card .copy .inbox-table li .outer .td.td0 {
+            width: 5%;
+            flex-grow: 0; }
           .content .card .copy .inbox-table li .outer .th.th1, .content .card .copy .inbox-table li .outer .th.td1, .content .card .copy .inbox-table li .outer .td.th1, .content .card .copy .inbox-table li .outer .td.td1 {
             width: 15%;
             flex-grow: 0; }
@@ -9557,13 +9790,13 @@ footer.dashb {
             width: 15%;
             flex-grow: 0; }
           .content .card .copy .inbox-table li .outer .th.th4, .content .card .copy .inbox-table li .outer .th.td4, .content .card .copy .inbox-table li .outer .td.th4, .content .card .copy .inbox-table li .outer .td.td4 {
-            width: 50%;
+            width: 45%;
             flex-grow: 0; }
         .content .card .copy .inbox-table li .outer .td {
           font-weight: 500;
           color: #666; }
           @media only screen and (max-width: 767px) {
-            .content .card .copy .inbox-table li .outer .td.td1, .content .card .copy .inbox-table li .outer .td.td2, .content .card .copy .inbox-table li .outer .td.td3, .content .card .copy .inbox-table li .outer .td.td4, .content .card .copy .inbox-table li .outer .td.td5 {
+            .content .card .copy .inbox-table li .outer .td.td0, .content .card .copy .inbox-table li .outer .td.td1, .content .card .copy .inbox-table li .outer .td.td2, .content .card .copy .inbox-table li .outer .td.td3, .content .card .copy .inbox-table li .outer .td.td4, .content .card .copy .inbox-table li .outer .td.td5 {
               width: 100%; }
             .content .card .copy .inbox-table li .outer .td.td5 {
               display: none; } }
@@ -9575,6 +9808,15 @@ footer.dashb {
                 display: block; } }
           .content .card .copy .inbox-table li .outer .td .result .more {
             color: #00aef2; }
+          .content .card .copy .inbox-table li .outer .td.td0 {
+            text-align: center; }
+            @media only screen and (max-width: 767px) {
+              .content .card .copy .inbox-table li .outer .td.td0 {
+                text-align: left; } }
+            .content .card .copy .inbox-table li .outer .td.td0 .icon-received {
+              color: #00cc96; }
+            .content .card .copy .inbox-table li .outer .td.td0 .icon-sent {
+              color: #00aef2; }
       .content .card .copy .inbox-table li .details, .content .card .copy .inbox-table li .actions {
         padding: 15px; }
         .content .card .copy .inbox-table li .details .action, .content .card .copy .inbox-table li .actions .action {
@@ -9615,11 +9857,15 @@ footer.dashb {
         @media only screen and (max-width: 767px) {
           .content .card .copy .inbox-table li .details {
             padding-bottom: 0; } }
+        .content .card .copy .inbox-table li .details .result {
+          -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
+          -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset; }
         .content .card .copy .inbox-table li .details .result, .content .card .copy .inbox-table li .details .action {
           padding: 10px;
           background: #f2f2f2;
-          -webkit-border-radius: 10px;
-          border-radius: 10px;
+          -webkit-border-radius: 5px;
+          border-radius: 5px;
           background-clip: padding-box;
           /* stops bg color from leaking outside the border: */ }
         .content .card .copy .inbox-table li .details .action {
@@ -9661,27 +9907,36 @@ footer.dashb {
       @media only screen and (max-width: 767px) {
         .content .card .copy .inbox-table li.tth {
           display: none; } }
-      .content .card .copy .inbox-table li.ttd .outer .td {
+      .content .card .copy .inbox-table li.ttd {
         -moz-transition: all 300ms;
         -o-transition: all 300ms;
         -webkit-transition: all 300ms;
-        transition: all 300ms;
-        cursor: pointer; }
-      .content .card .copy .inbox-table li.ttd.active .outer .td {
-        color: #00aef2; }
-      .content .card .copy .inbox-table li.ttd.new {
-        border-bottom: 2px solid #f2f2f2;
-        background: #92f6c9; }
-        .content .card .copy .inbox-table li.ttd.new .outer .td {
-          font-weight: 500;
-          color: #222223; }
-        @media only screen and (max-width: 767px) {
-          .content .card .copy .inbox-table li.ttd.new .details .action, .content .card .copy .inbox-table li.ttd.new .actions .action {
-            border-bottom: 1px solid #dbdbdb; } }
-        .content .card .copy .inbox-table li.ttd.new .details .action [class^="icon-"]:before, .content .card .copy .inbox-table li.ttd.new .details .action [class*=" icon-"]:before, .content .card .copy .inbox-table li.ttd.new .actions .action [class^="icon-"]:before, .content .card .copy .inbox-table li.ttd.new .actions .action [class*=" icon-"]:before {
-          border-color: #dbdbdb; }
-      .content .card .copy .inbox-table li.ttd:hover .outer .td {
-        color: #00aef2; }
+        transition: all 300ms; }
+        .content .card .copy .inbox-table li.ttd .outer .td {
+          -moz-transition: all 300ms;
+          -o-transition: all 300ms;
+          -webkit-transition: all 300ms;
+          transition: all 300ms;
+          cursor: pointer; }
+        .content .card .copy .inbox-table li.ttd.active .outer .td {
+          color: #00aef2; }
+        .content .card .copy .inbox-table li.ttd.active:hover {
+          background: #fff; }
+        .content .card .copy .inbox-table li.ttd.new {
+          border-bottom: 2px solid #f2f2f2;
+          background: #92f6c9; }
+          .content .card .copy .inbox-table li.ttd.new .outer .td {
+            font-weight: 500;
+            color: #222223; }
+          @media only screen and (max-width: 767px) {
+            .content .card .copy .inbox-table li.ttd.new .details .action, .content .card .copy .inbox-table li.ttd.new .actions .action {
+              border-bottom: 1px solid #dbdbdb; } }
+          .content .card .copy .inbox-table li.ttd.new .details .action [class^="icon-"]:before, .content .card .copy .inbox-table li.ttd.new .details .action [class*=" icon-"]:before, .content .card .copy .inbox-table li.ttd.new .actions .action [class^="icon-"]:before, .content .card .copy .inbox-table li.ttd.new .actions .action [class*=" icon-"]:before {
+            border-color: #dbdbdb; }
+        .content .card .copy .inbox-table li.ttd:hover {
+          background: #fbfbfb; }
+          .content .card .copy .inbox-table li.ttd:hover .outer .td {
+            color: #00aef2; }
       .content .card .copy .inbox-table li:last-child {
         border: none; }
 
@@ -9859,7 +10114,8 @@ header.consumer {
             height: auto; } }
         @media only screen and (max-width: 575px) {
           header.consumer .tp-1 .tp-r .tc1 {
-            padding-top: 0px; } }
+            padding-top: 0px;
+            margin-bottom: 20px; } }
         @media (min-width: 768px) and (max-width: 991px) {
           header.consumer .tp-1 .tp-r .tc1 {
             height: 70px; } }
@@ -9878,9 +10134,6 @@ header.consumer {
             color: #666;
             margin-left: auto;
             margin-right: 15px; }
-            @media only screen and (max-width: 767px) {
-              header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps {
-                margin-bottom: 15px; } }
             header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx {
               padding-left: 30px;
               cursor: pointer; }
@@ -9921,6 +10174,10 @@ header.consumer {
                   align-items: center;
                   width: 21px;
                   height: 17px; }
+                  @media only screen and (max-width: 575px) {
+                    header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx i {
+                      width: 18px;
+                      height: 11px; } }
           header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem {
             font-size: .875rem;
             font-weight: 500; }

@@ -177,8 +177,7 @@ app-footer {
     }
 }
 
-/***  MENU Style Popup  #####*/
-
+// MENU Style Popup
 .mat-menu-panel {
     @include box-shadow(0, 0, 30px, rgba(0,0,0,.1));
     
@@ -225,7 +224,7 @@ app-footer {
     }
 }
 
-/*card style ####*/
+// Card Style
 .card {
     padding: 20px;
     @include box-shadow(0, 0, 10px, rgba(0,0,0,.05) !important);

@@ -5251,7 +5251,7 @@ footer {
     
 }
 
-// ### Check-In View Page
+// ### View Check-In Page
 .content {
     &.comn-cls {
         .lbl {
@@ -5338,9 +5338,314 @@ footer {
                                         font-size: 1rem;
                                     }
                                 }
-                                
-                                .chistory {
-                                    
+                            }
+                        }
+                    }
+                    &.communication-history {
+                        .mat-expansion-panel-content {
+                            padding: 0;
+                            
+                            .inbox-table {
+                                margin: 0;
+                                padding: 0;
+                                @include border-radius(5px);
+
+                                li {
+                                    list-style: none;
+                                    font-size: .875rem;
+                                    border-bottom: 2px solid $cc-body;
+
+                                    .outer {
+                                        display: flex;
+
+                                        @include respond-to(ynw-767) {
+                                            flex-direction: column;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            flex-direction: column;
+                                        }
+
+
+                                        .th, .td {
+                                            flex-grow: 1;
+                                            font-weight: 600;
+                                            padding: 10px 15px;
+                                            color: $linkblack;
+
+                                            &.th0, &.td0 {
+                                                width: 5%;
+                                                flex-grow: 0;
+                                            }
+                                            &.th1, &.td1 {
+                                                width: 15%;
+                                                flex-grow: 0;
+                                            }
+                                            &.th2, &.td2 {
+                                                width: 20%;
+                                                flex-grow: 0;
+                                            }
+                                            &.th3, &.td3 {
+                                                width: 15%;
+                                                flex-grow: 0;
+                                            }
+                                            &.th4, &.td4 {
+                                                width: 45%;
+                                                flex-grow: 0;
+                                            }
+                                            /*&.th5, &.td5 {
+                                                width: 10%;
+                                                flex-grow: 0;
+                                                text-align: center;
+                                            }
+                                            &.td5 {
+                                                span {
+                                                    cursor: pointer;
+                                                    font-size: 1rem;
+
+                                                    &:hover {
+                                                        color: $cc-red;
+                                                    }
+                                                }
+                                            }*/
+                                        }
+
+                                        .td {
+                                            font-weight: 500;
+                                            color: $cc-gray;
+
+                                            @include respond-to(ynw-767) {
+                                                &.td0, &.td1, &.td2, &.td3, &.td4, &.td5 {
+                                                    width: 100%;
+                                                }
+                                                &.td5 {
+                                                    display: none;
+                                                }
+                                            }
+                                            @include respond-to(ynw-768-991) {
+                                                &.td0, &.td1, &.td2, &.td3, &.td4, &.td5 {
+                                                    width: 100%;
+                                                }
+                                                &.td5 {
+                                                    display: none;
+                                                }
+                                            }
+
+                                            .label {
+                                                display: none;
+                                                font-weight: 600;
+
+                                                @include respond-to(ynw-767) {
+                                                    display: block;
+                                                }
+                                                @include respond-to(ynw-768-991) {
+                                                    display: block;
+                                                }
+                                            }
+                                            .result {                                
+                                                .more {
+                                                    color: $linkblue;
+                                                }
+
+                                            }
+                                            &.td0 {
+                                                text-align: center;
+
+                                                @include respond-to(ynw-767) {text-align: left;}
+                                                @include respond-to(ynw-768-991) {text-align: left;}
+
+                                                .icon-received {
+                                                    color: $green;
+                                                }
+                                                .icon-sent {
+                                                    color: $linkblue;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .details, .actions {
+                                        padding: 15px;
+
+                                        .action {
+                                            padding-bottom: 10px;
+
+
+                                            [class^="icon-"], [class*=" icon-"] {
+                                                display: inline-block;
+                                                padding: 0 10px;
+                                                align-items: center;
+                                                cursor: pointer;
+                                                font-weight: 500;
+                                                padding-left: 30px;
+                                                position: relative;
+                                                margin-right: 5px;
+                                                @include transition(all 300ms);
+
+                                                &:before {
+                                                    position: absolute;
+                                                    left: 10px;
+                                                    top: 6px;
+                                                    width: 14px;
+                                                    height: 14px;
+                                                    font-size: .75rem;
+                                                    align-items: center;
+                                                }
+
+                                                &:hover {
+                                                    color: $linkblue;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .details {
+                                        padding-top: 0;
+                                        line-height: 1.8;
+                                        display: none;
+                                        margin-bottom: 50px;
+                                        height: 0;
+                                        @include transition(all 300ms);
+
+                                        @include respond-to(ynw-767) {
+                                            padding-bottom: 0;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            padding-bottom: 0;
+                                        }
+
+                                        .result {
+                                            @include box-shadow(0, 0, 10px, rgba(0,0,0,.05), inset);
+                                        }
+
+                                        .result, .action {
+                                            padding: 10px;
+                                            background: $cc-body;
+                                            @include border-radius(5px);
+                                        }
+                                        .action {
+                                            background: none;
+                                        }
+
+                                        &.show {
+                                            display: block;
+                                            margin-bottom: 0;
+                                            height: auto;
+                                        }
+                                    }
+
+                                    .actions {
+                                        text-align: right;
+                                        display: none;
+                                        font-weight: 500;
+
+                                        @include respond-to(ynw-767) {
+                                            border-top: 1px solid $cc-body;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            border-top: 1px solid $cc-body;
+                                        }
+
+                                        .icon-delete {
+                                            display: inline-block;
+                                            padding: 0 10px;
+                                            align-items: center;
+                                            cursor: pointer;
+                                            font-weight: 500;
+                                            padding-left: 30px;
+                                            position: relative;
+                                            margin-right: 5px;
+                                            @include transition(all 300ms);
+
+                                            &:before {
+                                                position: absolute;
+                                                left: 10px;
+                                                top: 4px;
+                                                width: 14px;
+                                                height: 14px;
+                                                font-size: .75rem;
+                                                align-items: center;
+                                            }
+
+                                            &:hover {
+                                                color: $cc-red;
+                                            }
+                                        }
+                                    }
+
+                                    &.tth {
+
+                                        @include respond-to(ynw-767) {
+                                            display: none;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            display: none;
+                                        }
+                                    }
+                                    &.ttd {
+                                        @include transition(all 300ms);
+
+                                        .outer {
+                                            .td {
+                                                @include transition(all 300ms);
+                                                cursor: pointer;
+                                            }
+                                        }
+
+                                        &.active {
+                                            .outer {
+                                                .td {
+                                                    color: $linkblue;
+                                                }
+                                            }
+
+                                            &:hover {
+                                                background: $white;
+                                            }
+                                        }
+
+                                        &.new{
+                                            border-bottom: 2px solid $cc-body;
+                                            background: lighten($acceptbill, 10%);
+
+                                            .outer {
+                                                .td {
+                                                    font-weight: 500;
+                                                    color: $linkblack;
+                                                }
+                                            }
+
+                                            .details, .actions {
+                                                .action {
+                                                    @include respond-to(ynw-767) {
+                                                        border-bottom: 1px solid $cc-ash;
+                                                    }
+                                                    @include respond-to(ynw-768-991) {
+                                                        border-bottom: 1px solid $cc-ash;
+                                                    }
+
+                                                    [class^="icon-"], [class*=" icon-"] {
+                                                        &:before {
+                                                            border-color: $cc-ash;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        &:hover {
+                                            background: #fbfbfb;
+
+                                            .outer {
+                                                .td {
+                                                    color: $linkblue;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    &:last-child {
+                                        border: none;
+                                    }
                                 }
                             }
                         }
@@ -5404,7 +5709,7 @@ footer {
                         }
                         &.checkedIn {
                             &:before {
-                                background: $start;
+                                background: $checkedin;
                             }
                         }
                         &.done {
@@ -5733,7 +6038,11 @@ footer {
                             font-weight: 600;
                             padding: 15px;
                             color: $linkblack;
-
+                            
+                            &.th0, &.td0 {
+                                width: 5%;
+                                flex-grow: 0;
+                            }
                             &.th1, &.td1 {
                                 width: 15%;
                                 flex-grow: 0;
@@ -5747,7 +6056,7 @@ footer {
                                 flex-grow: 0;
                             }
                             &.th4, &.td4 {
-                                width: 50%;
+                                width: 45%;
                                 flex-grow: 0;
                             }
                             /*&.th5, &.td5 {
@@ -5772,7 +6081,7 @@ footer {
                             color: $cc-gray;
                             
                             @include respond-to(ynw-767) {
-                                &.td1, &.td2, &.td3, &.td4, &.td5 {
+                                &.td0, &.td1, &.td2, &.td3, &.td4, &.td5 {
                                     width: 100%;
                                 }
                                 &.td5 {
@@ -5794,7 +6103,18 @@ footer {
                                 }
                                 
                             }
-                            
+                            &.td0 {
+                                text-align: center;
+                                
+                                @include respond-to(ynw-767) {text-align: left;}
+                                
+                                .icon-received {
+                                    color: $green;
+                                }
+                                .icon-sent {
+                                    color: $linkblue;
+                                }
+                            }
                         }
                     }
                     
@@ -5845,10 +6165,14 @@ footer {
                             padding-bottom: 0;
                         }
                         
+                        .result {
+                            @include box-shadow(0, 0, 10px, rgba(0,0,0,.05), inset);
+                        }
+                        
                         .result, .action {
                             padding: 10px;
                             background: $cc-body;
-                            @include border-radius(10px);
+                            @include border-radius(5px);
                         }
                         .action {
                             background: none;
@@ -5904,6 +6228,8 @@ footer {
                         }
                     }
                     &.ttd {
+                        @include transition(all 300ms);
+                        
                         .outer {
                             .td {
                                 @include transition(all 300ms);
@@ -5917,7 +6243,12 @@ footer {
                                     color: $linkblue;
                                 }
                             }
+                            
+                            &:hover {
+                                background: $white;
+                            }
                         }
+                        
                         &.new{
                             border-bottom: 2px solid $cc-body;
                             background: lighten($acceptbill, 10%);
@@ -5943,7 +6274,10 @@ footer {
                                 }
                             }
                         }
+                        
                         &:hover {
+                            background: #fbfbfb;
+                            
                             .outer {
                                 .td {
                                     color: $linkblue;
@@ -5951,6 +6285,7 @@ footer {
                             }
                         }
                     }
+                    
                     &:last-child {
                         border: none;
                     }
