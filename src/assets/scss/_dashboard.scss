@@ -5274,10 +5274,13 @@ footer {
                         flex-wrap: wrap;
 
                         .item {
-                            flex-flow: 1;
                             font-weight: 600;
                             width: 33%;
                             margin-bottom: 20px;
+                            
+                            @include respond-to(ynw-767) {
+                                width: 50%
+                            }
 
                             .ttle {
                                 color: $cc-mediumgray;
@@ -5289,8 +5292,59 @@ footer {
 
                     .btm {
                         display: flex;
+                        flex-wrap: wrap;
+                        
                         button {
                             margin-right: 10px;
+                            border: none;
+                            position: relative;
+                            padding-left: 22px;
+                            
+                            &:hover {
+                                background: transparent;
+                                color: $linkblue;
+                            }
+                            
+                            &:before {
+                                position: absolute;
+                                @include font-custom;
+                                width: 14px;
+                                height: 14px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                left: 0;
+                                font-size: 1rem;
+                                font-weight: 400;
+                            }
+                            
+                            &.communicate {
+                                &:before {
+                                    content: "\53";
+                                }
+                            }
+                            &.addprovider {
+                                &:before {
+                                    content: "\55";
+                                }
+                            }
+                            &.cancel {
+                                margin-left: auto;
+                                margin-right: 0;
+                                
+                                @include respond-to(ynw-767) {
+                                    margin-left: 0;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    margin-left: 0;
+                                }
+                                
+                                &:before {
+                                    content: "\69";
+                                    text-transform: none;
+                                    font-size: .75rem;
+                                }
+                            }
                         }
                     }
                 }
@@ -5645,6 +5699,39 @@ footer {
 
                                     &:last-child {
                                         border: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &.provider-notes {
+                        .mat-expansion-panel {
+                            .mat-expansion-panel-content {
+                                .mat-expansion-panel-body {
+                                    .pnotes {
+                                        margin-bottom: 20px;
+                                        border-bottom: dashed 1px $cc-ash;
+                                        padding-bottom: 15px;
+                                        
+                                        p {
+                                            margin-bottom: 0;
+                                            font-weight: 600;
+                                            font-size: .75rem;
+                                            color: $cc-mediumgray;
+                                            
+                                            &:first-child {
+                                                margin-bottom: 5px;
+                                                font-weight: 500;
+                                                font-size: .875rem;
+                                                color: $linkblack;
+                                            }
+                                        }
+                                        
+                                        &:last-child {
+                                            margin-bottom: 0;
+                                            border: none;
+                                            padding-bottom: 0;
+                                        }
                                     }
                                 }
                             }

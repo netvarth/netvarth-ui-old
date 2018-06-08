@@ -9225,18 +9225,55 @@ footer.dashb {
       display: flex;
       flex-wrap: wrap; }
       .content.comn-cls .lbl .card .c-details .tp .item {
-        flex-flow: 1;
         font-weight: 600;
         width: 33%;
         margin-bottom: 20px; }
+        @media only screen and (max-width: 767px) {
+          .content.comn-cls .lbl .card .c-details .tp .item {
+            width: 50%; } }
         .content.comn-cls .lbl .card .c-details .tp .item .ttle {
           color: #999999;
           display: block;
           font-weight: 500; }
     .content.comn-cls .lbl .card .c-details .btm {
-      display: flex; }
+      display: flex;
+      flex-wrap: wrap; }
       .content.comn-cls .lbl .card .c-details .btm button {
-        margin-right: 10px; }
+        margin-right: 10px;
+        border: none;
+        position: relative;
+        padding-left: 22px; }
+        .content.comn-cls .lbl .card .c-details .btm button:hover {
+          background: transparent;
+          color: #00aef2; }
+        .content.comn-cls .lbl .card .c-details .btm button:before {
+          position: absolute;
+          font-family: "custom-ynw" !important;
+          width: 14px;
+          height: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          left: 0;
+          font-size: 1rem;
+          font-weight: 400; }
+        .content.comn-cls .lbl .card .c-details .btm button.communicate:before {
+          content: "\53"; }
+        .content.comn-cls .lbl .card .c-details .btm button.addprovider:before {
+          content: "\55"; }
+        .content.comn-cls .lbl .card .c-details .btm button.cancel {
+          margin-left: auto;
+          margin-right: 0; }
+          @media only screen and (max-width: 767px) {
+            .content.comn-cls .lbl .card .c-details .btm button.cancel {
+              margin-left: 0; } }
+          @media (min-width: 768px) and (max-width: 991px) {
+            .content.comn-cls .lbl .card .c-details .btm button.cancel {
+              margin-left: 0; } }
+          .content.comn-cls .lbl .card .c-details .btm button.cancel:before {
+            content: "\69";
+            text-transform: none;
+            font-size: .75rem; }
   .content.comn-cls .lbl .card .mat-accordion {
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -9502,6 +9539,24 @@ footer.dashb {
                 color: #00aef2; }
           .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li:last-child {
             border: none; }
+    .content.comn-cls .lbl .card .mat-accordion.provider-notes .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .pnotes {
+      margin-bottom: 20px;
+      border-bottom: dashed 1px #dbdbdb;
+      padding-bottom: 15px; }
+      .content.comn-cls .lbl .card .mat-accordion.provider-notes .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .pnotes p {
+        margin-bottom: 0;
+        font-weight: 600;
+        font-size: .75rem;
+        color: #999999; }
+        .content.comn-cls .lbl .card .mat-accordion.provider-notes .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .pnotes p:first-child {
+          margin-bottom: 5px;
+          font-weight: 500;
+          font-size: .875rem;
+          color: #222223; }
+      .content.comn-cls .lbl .card .mat-accordion.provider-notes .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .pnotes:last-child {
+        margin-bottom: 0;
+        border: none;
+        padding-bottom: 0; }
 .content.comn-cls .lbr .card {
   margin-bottom: 30px;
   font-size: .875rem; }

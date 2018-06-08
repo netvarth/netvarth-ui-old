@@ -43,6 +43,7 @@ export class ProviderDetailComponent implements OnInit {
   servicesjson: any = [];
   galleryjson: any = [];
   locationjson: any = [];
+  waitlisttime_arr: any = [];
   favprovs: any = [];
   settings_exists = false;
   business_exists = false;
@@ -117,7 +118,6 @@ export class ProviderDetailComponent implements OnInit {
                     this.getbusinessprofiledetails_json('services', true);
                     this.getbusinessprofiledetails_json('gallery', true);
                     this.getbusinessprofiledetails_json('settings', true);
-                    this.getbusinessprofiledetails_json('location', true);
                     // this.getbusinessprofiledetails_json('terminologies', true);
                   },
                   error => {
@@ -164,6 +164,7 @@ export class ProviderDetailComponent implements OnInit {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
+            this.getbusinessprofiledetails_json('location', true);
           break;
           }
           case 'services': {
@@ -229,9 +230,11 @@ export class ProviderDetailComponent implements OnInit {
                   this.getServiceByLocationid(this.locationjson[i].id, i);
                   this.locationjson[i]['checkins'] = [];
                   this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
-                  locarr.push({'locid': this.locationjson[i].id, 'locindx': i});
+                  // this.locationjson[i].fields = [];
+                  locarr.push({'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i});
             }
             console.log('locarr', locarr);
+            this.getWaitingTime(locarr);
           break;
           }
           /* case 'menu': {
@@ -470,7 +473,7 @@ export class ProviderDetailComponent implements OnInit {
 
     });
   }
-  showcheckInButton() {
+  showcheckInButton(obj) {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.service_exists && this.gallery_exists && this.location_exists) {
       return true;
     }
@@ -481,16 +484,64 @@ export class ProviderDetailComponent implements OnInit {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
           // if (provids[i] !== undefined) {
-            post_provids_locid.push(provids_locid[i].provid);
+            post_provids_locid.push(provids_locid[i].locid);
          // }
       }
+    console.log('wtime', post_provids_locid);
     this.providerdetailserviceobj.getEstimatedWaitingTime(post_provids_locid)
       .subscribe (data => {
          console.log('waitingtime api', data);
-        /*this.waitlisttime_arr = data;
+        this.waitlisttime_arr = data;
         if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
           this.waitlisttime_arr = [];
-        }*/
+        }
+        const today = new Date();
+        const dd = today.getDate();
+        const mm = today.getMonth() + 1; // January is 0!
+        const yyyy = today.getFullYear();
+        let cday = '';
+        if (dd < 10) {
+            cday = '0' + dd;
+        } else {
+          cday = '' + dd;
+        }
+        let cmon;
+        if (mm < 10) {
+          cmon = '0' + mm;
+        } else {
+          cmon = '' + mm;
+        }
+        const dtoday = yyyy + '-' + cmon + '-' + cday;
+        const ctoday = cday + '/' + cmon + '/' + yyyy;
+        let locindx;
+        for (let i = 0; i < this.waitlisttime_arr.length; i++) {
+          locindx = provids_locid[i].locindx;
+          console.log('locindx', locindx);
+          this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
+          this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+          this.locationjson[locindx]['estimatedtime_det'] = [];
+
+          if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+            this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 1;
+            if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+              this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                 + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+            } else {
+              this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+              + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+            }
+          } else {
+            this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+            this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 2;
+            if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+              this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+            } else {
+              this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+            }
+          }
+        }
+        console.log('loc final', this.locationjson);
       });
     }
   }
