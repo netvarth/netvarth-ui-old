@@ -17,6 +17,11 @@
                                   <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName}} {{waitlist_data.consumer.userProfile.lastName}}</span></div>
                                   <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date}}</span></div>
                                   <div class="item"><span class="ttle">Location:</span><span>{{waitlist_data.queue.location.place}}</span></div>
+                                  <div class="item"><span class="ttle">Waitlist For:</span>
+                                    <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
+                                        {{user.firstName}} {{user.lastName}}
+                                    </span>
+                                  </div>
 
                                   <div class="item"><span class="ttle">Service:</span><span> {{waitlist_data.service.name}}</span></div>
                                   <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_data.queue.name}}</span></div>
