@@ -28,6 +28,7 @@ export class InboxOuterComponent implements OnInit {
   ];
   selectedMsg = -1;
   userDet;
+  obtainedMsgs = false;
 
   constructor( private inbox_services: InboxServices,
     private router: Router, private dialog: MatDialog,
@@ -45,7 +46,7 @@ export class InboxOuterComponent implements OnInit {
       data => {
           this.messages = data;
           this.sortMessages();
-
+          this.obtainedMsgs = true;
       },
       error => {
 

@@ -23,6 +23,7 @@ export class InboxListComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   selectedMsg = -1;
   userDet;
+  shownomsgdiv = false;
 
   @Input() messages: any;
   @Input() replybutton: any;
@@ -34,7 +35,6 @@ export class InboxListComponent implements OnInit {
 
   ngOnInit() {
     this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
-
   }
 
 

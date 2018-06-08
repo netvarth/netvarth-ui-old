@@ -108,7 +108,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.inboxCntFetched = false;
-    this.getInboxUnreadCnt();
+    // this.getInboxUnreadCnt();
 
     // Section which handles the periodic reload
     if (this.ctype === 'consumer' || this.ctype === 'provider') {

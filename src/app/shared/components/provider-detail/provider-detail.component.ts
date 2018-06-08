@@ -202,6 +202,7 @@ export class ProviderDetailComponent implements OnInit {
             this.locationjson = res;
             this.location_exists = true;
             let schedule_arr: any = [];
+            const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
                   if (this.locationjson[i].bSchedule) {
                     if (this.locationjson[i].bSchedule.timespec) {
@@ -228,7 +229,9 @@ export class ProviderDetailComponent implements OnInit {
                   this.getServiceByLocationid(this.locationjson[i].id, i);
                   this.locationjson[i]['checkins'] = [];
                   this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
+                  locarr.push({'locid': this.locationjson[i].id, 'locindx': i});
             }
+            console.log('locarr', locarr);
           break;
           }
           /* case 'menu': {
@@ -470,6 +473,25 @@ export class ProviderDetailComponent implements OnInit {
   showcheckInButton() {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.service_exists && this.gallery_exists && this.location_exists) {
       return true;
+    }
+  }
+
+  private getWaitingTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+          // if (provids[i] !== undefined) {
+            post_provids_locid.push(provids_locid[i].provid);
+         // }
+      }
+    this.providerdetailserviceobj.getEstimatedWaitingTime(post_provids_locid)
+      .subscribe (data => {
+         console.log('waitingtime api', data);
+        /*this.waitlisttime_arr = data;
+        if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
+          this.waitlisttime_arr = [];
+        }*/
+      });
     }
   }
 }

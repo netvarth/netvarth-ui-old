@@ -770,11 +770,13 @@ export class SearchDetailComponent implements OnInit {
             let locationcnt = 0;
             for (let i = 0 ; i < this.search_data.hits.hit.length ; i++) {
               locationcnt = 0;
-              const providarr = this.search_data.hits.hit[i].id.split('-');
+              // const providarr = this.search_data.hits.hit[i].id.split('-');
+              const provid = this.search_data.hits.hit[i].id;
               // this.result_provid[i] = this.search_data.hits.hit[i].id;
               if (this.search_data.hits.hit[i].fields.claimable !== '1') {
                 // this.result_provid[i] = providarr[0]; // this.search_data.hits.hit[i].id;
-                this.result_providdet.push({'provid': providarr[0], 'searchindx': i});
+                // this.result_providdet.push({'provid': providarr[0], 'searchindx': i});
+                this.result_providdet.push({'provid': provid, 'searchindx': i});
               } else {
                 // console.log('claimable', this.search_data.hits.hit[i].fields.claimable );
               }

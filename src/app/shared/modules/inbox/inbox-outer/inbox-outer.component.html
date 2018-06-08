@@ -8,7 +8,7 @@
       <div class="container">
           <div class="row">
               <div class="card p0">
-                <app-inbox-list [messages]="messages" [replybutton]="true" (reloadApi)= "getInboxMessages()"></app-inbox-list>
+                <app-inbox-list [messages]="messages" [replybutton]="true" (reloadApi)= "getInboxMessages()" *ngIf="obtainedMsgs"></app-inbox-list>
               </div>
           </div>
       </div>
