@@ -52,7 +52,7 @@
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
                               <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-                               (reloadApi)= "getCommunicationHistory()"></app-inbox-list>
+                               (reloadApi)= "getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
 
                             </mat-expansion-panel>
                           </mat-accordion>

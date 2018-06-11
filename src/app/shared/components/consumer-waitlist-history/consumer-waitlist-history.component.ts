@@ -23,6 +23,10 @@ export class ConsumerWaitlistHistoryComponent implements OnInit {
     selectedMsg = -1;
     userDet;
 
+    // Edited//
+    public domain;
+    // Edited//
+
   constructor(
     private router: Router, private dialog: MatDialog,
     private shared_functions: SharedFunctions,
@@ -99,4 +103,9 @@ export class ConsumerWaitlistHistoryComponent implements OnInit {
   closeMsg() {
     this.selectedMsg = -1;
   }*/
+
+  // Edited//
+  handlesearchClick(obj) {
+  }
+   // Edited//
 }

@@ -86,6 +86,11 @@ export class ProviderDetailComponent implements OnInit {
       }
     ]
   };
+
+// Edited//
+  public domain;
+// Edited//
+
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -545,5 +550,14 @@ export class ProviderDetailComponent implements OnInit {
       });
     }
   }
+  // Edited//
+  handlesearchClick(obj) {
+  }
+
+  onButtonBeforeHook(event: ButtonEvent) {
+  }
+
+  onButtonAfterHook(event: ButtonEvent) {}
+ // Edited//
 }
 
