@@ -362,8 +362,9 @@ export class SharedServices {
       return this.servicemeta.httpGet(url);
     }
 
-    getPaymentStatus() {
-      return ;
+    getPaymentStatus(type, uuid) {
+      const url = type + '/payment/status/' + uuid;
+      return this.servicemeta.httpGet(url);
     }
 
     getInboxUnreadCount(typ) {

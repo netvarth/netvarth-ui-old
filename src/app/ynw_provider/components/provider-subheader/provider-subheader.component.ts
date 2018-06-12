@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-
+import { AddProviderCustomerComponent } from '../add-provider-customer/add-provider-customer.component';
 
 
 @Component({
@@ -20,8 +20,21 @@ export class ProviderSubeaderComponent implements OnInit {
 
   @Input() activeTab: string;
   userdet: any = [];
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
+  }
+
+  createCustomer() {
+
+    const dialogRef = this.dialog.open(AddProviderCustomerComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass'],
+      data: {
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

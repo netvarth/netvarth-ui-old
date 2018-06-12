@@ -1,31 +1,87 @@
 <h1 class="mat-dialog-title">Invoice<button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
-  <!-- <p>Account Id: {{invoice.accountId}}</p> -->
-  <p>Provider Name: {{invoice.accountId}}</p>
-  <p>Service Period: {{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date: dateFormat}} </p>
-<p>Services</p>
-<div *ngIf="invoice.licensePkgDetails">
-    <p>{{invoice.licensePkgDetails.licenseName}}</p>
-    <p>{{invoice.licensePkgDetails.amount  | currency:'INR':'symbol':'.2-2'}}</p>
-</div>
 
-<div *ngFor="let addon of invoice.addonDetails">
-    <p>{{addon.addonName}}</p>
-    <p>{{addon.amount  | currency:'INR':'symbol':'.2-2'}}</p>
-</div>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="invoice">
+                    <div class="outer">
+                        <div class="ivc">
+                            <span class="label">Service Period</span>
+                            <span class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date: dateFormat}}</span>
+                        </div>
 
-<ng-container *ngIf="payment_status === 'NotPaid'">
-  <p>Payment Options</p>
-  <div>
-    <mat-radio-group [(ngModel)]="pay_data.paymentMode">
-      <mat-radio-button [value]="opt.name"
-      *ngFor="let opt of payment_modes">{{opt.Displayname}}
-      </mat-radio-button>
-    </mat-radio-group>
-  </div>
-</ng-container>
+                        <h4>Services</h4>
 
-<p>Amount to pay: {{invoice.amount | currency:'INR':'symbol':'.2-2'}}</p>
+                        <div class="ivc" *ngIf="invoice.licensePkgDetails">
+                            <span class="label"><span>{{invoice.licensePkgDetails.licenseName}}</span></span>
+                            <span class="result">{{invoice.licensePkgDetails.amount  | currency:'INR':'symbol':'.2-2'}}</span>
+                        </div>
+
+                        <div class="ivc" *ngFor="let addon of invoice.addonDetails">
+                            <span class="label"><span>{{addon.addonName}}</span></span>
+                            <span class="result">{{addon.amount  | currency:'INR':'symbol':'.2-2'}}</span>
+                        </div>
+
+                        <div class="ivc" *ngIf="source != 'payment-history'">
+                            <span class="label">Amount to pay</span>
+                            <span class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span>
+                        </div>
+                    </div>
+                    <div class="payment-details" *ngIf="source === 'payment-history' && payment_detail && payment_detail.length > 0">
+                        <div class="pay-tbl">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Payment Gateway</th>
+                                        <th>Payment Mode</th>
+                                        <th>Amount</th>
+                                        <th>Payment Date</th>
+                                        <th>Payment Id</th>
+                                        <th>Payment Ref Id</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor=" let payment of payment_detail.slice().reverse()">
+                                        <td data-title="Payment Gateway">{{payment.paymentGateway}}</td>
+                                        <td data-title="Payment Mode"> {{payment.paymentMode}}
+                                        </td>
+                                        <td data-title="Amount">
+                                            {{payment.amount  | currency:'INR':'symbol':'.2-2'}}
+                                        </td>
+                                        <td data-title="Payment Date">
+                                            {{payment.paymentOn | date: dateFormat}}
+                                        </td>
+                                        <td data-title="Payment Id">
+                                            {{payment.paymentId}}
+                                        </td>
+                                        <td data-title="Payment Ref Id">
+                                            {{payment.paymentRefId}}
+                                        </td>
+                                        <td data-title="Status">
+                                            {{payment.status || 'FAILED'}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="payment-option" *ngIf="payment_status === 'NotPaid' && source != 'payment-history'">
+                        <h4>Payment Options</h4>
+                        <div>
+                          <mat-radio-group [(ngModel)]="pay_data.paymentMode">
+                            <mat-radio-button [value]="opt.name"
+                            *ngFor="let opt of payment_modes">{{opt.Displayname}}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>
 
@@ -34,7 +90,7 @@
     <button  type="button" mat-button class="cs-btn bt1"
     [disabled]="!pay_data.amount || pay_data.amount == 0 ||
     !pay_data.uuid || !pay_data.paymentMode"
-    (click)="makePayment()">Make Payment</button>
+    (click)="makePayment()" *ngIf="source != 'payment-history'">Make Payment</button>
      <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 </mat-dialog-actions>
 

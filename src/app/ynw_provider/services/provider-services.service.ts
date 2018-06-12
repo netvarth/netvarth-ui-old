@@ -642,4 +642,20 @@ export class ProviderServices {
   acknowledgeAlert(id) {
     return this.servicemeta.httpPut('provider/alerts/' + id);
   }
+
+  getProviderCustomers(filter = {}) {
+    const url = 'provider/waitlist/consumers' ;
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  getProviderCustomersCount(filter = {}) {
+    const url = 'provider/waitlist/consumers/count' ;
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  searchProviderCustomer(data) {
+    const url = 'provider/customers' ;
+    return this.servicemeta.httpGet(url, null, data);
+  }
+
 }

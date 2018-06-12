@@ -69,7 +69,8 @@ export class ProviderPaymentHistoryComponent implements OnInit {
       const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
         width: '50%',
         data: {
-          invoice : invoice
+          invoice : invoice,
+          source: 'payment-history'
         },
         panelClass: ['commonpopupmainclass'],
       });

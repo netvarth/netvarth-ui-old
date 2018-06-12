@@ -7,8 +7,8 @@
           <ng-container *ngIf="!loading">
             <p class="lead">Status : {{status}}</p>
             <p class="lead">
-                <a class="btn rounded-btn" *ngIf="user_type == 'Consumer'" [routerLink]="['/consumer']">Go to home</a>
-                <a class="btn rounded-btn" *ngIf="user_type == 'Provider'" [routerLink]="['/provider']">Go to home</a>
+                <a class="btn rounded-btn" *ngIf="user_type == 'consumer'" [routerLink]="['/consumer']">Go to home</a>
+                <a class="btn rounded-btn" *ngIf="user_type == 'provider'" [routerLink]="['/provider']">Go to home</a>
             </p>
           </ng-container>
       </div>
