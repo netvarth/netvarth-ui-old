@@ -50,7 +50,10 @@ export class SignUpComponent implements OnInit {
 
      ngOnInit() {
       this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
-      if (this.data.moreOptions.isCreateProv) {
+      if (this.data.moreOptions === undefined) {
+        this.data.moreOptions = { isCreateProv: false};
+      }
+      if (this.data.moreOptions && this.data.moreOptions.isCreateProv) {
         this.heading = 'Create Provider Account';
         this.createFormSpecial(1);
       } else {
