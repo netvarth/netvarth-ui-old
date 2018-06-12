@@ -49,6 +49,7 @@ export class AddProviderCustomerComponent implements OnInit {
         this.amForm.addControl('email_id', new FormControl('', Validators.compose([Validators.required, Validators.email])));
         this.amForm.addControl('dob', new FormControl('', Validators.compose([Validators.required])));
         this.amForm.addControl('gender', new FormControl('male', Validators.compose([Validators.required])));
+        this.amForm.addControl('address', new FormControl(''));
 
         this.amForm.get('last_name').setValue(this.amForm.get('first_last_name').value);
         this.amForm.get('first_name').setValue(this.amForm.get('first_last_name').value);
@@ -62,7 +63,7 @@ export class AddProviderCustomerComponent implements OnInit {
       'firstName-eq' : form_data.first_last_name,
       'primaryMobileNo-eq' : form_data.mobile_number
     };
-    this.provider_services.searchProviderCustomer(post_data)
+    this.provider_services.getCustomer(post_data)
     .subscribe(
       (data: any) => {
         if (data.length === 0) {
@@ -78,6 +79,29 @@ export class AddProviderCustomerComponent implements OnInit {
   }
 
   onSubmit (form_data) {
+
+    const post_data = {
+      'userProfile': {
+        'firstName': form_data.first_name,
+        'lastName': form_data.last_name,
+        'dob': form_data.dob,
+        'gender': form_data.gender,
+        'email': form_data.email_id,
+        'primaryMobileNo': form_data.mobile_number,
+        'address': form_data.address,
+    }};
+
+    this.provider_services.createProviderCustomer(post_data)
+    .subscribe(
+      data => {
+        this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+        setTimeout( () => {
+          this.dialogRef.close('reloadlist');
+        } , projectConstants.TIMEOUT_DELAY);
+      },
+      error => {
+
+      });
   }
 
   resetApiErrors () {

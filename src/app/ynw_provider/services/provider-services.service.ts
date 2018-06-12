@@ -653,9 +653,9 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
-  searchProviderCustomer(data) {
-    const url = 'provider/customers' ;
-    return this.servicemeta.httpGet(url, null, data);
+  createProviderCustomer(data) {
+    const url = 'provider/customers';
+    return this.servicemeta.httpPost(url, data);
   }
 
 }

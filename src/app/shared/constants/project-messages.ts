@@ -116,6 +116,7 @@ export const Messages = {
 
   'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
   'CUSTOMER_SEARCH_EXIST': 'Customer already exist',
+  'PROVIDER_CUSTOMER_CREATED': 'New customer created',
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',
   'PAYSETTING_SAV_PAYSTATUS': 'Payment Status updated successfully',

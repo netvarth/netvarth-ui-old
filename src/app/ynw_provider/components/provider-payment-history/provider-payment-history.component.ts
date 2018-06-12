@@ -72,7 +72,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
           invoice : invoice,
           source: 'payment-history'
         },
-        panelClass: ['commonpopupmainclass'],
+        panelClass: ['commonpopupmainclass', 'width-100'],
       });
 
       dialogRef.afterClosed().subscribe(result => {
