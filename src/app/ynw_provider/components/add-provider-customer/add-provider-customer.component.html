@@ -23,8 +23,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 
 <div class="form-group" *ngIf="step == 1">
-    <label class="col-form-label" for="first_last_name">First Name/Last Name *</label>
-    <input type="text" class="form-control" id="first_last_name" placeholder="First Name/Last Name"
+    <label class="col-form-label" for="first_last_name">First Name / Last Name *</label>
+    <input type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
     formControlName="first_last_name">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')"
     errorMsg="Please enter First Name / Last Name.">
@@ -83,6 +83,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
     errorMsg="Please select the date of birth.">
     </app-field-error-display>
+</div>
+
+<div class="form-group" *ngIf="step == 2">
+    <label class="col-form-label" for="email_id">Address</label>
+    <textarea  class="form-control" id="address" placeholder="Address"
+    formControlName="address"></textarea>
 </div>
 
 </mat-dialog-content>

@@ -6,14 +6,15 @@
   <div class="container">
       <div class="row">
           <div class="card p0 w-dta">
-
+              <div class="head">
+                <span class="cust_count">Customers who have checkedIn: {{customer_count}}</span>
+              </div>
               <div class="dash-list">
 
                   <mat-accordion >
                     <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
                       <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                        <span class="cust_count">Customers who have checkedIn: {{customer_count}}</span>
-                          <span (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                        <span (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
                       </mat-expansion-panel-header>
 
                       <div class="form-group first_name">
