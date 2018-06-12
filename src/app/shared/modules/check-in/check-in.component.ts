@@ -8,7 +8,7 @@ import { DOCUMENT } from '@angular/common';
 import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import {Messages} from '../../constants/project-messages';
+import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
@@ -57,8 +57,9 @@ export class CheckInComponent implements OnInit {
     maxsize;
     paytype = '';
     isFuturedate = false;
-    addmemberobj = {'fname': '', 'lname': '', 'mobile': ''};
+    addmemberobj = {'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': ''};
     payment_popup = null;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -486,6 +487,8 @@ export class CheckInComponent implements OnInit {
     this.addmemberobj.fname = obj.fname || '';
     this.addmemberobj.lname = obj.lname || '';
     this.addmemberobj.mobile = obj.mobile || '';
+    this.addmemberobj.gender = obj.gender || '';
+    this.addmemberobj.dob = obj.dob || '';
     console.log('add member return', this.addmemberobj);
   }
   handleSaveMember() {
@@ -504,23 +507,40 @@ export class CheckInComponent implements OnInit {
     }
 
     if (derror === '') {
-      if (!phonepattern.test(this.addmemberobj.mobile)) {
-        derror = 'Phone number should have only numbers';
-      } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
-        derror = 'Phone number should have 10 digits';
+      if (this.addmemberobj.mobile !== '') {
+        if (!phonepattern.test(this.addmemberobj.mobile)) {
+          derror = 'Phone number should have only numbers';
+        } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
+          derror = 'Phone number should have 10 digits';
+        }
       }
+    }
+
+    if (derror === '' && this.addmemberobj.gender === '') {
+      derror = 'Please select the gender';
+    }
+    if (derror === '' && this.addmemberobj.dob === '') {
+      derror = 'Please select the date of birth';
     }
 
     if (derror === '') {
       const post_data = {
         'userProfile': {
                           'firstName': this.addmemberobj.fname,
-                          'lastName':  this.addmemberobj.lname,
-                          'primaryMobileNo': this.addmemberobj.mobile,
-                          'countryCode': '+91',
+                          'lastName':  this.addmemberobj.lname
                         }
         };
-
+        if (this.addmemberobj.mobile !== '') {
+          post_data.userProfile['primaryMobileNo'] = this.addmemberobj.mobile;
+          post_data.userProfile['countryCode'] = '+91';
+        }
+        if (this.addmemberobj.gender !== '') {
+          post_data.userProfile['gender'] = this.addmemberobj.gender;
+        }
+        if (this.addmemberobj.dob !== '') {
+          post_data.userProfile['dob'] = this.addmemberobj.dob;
+        }
+        console.log('postdata', post_data);
         this.shared_services.addMembers(post_data)
         .subscribe(data => {
             this.api_success = Messages.MEMBER_CREATED;

@@ -11,7 +11,8 @@ import { ConsumerRoutingModule } from './consumer-routing.module';
 import { SearchModule } from '../shared/modules/search/search.module';
 import { HeaderModule } from '../shared/modules/header/header.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
-// import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
+import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
+import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
 
 import {ConsumerServices } from './services/consumer-services.service';
 import { ConsumerDataStorageService } from './services/consumer-datastorage.service';
@@ -24,6 +25,7 @@ import {WaitlistComponent} from './components/waitlist/waitlist.component';
 import { ConfirmBoxComponent} from './shared/component/confirm-box/confirm-box.component';
 import { NotificationListBoxComponent} from './shared/component/notification-list-box/notification-list-box.component';
 import {MembersComponent } from './components/members/members.component';
+import { AddMembersHolderComponent } from './components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from './components/add-member/add-member.component';
 
 
@@ -36,7 +38,9 @@ import { projectConstants } from '../shared/constants/project-constants';
         SearchModule,
         SharedModule,
         HeaderModule,
-        CheckInModule
+        CheckInModule,
+        BreadCrumbModule,
+        AddMemberModule
     ],
     declarations: [
       ConsumerComponent,
@@ -44,14 +48,16 @@ import { projectConstants } from '../shared/constants/project-constants';
       ConfirmBoxComponent,
       WaitlistComponent,
       NotificationListBoxComponent,
-      MembersComponent
+      MembersComponent,
+      AddMembersHolderComponent
       /*,
       AddMemberComponent*/
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
       ConfirmBoxComponent,
-      NotificationListBoxComponent /*,
+      NotificationListBoxComponent,
+      AddMembersHolderComponent /*,
       AddMemberComponent*/
     ],
     providers: [

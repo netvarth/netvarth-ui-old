@@ -35,6 +35,7 @@ export class SignUpComponent implements OnInit {
   user_details;
   domainIsthere;
   selectedpackage;
+  heading = 'Activation Process';
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,10 +45,17 @@ export class SignUpComponent implements OnInit {
     public shared_functions: SharedFunctions
     ) {
         this.is_provider = data.is_provider || 'true';
+        console.log('signup', data);
      }
 
      ngOnInit() {
-       this.createForm(1);
+      this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
+      if (this.data.moreOptions.isCreateProv) {
+        this.heading = 'Create Provider Account';
+        this.createFormSpecial(1);
+      } else {
+          this.createForm(1);
+      }
         this.shared_services.bussinessDomains()
         .subscribe(
           data => {
@@ -83,6 +91,26 @@ export class SignUpComponent implements OnInit {
                                             [Validators.required,  Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)]) ],
                           first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
                           last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                          selectedDomainIndex: ['', Validators.compose([Validators.required])],
+                          selectedSubDomains: [0, Validators.compose([Validators.required])],
+                          package_id : ['', Validators.compose([Validators.required])],
+                          terms_condition: ['true'],
+
+                 });
+                 this.signupForm.get('is_provider').setValue(this.is_provider);
+                 this.changeType();
+
+                 break;
+      }
+
+
+     }
+
+     createFormSpecial(step) {
+      this.step = step;
+      switch (step) {
+        case 1:  this.signupForm = this.fb.group({
+                          is_provider: ['true'],
                           selectedDomainIndex: ['', Validators.compose([Validators.required])],
                           selectedSubDomains: [0, Validators.compose([Validators.required])],
                           package_id : ['', Validators.compose([Validators.required])],
@@ -160,13 +188,28 @@ export class SignUpComponent implements OnInit {
      onSubmit() {
       this.resetApiErrors();
       this.user_details = {};
-      const userProfile = {
+      let userProfile = {
         countryCode: '+91',
-        primaryMobileNo: this.signupForm.get('phonenumber').value || null,
-        firstName: this.signupForm.get('first_name').value || null,
-        lastName: this.signupForm.get('last_name').value || null,
-        // licensePackage: this.signupForm.get('package_id').value || null,
+        primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
+        firstName: null,
+        lastName: null
       };
+      if (this.data.moreOptions.isCreateProv) {
+        userProfile = {
+          countryCode: '+91',
+          primaryMobileNo: this.data.moreOptions.dataCreateProv.ph || null, // this.signupForm.get('phonenumber').value || null,
+          firstName: this.data.moreOptions.dataCreateProv.fname || null,
+          lastName: this.data.moreOptions.dataCreateProv.lname || null
+        };
+      } else {
+        userProfile = {
+          countryCode: '+91',
+          primaryMobileNo: this.signupForm.get('phonenumber').value || null,
+          firstName: this.signupForm.get('first_name').value || null,
+          lastName: this.signupForm.get('last_name').value || null,
+          // licensePackage: this.signupForm.get('package_id').value || null,
+        };
+    }
 
 
 

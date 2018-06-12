@@ -56,7 +56,7 @@
                 <div class="pickerouter">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday">
+                <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday" readonly>
                 </div>
 
 
@@ -73,6 +73,7 @@
                     <li (click)="shared_functions.redirectto('change-password')" class="icon-password">Change Password</li>
                     <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">Change Mobile</li>
                     <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">Change Email</li>
+                    <li (click)="shared_functions.redirectto('members')" class="icon-members">Family Members</li>
                 </ul>
             </div>
             </div>

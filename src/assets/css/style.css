@@ -5579,7 +5579,8 @@ header.dashb .lg-opt {
         header.dashb .lg-opt .bnps .inbx .ot-bx i {
           font-size: 1.625rem;
           vertical-align: middle;
-          margin-top: 9px; }
+          margin-top: 9px;
+          width: 27px; }
   header.dashb .lg-opt .lgmem {
     padding-left: 40px;
     font-size: .875rem;
@@ -9325,7 +9326,7 @@ footer.dashb {
         .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li {
           list-style: none;
           font-size: .875rem;
-          border-bottom: 2px solid #f2f2f2; }
+          border-bottom: 2px solid #fff; }
           .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer {
             display: flex; }
             @media only screen and (max-width: 767px) {
@@ -9371,7 +9372,7 @@ footer.dashb {
                 flex-grow: 0; }
             .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td {
               font-weight: 500;
-              color: #666; }
+              color: #222223; }
               @media only screen and (max-width: 767px) {
                 .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td0, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td1, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td2, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td3, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td4, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .outer .td.td5 {
                   width: 100%; }
@@ -9433,7 +9434,6 @@ footer.dashb {
                 .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action [class^="icon-"]:hover, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action [class*=" icon-"]:hover, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action [class^="icon-"]:hover, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .actions .action [class*=" icon-"]:hover {
                   color: #00aef2; }
           .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details {
-            padding-top: 0;
             line-height: 1.8;
             display: none;
             margin-bottom: 50px;
@@ -9448,13 +9448,8 @@ footer.dashb {
             @media (min-width: 768px) and (max-width: 991px) {
               .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details {
                 padding-bottom: 0; } }
-            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .result {
-              -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
-              -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset; }
             .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .result, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action {
-              padding: 10px;
-              background: #f2f2f2;
+              padding: 5px 10px;
               -webkit-border-radius: 5px;
               border-radius: 5px;
               background-clip: padding-box;
@@ -9515,12 +9510,8 @@ footer.dashb {
               -webkit-transition: all 300ms;
               transition: all 300ms;
               cursor: pointer; }
-            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.active .outer .td {
-              color: #00aef2; }
-            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.active:hover {
-              background: #fff; }
             .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new {
-              border-bottom: 2px solid #f2f2f2;
+              border-bottom: 2px solid #fff;
               background: #92f6c9; }
               .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .outer .td {
                 font-weight: 500;
@@ -9533,10 +9524,6 @@ footer.dashb {
                   border-bottom: 1px solid #dbdbdb; } }
               .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .details .action [class^="icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .details .action [class*=" icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .actions .action [class^="icon-"]:before, .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new .actions .action [class*=" icon-"]:before {
                 border-color: #dbdbdb; }
-            .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd:hover {
-              background: #fbfbfb; }
-              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd:hover .outer .td {
-                color: #00aef2; }
           .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li:last-child {
             border: none; }
     .content.comn-cls .lbl .card .mat-accordion.provider-notes .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .pnotes {
@@ -9806,7 +9793,7 @@ footer.dashb {
     .content .card .copy .inbox-table li {
       list-style: none;
       font-size: .875rem;
-      border-bottom: 2px solid #f2f2f2; }
+      border-bottom: 2px solid #fff; }
       .content .card .copy .inbox-table li .outer {
         display: flex; }
         @media only screen and (max-width: 767px) {
@@ -9849,7 +9836,7 @@ footer.dashb {
             flex-grow: 0; }
         .content .card .copy .inbox-table li .outer .td {
           font-weight: 500;
-          color: #666; }
+          color: #222223; }
           @media only screen and (max-width: 767px) {
             .content .card .copy .inbox-table li .outer .td.td0, .content .card .copy .inbox-table li .outer .td.td1, .content .card .copy .inbox-table li .outer .td.td2, .content .card .copy .inbox-table li .outer .td.td3, .content .card .copy .inbox-table li .outer .td.td4, .content .card .copy .inbox-table li .outer .td.td5 {
               width: 100%; }
@@ -9900,7 +9887,6 @@ footer.dashb {
             .content .card .copy .inbox-table li .details .action [class^="icon-"]:hover, .content .card .copy .inbox-table li .details .action [class*=" icon-"]:hover, .content .card .copy .inbox-table li .actions .action [class^="icon-"]:hover, .content .card .copy .inbox-table li .actions .action [class*=" icon-"]:hover {
               color: #00aef2; }
       .content .card .copy .inbox-table li .details {
-        padding-top: 0;
         line-height: 1.8;
         display: none;
         margin-bottom: 50px;
@@ -9908,17 +9894,15 @@ footer.dashb {
         -moz-transition: all 300ms;
         -o-transition: all 300ms;
         -webkit-transition: all 300ms;
-        transition: all 300ms; }
+        transition: all 300ms;
+        /*.result {
+            @include box-shadow(0, 0, 10px, rgba(0,0,0,.05), inset);
+        }*/ }
         @media only screen and (max-width: 767px) {
           .content .card .copy .inbox-table li .details {
             padding-bottom: 0; } }
-        .content .card .copy .inbox-table li .details .result {
-          -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
-          -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset; }
         .content .card .copy .inbox-table li .details .result, .content .card .copy .inbox-table li .details .action {
-          padding: 10px;
-          background: #f2f2f2;
+          padding: 5px 10px;
           -webkit-border-radius: 5px;
           border-radius: 5px;
           background-clip: padding-box;
@@ -9973,10 +9957,6 @@ footer.dashb {
           -webkit-transition: all 300ms;
           transition: all 300ms;
           cursor: pointer; }
-        .content .card .copy .inbox-table li.ttd.active .outer .td {
-          color: #00aef2; }
-        .content .card .copy .inbox-table li.ttd.active:hover {
-          background: #fff; }
         .content .card .copy .inbox-table li.ttd.new {
           border-bottom: 2px solid #f2f2f2;
           background: #92f6c9; }
@@ -9988,10 +9968,29 @@ footer.dashb {
               border-bottom: 1px solid #dbdbdb; } }
           .content .card .copy .inbox-table li.ttd.new .details .action [class^="icon-"]:before, .content .card .copy .inbox-table li.ttd.new .details .action [class*=" icon-"]:before, .content .card .copy .inbox-table li.ttd.new .actions .action [class^="icon-"]:before, .content .card .copy .inbox-table li.ttd.new .actions .action [class*=" icon-"]:before {
             border-color: #dbdbdb; }
-        .content .card .copy .inbox-table li.ttd:hover {
-          background: #fbfbfb; }
-          .content .card .copy .inbox-table li.ttd:hover .outer .td {
-            color: #00aef2; }
+        .content .card .copy .inbox-table li.ttd.active .outer .td {
+          font-weight: 600;
+          background: inherit; }
+          .content .card .copy .inbox-table li.ttd.active .outer .td .label {
+            font-weight: 500; }
+        .content .card .copy .inbox-table li.ttd.active:hover {
+          background: #fff; }
+        .content .card .copy .inbox-table li.ttd.outer-received .outer .td {
+          background: #bbf7e7; }
+        .content .card .copy .inbox-table li.ttd.outer-received .details {
+          background: #fff; }
+        .content .card .copy .inbox-table li.ttd.outer-received:hover .outer .td {
+          background: #8df2d7; }
+        .content .card .copy .inbox-table li.ttd.outer-received.active .outer .td {
+          background: #8df2d7; }
+        .content .card .copy .inbox-table li.ttd.outer-sent .outer .td {
+          background: #a5e1ff; }
+        .content .card .copy .inbox-table li.ttd.outer-sent .details {
+          background: #fff; }
+        .content .card .copy .inbox-table li.ttd.outer-sent:hover .outer .td {
+          background: #72d0ff; }
+        .content .card .copy .inbox-table li.ttd.outer-sent.active .outer .td {
+          background: #72d0ff; }
       .content .card .copy .inbox-table li:last-child {
         border: none; }
 
@@ -11789,6 +11788,248 @@ header.consumer {
       padding-top: 60px;
       /*background: url(../images/no-results.svg) no-repeat scroll center top /70%;
       text-indent: -9999px;*/ }
+
+.consumer-dash {
+  padding: 30px 0; }
+  .consumer-dash h1 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 30px; }
+    .consumer-dash h1 span {
+      font-weight: 700; }
+  .consumer-dash .card {
+    margin-bottom: 30px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */ }
+    .consumer-dash .card h2 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #00aef2; }
+    .consumer-dash .card .outer .list {
+      display: flex;
+      font-size: .875rem;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #f2f2f2;
+      padding-bottom: 15px; }
+      @media only screen and (max-width: 767px) {
+        .consumer-dash .card .outer .list {
+          flex-direction: column; } }
+      .consumer-dash .card .outer .list .lt {
+        width: 40%; }
+        @media only screen and (max-width: 767px) {
+          .consumer-dash .card .outer .list .lt {
+            width: 100%;
+            margin-bottom: 15px; } }
+        .consumer-dash .card .outer .list .lt h3 {
+          font-size: 1rem;
+          font-weight: 600;
+          margin-bottom: 3px; }
+        .consumer-dash .card .outer .list .lt .location {
+          margin-bottom: 10px;
+          display: block;
+          font-weight: 500;
+          color: #666; }
+        .consumer-dash .card .outer .list .lt .est-time {
+          font-weight: 500;
+          display: flex;
+          flex-wrap: wrap;
+          color: #666; }
+          .consumer-dash .card .outer .list .lt .est-time .ttle {
+            margin-right: 10px;
+            flex-shrink: 0; }
+          .consumer-dash .card .outer .list .lt .est-time .time {
+            color: #222223;
+            font-weight: 600;
+            flex-shrink: 1; }
+            .consumer-dash .card .outer .list .lt .est-time .time .min {
+              color: #00cc96; }
+            .consumer-dash .card .outer .list .lt .est-time .time .date {
+              color: #fda60d; }
+      .consumer-dash .card .outer .list .rt {
+        width: 60%;
+        display: flex;
+        align-items: flex-end; }
+        @media only screen and (max-width: 767px) {
+          .consumer-dash .card .outer .list .rt {
+            width: 100%; } }
+        .consumer-dash .card .outer .list .rt .controls {
+          margin: 0;
+          margin-left: auto;
+          padding: 0;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-end; }
+          @media only screen and (max-width: 767px) {
+            .consumer-dash .card .outer .list .rt .controls {
+              margin-left: 0; } }
+          .consumer-dash .card .outer .list .rt .controls li {
+            list-style: none;
+            margin: 0 5px;
+            font-weight: 500; }
+            @media only screen and (max-width: 767px) {
+              .consumer-dash .card .outer .list .rt .controls li {
+                margin-top: 5px;
+                margin-left: 0; } }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .consumer-dash .card .outer .list .rt .controls li {
+                margin-top: 5px;
+                margin-left: 0; } }
+            .consumer-dash .card .outer .list .rt .controls li span {
+              padding: 3px;
+              position: relative;
+              padding-left: 25px;
+              padding-right: 8px;
+              cursor: pointer;
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms;
+              color: #222223; }
+              .consumer-dash .card .outer .list .rt .controls li span:before {
+                position: absolute;
+                content: "";
+                left: 6px;
+                top: 4px;
+                font-family: "custom-ynw" !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 16px;
+                height: 16px; }
+              .consumer-dash .card .outer .list .rt .controls li span:hover {
+                color: #00aef2; }
+              .consumer-dash .card .outer .list .rt .controls li span.message:before {
+                content: "\53"; }
+              .consumer-dash .card .outer .list .rt .controls li span.add-fav:before {
+                content: "\26"; }
+              .consumer-dash .card .outer .list .rt .controls li span.cancel:before {
+                content: "\69";
+                font-size: .65rem; }
+      .consumer-dash .card .outer .list:last-child {
+        margin-bottom: 0;
+        border: none;
+        padding: 0; }
+    .consumer-dash .card.favourites .outer .list .lt .location {
+      margin-bottom: 0; }
+    .consumer-dash .card.favourites .outer .list .rt .controls li span.checkin {
+      text-transform: uppercase;
+      -webkit-border-radius: 50px;
+      border-radius: 50px;
+      background-clip: padding-box;
+      /* stops bg color from leaking outside the border: */
+      background: #00aef2;
+      /* Old browsers */
+      background: -moz-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+      /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00aef2), color-stop(100%, #1873f2));
+      /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+      /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+      /* Opera 11.10+ */
+      background: -ms-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+      /* IE10+ */
+      background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
+      /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
+      /* IE6-9 */
+      color: #fff;
+      padding-left: 10px;
+      padding-right: 10px;
+      font-weight: 600; }
+    .consumer-dash .card.favourites .outer .list .rt .controls li span.add-fav.favourited:before {
+      content: "\27";
+      color: #f24949; }
+    .consumer-dash .card.history .history-tbl {
+      padding: 0;
+      font-weight: 500; }
+      .consumer-dash .card.history .history-tbl .table thead tr th.th4 {
+        border-right: 1px solid #f2f2f2; }
+      .consumer-dash .card.history .history-tbl .table tbody tr td.td4 {
+        border-right: 1px solid #f2f2f2; }
+        .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .completed {
+          color: #00cc96; }
+        .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .cancelled {
+          color: #f24949; }
+      .consumer-dash .card.history .history-tbl .table tbody tr td.td5 {
+        display: flex;
+        justify-content: flex-end; }
+        .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls {
+          margin: 0;
+          margin-left: auto;
+          padding: 0;
+          display: flex;
+          flex-wrap: wrap; }
+          .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li {
+            list-style: none;
+            margin: 0 5px; }
+            @media only screen and (max-width: 767px) {
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li {
+                margin-top: 8px; } }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li {
+                margin-top: 8px; } }
+            .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span {
+              padding: 3px;
+              position: relative;
+              padding-left: 22px;
+              padding-right: 10px;
+              cursor: pointer;
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms;
+              color: #222223; }
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span:before {
+                position: absolute;
+                content: "";
+                left: 2px;
+                top: 4px;
+                font-family: "custom-ynw" !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 16px;
+                height: 16px; }
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span:hover {
+                color: #00aef2; }
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.checkin {
+                text-transform: uppercase;
+                -webkit-border-radius: 50px;
+                border-radius: 50px;
+                background-clip: padding-box;
+                /* stops bg color from leaking outside the border: */
+                background: #00aef2;
+                /* Old browsers */
+                background: -moz-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+                /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00aef2), color-stop(100%, #1873f2));
+                /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+                /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+                /* Opera 11.10+ */
+                background: -ms-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+                /* IE10+ */
+                background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
+                /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
+                /* IE6-9 */
+                color: #fff;
+                padding-left: 10px;
+                padding-right: 10px;
+                font-weight: 600; }
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.message:before {
+                content: "\53"; }
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.view-bill:before {
+                content: "\4f"; }
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.pay-bill:before {
+                content: "\57"; }
+        @media only screen and (max-width: 767px) {
+          .consumer-dash .card.history .history-tbl .table tbody tr td.td5:before {
+            display: none; } }
 
 /***** Common Pages #### */
 .content.see-pages .outer-card {

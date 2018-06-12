@@ -1,10 +1,10 @@
-<h1 class="mat-dialog-title">Activation Process<button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title">{{heading}}<button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <form [formGroup]="signupForm"  novalidate
 (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">
 
 <div class="mat-dialog-content" *ngIf="step==1">
-  <div class="form-group">
+  <div class="form-group" *ngIf="!data.moreOptions.isCreateProv">
     <label class="col-form-label" for="phonenumber">Mobile *</label>
     <input type="text" class="form-control" id="phonenumber"
     formControlName="phonenumber">
@@ -18,7 +18,7 @@ onSubmit()" (keyup)="resetApiErrors()">
     })">
     </app-field-error-display>
   </div>
-  <div class="form-group-inline">
+  <div class="form-group-inline" *ngIf="!data.moreOptions.isCreateProv">
   <div class="form-group">
     <label class="col-form-label" for="first_name">First Name *</label>
     <input type="text" class="form-control" id="first_name"

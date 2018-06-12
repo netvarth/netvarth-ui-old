@@ -31,6 +31,9 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
   api_success = null;
   subdomain_fields: any = [];
   loc_icon = projectConstants.LOCATION_BADGE_ICON;
+  show_addlocationButton = false;
+  multipeLocationAllowed = false;
+  businessConfig: any = [];
 
   breadcrumbs = [
     {
@@ -52,22 +55,57 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
     private shared_Functionsobj: SharedFunctions,
     private dialog: MatDialog,
     private router: Router,
+    private shared_services: SharedServices,
     private provider_shared_functions: ProviderSharedFuctions
   ) {}
 
   ngOnInit() {
+    this.getBusinessConfiguration();
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
-    // calling the method to get the list of locations
-    this.getProviderLocations();
-    this.bProfile = this.provider_datastorage.get('bProfile');
+    // this.bProfile = this.provider_datastorage.get('bProfile');
   }
+  getBusinessConfiguration() {
+    this.shared_services.bussinessDomains()
+      .subscribe (data => {
+        this.businessConfig = data;
+        this.getBussinessProfile();
+      },
+    error => {
 
+    });
+  }
+  getBussinessProfile() {
+    this.provider_services.getBussinessProfile()
+      .subscribe (data => {
+        this.bProfile = data;
+        // console.log('sector Id', this.bProfile.serviceSector.id);
+        for (let i = 0; i < this.businessConfig.length ; i++) {
+          if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
+            if (this.businessConfig[i].multipleLocation) {
+              this.multipeLocationAllowed = true;
+            }
+          }
+        }
+        // calling the method to get the list of locations
+        this.getProviderLocations();
+      },
+    error => {
+
+    });
+  }
   // get the list of locations added for the current provider
   getProviderLocations() {
     this.provider_services.getProviderLocations()
       .subscribe(data => {
         this.loc_list = data;
+        if (this.multipeLocationAllowed) {
+          this.show_addlocationButton = true;
+        } else {
+          if (this.loc_list.length === 0) {
+            this.show_addlocationButton = true;
+          }
+        }
         this.query_executed = true;
       });
   }

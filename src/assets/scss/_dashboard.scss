@@ -136,6 +136,7 @@ header {
                             font-size: 1.625rem;
                             vertical-align: middle;
                             margin-top: 9px;
+                            width: 27px;
                         }
                     }
                 }
@@ -5407,7 +5408,7 @@ footer {
                                 li {
                                     list-style: none;
                                     font-size: .875rem;
-                                    border-bottom: 2px solid $cc-body;
+                                    border-bottom: 2px solid $white;
 
                                     .outer {
                                         display: flex;
@@ -5465,7 +5466,7 @@ footer {
 
                                         .td {
                                             font-weight: 500;
-                                            color: $cc-gray;
+                                            color: $linkblack;
 
                                             @include respond-to(ynw-767) {
                                                 &.td0, &.td1, &.td2, &.td3, &.td4, &.td5 {
@@ -5553,7 +5554,6 @@ footer {
                                     }
 
                                     .details {
-                                        padding-top: 0;
                                         line-height: 1.8;
                                         display: none;
                                         margin-bottom: 50px;
@@ -5566,14 +5566,8 @@ footer {
                                         @include respond-to(ynw-768-991) {
                                             padding-bottom: 0;
                                         }
-
-                                        .result {
-                                            @include box-shadow(0, 0, 10px, rgba(0,0,0,.05), inset);
-                                        }
-
                                         .result, .action {
-                                            padding: 10px;
-                                            background: $cc-body;
+                                            padding: 5px 10px;
                                             @include border-radius(5px);
                                         }
                                         .action {
@@ -5645,20 +5639,8 @@ footer {
                                             }
                                         }
 
-                                        &.active {
-                                            .outer {
-                                                .td {
-                                                    color: $linkblue;
-                                                }
-                                            }
-
-                                            &:hover {
-                                                background: $white;
-                                            }
-                                        }
-
                                         &.new{
-                                            border-bottom: 2px solid $cc-body;
+                                            border-bottom: 2px solid $white;
                                             background: lighten($acceptbill, 10%);
 
                                             .outer {
@@ -5682,16 +5664,6 @@ footer {
                                                             border-color: $cc-ash;
                                                         }
                                                     }
-                                                }
-                                            }
-                                        }
-
-                                        &:hover {
-                                            background: #fbfbfb;
-
-                                            .outer {
-                                                .td {
-                                                    color: $linkblue;
                                                 }
                                             }
                                         }
@@ -6111,8 +6083,9 @@ footer {
                 li {
                     list-style: none;
                     font-size: .875rem;
-                    border-bottom: 2px solid $cc-body;
-
+                    border-bottom: 2px solid $white;
+                    
+                    // inbox row colors
                     .outer {
                         display: flex;
                         
@@ -6165,7 +6138,7 @@ footer {
                         
                         .td {
                             font-weight: 500;
-                            color: $cc-gray;
+                            color: $linkblack;
                             
                             @include respond-to(ynw-767) {
                                 &.td0, &.td1, &.td2, &.td3, &.td4, &.td5 {
@@ -6241,7 +6214,6 @@ footer {
                     }
                     
                     .details {
-                        padding-top: 0;
                         line-height: 1.8;
                         display: none;
                         margin-bottom: 50px;
@@ -6252,13 +6224,12 @@ footer {
                             padding-bottom: 0;
                         }
                         
-                        .result {
+                        /*.result {
                             @include box-shadow(0, 0, 10px, rgba(0,0,0,.05), inset);
-                        }
+                        }*/
                         
                         .result, .action {
-                            padding: 10px;
-                            background: $cc-body;
+                            padding: 5px 10px;
                             @include border-radius(5px);
                         }
                         .action {
@@ -6324,18 +6295,6 @@ footer {
                             }
                         }
                         
-                        &.active {
-                            .outer {
-                                .td {
-                                    color: $linkblue;
-                                }
-                            }
-                            
-                            &:hover {
-                                background: $white;
-                            }
-                        }
-                        
                         &.new{
                             border-bottom: 2px solid $cc-body;
                             background: lighten($acceptbill, 10%);
@@ -6362,12 +6321,69 @@ footer {
                             }
                         }
                         
-                        &:hover {
-                            background: #fbfbfb;
-                            
+                        &.active {
                             .outer {
                                 .td {
-                                    color: $linkblue;
+                                    font-weight: 600;
+                                    background: inherit;
+                                    
+                                    .label {
+                                        font-weight: 500;
+                                    }
+                                }
+                            }
+                            
+                            &:hover {
+                                background: $white;
+                            }
+                        }
+                        
+                        &.outer-received {
+                            .outer {
+                                .td {
+                                    background: $received;
+                                }
+                            }
+                            .details {
+                                background: $white;
+                            }
+                            
+                            &:hover {
+                                .outer {
+                                    .td {
+                                        background: darken($received, 10%);
+                                    }
+                                }
+                            }
+                            &.active {
+                                .outer {
+                                    .td {
+                                        background: darken($received, 10%);
+                                    }
+                                }
+                            }
+                        }
+                        &.outer-sent {
+                            .outer {
+                                .td {
+                                    background: $sent;
+                                }
+                            }
+                            .details {
+                                background: $white;
+                            }
+                            &:hover {
+                                .outer {
+                                    .td {
+                                        background: darken($sent, 10%);
+                                    }
+                                }
+                            }
+                            &.active {
+                                .outer {
+                                    .td {
+                                        background: darken($sent, 10%);
+                                    }
                                 }
                             }
                         }
