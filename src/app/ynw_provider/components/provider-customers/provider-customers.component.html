@@ -1,0 +1,95 @@
+
+<section>
+  <app-provider-subheader [activeTab]="'customers'"></app-provider-subheader> <!-- Subheader section -->
+</section>
+<section class="dashboard">
+  <div class="container">
+      <div class="row">
+          <div class="card p0 w-dta">
+
+              <div class="dash-list">
+
+                  <mat-accordion >
+                    <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
+                      <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                        <span class="cust_count">Customers who have checkedIn: {{customer_count}}</span>
+                          <span (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                      </mat-expansion-panel-header>
+
+                      <div class="form-group first_name">
+                        <mat-form-field class="example-full-width">
+                          <label class="col-form-label">First name</label>
+                          <input matInput [(ngModel)]="filter.first_name"  (blur)="doSearch()">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group mobile">
+                        <mat-form-field class="example-full-width">
+                          <label class="col-form-label">Mobile</label>
+                          <input matInput [(ngModel)]="filter.mobile"  (blur)="doSearch()">
+                        </mat-form-field>
+                      </div>
+
+                      <div class="form-group email">
+                        <mat-form-field class="example-full-width">
+                          <label class="col-form-label">Email</label>
+                          <input matInput [(ngModel)]="filter.email"  (blur)="doSearch()">
+                        </mat-form-field>
+                      </div>
+
+                      <div class="check_in_date">
+                        <label class="col-form-label" for="displayName">Check-In Date</label>
+                        <mat-form-field>
+                          <input matInput [(ngModel)]="filter.date" [matDatepicker]="picker"
+                          (dateChange)="doSearch()">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                  <div class="table-outer d-tbl">
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>Name</th>
+                                  <th>Mobile</th>
+                                  <th>Email</th>
+                                  <th>Last Visit</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let customer of customers">
+
+                                  <td data-title="Name" class="name">
+                                    {{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}
+                                  </td>
+                                  <td data-title="Mobile" class="service"> {{customer.consumer.userProfile.primaryMobileNo}} </td>
+                                  <td data-title="Email" class="email">{{customer.consumer.userProfile.email}}</td>
+
+                                  <td data-title="Last Visit" class="lastvisit">
+                                      {{customer.lastVisitedDate | date: dateFormat }}
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+
+
+                      <ng-container *ngIf="loadComplete && customers.length == 0">
+                        <div class="qlst no-dta" >
+                          No customers found
+                        </div>
+                      </ng-container>
+
+                    <div class="search_paging">
+                      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+                    </div>
+
+                  </div>
+
+              </div>
+
+          </div>
+      </div>
+  </div>
+</section>

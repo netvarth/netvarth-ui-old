@@ -3,33 +3,33 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
   </section>
   <section>
-    <div class="content comn-cls">
+    <div class="content comn-cls paymenthistory">
         <div class="container">
             <div class="w-dta">
                 <div class="row">
                     <div class="card">
                       <div class="lc4-2" >
-                          <div class="pay-tbl">
+                          <div class="pay-tbl tbl-outer">
                               <app-innerloading-spinner *ngIf="!load_complete"></app-innerloading-spinner>
                               <table class="table"  *ngIf="payment_history.length != 0">
                                   <thead>
                                       <tr>
-                                          <th>Date</th>
-                                          <th>Amount</th>
-                                          <th>Period</th>
-                                          <th>Invoice</th>
+                                          <th class="th1">Date</th>
+                                          <th class="th2">Amount</th>
+                                          <th class="th3">Period</th>
+                                          <th class="th4">Invoice</th>
                                       </tr>
                                   </thead>
                                   <tbody>
                                       <tr *ngFor="let invoice of payment_history">
-                                          <td data-title="Date">{{invoice.createdDate | date: dateFormat }}</td>
-                                          <td data-title="Amount">
+                                          <td class="td1" data-title="Date">{{invoice.createdDate | date: dateFormat }}</td>
+                                          <td class="td2"data-title="Amount">
                                               <strong>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</strong>
                                           </td>
-                                          <td data-title="Period">
+                                          <td class="td3"data-title="Period">
                                               {{invoice.periodFrom | date: dateFormat }} - {{invoice.periodTo | date: dateFormat }}
                                           </td>
-                                          <td data-title="Invoice">
+                                          <td class="td4" data-title="Invoice">
                                               <span class="icon-invoice" (click)="getInvoice(invoice)"></span>
                                           </td>
                                       </tr>

@@ -22,7 +22,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   api_success = null;
   invoice: any  = null;
   payment_modes: any = [];
-  payment_detail = null;
+  payment_detail: any = [];
   payment_status = null;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   pay_data = {
@@ -31,6 +31,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     uuid: null
   };
   payment_popup = null;
+  source = 'payment-history';
   constructor(
     public dialogRef: MatDialogRef<ProviderLicenceInvoiceDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,6 +43,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     @Inject(DOCUMENT) public document
     ) {
        this.invoice = data.invoice || null;
+       this.source = data.source || 'payment-history';
+
        this.pay_data.amount = this.invoice.amount;
        this.pay_data.uuid = this.invoice.ynwUuid;
      }
@@ -52,9 +55,11 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     this.payment_status = this.invoice.licensePaymentStatus || null;
 
     this.invoiceDetail();
-    if (this.payment_status === 'NotPaid') {
+    if (this.payment_status === 'NotPaid' && this.source !== 'payment-history') {
       this.getPaymentModes();
     } else if (this.payment_status === 'Paid') {
+      this.getPaymentDetails();
+    } else if (this.source === 'payment-history') {
       this.getPaymentDetails();
     } else {
       this.dialogRef.close();

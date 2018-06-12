@@ -29,6 +29,7 @@ export class ReturnPaymentComponent implements OnInit {
       this.getPaymentStatus();
 
       if (!this.unq_id) {
+        this.shared_functions.openSnackBar(Messages.API_ERROR, {'panelClass': 'snackbarerror'});
         this.route.navigate(['/']);
       }
 
@@ -40,14 +41,22 @@ export class ReturnPaymentComponent implements OnInit {
   }
 
   getPaymentStatus() {
-    this.shared_services.getPaymentStatus();
 
-    this.status = 'Success'; // Success // 'Failed' // 'NoResult'
-    this.user_type = 'Provider'; // Consumer// 'Provider'
+    this.user_type = this.shared_functions.isBusinessOwner('returntyp');
+    this.shared_services.getPaymentStatus(this.user_type, this.unq_id)
+    .subscribe(
+      data => {
+        this.status = data;
+        this.loading = 0;
+      },
+      error => {
+        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.loading = 0;
+      }
+    );
 
-    setTimeout(() => {
-      this.loading = 0;
-    }, 5000);
+   // this.status = 'Success'; // Success // 'Failed' // 'NoResult'
+
   }
 
 }

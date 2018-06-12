@@ -279,7 +279,8 @@ export class ProviderLicenseComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
       width: '50%',
       data: {
-        invoice : invoice
+        invoice : invoice,
+        source: 'license-home'
       },
       panelClass: ['commonpopupmainclass'],
     });

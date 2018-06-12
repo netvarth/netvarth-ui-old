@@ -27,6 +27,7 @@ import { ProviderWaitlistQueuesComponent } from './components/provider-waitlist-
 import { ProviderWaitlistQueueDetailComponent } from './components/provider-waitlist-queue-detail/provder-waitlist-queue-detail.component';
 import { ProviderPaymentHistoryComponent } from './components/provider-payment-history/provider-payment-history.component';
 import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
+import { ProviderCustomersComponent } from './components/provider-customers/provider-customers.component';
 
 import { AuthGuardProviderHome, AuthGuardNewProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
 import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
@@ -135,6 +136,7 @@ const routes: Routes = [
     { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin]},
     { path: 'members', component: ProviderMembersComponent },
+    { path: 'customers', component: ProviderCustomersComponent },
     {
       path: 'inbox',
       loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
