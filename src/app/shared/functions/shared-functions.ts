@@ -13,7 +13,7 @@ import { Subject } from 'rxjs/Subject';
 
 export class SharedFunctions {
 
-    dont_delete_localstorage = ['ynw-locdet']; // ['isBusinessOwner'];
+    dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov']; // ['isBusinessOwner'];
 
     private subject = new Subject<any>();
 
@@ -241,6 +241,9 @@ export class SharedFunctions {
     }
     public setitemonLocalStorage(itemname, itemvalue) { // function to set local storage item value
       localStorage.setItem(itemname, JSON.stringify(itemvalue));
+    }
+    public removeitemfromLocalStorage(itemname) {
+      localStorage.removeItem(itemname);
     }
 
     public setItemOnCookie(cname, cvalue, exdays = 30) {
@@ -700,6 +703,9 @@ redirectto (mod) {
     break;
     case 'change-email':
       this.router.navigate([usertype, 'change-email']);
+    break;
+    case 'members':
+      this.router.navigate([usertype, 'members']);
     break;
   }
 }

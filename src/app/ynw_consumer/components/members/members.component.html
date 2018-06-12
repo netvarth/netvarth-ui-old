@@ -1,8 +1,103 @@
-<app-header [headerTitle] = "'Members'"></app-header>
+<section>
+  <!-- <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> -->
+   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+   <div class="content see-pages">
+       <div class="container">
+           <div class="outer-card">
+           <div class="card">
+
+              <div class="table-outer d-tbl">
+                  <table class="table" *ngIf="member_list.length !=0">
+                      <thead>
+                          <tr>
+                              <th>First Name</th>
+                              <th>Last Name</th>
+                              <th>Mobile Number</th>
+                              <th>Gender</th>         
+                              <th>Date of Birth</th>     
+                              <th><span class="addbt" (click)="addMember()"></span></th>      
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let member of member_list">
+                              <td data-title="First Name" class="fname">{{member.userProfile.firstName}}</td>
+                              <td data-title="Last Name" class="lname">{{member.userProfile.lastName}}</td>
+                              <td data-title="Mobile Number" class="actions">{{member.userProfile.primaryMobileNo}}</td>
+                              <td data-title="Gender" class="payment">{{member.userProfile.gender}}</td>
+                              <td data-title="Date of Birth" class="message">{{member.userProfile.dob | date: dateFormat }}</td>
+                              <td class="mre"><span class="mbt">
+                                  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                      <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                  <mat-menu #menu="matMenu">
+                                      <button type="button" (click)="editMember(member)" mat-menu-item>
+                                          <i class="icon-edit"></i>
+                                          Edit
+                                      </button>
+                                      <button type="button" (click)="doRemoveMember(member)" mat-menu-item>
+                                          <i class="icon-delete"></i>
+                                          Delete
+                                      </button>
+                                  </mat-menu>
+                              </span>
+                              <span class="mbt-mobile-show">
+                                  <button class="editcls" type="button" (click)="editMember(member)">Edit</button>
+                                  <button class="deletecls" type="button" (click)="doRemoveMember(member)">Delete</button>
+                              </span>
+                            </td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <span class="addbt d-block d-md-none" (click)="addMember()"></span>
+              </div>
 
 
 
-<table class="table" *ngIf="member_list.length !=0">
+
+            <!-- <table class="table" *ngIf="member_list.length !=0">
+              <thead>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Primary Mobile Number</th>
+                <th></th>
+                <th></th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let member of member_list">
+                  <td>{{member.userProfile.firstName}}</td>
+                  <td>{{member.userProfile.lastName}}</td>
+                  <td>{{member.userProfile.primaryMobileNo}}</td>
+                  <td><button (click)="doRemoveMember(member)">Delete</button></td>
+                  <td><button (click)="editMember(member)">Edit</button></td>
+                </tr>
+              </tbody>
+            </table> -->
+
+           </div>
+           <div class="right-menu">
+               <div class="right-menu-header">Related Links</div>
+               <ul class="related-link">
+                   <li (click)="shared_functions.redirectto('profile')" class="icon-profile">Profile</li>
+                   <li (click)="shared_functions.redirectto('change-password')" class="icon-password">Change Password</li>
+                   <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">Change Mobile</li>
+                   <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">Change Email</li>
+               </ul>
+           </div>
+           </div>
+       </div>
+   </div>
+</section>
+
+
+
+<!-- 
+<app-header [headerTitle] = "'Members'"></app-header> -->
+
+
+
+<!-- <table class="table" *ngIf="member_list.length !=0">
   <thead>
     <th>First Name</th>
     <th>Last Name</th>
@@ -16,9 +111,9 @@
       <td>{{member.userProfile.lastName}}</td>
       <td>{{member.userProfile.primaryMobileNo}}</td>
       <td><button (click)="doRemoveMember(member)">Delete</button></td>
-      <!-- <td><button (click)="editMember(member)">Edit</button></td> -->
+      
     </tr>
   </tbody>
-</table>
+</table> -->
 
 <!-- <button (click)="addMember()">Add</button> -->

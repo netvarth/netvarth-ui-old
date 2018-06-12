@@ -183,12 +183,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
    }
 
   }
-  doSignup(origin?) {
+  doSignup(origin?, moreOptions = {}) {
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
       panelClass: 'signupmainclass',
       data: {
-        is_provider : this.checkProvider(origin)
+        is_provider : this.checkProvider(origin),
+        moreOptions: moreOptions
       }
     });
 
@@ -224,9 +225,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   upgradeMembership() {
     alert('Upgrade Membership');
   }
-  inboxiconClick() {
-    this.redirectto('inbox');
-  }
 
   redirectto (mod) {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -245,6 +243,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       break;
       case 'inbox':
         this.router.navigate([usertype, 'inbox']);
+      break;
+      case 'members':
+        this.router.navigate([usertype, 'members']);
       break;
     }
   }
@@ -278,6 +279,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
           'password': ynw.password
         };
         this.shared_functions.providerLogin(post_data);
+      },
+      error => {
+        // console.log(error);
+      }
+    );
+  }
+  createProviderAccount() {
+    const ynw = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const firstname = ynw.firstName;
+    const lastname = ynw.lastName;
+    const mobile = ynw.primaryPhoneNumber;
+    const storage_Data = {
+        fname: firstname,
+        lname: lastname,
+        ph: mobile
+    };
+    this.shared_functions.setitemonLocalStorage('ynw-createprov', storage_Data);
+    this.shared_service.ConsumerLogout()
+      .subscribe(data => {
+        this.shared_functions.clearLocalstorage();
+        const moreOptions = {
+          isCreateProv: true,
+          dataCreateProv: storage_Data
+        };
+        this.doSignup('provider', moreOptions);
       },
       error => {
         // console.log(error);

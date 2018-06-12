@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+import { SharedServices } from '../../../shared/services/shared-services';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { ConsumerDataStorageService } from '../../services/consumer-datastorage.service';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
+import { AddMemberComponent } from '../../../shared/modules/add-member/add-member.component';
+import { AddMembersHolderComponent } from '../../components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from '../add-member/add-member.component';
 
 @Component({
@@ -15,8 +19,21 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 export class MembersComponent implements OnInit {
 
   member_list: any = [] ;
+  breadcrumbs_init = [
+    {
+      title: 'Dashboard',
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
+    },
+    {
+      title: 'Family Members',
+      // url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/members'
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
 
   constructor( private consumer_services: ConsumerServices,
+    public shared_services: SharedServices,
+    public shared_functions: SharedFunctions,
   private router: Router, private dialog: MatDialog) {}
 
   ngOnInit() {
@@ -45,8 +62,9 @@ export class MembersComponent implements OnInit {
 
         const dialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
+          panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
           data: {
-            'message' : 'Do you really want to remove this Member?'
+            'message' : 'Do you really want to delete this Member?'
           }
         });
 
@@ -72,22 +90,27 @@ export class MembersComponent implements OnInit {
     );
   }
 
-  /*addMember() {
-    const dialogRef = this.dialog.open(AddMemberComponent, {
+  addMember() {
+    const dialogRef = this.dialog.open(AddMembersHolderComponent, {
       width: '50%',
+      panelClass: 'consumerpopupmainclass',
       data: {
-        type : 'add'
+        type : 'add',
+        moreparams: { source: 'memberadd' }
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getMembers();
+      if (result === 'reloadlist') {
+        this.getMembers();
+      }
     });
   }
 
   editMember(member) {
-    const dialogRef = this.dialog.open(AddMemberComponent, {
+    const dialogRef = this.dialog.open(AddMembersHolderComponent, {
       width: '50%',
+      panelClass: 'consumerpopupmainclass',
       data: {
         member : member,
         type : 'edit'
@@ -95,9 +118,11 @@ export class MembersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getMembers();
+      if (result === 'reloadlist') {
+        this.getMembers();
+      }
     });
-  }*/
+  }
 
 
 }

@@ -23,7 +23,7 @@ const routes: Routes = [
     { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin]},
-    { path: 'members', component: MembersComponent},
+    { path: 'members', component: MembersComponent, canActivate: [AuthGuardLogin]},
     {
       path: 'inbox',
       loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'

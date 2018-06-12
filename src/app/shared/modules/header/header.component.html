@@ -108,9 +108,17 @@
                                         <i class="icon-inbox"></i>
                                         <span>Change Email</span>
                                     </button>
-                                    <button mat-menu-item (click)="switchtoProvider()" *ngIf="!isprovider">
+                                    <button mat-menu-item (click)="redirectto('members')">
+                                        <i class="icon-members"></i>
+                                        <span>Family Members</span>
+                                    </button>
+                                    <button mat-menu-item (click)="switchtoProvider()" *ngIf="!isprovider && provider_loggedin">
                                         <i class="icon-switch"></i>
                                         <span>Switch to Provider</span>
+                                    </button>
+                                    <button mat-menu-item (click)="createProviderAccount()" *ngIf="!isprovider && consumer_loggedin">
+                                        <i class="icon-createprovider"></i>
+                                        <span>Create a Provider Account</span>
                                     </button>
                                     <button mat-menu-item (click)="doLogout()">
                                         <i class="icon-logout"></i>

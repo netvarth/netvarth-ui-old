@@ -18,10 +18,15 @@ export class AddMemberComponent implements OnInit {
   firstname = '';
   lastname = '';
   mobile = '';
+  gender = '';
+  dob = ';';
+  dobholder = '';
   amForm: FormGroup;
   api_error = null;
   api_success = null;
   parent_id ;
+  tday = new Date();
+
   @Input() calledFrom: any;
   @Output() returnDetails = new EventEmitter<any>();
 
@@ -33,14 +38,21 @@ export class AddMemberComponent implements OnInit {
     public sharedservice: SharedServices
     ) {
         console.log(data);
+        if (data.type === 'edit') {
+          this.firstname = data.member.userProfile.firstName || '';
+          this.lastname = data.member.userProfile.lastName || '';
+          this.mobile = data.member.userProfile.primaryMobileNo || '';
+          this.gender = data.member.userProfile.gender || '';
+          this.dob = data.member.userProfile.dob || '';
+          this.dobholder = data.member.userProfile.dob || '';
+        }
      }
 
   ngOnInit() {
     console.log('called from', this.calledFrom);
-    // this.createForm();
   }
 
-  createForm() {
+  /*createForm() {
     this.amForm = this.fb.group({
       first_name: ['', Validators.compose([Validators.required])],
       last_name: ['', Validators.compose([Validators.required])],
@@ -58,9 +70,9 @@ export class AddMemberComponent implements OnInit {
       'last_name': this.data.member.userProfile.lastName || null,
       'mobile':  this.data.member.userProfile.primaryMobileNo || null
     });
-  }
+  }*/
 
-  onSubmit (form_data) {
+  /*onSubmit (form_data) {
 
     const post_data = {
     'userProfile': {
@@ -76,9 +88,9 @@ export class AddMemberComponent implements OnInit {
     } else if (this.data.type === 'add') {
       this.addMember(post_data);
     }
-  }
+  }*/
 
-  editMember(post_data) {
+ /* editMember(post_data) {
 
     post_data.user =  this.data.member.user;
     this.sharedservice.editMember(post_data)
@@ -109,15 +121,36 @@ export class AddMemberComponent implements OnInit {
         this.api_error = error.error;
       }
     );
-  }
+  }*/
   valuechange() {
-    // console.log('value change', this.firstname, this.lastname, this.mobile);
+    console.log('value change', this.firstname, this.lastname, this.mobile, this.gender, this.dob);
     const retobj = {
       'fname': this.firstname,
       'lname': this.lastname,
-      'mobile': this.mobile
+      'mobile': this.mobile,
+      'gender': this.gender,
+      'dob': this.dobholder
     };
     this.returnDetails.emit(retobj);
+  }
+  dateChanged(e) {
+    if (e) {
+      if (e._i) {
+        let cday = e._i.date;
+        let cmon = (e._i.month + 1);
+        const cyear = e._i.year;
+        if (cday < 10) {
+          cday = '0' + cday;
+        }
+        if (cmon < 10) {
+          cmon = '0' + cmon;
+        }
+        this.dobholder = cyear + '-' + cmon + '-' + cday;
+      }
+    } else {
+      this.dobholder = '';
+    }
+    this.valuechange();
   }
   resetApiErrors () {
     this.api_error = null;
