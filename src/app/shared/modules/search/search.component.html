@@ -28,13 +28,13 @@
 
   <div class="sa-src flex-shrink-1 plr0i ml5">
       <mat-form-field class="search_keyword_class">
-        <input name="provider_box" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" (change)="kwtyping($event.target.value)" (click)="filterKeywords($event.target.value)">
+        <input name="provider_box" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">
         <!-- <mat-autocomplete #autoprov="matAutocomplete" (optionSelected)="selectedOption(provbox.value)"> -->
-          <mat-autocomplete #autoprov="matAutocomplete">
+          <mat-autocomplete #autoprov="matAutocomplete" #autotest> 
           <div *ngIf="keywordgroupList">
               <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList">
-                <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (click)="setKeyword(kw)">
-                <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (onSelectionChange)="setKeyword(kw)"> -->
+                <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (click)="setKeyword(kw)"> -->
+                <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (onSelectionChange)="setKeyword(kw)">
                 <span [innerHTML] ="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>
                 </mat-option>
               </mat-optgroup>
