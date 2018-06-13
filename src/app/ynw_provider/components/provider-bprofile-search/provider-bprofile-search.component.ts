@@ -203,7 +203,6 @@ export class ProviderBprofileSearchComponent implements OnInit {
     .then(
       data => {
         this.bProfile = data;
-
         this.provider_datastorage.set('bProfile', data);
         const loginuserdata = this.sharedfunctionobj.getitemfromLocalStorage('ynw-user');
         // setting the status of the customer from the profile details obtained from the API call

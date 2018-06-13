@@ -225,6 +225,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   upgradeMembership() {
     alert('Upgrade Membership');
   }
+  inboxiconClick() {
+    this.redirectto('inbox');
+  }
 
   redirectto (mod) {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');

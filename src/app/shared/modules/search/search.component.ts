@@ -715,7 +715,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.curlabel.typ = '';
     this.curlabel.query = '';
    }
-
+console.log('kwholder', this.keywordholder);
  }
  private setNullKeyword(kw?) {
     this.keywordholder = {

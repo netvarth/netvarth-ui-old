@@ -141,6 +141,7 @@ export class ProviderDetailComponent implements OnInit {
         switch (section) {
          case 'businessProfile': {
             this.businessjson = res;
+            // console.log('bprofile', JSON.stringify(this.businessjson));
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             this.getFavProviders();
@@ -492,10 +493,10 @@ export class ProviderDetailComponent implements OnInit {
             post_provids_locid.push(provids_locid[i].locid);
          // }
       }
-    console.log('wtime', post_provids_locid);
+    // console.log('wtime', post_provids_locid);
     this.providerdetailserviceobj.getEstimatedWaitingTime(post_provids_locid)
       .subscribe (data => {
-         console.log('waitingtime api', data);
+        // console.log('waitingtime api', data);
         this.waitlisttime_arr = data;
         if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
           this.waitlisttime_arr = [];
@@ -521,7 +522,7 @@ export class ProviderDetailComponent implements OnInit {
         let locindx;
         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
           locindx = provids_locid[i].locindx;
-          console.log('locindx', locindx);
+          // console.log('locindx', locindx);
           this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
           this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
           this.locationjson[locindx]['estimatedtime_det'] = [];
@@ -546,7 +547,7 @@ export class ProviderDetailComponent implements OnInit {
             }
           }
         }
-        console.log('loc final', this.locationjson);
+        // console.log('loc final', this.locationjson);
       });
     }
   }
