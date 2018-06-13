@@ -7,29 +7,31 @@ onSubmit(amForm.value)">
     </button>
   </h1>
   <mat-dialog-content>
-    <div class="form-group">
-      <mat-form-field>
-          <label class="col-form-label">Queue</label>
-          <mat-select placeholder="Queue" formControlName="queue_id">
-            <mat-option *ngFor="let queue of queues" [value]="queue.id" >
-              {{queue.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-    </div>
-    <div class="form-group">
-        <label class="col-form-label">Delay</label>
-      <ngb-timepicker [(ngModel)]="time" formControlName="delay"></ngb-timepicker>
-    </div>
-    <div class="form-group inline">
-      <label class="col-form-label">Send Message</label>
-      <mat-checkbox formControlName="send_message"></mat-checkbox>
-    </div>
-    <div class="form-group">
-      <mat-form-field class="example-full-width"  *ngIf="amForm.get('send_message').value === true">
-        <label class="col-form-label">Message</label>
-        <input matInput type="text" placeholder="Message" formControlName="message">
-      </mat-form-field>
+    <div class="adjustdelay">
+        <div class="form-group">
+          <mat-form-field>
+              <label class="col-form-label">Queue</label>
+              <mat-select placeholder="Queue" formControlName="queue_id">
+                <mat-option *ngFor="let queue of queues" [value]="queue.id" >
+                  {{queue.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Delay</label>
+          <ngb-timepicker [(ngModel)]="time" formControlName="delay"></ngb-timepicker>
+        </div>
+        <div class="form-group inline">
+          <label class="col-form-label">Send Message</label>
+          <mat-checkbox formControlName="send_message"></mat-checkbox>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="example-full-width"  *ngIf="amForm.get('send_message').value === true">
+            <label class="col-form-label">Message</label>
+            <input matInput type="text" placeholder="Message" formControlName="message">
+          </mat-form-field>
+        </div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>

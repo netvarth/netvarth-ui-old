@@ -1,89 +1,84 @@
 <h1 class="mat-dialog-title">Invoice<button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
 
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="invoice">
-                    <div class="outer">
-                        <div class="ivc">
-                            <span class="label">Service Period</span>
-                            <span class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date: dateFormat}}</span>
-                        </div>
 
-                        <h4>Services</h4>
+  <div class="invoice">
+      <div class="outer">
+          <div class="ivc">
+              <span class="label">Service Period</span>
+              <span class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date: dateFormat}}</span>
+          </div>
 
-                        <div class="ivc" *ngIf="invoice.licensePkgDetails">
-                            <span class="label"><span>{{invoice.licensePkgDetails.licenseName}}</span></span>
-                            <span class="result">{{invoice.licensePkgDetails.amount  | currency:'INR':'symbol':'.2-2'}}</span>
-                        </div>
+          <h4>Services</h4>
 
-                        <div class="ivc" *ngFor="let addon of invoice.addonDetails">
-                            <span class="label"><span>{{addon.addonName}}</span></span>
-                            <span class="result">{{addon.amount  | currency:'INR':'symbol':'.2-2'}}</span>
-                        </div>
+          <div class="ivc" *ngIf="invoice.licensePkgDetails">
+              <span class="label"><span>{{invoice.licensePkgDetails.licenseName}}</span></span>
+              <span class="result">{{invoice.licensePkgDetails.amount  | currency:'INR':'symbol':'.2-2'}}</span>
+          </div>
 
-                        <div class="ivc" *ngIf="source != 'payment-history'">
-                            <span class="label">Amount to pay</span>
-                            <span class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span>
-                        </div>
-                    </div>
-                    <div class="payment-details" *ngIf="source === 'payment-history' && payment_detail && payment_detail.length > 0">
-                        <div class="pay-tbl table-outer">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Payment Gateway</th>
-                                        <th>Payment Mode</th>
-                                        <th>Amount</th>
-                                        <th>Payment Date</th>
-                                        <th>Payment Id</th>
-                                        <th>Payment Ref Id</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor=" let payment of payment_detail.slice().reverse()">
-                                        <td data-title="Payment Gateway">{{payment.paymentGateway}}</td>
-                                        <td data-title="Payment Mode"> {{payment.paymentMode}}
-                                        </td>
-                                        <td data-title="Amount">
-                                            {{payment.amount  | currency:'INR':'symbol':'.2-2'}}
-                                        </td>
-                                        <td data-title="Payment Date">
-                                            {{payment.paymentOn | date: dateFormat}}
-                                        </td>
-                                        <td data-title="Payment Id">
-                                            {{payment.paymentId}}
-                                        </td>
-                                        <td data-title="Payment Ref Id">
-                                            {{payment.paymentRefId}}
-                                        </td>
-                                        <td data-title="Status">
-                                            {{payment.status || 'FAILED'}}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+          <div class="ivc" *ngFor="let addon of invoice.addonDetails">
+              <span class="label"><span>{{addon.addonName}}</span></span>
+              <span class="result">{{addon.amount  | currency:'INR':'symbol':'.2-2'}}</span>
+          </div>
 
-                    <div class="payment-option" *ngIf="payment_status === 'NotPaid' && source != 'payment-history'">
-                        <h4>Payment Options</h4>
-                        <div>
-                          <mat-radio-group [(ngModel)]="pay_data.paymentMode">
-                            <mat-radio-button [value]="opt.name"
-                            *ngFor="let opt of payment_modes">{{opt.Displayname}}
-                            </mat-radio-button>
-                          </mat-radio-group>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+          <div class="ivc" *ngIf="source != 'payment-history'">
+              <span class="label">Amount to pay</span>
+              <span class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span>
+          </div>
+      </div>
+      <div class="payment-details" *ngIf="source === 'payment-history' && payment_detail && payment_detail.length > 0">
+          <div class="pay-tbl table-outer">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>Payment Gateway</th>
+                          <th>Payment Mode</th>
+                          <th>Amount</th>
+                          <th>Payment Date</th>
+                          <th>Payment Id</th>
+                          <th>Payment Ref Id</th>
+                          <th>Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor=" let payment of payment_detail.slice().reverse()">
+                          <td data-title="Payment Gateway">{{payment.paymentGateway}}</td>
+                          <td data-title="Payment Mode"> {{payment.paymentMode}}
+                          </td>
+                          <td data-title="Amount">
+                              {{payment.amount  | currency:'INR':'symbol':'.2-2'}}
+                          </td>
+                          <td data-title="Payment Date">
+                              {{payment.paymentOn | date: dateFormat}}
+                          </td>
+                          <td data-title="Payment Id">
+                              {{payment.paymentId}}
+                          </td>
+                          <td data-title="Payment Ref Id">
+                              {{payment.paymentRefId}}
+                          </td>
+                          <td data-title="Status">
+                              {{payment.status || 'FAILED'}}
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
 
-<div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>
+      <div class="payment-option" *ngIf="payment_status === 'NotPaid' && source != 'payment-history'">
+          <h4>Payment Options</h4>
+          <div>
+            <mat-radio-group [(ngModel)]="pay_data.paymentMode">
+              <mat-radio-button [value]="opt.name"
+              *ngFor="let opt of payment_modes">{{opt.Displayname}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+      </div>
+  </div>
+
+  <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>
 
 </mat-dialog-content>
 <mat-dialog-actions>
