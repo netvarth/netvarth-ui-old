@@ -35,6 +35,12 @@ export class ProviderPaymentHistoryComponent implements OnInit {
       }
     ];
 
+    pagination: any  = {
+      startpageval: 1,
+      totalCnt : 0,
+      perPage : projectConstants.PERPAGING_LIMIT
+    };
+
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions,
@@ -47,7 +53,8 @@ export class ProviderPaymentHistoryComponent implements OnInit {
 
 
     getPaymentHistory() {
-      this.provider_servicesobj.getInvoicesWithStatus('Paid')
+      const api_filter = this.setPaginationFilter();
+      this.provider_servicesobj.getInvoicesWithStatus('Paid', api_filter)
         .subscribe(data => {
           this.payment_history = data;
         },
@@ -79,5 +86,18 @@ export class ProviderPaymentHistoryComponent implements OnInit {
 
       });
 
+    }
+
+    handle_pageclick(pg) {
+      this.pagination.startpageval = pg;
+      this.getPaymentHistory();
+    }
+
+    setPaginationFilter() {
+      const api_filter = {};
+      api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
+      api_filter['count'] = this.pagination.perPage;
+
+      return api_filter;
     }
 }

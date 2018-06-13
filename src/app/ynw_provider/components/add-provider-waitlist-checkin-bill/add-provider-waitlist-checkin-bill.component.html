@@ -51,7 +51,10 @@
                       <td data-title="Service/Item">{{item.name}}</td>
                       <td data-title="Quantity"> <input type="number" min="1" [(ngModel)]="cart.items[i].quantity"
                         [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)"> </td>
-                      <td data-title="StdRate">{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
+                      <td data-title="StdRate">
+                        <input type="number" [(ngModel)]="item.price"
+                        [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)">
+                      </td>
                       <td data-title="Discount">
                         <div class="form-group" *ngIf="discounts.length >0">
                         <mat-form-field>
