@@ -728,6 +728,12 @@
 .icon-sent:before {
   content: "\2e"; }
 
+.icon-members:before {
+  content: "\2f"; }
+
+.icon-createprovider:before {
+  content: "\3a"; }
+
 html {
   font-size: 16px; }
   @media only screen and (max-width: 575px) {
@@ -12080,11 +12086,22 @@ header.consumer {
     .content.see-pages .outer-card {
       flex-direction: column; } }
   .content.see-pages .outer-card .card {
-    width: 60%; }
+    width: 75%; }
     @media only screen and (max-width: 575px) {
       .content.see-pages .outer-card .card {
         margin-bottom: 30px;
         width: 100%; } }
+    .content.see-pages .outer-card .card .form-group .col-form-label {
+      padding: 0;
+      margin-bottom: 5px; }
+    .content.see-pages .outer-card .card .form-group .form-control {
+      width: 50%; }
+      @media only screen and (max-width: 767px) {
+        .content.see-pages .outer-card .card .form-group .form-control {
+          width: 100%; } }
+      @media (min-width: 768px) and (max-width: 991px) {
+        .content.see-pages .outer-card .card .form-group .form-control {
+          width: 100%; } }
     .content.see-pages .outer-card .card .form-group .pickerouter {
       display: flex; }
       .content.see-pages .outer-card .card .form-group .pickerouter input[type="text"] {
@@ -12102,8 +12119,7 @@ header.consumer {
           line-height: 38px; }
     .content.see-pages .outer-card .card .form-group .mat-radio-group .mat-radio-button {
       font-family: 'Montserrat', sans-serif;
-      font-weight: normal; }
-    .content.see-pages .outer-card .card .form-group .mat-radio-group .mat-radio-button {
+      font-weight: normal;
       margin-right: 10px; }
     .content.see-pages .outer-card .card .form-group .verified {
       position: relative;
@@ -12131,9 +12147,57 @@ header.consumer {
       font-size: .625rem;
       font-weight: 500;
       text-align: left; }
+    .content.see-pages .outer-card .card .d-tbl .addbt {
+      margin-top: 0;
+      font-weight: 500; }
+    .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre {
+      text-align: center; }
+      .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt {
+        top: -10px; }
+        @media only screen and (max-width: 767px) {
+          .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt {
+            display: none; } }
+        .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt:before {
+          display: none; }
+      .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        display: none; }
+        @media only screen and (max-width: 767px) {
+          .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show {
+            display: block;
+            text-align: right; } }
+        .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls, .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls {
+          position: relative;
+          border: none;
+          background: transparent;
+          padding-left: 20px;
+          font-weight: 500;
+          margin-right: 15px;
+          cursor: pointer; }
+          .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls:before, .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls:before {
+            font-family: "custom-ynw" !important;
+            content: "\78";
+            position: absolute;
+            left: 0;
+            font-size: .875rem; }
+        .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls {
+          margin-right: 0; }
+          .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls:before {
+            content: "\4b"; }
+        @media (min-width: 768px) and (max-width: 991px) {
+          .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show {
+            display: none; } }
+        @media (min-width: 992px) and (max-width: 1199px) {
+          .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show {
+            display: none; } }
+        @media only screen and (min-width: 1200px) {
+          .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show {
+            display: none; } }
   .content.see-pages .outer-card .right-menu {
     flex-grow: 1;
-    margin-left: 50px; }
+    margin-left: 40px; }
     @media only screen and (max-width: 575px) {
       .content.see-pages .outer-card .right-menu {
         margin-left: 0; } }

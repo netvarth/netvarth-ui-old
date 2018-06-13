@@ -12,7 +12,7 @@
             }
 
             .card {
-                width: 60%;
+                width: 75%;
                 
                 @include respond-to(ynw-575) {
                     margin-bottom: 30px;
@@ -20,6 +20,22 @@
                 }
                 
                 .form-group {
+                    .col-form-label {
+                        padding: 0;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .form-control {
+                        width: 50%;
+                        
+                        @include respond-to(ynw-767) {
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 100%;
+                        }
+                    }
+                    
                     .pickerouter {
                         display: flex;
 
@@ -39,13 +55,10 @@
                             }
                         }
                     }
+                    
                     .mat-radio-group {
                         .mat-radio-button {
                             @include font-regular;
-                        }
-                    }
-                    .mat-radio-group {
-                        .mat-radio-button {
                             margin-right: 10px;
                         }
                     }
@@ -66,6 +79,7 @@
                         }
                         
                     }
+                    
                     app-field-error-display {
                         .sts-msg {
                             &.error {
@@ -87,10 +101,89 @@
                         }
                     }
                 }
+                
+                .d-tbl {
+                    .addbt {
+                        margin-top: 0;
+                        font-weight: 500;
+                    }
+                    
+                    .table {
+                        tbody {
+                            tr {
+                                td {
+                                    &.mre {
+                                        text-align: center;
+                                        
+                                        .mbt {
+                                            top: -10px;
+                                            
+                                            @include respond-to(ynw-767){
+                                                display: none;
+                                            }
+                                            
+                                            &:before {
+                                                display: none;
+                                            }
+                                        }
+                                        .mbt-mobile-show {
+                                                width: 100%;
+                                                display: flex;
+                                                justify-content: flex-end;
+                                                display: none;
+                                                
+                                                @include respond-to(ynw-767){
+                                                    display: block;
+                                                    text-align: right;
+                                                }
+
+                                                .editcls, .deletecls {
+                                                    position: relative;
+                                                    border: none;
+                                                    background: transparent;
+                                                    padding-left: 20px;
+                                                    font-weight: 500;
+                                                    margin-right: 15px;
+                                                    cursor: pointer;
+
+                                                    &:before {
+                                                        @include font-custom;
+                                                        content: "\78";
+                                                        position: absolute;
+                                                        left: 0;
+                                                        font-size: .875rem;
+                                                    }
+                                                }
+
+                                                .deletecls {
+                                                    margin-right: 0;
+
+                                                    &:before {
+                                                        content: "\4b";
+                                                    }
+                                                }
+
+                                                @include respond-to(ynw-768-991) {
+                                                    display: none;
+                                                }
+                                                @include respond-to(ynw-992-1199) {
+                                                    display: none;
+                                                }
+                                                @include respond-to(ynw-1200) {
+                                                    display: none;
+                                                }
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            
             .right-menu {
                 flex-grow: 1;
-                margin-left: 50px;
+                margin-left: 40px;
                 
                 @include respond-to(ynw-575) {
                     margin-left: 0;
