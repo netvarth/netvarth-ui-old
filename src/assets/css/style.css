@@ -9781,6 +9781,28 @@ footer.dashb {
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .actiondiv {
         padding-left: 0; } }
 
+.comn-cls.payment-history .w-dta .card .table-outer {
+  padding: 0; }
+  .comn-cls.payment-history .w-dta .card .table-outer .table {
+    margin-bottom: 0; }
+    .comn-cls.payment-history .w-dta .card .table-outer .table tbody tr td {
+      font-weight: 500; }
+      .comn-cls.payment-history .w-dta .card .table-outer .table tbody tr td strong {
+        font-weight: 600; }
+      .comn-cls.payment-history .w-dta .card .table-outer .table tbody tr td .icon-invoice {
+        cursor: pointer;
+        color: #00aef2;
+        padding: 5px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -moz-transition: all 300ms;
+        -o-transition: all 300ms;
+        -webkit-transition: all 300ms;
+        transition: all 300ms; }
+
 .content .card {
   margin-bottom: 50px; }
   .content .card .copy .inbox-table {
@@ -10125,6 +10147,25 @@ footer.dashb {
         .content.comn-cls .card .audit .search_paging .container .text-center .pagination li:nth-child(2) {
           padding-left: 10px;
           padding-right: 10px; }
+
+.invoice {
+  width: 100%;
+  font-size: .875rem;
+  font-weight: 500; }
+  .invoice .outer .ivc {
+    margin-bottom: 15px; }
+    .invoice .outer .ivc .label {
+      color: #222223; }
+      .invoice .outer .ivc .label span {
+        color: #222223;
+        font-weight: 600; }
+    .invoice .outer .ivc .result {
+      font-weight: 600;
+      display: block; }
+  .invoice .outer h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 10px; }
 
 header.consumer {
   padding-top: 15px; }

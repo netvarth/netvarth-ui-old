@@ -69,6 +69,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
     this.shared_services.bussinessDomains()
       .subscribe (data => {
         this.businessConfig = data;
+        // console.log('config', this.businessConfig);
         this.getBussinessProfile();
       },
     error => {
@@ -79,7 +80,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
     this.provider_services.getBussinessProfile()
       .subscribe (data => {
         this.bProfile = data;
-        // console.log('sector Id', this.bProfile.serviceSector.id);
+        // console.log('sector Id', this.bProfile);
         for (let i = 0; i < this.businessConfig.length ; i++) {
           if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
             if (this.businessConfig[i].multipleLocation) {
@@ -96,6 +97,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
   }
   // get the list of locations added for the current provider
   getProviderLocations() {
+    this.show_addlocationButton = false;
     this.provider_services.getProviderLocations()
       .subscribe(data => {
         this.loc_list = data;

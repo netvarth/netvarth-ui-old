@@ -924,7 +924,7 @@
             }
         }
         
-        //Accept Payment
+        // Accept Payment
         .full-outer {
             .btl {
                 border-bottom: 1px dashed $cc-ash;
@@ -988,6 +988,11 @@
                     }
                 }
             }
+            
+        }
+        
+        // Invoice
+        .invoice {
             
         }
         

@@ -6068,6 +6068,47 @@ footer {
     }
 }
 
+// ### Payment History
+.comn-cls {
+    &.payment-history {
+        .w-dta {
+            .card {
+                .table-outer {
+                    padding: 0;
+
+                    .table {
+                        margin-bottom: 0;
+
+                        tbody {
+                            tr{
+                                td {
+                                    font-weight: 500;
+
+                                    strong {
+                                        font-weight: 600;
+                                    }
+
+                                    .icon-invoice {
+                                        cursor: pointer;
+                                        color: $linkblue;
+                                        padding: 5px;
+                                        width: 24px;
+                                        height: 24px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        @include transition(all 300ms);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 // ### Inbox
 .content {
@@ -6594,7 +6635,37 @@ footer {
 }
 
 
-
+// Invoice
+.invoice {
+    width: 100%;
+    font-size: .875rem;
+    font-weight: 500;
+    
+    .outer {
+        .ivc {
+            margin-bottom: 15px;
+            
+            .label {
+                color: $linkblack;
+                
+                span {
+                    color: $linkblack;
+                    font-weight: 600;
+                }
+            }
+            .result {
+                font-weight: 600;
+                display: block;
+            }
+        }
+        
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+    }
+}
 
 
 
