@@ -245,7 +245,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       data => {
         this.items = data;
         const items = this.items.map((ob) => ob.displayName );
-        console.log(items);
+
         this.itemServicesGroup[1]['values'] = items;
 
         if (this.bill_data.items && this.bill_data.items.length > 0) {
@@ -350,6 +350,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   itemCouponChange(i) {
+    this.calculateItemTotal(i);
+  }
+
+  stdRateChange(i) {
+    if (!this.cart['items'][i]['price'] ||
+    isNaN(this.cart['items'][i]['price']) ||
+    this.cart['items'][i]['price'] < 0) {
+      this.cart['items'][i]['price'] = 0;
+    }
+
     this.calculateItemTotal(i);
   }
 
@@ -579,6 +589,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         if (ob.id === service.serviceId) {
           this.pushCartItem(ob, 'Services');
           this.cart.items[this.cart.items.length - 1] ['quantity']  = service.quantity;
+          this.cart.items[this.cart.items.length - 1]['price'] = service.price;
           if (service.discountId !== 0) {
             this.cart.items[this.cart.items.length - 1] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
           }
@@ -607,6 +618,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         if (ob.itemId === item.itemId) {
           this.pushCartItem(ob, 'Items');
           this.cart.items[this.cart.items.length - 1] ['quantity']  = item.quantity;
+          this.cart.items[this.cart.items.length - 1]['price'] = item.price;
           if (item.discountId !== 0) {
             this.cart.items[this.cart.items.length - 1] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
           }
@@ -614,6 +626,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           if (item.couponId !== 0) {
             this.cart.items[this.cart.items.length - 1] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
           }
+
           this.calculateItemTotal(this.cart.items.length - 1);
         }
 

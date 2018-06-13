@@ -35,11 +35,17 @@
                                       </tr>
                                   </tbody>
                               </table>
+
+                              <div class="search_paging">
+                                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+                              </div>
+
                           </div>
                       </div>
                       <div  *ngIf="load_complete==1 && payment_history.length == 0">
                         You don't have any payment history.
                       </div>
+
                     </div>
                 </div>
             </div>
