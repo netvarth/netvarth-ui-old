@@ -22,26 +22,26 @@ export const Messages = {
   'ITEMIMAGE_UPLOADED': 'Image uploaded successfully',
 
   // Bill Discount
-  'DISCOUNT_CREATED' : 'Billing Discount created successfully',
-  'DISCOUNT_UPDATED' : 'Billing Discount updated successfully',
-  'DISCOUNT_DELETE'  : 'Do you really want to remove the billing discount "[name]"?',
-  'DISCOUNT_DELETED' : 'Billing Discount deleted successfully',
-  'DISCOUNT_LISTEMPTY' : 'No Billing Discounts exists',
+  'DISCOUNT_CREATED' : 'Bill Discount created successfully',
+  'DISCOUNT_UPDATED' : 'Bill Discount updated successfully',
+  'DISCOUNT_DELETE'  : 'Do you really want to remove the bill discount "[name]"?',
+  'DISCOUNT_DELETED' : 'Bill Discount deleted successfully',
+  'DISCOUNT_LISTEMPTY' : 'No Bill Discounts exists',
 
   // Bill Coupons
-  'COUPON_CREATED' : 'Billing Coupon created successfully',
-  'COUPON_UPDATED' : 'Billing Coupon updated successfully',
-  'COUPON_DELETE'  : 'Do you really want to remove the billing coupon "[name]"?',
-  'COUPON_DELETED' : 'Billing Coupon deleted successfully',
-  'COUPON_LISTEMPTY' : 'No Billing Coupons exists',
+  'COUPON_CREATED' : 'Bill Coupon created successfully',
+  'COUPON_UPDATED' : 'Bill Coupon updated successfully',
+  'COUPON_DELETE'  : 'Do you really want to remove the bill coupon "[name]"?',
+  'COUPON_DELETED' : 'Bill Coupon deleted successfully',
+  'COUPON_LISTEMPTY' : 'No Bill Coupons exists',
 
   // non working days
-  'HOLIDAY_CREATED' : 'Holiday created successfully',
-  'HOLIDAY_UPDATED' : 'Holiday updated successfully',
-  'HOLIDAY_DELETE'  : 'Do you really want to remove the Holiday "[date]"?',
+  'HOLIDAY_CREATED' : 'Non Working Day created successfully',
+  'HOLIDAY_UPDATED' : 'Non Working Day updated successfully',
+  'HOLIDAY_DELETE'  : 'Do you really want to remove the Non Working Day "[date]"?',
   'HOLIDAY_STIME'   : 'Start time should be greater than current time',
   'HOLIDAY_ETIME'   : 'Closing time should be greater than Start time',
-  'HOLIDAY_LISTEMPTY' : 'No Holiday List exists',
+  'HOLIDAY_LISTEMPTY' : 'No Non Working Day available',
 
   // Common
   'API_ERROR': 'YouNeverWait.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
@@ -87,7 +87,7 @@ export const Messages = {
   // WaitlistManager
   'ONLINE_CHECKIN_SAVED' : 'Saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
-  'SERVICE_ADDED' : 'Service added successfully',
+  'SERVICE_ADDED' : 'New service added successfully. Please add this service to the relevant queue',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'WAITLIST_LOCATION_CREATED': 'Location created successfully',
@@ -116,6 +116,7 @@ export const Messages = {
 
   'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
   'CUSTOMER_SEARCH_EXIST': 'Customer already exist',
+  'CUSTOMER_SEARCH_UNAVAILABLE': 'This customer doesnt exist',
   'PROVIDER_CUSTOMER_CREATED': 'New customer created',
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',

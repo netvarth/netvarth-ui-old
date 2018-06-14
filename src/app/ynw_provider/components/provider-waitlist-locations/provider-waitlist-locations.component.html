@@ -14,7 +14,7 @@
           <div class="row" *ngFor="let loc of loc_list">
               <div class="card" [class.disabled]="loc.status=='INACTIVE'" [class.bse-lcn]="loc.baseLocation == true">
                   <div class="copy">
-                      <span class="mbt">
+                      <span class="mbt" *ngIf="loc.baseLocation != true">
                         <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
                             <mat-icon>more_vert</mat-icon>
                         </button>
@@ -28,21 +28,21 @@
 
                       <mat-menu #appMenu="matMenu">
                         <button mat-menu-item (click)="changeProviderLocationStatus(loc)">
-                            <i *ngIf="loc.status=='INACTIVE'" class="icon-enable"></i> 
-                            <i *ngIf="loc.status=='ACTIVE'" class="icon-disable"></i> 
+                            <i *ngIf="loc.status=='INACTIVE'" class="icon-enable"></i>
+                            <i *ngIf="loc.status=='ACTIVE'" class="icon-disable"></i>
                             {{(loc.status=='ACTIVE') ? 'Disable' :' Enable'}}
                         </button>
 
-                        <button mat-menu-item  *ngIf="loc.baseLocation != true" (click)="changeProviderBaseLocationStatus(loc)">
+                        <button mat-menu-item (click)="changeProviderBaseLocationStatus(loc)">
                             <i class="icon-location"></i> Set as Base Location
                         </button>
                       </mat-menu>
                   </div>
-              </div>    
+              </div>
           </div>
-          
+
       </div>
-  </div>    
+  </div>
 </section>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error"

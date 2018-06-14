@@ -10,7 +10,6 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-delay.component';
-import { AddProviderCheckinComponent } from '../add-provider-checkin/add-provider-checkin.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
@@ -173,7 +172,7 @@ export class ProviderHomeComponent implements OnInit {
     .subscribe(
       data => {
         this.locations = data;
-        const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location');
+        const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider checkin button page
         if ( cookie_location_id === '') {
           if (this.locations[0]) {
             this.changeLocation(this.locations[0]);
@@ -506,26 +505,6 @@ export class ProviderHomeComponent implements OnInit {
     });
   }
 
-  goCheckIn() {
-
-
-    const dialogRef = this.dialog.open(AddProviderCheckinComponent, {
-      width: '50%',
-      data: {
-        locations : this.locations,
-        selected_location : this.selected_location,
-        queues: this.queues,
-        selected_queue: this.selected_queue
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.getTodayCheckIn();
-      }
-    });
-
-  }
 
   editLocation() {
      this.locations.forEach((loc, index) => {

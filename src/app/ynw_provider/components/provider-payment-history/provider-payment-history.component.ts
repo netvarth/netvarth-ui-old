@@ -48,9 +48,21 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+      this.getPaymentHistoryCount();
       this.getPaymentHistory();
     }
 
+    getPaymentHistoryCount() {
+      this.provider_servicesobj.getInvoicesWithStatusCount('Paid')
+      .subscribe(
+        (data: any) => {
+          this.pagination.totalCnt = data;
+        },
+        error => {
+
+        }
+      );
+    }
 
     getPaymentHistory() {
       const api_filter = this.setPaginationFilter();

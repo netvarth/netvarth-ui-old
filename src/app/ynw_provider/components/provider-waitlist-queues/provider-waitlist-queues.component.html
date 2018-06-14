@@ -23,6 +23,9 @@
 
                         <h3 class="pointer-cursor" (click)="goQueueDetail(queue)">
                         {{queue.name}}
+                        <span *ngIf="queue['queueSchedule']['timeSlots'][0]">
+                          [ {{queue.queueSchedule.timeSlots[0].sTime}} - {{queue.queueSchedule.timeSlots[0].eTime}} ]
+                        </span>
                         </h3>
 
                         <div class="c-ot m0">
