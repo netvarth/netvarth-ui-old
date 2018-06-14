@@ -1,7 +1,7 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Billing Coupons - {{ data.type | titlecase }}  
+<h1 class="mat-dialog-title">Billing Coupons - {{ data.type | titlecase }}
   <button #queue mat-dialog-close class="modal_close">
       <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
@@ -13,7 +13,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     formControlName="name">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
     errorMsg="Please enter your coupon name.">
-   </app-field-error-display> 
+   </app-field-error-display>
 </div>
 
 <div class="form-group">
@@ -24,13 +24,18 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
       </mat-radio-group>
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'calculationType')"
     errorMsg="Please enter your coupon type.">
-   </app-field-error-display> 
+   </app-field-error-display>
 
-   <input type="text" class="form-control" id="discValue" [placeholder]="valueCaption"
-   formControlName="discValue">
+    <mat-form-field class="example-full-width">
+      <span matPrefix *ngIf="amForm.get('calculationType').value == 'Fixed'"> ₹ &nbsp;</span>
+      <input matInput type="text" class="form-control" id="discValue" [placeholder]="valueCaption"
+      formControlName="discValue">
+      <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span>
+    </mat-form-field>
+
    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'discValue')"
    [errorMsg]="valueCaption">
-  </app-field-error-display> 
+  </app-field-error-display>
 </div>
 
 <div class="form-group">

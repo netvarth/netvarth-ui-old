@@ -138,7 +138,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
         this.getProviderLocations();
       },
       error => {
-        this.provider_shared_functions.openSnackBar (error.error);
+        this.provider_shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
         /*this.api_error = error.error;
         setTimeout(() => {
           this.resetApiErrors();

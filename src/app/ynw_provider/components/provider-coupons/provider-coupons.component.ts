@@ -28,7 +28,7 @@ export class ProviderCouponsComponent implements OnInit {
         title: 'Settings'
       },
       {
-        title: 'Billing Coupons',
+        title: 'Bill Coupons',
         url: '/provider/settings/coupons'
       }
     ];

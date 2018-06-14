@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProviderRouterModule } from './provider-routing.module';
 import { HeaderModule } from '../shared/modules/header/header.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
+import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 
 import { ProviderComponent } from './provider.component';
 import { ProviderHomeComponent } from './components/home/provider-home.component';
@@ -85,6 +86,7 @@ import { ProviderSystemAuditLogComponent  } from './components/provider-system-a
 import { ProviderSystemAlertComponent } from './components/provider-system-alerts/provider-system-alerts.component';
 import { ProviderCustomersComponent } from './components/provider-customers/provider-customers.component';
 import { AddProviderCustomerComponent } from './components/add-provider-customer/add-provider-customer.component';
+import { SearchProviderCustomerComponent } from './components/search-provider-customer/search-provider-customer.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -117,7 +119,8 @@ import 'mousetrap';
         BreadCrumbModule,
         HeaderModule,
         PagerModule,
-        InboxModule
+        InboxModule,
+        CheckInModule
     ],
     declarations: [
         ProviderComponent,
@@ -194,7 +197,8 @@ import 'mousetrap';
         ProviderSystemAuditLogComponent,
         ProviderSystemAlertComponent,
         ProviderCustomersComponent,
-        AddProviderCustomerComponent
+        AddProviderCustomerComponent,
+        SearchProviderCustomerComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -234,7 +238,8 @@ import 'mousetrap';
       AddProviderWaitlistCheckInBillComponent,
       ViewProviderWaitlistCheckInBillComponent,
       ProviderWaitlistCheckInPaymentComponent,
-      AddProviderCustomerComponent
+      AddProviderCustomerComponent,
+      SearchProviderCustomerComponent
     ],
     providers: [
        AuthGuardProviderHome,

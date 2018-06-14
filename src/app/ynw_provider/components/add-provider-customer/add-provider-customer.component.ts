@@ -19,6 +19,7 @@ export class AddProviderCustomerComponent implements OnInit {
   api_success = null;
   step = 1;
   tday = new Date();
+  search_data = null;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
@@ -28,55 +29,31 @@ export class AddProviderCustomerComponent implements OnInit {
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions
     ) {
-
+      this.search_data = this.data.search_data;
+      console.log(this.search_data);
      }
 
   ngOnInit() {
      this.createForm(this.step);
   }
   createForm(step) {
-    this.step = step;
-    switch (step) {
 
-      case 1:     this.amForm = this.fb.group({
-                  mobile_number: ['', Validators.compose([Validators.required,  Validators.maxLength(10),
-                    Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-                  first_last_name: ['', Validators.compose([Validators.required])]
-                  }); break;
-      case 2:
-      this.amForm.addControl('first_name', new FormControl('', Validators.compose([Validators.required])));
-        this.amForm.addControl('last_name', new FormControl('', Validators.compose([Validators.required])));
-        this.amForm.addControl('email_id', new FormControl('', Validators.compose([Validators.required, Validators.email])));
-        this.amForm.addControl('dob', new FormControl('', Validators.compose([Validators.required])));
-        this.amForm.addControl('gender', new FormControl('male', Validators.compose([Validators.required])));
-        this.amForm.addControl('address', new FormControl(''));
+  this.amForm = this.fb.group({
+      mobile_number: ['', Validators.compose([Validators.required,  Validators.maxLength(10),
+        Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+        first_name: ['', Validators.compose([Validators.required])],
+        last_name: ['', Validators.compose([Validators.required])],
+        email_id: ['', Validators.compose([Validators.required, Validators.email])],
+        dob: ['', Validators.compose([Validators.required])],
+        gender: ['male', Validators.compose([Validators.required])],
+        address: ['']
+      });
 
-        this.amForm.get('last_name').setValue(this.amForm.get('first_last_name').value);
-        this.amForm.get('first_name').setValue(this.amForm.get('first_last_name').value);
-        this.amForm.removeControl('first_last_name');
-      }
+  this.amForm.get('mobile_number').setValue(this.search_data.mobile_number);
+  this.amForm.get('first_name').setValue(this.search_data.first_last_name);
 
   }
 
-  searchCustomer(form_data) {
-    const post_data = {
-      'firstName-eq' : form_data.first_last_name,
-      'primaryMobileNo-eq' : form_data.mobile_number
-    };
-    this.provider_services.getCustomer(post_data)
-    .subscribe(
-      (data: any) => {
-        if (data.length === 0) {
-          this.createForm(2);
-        } else {
-          this.shared_functions.apiErrorAutoHide(this, Messages.CUSTOMER_SEARCH_EXIST);
-        }
-      },
-      error => {
-        this.shared_functions.apiErrorAutoHide(this, error);
-      }
-    );
-  }
 
   onSubmit (form_data) {
 

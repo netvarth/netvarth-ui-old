@@ -546,6 +546,11 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null , filter);
   }
 
+  getInvoicesWithStatusCount(status = 'NotPaid', filter = {}) {
+    const url = 'provider/license/invoices/' + status + '/count';
+    return this.servicemeta.httpGet(url, null , filter);
+  }
+
   getLicenseSubscription() {
     const url = 'provider/license/getSubscription';
     return this.servicemeta.httpGet(url);
