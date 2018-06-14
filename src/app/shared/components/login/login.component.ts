@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
     this.dialogRef.close(); // closing the signin window
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
-      panelClass: 'signupmainclass',
+      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
       data: { is_provider : this.is_provider}
     });
 

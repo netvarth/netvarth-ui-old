@@ -237,7 +237,7 @@
                                     <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>
                                             <div class="galbx">
-                                                <div class="overlay">+{{(search_result.fields.gallery_thumb_nails.length-1)}}</div>
+                                                <div class="overlay" (click)="providerDetClicked(search_result)">+{{(search_result.fields.gallery_thumb_nails.length-1)}}</div>
                                                 <img [src]="search_result.fields.gallery_thumb_nails[0]" alt="" style="width:50px;height:auto;">
                                             </div>
                                         </li>
@@ -247,72 +247,48 @@
                                         <ng-container *ngIf="search_result.fields.rating>0">
                                                 <ng-container *ngIf="search_result.fields.rating==.5">
                                                     <img class="ratingstar" src="./assets/images/star-half.svg"/>
-                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
 
                                                 <ng-container *ngIf="search_result.fields.rating==1">
                                                         <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
 
                                                 <ng-container *ngIf="search_result.fields.rating==1.5">
                                                         <img class="ratingstar" src="./assets/images/star.svg"/>
                                                         <img class="ratingstar" src="./assets/images/star-half.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
                                                 <ng-container *ngIf="search_result.fields.rating==2">
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
 
                                                 <ng-container *ngIf="search_result.fields.rating==2.5">
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg"/>
                                                         <img class="ratingstar" src="./assets/images/star-half.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
 
                                                 <ng-container *ngIf="search_result.fields.rating==3">
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
 
                                                 <ng-container *ngIf="search_result.fields.rating==3.5">
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg"/>
                                                         <img class="ratingstar" src="./assets/images/star-half.svg"/>
                                                         <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
 
                                                 <ng-container *ngIf="search_result.fields.rating==4">
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg"/>
                                                         <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
 
                                                 <ng-container *ngIf="search_result.fields.rating==4.5">
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
-                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg"/>
                                                         <img class="ratingstar" src="./assets/images/star-half.svg"/>
                                                 </ng-container>
                                               
@@ -382,9 +358,9 @@
                                 <span class="claim-business" (click)="claimBusiness()" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
                             </div>
                         </div>
-                        <div class="bottom-sect">
+                        <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']">
                             <div class="bt-l">
-                                <div class="wt-tme" *ngIf="waitlisttime_arr.length && search_result.fields.services?.length>0">
+                                <div class="wt-tme" *ngIf="waitlisttime_arr.length>0 && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1">
                                     <div class="o-now" *ngIf="search_result.fields['opennow']==true">Open Now</div>
                                     <div class="timing" >
                                         <span class="est-time" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
@@ -392,11 +368,11 @@
                                     </div>
                                 </div>
 
-                                <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0)">
+                                <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0">
                                     Sorry!! Check-ins not allowed
                                 </div>
                             </div>
-                            <div class="bt-r" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields.services?.length>0">
+                            <div class="bt-r" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1">
                                 <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==2">Check-In</span>
                                 <span class="cs-btn chk-btn disabled" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">Check-In</span>
                                 <!-- <span class="future-text" (click)="checkinClicked(search_result)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">Do you want to Check in for this date ?</span>   -->
@@ -416,130 +392,5 @@
         </div>
     </div>
 </section>
-
-
-
-
-
-<!-- 
-
-<table class="table">
-  <tr>
-    <td class="lefttd">
-      <div class="refine_outer">Refine Search</div>
-      <div *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
-        <div *ngIf="domainlist_data && kwtyp != 'subdom'">
-          <div class="refine_subheader">Select Domain</div>
-          <mat-form-field>
-              <div>
-                <mat-select placeholder="" [(ngModel)]="domain" #leftseldomain (change)="handleleftdomainchange(leftseldomain.value)" >
-                  <mat-option value="">--  Select --</mat-option>
-                  <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain" >
-                    {{ domain.displayName }}
-                  </mat-option>
-                </mat-select>
-              </div>
-            </mat-form-field>
-        </div>
-        <div *ngIf="subdomainlist_data && kwtyp != 'subdom' && domain">
-            <div class="refine_subheader">Select Sub Domain</div>
-            <mat-form-field>
-                <div>
-                  <mat-select placeholder="" [(ngModel)]="selected_leftsubdomain" #leftselsubdomain (change)="handleleftsubdomainchange(leftselsubdomain.value)" >
-                    <mat-option value="">--  Select --</mat-option>
-                    <mat-option *ngFor="let sdomain of subdomainlist_data" [value]="sdomain.subDomain" >
-                      {{ sdomain.displayName }}
-                    </mat-option>
-                  </mat-select>
-                </div>
-              </mat-form-field>
-        </div>    
-
-        <div *ngFor="let refine_data of searchrefine_arr">
-            <div class="refine_subheader">{{refine_data.displayName}}</div>
-              <div class="refine_fieldlist">
-                
-                
-                <div *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'" >
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Enter {{refine_data.displayName}}" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (blur)="handleTextrefineblur(refine_data.cloudSearchIndex	,$event.target.value,refine_data.dataType, false)">
-                    </mat-form-field>
-                    <span class="glyphicon glyphicon-search"></span>
-                </div>
-                
-                <div *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum'">
-                    <div *ngIf="refine_data.enumeratedConstants.length>0">
-                        <div class="refine_field_subouter" *ngFor="let refine_field of refine_data.enumeratedConstants">
-                          <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
-                          
-                        </div>
-                    </div>
-                </div> 
-
-            
-
-                <div *ngIf="refine_data.dataType=='Boolean'">
-                  <mat-slide-toggle #{{refine_data.name}}  [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1,false)">{{refine_data.displayName}}</mat-slide-toggle>
-                </div>  
-                
-                <div *ngIf="refine_data.dataType=='Rating'">
-                  <app-rating-star  [cloudindex]="refine_data.cloudSearchIndex" [ratingval]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (ratingreturn)="handleratingClick($event)"></app-rating-star>
-                </div> 
-                
-              </div>
-        </div>
-      </div>
-    </td>
-    <td class="righttd">
-        <div class='search_result_outer'>
-
-          <div *ngIf="searchrefineresult_arr.length>0">
-              <div *ngFor="let result of searchrefineresult_arr">
-                  {{result}}
-              </div>
-          </div>
-
-
-            <div><button (click)="goback()">Back</button></div>
-          <div *ngIf = "search_string" >{{search_string}}</div>
-          <div *ngIf = "search_result_count">
-            <div class="count_div">
-                <div class="search_count_display"> {{search_data.hits.found}} YNW Business listings found</div>
-                <div class="search_sort_display">
-                  <select name="sortfield" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)">
-                    <option value="title" [selected]="sortfield==='title'" >Title</option>
-                    <option value="sector" [selected]="sortfield==='sector'">Sector</option>
-                  </select>
-                  <span class="sorder" (click)="selected_sortorder('asc')">A</span>&nbsp;<span  class="sorder" (click)="selected_sortorder('desc')">D</span>
-                </div>
-            </div>
-            <div *ngFor = "let search_result of search_data.hits.hit">
-        
-              <div class="search_result_row">
-                <div class="search_prov_logo">
-                  <img *ngIf="search_result.fields.logo" [src]="showproviderlogoicon(search_result.fields.logo)"/>
-                  <img *ngIf="!search_result.fields.logo" [src]="showproviderlogoicon()"/>
-                </div>
-                <div class="search_prov_lhs_outer">
-                  <div class="search_prov_name"><a [routerLink]="[search_result.fields.unique_id]" class="search_prov_namelink">{{search_result.fields.title}}</a></div>
-                  <div class="search_prov_sector">Sector - {{search_result.fields.sector}}</div>
-                </div>
-                <div class="search_prov_rhs_outer">
-                  <div class="search_prov_place">{{search_result.fields.place1}}</div>
-                  <div class="search_prov_phone">{{search_result.fields.business_phone_no}}</div>
-                </div>
-              </div>
-        
-            </div>
-            <div class="search_paging">
-             <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
-            </div>
-          </div>
-          <div *ngIf="nosearch_results">No YNW results found - {{nosearch_results}}</div>
-          </div>
-    
-    </td>
-  </tr>
-</table> -->
 <app-footer></app-footer>
 

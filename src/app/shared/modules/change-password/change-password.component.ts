@@ -20,6 +20,7 @@ export class ChangePasswordComponent implements OnInit {
   spForm: FormGroup;
   api_error = null;
   api_success = null;
+  curtype;
   breadcrumbs_init = [
     {
       title: 'Dashboard',
@@ -41,7 +42,7 @@ export class ChangePasswordComponent implements OnInit {
   ) {}
 
     ngOnInit() {
-
+      this.curtype = this.shared_functions.isBusinessOwner('returntyp');
       this.spForm = this.fb.group({
         old_password: ['', Validators.compose(
           [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]).{8,}$')]) ],

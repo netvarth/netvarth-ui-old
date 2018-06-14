@@ -1,3 +1,4 @@
+<div class="overlay  moreOptionsOverlay" [class.show]="showMoreOptionsOverlay" (click)="closeMoreoptions()"></div>
 <ng-container>
 <div [class.sa-fld]="includedfrom=='home'" [class.tp-srch]="includedfrom=='consumer_header'">
   <div class="sa-lc flex-shrink-0">
@@ -5,7 +6,9 @@
         <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name"  matInput [formControl]="myControl_loc" [matAutocomplete]="autoloc">
         <mat-autocomplete #autoloc="matAutocomplete">
           <div *ngIf="locationList">
-          <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname" (click)="setLocation(loc)">
+          <!-- <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname" (click)="setLocation(loc)"> -->
+              <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname" (onSelectionChange)="setLocation(loc)">
+            
             <div [innerHTML] ="highlightSelText(loc.autoname, 'search_autocompletehighlight', 'location', loc.typ)"></div>
           </mat-option>
           </div>
@@ -33,8 +36,8 @@
           <mat-autocomplete #autoprov="matAutocomplete" #autotest> 
           <div *ngIf="keywordgroupList">
               <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList">
-                <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (click)="setKeyword(kw)"> -->
-                <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (onSelectionChange)="setKeyword(kw)">
+                <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (click)="setKeyword(kw)">
+                <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (onSelectionChange)="setKeyword(kw)"> -->
                 <span [innerHTML] ="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>
                 </mat-option>
               </mat-optgroup>

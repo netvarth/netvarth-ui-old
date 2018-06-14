@@ -86,6 +86,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   public show_searchlabellist;
   public commonfilters;
   public insidelocloop;
+  showMoreOptionsOverlay = false;
   curlabel = {typ: '', query: ''};
 
   moreoptions_arr: any = [];
@@ -240,12 +241,15 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }*/
   closeMoreoptions() {
     this.showmoreoptionsSec = false;
+    this.showMoreOptionsOverlay = false;
   }
   showMoreOptions() {
     if (this.showmoreoptionsSec) {
       this.showmoreoptionsSec = false;
+      this.showMoreOptionsOverlay = false;
     } else {
       this.showmoreoptionsSec = true;
+      this.showMoreOptionsOverlay = true;
     }
 
     /*const dialogRef = this.dialog.open(SearchMoreOptionsComponent, {
@@ -643,6 +647,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
                           };
    this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
    this.location_data = undefined;
+   // console.log('loc', loc);
   }
   private setNulllocationvalues(loc?) {
     this.locationholder =  {
@@ -658,41 +663,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.hide_location_div = true;
   }
 
- /* private getProvider(criteria) {
-    this.prolocation_exists = false;
-    this.prov_nocriteria = true;
-    this.prov_loading = true;
-    this.hide_prov_div = false;
-    if (criteria !== '') {
-       if ( this.prov_subscription ) {
-          this.prov_subscription.unsubscribe();
-        }
-        // Creating criteria to be passed via get
-        const pass_data = {
-          'suggester': 'title',
-          'q': criteria
-        };
-        this.shared_functions.getCloudUrl()
-        .then (url => {
-            this.prov_subscription = this.shared_service.GetProviders(url, pass_data)
-            .subscribe(res => {
-              this.provider_data = res;
-              this.suggestions = this.provider_data.suggest.suggestions || [];
-              if (this.provider_data.found === 0) { this.setNulllprovidervalues(res); } this.prov_loading = false;
-            });
-        });
-        this.prov_loading = false;
-        this.provider_data = undefined;
-      }
-  }*/
- /*private setProvider(prov) {
-      this.prov_id = prov.id;
-      this.prov_name = prov.suggestion;
-      this.provider_data = undefined;
-      this.searchfields.provider = prov.suggestion;
- }*/
-
- private setKeyword(kw) {
+  private setKeyword(kw) {
   if (kw.name !== '') {
     this.kw_autoname = kw.autoname;
     this.keywordholder = {
@@ -715,9 +686,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.curlabel.typ = '';
     this.curlabel.query = '';
    }
-   console.log('kwholder1', this.keywordholder);
    if (kw.typ !== 'label') { // execute search when selected an option using mouse in keyword box
-    // this.do_search();
+    this.do_search();
    }
  }
  private setNullKeyword(kw?) {
@@ -730,7 +700,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     };
  }
  kwtyping(ev, val) {
-   console.log('typig');
    const kCode = parseInt(ev.keyCode, 10);
   switch (kCode) {
     case 37: // left arrow key
@@ -740,8 +709,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         // do nothing for above keys
     break;
     case 13: // enter key
-      // ev.target.closePanel();
-      // this.setKeyword(this.keywordholder);
+      this.setKeyword(this.keywordholder);
     break;
     default: // if other than above keys, then by default set the type as "kwtitle"
       this.kw_autoname = val;
@@ -944,10 +912,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           }
         }
       }
-    } // else {
-      // retarr = { 'dom': '', 'subdom_dispname': ''};
-      return retarr;
-    // }
+    }
+    return retarr;
   }
   getdomainofaSpecialization(specialization) {
     //  console.log('domain list', this.domainlist_data);

@@ -146,7 +146,7 @@ export class ProviderDetailComponent implements OnInit {
             this.provider_bussiness_id = this.businessjson.id;
             this.getFavProviders();
             const holdbName = this.businessjson.businessDesc;
-            const maxCnt = 20;
+            const maxCnt = 120;
             if (holdbName.length > maxCnt ) {
               this.bNameStart = holdbName.substr(0, maxCnt);
               this.bNameEnd = holdbName.substr(maxCnt , holdbName.length);
@@ -239,7 +239,7 @@ export class ProviderDetailComponent implements OnInit {
                   // this.locationjson[i].fields = [];
                   locarr.push({'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i});
             }
-            console.log('locarr', locarr);
+            // console.log('locarr', locarr);
             this.getWaitingTime(locarr);
           break;
           }
@@ -287,7 +287,7 @@ export class ProviderDetailComponent implements OnInit {
     this.shared_services.getServicesByLocationId(locid)
       .subscribe (data => {
         this.locationjson[passedIndx]['services'] = data;
-        console.log('locjson', this.locationjson);
+        // console.log('locjson', this.locationjson);
       },
       error => {
         this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -298,7 +298,7 @@ export class ProviderDetailComponent implements OnInit {
     this.shared_services.getExistingCheckinsByLocation(locid)
     .subscribe (data => {
       this.locationjson[passedIndx]['checkins'] = data;
-      console.log('locjsoncheckin', this.locationjson[passedIndx]['checkins']);
+     // console.log('locjsoncheckin', this.locationjson[passedIndx]['checkins']);
     },
     error => {
       this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -400,7 +400,7 @@ export class ProviderDetailComponent implements OnInit {
         this.isInFav = false;
         if (this.favprovs.length > 0) {
           for (let i = 0; i < this.favprovs.length; i++) {
-            console.log('here', this.favprovs[i].id, this.provider_bussiness_id);
+            // console.log('here', this.favprovs[i].id, this.provider_bussiness_id);
             if (this.favprovs[i].id === this.provider_bussiness_id) {
               this.isInFav = true;
             }
@@ -524,27 +524,32 @@ export class ProviderDetailComponent implements OnInit {
           locindx = provids_locid[i].locindx;
           // console.log('locindx', locindx);
           this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
-          this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
           this.locationjson[locindx]['estimatedtime_det'] = [];
 
-          if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-            this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
-            this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 1;
-            if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                 + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+          if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+            this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+            this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 1;
+            if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+              this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+              this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 1;
+              if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                  + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              } else {
+                this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              }
             } else {
-              this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-              + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+              this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 2;
+              if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              } else {
+                this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              }
             }
           } else {
-            this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
-            this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 2;
-            if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-            } else {
-              this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-            }
+            this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 0;
           }
         }
         // console.log('loc final', this.locationjson);

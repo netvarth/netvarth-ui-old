@@ -1121,33 +1121,35 @@ app-footer {
       margin-bottom: 20px;
       font-weight: 700;
       line-height: 1rem; }
-    .more-opt .mo-content .mat-dialog-content:before, .more-opt .mo-content .mat-dialog-content:after {
-      content: "";
-      display: table; }
-    .more-opt .mo-content .mat-dialog-content:after {
-      clear: both; }
-    .more-opt .mo-content .mat-dialog-content .more-box {
-      float: left;
-      width: 25%; }
-      @media only screen and (max-width: 767px) {
-        .more-opt .mo-content .mat-dialog-content .more-box {
-          width: 33.33%; } }
-      @media only screen and (max-width: 575px) {
-        .more-opt .mo-content .mat-dialog-content .more-box {
-          width: 50%; } }
-      @media only screen and (max-width: 400px) {
-        .more-opt .mo-content .mat-dialog-content .more-box {
-          width: 100%;
-          margin-bottom: 15px; } }
-      .more-opt .mo-content .mat-dialog-content .more-box .refine_subheader {
-        font-weight: 600;
-        margin-bottom: 10px; }
-      .more-opt .mo-content .mat-dialog-content .more-box:last-child {
-        margin: 0; }
-      .more-opt .mo-content .mat-dialog-content .more-box .mat-slide-toggle-content {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 500;
-        font-size: .875rem; }
+    .more-opt .mo-content .mat-dialog-content {
+      overflow: inherit; }
+      .more-opt .mo-content .mat-dialog-content:before, .more-opt .mo-content .mat-dialog-content:after {
+        content: "";
+        display: table; }
+      .more-opt .mo-content .mat-dialog-content:after {
+        clear: both; }
+      .more-opt .mo-content .mat-dialog-content .more-box {
+        float: left;
+        width: 25%; }
+        @media only screen and (max-width: 767px) {
+          .more-opt .mo-content .mat-dialog-content .more-box {
+            width: 33.33%; } }
+        @media only screen and (max-width: 575px) {
+          .more-opt .mo-content .mat-dialog-content .more-box {
+            width: 50%; } }
+        @media only screen and (max-width: 400px) {
+          .more-opt .mo-content .mat-dialog-content .more-box {
+            width: 100%;
+            margin-bottom: 15px; } }
+        .more-opt .mo-content .mat-dialog-content .more-box .refine_subheader {
+          font-weight: 600;
+          margin-bottom: 10px; }
+        .more-opt .mo-content .mat-dialog-content .more-box:last-child {
+          margin: 0; }
+        .more-opt .mo-content .mat-dialog-content .more-box .mat-slide-toggle-content {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 500;
+          font-size: .875rem; }
     .more-opt .mo-content .mat-dialog-actions {
       margin-top: 20px;
       display: block;
@@ -2719,6 +2721,13 @@ header {
         .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover,
         .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover, .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td.delete button:hover {
           color: #f24949; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"],
+      .loginmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"],
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"],
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"],
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"],
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"], .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"], .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"] {
+        width: 100px; }
     .signupmainclass .mat-dialog-content .group-outer .log-tbl,
     .loginmainclass .mat-dialog-content .group-outer .log-tbl,
     .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl,
@@ -4083,6 +4092,8 @@ header {
     @media (min-width: 768px) and (max-width: 991px) {
       .srch .sa {
         padding-top: 60px; } }
+    .srch .sa .moreOptionsOverlay {
+      z-index: 199; }
     .srch .sa h1 {
       font-size: 3.125em;
       text-align: center;
@@ -5583,10 +5594,13 @@ header.dashb .lg-opt {
           padding: 1px 5px;
           border: 2px solid #fff; }
         header.dashb .lg-opt .bnps .inbx .ot-bx i {
-          font-size: 1.625rem;
-          vertical-align: middle;
-          margin-top: 9px;
-          width: 27px; }
+          font-size: 1.5rem;
+          width: 25px;
+          height: 23px;
+          display: flex; }
+          header.dashb .lg-opt .bnps .inbx .ot-bx i:before {
+            width: 25px;
+            height: 23px; }
   header.dashb .lg-opt .lgmem {
     padding-left: 40px;
     font-size: .875rem;
@@ -8419,7 +8433,8 @@ footer.dashb {
         margin-bottom: -15px;
         opacity: 0; }
       .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-input-wrapper .mat-input-flex {
-        align-items: center; }
+        align-items: center;
+        height: 28px; }
         .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-suffix {
           width: 40px;
           height: 40px; }
@@ -8678,6 +8693,17 @@ footer.dashb {
           .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center .pagination li:nth-child(2) {
             padding-left: 10px;
             padding-right: 10px; }
+
+.dashboard .customers.w-dta .head {
+  margin-bottom: 0;
+  border: none;
+  padding: 0 15px;
+  justify-content: flex-start; }
+  .dashboard .customers.w-dta .head .cust_count {
+    font-weight: 500; }
+.dashboard .customers.w-dta .dash-list .d-tbl .table thead tr th, .dashboard .customers.w-dta .dash-list .d-tbl .table thead tr td, .dashboard .customers.w-dta .dash-list .d-tbl .table tbody tr th, .dashboard .customers.w-dta .dash-list .d-tbl .table tbody tr td {
+  padding: .75rem;
+  font-weight: 500; }
 
 .content.settings .set-otr {
   display: flex;
@@ -9322,6 +9348,8 @@ footer.dashb {
               font-size: 1rem; }
     .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content {
       padding: 0; }
+      .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .copy .no-msg {
+        margin: 0 20px; }
       .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table {
         margin: 0;
         padding: 0;
@@ -9532,6 +9560,8 @@ footer.dashb {
                 border-color: #dbdbdb; }
           .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li:last-child {
             border: none; }
+    .content.comn-cls .lbl .card .mat-accordion.provider-notes .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .copy .no-msg {
+      margin: 0 20px; }
     .content.comn-cls .lbl .card .mat-accordion.provider-notes .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .pnotes {
       margin-bottom: 20px;
       border-bottom: dashed 1px #dbdbdb;
@@ -9787,15 +9817,15 @@ footer.dashb {
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .actiondiv {
         padding-left: 0; } }
 
-.comn-cls.payment-history .w-dta .card .table-outer {
+.comn-cls.paymenthistory .w-dta .card .table-outer {
   padding: 0; }
-  .comn-cls.payment-history .w-dta .card .table-outer .table {
+  .comn-cls.paymenthistory .w-dta .card .table-outer .table {
     margin-bottom: 0; }
-    .comn-cls.payment-history .w-dta .card .table-outer .table tbody tr td {
+    .comn-cls.paymenthistory .w-dta .card .table-outer .table tbody tr td {
       font-weight: 500; }
-      .comn-cls.payment-history .w-dta .card .table-outer .table tbody tr td strong {
+      .comn-cls.paymenthistory .w-dta .card .table-outer .table tbody tr td strong {
         font-weight: 600; }
-      .comn-cls.payment-history .w-dta .card .table-outer .table tbody tr td .icon-invoice {
+      .comn-cls.paymenthistory .w-dta .card .table-outer .table tbody tr td .icon-invoice {
         cursor: pointer;
         color: #00aef2;
         padding: 5px;
@@ -10161,7 +10191,8 @@ footer.dashb {
   .invoice .outer .ivc {
     margin-bottom: 15px; }
     .invoice .outer .ivc .label {
-      color: #222223; }
+      color: #999999;
+      font-weight: 500; }
       .invoice .outer .ivc .label span {
         color: #222223;
         font-weight: 600; }
@@ -10169,9 +10200,21 @@ footer.dashb {
       font-weight: 600;
       display: block; }
   .invoice .outer h4 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 10px; }
+    font-size: .875rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #00aef2; }
+  .invoice .payment-option h4 {
+    font-size: .875rem;
+    font-weight: 600;
+    margin-bottom: 5px; }
+  .invoice .payment-option .table-outer {
+    padding: 0; }
+    .invoice .payment-option .table-outer .table {
+      margin-bottom: 0; }
+  .invoice .payment-details .table-outer {
+    padding: 0; }
 
 header.consumer {
   padding-top: 15px; }
@@ -10203,6 +10246,8 @@ header.consumer {
             padding-top: 0; } }
     header.consumer .tp-1 .tp-r {
       flex-grow: 1; }
+      header.consumer .tp-1 .tp-r .moreOptionsOverlay {
+        z-index: 199; }
       header.consumer .tp-1 .tp-r .tc1 {
         margin-top: 0;
         margin-bottom: 10px; }
@@ -10820,7 +10865,7 @@ header.consumer {
           cursor: pointer;
           display: table;
           position: relative;
-          padding-left: 30px; }
+          padding-left: 20px; }
           .content .c-outer .c-body .bk-ctrl .backtoresults .strong {
             font-weight: 600; }
           .content .c-outer .c-body .bk-ctrl .backtoresults:before {
@@ -10828,7 +10873,7 @@ header.consumer {
             content: "\61";
             position: absolute;
             left: 0;
-            top: 4px;
+            top: 3px;
             width: 14px;
             height: 14px;
             display: flex;
@@ -10940,7 +10985,8 @@ header.consumer {
                 position: relative;
                 overflow: hidden;
                 width: 170px;
-                height: 150px; }
+                height: 150px;
+                cursor: pointer; }
                 .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img img {
                   width: 170px;
                   height: 150px;
@@ -10983,7 +11029,9 @@ header.consumer {
                     margin-right: 5px; } }
                 .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li {
                   list-style: none;
-                  height: 50px; }
+                  height: 50px;
+                  width: 50px;
+                  cursor: pointer; }
                   .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li .galbx {
                     position: relative;
                     width: 100%;
@@ -10993,15 +11041,18 @@ header.consumer {
                       width: 100%;
                       height: 100%;
                       z-index: 10;
-                      background: rgba(0, 0, 0, 0.3);
+                      background: rgba(0, 0, 0, 0.5);
                       display: flex;
                       align-items: center;
                       justify-content: center;
                       color: #fff;
                       font-weight: 600;
-                      font-size: 1.125rem; }
+                      font-size: 1.125rem;
+                      visibility: visible;
+                      opacity: 1; }
                     .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li .galbx img {
-                      height: 100% !important; }
+                      height: 100% !important;
+                      width: 50px; }
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .rating-stars {
                 text-align: left; }
                 .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .rating-stars img {
@@ -11023,7 +11074,14 @@ header.consumer {
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 h3 {
                 font-size: 1rem;
                 font-weight: 700;
-                margin-bottom: 5px; }
+                margin-bottom: 5px;
+                -moz-transition: all 300ms;
+                -o-transition: all 300ms;
+                -webkit-transition: all 300ms;
+                transition: all 300ms;
+                cursor: pointer; }
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 h3:hover {
+                  color: #00aef2; }
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .address {
                 margin-bottom: 15px;
                 display: inline-block; }
@@ -11376,7 +11434,7 @@ header.consumer {
                       background: #00cc96;
                       color: #fff;
                       font-weight: 600;
-                      font-size: .75rem;
+                      font-size: .65rem;
                       padding: 4px 7px;
                       margin-left: 5px;
                       -webkit-border-radius: 50px;

@@ -7,9 +7,12 @@
        <div class="container">
            <div class="outer-card">
            <div class="card">
-
-              <div class="table-outer d-tbl">
-                  <table class="table" *ngIf="member_list.length !=0">
+            <div class="no-dta" *ngIf="member_list.length ==0 && query_executed == true">
+                <p>{{emptyMsg}}</p>
+                <span class="cs-btn bt3" (click)="addMember()">Add Family Member</span>
+                </div>
+              <div class="table-outer d-tbl" *ngIf="member_list.length !=0">
+                  <table class="table">
                       <thead>
                           <tr>
                               <th>First Name</th>

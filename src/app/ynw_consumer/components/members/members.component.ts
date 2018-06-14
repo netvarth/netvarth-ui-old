@@ -19,6 +19,7 @@ import { AddMembersHolderComponent } from '../../components/add-members-holder/a
 export class MembersComponent implements OnInit {
 
   member_list: any = [] ;
+  query_executed = false;
   breadcrumbs_init = [
     {
       title: 'Dashboard',
@@ -30,6 +31,7 @@ export class MembersComponent implements OnInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
+  emptyMsg = 'No Family members added yet';
 
   constructor( private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
@@ -46,6 +48,7 @@ export class MembersComponent implements OnInit {
     .subscribe(
       data => {
           this.member_list = data;
+          this.query_executed = true;
       },
       error => {
 

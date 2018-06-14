@@ -39,6 +39,8 @@ header {
 
             .tp-r {
                 flex-grow: 1;
+                
+                .moreOptionsOverlay {z-index: 199;}
 
                 .tc1 {
                     margin-top: 0;
@@ -845,7 +847,7 @@ header {
                     cursor: pointer;
                     display: table;
                     position: relative;
-                    padding-left: 30px;
+                    padding-left: 20px;
                     
                     .strong {
                         font-weight: 600;
@@ -856,7 +858,7 @@ header {
                         content: "\61";
                         position: absolute;
                         left: 0;
-                        top: 4px;
+                        top: 3px;
                         width: 14px;
                         height: 14px;
                         display: flex;
@@ -1007,6 +1009,7 @@ header {
                                 overflow: hidden;
                                 width: 170px;
                                 height: 150px;
+                                cursor: pointer;
                                 
                                 img {
                                     width: 170px;
@@ -1063,6 +1066,8 @@ header {
                                 li {
                                     list-style: none;
                                     height: 50px;
+                                    width: 50px;
+                                    cursor: pointer;
                                         
                                     .galbx {
                                         position: relative;
@@ -1074,16 +1079,19 @@ header {
                                             width: 100%;
                                             height: 100%;
                                             z-index: 10;
-                                            background: rgba(0,0,0,.3);
+                                            background: rgba(0,0,0,.5);
                                             display: flex;
                                             align-items: center;
                                             justify-content: center;
                                             color: $white;
                                             font-weight: 600;
                                             font-size: 1.125rem;
+                                            visibility: visible;
+                                            opacity: 1;
                                         }
                                         img {
                                             height: 100% !important;
+                                            width: 50px;
                                         }
                                     }
                                 }
@@ -1118,6 +1126,12 @@ header {
                                 font-size: 1rem;
                                 font-weight: 700;
                                 margin-bottom: 5px;
+                                @include transition(all 300ms);
+                                cursor: pointer;
+                                
+                                &:hover {
+                                    color: $linkblue;
+                                }
                             }
                             
                             .address {
@@ -1575,7 +1589,7 @@ header {
                                             background: $green;
                                             color: $white;
                                             font-weight: 600;
-                                            font-size: .75rem;
+                                            font-size: .65rem;
                                             padding: 4px 7px;
                                             margin-left: 5px;
                                             @include border-radius(50px);

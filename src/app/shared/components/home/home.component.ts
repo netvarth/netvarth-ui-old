@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit {
         const bdata = bconfig.bdata;
         const saveddate = new Date(bdate);
         const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
-        console.log('diff hours', diff['hours']);
+        // console.log('diff hours', diff['hours']);
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;
@@ -188,7 +188,7 @@ export class HomeComponent implements OnInit {
     doSignup(origin?) {
       const dialogRef = this.dialog.open(SignUpComponent, {
         width: '50%',
-        panelClass: 'signupmainclass',
+        panelClass: ['signupmainclass', 'consumerpopupmainclass'],
         data: {
           is_provider : this.checkProvider(origin)
         }
@@ -202,7 +202,7 @@ export class HomeComponent implements OnInit {
     doLogin(origin?) {
       const dialogRef = this.dialog.open(LoginComponent, {
         width: '50%',
-        panelClass: 'loginmainclass',
+        panelClass: ['loginmainclass', 'consumerpopupmainclass'],
         data: {
           type : origin,
           is_provider : this.checkProvider(origin)

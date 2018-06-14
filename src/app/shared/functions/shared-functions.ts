@@ -356,7 +356,7 @@ export class SharedFunctions {
             break;
           }
       // }
-      console.log('Distance for Cloud', distance, loctype);
+      // console.log('Distance for Cloud', distance, loctype);
       const distInDegree = distance / 111;
       // console.log(distInDegree);
       const upperLeftLat = Number(centerLat) - Number(distInDegree);

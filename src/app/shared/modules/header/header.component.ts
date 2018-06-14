@@ -186,7 +186,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   doSignup(origin?, moreOptions = {}) {
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
-      panelClass: 'signupmainclass',
+      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
       data: {
         is_provider : this.checkProvider(origin),
         moreOptions: moreOptions
@@ -201,7 +201,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   doLogin(origin?) {
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',
-       panelClass: 'loginmainclass',
+       panelClass: ['loginmainclass', 'consumerpopupmainclass'],
       data: {
         type : origin,
         is_provider : this.checkProvider(origin)

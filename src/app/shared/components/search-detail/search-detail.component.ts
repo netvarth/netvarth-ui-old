@@ -120,43 +120,6 @@ export class SearchDetailComponent implements OnInit {
     }
    // console.log('here', this.screenWidth, this.screenHeight);
 }
- /*private getDomainList() {
-    this.shared_service.bussinessDomains()
-    .subscribe (
-      res => {
-        this.domainlist_data = res;
-        if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
-          const domainobtain = this.getdomainofaSubdomain(this.subsector);
-          if (domainobtain !== undefined && domainobtain) {
-            this.kwautoname = domainobtain['subdom_dispname'] || '';
-            this.kwdomain = domainobtain['dom'] || '';
-          }
-          this.kwsubdomain = '';
-          this.kwtyp = 'subdom';
-        }
-        let fetchsubdom = true;
-       if (this.domain) {
-           if (this.kw) {
-              if (this.kwtyp === 'subdom') {
-                fetchsubdom = false;
-              }
-              if (this.kwtyp === 'special') {
-                if (this.kwsubdomain !== '') {
-                  fetchsubdom = false;
-                }
-              }
-           }
-           if (fetchsubdom) {
-            this.getlistofSubdomains(this.domain);
-           }
-        }
-        this.showsearchsection = true;
-        this.setfields();
-        this.getRefinedSearch(true);
-      }
-    );
- }*/
-
   getDomainList(bypassotherfunction?) {
     const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
@@ -678,7 +641,10 @@ export class SearchDetailComponent implements OnInit {
      }
 
      if (this.kwtyp === 'kwtitle') {
-        q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
+       let  ptitle = this.kw.replace('/', '');
+       ptitle = ptitle.replace(/'/g, '\\\'');
+       q_str = q_str + ' title:\'' + ptitle + '\'';
+       // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
      }
      if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
        q_str = q_str + 'sector:\'' + this.domain + '\'';
@@ -736,7 +702,7 @@ export class SearchDetailComponent implements OnInit {
     }
     // Creating criteria to be passed via get
     // console.log('refined query', this.refined_querystr);
-   // console.log('search query', q_str);
+    // console.log('search query', q_str);
     projectConstants.searchpass_criteria.q = q_str;
     projectConstants.searchpass_criteria.sort = sortval;
     projectConstants.searchpass_criteria.fq = this.refined_querystr;
@@ -876,30 +842,36 @@ export class SearchDetailComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         const ctoday = cday + '/' + cmon + '/' + yyyy;
         let srchindx;
+        // console.log('prov id', provids);
         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
           srchindx = provids[i].searchindx;
           this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
-          this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
           this.search_data.hits.hit[srchindx].fields['estimatedtime_det'] = [];
 
-          if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
-            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 1;
-            if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                 + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+          if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 1;
+            this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
+            if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 1;
+              if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                  + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              } else {
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              }
             } else {
-              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-              + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 2;
+              if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              } else {
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              }
             }
           } else {
-            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
-            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 2;
-            if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-            } else {
-              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-            }
+            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 0;
           }
         }
       });
@@ -1386,7 +1358,7 @@ export class SearchDetailComponent implements OnInit {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',
-       panelClass: 'loginmainclass',
+       panelClass: ['loginmainclass', 'consumerpopupmainclass'],
       data: {
         type : origin,
         is_provider : this.checkProvider(origin),

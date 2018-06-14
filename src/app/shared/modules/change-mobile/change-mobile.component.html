@@ -49,7 +49,7 @@
                 <li (click)="shared_functions.redirectto('profile')" class="icon-profile">Profile</li>
                 <li (click)="shared_functions.redirectto('change-password')" class="icon-password">Change Password</li>
                 <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">Change Email</li>
-                <li (click)="shared_functions.redirectto('members')" class="icon-members">Family Members</li>
+                <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">Family Members</li>
             </ul>
         </div>
         </div>

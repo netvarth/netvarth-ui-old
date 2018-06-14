@@ -319,6 +319,7 @@ app-footer {
         }
         
         .mat-dialog-content {
+            overflow: inherit;
             @include clearfix();
             
             .more-box {
@@ -350,6 +351,7 @@ app-footer {
                 }
             }
         }
+        
         .mat-dialog-actions {
             margin-top: 20px;
             display: block;

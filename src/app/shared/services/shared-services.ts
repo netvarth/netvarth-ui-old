@@ -131,6 +131,7 @@ export class SharedServices {
         'q.parser': params.parser, // 'q.parser'
         'q.options': params.options, // 'q.options'
         'q.sort': 'distance asc,' + params.sort,
+        // 'q.sort': params.sort,
         'expr.distance': params.distance
       };
       return this.servicemeta.httpGet(url, '', pass_params);

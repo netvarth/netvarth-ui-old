@@ -106,6 +106,7 @@ export class CheckInComponent implements OnInit {
       if (this.data.moreparams.source === 'searchlist_checkin') { // case check-in from search result page
 
         this.search_obj = this.data.srchprovider;
+        // console.log('locs', this.search_obj);
         this.provider_id = this.search_obj.fields.unique_id;
         const providarr = this.search_obj.id.split('-');
         this.account_id = providarr[0];
@@ -127,7 +128,6 @@ export class CheckInComponent implements OnInit {
                               }
         };
         this.search_obj = srch_fields;
-
         // this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
         this.sel_loc = this.data.moreparams.location.id;
         this.sel_checkindate = this.data.moreparams.sel_date;
@@ -148,7 +148,7 @@ export class CheckInComponent implements OnInit {
       this.shared_services.getPaymentModesofProvider(provid)
         .subscribe (data => {
           this.paymentModes = data;
-          console.log ('paymodes', this.paymentModes);
+          // console.log ('paymodes', this.paymentModes);
         },
       error => {
         console.log ('error', error);
@@ -210,7 +210,10 @@ export class CheckInComponent implements OnInit {
               this.setServiceDetails(this.servicesjson[0]); // setting the details of the first service to the holding variable
               this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
             }
-        });
+        },
+      error => {
+        this.sel_ser = '';
+      });
     }
     setServiceDetails(serv) {
      // console.log('serdet', serv);
@@ -288,6 +291,7 @@ export class CheckInComponent implements OnInit {
   }
 
   isCheckinenable() {
+    // console.log('enable', this.sel_loc, this.sel_ser, this.sel_queue_id , this.sel_checkindate);
     if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
       return true;
     } else {

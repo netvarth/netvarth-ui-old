@@ -1,6 +1,7 @@
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home'">
     <div class="container">
         <div class="row">
+                
             <div class="lgo col-md-3"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
             <div class="tc1 col-md-3 ml-auto" *ngIf="!shared_functions.checkLogin()">
                 <div class="topsignouter"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span></div>

@@ -37,6 +37,9 @@
           <mat-chip-list *ngIf="servicesjson.length > 0">
             <mat-chip *ngFor="let serv of servicesjson" (click)="handleServiceSel(serv)" [selected] ="isSelectedService(serv.id)">{{serv.name}}</mat-chip>
           </mat-chip-list>
+          <ng-container *ngIf="servicesjson.length == 0">
+                <span class='no-queue-available'>No services available.</span>
+            </ng-container>
           </ng-container>
 
           <ng-container *ngIf="step==2">

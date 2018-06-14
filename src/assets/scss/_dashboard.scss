@@ -133,10 +133,15 @@ header {
                         }
 
                         i {
-                            font-size: 1.625rem;
-                            vertical-align: middle;
-                            margin-top: 9px;
-                            width: 27px;
+                            font-size: 1.5rem;
+                            width: 25px;
+                            height: 23px;
+                            display: flex;
+                            
+                            &:before {
+                                width: 25px;
+                                height: 23px;
+                            }
                         }
                     }
                 }
@@ -4051,6 +4056,7 @@ footer {
                                             
                                             .mat-input-flex {
                                                 align-items: center;
+                                                height: 28px;
                                                 
                                                 .mat-input-suffix {
                                                     width: 40px;
@@ -4394,6 +4400,39 @@ footer {
                                             padding-right: 10px;
                                         }
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ### Customers 
+.dashboard {
+    .customers {
+        &.w-dta {
+            .head {
+                margin-bottom: 0;
+                border: none;
+                padding: 0 15px;
+                justify-content: flex-start;
+
+                .cust_count {
+                    font-weight: 500;
+                }
+            }
+
+            .dash-list {
+                .d-tbl {
+                    .table {
+                        thead, tbody {
+                            tr {
+                                th, td {
+                                    padding: .75rem;
+                                    font-weight: 500;
                                 }
                             }
                         }
@@ -5400,6 +5439,12 @@ footer {
                         .mat-expansion-panel-content {
                             padding: 0;
                             
+                            .copy {
+                                .no-msg {
+                                    margin: 0 20px;
+                                }
+                            }
+                            
                             .inbox-table {
                                 margin: 0;
                                 padding: 0;
@@ -5680,6 +5725,11 @@ footer {
                         .mat-expansion-panel {
                             .mat-expansion-panel-content {
                                 .mat-expansion-panel-body {
+                                    .copy {
+                                        .no-msg {
+                                            margin: 0 20px;
+                                        }
+                                    }
                                     .pnotes {
                                         margin-bottom: 20px;
                                         border-bottom: dashed 1px $cc-ash;
@@ -6070,7 +6120,7 @@ footer {
 
 // ### Payment History
 .comn-cls {
-    &.payment-history {
+    &.paymenthistory {
         .w-dta {
             .card {
                 .table-outer {
@@ -6646,7 +6696,8 @@ footer {
             margin-bottom: 15px;
             
             .label {
-                color: $linkblack;
+                color: $cc-mediumgray;
+                font-weight: 500;
                 
                 span {
                     color: $linkblack;
@@ -6660,9 +6711,32 @@ footer {
         }
         
         h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-size: .875rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: $linkblue;
+        }
+    }
+    
+    .payment-option {
+        h4 {
+            font-size: .875rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .table-outer {
+            padding: 0;
+            
+            .table {
+                margin-bottom: 0;
+            }
+        }
+    }
+    .payment-details {
+        .table-outer {
+            padding: 0;
         }
     }
 }

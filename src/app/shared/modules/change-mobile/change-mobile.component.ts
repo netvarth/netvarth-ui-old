@@ -22,6 +22,7 @@ export class ChangeMobileComponent implements OnInit {
   is_verified = false;
   user_details;
   step = 1;
+  curtype;
   submit_data = {'phonenumber' : null};
   breadcrumbs_init = [
     {
@@ -44,7 +45,7 @@ export class ChangeMobileComponent implements OnInit {
   ) {}
 
     ngOnInit() {
-
+      this.curtype = this.shared_functions.isBusinessOwner('returntyp');
       this.spForm = this.fb.group({
         phonenumber: ['', Validators.compose(
           [ Validators.required,
