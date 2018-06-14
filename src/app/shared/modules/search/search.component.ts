@@ -715,7 +715,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.curlabel.typ = '';
     this.curlabel.query = '';
    }
-console.log('kwholder', this.keywordholder);
+   console.log('kwholder1', this.keywordholder);
+   if (kw.typ !== 'label') { // execute search when selected an option using mouse in keyword box
+    // this.do_search();
+   }
  }
  private setNullKeyword(kw?) {
     this.keywordholder = {
@@ -726,15 +729,33 @@ console.log('kwholder', this.keywordholder);
        typ: kw.typ || ''
     };
  }
- kwtyping(val) {
-  this.keywordholder.name = val;
-  this.keywordholder.autoname = val;
-  this.keywordholder.domain = '';
-  this.keywordholder.subdomain = '';
-  this.keywordholder.typ = 'kwtitle';
+ kwtyping(ev, val) {
+   console.log('typig');
+   const kCode = parseInt(ev.keyCode, 10);
+  switch (kCode) {
+    case 37: // left arrow key
+    case 38: // top arrow key
+    case 39: // right arrow key
+    case 40: // bottom arrow key
+        // do nothing for above keys
+    break;
+    case 13: // enter key
+      // ev.target.closePanel();
+      // this.setKeyword(this.keywordholder);
+    break;
+    default: // if other than above keys, then by default set the type as "kwtitle"
+      this.kw_autoname = val;
+      this.keywordholder.name = val;
+      this.keywordholder.autoname = val;
+      this.keywordholder.domain = '';
+      this.keywordholder.subdomain = '';
+      this.keywordholder.typ = 'kwtitle';
+      // console.log('reached here', this.keywordholder);
+    break;
+  }
  }
  selectedOption(kw) {
-   console.log('selected', kw);
+   // console.log('selected', kw);
  }
  do_search(labelqpassed?) {
    this.closeMoreoptions();
