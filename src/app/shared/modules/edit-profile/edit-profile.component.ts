@@ -24,6 +24,8 @@ export class EditProfileComponent implements OnInit {
   curtype;
   maxalloweddate = '';
   tday = new Date();
+  emailHolder = '';
+  phonenoHolder = '';
   breadcrumbs_init = [
     {
       title: 'Dashboard',
@@ -78,6 +80,8 @@ export class EditProfileComponent implements OnInit {
             gender : data['userProfile']['gender'] || null,
             dob : data['userProfile']['dob'] || null
           });
+          this.emailHolder = data['userProfile']['email'] || '';
+          this.phonenoHolder = data['userProfile']['primaryMobileNo'] || '';
         } else if ( typ === 'provider') {
           this.editProfileForm.setValue({
             first_name : data['basicInfo']['firstName'] || null,
@@ -85,6 +89,8 @@ export class EditProfileComponent implements OnInit {
             gender : data['basicInfo']['gender'] || null,
             dob : data['basicInfo']['dob'] || null
           });
+          this.emailHolder = data['basicInfo']['email'] || '';
+          this.phonenoHolder = data['basicInfo']['mobile'] || '';
         }
       },
       error => { this.api_error = error.error; }

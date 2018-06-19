@@ -33,12 +33,12 @@ app-footer {
     }
 }
 
-/* Tooltip Icon */
+// Tooltip Icon ####
 .icon-question, [data-icon="F"] {
     cursor: pointer;
 }
 
-/*YNW Custom Fonts ####*/
+// YNW Custom Fonts ####
 @font-face {
     font-family: 'Montserrat';
     src: url('../fonts/Montserrat-Medium.eot');
@@ -84,7 +84,7 @@ app-footer {
     font-style: normal;
 }
 
-/*Form Related ####*/
+// Form Related #### 
 .form-group, .form-check {
     font-size: .875rem;
     font-weight: 500;
@@ -125,7 +125,7 @@ app-footer {
     }
 }
 
-/*Margin / Padding ####*/
+// Margin / Padding #### 
 .m0 {
     margin: 0 !important;
 }
@@ -149,7 +149,7 @@ app-footer {
 .pb0 {padding-bottom: 0 !important;}
 .pt0 {padding-top: 0 !important;}
 
-/*Warning Box ####*/
+// Warning Box ####
 .wbox {
     border:2px solid $cc-warning-border;
     box-shadow: none;
@@ -177,7 +177,7 @@ app-footer {
     }
 }
 
-// MENU Style Popup
+// MENU Style Popup ####
 .mat-menu-panel {
     @include box-shadow(0, 0, 30px, rgba(0,0,0,.1));
     
@@ -224,7 +224,7 @@ app-footer {
     }
 }
 
-// Card Style
+// Card Style ####
 .card {
     padding: 20px;
     @include box-shadow(0, 0, 10px, rgba(0,0,0,.05) !important);
@@ -282,7 +282,7 @@ app-footer {
     }
 }
 
-// More Options Dropdown 
+// More Options Dropdown ####
 .more-opt {
     position: absolute;
     width: 100%;
@@ -370,7 +370,7 @@ app-footer {
     }
 }
 
-/*information notification ####*/
+// information notification ####
 .info-lst {
     margin: 0;
     padding: 0 0 0 34px;
@@ -391,7 +391,7 @@ app-footer {
     }
 }
 
-/* Snackbar ####*/
+// Snackbar ####
 .mat-snack-bar-container {
     color: $white;
     background: $linkblue;
@@ -427,12 +427,12 @@ app-footer {
     }
 }
 
-/*popup menu ####*/
+// Popup menu ####
 .pop-mnu {
     display: none;
 }
 
-/*Table styles ####*/
+// Table styles ####
 .tbl-list {
     margin: 0;
     padding: 0;
@@ -484,8 +484,31 @@ app-footer {
     }
 }
 
-/* #### Common Styles to apply everywhere  ####*/
+// #### Common Styles to apply everywhere  #### //
 
 .mat-checkbox {
     @include font-medium;
+}
+
+// Ripple effect
+.ripple {
+    position: relative;
+    overflow: hidden;
+    
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(0, 0, 0, .03);
+        opacity: 0;
+        @include border-radius(200px);
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
+}
+.ripple:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
 }

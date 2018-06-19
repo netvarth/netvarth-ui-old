@@ -26,6 +26,7 @@ import { AddProviderBprofileSpokenLanguagesComponent } from '../add-provider-bpr
 import { AddProviderBprofileSpecializationsComponent } from '../add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 // import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { ProviderBprofileSearchDynamicComponent } from '../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
+import { AddProviderBprofileSearchAdwordsComponent } from '../add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -1316,7 +1317,19 @@ export class ProviderBprofileSearchComponent implements OnInit {
   }
 
   addAdwords() {
-    alert('Add Adwords clicked');
+    const dialogRef = this.dialog.open(AddProviderBprofileSearchAdwordsComponent, {
+      width: '50%',
+      data: {
+        type : 'add'
+      },
+      panelClass: ['commonpopupmainclass']
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.getAdwords();
+      }
+    });
   }
 
 }

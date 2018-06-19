@@ -1,6 +1,6 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 <h1 class="mat-dialog-title">Search Customer
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
@@ -33,7 +33,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 </mat-dialog-content>
 <mat-dialog-actions>
-<button  type="button" mat-button (click)="searchCustomer(amForm.value)"
+<button  mat-button
 [disabled]="!amForm.valid" class="cs-btn bt1">Search</button>
 <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 </mat-dialog-actions>

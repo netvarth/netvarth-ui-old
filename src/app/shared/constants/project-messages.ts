@@ -10,6 +10,7 @@ export const Messages = {
   'MEMBER_CREATED': 'Member created successfully',
   'MEMBER_UPDATED': 'Member updated successfully',
   'LICENSE_UPGRADED': 'License Package upgraded successfully',
+  'LICENSE_TOOLTIP' : 'This tooltip can be managed from the messages file',
   'ADDON_ADDED': 'Addon Package added successfully',
 
   // Items

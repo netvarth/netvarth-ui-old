@@ -16,7 +16,7 @@
                                       <div class="lc-box">
                                           <div class="tp">
                                             <span class="ttle" *ngIf="currentlicense_details.accountLicense">
-                                              Your current License Package is <span class="pkg">{{currentlicense_details.accountLicense.name}} <span class="icon-question"></span></span>
+                                              Your current License Package is <span class="pkg">{{currentlicense_details.accountLicense.name}} <span class="icon-question" [matTooltip]="license_tooltip"></span></span>
                                                <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span>
                                             </div>
 
