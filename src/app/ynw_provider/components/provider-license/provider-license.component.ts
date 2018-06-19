@@ -14,6 +14,7 @@ import { AddproviderAddonComponent  } from '../add-provider-addons/add-provider-
 import { ProviderLicenseUsageComponent } from '../provider-license-usage/provider-license-usage.component';
 import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditlogs.component';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 
 @Component({
@@ -29,6 +30,7 @@ export class ProviderLicenseComponent implements OnInit {
     license_sub = null;
     all_license_metadata: any = [];
     license_upgarde_sub = {};
+    license_tooltip = Messages.LICENSE_TOOLTIP;
     breadcrumbs = [
       {
         title: 'Settings',

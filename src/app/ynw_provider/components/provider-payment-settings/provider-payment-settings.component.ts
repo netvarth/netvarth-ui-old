@@ -44,6 +44,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     paytmverified = false;
     payuverified = false;
     tabid = 0;
+    emailidVerified = false;
+    profileQueryExecuted = false;
     breadcrumbs = [
         {
           title: 'Settings',
@@ -69,6 +71,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.resetApi();
         this.getPaymentSettings(2);
         this.getTaxpercentage();
+        this.getProviderProfile();
     }
     getPaymentSettings(showmsg) {
         this.provider_services.getPaymentSettings()
@@ -263,6 +266,23 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.savetaxEnabled = true;
             });
         }
+    }
+    getProviderProfile() {
+        const ob = this;
+        this.shared_Functionsobj.getProfile()
+        .then(
+          success =>  {
+           console.log('succ', success);
+           this.profileQueryExecuted = true;
+           this.emailidVerified =  success['basicInfo']['emailVerified'];
+          },
+          error => {
+            this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          }
+        );
+    }
+    redirectToEmail() {
+        this.router.navigate(['provider', 'change-email']);
     }
     resetApi() {
         this.errorExist = false;

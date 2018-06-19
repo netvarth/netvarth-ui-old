@@ -6,6 +6,7 @@ import {HeaderComponent} from '../../../shared/modules/header/header.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
+import { ProviderSharedFuctions  } from '../../shared/functions/provider-shared-functions';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -19,7 +20,7 @@ export class ProviderSettingsComponent implements OnInit {
 
   waitlist_status = false;
   waitlist_statusstr = 'Off';
-  search_status = 2;
+  search_status = false;
   search_statusstr = 'Off';
   payment_settings: any = [];
   payment_settingsdet: any = [];
@@ -41,6 +42,7 @@ export class ProviderSettingsComponent implements OnInit {
   queues_count: any = 0;
 
   constructor(private provider_services: ProviderServices,
+    private provider_shared_functions: ProviderSharedFuctions,
   private routerobj: Router) {}
 
   ngOnInit() {
@@ -77,6 +79,7 @@ export class ProviderSettingsComponent implements OnInit {
         this.getWaitlistMgr();
       },
       error => {
+        const snackBarRef =  this.provider_shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
         this.getWaitlistMgr();
       }
     );
@@ -86,11 +89,13 @@ export class ProviderSettingsComponent implements OnInit {
     .subscribe(
       data => {
         this.payment_settings = data;
-
-        this.payment_status = data['onlinePayment'] || false;
+        // console.log('paystatus', data);
+        this.payment_status = (data['onlinePayment']) || false;
         this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
       },
-      error => {}
+      error => {
+        const snackBarRef =  this.provider_shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+      }
     );
 
   }
@@ -157,6 +162,8 @@ export class ProviderSettingsComponent implements OnInit {
         this.getpaymentDetails();
       },
       error => {
+        const snackBarRef =  this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        console.log('reached here');
         this.getpaymentDetails();
       }
     );
@@ -165,21 +172,25 @@ export class ProviderSettingsComponent implements OnInit {
     this.provider_services.getPublicSearch()
       .subscribe(data => {
         if (data && data.toString() === 'true') {
-          this.search_status = 1;
+          this.search_status = true;
           this.search_statusstr = 'On';
         } else {
-          this.search_status = 2;
+          this.search_status = false;
           this.search_statusstr = 'Off';
         }
       });
 
   }
   handle_searchstatus() {
-    const changeTostatus = (this.search_status === 1) ? 'DISABLE' : 'ENABLE';
+    const changeTostatus = (this.search_status === false) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe (data => {
           this.getSearchstatus();
-      });
+      },
+    error => {
+      const snackBarRef =  this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      this.getSearchstatus();
+    });
   }
   redirecTo(mod) {
     switch (mod) {

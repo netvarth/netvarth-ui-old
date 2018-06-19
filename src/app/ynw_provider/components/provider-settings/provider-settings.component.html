@@ -16,9 +16,9 @@
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Public Search <span class="sts" [class.active]="search_status==1">{{search_statusstr}}</span>
+                                        Public Search <span class="sts" [class.active]="search_status">{{search_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"><mat-slide-toggle [checked]="search_status==1" (change)="handle_searchstatus()"></mat-slide-toggle></span>
+                                    <span class="ctrl"><mat-slide-toggle [(ngModel)]="search_status" (change)="handle_searchstatus()"></mat-slide-toggle></span>
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('bprofile')">Profile</span>
@@ -39,7 +39,7 @@
                                     <span class="ttle">
                                         Accept Online Check-in <span class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"><mat-slide-toggle [checked]="waitlist_status" (change)="handle_waitliststatus($event)"></mat-slide-toggle></span>
+                                    <span class="ctrl"><mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handle_waitliststatus($event)"></mat-slide-toggle></span>
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('waitlistmanager')">Settings</span>
@@ -85,9 +85,9 @@
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Accept Payments <span class="sts"[class.active]="payment_status">{{payment_statusstr}}</span>
+                                        Accept Payments <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"><mat-slide-toggle [checked]="payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle></span>
+                                    <span class="ctrl"><mat-slide-toggle [(ngModel)] = "payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle></span>
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('paymentsettings')">Payment Settings</span>
