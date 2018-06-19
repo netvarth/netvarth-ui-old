@@ -8,7 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AddProviderCustomerComponent } from '../add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from '../search-provider-customer/search-provider-customer.component';
 import { ProviderServices } from '../../services/provider-services.service';
-import { AddProviderCheckinComponent } from '../../components/add-provider-checkin/add-provider-checkin.component';
+import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 
 @Component({
     selector: 'app-provider-subheader',
@@ -103,10 +103,9 @@ export class ProviderSubeaderComponent implements OnInit {
     }
 
     if (selected_location != null) {
-
       post_data['location'] = {
         'id' :  selected_location['id'],
-        'name': selected_location['name']
+        'name': selected_location['place']
       };
 
     }
@@ -136,7 +135,7 @@ export class ProviderSubeaderComponent implements OnInit {
     const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
 
 
-    const dialogRef = this.dialog.open(AddProviderCheckinComponent, {
+    const dialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
      data: {

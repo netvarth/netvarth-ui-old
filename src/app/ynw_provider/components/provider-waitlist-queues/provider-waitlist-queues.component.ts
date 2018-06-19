@@ -64,6 +64,17 @@ export class ProviderWaitlistQueuesComponent implements OnInit {
     this.provider_services.getProviderQueues()
       .subscribe(data => {
         this.queue_list = data;
+        for (let ii = 0; ii < this.queue_list.length; ii++) {
+          let schedule_arr = [];
+          // extracting the schedule intervals
+          if (this.queue_list[ii].queueSchedule) {
+           schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].queueSchedule);
+          }
+          let display_schedule = [];
+          display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+          this.queue_list[ii]['displayschedule'] = display_schedule;
+        }
+
         this.query_executed = true;
       },
       complete => {

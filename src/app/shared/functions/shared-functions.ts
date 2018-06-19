@@ -515,6 +515,23 @@ export class SharedFunctions {
     return parseInt(m.minute, 10) + parseInt(m.hour, 10) * 60;
   }
 
+  queueSheduleLoop(queueSchedule) {
+      const schedule_arr = [];
+      // extracting the schedule intervals
+      if (queueSchedule) {
+        // for (let i = 0; i < this.queues[ii].queueSchedule.length; i++) {
+            for (let j = 0; j < queueSchedule.repeatIntervals.length; j++) {
+            // pushing the schedule details to the respective array to show it in the page
+            schedule_arr.push({
+                day: queueSchedule.repeatIntervals[j],
+                sTime: queueSchedule.timeSlots[0].sTime,
+                eTime: queueSchedule.timeSlots[0].eTime
+            });
+            }
+        // }
+    }
+    return schedule_arr;
+  }
   arrageScheduleforDisplay(schedule_arr) {
     const timebase: any = [];
     for (let i = 0; i < schedule_arr.length; i++ ) {

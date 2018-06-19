@@ -64,15 +64,15 @@
 </div>
 
 <div class="form-group">
-    <label class="col-form-label" for="displayDesc">Display Description *</label>
-    <input type="text" class="form-control" id="displayDesc" placeholder="Display Description" formControlName="displayDesc">
+    <label class="col-form-label" for="displayDesc">Detailed Description *</label>
+    <input type="text" class="form-control" id="displayDesc" placeholder="Detailed Description" formControlName="displayDesc">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')"  errorMsg="Please enter display description.">
    </app-field-error-display>
 </div>
 
 <div class="form-group">
-    <label class="col-form-label" for="displayDesc">Price *</label>
-    <input type="text" class="form-control" id="displayDesc" placeholder="Price" formControlName="price">
+    <label class="col-form-label" for="price">Price *</label>
+    <input type="text" class="form-control" id="price" placeholder="Price" formControlName="price">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')"  errorMsg="Please enter valid price.">
    </app-field-error-display>
 </div>

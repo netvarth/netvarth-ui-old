@@ -23,9 +23,6 @@
 
                         <h3 class="pointer-cursor" (click)="goQueueDetail(queue)">
                         {{queue.name}}
-                        <span *ngIf="queue['queueSchedule']['timeSlots'][0]">
-                          [ {{queue.queueSchedule.timeSlots[0].sTime}} - {{queue.queueSchedule.timeSlots[0].eTime}} ]
-                        </span>
                         </h3>
 
                         <div class="c-ot m0">
@@ -37,6 +34,19 @@
                                 <span class="ttle">Max. Capacity</span>
                                 <span class="icon-customer-line">{{queue.capacity}}</span>
                             </div>
+
+                            <div class="item" *ngIf="queue.displayschedule">
+                              <span class="ttle">Schedule</span>
+                              <span>
+                                <ng-container *ngFor="let schedule of queue.displayschedule">
+                                  <!-- <span class="sch">
+                                      Mon - Fri 09:00 AM - 06:00 PM
+                                  </span> -->
+                                  <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
+                              </ng-container>
+                              </span>
+                            </div>
+
                         </div>
 
                         <mat-menu #appMenu="matMenu">

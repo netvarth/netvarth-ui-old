@@ -4,14 +4,14 @@
     </button>
   </h1>
   <mat-dialog-content *ngIf="search_obj">
-      
+
         <div class="mainouter">
           <ng-container *ngIf="step==1 || step==2">
           <div class="main-head">
             Check-in at <span class="pro-loc"><span class='prov_name'>{{search_obj.fields.title}},</span> <span class="loc_name">{{search_obj.fields.place1}}</span></span>
           </div>
           <div class="date-outer" *ngIf="step==1">
-            Check-in Date: <span class="selected-date">  {{sel_checkindate | date: dateFormat}}</span> 
+            Check-in Date: <span class="selected-date">  {{sel_checkindate | date: dateFormat}}</span>
             <!-- <span class="future-text" (click)="handleFuturetoggle()" *ngIf="futuredate_allowed && isFuturedate">Do you want to Check in for a Different Date / Time ?</span> -->
             <span class="future-text" (click)="handleFuturetoggle()" *ngIf="futuredate_allowed && data.datechangereq">Do you want to Check in for a Different Date / Time ?</span>
 
@@ -20,19 +20,19 @@
                     <label for="reason" class="col-form-label">Select the required date</label>
                     <div class="pickerouter">
                         <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
-                        <mat-datepicker #picker (selectedChanged)="handleFutureDateChange($event)" [disabled]="false"></mat-datepicker> 
+                        <mat-datepicker #picker (selectedChanged)="handleFutureDateChange($event)" [disabled]="false"></mat-datepicker>
                         <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" disabled>
                     </div>
                 </div>
             </div>
           </div>
           <div class="date-outer" *ngIf="step==2">
-            Date: <span class="selected-date">{{sel_checkindate | date: dateFormat}}</span> 
+            Date: <span class="selected-date">{{sel_checkindate | date: dateFormat}}</span>
            </div>
-          
+
           <div class="service-outer">
           <div class="service-head" *ngIf="step==1">For Service</div>
-          
+
           <ng-container *ngIf="step==1">
           <mat-chip-list *ngIf="servicesjson.length > 0">
             <mat-chip *ngFor="let serv of servicesjson" (click)="handleServiceSel(serv)" [selected] ="isSelectedService(serv.id)">{{serv.name}}</mat-chip>
@@ -56,7 +56,7 @@
           </div>
           <div class="queue-outer">
                 <div class="queue-head" *ngIf="step==1">Queue </div>
-                
+
                 <ng-container *ngIf="queuejson.length > 0">
                 <mat-chip-list *ngIf="step==1">
                 <mat-chip *ngFor="let que of queuejson" (click)="handleQueueSel(que)" [selected] ="isSelectedQueue(que.id)">
@@ -81,7 +81,7 @@
           <div class="servicefor-outer" [class.btborder]="step==2">
               Service is for <span class="service-availer" *ngFor="let waitfor of waitlist_for; let i=index"><ng-container *ngIf="i>0">, </ng-container>{{waitfor.name}}</span> <span class="change-button" (click)="handleServiceForWhom()" *ngIf="step==1">Change?</span>
           </div>
-          
+
           <ng-container *ngIf="step==2">
           <div class="revealdiv">
                 <div class="form-group">
@@ -94,7 +94,7 @@
                     <textarea matInput #consumernote (change)="handleConsumerNote(consumernote.value)"></textarea>
                 </div>
           </div>
-          <div class="prepay-outer" *ngIf="step==2 && sel_ser_det.isPrePayment"> 
+          <div class="prepay-outer" *ngIf="step==2 && sel_ser_det.isPrePayment">
             <div class="prepay-dur-pr">
                 <div class="prepay-amt">Amount to Pay: <span class="prepaymin-cls">{{sel_ser_det.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span></div>
                 <div class="prepay-gateway-outer">
@@ -115,10 +115,33 @@
                 </div>
                 <div class="member-list">
                     <ul class="member-ul">
-                        <li><mat-checkbox (change)="handleMemberSelect(loggedinuser.id,'Self', $event)" [checked]="isChecked(loggedinuser.id)" [value]="loggedinuser.id">Self</mat-checkbox></li>
-                        <li *ngFor="let memb of familymembers">
-                            <mat-checkbox (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName,  $event)" [value]="memb.userProfile.id"  [checked]="isChecked(memb.userProfile.id)">{{memb.userProfile.firstName + ' ' + memb.userProfile.lastName }}</mat-checkbox>
-                        </li>
+                        <!-- <li>
+                          <mat-checkbox (change)="handleMemberSelect(loggedinuser.id,'Self', $event)"
+                          [checked]="isChecked(loggedinuser.id)"
+                          [value]="loggedinuser.id">
+                          Self
+                        </mat-checkbox></li> -->
+                        <ng-container *ngIf="maxsize > 1">
+                            <li *ngFor="let memb of familymembers">
+                                <mat-checkbox (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName,  $event)"
+                                [value]="memb.userProfile.id"  [checked]="isChecked(memb.userProfile.id)"
+                                >
+                                {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName }}
+                              </mat-checkbox>
+                            </li>
+                        </ng-container>
+
+                        <ng-container *ngIf="maxsize ==1">
+                            <mat-radio-group>
+                                <li *ngFor="let memb of familymembers">
+                                    <mat-radio-button (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName,  $event)"
+                                    [value]="memb.userProfile.id"  [checked]="isChecked(memb.userProfile.id)">
+                                    {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName }}
+                                  </mat-radio-button>
+                                </li>
+                            </mat-radio-group>
+                        </ng-container>
+
                     </ul>
                     <div class='member-add' (click)="addMember()">Add New Member</div>
                 </div>

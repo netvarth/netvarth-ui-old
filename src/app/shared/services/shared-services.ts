@@ -235,9 +235,22 @@ export class SharedServices {
     addCheckin(accountid, postData) {
       return this.servicemeta.httpPost('consumer/waitlist?account=' + accountid, postData);
     }
+
+    addProviderCheckin(postData) {
+      return this.servicemeta.httpPost('provider/waitlist', postData);
+    }
+
     getConsumerFamilyMembers() {
       return this.servicemeta.httpGet('consumer/familyMember');
     }
+    getProviderCustomerFamilyMembers(consumer_id) {
+      const url = 'provider/familyMember/' + consumer_id;
+      return this.servicemeta.httpGet(url);
+    }
+    addProviderCustomerFamilyMember(data) {
+      return this.servicemeta.httpPost('provider/familyMember', data);
+    }
+
     addMembers(data) {
       return this.servicemeta.httpPost('consumer/familyMember', data);
     }

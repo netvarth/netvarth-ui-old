@@ -185,6 +185,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
         if (this.bill_data.service && this.bill_data.service.length > 0) {
           this.addSavedServiceToCart(this.bill_data.service);
+        } else if (this.bill_data.length === 0 && this.checkin.service) {
+          // Add waitlist service by default
+          const service = [];
+          service.push({
+            name: this.checkin.service.id || '',
+            serviceId: this.checkin.service.id || 0
+          }); // Create an array same like service array
+          this.addSavedServiceToCart(service);
         }
 
       },
@@ -585,11 +593,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     for (const service of services) {
       this.services
       .map((ob) => {
-
-        if (ob.id === service.serviceId) {
+        console.log(ob, service);
+        if (ob.id === service.serviceId) {console.log('here');
           this.pushCartItem(ob, 'Services');
-          this.cart.items[this.cart.items.length - 1] ['quantity']  = service.quantity;
-          this.cart.items[this.cart.items.length - 1]['price'] = service.price;
+          this.cart.items[this.cart.items.length - 1] ['quantity']  = service.quantity || 1;
+          this.cart.items[this.cart.items.length - 1]['price'] = service.price || ob.totalAmount;
           if (service.discountId !== 0) {
             this.cart.items[this.cart.items.length - 1] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
           }
