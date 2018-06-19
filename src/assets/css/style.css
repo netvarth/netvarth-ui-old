@@ -816,6 +816,180 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
   background-color: #fff; }
 
+.ksk {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative; }
+  @media only screen and (max-width: 575px) {
+    .ksk {
+      height: auto; } }
+  .ksk .ksk-hd {
+    position: absolute;
+    width: 100%;
+    padding-top: 50px; }
+    @media only screen and (max-width: 575px) {
+      .ksk .ksk-hd {
+        position: relative;
+        margin-bottom: 100px; } }
+    .ksk .ksk-hd .ksk-tp {
+      text-align: center;
+      width: 100%; }
+  .ksk .ksk-cpy {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .ksk .ksk-cpy .controls {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      width: 640px;
+      flex-wrap: wrap; }
+      @media only screen and (max-width: 575px) {
+        .ksk .ksk-cpy .controls {
+          flex-direction: column; } }
+      .ksk .ksk-cpy .controls li {
+        list-style: none;
+        width: 50%;
+        align-self: center;
+        padding: 15px; }
+        @media only screen and (max-width: 575px) {
+          .ksk .ksk-cpy .controls li {
+            width: 75%; } }
+        .ksk .ksk-cpy .controls li .ot {
+          width: 100%;
+          border: none;
+          padding: 20px;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
+          -moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
+          box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
+          background: #fff;
+          cursor: pointer;
+          font-weight: 500;
+          position: relative;
+          overflow: hidden; }
+          .ksk .ksk-cpy .controls li .ot .icon-k-checkin,
+          .ksk .ksk-cpy .controls li .ot .icon-k-lookup,
+          .ksk .ksk-cpy .controls li .ot .icon-k-rating,
+          .ksk .ksk-cpy .controls li .ot .icon-k-arrived {
+            width: 100px;
+            height: 100px;
+            display: block;
+            background: url(../images/k-checkin.svg) no-repeat scroll 0 0;
+            margin-bottom: 15px; }
+          .ksk .ksk-cpy .controls li .ot .icon-k-lookup {
+            background: url(../images/k-lookup.svg) no-repeat scroll 0 0; }
+          .ksk .ksk-cpy .controls li .ot .icon-k-rating {
+            background: url(../images/k-rating.svg) no-repeat scroll 0 0; }
+          .ksk .ksk-cpy .controls li .ot .icon-k-arrived {
+            background: url(../images/k-arrived.svg) no-repeat scroll 0 0; }
+          .ksk .ksk-cpy .controls li .ot .title {
+            font-size: 1.125rem; }
+          .ksk .ksk-cpy .controls li .ot:focus {
+            background: transparent;
+            box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+            -moz-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+            -webkit-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+            -o-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important; }
+          .ksk .ksk-cpy .controls li .ot:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.03);
+            opacity: 0;
+            -webkit-border-radius: 200px;
+            border-radius: 200px;
+            background-clip: padding-box;
+            /* stops bg color from leaking outside the border: */
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%; }
+        .ksk .ksk-cpy .controls li .ot:focus:not(:active)::after {
+          animation: ripple 1s ease-out; }
+    .ksk .ksk-cpy .get-info {
+      padding: 20px;
+      width: 480px; }
+      .ksk .ksk-cpy .get-info .notice {
+        margin-bottom: 30px;
+        display: none; }
+        .ksk .ksk-cpy .get-info .notice.show {
+          display: block; }
+          .ksk .ksk-cpy .get-info .notice.show .box {
+            display: flex;
+            animation: hola 1s ease-in-out; }
+            .ksk .ksk-cpy .get-info .notice.show .box.error .label {
+              padding: 15px;
+              display: block;
+              background: #fff;
+              /*border: 2px solid $cc-red;*/
+              font-weight: 500;
+              font-size: .875rem;
+              color: #f24949; }
+              .ksk .ksk-cpy .get-info .notice.show .box.error .label span {
+                display: block;
+                font-weight: 600;
+                font-size: 1rem; }
+            .ksk .ksk-cpy .get-info .notice.show .box.error .cs-btn {
+              background: #00aef2;
+              color: #fff;
+              font-weight: 600;
+              text-transform: uppercase;
+              text-align: center;
+              padding: 0;
+              width: 200px; }
+      .ksk .ksk-cpy .get-info .form-group {
+        text-align: center;
+        margin-bottom: 30px; }
+        .ksk .ksk-cpy .get-info .form-group input[type="text"], .ksk .ksk-cpy .get-info .form-group input[type="email"], .ksk .ksk-cpy .get-info .form-group input[type="password"], .ksk .ksk-cpy .get-info .form-group input[type="file"], .ksk .ksk-cpy .get-info .form-group textarea, .ksk .ksk-cpy .get-info .form-group .form-control {
+          background: #fff;
+          text-align: center;
+          padding: 15px;
+          height: auto;
+          font-size: 1.125rem;
+          font-weight: 500; }
+        .ksk .ksk-cpy .get-info .form-group button {
+          background: #f24949;
+          width: 100%;
+          margin-top: 30px;
+          border: none;
+          color: #fff;
+          padding: 15px;
+          text-transform: uppercase;
+          font-weight: 600;
+          cursor: pointer;
+          font-size: 1rem; }
+          .ksk .ksk-cpy .get-info .form-group button.disabled {
+            background: #dbdbdb !important;
+            pointer-events: none;
+            color: #999999 !important;
+            border: transparent; }
+        .ksk .ksk-cpy .get-info .form-group .label {
+          display: block;
+          margin-bottom: 5px; }
+          .ksk .ksk-cpy .get-info .form-group .label span {
+            font-weight: 600; }
+        .ksk .ksk-cpy .get-info .form-group:last-child {
+          margin-bottom: 0l; }
+  .ksk:before {
+    background: url(../images/clouds.svg) no-repeat scroll center bottom/cover;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 20vh; }
+    @media only screen and (max-width: 575px) {
+      .ksk:before {
+        height: 28vh; } }
+
 /* #### Start Sticky Footer ####*/
 /*
 html {
@@ -847,11 +1021,9 @@ app-footer {
     margin-left: 0;
     margin-right: 0; } }
 
-/* Tooltip Icon */
 .icon-question, [data-icon="F"] {
   cursor: pointer; }
 
-/*YNW Custom Fonts ####*/
 @font-face {
   font-family: 'Montserrat';
   src: url("../fonts/Montserrat-Medium.eot");
@@ -876,7 +1048,6 @@ app-footer {
   src: url("../fonts/Montserrat-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat-Regular.woff") format("woff"), url("../fonts/Montserrat-Regular.ttf") format("truetype"), url("../fonts/Montserrat-Regular.svg#Montserrat-Regular") format("svg");
   font-weight: normal;
   font-style: normal; }
-/*Form Related ####*/
 .form-group, .form-check {
   font-size: .875rem;
   font-weight: 500; }
@@ -912,7 +1083,6 @@ app-footer {
     font-size: .875rem;
     font-weight: 500; }
 
-/*Margin / Padding ####*/
 .m0 {
   margin: 0 !important; }
 
@@ -949,7 +1119,6 @@ app-footer {
 .pt0 {
   padding-top: 0 !important; }
 
-/*Warning Box ####*/
 .wbox {
   border: 2px solid #fee3b2;
   box-shadow: none;
@@ -1164,7 +1333,6 @@ app-footer {
       -webkit-transform: rotateX(0deg);
       transform: rotateX(0deg); }
 
-/*information notification ####*/
 .info-lst {
   margin: 0;
   padding: 0 0 0 34px;
@@ -1183,7 +1351,6 @@ app-footer {
     .info-lst li:last-child {
       margin-bottom: 0; }
 
-/* Snackbar ####*/
 .mat-snack-bar-container {
   color: #fff;
   background: #00aef2;
@@ -1207,11 +1374,9 @@ app-footer {
   .mat-snack-bar-container.snackbarerror:before {
     background: #f24949; }
 
-/*popup menu ####*/
 .pop-mnu {
   display: none; }
 
-/*Table styles ####*/
 .tbl-list {
   margin: 0;
   padding: 0;
@@ -1242,10 +1407,31 @@ app-footer {
     .tbl-list li:hover .otr {
       background: #f2f2f2; }
 
-/* #### Common Styles to apply everywhere  ####*/
 .mat-checkbox {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500; }
+
+.ripple {
+  position: relative;
+  overflow: hidden; }
+  .ripple:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(0, 0, 0, 0.03);
+    opacity: 0;
+    -webkit-border-radius: 200px;
+    border-radius: 200px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%; }
+
+.ripple:focus:not(:active)::after {
+  animation: ripple 1s ease-out; }
 
 a {
   color: #00aef2; }
@@ -12487,5 +12673,25 @@ footer {
     transform: rotate(90deg); }
   to {
     transform: rotate(0deg); } }
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 1; }
+  20% {
+    transform: scale(40, 40);
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: scale(80, 80); } }
+@keyframes hola {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0; }
+  75% {
+    transform: translateY(10px);
+    opacity: 1; }
+  100% {
+    transform: translateY(0px);
+    opacity: 1; } }
 
 /*# sourceMappingURL=style.css.map */
