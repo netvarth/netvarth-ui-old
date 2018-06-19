@@ -60,6 +60,10 @@ export class CheckInComponent implements OnInit {
     addmemberobj = {'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': ''};
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+
+    customer_data: any = [];
+    page_source = null;
+
     constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -71,6 +75,8 @@ export class CheckInComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
       console.log('check-inpassed data', data);
+      this.customer_data = this.data.customer_data || [];
+      this.page_source = this.data.moreparams.source;
     }
 
     ngOnInit() {
@@ -101,8 +107,12 @@ export class CheckInComponent implements OnInit {
       const dtoday = yyyy + '-' + cmon + '-' + cday;
 
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-      this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+      if (this.page_source === 'provider_checkin') {
+        this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
 
+      } else {
+        this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+      }
       if (this.data.moreparams.source === 'searchlist_checkin') { // case check-in from search result page
 
         this.search_obj = this.data.srchprovider;
@@ -115,7 +125,8 @@ export class CheckInComponent implements OnInit {
         this.sel_loc = this.search_obj.fields.location_id1;
         this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
 
-      } else if (this.data.moreparams.source === 'provdet_checkin') { // case check-in from provider details page
+      } else if (this.data.moreparams.source === 'provdet_checkin'
+      || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
 
         // this.search_obj = this.data.srchprovider;
         this.provider_id = this.data.moreparams.provider.unique_id;
@@ -134,7 +145,11 @@ export class CheckInComponent implements OnInit {
 
       }
       this.getServicebyLocationId (this.sel_loc, this.sel_checkindate);
-      this.getPaymentModesofProvider(this.account_id);
+
+      if ( this.page_source !== 'provider_checkin') {
+        this.getPaymentModesofProvider(this.account_id);
+      }
+
       // console.log('selcheckindate', this.sel_checkindate);
       if (this.sel_checkindate !== dtoday) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
         this.isFuturedate = true;
@@ -155,13 +170,43 @@ export class CheckInComponent implements OnInit {
       });
     }
     getFamilyMembers() {
-      this.shared_services.getConsumerFamilyMembers()
-        .subscribe( data => {
-          this.familymembers = data;
-         // console.log('family', this.familymembers);
-        },
-        error => {
-        });
+
+      let fn;
+      let self_obj;
+
+      if (this.page_source === 'provider_checkin') {
+        fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
+        self_obj = {
+          'userProfile': {
+            'id': this.customer_data.id,
+            'firstName': 'Self',
+            'lastName' : ''
+          }
+        };
+      } else {
+        fn = this.shared_services.getConsumerFamilyMembers();
+         self_obj = {
+          'userProfile': {
+            'id': this.loggedinuser.id,
+            'firstName': 'Self',
+            'lastName' : ''
+          }
+        };
+      }
+
+      fn.subscribe( data => {
+        this.familymembers = [];
+        this.familymembers.push(self_obj);
+        for ( const mem of data) {
+          if (mem.userProfile.id !== self_obj.userProfile.id) {
+            this.familymembers.push(mem);
+          }
+        }
+       console.log('family', this.familymembers);
+      },
+      error => {
+      });
+
     }
     gets3curl() {
       this.retval = this.sharedFunctionobj.getS3Url()
@@ -190,6 +235,7 @@ export class CheckInComponent implements OnInit {
               if (this.maxsize === undefined) {
                 this.maxsize = 1;
               }
+              this.maxsize = 2;
             break;
             }
           }
@@ -357,55 +403,80 @@ export class CheckInComponent implements OnInit {
         'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
         'revealPhone': this.revealphonenumber
     };
+
+    if (this.page_source === 'provider_checkin') {
+      post_Data['consumer'] =  {id : this.customer_data.id };
+      this.addCheckInProvider(post_Data);
+    } else {
+      this.addCheckInConsumer(post_Data);
+    }
+
     console.log('postdata', JSON.stringify(post_Data));
-    this.shared_services.addCheckin(this.account_id, post_Data)
-      .subscribe(data => {
-        const retData = data;
-        console.log('check-in returned', retData);
-        let toKen;
-        let retUUID;
-        Object.keys(retData).forEach(key => {
-          toKen = key;
-          retUUID =  retData[key];
-        });
-        console.log('token', toKen);
-        console.log('uuid', retUUID);
-        if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
-          if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
-            const payData = {
-              'amount': this.sel_ser_det.minPrePaymentAmount,
-              'paymentMode': this.paytype,
-              'uuid': retUUID
-            };
-            this.shared_services.consumerPayment(payData)
-              .subscribe (pData => {
-                  if (pData['response']) {
-                    this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                    this.api_success = Messages.CHECKIN_SUCC_REDIRECT;
-                      setTimeout(() => {
-                        this.document.getElementById('payuform').submit();
-                      }, 2000);
-                  } else {
-                    this.api_error = Messages.CHECKIN_ERROR;
-                  }
-              },
-              error => {
-                this.api_error = error.error;
-              });
-          } else {
-            this.api_error = Messages.CHECKIN_ERROR;
-          }
-        } else {
-          this.api_success = Messages.CHECKIN_SUCC;
-          setTimeout(() => {
-            this.dialogRef.close('reloadlist');
-          }, projectConstants.TIMEOUT_DELAY);
-        }
-      },
-      error => {
-         this.api_error = error.error;
-      });
   }
+
+  addCheckInConsumer(post_Data) {
+    this.shared_services.addCheckin(this.account_id, post_Data)
+    .subscribe(data => {
+      const retData = data;
+      console.log('check-in returned', retData);
+      let toKen;
+      let retUUID;
+      Object.keys(retData).forEach(key => {
+        toKen = key;
+        retUUID =  retData[key];
+      });
+      console.log('token', toKen);
+      console.log('uuid', retUUID);
+      if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
+        if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+          const payData = {
+            'amount': this.sel_ser_det.minPrePaymentAmount,
+            'paymentMode': this.paytype,
+            'uuid': retUUID
+          };
+          this.shared_services.consumerPayment(payData)
+            .subscribe (pData => {
+                if (pData['response']) {
+                  this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                  this.api_success = Messages.CHECKIN_SUCC_REDIRECT;
+                    setTimeout(() => {
+                      this.document.getElementById('payuform').submit();
+                    }, 2000);
+                } else {
+                  this.api_error = Messages.CHECKIN_ERROR;
+                }
+            },
+            error => {
+              this.api_error = error.error;
+            });
+        } else {
+          this.api_error = Messages.CHECKIN_ERROR;
+        }
+      } else {
+        this.api_success = Messages.CHECKIN_SUCC;
+        setTimeout(() => {
+          this.dialogRef.close('reloadlist');
+        }, projectConstants.TIMEOUT_DELAY);
+      }
+    },
+    error => {
+      this.api_error = error.error;
+    });
+  }
+
+  addCheckInProvider(post_Data) {
+    this.shared_services.addProviderCheckin(post_Data)
+    .subscribe(data => {
+      this.api_success = Messages.CHECKIN_SUCC;
+      setTimeout(() => {
+        this.dialogRef.close('reloadlist');
+      }, projectConstants.TIMEOUT_DELAY);
+    },
+    error => {
+      this.api_error = error.error;
+    });
+  }
+
   handleGoBack(cstep) {
     this.resetApi();
     this.step = cstep;
@@ -421,6 +492,12 @@ export class CheckInComponent implements OnInit {
       caption = 'Confirm Check-in';
     }
     return caption;
+  }
+
+  handleOneMemberSelect(id, name, obj) {
+    this.resetApi();
+    this.waitlist_for = [];
+    this.waitlist_for.push({ id: id, name: name });
   }
 
   handleMemberSelect(id, name, obj) {
@@ -545,8 +622,16 @@ export class CheckInComponent implements OnInit {
           post_data.userProfile['dob'] = this.addmemberobj.dob;
         }
         console.log('postdata', post_data);
-        this.shared_services.addMembers(post_data)
-        .subscribe(data => {
+
+        let fn;
+        if (this.page_source === 'provider_checkin') {
+          post_data['parent'] = this.customer_data.id;
+         fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
+        } else {
+          fn =   this.shared_services.addMembers(post_data);
+        }
+
+        fn.subscribe(data => {
             this.api_success = Messages.MEMBER_CREATED;
             this.getFamilyMembers();
             setTimeout(() => {

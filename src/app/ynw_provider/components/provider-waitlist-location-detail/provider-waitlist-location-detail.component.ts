@@ -160,19 +160,10 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
                 this.queues = data;
 
                 for (let ii = 0; ii < this.queues.length; ii++) {
-                    const schedule_arr = [];
+                    let schedule_arr = [];
                     // extracting the schedule intervals
                     if (this.queues[ii].queueSchedule) {
-                        // for (let i = 0; i < this.queues[ii].queueSchedule.length; i++) {
-                            for (let j = 0; j < this.queues[ii].queueSchedule.repeatIntervals.length; j++) {
-                            // pushing the schedule details to the respective array to show it in the page
-                            schedule_arr.push({
-                                day: this.queues[ii].queueSchedule.repeatIntervals[j],
-                                sTime: this.queues[ii].queueSchedule.timeSlots[0].sTime,
-                                eTime: this.queues[ii].queueSchedule.timeSlots[0].eTime
-                            });
-                            }
-                        // }
+                     schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queues[ii].queueSchedule);
                     }
                     let display_schedule = [];
                     display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);

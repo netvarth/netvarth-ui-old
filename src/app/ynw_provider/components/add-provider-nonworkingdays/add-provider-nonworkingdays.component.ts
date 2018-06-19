@@ -61,7 +61,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     });
   }
   onSubmit (form_data) {
-
+    this.resetApiErrors();
     // today
     const curday = new Date();
     const today_date = moment(curday).format('YYYY-MM-DD');

@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
@@ -27,6 +28,7 @@ import {map} from 'rxjs/operators/map';
 import {FormControl} from '@angular/forms';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import 'rxjs/add/observable/interval';
 
 @Component({
     selector: 'app-provider-home',
@@ -34,7 +36,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
     styleUrls: ['./provider-home.component.scss']
 })
 
-export class ProviderHomeComponent implements OnInit {
+export class ProviderHomeComponent implements OnInit,OnDestroy {
 
 
   locations: any = [];
@@ -86,6 +88,9 @@ export class ProviderHomeComponent implements OnInit {
     perPage : this.filter.page_count
   };
 
+  cronHandle: Subscription;
+  cronStarted;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -94,6 +99,8 @@ export class ProviderHomeComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices) {
+
+
     }
 
 
@@ -102,6 +109,16 @@ export class ProviderHomeComponent implements OnInit {
     this.getBusinessProfile();
     this.getLocationList();
     this.getServiceList();
+
+    // this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+
+    // });
+  }
+
+  ngOnDestroy() {
+     if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+     }
   }
 
   getBusinessProfile() {

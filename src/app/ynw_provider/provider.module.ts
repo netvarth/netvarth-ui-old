@@ -57,7 +57,6 @@ import { AddProviderWaitlistQueuesComponent } from './components/add-provider-wa
 // import { ProviderInboxReplyComponent } from './components/provider-inbox-reply/provider-inbox-reply.component';
 // import { AddProviderInboxMessageComponent } from './components/add-provider-inbox-message/add-provider-inbox-message.component';
 import { AdjustQueueDelayComponent } from './components/adjust-queue-delay/adjust-queue-delay.component';
-import { AddProviderCheckinComponent } from './components/add-provider-checkin/add-provider-checkin.component';
 import { GoogleMapComponent } from './components/googlemap/googlemap.component';
 import { ProviderbWizardComponent } from './components/provider-bwizard/provider-bwizard.component';
 import { AuthGuardProviderHome, AuthGuardNewProviderHome } from '../shared/guard/auth.guard';
@@ -170,7 +169,6 @@ import 'mousetrap';
         // ProviderInboxComponent,
         // AddProviderInboxMessageComponent,
         AdjustQueueDelayComponent,
-        AddProviderCheckinComponent,
         GoogleMapComponent,
         ProviderbWizardComponent,
         ProviderSubeaderComponent,
@@ -218,7 +216,6 @@ import 'mousetrap';
       AddProviderWaitlistQueuesComponent,
       // AddProviderInboxMessageComponent,
       AdjustQueueDelayComponent,
-      AddProviderCheckinComponent,
       GoogleMapComponent,
       ProviderBprofileSearchPrimaryComponent,
       AddProviderBprofilePrivacysettingsComponent,

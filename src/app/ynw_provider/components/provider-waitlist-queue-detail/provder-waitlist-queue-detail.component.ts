@@ -74,18 +74,9 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
         .subscribe(
             data => {
                 this.queue_data = data;
-                const schedule_arr = [];
+                let schedule_arr = [];
                 if (this.queue_data.queueSchedule) {
-                    // for (let i = 0; i < this.queues[ii].queueSchedule.length; i++) {
-                        for (let j = 0; j < this.queue_data.queueSchedule.repeatIntervals.length; j++) {
-                        // pushing the schedule details to the respective array to show it in the page
-                        schedule_arr.push({
-                            day: this.queue_data.queueSchedule.repeatIntervals[j],
-                            sTime: this.queue_data.queueSchedule.timeSlots[0].sTime,
-                            eTime: this.queue_data.queueSchedule.timeSlots[0].eTime
-                        });
-                        }
-                    // }
+                 schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
                 }
                 this.display_schedule = [];
                 this.display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
