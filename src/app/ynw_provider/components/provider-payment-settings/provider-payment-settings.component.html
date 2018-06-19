@@ -10,12 +10,12 @@
                 <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid">
                     <mat-tab label="Online Payment Settings">
                         <div class="outermost">
-                            <div class='pay-outer'>
+                            <!-- <div class='pay-outer'>
                                 <span class="ttle">
                                     Online Payment Enabled? <span class="sts" [class.active]="paystatus==true">{{(paystatus==true)?'Yes':'No'}}</span>
                                 </span>
                                 <span class="ctrl"><mat-slide-toggle [checked]="paystatus" (change)="showhidepaytype()"></mat-slide-toggle></span>
-                            </div>
+                            </div> -->
                             <div class="no-dta" *ngIf="!emailidVerified && profileQueryExecuted" >
                                 <p>Payment settings can be done only if your email id is verified. Please use the below button to set up your email id.</p>
                                 <span class="cs-btn bt3" (click)="redirectToEmail()">Add It Now</span>

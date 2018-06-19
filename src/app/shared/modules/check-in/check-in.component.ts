@@ -569,7 +569,7 @@ export class CheckInComponent implements OnInit {
     this.addmemberobj.mobile = obj.mobile || '';
     this.addmemberobj.gender = obj.gender || '';
     this.addmemberobj.dob = obj.dob || '';
-    console.log('add member return', this.addmemberobj);
+    // console.log('add member return', this.addmemberobj);
   }
   handleSaveMember() {
     this.resetApi();
@@ -596,12 +596,12 @@ export class CheckInComponent implements OnInit {
       }
     }
 
-    if (derror === '' && this.addmemberobj.gender === '') {
+    /*if (derror === '' && this.addmemberobj.gender === '') {
       derror = 'Please select the gender';
     }
     if (derror === '' && this.addmemberobj.dob === '') {
       derror = 'Please select the date of birth';
-    }
+    }*/
 
     if (derror === '') {
       const post_data = {

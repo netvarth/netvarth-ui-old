@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-group">
-                <label class="col-form-label" for="gender">Gender </label>
+                <label class="col-form-label" for="gender">Gender *</label>
                 <mat-radio-group formControlName="gender">
                 <mat-radio-button value="male">Male</mat-radio-button>
                 <mat-radio-button value="female">Female</mat-radio-button>
@@ -47,7 +47,7 @@
                 </app-field-error-display>
                 </div>
                 <div class="form-group">
-                <label class="col-form-label" for="last_name">Date Of Birth </label>
+                <label class="col-form-label" for="last_name">Date Of Birth *</label>
                 <!-- <mat-datepicker #picker></mat-datepicker>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <input class="form-control" [matDatepicker]="picker" formControlName="dob" [max]="maxalloweddate"> -->
@@ -66,14 +66,14 @@
                         <label class="col-form-label" >Phone Number</label>
                         <input type="text" class="form-control" id="phoneno" placeholder="Phone Number" readonly [value]="phonenoHolder">
                         <ul class="info-lst">
-                            <li>Phone number can be edited from "Change Mobile" option</li>
+                            <li>Use "Change Mobile" option to edit the Phone number</li>
                         </ul>
                     </div>
                     <div class="form-group" *ngIf="emailHolder!=''">
                         <label class="col-form-label" >Email Id</label>
                         <input type="text" class="form-control" id="emailid" placeholder="Email Id" readonly [value]="emailHolder">
                         <ul class="info-lst">
-                            <li>Email Id can be edited from "Change Email" option</li>
+                            <li>Use "Change Email" option to edit the Email Id</li>
                         </ul>                    
                     </div>
                 </div>
