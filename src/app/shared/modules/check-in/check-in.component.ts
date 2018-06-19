@@ -235,7 +235,6 @@ export class CheckInComponent implements OnInit {
               if (this.maxsize === undefined) {
                 this.maxsize = 1;
               }
-              this.maxsize = 2;
             break;
             }
           }
