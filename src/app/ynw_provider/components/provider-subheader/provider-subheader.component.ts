@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -21,6 +21,7 @@ import { CheckInComponent } from '../../../shared/modules/check-in/check-in.comp
 export class ProviderSubeaderComponent implements OnInit {
 
   @Input() activeTab: string;
+  @Output() reloadActionSubheader = new EventEmitter<any>();
   userdet: any = [];
   waitlist_set: any = [];
   locations: any = [];
@@ -137,7 +138,7 @@ export class ProviderSubeaderComponent implements OnInit {
 
     const dialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
-      panelClass: 'consumerpopupmainclass',
+      panelClass: ['commonpopupmainclass'],
      data: {
        type : 'provider',
        is_provider : 'true',
@@ -153,7 +154,9 @@ export class ProviderSubeaderComponent implements OnInit {
    });
 
    dialogRef.afterClosed().subscribe(result => {
-
+      if (result === 'reloadlist') {
+          this.reloadActionSubheader.emit(result);
+      }
    });
 
   }

@@ -36,7 +36,7 @@ import 'rxjs/add/observable/interval';
     styleUrls: ['./provider-home.component.scss']
 })
 
-export class ProviderHomeComponent implements OnInit,OnDestroy {
+export class ProviderHomeComponent implements OnInit, OnDestroy {
 
 
   locations: any = [];
@@ -110,9 +110,9 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
     this.getLocationList();
     this.getServiceList();
 
-    // this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
-
-    // });
+    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+        this.reloadAPIs();
+    });
   }
 
   ngOnDestroy() {
@@ -315,11 +315,12 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
 
   getFutureCheckinCount(filter = null) {
 
-
+    let no_filter = false;
     if (!filter) {
       filter = {
         'location-eq' : this.selected_location.id
       };
+      no_filter = true;
     }
 
     return new Promise((resolve, reject) => {
@@ -327,6 +328,7 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
       .subscribe(
         data => {
           resolve(data);
+          if (no_filter) { this.future_waitlist_count = data; }
         },
         error => {
 
@@ -338,10 +340,12 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
 
   getHistoryCheckinCount(filter = null) {
 
+    let no_filter = false;
     if (!filter) {
       filter = {
         'location-eq' : this.selected_location.id
       };
+      no_filter = true;
     }
     console.log(filter);
     return new Promise((resolve, reject) => {
@@ -350,6 +354,7 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
     .subscribe(
       data => {
         resolve(data);
+        if (no_filter) { this.histroy_waitlist_count = data; }
       },
       error => {
 
@@ -360,10 +365,14 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
 
   getTodayCheckinCount(filter = null) {
 
+    let no_filter = false;
+
     if (!filter) {
       filter = {
         'location-eq' : this.selected_location.id
       };
+
+      no_filter = true;
     }
 
     return new Promise((resolve, reject) => {
@@ -371,6 +380,7 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
       this.provider_services.getwaitlistTodayCount(filter)
       .subscribe(
         data => {
+          if (no_filter) { this.today_waitlist_count = data; }
           resolve(data);
         },
         error => {
@@ -543,9 +553,16 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
   }
 
   reloadAPIs() {
+    this.countApiCall();
     this.loadApiSwitch('reloadAPIs');
   }
 
+  countApiCall() {
+
+    this.getHistoryCheckinCount();
+    this.getFutureCheckinCount();
+    this.getTodayCheckinCount();
+  }
   changeStatusType(type) {
 
 
@@ -793,5 +810,8 @@ export class ProviderHomeComponent implements OnInit,OnDestroy {
     );
   }
 
+  reloadActionSubheader(data) {
+    this.reloadAPIs();
+  }
 
 }

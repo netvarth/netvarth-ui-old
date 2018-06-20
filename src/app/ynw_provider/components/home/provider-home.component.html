@@ -1,6 +1,6 @@
 
 <section>
-  <app-provider-subheader [activeTab]="'dashboard'"></app-provider-subheader> <!-- Subheader section -->
+  <app-provider-subheader [activeTab]="'dashboard'" (reloadActionSubheader)="reloadActionSubheader($event)"></app-provider-subheader> <!-- Subheader section -->
 </section>
 <section class="dashboard">
   <div class="container">
