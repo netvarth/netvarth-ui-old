@@ -5,7 +5,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 <mat-dialog-content>
     <ng-container *ngIf=" data && !forbadge">
         <div class="form-group mapselection">
-            <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i data-icon="j"></i>Choose your location in the MAP</button>
+            <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1"><i data-icon="j"></i>Choose your location in the MAP</button>
             <span class="expl">If your location is not available in the MAP, kindly fill the location details manually.</span>
         </div>
         <div class="form-group">

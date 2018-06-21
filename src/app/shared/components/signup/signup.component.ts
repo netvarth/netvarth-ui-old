@@ -258,8 +258,15 @@ export class SignUpComponent implements OnInit {
       this.shared_services.signUpConsumer(user_details)
       .subscribe(
         data => {
-           // console.log(data);
+          console.log(user_details);
             this.createForm(2);
+            if (user_details.userProfile &&
+              user_details.userProfile.email) {
+
+                this.setMessage('email', user_details.userProfile.email);
+              } else {
+                this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
+              }
         },
         error => {
             console.log(error);
@@ -376,7 +383,7 @@ export class SignUpComponent implements OnInit {
     }
 
     resendOtp(user_details) {
-
+      // console.log('here');
      if (user_details.isAdmin) {
 
       this.signUpApiProvider(user_details);
@@ -398,7 +405,8 @@ export class SignUpComponent implements OnInit {
     }
 
     setMessage (type, data) {
-
+      this.api_error = '';
+      console.log('setmsg', type, data);
       if (type === 'email') {
         const email = (data) ? data : 'your email';
         this.api_success  = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);

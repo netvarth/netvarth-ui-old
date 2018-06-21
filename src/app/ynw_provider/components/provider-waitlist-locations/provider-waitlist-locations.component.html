@@ -7,7 +7,7 @@
   <div class="content loc-list">
       <div class="container">
           <div class="row">
-              <div class="n-loc" >
+              <div class="n-loc" *ngIf="show_addlocationButton">
                   <span class="add-nloc cs-btn bt3" (click)="addLocation()">Add New Location</span>
               </div>
           </div>

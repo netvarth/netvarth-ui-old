@@ -14,7 +14,7 @@
                 <div class="form-group">
                   <label class="col-form-label" for="email">Email *</label>
                   <input type="text" class="form-control" id="email" 
-                  formControlName="email" (keyup)="isVerified(spForm.controls['email'].value)"> 
+                  formControlName="email" (keyup)="isVerified(spForm.controls['email'].value)" autocomplete="off"> 
                   <div *ngIf="is_verified" class="verified">Verified</div>
                   <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'email')"
                   errorMsg="Please enter a valid email.">

@@ -89,10 +89,11 @@ export class AuthGuardProviderHome implements CanActivate {
                   return true;
                 } else {
                   if (localStorage.getItem('new_provider')) {
-                    // this.router.navigate(['/provider/tour']); // commented to make the bwizard work
-                    this.router.navigate(['/provider/bwizard']);
+                        // this.router.navigate(['/provider/tour']); // commented to make the bwizard work
+                        this.router.navigate(['/provider/bwizard']);
                   } else {
-                    this.router.navigate(['/provider/settings']);
+                        // this.router.navigate(['/provider/settings']);
+                        this.router.navigate(['/provider/settings/bprofile-search']);
                   }
                   return false;
                 }
