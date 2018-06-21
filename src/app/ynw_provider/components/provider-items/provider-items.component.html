@@ -24,7 +24,7 @@
                                               <th>Name</th>
                                               <th>Price</th>
                                               <th>Taxable</th>
-                                              <th>Status</th>
+                                              <!-- <th>Status</th> -->
                                               <th><span class="addbt" (click)="addItem()"></span></th>
                                           </tr>
                                       </thead>
@@ -40,7 +40,7 @@
                                                       </td>
                                                       <td data-title="Status" clas="td4">{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
                                                       <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}</td>
-                                                      <td data-title="Status" clas="td4">{{item.status}}</td>
+                                                      <!-- <td data-title="Status" clas="td4">{{item.status}}</td> -->
 
                                                       <td class="action">
                                                           <span class="mbt">

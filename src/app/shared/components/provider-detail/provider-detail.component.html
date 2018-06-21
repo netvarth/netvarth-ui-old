@@ -43,9 +43,31 @@
 
                                   <div class="clr">
                                       <div class="otr-elements">
-                                          <span class="exp">10 yrs Experience </span>
-                                          <span class="awards">Awards &amp; Recognition</span>
-                                          <span class="memberships">Memberships</span>
+                                          <span class="exp" *ngIf="businessjson.domainVirtualFields?.experience">{{businessjson.domainVirtualFields.experience}}</span>
+                                          <ng-container *ngIf="businessjson.domainVirtualFields?.awardsrecognitions">
+                                            <span class="awards" *ngIf="businessjson.domainVirtualFields?.awardsrecognitions.length > 0">Awards &amp; Recognition</span>
+                                            <div class="table-outer d-tbl">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Year</th>
+                                                            <th>Month</th>
+                                                            <th>Name</th>
+                                                            <th>Issued By</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let awd of businessjson.domainVirtualFields?.awardsrecognitions">
+                                                            <td data-title="Year" class="awd-year">{{awd.awardYear}}</td>
+                                                            <td data-title="Month" class="awd-month">{{awd.awardMonth}}</td>
+                                                            <td data-title="Name" class="awd-name">{{awd.awardName}}</td>
+                                                            <td data-title="Issued By" class="awd-issuedby">{{awd.awardIssuedBy}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                          </ng-container>
+                                          <!-- <span class="memberships">Memberships</span> -->
                                       </div>
 
                                       <div class="pro-desc">

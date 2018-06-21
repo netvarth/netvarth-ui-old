@@ -15,7 +15,7 @@
             <div class="form-group">
               <label class="col-form-label" for="phonenumber">Mobile *</label>
               <input type="text" class="form-control" id="phonenumber" placeholder="Mobile"
-              formControlName="phonenumber" (keyup)="isVerified(spForm.controls['phonenumber'].value)">
+              formControlName="phonenumber" (keyup)="isVerified(spForm.controls['phonenumber'].value)" autocomplete="off">
               <div *ngIf="is_verified" class="verified">Verifed</div>
               <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'phonenumber')"
               [errorMsgs]="fed_service.getErrorMessage(spForm,'phonenumber',
