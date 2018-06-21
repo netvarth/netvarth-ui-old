@@ -1083,6 +1083,9 @@ app-footer {
     font-size: .875rem;
     font-weight: 500; }
 
+#modal-gallery-wrapper header {
+  background: transparent; }
+
 .m0 {
   margin: 0 !important; }
 
@@ -4582,7 +4585,7 @@ header {
           position: relative;
           display: block;
           padding-left: 40px;
-          width: 60px;
+          width: 85px;
           cursor: pointer; }
           @media only screen and (max-width: 767px) {
             .srch .sa .sa-fld .sa-mo .icon-filter {
@@ -5822,8 +5825,7 @@ header.dashb .lg-opt {
         header.dashb .lg-opt .lgmem a, header.dashb .lg-opt .lgmem span {
           text-align: center; } }
       header.dashb .lg-opt .lgmem a i, header.dashb .lg-opt .lgmem span i {
-        font-size: 0.525rem;
-        margin-left: 3px; }
+        font-size: 0.525rem; }
         @media only screen and (max-width: 575px) {
           header.dashb .lg-opt .lgmem a i, header.dashb .lg-opt .lgmem span i {
             margin: 0; } }
@@ -6651,15 +6653,16 @@ footer.dashb {
   .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list {
     min-width: 100%; }
     .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .tth .otr .cth {
-      font-weight: 600;
-      font-size: 1rem; }
+      font-weight: 700;
+      font-size: .875rem;
+      display: flex;
+      align-items: center; }
       .content .col-a .card.w-dta.active .cd-t .phtbl .tbl-list .tth .otr .cth .addbt {
         position: relative;
         display: inline-block;
         width: 24px;
         height: 24px;
         font-size: 1.5rem;
-        vertical-align: middle;
         margin-left: 5px;
         font-weight: 500;
         color: #00aef2; }
@@ -6920,15 +6923,16 @@ footer.dashb {
   .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list {
     min-width: 100%; }
     .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .tth .otr .cth {
-      font-weight: 600;
-      font-size: 1rem; }
+      font-weight: 700;
+      font-size: .875rem;
+      display: flex;
+      align-items: center; }
       .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .tth .otr .cth .addbt {
         position: relative;
         display: inline-block;
         width: 24px;
         height: 24px;
         font-size: 1.5rem;
-        vertical-align: middle;
         margin-left: 5px;
         font-weight: 500;
         color: #00aef2; }
@@ -8897,7 +8901,8 @@ footer.dashb {
   justify-content: space-between; }
   .content.settings .set-otr .card {
     width: 320px;
-    margin-bottom: 50px; }
+    margin-bottom: 50px;
+    opacity: 0; }
     @media only screen and (max-width: 767px) {
       .content.settings .set-otr .card {
         width: 100%;
@@ -8969,16 +8974,28 @@ footer.dashb {
                   left: 0;
                   position: absolute;
               }*/ }
-    .content.settings .set-otr .card.set02 .copy h2:before {
-      content: "\33"; }
-    .content.settings .set-otr .card.set03 .copy h2:before {
-      content: "\5a"; }
-    .content.settings .set-otr .card.set04 .copy h2:before {
-      content: "\57"; }
-    .content.settings .set-otr .card.set05 .copy h2:before {
-      content: "\58"; }
-    .content.settings .set-otr .card.set06 .copy h2:before {
-      content: "\34"; }
+    .content.settings .set-otr .card.set01 {
+      animation: setcard .5s forwards 0s ease; }
+    .content.settings .set-otr .card.set02 {
+      animation: setcard .5s forwards .1s ease; }
+      .content.settings .set-otr .card.set02 .copy h2:before {
+        content: "\33"; }
+    .content.settings .set-otr .card.set03 {
+      animation: setcard .5s forwards .2s ease; }
+      .content.settings .set-otr .card.set03 .copy h2:before {
+        content: "\5a"; }
+    .content.settings .set-otr .card.set04 {
+      animation: setcard .5s forwards .3s ease; }
+      .content.settings .set-otr .card.set04 .copy h2:before {
+        content: "\57"; }
+    .content.settings .set-otr .card.set05 {
+      animation: setcard .5s forwards .4s ease; }
+      .content.settings .set-otr .card.set05 .copy h2:before {
+        content: "\58"; }
+    .content.settings .set-otr .card.set06 {
+      animation: setcard .5s forwards .5s ease; }
+      .content.settings .set-otr .card.set06 .copy h2:before {
+        content: "\34"; }
 
 .comn-cls .no-dta {
   text-align: center; }
@@ -10893,7 +10910,8 @@ header.consumer {
     width: 100%;
     margin-top: 20px;
     margin-bottom: 30px;
-    position: relative; }
+    position: relative;
+    overflow: hidden; }
     .content .c-outer .sidebar-overlay {
       position: absolute;
       width: 100%;
@@ -11036,6 +11054,8 @@ header.consumer {
                   content: "\66"; }
           .content .c-outer .sidebar .rs-box .bx-block:last-child {
             border: none; }
+      .content .c-outer .sidebar.show {
+        animation: sidebar-in .6s forwards 0s ease; }
     .content .c-outer .c-body {
       flex-grow: 1;
       position: relative;
@@ -11242,7 +11262,8 @@ header.consumer {
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .rating-stars {
                 text-align: left; }
                 .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .rating-stars img {
-                  width: 12px; }
+                  width: 12px;
+                  margin-right: 5px; }
             .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 {
               flex-grow: 1; }
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified {
@@ -11277,9 +11298,22 @@ header.consumer {
                   margin-bottom: 15px;
                   display: flex;
                   flex-direction: column; }
-                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .span {
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements span {
                     display: inline-block;
                     margin-bottom: 3px; }
+                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements span.exp {
+                      margin-bottom: 10px; }
+                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements span.awards {
+                      margin-bottom: 5px;
+                      font-weight: 600; }
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table {
+                    margin-bottom: 0; }
+                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table th, .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table td {
+                      padding: 5px;
+                      font-size: .75rem; }
+                      @media only screen and (max-width: 767px) {
+                        .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table th, .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table td {
+                          min-height: auto; } }
                 .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule {
                   margin-bottom: 15px; }
                   .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule ul {
@@ -12352,15 +12386,17 @@ header.consumer {
         width: 120px;
         padding: .375rem .75rem; }
       .content.see-pages .outer-card .card .form-group .pickerouter .mat-datepicker-toggle {
-        border: 1px solid #00aef2;
-        -webkit-border-radius: 0.25rem;
-        border-radius: 0.25rem;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
         background-clip: padding-box;
         /* stops bg color from leaking outside the border: */
+        background: #00aef2;
         margin-right: 15px; }
         .content.see-pages .outer-card .card .form-group .pickerouter .mat-datepicker-toggle .mat-icon-button {
           height: 38px;
           line-height: 38px; }
+          .content.see-pages .outer-card .card .form-group .pickerouter .mat-datepicker-toggle .mat-icon-button svg {
+            color: #fff; }
     .content.see-pages .outer-card .card .form-group .mat-radio-group .mat-radio-button {
       font-family: 'Montserrat', sans-serif;
       font-weight: normal;
@@ -12467,6 +12503,11 @@ header.consumer {
   .content.see-pages .outer-card .mat-dialog-actions:last-child {
     margin: 0;
     padding: 20px 0; }
+.content.comn-cls .copy .no-msg {
+  padding: 20px;
+  font-size: .875rem;
+  color: #999999;
+  text-align: center; }
 
 footer {
   color: #fff;
@@ -12692,6 +12733,20 @@ footer {
     opacity: 1; }
   100% {
     transform: translateY(0px);
+    opacity: 1; } }
+@keyframes setcard {
+  0% {
+    transform: rotate(0) translateY(-15px);
+    opacity: 0; }
+  100% {
+    transform: rotate(0) translateY(0px);
+    opacity: 1; } }
+@keyframes sidebar-in {
+  0% {
+    transform: rotate(0) translateX(-300px);
+    opacity: 0; }
+  100% {
+    transform: rotate(0) translateX(0);
     opacity: 1; } }
 
 /*# sourceMappingURL=style.css.map */

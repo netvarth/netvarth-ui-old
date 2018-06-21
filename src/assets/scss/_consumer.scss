@@ -637,6 +637,7 @@ header {
         margin-top: 20px;
         margin-bottom: 30px;
         position: relative;
+        overflow: hidden;
         
         .sidebar-overlay {
             position: absolute;
@@ -831,6 +832,9 @@ header {
                         border: none;
                     }
                 }
+            }
+            &.show {
+                animation: sidebar-in .6s forwards 0s ease;
             }
         }
         
@@ -1101,6 +1105,7 @@ header {
                                 
                                 img {
                                     width: 12px;
+                                    margin-right: 5px;
                                 }
                             }
                         }
@@ -1147,9 +1152,30 @@ header {
                                     display: flex;
                                     flex-direction: column;
 
-                                    .span {
+                                    span {
                                         display: inline-block;
-                                        margin-bottom: 3px;         
+                                        margin-bottom: 3px;
+                                        
+                                        &.exp {
+                                            margin-bottom: 10px;
+                                        }
+                                        &.awards {
+                                            margin-bottom: 5px;
+                                            font-weight: 600;
+                                        }
+                                    }
+                                    .d-tbl {
+                                        .table {
+                                            margin-bottom: 0;
+                                            th, td {
+                                                padding: 5px;
+                                                font-size: .75rem;
+                                                
+                                                @include respond-to(ynw-767) {
+                                                    min-height: auto;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
 

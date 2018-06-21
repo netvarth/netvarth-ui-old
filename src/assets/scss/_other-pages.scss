@@ -45,13 +45,17 @@
                         }
 
                         .mat-datepicker-toggle {
-                            border: 1px solid $linkblue;
-                            @include border-radius(.25rem);
+                            @include border-radius(50px);
+                            background: $linkblue;
                             margin-right: 15px;
 
                             .mat-icon-button {
                                 height: 38px;
                                 line-height: 38px;
+                                
+                                svg {
+                                    color: $white;
+                                }
                             }
                         }
                     }
@@ -223,6 +227,16 @@
                     margin: 0;
                     padding: 20px 0;
                 }
+            }
+        }
+    }
+    &.comn-cls {
+        .copy {
+            .no-msg {
+                padding: 20px;
+                font-size: .875rem;
+                color: $cc-mediumgray;
+                text-align: center;
             }
         }
     }

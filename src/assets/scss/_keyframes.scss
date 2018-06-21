@@ -42,3 +42,27 @@
   }
     
 }
+
+// Settings - Card Animation
+@keyframes setcard{
+    0%{
+        transform: rotate(0) translateY(-15px);
+        opacity: 0;
+        }
+    100%{
+        transform: rotate(0) translateY(0px);
+        opacity: 1;
+        }
+}
+
+// Sidebar - Animation
+@keyframes sidebar-in{
+    0%{
+        transform: rotate(0) translateX(-300px);
+        opacity: 0;
+        }
+    100%{
+        transform: rotate(0) translateX(0);
+        opacity: 1;
+        }
+}

@@ -17,7 +17,7 @@
             
             <div class="c-outer"> 
                 <div class="sidebar-overlay" *ngIf="showrefinedsection && search_result_count > 0" (click)="togger_refinesection()"></div>
-                <div class="sidebar" *ngIf="showrefinedsection && search_result_count > 0">
+                <div class="sidebar" [class.show]="showrefinedsection && search_result_count > 0" *ngIf="showrefinedsection && search_result_count > 0">
                     <div class="rs-box">
                         <div  *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
                           <!-- <div class="bx-block" *ngIf="domainlist_data && kwtyp != 'subdom'"> -->

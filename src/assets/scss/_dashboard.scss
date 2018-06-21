@@ -195,7 +195,6 @@ header {
 
                     i {
                         font-size: 0.525rem;
-                        margin-left: 3px;
                         
                         @include respond-to(ynw-575) {margin: 0;}
                     }
@@ -1295,8 +1294,10 @@ footer {
                                 .tth {
                                     .otr {                                        
                                         .cth {
-                                            font-weight: 600;
-                                            font-size: 1rem;
+                                            font-weight: 700;
+                                            font-size: .875rem;
+                                            display: flex;
+                                            align-items: center;
                                             
                                             .addbt {
                                                 position: relative;
@@ -1304,7 +1305,6 @@ footer {
                                                 width: 24px;
                                                 height: 24px;
                                                 font-size: 1.5rem;
-                                                vertical-align: middle;
                                                 margin-left: 5px;
                                                 font-weight: 500;
                                                 color: $linkblue;
@@ -1667,8 +1667,10 @@ footer {
                                 .tth {
                                     .otr {
                                         .cth {
-                                            font-weight: 600;
-                                            font-size: 1rem;
+                                            font-weight: 700;
+                                            font-size: .875rem;
+                                            display: flex;
+                                            align-items: center;
                                             
                                             .addbt {
                                                 position: relative;
@@ -1676,7 +1678,6 @@ footer {
                                                 width: 24px;
                                                 height: 24px;
                                                 font-size: 1.5rem;
-                                                vertical-align: middle;
                                                 margin-left: 5px;
                                                 font-weight: 500;
                                                 color: $linkblue;
@@ -4454,6 +4455,7 @@ footer {
             .card {
                 width: 320px;
                 margin-bottom: 50px;
+                opacity: 0;
                 
                 @include respond-to(ynw-767) {
                     width: 100%;
@@ -4465,6 +4467,7 @@ footer {
                 
                 .copy {
                     padding: 0 20px;
+                    
                     .hd {
                         display: flex;
                         align-items: center;
@@ -4527,7 +4530,11 @@ footer {
                         }
                     }
                 }
+                &.set01 {
+                    animation: setcard .5s forwards 0s ease;
+                }
                 &.set02 {
+                    animation: setcard .5s forwards .1s ease;
                     .copy {
                         h2 {
                             &:before {
@@ -4537,6 +4544,7 @@ footer {
                     }
                 }
                 &.set03 {
+                    animation: setcard .5s forwards .2s ease;
                     .copy {
                         h2 {
                             &:before {
@@ -4546,6 +4554,7 @@ footer {
                     }
                 }
                 &.set04 {
+                    animation: setcard .5s forwards .3s ease;
                     .copy {
                         h2 {
                             &:before {
@@ -4555,6 +4564,7 @@ footer {
                     }
                 }
                 &.set05 {
+                    animation: setcard .5s forwards .4s ease;
                     .copy {
                         h2 {
                             &:before {
@@ -4564,6 +4574,7 @@ footer {
                     }
                 }
                 &.set06 {
+                    animation: setcard .5s forwards .5s ease;
                     .copy {
                         h2 {
                             &:before {

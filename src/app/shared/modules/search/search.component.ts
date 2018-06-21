@@ -1,5 +1,5 @@
 /* tslint:disable:forin */
-import { Component, OnInit, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -116,7 +116,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   locationholder: Locscls;
   keywordholder: Keywordscls;
   showmoreoptionsSec = false;
-
+  holdsrchlocname = '';
+  @ViewChild('locrefrence') private locRef: ElementRef;
   constructor (
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
@@ -824,6 +825,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchfields.latitude = undefined;
       this.searchfields.longitude = undefined;
     } else {
+      // this.location_name = this.locationholder.autoname;
+
+      if (this.locRef.nativeElement) {
+        this.locRef.nativeElement.value  = this.locationholder.autoname;
+      }
+      // console.log('locauto', this.locationholder.autoname);
       this.searchfields.location = this.locationholder.name;
       this.searchfields.locationautoname = this.locationholder.autoname;
       this.searchfields.locationtype = this.locationholder.typ;
@@ -1000,5 +1007,22 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
   handle_returntochild(obj) {
    // console.log('reached back');
+  }
+  clearSearch(obj) {
+    /* this.location_name = '';
+    this.holdsrchlocname = obj.value;
+    this.displaylocationList = [];
+    obj.value = '';*/
+    // console.log('reached here', obj.value, this.location_name);
+  }
+  blurSearch(obj) {
+   /* if (this.holdsrchlocname !== '' && obj.value === '') {
+      obj.value = this.holdsrchlocname;
+    }*/
+  }
+  deselect() {
+    /*if (this.locRef.nativeElement) {
+      this.locRef.nativeElement.value  = this.locRef.nativeElement.value;
+    }*/
   }
 }

@@ -7,78 +7,85 @@
         <div class="container">
             <div class="outer-card">
             <div class="card">
-                <form [formGroup]="editProfileForm"  novalidate
-                (ngSubmit)="editProfileForm.valid &&
-                onSubmit(editProfileForm.value)" (keyup)="resetApiErrors()">
-                <div class="form-group">
-                <label class="col-form-label" for="first_name">First Name *</label>
-                <input type="text" class="form-control" id="first_name" placeholder="First Name"
-                formControlName="first_name" autocomplete="off">
-                <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
-                [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
-                {
-                'required' : 'First name is required',
-                'pattern' : 'Only alphabets are allowed'
-                })">
-                </app-field-error-display>
-                </div>
+                    <form [formGroup]="editProfileForm"  novalidate
+                    (ngSubmit)="editProfileForm.valid &&
+                    onSubmit(editProfileForm.value)" (keyup)="resetApiErrors()">
+                    <div class="innercard">
+                        <div class="leftcard">
+                            <div class="form-group">
+                            <label class="col-form-label" for="first_name">First Name *</label>
+                            <input type="text" class="form-control" id="first_name" placeholder="First Name"
+                            formControlName="first_name" autocomplete="off">
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
+                            [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
+                            {
+                            'required' : 'First name is required',
+                            'pattern' : 'Only alphabets are allowed'
+                            })">
+                            </app-field-error-display>
+                            </div>
 
-                <div class="form-group">
-                <label class="col-form-label" for="last_name">Last Name *</label>
-                <input type="text" class="form-control" id="last_name" placeholder="Last Name"
-                formControlName="last_name" autocomplete="off">
-                <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
-                [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
-                {
-                'required' : 'Last name is required',
-                'pattern' : 'Only alphabets are allowed'
-                })">
-                </app-field-error-display>
-                </div>
+                            <div class="form-group">
+                            <label class="col-form-label" for="last_name">Last Name *</label>
+                            <input type="text" class="form-control" id="last_name" placeholder="Last Name"
+                            formControlName="last_name" autocomplete="off">
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
+                            [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
+                            {
+                            'required' : 'Last name is required',
+                            'pattern' : 'Only alphabets are allowed'
+                            })">
+                            </app-field-error-display>
+                            </div>
 
-                <div class="form-group">
-                <label class="col-form-label" for="gender">Gender *</label>
-                <mat-radio-group formControlName="gender">
-                <mat-radio-button value="male">Male</mat-radio-button>
-                <mat-radio-button value="female">Female</mat-radio-button>
-                </mat-radio-group>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
-                errorMsg="Please select the gender.">
-                </app-field-error-display>
-                </div>
-                <div class="form-group">
-                <label class="col-form-label" for="last_name">Date Of Birth *</label>
-                <!-- <mat-datepicker #picker></mat-datepicker>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <input class="form-control" [matDatepicker]="picker" formControlName="dob" [max]="maxalloweddate"> -->
+                            <div class="form-group">
+                            <label class="col-form-label" for="gender">Gender *</label>
+                            <mat-radio-group formControlName="gender">
+                            <mat-radio-button value="male">Male</mat-radio-button>
+                            <mat-radio-button value="female">Female</mat-radio-button>
+                            </mat-radio-group>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
+                            errorMsg="Please select the gender.">
+                            </app-field-error-display>
+                            </div>
+                            <div class="form-group">
+                            <label class="col-form-label" for="last_name">Date Of Birth *</label>
+                            <!-- <mat-datepicker #picker></mat-datepicker>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <input class="form-control" [matDatepicker]="picker" formControlName="dob" [max]="maxalloweddate"> -->
 
-                <div class="pickerouter">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday" readonly>
-                </div>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
-                errorMsg="Please select the date of birth.">
-                </app-field-error-display>
-                </div>
-                <div class="grayouter">
-                    <div class="form-group">
-                        <label class="col-form-label" >Phone Number</label>
-                        <input type="text" class="form-control" id="phoneno" placeholder="Phone Number" readonly [value]="phonenoHolder" autocomplete="off">
-                        <ul class="info-lst">
-                            <li>Use "Change Mobile" option to edit the Phone number</li>
-                        </ul>
+                            <div class="pickerouter">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday" readonly>
+                            </div>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
+                            errorMsg="Please select the date of birth.">
+                            </app-field-error-display>
+                            </div>
+                        </div>
+                        <div class="cardright">
+                            <div class="grayouter">
+                                <div class="form-group">
+                                    <label class="col-form-label" >Phone Number</label>
+                                    <input type="text" class="form-control" id="phoneno" placeholder="Phone Number" disabled [value]="phonenoHolder" autocomplete="off">
+                                    <ul class="info-lst">
+                                        <li>Use "Change Mobile" option to edit the Phone number</li>
+                                    </ul>
+                                </div>
+                                <div class="form-group" *ngIf="emailHolder!=''">
+                                    <label class="col-form-label" >Email Id</label>
+                                    <input type="text" class="form-control" id="emailid" placeholder="Email Id" disabled [value]="emailHolder" autocomplete="off">
+                                    <ul class="info-lst">
+                                        <li>Use "Change Email" option to edit the Email Id</li>
+                                    </ul>                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group" *ngIf="emailHolder!=''">
-                        <label class="col-form-label" >Email Id</label>
-                        <input type="text" class="form-control" id="emailid" placeholder="Email Id" readonly [value]="emailHolder" autocomplete="off">
-                        <ul class="info-lst">
-                            <li>Use "Change Email" option to edit the Email Id</li>
-                        </ul>                    
-                    </div>
-                </div>
-                <button  type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">Update</button>
-                </form>
+                    <button  type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">Update</button>
+                    </form>
+                
             </div>
             <div class="right-menu">
                 <div class="right-menu-header">Related Links</div>
