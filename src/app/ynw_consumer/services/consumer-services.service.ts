@@ -22,10 +22,14 @@ export class ConsumerServices {
       // set no_redirect_path in interceptor to avoid redirect on 401
   }
 
+  getWaitlistHistory(params) {
+    return this.servicemeta.httpGet('consumer/waitlist', null, params);
+    // set no_redirect_path in interceptor to avoid redirect on 401
+  }
 
 
   deleteFavProvider(id) {
-    return this.servicemeta.httpDelete('consumers/accounts/' + id);
+    return this.servicemeta.httpDelete('consumer/providers/' + id);
   }
 
 
@@ -50,6 +54,16 @@ export class ConsumerServices {
   deleteMember(id) {
     const path = 'consumer/familyMember/' + id;
     return this.servicemeta.httpDelete(path);
+  }
+
+  addConsumertoProviderNote(uuid, message) {
+    const url = 'consumer/communications?account=' + uuid;
+    return this.servicemeta.httpPost(url, message);
+  }
+
+  addConsumerWaitlistNote(accountid, uuid, body) {
+    const url = 'consumer/waitlist/communicate/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpPost(url, body);
   }
 
  /* addMembers(data) {

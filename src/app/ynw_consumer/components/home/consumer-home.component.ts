@@ -10,6 +10,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
+import { AddConsumerWaitlistCheckInProviderNoteComponent } from '../add-consumer-waitlist-checkin-provider-note/add-consumer-waitlist-checkin-provider-note.component';
 
 import { projectConstants } from '../../../shared/constants/project-constants';
 
@@ -21,10 +22,11 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 export class ConsumerHomeComponent implements OnInit {
 
   waitlists;
-  fav_providers ;
+  fav_providers: any = [];
   history ;
   fav_providers_id_list = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  loadcomplete = {waitlist: false , fav_provider: false};
 
   public searchfields: SearchFields = new SearchFields();
 
@@ -36,37 +38,37 @@ export class ConsumerHomeComponent implements OnInit {
   ngOnInit() {
 
     this.getWaitlist();
-    this.getHistoryCount();
+    this.getHistroy();
     this.getFavouriteProvider();
 
   }
   getWaitlist() {
+
+      this.loadcomplete.waitlist = false;
+
        const params = {
      //  'sort_id': 'asc',
      // 'waitlistStatus-eq': 'checkedIn,arrived'
       };
+
       this.consumer_services.getWaitlist(params)
       .subscribe(
       data => {
         this.waitlists = data;
-        console.log(data);
-
-
+        this.loadcomplete.waitlist = true;
       },
       error => {
-
+        this.loadcomplete.waitlist = true;
       }
       );
   }
 
   getHistroy() {
       const date = moment().format(projectConstants.POST_DATE_FORMAT);
-      const params = {'count': 10,
-      'date-le': date,
-      'sort_id': 'desc',
-      'waitlistStatus-neq': 'waitlisted,arrived'
+      const params = {
+      'date-le': date
       };
-      this.consumer_services.getWaitlist(params)
+      this.consumer_services.getWaitlistHistory(params)
       .subscribe(
       data => {
           this.history = data;
@@ -98,9 +100,15 @@ export class ConsumerHomeComponent implements OnInit {
   }
 
   getFavouriteProvider() {
+
+    this.loadcomplete.fav_provider = false;
+
     this.shared_services.getFavProvider()
     .subscribe(
     data => {
+
+      this.loadcomplete.fav_provider = true;
+
       this.fav_providers = data;
       this.fav_providers_id_list = [];
 
@@ -110,7 +118,7 @@ export class ConsumerHomeComponent implements OnInit {
 
     },
     error => {
-
+      this.loadcomplete.fav_provider = true;
     }
     );
   }
@@ -154,58 +162,64 @@ export class ConsumerHomeComponent implements OnInit {
     );
   }
 
-  // doDeleteFavProvider(fav) {
+  doDeleteFavProvider(fav) {
 
-  //   if (!fav.id) {
-  //     return false;
-  //   }
+    if (!fav.id) {
+      return false;
+    }
 
-  //   const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-  //     width: '50%',
-  //     data: {
-  //       'message' : 'Do you want to remove ' + fav.businessName + '?'
-  //     }
-  //   });
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      data: {
+        'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
+        'heading' : 'Confirm'
+      }
+    });
 
-  //   dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
 
-  //     if (result) {
-  //       this.deleteFavProvider(fav.id);
-  //     }
+      if (result) {
+        this.deleteFavProvider(fav.id);
+      }
 
-  //   });
-  // }
+    });
+  }
 
-  // deleteFavProvider(id) {
-  //   this.consumer_services.deleteFavProvider(id)
-  //   .subscribe(
-  //   data => {
-  //       console.log(data);
-  //       this.getFavouriteProvider();
-  //   },
-  //   error => {
+  deleteFavProvider(id) {
+    this.consumer_services.deleteFavProvider(id)
+    .subscribe(
+    data => {
+        console.log(data);
+        this.getFavouriteProvider();
+    },
+    error => {
 
-  //   }
-  //   );
-  // }
+    }
+    );
+  }
 
-  // addFavProvider(id) {
-  //   this.shared_services.addFavProvider(id)
-  //   .subscribe(
-  //   data => {
-  //       this.getFavouriteProvider();
-  //   },
-  //   error => {
+  addFavProvider(id) {
+    if (!id) {
+      return false;
+    }
 
-  //   }
-  //   );
-  // }
+    this.shared_services.addProvidertoFavourite(id)
+    .subscribe(
+    data => {
+        this.getFavouriteProvider();
+    },
+    error => {
+
+    }
+    );
+  }
 
   getAppxTime(time) {
       if (time === 0) {
         return 'Now';
       } else {
-        return moment().add(time, 'minutes').format('hh:mm A');
+        return moment().add(time, 'minutes').format('hh:mm A') + ' Minutes';
       }
   }
 
@@ -228,6 +242,49 @@ export class ConsumerHomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
 
+    });
+  }
+
+  checkIfFav(id) {
+    let fav = false;
+
+    this.fav_providers_id_list.map((e) => {
+      if ( e === id) {
+        fav =  true;
+      }
+    });
+    return fav;
+  }
+
+  addWaitlistMessage(waitlist) {console.log(waitlist);
+    const pass_ob = {};
+    pass_ob['source'] = 'consumer-waitlist';
+    pass_ob['checkin_id'] = waitlist.ynwUuid;
+    pass_ob['user_id'] = waitlist.provider.id;
+    this.addNote(pass_ob);
+
+  }
+
+  addCommonMessage(provider) {console.log(provider);
+    const pass_ob = {};
+    pass_ob['source'] = 'consumer-common';
+    pass_ob['user_id'] = provider.id;
+    this.addNote(pass_ob);
+  }
+
+  addNote(pass_ob) {
+
+    const dialogRef = this.dialog.open(AddConsumerWaitlistCheckInProviderNoteComponent, {
+      width: '50%',
+      panelClass: 'commonpopupmainclass',
+      autoFocus: true,
+      data: pass_ob
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
     });
   }
 

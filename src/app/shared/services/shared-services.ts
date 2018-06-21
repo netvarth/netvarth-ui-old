@@ -401,8 +401,8 @@ export class SharedServices {
       return this.servicemeta.httpPost(url, body);
     }
 
-    addConsumerWaitlistNote(uuid, body) {
-      const url = 'consumer/waitlist/communicate/' + uuid;
+    addConsumerWaitlistNote(accountid, uuid, body) {
+      const url = 'consumer/waitlist/communicate/' + uuid + '?account=' + accountid;
       return this.servicemeta.httpPost(url, body);
     }
 

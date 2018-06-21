@@ -4,210 +4,150 @@
       <div class="row">
           <!-- <h1>Consumer <span>Dashboard</span></h1> -->
           <div class="card c-chekins">
-              <h2>Current Check-Ins</h2>
-              <div class="outer">
-                  <div class="list">
-                      <div class="lt">
-                          <h3>Sun Medical Care</h3>
-                          <span class="location">Ollur, Thrissur</span>
-                          <div class="est-time"><span class="ttle">Estimated Waiting Time:</span><span class="time"><span class="min">10 Minutes</span></span></div>
-                      </div>
-                      <div class="rt">
-                          <ul class="controls">
-                              <li><span class="message">Message</span></li>
-                              <li><span class="add-fav">Add to Favourites</span></li>
-                              <li><span class="cancel">Cancel Check-in</span></li>
-                          </ul>
-                      </div>
-                  </div>
-                  <div class="list">
-                      <div class="lt">
-                          <h3>Sun Medical Care</h3>
-                          <span class="location">Ollur, Thrissur</span>
-                          <div class="est-time"><span class="ttle">Estimated Waiting Time:</span><span class="time"><span class="min">30 Minutes</span></span></div>
-                      </div>
-                      <div class="rt">
-                          <ul class="controls">
-                              <li><span class="message">Message</span></li>
-                              <li><span class="add-fav">Add to Favourites</span></li>
-                              <li><span class="cancel">Cancel Check-in</span></li>
-                          </ul>
-                      </div>
-                  </div>
-                  <div class="list">
-                      <div class="lt">
-                          <h3>Sun Medical Care</h3>
-                          <span class="location">Ollur, Thrissur</span>
-                          <div class="est-time"><span class="ttle">Estimated Waiting Time:</span><span class="time"><span class="date">06-27-2018, 10:00 AM</span></span></div>
-                      </div>
-                      <div class="rt">
-                          <ul class="controls">
-                              <li><span class="message">Message</span></li>
-                              <li><span class="add-fav">Add to Favourites</span></li>
-                              <li><span class="cancel">Cancel Check-in</span></li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
+              <mat-accordion >
+                <mat-expansion-panel [expanded]= 'true'>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Current Check-Ins
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="outer">
+                    <div class="list" *ngFor=" let waitlist of waitlists">
+                        <div class="lt">
+                            <h3>{{waitlist.provider.businessName || ''}}</h3>
+                            <span class="location">{{waitlist.queue.location.name || ''}}</span>
+                            <div class="est-time">
+                              <span class="ttle">Estimated Waiting Time:</span>
+                              <span class="time"><span class="min">{{getAppxTime(waitlist.appxWaitingTime)}}</span></span>
+                            </div>
+                        </div>
+                        <div class="rt">
+                            <ul class="controls">
+                                <li  (click)="addWaitlistMessage(waitlist)"><span class="message">Message</span></li>
+                                <li *ngIf="!checkIfFav(waitlist.provider.id)">
+                                  <span class="add-fav" (click)="addFavProvider(waitlist.provider.id)">
+                                    Add to Favourites</span>
+                                </li>
+                                <li *ngIf="checkIfFav(waitlist.provider.id)">
+                                  <span class="add-fav favourited"
+                                    (click)="doDeleteFavProvider(waitlist.provider)">
+                                    Remove Favourite</span>
+                                </li>
+                                <li *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived'">
+                                  <span class="cancel">Cancel Check-in</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0">
+                      <p>No current Check-Ins available</p>
+                    </div>
 
+                  </div>
+                </mat-expansion-panel>
+                </mat-accordion>
           </div>
+
           <div class="card favourites">
-              <h2>My Favourites</h2>
-
-              <div class="outer">
-                  <div class="list">
-                      <div class="lt">
-                          <h3>Sun Medical Care</h3>
-                          <span class="location">Ollur, Thrissur</span>
+              <mat-accordion>
+                <mat-expansion-panel [expanded]= 'true'>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      My Favourites
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="outer">
+                      <div class="list" *ngFor="let provider of fav_providers">
+                          <div class="lt">
+                              <h3>{{provider.businessName}}</h3>
+                          </div>
+                          <div class="rt">
+                              <ul class="controls">
+                                  <li><span class="checkin">Check-in</span></li>
+                                  <li (click)="addCommonMessage(provider)"><span class="message">Message</span></li>
+                                  <li><span class="add-fav favourited"
+                                    (click)="doDeleteFavProvider(provider)">
+                                    Remove Favourite</span>
+                                  </li>
+                              </ul>
+                          </div>
                       </div>
-                      <div class="rt">
-                          <ul class="controls">
-                              <li><span class="checkin">Check-in</span></li>
-                              <li><span class="message">Message</span></li>
-                              <li><span class="add-fav favourited">Remove Favourite</span></li>
-                          </ul>
-                      </div>
-                  </div>
-                  <div class="list">
-                      <div class="lt">
-                          <h3>Sun Medical Care</h3>
-                          <span class="location">Ollur, Thrissur</span>
-                      </div>
-                      <div class="rt">
-                          <ul class="controls">
-                              <li><span class="checkin">Check-in</span></li>
-                              <li><span class="message">Message</span></li>
-                              <li><span class="add-fav favourited">Remove Favourite</span></li>
-                          </ul>
+                      <div *ngIf="loadcomplete.fav_provider && fav_providers && fav_providers.length == 0">
+                        <p>You haven't added any favourite providers</p>
                       </div>
                   </div>
-                  <div class="list">
-                      <div class="lt">
-                          <h3>Sun Medical Care</h3>
-                          <span class="location">Ollur, Thrissur</span>
-                      </div>
-                      <div class="rt">
-                          <ul class="controls">
-                              <li><span class="checkin">Check-in</span></li>
-                              <li><span class="message">Message</span></li>
-                              <li><span class="add-fav favourited">Remove Favourite</span></li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
+                </mat-expansion-panel>
+              </mat-accordion>
           </div>
-          <div class="card history">
-              <h2>History</h2>
 
-              <div class="table-outer history-tbl">
-                  <table class="table">
-                      <thead>
-                          <tr>
-                              <th class="th1">Service Provider</th>
-                              <th class="th2">Location</th>
-                              <th class="th3">Date/Time</th>
-                              <th class="th4">Status</th>
-                              <th class="th5"></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td data-title="Service Provider" class="td1">Sun Medical Care</td>
-                              <td data-title="Location" class="td2">Ollur, Thrissur</td>
-                              <td data-title="Date/Time" class="td3">06-01-2018</td>
-                              <td data-title="Status" class="td4"><span class="completed">Completed</span></td>
-                              <td data-title="" class="td5">
-                                  <ul class="controls">
-                                      <li><span class="checkin">Check-in</span></li>
-                                      <li><span class="message">Message</span></li>
-                                      <li><span class="view-bill">View Bill</span></li>
-                                      <li><span class="pay-bill">Pay Bill</span></li>
-                                  </ul>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td data-title="Service Provider" class="td1">Sun Medical Care</td>
-                              <td data-title="Location" class="td2">Ollur, Thrissur</td>
-                              <td data-title="Date/Time" class="td3">06-01-2018</td>
-                              <td data-title="Status" class="td4"><span class="cancelled">Cancelled</span></td>
-                              <td data-title="" class="td5">
-                                  <ul class="controls">
-                                      <li><span class="checkin">Check-in</span></li>
-                                      <li><span class="message">Message</span></li>
-                                      <li><span class="view-bill">View Bill</span></li>
-                                      <li><span class="pay-bill">Pay Bill</span></li>
-                                  </ul>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td data-title="Service Provider" class="td1">Sun Medical Care</td>
-                              <td data-title="Location" class="td2">Ollur, Thrissur</td>
-                              <td data-title="Date/Time" class="td3">06-01-2018</td>
-                              <td data-title="Status" class="td4"><span class="completed">Completed</span></td>
-                              <td data-title="" class="td5">
-                                  <ul class="controls">
-                                      <li><span class="checkin">Check-in</span></li>
-                                      <li><span class="message">Message</span></li>
-                                      <li><span class="view-bill">View Bill</span></li>
-                                      <li><span class="pay-bill">Pay Bill</span></li>
-                                  </ul>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
+          <div class="card history">
+              <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      History
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="table-outer history-tbl">
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th class="th1">Service Provider</th>
+                                  <th class="th2">Location</th>
+                                  <th class="th3">Date/Time</th>
+                                  <th class="th4">Status</th>
+                                  <th class="th5"></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td data-title="Service Provider" class="td1">Sun Medical Care</td>
+                                  <td data-title="Location" class="td2">Ollur, Thrissur</td>
+                                  <td data-title="Date/Time" class="td3">06-01-2018</td>
+                                  <td data-title="Status" class="td4"><span class="completed">Completed</span></td>
+                                  <td data-title="" class="td5">
+                                      <ul class="controls">
+                                          <li><span class="checkin">Check-in</span></li>
+                                          <li><span class="message">Message</span></li>
+                                          <li><span class="view-bill">View Bill</span></li>
+                                          <li><span class="pay-bill">Pay Bill</span></li>
+                                      </ul>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td data-title="Service Provider" class="td1">Sun Medical Care</td>
+                                  <td data-title="Location" class="td2">Ollur, Thrissur</td>
+                                  <td data-title="Date/Time" class="td3">06-01-2018</td>
+                                  <td data-title="Status" class="td4"><span class="cancelled">Cancelled</span></td>
+                                  <td data-title="" class="td5">
+                                      <ul class="controls">
+                                          <li><span class="checkin">Check-in</span></li>
+                                          <li><span class="message">Message</span></li>
+                                          <li><span class="view-bill">View Bill</span></li>
+                                          <li><span class="pay-bill">Pay Bill</span></li>
+                                      </ul>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td data-title="Service Provider" class="td1">Sun Medical Care</td>
+                                  <td data-title="Location" class="td2">Ollur, Thrissur</td>
+                                  <td data-title="Date/Time" class="td3">06-01-2018</td>
+                                  <td data-title="Status" class="td4"><span class="completed">Completed</span></td>
+                                  <td data-title="" class="td5">
+                                      <ul class="controls">
+                                          <li><span class="checkin">Check-in</span></li>
+                                          <li><span class="message">Message</span></li>
+                                          <li><span class="view-bill">View Bill</span></li>
+                                          <li><span class="pay-bill">Pay Bill</span></li>
+                                      </ul>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
           </div>
       </div>
   </div>
 </section>
-
-
-<section class="content">
-    <div class="container">
-        <div class="row">
-<h2>Consumer Dashboard</h2>
-</div>
-</div>
-</section>
-
-
-<div *ngFor="let waitlist of waitlists">
-
-  <h4>{{waitlist.provider.businessName}},  -{{waitlist.service.name}}</h4>
-  <p>Service is for: {{waitlist.waitlistingFor.firstName}} {{waitlist.waitlistingFor.lastName}} </p>
-  <p>Approx. Service Time:  {{getAppxTime(waitlist.appxWaitingTime)}}</p>
-  <p>Token No.{{waitlist.token}}</p>
-  <p>Number of customers ahead : {{waitlist.personsAhead}}</p>
-  <!-- <button [disabled]="waitlist.messages.length == 0">Notification
-    <span *ngIf="waitlist.messages.length >0">({{waitlist.messages.length}})</span>
-  </button> -->
-  <button (click)="doCancelWaitlist(waitlist)">Cancel</button>
-  <button>Favourites</button>
-
-</div>
-
-<!-- <h2>Favourite Providers</h2> -->
-<div *ngFor="let fav of fav_providers">
-
-      <h4>{{fav.businessName}}</h4>
-
-      <button (click)="doDeleteFavProvider(fav)">remove</button>
-
-</div>
-
-<!-- <h2>History</h2> -->
-
-
-<div *ngFor="let waitlist of history">
-
-    <h4  (click)="goWaitlistDetail(waitlist)">{{waitlist.createdDate | date: dateFormat}} {{waitlist.provider.businessName}} -{{waitlist.service.name}}</h4>
-
-    <!-- <button [disabled]="waitlist.messages.length == 0" (click)="openNotification(waitlist.messages)">Notification
-      <span *ngIf="waitlist.messages.length >0"> ({{waitlist.messages.length}})</span>
-    </button> -->
-    <!-- <button (click)="fav_providers_id_list.indexOf(waitlist.provider.id)==-1 && addFavProvider(waitlist.provider.id)">
-      {{fav_providers_id_list.indexOf(waitlist.provider.id)==-1?'dis_icon':'red'}}</button> -->
-
-  </div>
-
-  <!-- <router-outlet></router-outlet> -->

@@ -27,7 +27,7 @@ import { NotificationListBoxComponent} from './shared/component/notification-lis
 import {MembersComponent } from './components/members/members.component';
 import { AddMembersHolderComponent } from './components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from './components/add-member/add-member.component';
-
+import { AddConsumerWaitlistCheckInProviderNoteComponent } from './components/add-consumer-waitlist-checkin-provider-note/add-consumer-waitlist-checkin-provider-note.component';
 
 import { projectConstants } from '../shared/constants/project-constants';
 
@@ -49,16 +49,15 @@ import { projectConstants } from '../shared/constants/project-constants';
       WaitlistComponent,
       NotificationListBoxComponent,
       MembersComponent,
-      AddMembersHolderComponent
-      /*,
-      AddMemberComponent*/
+      AddMembersHolderComponent,
+      AddConsumerWaitlistCheckInProviderNoteComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
       ConfirmBoxComponent,
       NotificationListBoxComponent,
-      AddMembersHolderComponent /*,
-      AddMemberComponent*/
+      AddMembersHolderComponent,
+      AddConsumerWaitlistCheckInProviderNoteComponent
     ],
     providers: [
       SharedServices,

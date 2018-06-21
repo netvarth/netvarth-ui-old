@@ -88,7 +88,7 @@ export class AddInboxMessagesComponent implements OnInit {
   consumerToProviderWaitlistNote(post_data) {
     if (this.uuid !== null) {
 
-      this.shared_services.addConsumerWaitlistNote(this.uuid,
+      this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
         post_data)
         .subscribe(
           data => {
