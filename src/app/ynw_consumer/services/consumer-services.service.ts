@@ -18,7 +18,7 @@ export class ConsumerServices {
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) {}
 
   getWaitlist(params) {
-      return this.servicemeta.httpGet('consumers/waitlist', null, params);
+      return this.servicemeta.httpGet('consumer/waitlist', null, params);
       // set no_redirect_path in interceptor to avoid redirect on 401
   }
 
@@ -31,15 +31,15 @@ export class ConsumerServices {
 
 
   getWaitlistCount(params) {
-    return this.servicemeta.httpGet('consumers/waitlist/count', null, params);
+    return this.servicemeta.httpGet('consumer/waitlist/count', null, params);
   }
 
   deleteWaitlist(id, params) {
-    return this.servicemeta.httpDelete('consumers/waitlist/' + id, null, params);
+    return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
   }
 
   getWaitlistDetail(token, date, provider_id) {
-    const path = 'consumers/waitlist/' + token + '/' + date + '?account=' + provider_id;
+    const path = 'consumer/waitlist/' + token + '/' + date + '?account=' + provider_id;
     return this.servicemeta.httpGet(path);
   }
 

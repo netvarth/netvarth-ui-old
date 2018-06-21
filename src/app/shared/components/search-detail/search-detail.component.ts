@@ -1385,7 +1385,7 @@ export class SearchDetailComponent implements OnInit {
   showCheckin(origin?) {
     const dialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
-       panelClass: 'consumerpopupmainclass',
+       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       data: {
         type : origin,
         is_provider : this.checkProvider(origin),

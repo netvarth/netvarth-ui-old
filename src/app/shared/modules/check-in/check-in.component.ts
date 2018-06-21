@@ -405,6 +405,7 @@ export class CheckInComponent implements OnInit {
 
     if (this.page_source === 'provider_checkin') {
       post_Data['consumer'] =  {id : this.customer_data.id };
+      post_Data['ignorePrePayment'] = true;
       this.addCheckInProvider(post_Data);
     } else {
       this.addCheckInConsumer(post_Data);

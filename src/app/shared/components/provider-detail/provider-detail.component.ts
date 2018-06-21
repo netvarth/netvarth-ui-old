@@ -455,7 +455,7 @@ export class ProviderDetailComponent implements OnInit {
     const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
     const dialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
-       panelClass: 'consumerpopupmainclass',
+       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       data: {
         type : origin,
         is_provider : false,

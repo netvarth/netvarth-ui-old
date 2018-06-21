@@ -35,15 +35,16 @@ export class ConsumerHomeComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.getWaitlist();
-    // this.getHistoryCount();
-    // this.getFavouriteProvider();
+    this.getWaitlist();
+    this.getHistoryCount();
+    this.getFavouriteProvider();
 
   }
   getWaitlist() {
        const params = {
-      'sort_id': 'asc',
-      'waitlistStatus-eq': 'waitlisted,arrived'};
+     //  'sort_id': 'asc',
+     // 'waitlistStatus-eq': 'checkedIn,arrived'
+      };
       this.consumer_services.getWaitlist(params)
       .subscribe(
       data => {

@@ -1,8 +1,167 @@
-<!-- <app-header [headerTitle] = "'Cosumer header'"></app-header> -->
 
-<!-- <app-search [showopennow]="0" [searchfields]="searchfields"></app-search> -->
-<br>
-<!-- <h2>Check-Ins/Orders</h2> -->
+<section class="content consumer-dash">
+  <div class="container">
+      <div class="row">
+          <!-- <h1>Consumer <span>Dashboard</span></h1> -->
+          <div class="card c-chekins">
+              <h2>Current Check-Ins</h2>
+              <div class="outer">
+                  <div class="list">
+                      <div class="lt">
+                          <h3>Sun Medical Care</h3>
+                          <span class="location">Ollur, Thrissur</span>
+                          <div class="est-time"><span class="ttle">Estimated Waiting Time:</span><span class="time"><span class="min">10 Minutes</span></span></div>
+                      </div>
+                      <div class="rt">
+                          <ul class="controls">
+                              <li><span class="message">Message</span></li>
+                              <li><span class="add-fav">Add to Favourites</span></li>
+                              <li><span class="cancel">Cancel Check-in</span></li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="list">
+                      <div class="lt">
+                          <h3>Sun Medical Care</h3>
+                          <span class="location">Ollur, Thrissur</span>
+                          <div class="est-time"><span class="ttle">Estimated Waiting Time:</span><span class="time"><span class="min">30 Minutes</span></span></div>
+                      </div>
+                      <div class="rt">
+                          <ul class="controls">
+                              <li><span class="message">Message</span></li>
+                              <li><span class="add-fav">Add to Favourites</span></li>
+                              <li><span class="cancel">Cancel Check-in</span></li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="list">
+                      <div class="lt">
+                          <h3>Sun Medical Care</h3>
+                          <span class="location">Ollur, Thrissur</span>
+                          <div class="est-time"><span class="ttle">Estimated Waiting Time:</span><span class="time"><span class="date">06-27-2018, 10:00 AM</span></span></div>
+                      </div>
+                      <div class="rt">
+                          <ul class="controls">
+                              <li><span class="message">Message</span></li>
+                              <li><span class="add-fav">Add to Favourites</span></li>
+                              <li><span class="cancel">Cancel Check-in</span></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+          <div class="card favourites">
+              <h2>My Favourites</h2>
+
+              <div class="outer">
+                  <div class="list">
+                      <div class="lt">
+                          <h3>Sun Medical Care</h3>
+                          <span class="location">Ollur, Thrissur</span>
+                      </div>
+                      <div class="rt">
+                          <ul class="controls">
+                              <li><span class="checkin">Check-in</span></li>
+                              <li><span class="message">Message</span></li>
+                              <li><span class="add-fav favourited">Remove Favourite</span></li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="list">
+                      <div class="lt">
+                          <h3>Sun Medical Care</h3>
+                          <span class="location">Ollur, Thrissur</span>
+                      </div>
+                      <div class="rt">
+                          <ul class="controls">
+                              <li><span class="checkin">Check-in</span></li>
+                              <li><span class="message">Message</span></li>
+                              <li><span class="add-fav favourited">Remove Favourite</span></li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="list">
+                      <div class="lt">
+                          <h3>Sun Medical Care</h3>
+                          <span class="location">Ollur, Thrissur</span>
+                      </div>
+                      <div class="rt">
+                          <ul class="controls">
+                              <li><span class="checkin">Check-in</span></li>
+                              <li><span class="message">Message</span></li>
+                              <li><span class="add-fav favourited">Remove Favourite</span></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card history">
+              <h2>History</h2>
+
+              <div class="table-outer history-tbl">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th class="th1">Service Provider</th>
+                              <th class="th2">Location</th>
+                              <th class="th3">Date/Time</th>
+                              <th class="th4">Status</th>
+                              <th class="th5"></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td data-title="Service Provider" class="td1">Sun Medical Care</td>
+                              <td data-title="Location" class="td2">Ollur, Thrissur</td>
+                              <td data-title="Date/Time" class="td3">06-01-2018</td>
+                              <td data-title="Status" class="td4"><span class="completed">Completed</span></td>
+                              <td data-title="" class="td5">
+                                  <ul class="controls">
+                                      <li><span class="checkin">Check-in</span></li>
+                                      <li><span class="message">Message</span></li>
+                                      <li><span class="view-bill">View Bill</span></li>
+                                      <li><span class="pay-bill">Pay Bill</span></li>
+                                  </ul>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td data-title="Service Provider" class="td1">Sun Medical Care</td>
+                              <td data-title="Location" class="td2">Ollur, Thrissur</td>
+                              <td data-title="Date/Time" class="td3">06-01-2018</td>
+                              <td data-title="Status" class="td4"><span class="cancelled">Cancelled</span></td>
+                              <td data-title="" class="td5">
+                                  <ul class="controls">
+                                      <li><span class="checkin">Check-in</span></li>
+                                      <li><span class="message">Message</span></li>
+                                      <li><span class="view-bill">View Bill</span></li>
+                                      <li><span class="pay-bill">Pay Bill</span></li>
+                                  </ul>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td data-title="Service Provider" class="td1">Sun Medical Care</td>
+                              <td data-title="Location" class="td2">Ollur, Thrissur</td>
+                              <td data-title="Date/Time" class="td3">06-01-2018</td>
+                              <td data-title="Status" class="td4"><span class="completed">Completed</span></td>
+                              <td data-title="" class="td5">
+                                  <ul class="controls">
+                                      <li><span class="checkin">Check-in</span></li>
+                                      <li><span class="message">Message</span></li>
+                                      <li><span class="view-bill">View Bill</span></li>
+                                      <li><span class="pay-bill">Pay Bill</span></li>
+                                  </ul>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
 <section class="content">
     <div class="container">
         <div class="row">
