@@ -110,7 +110,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   }
 
 
-  makePayment() {
+  makePayment(e) {
     this.dialogRef.close('makePayment');
   }
 

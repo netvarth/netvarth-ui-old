@@ -113,15 +113,15 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
     );
   }
 
-  updateBill() {
+  updateBill(e) {
     this.dialogRef.close('updateBill');
   }
 
-  makePayment() {
+  makePayment(e) {
     this.dialogRef.close('makePayment');
   }
 
-  settleBill() {
+  settleBill(e) {
     this.provider_services.settleWaitlistBill(this.checkin.ynwUuid)
     .subscribe(
       data => {
@@ -135,7 +135,7 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
     );
   }
 
-  emailBill() {
+  emailBill(e) {
     this.provider_services.emailWaitlistBill(this.checkin.ynwUuid)
     .subscribe(
       data => {
