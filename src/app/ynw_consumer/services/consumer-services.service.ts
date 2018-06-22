@@ -23,7 +23,7 @@ export class ConsumerServices {
   }
 
   getWaitlistHistory(params) {
-    return this.servicemeta.httpGet('consumer/waitlist', null, params);
+    return this.servicemeta.httpGet('consumer/waitlist/history', null, params);
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
 
@@ -36,6 +36,10 @@ export class ConsumerServices {
 
   getWaitlistCount(params) {
     return this.servicemeta.httpGet('consumer/waitlist/count', null, params);
+  }
+
+  getHistoryWaitlistCount() {
+    return this.servicemeta.httpGet('consumer/waitlist/history/count');
   }
 
   deleteWaitlist(id, params) {
@@ -73,6 +77,16 @@ export class ConsumerServices {
   editMember(data) {
     return this.servicemeta.httpPut('consumer/familyMember', data);
   } */
+
+  getWaitlistBill(uuid) {
+    const path = 'consumer/bill/' + uuid;
+    return this.servicemeta.httpGet(path);
+  }
+
+  getPaymentDetail(uuid) {
+    const url = 'consumer/payment/' + uuid ;
+    return this.servicemeta.httpGet(url);
+  }
 
 
 }

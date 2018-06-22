@@ -104,6 +104,8 @@ import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module
 // import { ChangePasswordModule } from '../shared/modules/change-password/change-password.module';
 // import { ChangeMobileModule } from '../shared/modules/change-mobile/change-mobile.module';
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
+import { ViewBillModule } from '../shared/modules/view-bill/view-bill.module';
+
 
 import 'hammerjs';
 import 'mousetrap';
@@ -119,7 +121,8 @@ import 'mousetrap';
         HeaderModule,
         PagerModule,
         InboxModule,
-        CheckInModule
+        CheckInModule,
+        ViewBillModule
     ],
     declarations: [
         ProviderComponent,
