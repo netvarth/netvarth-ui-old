@@ -24,12 +24,20 @@ export class RatingStarComponent implements OnInit {
     private shared_functions: SharedFunctions,
     ) {}
   curratval: any;
+  selval = 0;
   ngOnInit() {
     // console.log('passedin', this.cloudindex);
     this.curratval = this.ratingval || '';
   }
   handle_ratingclick(val) {
+    this.selval = val;
     const retobj = {'cloudindex': this.cloudindex, 'selectedrating': val};
     this.ratingreturn.emit(retobj);
+  }
+  clearSel() {
+    this.selval = 0;
+    this.ratingval = '';
+    this.curratval = '';
+    this.handle_ratingclick(0);
   }
 }

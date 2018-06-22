@@ -94,6 +94,7 @@
                                         <div class="col-6"><input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"></div>
                                         <div class="col-6"><input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lon']" name="lon" placeholder="Longitude"></div>
                                     </div>
+                                    <div class="sts-msg error" *ngIf="coord_error!=''">{{coord_error}}</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>
@@ -109,11 +110,13 @@
                                     <label>Location Name</label>
                                     <span class="expl">Display name of the location where you render services for your customers. This is what your customers see when they search online.</span>
                                     <input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="">
+                                    <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Google Map URL</label>
                                     <span class="expl">This can be used to find the exact location</span>
                                     <input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder="">
+                                    <div class="sts-msg error" *ngIf="gurl_error!=''">{{gurl_error}}</div>
                                 </div>
                             </div>
                         </div>

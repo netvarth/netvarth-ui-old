@@ -4,7 +4,8 @@
 <section class="content">
     <div class="container">
         <div class="row">
-            <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && search_result_count > 0">
+            <!-- <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && search_result_count > 0"> -->
+            <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">    
                 <div class="ct1" >
                     <span class="mnu" (click)="togger_refinesection()">
                         <span></span>
@@ -16,8 +17,10 @@
             </div>
             
             <div class="c-outer"> 
-                <div class="sidebar-overlay" *ngIf="showrefinedsection && search_result_count > 0" (click)="togger_refinesection()"></div>
-                <div class="sidebar" [class.show]="showrefinedsection && search_result_count > 0" *ngIf="showrefinedsection && search_result_count > 0">
+                <!-- <div class="sidebar-overlay" *ngIf="showrefinedsection && search_result_count > 0" (click)="togger_refinesection()"></div>
+                <div class="sidebar" [class.show]="showrefinedsection && search_result_count > 0" *ngIf="showrefinedsection && search_result_count > 0"> -->
+                    <div class="sidebar-overlay" *ngIf="showrefinedsection && additionalRefineCondition()" (click)="togger_refinesection()"></div>
+                    <div class="sidebar" [class.show]="showrefinedsection" *ngIf="showrefinedsection && additionalRefineCondition()">
                     <div class="rs-box">
                         <div  *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
                           <!-- <div class="bx-block" *ngIf="domainlist_data && kwtyp != 'subdom'"> -->
@@ -346,11 +349,11 @@
                             <div class="tp-r">
                                 <div *ngIf="search_result.fields.ynw_verified==1" class="ynw-verified"></div>
                                 <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
-                                    <li *ngIf="search_result.fields.parking_location1==1"><span class="icon-parking"></span></li>
-                                    <li *ngIf="search_result.fields.always_open1==1"><span class="icon-open-time"></span></li>
-                                    <li *ngIf="search_result.fields.traumacentre_location1==1"><span class="icon-trauma"></span></li>
-                                    <li *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1"><span class="icon-emergency"></span></li>
-                                    <li *ngIf="search_result.fields.firstaid_location1==1"><span class="icon-first-aid"></span></li>
+                                    <li *ngIf="search_result.fields.parking_type_location1" [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span class="icon-parking"></span></li>
+                                    <li *ngIf="search_result.fields.always_open_location1==1" [matTooltip]="'24 Hours Open'"><span class="icon-open-time"></span></li>
+                                    <li *ngIf="search_result.fields.traumacentre_location1==1" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
+                                    <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1"><span class="icon-emergency"></span></li>
+                                    <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
                                     <!-- <li><span class="icon-ambulance"></span></li>
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>

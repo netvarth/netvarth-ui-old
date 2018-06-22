@@ -32,6 +32,10 @@ export class ProviderbWizardComponent implements OnInit {
   ischange_schedule_clicked = false;
   loading_active = true;
   search_status = 0;
+  coord_error = '';
+  locname_error = '';
+  gurl_error = '';
+  error_Exists = false;
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
@@ -65,6 +69,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   showStep(changetostep) {
     this.loading_active = true;
+    this.resetErrors();
     if (changetostep === 2) {
       this.ischange_schedule_clicked = false;
     } else if (changetostep === 4) {
@@ -107,6 +112,54 @@ export class ProviderbWizardComponent implements OnInit {
           );
       break;
       case 2:
+          let latlon_Exists = false;
+          const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
+          const floatpattern = new RegExp(projectConstants.VALIDATOR_FLOAT);
+          const urlpattern = new RegExp(projectConstants.VALIDATOR_URL);
+          let latexists = false;
+          let lonexists = false;
+          // validating the fields if they are entered
+          if (this.wizard_data_holder.lon !== '' && this.wizard_data_holder.lon !== undefined) {
+            latlon_Exists = true;
+            const lon_validate = floatpattern.test(this.wizard_data_holder.lon);
+            latexists = true;
+            if (!lon_validate) {
+              this.error_Exists = true;
+              this.coord_error = 'Only number are allowed for GPS Coordinate';
+            }
+          }
+          if (this.wizard_data_holder.lat !== '' && this.wizard_data_holder.lat !== undefined) {
+            latlon_Exists = true;
+            lonexists = true;
+            const lat_validate = floatpattern.test(this.wizard_data_holder.lat);
+            if (!lat_validate) {
+              this.error_Exists = true;
+              this.coord_error = 'Only number are allowed for GPS Coordinate';
+            }
+          }
+          if (latlon_Exists) { // if lat or lan or both exist, then the location name is required
+            if (!latexists || !lonexists) {
+              this.error_Exists = true;
+              this.coord_error = 'Both coordinates are required';
+            }
+            const locname_validate = blankpattern.test(this.wizard_data_holder.location);
+            if (locname_validate) {
+              this.error_Exists = true;
+              this.locname_error = 'Please enter the location name';
+            }
+            const mapurlexists_validate = blankpattern.test(this.wizard_data_holder.mapurl);
+            if (!mapurlexists_validate) {
+              const mapurl_validate = urlpattern.test(this.wizard_data_holder.mapurl);
+              if (!mapurl_validate) {
+                this.error_Exists = true;
+                this.gurl_error = 'Invalid Google map URL';
+              }
+            }
+          }
+          if (this.error_Exists === true) {
+            this.loading_active = false;
+            return;
+          }
         const post_itemdata2 = {
            'baseLocation': {
                               'place': this.wizard_data_holder.location || '',
@@ -206,6 +259,7 @@ export class ProviderbWizardComponent implements OnInit {
           }
         }
       };
+      console.log('schedule save', post_itemdata3);
       // adding the schedule for the location
       /* const blob_itemdata3 = new Blob([JSON.stringify(post_itemdata3)], { type: 'application/json' });
       const submit_data3: FormData = new FormData();
@@ -326,6 +380,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   // Save schedule to arr
   handlesSaveschedule(obj) {
+    console.log('returned Schedule', obj);
     this.schedule_arr = obj;
     this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     // this.ischange_schedule_clicked = false;
@@ -424,5 +479,11 @@ export class ProviderbWizardComponent implements OnInit {
     } else { // if sufficient data is there, then show the bprofile
       this.redirecttoProfile();
     }
+  }
+  resetErrors() {
+    this.error_Exists = false;
+    this.coord_error = '';
+    this.locname_error = '';
+    this.gurl_error = '';
   }
 }

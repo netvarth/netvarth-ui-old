@@ -15,6 +15,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
+import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
@@ -120,7 +121,7 @@ export class ProviderDetailComponent implements OnInit {
                     this.s3url = res;
                     // console.log('s3', this.s3url);
                     this.getbusinessprofiledetails_json('businessProfile', true);
-                    this.getbusinessprofiledetails_json('services', true);
+                    // this.getbusinessprofiledetails_json('services', true);
                     this.getbusinessprofiledetails_json('gallery', true);
                     this.getbusinessprofiledetails_json('settings', true);
                     // this.getbusinessprofiledetails_json('terminologies', true);
@@ -431,6 +432,26 @@ export class ProviderDetailComponent implements OnInit {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         });
     }
+  }
+  doRemoveFav() {
+
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      data: {
+        'message' : 'Do you want to remove this provider from your favourite list?',
+        'heading' : 'Confirm'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        this.handle_Fav('remove');
+      }
+
+    });
+
   }
   checkinClicked(locid, locname, chdatereq) {
     this.changedate_req = chdatereq;

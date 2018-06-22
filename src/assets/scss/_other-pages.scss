@@ -12,7 +12,7 @@
             }
 
             .card {
-                width: 75%;
+                width: 60%;
                 
                 @include respond-to(ynw-575) {
                     margin-bottom: 30px;
@@ -106,13 +106,65 @@
                     }
                 }
                 
+                .innercard {
+                    display: flex;
+                    
+                    @include respond-to(ynw-767) {
+                        flex-direction: column;
+                    }
+                    @include respond-to(ynw-768-991) {
+                        flex-direction: column;
+                    }
+                    
+                    .form-group {
+                        .form-control {
+                            width: 100%;
+                        }    
+                    }
+                    
+                    .leftcard, .cardright {
+                        width: 50%;
+                        
+                        @include respond-to(ynw-767) {
+                            width: 100%
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 100%
+                        }
+                    }
+                    .cardright {
+                        .grayouter {
+                            padding-left: 40px;
+                            
+                            @include respond-to(ynw-767) {
+                                padding-left: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                padding-left: 0;
+                            }
+                            
+                            .info-lst {
+                                padding: 0px 0 0 20px;
+                                background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/16px 16px;
+                                margin-top: 5px;
+                                
+                                li {
+                                    color: $cc-mediumgray;
+                                }
+                            }
+                        }
+                    }
+                }
+                
                 .d-tbl {
                     .addbt {
-                        margin-top: 0;
+                        margin-top: 20px;
                         font-weight: 500;
                     }
                     
                     .table {
+                        margin-bottom: 0;
+                        
                         tbody {
                             tr {
                                 td {
@@ -182,6 +234,9 @@
                             }
                         }
                     }
+                }
+                &.members-card {
+                    width: 75%;
                 }
             }
             

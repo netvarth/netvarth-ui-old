@@ -1009,20 +1009,21 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
    // console.log('reached back');
   }
   clearSearch(obj) {
-    /* this.location_name = '';
-    this.holdsrchlocname = obj.value;
     this.displaylocationList = [];
-    obj.value = '';*/
-    // console.log('reached here', obj.value, this.location_name);
+    obj.value = '';
   }
   blurSearch(obj) {
    /* if (this.holdsrchlocname !== '' && obj.value === '') {
       obj.value = this.holdsrchlocname;
     }*/
+    if (obj.value === '') {
+      obj.value = this.locationholder.autoname;
+    }
   }
   deselect() {
-    /*if (this.locRef.nativeElement) {
+    console.log('blur');
+    if (this.locRef.nativeElement) {
       this.locRef.nativeElement.value  = this.locRef.nativeElement.value;
-    }*/
+    }
   }
 }

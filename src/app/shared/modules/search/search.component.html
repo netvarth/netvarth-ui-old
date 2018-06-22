@@ -3,7 +3,8 @@
 <div [class.sa-fld]="includedfrom=='home'" [class.tp-srch]="includedfrom=='consumer_header'">
   <div class="sa-lc flex-shrink-0">
       <mat-form-field class="search_location_class">
-        <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name"  matInput [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="Please type a location" #locrefrence (click)="locrefrence.select()" (blur)="deselect()">
+        <!-- <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name"  matInput [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="Please type a location" #locrefrence (focus)="locrefrence.select()" (blur)="deselect()"> -->
+        <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name"  matInput [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="Please type a location" #locrefrence (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)">
         <mat-autocomplete #autoloc="matAutocomplete">
           <div *ngIf="locationList">
           <!-- <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname" (click)="setLocation(loc)"> -->

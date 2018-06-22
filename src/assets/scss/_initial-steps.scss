@@ -231,6 +231,16 @@ footer {
                         width: 25%;
                     }
                 }
+                
+                .sts-msg {
+                    font-size: .75rem;
+                    padding: 5px;
+                    
+                    &.error {
+                        color: $cc-red;
+                    }
+                }
+                
             }
         }
         

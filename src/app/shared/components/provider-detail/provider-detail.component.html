@@ -100,10 +100,11 @@
                           </div>
                           <div class="tp-r">
                               <div class="ynw-verified"></div>
-                              <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists">
+                              <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
+                              <ul class="side-menu" *ngIf="settings_exists && business_exists && gallery_exists && location_exists">
                                   <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
                                   <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">Add to Favourites</span></li>
-                                  <li><span class ="icon-favourite-filled" *ngIf="isInFav" (click)="handle_Fav('remove')">Remove from Favourites</span></li>
+                                  <li><span class ="icon-favourite-filled" *ngIf="isInFav" (click)="doRemoveFav()">Remove from Favourites</span></li>
                                   <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li>
                                   <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">Communicate</span></li>
                                   <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li>
@@ -142,7 +143,11 @@
                               <ul class="badges">
                                   <li *ngIf="loc.parkingType!=='' && loc.parkingType != undefined" [matTooltip]="'Parking Type: ' + loc.parkingType"><span class="icon-parking"></span></li>
                                   <li *ngIf="loc.open24hours==true"><span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span></li>
-
+                                 
+                                  <li *ngIf="loc?.locationVirtualFields?.traumacentre=='true'" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
+                                  <li [matTooltip]="'Emergency Services'" *ngIf="loc?.locationVirtualFields?.physiciansemergencyservices=='true' || loc?.locationVirtualFields?.dentistemergencyservices=='true' || loc?.locationVirtualFields?.altemergencyservices=='true'"><span class="icon-emergency"></span></li>
+                                  <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'" [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
+                                  
                                   <!-- <li><span class="icon-trauma"></span></li>
                                   <li><span class="icon-emergency"></span></li>
                                   <li><span class="icon-first-aid"></span></li>

@@ -63,6 +63,7 @@ export class CheckInComponent implements OnInit {
 
     customer_data: any = [];
     page_source = null;
+    main_heading;
 
     constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -74,12 +75,13 @@ export class CheckInComponent implements OnInit {
     @Inject(DOCUMENT) public document,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-      console.log('check-inpassed data', data);
+      // console.log('check-inpassed data', data);
       this.customer_data = this.data.customer_data || [];
       this.page_source = this.data.moreparams.source;
     }
 
     ngOnInit() {
+      this.main_heading = 'Check-in';
       this.maxsize = 1;
       this.step = 1;
       this.loggedinuser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
@@ -202,7 +204,7 @@ export class CheckInComponent implements OnInit {
             this.familymembers.push(mem);
           }
         }
-       console.log('family', this.familymembers);
+       // console.log('family', this.familymembers);
       },
       error => {
       });
@@ -365,6 +367,7 @@ export class CheckInComponent implements OnInit {
   handleServiceForWhom() {
     this.holdwaitlist_for = this.waitlist_for;
     this.step = 3;
+    this.main_heading = 'Family Members';
   }
   handleCheckinClicked() {
     this.resetApi();
@@ -373,7 +376,7 @@ export class CheckInComponent implements OnInit {
       this.step = 2;
     } else if (this.step === 2) {
       if (this.sel_ser_det.isPrePayment) {
-        console.log('serv det', this.sel_ser_det);
+        // console.log('serv det', this.sel_ser_det);
         if (this.paytype === '') {
           error = 'Please select the payment mode';
         }
@@ -418,15 +421,15 @@ export class CheckInComponent implements OnInit {
     this.shared_services.addCheckin(this.account_id, post_Data)
     .subscribe(data => {
       const retData = data;
-      console.log('check-in returned', retData);
+     // console.log('check-in returned', retData);
       let toKen;
       let retUUID;
       Object.keys(retData).forEach(key => {
         toKen = key;
         retUUID =  retData[key];
       });
-      console.log('token', toKen);
-      console.log('uuid', retUUID);
+    //  console.log('token', toKen);
+    //  console.log('uuid', retUUID);
       if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
         if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
           const payData = {
@@ -479,6 +482,15 @@ export class CheckInComponent implements OnInit {
 
   handleGoBack(cstep) {
     this.resetApi();
+    switch (cstep) {
+      case 1:
+      case 2:
+        this.main_heading = 'Check-in';
+      break;
+      case 3:
+      this.main_heading = 'Family Members';
+      break;
+    }
     this.step = cstep;
     if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
       this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
@@ -556,6 +568,7 @@ export class CheckInComponent implements OnInit {
   addMember() {
     this.resetApi();
     this.step = 4; // show add member section
+    this.main_heading = 'Add Family Member';
   }
 
   resetApi() {
@@ -621,7 +634,7 @@ export class CheckInComponent implements OnInit {
         if (this.addmemberobj.dob !== '') {
           post_data.userProfile['dob'] = this.addmemberobj.dob;
         }
-        console.log('postdata', post_data);
+        // console.log('postdata', post_data);
 
         let fn;
         if (this.page_source === 'provider_checkin') {

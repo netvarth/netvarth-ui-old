@@ -556,7 +556,28 @@ export class ProviderBprofileSearchComponent implements OnInit {
     if (this.bProfile.baseLocation) {
       const locid = this.bProfile.baseLocation.id;
       if (locid) {
-        this.routerobj.navigate(['/provider/settings/waitlist-manager/location-detail/' + locid]);
+        // this.routerobj.navigate(['/provider/settings/waitlist-manager/location-detail/' + locid]);
+        const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
+          autoFocus: false,
+          data: {
+            location : this.base_loc,
+            badges: this.loc_badges,
+            type : 'edit',
+            // source: 'bprofile',
+            source: 'waitlist',
+            forbadge: (badge) ? true : false
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            if (result === 'reloadlist') {
+              this.getBusinessProfile();
+              this.getProviderLocations();
+          }
+        }
+        });
       }
     } else {
       // come to base profile from wizard and profile is disabled
@@ -587,6 +608,14 @@ export class ProviderBprofileSearchComponent implements OnInit {
       }
     }
     });*/
+  }
+  editQueue() {
+    if (this.bProfile.baseLocation) {
+      const locid = this.bProfile.baseLocation.id;
+      if (locid) {
+        this.routerobj.navigate(['/provider/settings/waitlist-manager/location-detail/' + locid]);
+      }
+    }
   }
   addLocation() {
     const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {

@@ -90,6 +90,7 @@ export class SearchDetailComponent implements OnInit {
   specialization_hide = false;
   showmore_defaultcnt = projectConstants.REFINE_ENUMLIST_DEFAULT_SHOW_CNT;
   holdprovidforCommunicate = 0;
+  searchButtonClick = false;
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
@@ -213,8 +214,9 @@ export class SearchDetailComponent implements OnInit {
   }
 
   setSearchfields(obj, src) {
-   // console.log('src', src, 'details', obj);
+    // console.log('src', src, 'details', obj);
     if (src === 1) { // case from ngoninit
+      this.searchButtonClick = true;
       this.domain = obj.do;
       this.locname = obj.lon;
       this.locautoname = obj.lonauto;
@@ -287,6 +289,7 @@ export class SearchDetailComponent implements OnInit {
       }
     } else if (src === 2) { // case of setting values in response to call from the searchdetails page
       // console.log('details obj', obj);
+      this.searchButtonClick = true;
       this.refined_domain = '';
       this.refined_subdomain = '';
       this.subsector = '';
@@ -355,7 +358,7 @@ export class SearchDetailComponent implements OnInit {
       this.commonfilters = obj.commonfilters || '';
       this.passrefinedfilters = obj.passrefinedfilters || [];
       if (this.passrefinedfilters.length > 0) {
-
+        this.searchButtonClick = false;
         const  passparam1 = {};
           for (let i = 0; i < this.passrefinedfilters.length; i++) {
             for (const field in this.passrefinedfilters[i]) {
@@ -1094,6 +1097,7 @@ export class SearchDetailComponent implements OnInit {
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
+    this.searchButtonClick = false;
    // console.log('click', fieldname, fieldtype, selval);
     if (this.searchrefineresult_arr.length) {
       const sec_indx = this.check_fieldexistsinArray(fieldname, fieldtype);
@@ -1269,6 +1273,7 @@ export class SearchDetailComponent implements OnInit {
 
   // method which will be called onblur on textbox fields of refined filters
   handleTextrefineblur (fieldname, fieldvalue, fieldtype, bypassbuildquery?) {
+    this.searchButtonClick = false;
     // check whether fieldname already exists
     this.searchrefinetextresult_arr[fieldname] = fieldvalue;
     if (fieldvalue === '') {
@@ -1332,6 +1337,7 @@ export class SearchDetailComponent implements OnInit {
     }
   }*/
   handleratingClick(obj) {
+    this.searchButtonClick = false;
     this.handle_optionclick(obj.cloudindex, 'Rating', obj.selectedrating, false);
   }
 
@@ -1425,6 +1431,7 @@ export class SearchDetailComponent implements OnInit {
   }
 
   handlerefineddomainchange(val) {
+    this.searchButtonClick = false;
    // console.log('refineddomain', val);
     this.refined_domain = val;
     this.refined_subdomain = '';
@@ -1433,6 +1440,7 @@ export class SearchDetailComponent implements OnInit {
   }
 
   handlerefinedsubdomainchange(val) {
+    this.searchButtonClick = false;
    // console.log('refinedSubdomain', val);
     this.refined_subdomain = val;
     this.getRefinedSearch(true, 1);
@@ -1475,5 +1483,23 @@ export class SearchDetailComponent implements OnInit {
    dialogRef.afterClosed().subscribe(result => {
 
    });
+  }
+  additionalRefineCondition() {
+    let retval = false;
+    // console.log('condi', this.searchButtonClick, this.search_result_count);
+    if (this.searchButtonClick) {
+      if (this.search_result_count !== undefined) {
+        if (this.search_result_count > 0) {
+          retval =  true;
+        } else {
+          retval = false;
+        }
+    } else {
+      retval =  false;
+    }
+    } else {
+      retval =  true;
+    }
+    return retval;
   }
 }
