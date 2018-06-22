@@ -1,0 +1,38 @@
+<div class="table-outer history-tbl">
+    <table class="table" *ngIf="history && history.length > 0">
+        <thead>
+            <tr>
+                <th class="th1">Service Provider</th>
+                <th class="th2">Location</th>
+                <th class="th3">Date/Time</th>
+                <th class="th4">Status</th>
+                <th class="th5"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let his_wait of history">
+                <td data-title="Service Provider" class="td1">{{his_wait.provider.businessName || ''}}</td>
+                <td data-title="Location" class="td2">{{his_wait.queue.location.place || ''}}</td>
+                <td data-title="Date/Time" class="td3"> {{his_wait.date | date: dateFormat }}</td>
+                <td data-title="Status" class="td4">
+                  <span class="{{his_wait.waitlistStatus}}">{{his_wait.waitlistStatus}}</span>
+                </td>
+                <td data-title="" class="td5">
+                    <ul class="controls">
+                        <li><span class="message" (click)="addWaitlistMessage(his_wait)">Message</span></li>
+                        <li><span class="view-bill"
+                          *ngIf="his_wait.billStatus" (click)="getWaitlistBill(his_wait)">View Bill</span></li>
+                        <li><span class="pay-bill"
+                          *ngIf="his_wait.billStatus == 'New' &&
+                          his_wait.paymentStatus!='FullyPaid'">
+                          Pay Bill</span></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="search_paging">
+      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+    </div>
+
+</div>

@@ -113,7 +113,7 @@ export class ProviderSubeaderComponent implements OnInit {
 
     const user = JSON.parse(localStorage.getItem('ynw-user'));
     post_data['provider'] = {
-      unique_id: user.id,
+      unique_id: this.bprofile.uniqueId,
       account_id: this.bprofile.id,
       name: this.bprofile.businessName
     };
