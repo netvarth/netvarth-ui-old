@@ -14,8 +14,8 @@ import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
 import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
-import { ViewBillModule } from '../shared/modules/view-bill/view-bill.module';
 import { ConsumerCheckinHistoryListModule } from '../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
+import { InboxModule } from '../shared/modules/inbox/inbox.module';
 
 import {ConsumerServices } from './services/consumer-services.service';
 import { ConsumerDataStorageService } from './services/consumer-datastorage.service';
@@ -30,9 +30,6 @@ import { NotificationListBoxComponent} from './shared/component/notification-lis
 import {MembersComponent } from './components/members/members.component';
 import { AddMembersHolderComponent } from './components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from './components/add-member/add-member.component';
-import { AddConsumerWaitlistCheckInProviderNoteComponent } from './components/add-consumer-waitlist-checkin-provider-note/add-consumer-waitlist-checkin-provider-note.component';
-import { ViewConsumerWaitlistCheckInBillComponent } from './components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
-
 import { projectConstants } from '../shared/constants/project-constants';
 
 @NgModule({
@@ -46,8 +43,8 @@ import { projectConstants } from '../shared/constants/project-constants';
         BreadCrumbModule,
         AddMemberModule,
         PagerModule,
-        ViewBillModule,
-        ConsumerCheckinHistoryListModule
+        ConsumerCheckinHistoryListModule,
+        InboxModule
     ],
     declarations: [
       ConsumerComponent,
@@ -56,17 +53,13 @@ import { projectConstants } from '../shared/constants/project-constants';
       WaitlistComponent,
       NotificationListBoxComponent,
       MembersComponent,
-      AddMembersHolderComponent,
-      AddConsumerWaitlistCheckInProviderNoteComponent,
-      ViewConsumerWaitlistCheckInBillComponent
+      AddMembersHolderComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
       ConfirmBoxComponent,
       NotificationListBoxComponent,
-      AddMembersHolderComponent,
-      AddConsumerWaitlistCheckInProviderNoteComponent,
-      ViewConsumerWaitlistCheckInBillComponent
+      AddMembersHolderComponent
     ],
     providers: [
       SharedServices,

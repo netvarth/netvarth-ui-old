@@ -19,8 +19,11 @@ export class WaitlistDetailResolver implements Resolve<{}> {
     // let id = route.paramMap.get('id');
 
     const waitlist = this.consumer_datastorage.get();
-    if (waitlist != null && waitlist.id) {
-      return this.consumer_services.getWaitlistDetail(waitlist.token, waitlist.createdDate, waitlist.provider.id);
+    if (waitlist != null && waitlist.ynwUuid) {
+      const params = {
+        account: waitlist.provider.id
+      };
+      return this.consumer_services.getWaitlistDetail(waitlist.ynwUuid, params);
     } else {
       this.router.navigate(['/consumer']);
     }

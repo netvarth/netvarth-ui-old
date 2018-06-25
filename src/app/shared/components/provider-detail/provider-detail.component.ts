@@ -354,7 +354,7 @@ export class ProviderDetailComponent implements OnInit {
         this.routerobj.navigate(['consumer', 'inbox']);
       break;
       case 'history':
-        this.routerobj.navigate(['searchdetail', this.provider_id, 'history']);
+        this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
       break;
     }
   }

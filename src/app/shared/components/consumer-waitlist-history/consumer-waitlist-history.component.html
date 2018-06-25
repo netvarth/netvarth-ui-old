@@ -2,13 +2,16 @@
 <section class="content">
     <div class="container">
         <div class="row">
-            <div class="c-outer">           
+            <div class="c-outer">
                 <div class="c-body">
                     <div class="bk-ctrl">
                         <span class="backtoresults" (click)="backtoProviderDetails()">Back to <span class="strong">Provider Details</span></span>
                     </div>
-                    <div class="table-outer d-tbl">
-                        This section will be done when we deal with the history section in consumer dashboard
+                    <div class="card history">
+
+                      <app-consumer-checkin-history-list
+                      [params]="params" *ngIf="provider_id"></app-consumer-checkin-history-list>
+
                     </div>
                 </div>
             </div>

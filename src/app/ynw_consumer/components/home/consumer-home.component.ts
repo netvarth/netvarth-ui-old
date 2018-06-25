@@ -11,9 +11,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
-import { AddConsumerWaitlistCheckInProviderNoteComponent } from '../add-consumer-waitlist-checkin-provider-note/add-consumer-waitlist-checkin-provider-note.component';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
-import { ViewConsumerWaitlistCheckInBillComponent } from '../consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
+import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 
 import { projectConstants } from '../../../shared/constants/project-constants';
 
@@ -48,7 +47,7 @@ export class ConsumerHomeComponent implements OnInit {
   ngOnInit() {
 
     this.getWaitlist();
-    this.getHistoryCount();
+   // this.getHistoryCount();
     this.getFavouriteProvider();
 
   }
@@ -132,43 +131,23 @@ export class ConsumerHomeComponent implements OnInit {
   }
 
   doCancelWaitlist(waitlist) {
-
-    if (!waitlist.id || !waitlist.provider_id) {
+    if (!waitlist.ynwUuid || !waitlist.provider.id) {
       return false;
     }
 
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      data: {
-        'message' : 'Do you want to remove ' + '' + '?'
+    this.shared_functions.doCancelWaitlist(waitlist)
+    .then (
+      data => {
+        if (data === 'reloadlist') {
+          this.getWaitlist();
+        }
+      },
+      error => {
+        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-      if (result) {
-        this.cancelWaitlist(waitlist.id , waitlist.provider_id);
-      }
-
-    });
-
-  }
-
-  cancelWaitlist(id , provider_id) {
-    const params = {
-      'account': provider_id
-    };
-    this.consumer_services.deleteWaitlist(id, params)
-    .subscribe(
-    data => {
-        console.log(data);
-        this.getWaitlist();
-    },
-    error => {
-
-    }
     );
   }
+
 
   doDeleteFavProvider(fav) {
 
@@ -176,35 +155,16 @@ export class ConsumerHomeComponent implements OnInit {
       return false;
     }
 
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
-      data: {
-        'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
-        'heading' : 'Confirm'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-      if (result) {
-        this.deleteFavProvider(fav.id);
-      }
-
-    });
-  }
-
-  deleteFavProvider(id) {
-    this.consumer_services.deleteFavProvider(id)
-    .subscribe(
-    data => {
-        console.log(data);
-        this.getFavouriteProvider();
-    },
-    error => {
-
-    }
-    );
+    this.shared_functions.doDeleteFavProvider(fav)
+    .then(
+      data => {
+        if (data === 'reloadlist') {
+          this.getFavouriteProvider();
+        }
+      },
+      error => {
+        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      });
   }
 
   addFavProvider(id) {
@@ -232,8 +192,7 @@ export class ConsumerHomeComponent implements OnInit {
   }
 
   goWaitlistDetail(waitlist) {
-    this.consumer_datastorage.set(waitlist);
-    this.router.navigate(['consumer/waitlist']);
+    this.router.navigate(['consumer/waitlist', waitlist.provider.id, waitlist.ynwUuid]);
   }
 
   openNotification(data) {
@@ -264,10 +223,10 @@ export class ConsumerHomeComponent implements OnInit {
     return fav;
   }
 
-  addWaitlistMessage(waitlist) {console.log(waitlist);
+  addWaitlistMessage(waitlist) {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
-    pass_ob['checkin_id'] = waitlist.ynwUuid;
+    pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.provider.id;
     this.addNote(pass_ob);
 
@@ -282,9 +241,9 @@ export class ConsumerHomeComponent implements OnInit {
 
   addNote(pass_ob) {
 
-    const dialogRef = this.dialog.open(AddConsumerWaitlistCheckInProviderNoteComponent, {
+    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: 'commonpopupmainclass',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       autoFocus: true,
       data: pass_ob
     });
@@ -369,36 +328,6 @@ export class ConsumerHomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
 
-    });
-  }
-
-  getWaitlistBill(waitlist) {
-
-    this.consumer_services.getWaitlistBill(waitlist.ynwUuid)
-    .subscribe(
-      data => {
-        const bill_data = data;
-        this.viewBill(waitlist, bill_data);
-      },
-      error => {
-        this.shared_functions.openSnackBar(error.error,  {'panelClass': 'snackbarerror'});
-      }
-    );
-  }
-
-  viewBill(checkin, bill_data) {
-    const dialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'width-100'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     });
   }
 

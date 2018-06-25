@@ -1,4 +1,4 @@
-<app-header [headerTitle] = "'Waitlist Detail'"></app-header>
+<!-- <app-header [headerTitle] = "'Waitlist Detail'"></app-header>
 
 <app-search [showopennow]="0" [searchfields]="searchfields"></app-search>
 <br/>
@@ -16,5 +16,94 @@
 
 <p *ngFor="let msg of waitlist_detail.messages">
     {{msg.date}} {{msg.time}}: {{msg.message}}
-</p>
+</p> -->
 
+<section class="content consumer-dash">
+<div class="content comn-cls">
+    <div class="container">
+        <div class="row">
+            <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                <div class="card">
+                    <div class="c-details">
+                        <h2>Check-In Details</h2>
+                        <div class="tp" *ngIf="waitlist_detail">
+                            <div class="item"><span class="ttle">Bussiness Name:</span> <span> {{waitlist_detail.provider.businessName}}</span></div>
+                            <div class="item"><span class="ttle">Date:</span><span>{{waitlist_detail.date | date: dateFormat}}</span></div>
+                            <div class="item"><span class="ttle">Estimated Waiting Time:</span><span></span></div>
+                            <div class="item"><span class="ttle">Location:</span><span>{{waitlist_detail.queue.location.place}}</span></div>
+                            <div class="item"><span class="ttle">Waitlist For:</span>
+                              <span class="waitlist_for" *ngFor="let user of waitlist_detail.waitlistingFor">
+                                  {{user.firstName}} {{user.lastName}}
+                              </span>
+                            </div>
+
+                            <div class="item"><span class="ttle">Service:</span><span> {{waitlist_detail.service.name}}</span></div>
+                            <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_detail.queue.name}}</span></div>
+                            <div class="item"><span class="ttle">Payment Status:</span>
+                              <ng-container *ngIf="waitlist_detail && waitlist_detail.paymentStatus">
+                                  <span class="paid-n" *ngIf="waitlist_detail.paymentStatus == 'NotPaid'"><span class="text">Not Paid</span></span>
+                                  <span class="paid-h" *ngIf="waitlist_detail.paymentStatus == 'PartiallyPaid'"><span class="text">Partially Paid</span></span>
+                                  <span class="paid-f" *ngIf="waitlist_detail.paymentStatus == 'FullyPaid'"><span class="text">Paid</span></span>
+
+                              </ng-container>
+                            </div>
+                        </div>
+                        <div class="btm" *ngIf="waitlist_detail">
+                            <button class="cs-btn bt3 communicate"
+                            (click)="addWaitlistMessage(waitlist_detail)">Communicate</button>
+
+                            <button class="cs-btn bt3">
+                              <span class="add-fav" (click)="addFavProvider(waitlist_detail.provider.id)">
+                                  Add to Favourites</span>
+                            </button>
+
+                            <button class="cs-btn bt3">
+                                <span class="add-fav favourited"
+                                (click)="doDeleteFavProvider(waitlist_detail.provider)">
+                                Remove Favourite</span>
+                            </button>
+                            <button class="cs-btn bt7 cancel" (click)="doCancelWaitlist(waitlist_detail)"
+                            *ngIf="!waitlist_detail.history &&
+                            ( waitlist_detail.waitlistStatus == 'checkedIn' || waitlist_detail.waitlistStatus == 'arrived')">Cancel Check-In</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card p0">
+                    <mat-accordion class="communication-history">
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            Communication History
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-inbox-list [messages]="communication_history" [fromsource]="'consumer_checkin_detail'"
+                         (reloadApi)= "getCommunicationHistory()"></app-inbox-list>
+
+                      </mat-expansion-panel>
+                    </mat-accordion>
+
+                </div>
+
+
+            </div>
+            <!-- <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="card">
+                    <h2>Check-In History</h2>
+                    <div class="c-history-outer">
+                      <ul class="c-history">
+                        <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
+                            <div class="time">{{ history.time}}</div>
+                            <div class="action">{{ history.waitlistStatus}}</div>
+                        </li>
+                      </ul>
+
+                      <p class="no-result" *ngIf="waitlist_history.length == 0">No history found</p>
+                    </div>
+
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+</div>
+</section>

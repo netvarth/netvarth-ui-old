@@ -8,7 +8,8 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { PagerModule } from '../../modules/pager/pager.module';
 import { ViewBillModule } from '../../modules/view-bill/view-bill.module';
 
-import { ConsumerCheckInHistoryListComponent } from './consumer-checkin-history-list.component';
+import { ConsumerCheckInHistoryListComponent } from './components/consumer-checkin-history-list/consumer-checkin-history-list.component';
+import { ViewConsumerWaitlistCheckInBillComponent } from './components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 
 import { CheckInHistoryServices } from './consumer-checkin-history-list.service';
 
@@ -23,10 +24,14 @@ import { CheckInHistoryServices } from './consumer-checkin-history-list.service'
         ViewBillModule,
     ],
     declarations: [
-      ConsumerCheckInHistoryListComponent
+      ConsumerCheckInHistoryListComponent,
+      ViewConsumerWaitlistCheckInBillComponent
     ],
     exports: [
       ConsumerCheckInHistoryListComponent
+    ],
+    entryComponents: [
+      ViewConsumerWaitlistCheckInBillComponent
     ],
     providers: [
       CheckInHistoryServices

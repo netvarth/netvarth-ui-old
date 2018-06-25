@@ -36,7 +36,8 @@ export class InboxListComponent implements OnInit {
 
   ngOnInit() {
     this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    if (this.fromsource === 'provider_checkin_detail') {
+    if (this.fromsource === 'provider_checkin_detail' ||
+    this.fromsource === 'consumer_checkin_detail' ) {
       this.hide_reply_button = true;
     } else {
       this.hide_reply_button = false;

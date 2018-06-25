@@ -464,4 +464,8 @@ export class SharedServices {
       }
       return url;
     }
+
+    deleteWaitlist(id, params) {
+      return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
+    }
 }
