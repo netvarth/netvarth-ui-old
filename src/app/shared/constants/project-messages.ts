@@ -77,6 +77,7 @@ export const Messages = {
   'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
   'BPROFILE_LANGUAGE_SAVED': 'Languages Saved succesfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations Saved succesfully',
+  'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
 
 
   // Adwords

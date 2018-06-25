@@ -14,6 +14,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 
 import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { Observable } from 'rxjs/Observable';
@@ -25,6 +26,8 @@ import {
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
+import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
+import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 
 @Component({
@@ -87,6 +90,7 @@ export class ProviderDetailComponent implements OnInit {
       }
     ]
   };
+  waitlistestimatetimetooltip  = Messages.SEARCH_ESTIMATE_TOOPTIP;
 
 // Edited//
   public domain;
@@ -497,11 +501,12 @@ export class ProviderDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getbusinessprofiledetails_json('location', true);
     });
   }
   showcheckInButton(obj) {
-    if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.service_exists && this.gallery_exists && this.location_exists) {
+    // console.log('ddd', this.settingsjson, this.settingsjson.onlineCheckIns, this.settings_exists, this.business_exists, this.service_exists, this.location_exists);
+    if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists) {
       return true;
     }
   }
@@ -586,5 +591,37 @@ export class ProviderDetailComponent implements OnInit {
 
   onButtonAfterHook(event: ButtonEvent) {}
  // Edited//
+
+ showExistingCheckin(obj) {
+    const dialogRef = this.dialog.open(ExistingCheckinComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+    data: {
+      locdet: obj
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+        this.getbusinessprofiledetails_json('location', true);
+    }
+  });
+ }
+
+ showServiceDetail(serv, busname) {
+  const dialogRef = this.dialog.open(ServiceDetailComponent, {
+    width: '50%',
+    panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+  data: {
+    bname: busname,
+    serdet: serv
+  }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+
+  });
+}
+
 }
 

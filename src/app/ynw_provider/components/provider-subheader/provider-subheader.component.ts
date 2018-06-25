@@ -29,7 +29,8 @@ export class ProviderSubeaderComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
   public provider_services: ProviderServices,
-  public shared_functions: SharedFunctions) {}
+  public shared_functions: SharedFunctions,
+  public routerobj: Router) {}
 
   ngOnInit() {
     // this.getWaitlistMgr(); // hide becuause it called on every page change
