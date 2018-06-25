@@ -832,4 +832,104 @@ addZero(i) {
   return i;
 }
 
+doCancelWaitlist(waitlist) {
+  return new Promise((resolve, reject) => {
+
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      data: {
+        'message' : 'Do you want to remove this Check-In ?',
+        'heading' : 'Confirm'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        this.cancelWaitlist(waitlist.ynwUuid , waitlist.provider.id)
+        .then(
+          data => {
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+      } else {
+        resolve();
+      }
+
+    });
+
+  });
+
+
+
+}
+
+cancelWaitlist(id , provider_id) {
+
+  return new Promise((resolve, reject) => {
+    const params = {
+      'account': provider_id
+    };
+    this.shared_service.deleteWaitlist(id, params)
+    .subscribe(
+    data => {
+      resolve('reloadlist');
+    },
+    error => {
+      reject(error);
+    }
+    );
+  });
+}
+
+doDeleteFavProvider(fav) {
+  return new Promise((resolve, reject) => {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      data: {
+        'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
+        'heading' : 'Confirm'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        this.deleteFavProvider(fav.id)
+        .then(
+          data => {
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+      } else {
+        resolve();
+      }
+
+    });
+  });
+}
+
+deleteFavProvider(id) {
+  return new Promise((resolve, reject) => {
+  this.shared_service.removeProviderfromFavourite(id)
+  .subscribe(
+  data => {
+     resolve('reloadlist');
+  },
+  error => {
+    reject(error);
+  }
+  );
+  });
+}
+
+
 }

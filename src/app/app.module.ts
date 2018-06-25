@@ -18,6 +18,7 @@ import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { CheckInModule } from './shared/modules/check-in/check-in.module';
+import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
@@ -103,7 +104,8 @@ import 'hammerjs';
     RatingStarModule,
     HeaderModule,
     CheckInModule,
-    ModalGalleryModule.forRoot()
+    ModalGalleryModule.forRoot(),
+    ConsumerCheckinHistoryListModule
   ],
   providers: [
     AuthGuardConsumer,

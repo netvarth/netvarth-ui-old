@@ -3,11 +3,10 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
-import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ConsumerServices } from '../../services/consumer-services.service';
-
+import { Messages } from '../../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
@@ -52,7 +51,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    public consumer_services: ConsumerServices,
+    public consumer_checkin_history_service: CheckInHistoryServices,
     public sharedfunctionObj: SharedFunctions,
 
     ) {
@@ -84,7 +83,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   }
 
   getWaitlistBill(checkin) {
-    this.consumer_services.getWaitlistBill(checkin.ynwUuid)
+    this.consumer_checkin_history_service.getWaitlistBill(checkin.ynwUuid)
     .subscribe(
       data => {
         this.bill_data = data;
@@ -98,7 +97,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   }
 
   getPrePaymentDetails() {
-    this.consumer_services.getPaymentDetail(this.checkin.ynwUuid)
+    this.consumer_checkin_history_service.getPaymentDetail(this.checkin.ynwUuid)
     .subscribe(
       data => {
         this.pre_payment_log = data;

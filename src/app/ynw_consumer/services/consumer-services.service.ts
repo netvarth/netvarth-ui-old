@@ -46,9 +46,9 @@ export class ConsumerServices {
     return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
   }
 
-  getWaitlistDetail(token, date, provider_id) {
-    const path = 'consumer/waitlist/' + token + '/' + date + '?account=' + provider_id;
-    return this.servicemeta.httpGet(path);
+  getWaitlistDetail(uuid, params) {
+    const path = 'consumer/waitlist/' + uuid;
+    return this.servicemeta.httpGet(path, null, params);
   }
 
   getMembers() {
@@ -58,6 +58,11 @@ export class ConsumerServices {
   deleteMember(id) {
     const path = 'consumer/familyMember/' + id;
     return this.servicemeta.httpDelete(path);
+  }
+
+  getConsumerCommunications(provider_id) {
+    const url = 'consumer/communications?account=' + provider_id;
+    return this.servicemeta.httpGet(url);
   }
 
   addConsumertoProviderNote(uuid, message) {

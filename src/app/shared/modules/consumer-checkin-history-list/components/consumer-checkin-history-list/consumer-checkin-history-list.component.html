@@ -34,5 +34,7 @@
     <div class="search_paging">
       <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
     </div>
-
+    <div *ngIf="loadcomplete.history && history && history.length == 0">
+      <p>No previous Check-Ins available</p>
+    </div>
 </div>

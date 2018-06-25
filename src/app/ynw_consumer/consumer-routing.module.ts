@@ -16,9 +16,7 @@ import { WaitlistDetailResolver } from './services/waitlist-detail-resolver.serv
 const routes: Routes = [
   {path: '', component: ConsumerComponent, children: [
     {path: '', component: ConsumerHomeComponent},
-    {path: 'waitlist', component: WaitlistComponent, resolve: {
-      waitlist_detail: WaitlistDetailResolver
-    }},
+    {path: 'waitlist/:provider_id/:uuid', component: WaitlistComponent},
     { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
     { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
