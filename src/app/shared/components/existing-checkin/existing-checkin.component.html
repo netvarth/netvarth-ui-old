@@ -8,27 +8,30 @@
    
     <div class="c-checkin" *ngIf="loc.length>0">
 
-            <div class="table-outer d-tbl">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Service</th>
-                            <th>For</th>
-                            <th>Scheduled on</th>
-                            <th></th>      
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let chkin of loc">
-                            <td class="chk-service" data-title="Service">{{chkin.service.name}}</td>
-                            <td class="chk-service" data-title="For">{{getWaitlistingFor(chkin.waitlistingFor)}}</td>
-                            <td class="chk-service" data-title="Time"><span class="schedule">{{getDateDisplay(chkin.date)}}</span>, Estimated Waiting Time is <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span></td>
-                            <td class="chk-cancel" (click)="confirmCancelChecin(chkin)"><span class="icon-delete"></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div> 
+        <div class="table-outer d-tbl">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>For</th>
+                        <th>Scheduled on</th>
+                        <th></th>      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let chkin of loc">
+                        <td class="chk-service" data-title="Service">{{chkin.service.name}}</td>
+                        <td class="chk-service" data-title="For">{{getWaitlistingFor(chkin.waitlistingFor)}}</td>
+                        <td class="chk-service" data-title="Time"><div class="schedulediv"><span class="schedule">{{getDateDisplay(chkin.date)}}</span>, Estimated Waiting Time is <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span></div></td>
+                        <td class="chk-cancel" (click)="confirmCancelChecin(chkin)"><span class="icon-delete"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> 
+    <div class="c-checkin-blank" *ngIf="loc.length==0">
+        No Check-Ins exists at {{this.data.locdet.place}}
+    </div>
     </mat-dialog-content>
 
     <mat-dialog-actions>

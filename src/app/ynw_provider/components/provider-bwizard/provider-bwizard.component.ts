@@ -259,7 +259,7 @@ export class ProviderbWizardComponent implements OnInit {
           }
         }
       };
-      console.log('schedule save', post_itemdata3);
+      // console.log('schedule save', post_itemdata3);
       // adding the schedule for the location
       /* const blob_itemdata3 = new Blob([JSON.stringify(post_itemdata3)], { type: 'application/json' });
       const submit_data3: FormData = new FormData();
@@ -380,7 +380,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   // Save schedule to arr
   handlesSaveschedule(obj) {
-    console.log('returned Schedule', obj);
+    // console.log('returned Schedule', obj);
     this.schedule_arr = obj;
     this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     // this.ischange_schedule_clicked = false;

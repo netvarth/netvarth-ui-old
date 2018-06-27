@@ -19,7 +19,7 @@ header {
                 }
 
                 &.lgo {
-                    padding-top: 33px;
+                    padding-top: 25px;
 
                     @include respond-to(ynw-767) {
                         padding-top: 0;
@@ -637,7 +637,6 @@ header {
         margin-top: 20px;
         margin-bottom: 30px;
         position: relative;
-        overflow: hidden;
         
         .sidebar-overlay {
             position: absolute;
@@ -956,7 +955,6 @@ header {
                     display: flex;
                     width: 100%;
                     padding: 20px;
-                    border-bottom: 2px solid $cc-body;
                     
                     @include respond-to(ynw-767) {
                         flex-direction: column;
@@ -1347,6 +1345,7 @@ header {
                 }
                 .bottom-sect {
                     display: flex;
+                    border-top: 2px solid $cc-body;
                     
                     @include respond-to(ynw-575) {
                         flex-direction: column;
@@ -1355,17 +1354,34 @@ header {
                     .bt-l {
                         flex-grow: 1;
                         padding: 20px;
+                        width: 50%;
+                        
+                        @include respond-to(ynw-767) {
+                            width: 50%;
+                        }
                         
                         @include respond-to(ynw-575) {
-                            margin-bottom: 20px;
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 60%;
                         }
                         
                         .wt-tme {
                             display: flex;
                             align-items: center;
                             
+                            @include respond-to(ynw-767) {
+                                align-items: flex-start;
+                                flex-direction: column;
+                            }
                             @include respond-to(ynw-575) {
                                 justify-content: center;
+                                align-items: center;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                align-items: flex-start;
+                                flex-direction: column;
                             }
                             
                             .o-now {
@@ -1379,8 +1395,15 @@ header {
                                 font-weight: 600;
                                 margin-right: 30px;
                                 
+                                @include respond-to(ynw-767) {
+                                    height: 30px;
+                                    margin-right: 0;
+                                    margin-bottom: 15px;
+                                }
                                 @include respond-to(ynw-768-991) {
-                                    width: 60px;
+                                    height: 30px;
+                                    margin-right: 0;
+                                    margin-bottom: 15px;
                                 }
                                 
                                 &:after {
@@ -1394,12 +1417,30 @@ header {
                                     border-top: 25px solid transparent;
                                     border-bottom: 25px solid transparent;  
                                     border-left: 15px solid $green;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        @include rotate(90);
+                                        bottom: 0;
+                                        left: 50%;
+                                        margin-left: -6px;
+                                        top: 6px;
+                                    }
+                                    @include respond-to(ynw-768-991) {
+                                        @include rotate(90);
+                                        bottom: 0;
+                                        left: 50%;
+                                        margin-left: -6px;
+                                        top: 6px;
+                                    }
                                 }
                             }
                             .timing {
                                 display: flex;
                                 flex-direction: column;
                                 
+                                @include respond-to(ynw-575) {
+                                    text-align: center;
+                                }
                                 
                                 .est-time {
                                     color: $cc-mediumgray;
@@ -1409,10 +1450,52 @@ header {
                                     position: relative;
                                     padding-left: 20px;
                                     
+                                    @include respond-to(ynw-767) {
+                                        display: inline-flex;
+                                        align-items: center;
+                                    }
+                                    @include respond-to(ynw-575) {
+                                        display: inline-flex;
+                                        margin: 0 auto;
+                                        align-items: center;
+                                    }
+                                    @include respond-to(ynw-768-991) {
+                                        display: inline-flex;
+                                        align-items: center;
+                                    }
+                                    @include respond-to(ynw-992-1199) {
+                                        display: inline-flex;
+                                        align-items: center;
+                                    }
+                                    @include respond-to(ynw-1200) {
+                                        display: inline-flex;
+                                        align-items: center;
+                                    }
+                                    
                                     .icon-question {
                                         vertical-align: middle;
-                                        height: 16px;
                                         display: inline-block;
+                                        
+                                        @include respond-to(ynw-767) {
+                                            height: 16px;
+                                            margin-left: 5px;
+                                        }
+                                        @include respond-to(ynw-575) {
+                                            height: 14px;
+                                            margin-left: 5px;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            height: 16px;
+                                            margin-left: 5px;
+                                        }
+                                        @include respond-to(ynw-992-1199) {
+                                            height: 16px;
+                                            margin-left: 5px;
+                                        }
+                                        @include respond-to(ynw-1200) {
+                                            height: 16px;
+                                            margin-left: 5px;
+                                        }
                                     }
                                     
                                     &:before {
@@ -1428,48 +1511,64 @@ header {
                     }
                     .bt-r {
                         padding: 20px;
-                        width: 30%;
+                        width: 35%;
                         
                         @include respond-to(ynw-767) {
-                            width: 100%;
+                            width: 50%;
                             text-align: left;
-                            padding-top: 0;
                         }
                         @include respond-to(ynw-575) {
                             text-align: center;
+                            width: 100%;
+                            padding-top: 0;
                         }
                         @include respond-to(ynw-768-991) {
-                            width: 30%;
+                            width: 40%;
+                        }
+                        @include respond-to(ynw-1200) {
+                            width: 40%;
                         }
                         
                         .chk-btn {
                             margin-bottom: 10px;
                             width: 100%;
                             
+                            
                             @include respond-to(ynw-767) {
-                                width: 250px;
-                                margin-right: auto;
+                                width: 80%;
+                                margin-right: 0;
+                                margin-left: auto;
                             }
                             @include respond-to(ynw-575) {
-                                width: auto;
+                                width: 75%;
+                                margin: 0 auto;
                             }
                             @include respond-to(ynw-768-991) {
                                 width: 100%;
+                            }
+                            @include respond-to(ynw-992-1199) {
+                                width: 200px;
+                                margin-left: auto;
+                            }
+                            @include respond-to(ynw-1200) {
+                                width: 200px;
+                                margin-left: auto;
                             }
                         }
                         
                         .bt10 {
                             text-align: right;
-                            margin-right: 15px;
                             display: block;
+                            margin-right: 15px;
                             
                             @include respond-to(ynw-767) {
                                 margin-right: 0;
                             }
-                            @include respond-to(ynw-768-991) {
-                                margin-right: 0;
+                            @include respond-to(ynw-575) {
+                                text-align: center;
+                                margin-top: 10px;
                             }
-                            
+       
                             &.blk {
                                 color: $cc-darkgray;
                                 margin-bottom: 10px;
@@ -1664,7 +1763,6 @@ header {
                     display: flex;
                     width: 100%;
                     padding: 20px;
-                    border-bottom: 2px solid $cc-body;
                     
                     .tp-l {
                         margin-right: 30px;
@@ -1687,6 +1785,34 @@ header {
                         
                         .tp2 {
                             flex-grow: 1;
+                            
+                            .ch-title {
+                                font-size: .875rem;
+                                font-weight: 500;
+                                margin-bottom: 10px;
+                                display: table;
+                                position: relative;
+                                padding-left: 20px;
+                                color: $green;
+
+                                .count {
+                                    font-weight: 700;
+                                    cursor: pointer;
+                                    
+                                }
+                                
+                                &:before {
+                                    @include font-custom;
+                                    font-size: .875rem;
+                                    content: "\73";
+                                    position: absolute;
+                                    left: 0;
+                                    top: 0;
+                                    display: flex;
+                                    align-items: center;
+                                    height: 20px;
+                                }
+                            }
                             
                             .ynw-verified {
                                 background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
@@ -1926,6 +2052,7 @@ header {
                 }
                 .bottom-sect {
                     display: flex;
+                    border-top: 2px solid $cc-body;
                     
                     @include respond-to(ynw-767) {
                         flex-direction: column;
@@ -2219,6 +2346,7 @@ header {
 // ### Consumer Dashboard
 .consumer-dash {
     padding: 30px 0;
+    padding-bottom: 0;
     
     h1 {
         font-size: 1.25rem;
@@ -2233,15 +2361,38 @@ header {
     .card {
         margin-bottom: 30px;
         @include border-radius(0);
+        padding: 0;
         
-        h2 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: $linkblue;
-        }
+        .mat-accordion {
+            .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+                background: $white;
+            }
+            .mat-expansion-panel {
+                box-shadow: none !important;
+                
+                .mat-expansion-panel-header {
+                    font-size: 1.125rem;
+                    @include font-bold;
+                    min-height: 40px;
+                    padding: 0px 20px 0px 20px;
+                    
+                    .mat-expansion-panel-header-title {
+                        color: $linkblue;
+                    }
+                }
+                .mat-expansion-panel-content {
+                    @include font-regular;
+                    
+                    .mat-expansion-panel-body {
+                        padding: 20px;
+                        padding-top: 0px;
+                    }
+                }
+                
+            }
+        }        
         
         .outer {
-            
             .list {
                 display: flex;
                 font-size: .875rem;
@@ -2316,6 +2467,9 @@ header {
                         @include respond-to(ynw-767) {
                             margin-left: 0;
                         }
+                        @include respond-to(ynw-575) {
+                            justify-content: flex-start;
+                        }
                         
                         li {
                             list-style: none;
@@ -2343,7 +2497,7 @@ header {
                                 &:before {
                                     position: absolute;
                                     content: "";
-                                    left: 6px;
+                                    left: 5px;
                                     top: 4px;
                                     @include font-custom;
                                     display: flex;
@@ -2424,6 +2578,8 @@ header {
         }
         
         &.history {
+            margin-bottom: 0;
+            
             .history-tbl {
                 padding: 0;
                 font-weight: 500;

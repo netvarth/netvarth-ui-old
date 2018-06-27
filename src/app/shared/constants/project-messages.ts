@@ -148,7 +148,7 @@ export const Messages = {
   'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull',
   'CHECKIN_SUCC': 'Check in Saved Successfully',
   'CHECKIN_SUCC_REDIRECT': 'Check in Saved Successfully. Please wait ... You are being redirected to the Payment Gateway ...',
-  'CHECKIN_ERROR': 'Sorry! an error occured'
-
+  'CHECKIN_ERROR': 'Sorry! an error occured',
+  'CHECKIN_CANCELLED' : 'Check-In cancelled successfully'
 
 };

@@ -78,7 +78,7 @@ export class GoogleMapComponent implements OnInit {
 
       const getLatLng = (e) => {
         try {
-          this._ngZone.run(() => { console.log(e);
+          this._ngZone.run(() => { // console.log(e);
             this.lat_lng.latitude = e.latLng.lat();
             this.lat_lng.longitude = e.latLng.lng();
             this.placeMarker(e.latLng, this.map);
@@ -91,7 +91,7 @@ export class GoogleMapComponent implements OnInit {
               let map_pin = '';
               this.obtained_address = '';
               if (mapdata['status'] === 'OK') {
-                console.log(mapdata['results']);
+                // console.log(mapdata['results']);
                 if (mapdata['results']) {
                   const maxcnt = 3;
                   for (let i = 0; i < mapdata['results'].length; i++) {

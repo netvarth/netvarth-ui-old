@@ -101,7 +101,7 @@ export class ExistingCheckinComponent implements OnInit {
   }
 
   confirmCancelChecin(obj) {
-
+    this.resetApiErrors();
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
@@ -118,8 +118,20 @@ export class ExistingCheckinComponent implements OnInit {
   }
 
   doCangelCheckin(obj) {
-    console.log('cancel checkin', obj);
-    this.changeOccured = true;
+   // console.log('cancel checkin', obj);
+    this.sharedfunctionObj.cancelWaitlist (obj.ynwUuid, obj.provider.id)
+    .then (
+      data => {
+        if (data === 'reloadlist') {
+          this.changeOccured = true;
+          this.api_success = Messages.CHECKIN_CANCELLED;
+          this.getExistingCheckinsByLocation(this.data.locdet.id);
+        }
+      },
+      error => {
+        this.api_error = error.error;
+      }
+    );
   }
 
 }

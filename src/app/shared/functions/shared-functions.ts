@@ -588,12 +588,12 @@ export class SharedFunctions {
               pday = timebase[obj][i].day;
             }
         }
-        displaysch.push({'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr});
+        displaysch.push({'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj});
         // console.log('curstr', curstr);
       }
     }
-    // console.log('timebase', timebase);
-    // console.log('displaystr', displaysch);
+     // console.log('timebase', timebase);
+     // console.log('displaystr', displaysch);
     return displaysch;
   }
   getDay(num) {

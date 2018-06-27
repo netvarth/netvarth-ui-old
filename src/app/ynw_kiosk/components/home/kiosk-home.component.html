@@ -9,28 +9,45 @@
                 </div> -->
                 <div class="form-group">
                     <span class="label">Enter Your <span>Mobile Number</span></span>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" [(ngModel)]="srch_mobile" autofocus autocomplete="off">
                 </div>
                 <div class="form-group">
                     <span class="label">Enter first 3 letters of your <span>First Name/Last Name</span></span>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" [(ngModel)]="srch_fname" autocomplete="off">
                 </div>
                 
                 <div class="form-group">
-                    <button class="cs-btn ripple">Search</button>
+                    <button class="cs-btn ripple" (click)="searchCustomer()" *ngIf="loadingNow==false">Search</button>
                 </div>
         </div>
         <!-- get info from User xx ends -->
 
         <!-- welcome screen -->
         <ng-container *ngIf="customer_found">
-            <div class="kiosk-customerdet">Welcome {{customer_name}}</div>
-        <ul class="controls">
-            <li><button class="ot"><span class="icon-k-checkin"></span><span class="title">Check-In Yourself</span></button></li>
-            <li><button class="ot"><span class="icon-k-lookup"></span><span class="title">Lookup Your Status</span></button></li>
-            <li><button class="ot"><span class="icon-k-rating"></span><span class="title">Rate Your Visit</span></button></li>
-            <li><button class="ot"><span class="icon-k-arrived"></span><span class="title">Report As Arrived</span></button></li>
-        </ul>
+            <div class="kiosk-customerdet" (click)="showMode('main')">Welcome {{customerDispDet.name}}</div>
+            
+            <ul class="controls" *ngIf="cMod=='main'">
+                <li><button class="ot" (click)="showMode('checkin')"><span class="icon-k-checkin" ></span><span class="title">Check-In Yourself</span></button></li>
+                <li><button class="ot" (click)="showMode('status')"><span class="icon-k-lookup"></span><span class="title">Lookup Your Status</span></button></li>
+                <li><button class="ot" (click)="showMode('rate')"><span class="icon-k-rating"></span><span class="title">Rate Your Visit</span></button></li>
+                <li><button class="ot" (click)="showMode('arrived')"><span class="icon-k-arrived"></span><span class="title">Report As Arrived</span></button></li>
+            </ul>
+
+            <ng-container *ngIf="cMod=='checkin'">
+                Check in page
+            </ng-container>
+
+            <ng-container *ngIf="cMod=='status'">
+                <app-lookup-status [passedInData]="getpassedinDetails()"></app-lookup-status>
+            </ng-container>
+
+            <ng-container *ngIf="cMod=='rate'">
+                    Rate visit status page
+             </ng-container>
+
+             <ng-container *ngIf="cMod=='arrived'">
+                    Report as arrived page
+             </ng-container>
         </ng-container>
         <!-- welcome screen ends -->
 

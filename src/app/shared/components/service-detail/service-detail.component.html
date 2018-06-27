@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">{{this.data.bname}}
+<h1 class="mat-dialog-title">{{data.bname}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -7,29 +7,52 @@
     <mat-dialog-content>
    
     <div class="servicedet_outer" *ngIf="service.name !==''">
-        <div class="outer1">
-            <div class="name">
-                <span class="caption">Service:</span><span class="dispvalue">{{this.data.serdet.name}}</span>
-            </div>
-            <div class="duration">
-                <span class="caption">Duration:</span><span class="dispvalue">{{this.data.serdet.serviceDuration}} Mins</span>
-            </div>
+        <div class="img-outer" *ngIf="image_list_popup && image_list_popup.length>0">
+
+                <div class="pro-img">
+                        <ng-container *ngIf="this.service.servicegallery.length > 0">
+                              <ng-container>
+                                  <img [src]="this.service.servicegallery[0].thumbUrl" alt=""  (click)="openImageModalRow(image_list_popup[0])">
+                              </ng-container>
+                          </ng-container>
+                </div>
+                <ul class="gal" *ngIf="service.servicegallery.length > 1">
+                    <li>
+                        <div class="galbx">
+                            <div class="overlay" (click)="openImageModalRow(image_list_popup[1])">+ {{service.servicegallery.length - 1 }}</div>
+                            <img [src]="service.servicegallery[1].thumbUrl" alt="">
+                        </div>
+                    </li>
+                </ul>
+                <ks-modal-gallery  [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+                [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)" 
+                (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
         </div>
-        <div class="outer2">
-            <div class="price">
-                <span class="caption">Price:</span><span class="dispvalue">{{this.data.serdet.totalAmount}} </span> <span class="taxable" *ngIf="this.data.serdet.taxable">(Tax Applicable)</span>
-            </div>
-        </div>
-        <div class="outer3" *ngIf="this.data.serdet.isPrePayment">
-            <div class="prepayment">
-                <span class="caption">Prepayment Amount:</span><span class="dispvalue">{{this.data.serdet.minPrePaymentAmount}} </span>
-            </div>
-        </div>
-        <div class="outer4" *ngIf="this.data.serdet.description != ''">
-                <div class="description">
-                    <span class="caption">Description:</span><span class="dispvalue">{{this.data.serdet.description}} </span>
+        <div class="outer">
+            <div class="outer1">
+                <div class="name">
+                    <span class="caption">Service:</span><span class="dispvalue">{{data.serdet.name}}</span>
+                </div>
+                <div class="duration">
+                    <span class="caption">Duration:</span><span class="dispvalue">{{data.serdet.serviceDuration}} Mins</span>
                 </div>
             </div>
+            <div class="outer2">
+                <div class="price">
+                    <span class="caption">Price:</span><span class="dispvalue">{{data.serdet.totalAmount | currency:'INR':'symbol':'.2-2'}} </span> <span class="taxable" *ngIf="this.data.serdet.taxable">(Tax Applicable)</span>
+                </div>
+            </div>
+            <div class="outer3" *ngIf="data.serdet.isPrePayment">
+                <div class="prepayment">
+                    <span class="caption">Prepayment Amount:</span><span class="dispvalue">{{data.serdet.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}} </span>
+                </div>
+            </div>
+            <div class="outer4" *ngIf="data.serdet.description">
+                    <div class="description">
+                        <span class="caption">Description:</span><span class="dispvalue">{{data.serdet.description}} </span>
+                    </div>
+            </div>
+        </div>
     </div> 
     </mat-dialog-content>
 

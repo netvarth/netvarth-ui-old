@@ -6,7 +6,7 @@
           <div class="c-outer">
               <div class="c-body">
                   <div class="bk-ctrl">
-                      <span class="backtoresults" (click)="backtoSearchResult()">Back to <span class="strong">Results</span></span>
+                      <span class="backtoresults" (click)="backtoSearchResult()"><span class="strong">Go Back</span></span>
                   </div>
                   <div class="srlst details">
                       <div class="top-sect">
@@ -99,7 +99,7 @@
                               </div>
                           </div>
                           <div class="tp-r">
-                              <div class="ynw-verified"></div>
+                              <div class="ynw-verified" *ngIf="businessjson.verifiedOn != null"></div>
                               <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
                               <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
                                   <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
@@ -118,7 +118,7 @@
                       <div class="top-sect">
                           <div class="tp-l">
                               <div class="tp2">
-                                  <span class="ch-title" *ngIf="loc.checkins.length>0">You have <span class="count" (click)="showExistingCheckin(loc)" >{{loc.checkins.length}} Check-ins</span>  at this location</span>
+                                  <span class="ch-title" *ngIf="loc.checkins.length>0" (click)="showExistingCheckin(loc)">You have <span class="count">{{loc.checkins.length}} Check-ins</span>  at this location</span>
                                   <h3>{{loc.place}}</h3>
                                   <a class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">Get Directions</a>
                                   <div class="clr">

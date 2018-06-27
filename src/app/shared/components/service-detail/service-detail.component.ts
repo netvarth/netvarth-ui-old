@@ -6,6 +6,14 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
+import {
+  AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
+  DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
+} from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-service-detail',
@@ -18,6 +26,24 @@ export class ServiceDetailComponent implements OnInit {
   api_success = null;
 
   service;
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy:  ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
+  image_list_popup: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<ServiceDetailComponent>,
@@ -30,10 +56,33 @@ export class ServiceDetailComponent implements OnInit {
      }
 
   ngOnInit() {
-      console.log('received', this.data);
+      // console.log('received', this.data);
     this.service = this.data.serdet;
+    this.image_list_popup = [];
+    if (this.service.hasOwnProperty('servicegallery')) {
+      // console.log('reached here');
+      for (let i = 0; i < this.service.servicegallery.length; i++) {
+          const imgobj = new Image(
+            i,
+            { // modal
+              img: this.service.servicegallery[i].url
+            });
+          this.image_list_popup.push(imgobj);
+        }
+    }
+  }
+  openImageModalRow(image: Image) {
+    // console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  onButtonBeforeHook(event: ButtonEvent) {
   }
 
+  onButtonAfterHook(event: ButtonEvent) {}
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;

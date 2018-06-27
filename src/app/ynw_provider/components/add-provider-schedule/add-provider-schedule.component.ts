@@ -34,8 +34,9 @@ export class AddProviderSchedulesComponent implements OnInit {
   show_schedule_selection = false;
   edit_mode = false;
   edit_heading = '';
-  edit_index = -1;
+  edit_index = '';
   schedule_arr: any = [];
+  display_schedule: any = [];
   show_savebutton = false;
   show_cancelbutton = false;
   constructor(
@@ -55,8 +56,11 @@ export class AddProviderSchedulesComponent implements OnInit {
     if (this.schedule_arr.length === 0) {
       this.show_schedule_selection = true;
     }
-    // console.log('schedule inside', this.schedule_arr);
+   // console.log('schedule inside', this.schedule_arr);
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
+    this.display_schedule =  this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+   // console.log('schedule', this.schedule_arr);
+   // console.log('dispschedule', this.display_schedule);
   }
 
   handlechecbox(dayindx) {
@@ -104,16 +108,19 @@ export class AddProviderSchedulesComponent implements OnInit {
     const endtime = new Date(today_date + ' ' + this.dend_time.hour + ':' + this.dend_time.minute + ':00');
     const endtime_format = moment(endtime).format('hh:mm A');
     // // console.log('reached here1');
-
+    const hold_schedule_edit_indexes = [];
+    const hold_schedule_update = [];
     for (const selday of this.selday_arr) {
      // // console.log('reached here2');
-      let curindx = 0;
+      let curindx = '';
+      let cindx = 0;
       for (const sch of this.schedule_arr) {
-       // // console.log('reached here3', sch.day, selday);
         if (parseInt(sch.day, 10) === parseInt(selday, 10)) { // Check whether the selected day is already in the existing schedule
           let bypasscurrentlop = false;
+          curindx = this.schedule_arr[cindx]['sTime'].replace(/\s+/, '') + this.schedule_arr[cindx]['eTime'].replace(/\s+/, '');
           if (this.edit_mode && this.edit_index === curindx) {
             bypasscurrentlop = true;
+            hold_schedule_edit_indexes.push({'indx': cindx});
           }
           if (!bypasscurrentlop) {
             // // console.log('reached here4');
@@ -144,23 +151,41 @@ export class AddProviderSchedulesComponent implements OnInit {
             }
           }
         }
-        curindx++;
+        cindx++;
       }
       const add_schedule = {
         'day': selday,
         'sTime' : starttime_format,
         'eTime': endtime_format
       };
-      if (this.edit_mode && this.edit_index >= 0 ) { // case of editing the schedule
+      if (this.edit_mode && this.edit_index !== '' ) { // case of editing the schedule
+        hold_schedule_update.push(add_schedule);
         // console.log('editindex', this.edit_index);
-        this.schedule_arr[this.edit_index] = add_schedule;
-        this.api_success = Messages.BPROFILE_SCHADDEDFOR + this.getDay(selday);
+        // this.schedule_arr[this.edit_index] = add_schedule;
+        // this.api_success = Messages.BPROFILE_SCHADDEDFOR + this.getDay(selday);
       } else { // case if adding the schedule
         this.schedule_arr.push(add_schedule);
         this.api_success = Messages.BPROFILE_SCHADDEDFOR + this.getDay(selday);
       }
     }
+    if (this.edit_mode && this.edit_index !== '') {
+      const holdschtemp = [];
+      for (const sch of this.schedule_arr) { // removing the records related to the currently edited item
+        const ncurindx = sch['sTime'].replace(/\s+/, '') + sch['eTime'].replace(/\s+/, '');
+        if (ncurindx !== this.edit_index) {
+          holdschtemp.push(sch);
+        }
+      }
+      this.schedule_arr = holdschtemp;
+      for (const addsch of hold_schedule_update) { // adding the schedule from the edited section
+        this.schedule_arr.push(addsch);
+      }
+    }
+
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
+    this.display_schedule =  this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+   // console.log('schedule', this.schedule_arr);
+   // console.log('dispschedule', this.display_schedule);
     // this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
     this.saveScheduleClick.emit(this.schedule_arr);
     this.showScheduleselection();
@@ -178,23 +203,44 @@ export class AddProviderSchedulesComponent implements OnInit {
   }
 
   deleteSchedule(indx) {
+   // console.log('delindx', indx, this.schedule_arr);
+    const holdarr = [];
     this.api_error = this.api_success = '';
-    this.schedule_arr.splice(indx, 1);
+    for (let i = 0; i < this.schedule_arr.length; i++) {
+      const timeindx = this.schedule_arr[i]['sTime'].replace(/\s+/, '') + this.schedule_arr[i]['eTime'].replace(/\s+/, '');
+      // console .log('chk', timeindx, indx);
+      if (timeindx !== indx) {
+        // this.schedule_arr.splice(indx, 1);
+        holdarr.push(this.schedule_arr[i]);
+      }
+    }
+    this.schedule_arr = holdarr;
+    // console.log('schedul after', this.schedule_arr);
+    this.display_schedule =  this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
     this.saveScheduleClick.emit(this.schedule_arr);
   }
 
-  showScheduleselection(indx?) {
+  showScheduleselection(indx?, obj?) {
     this.edit_heading = '';
-    this.edit_index = -1;
+    this.edit_index = '';
     if (indx !== undefined) { // case of edit mode
-      // // console.log('sch', this.schedule_arr);
+      // console.log('sch', this.schedule_arr, indx);
+      this.edit_heading = obj['dstr'] + ' ' + obj['time'];
       this.edit_index = indx;
       this.edit_mode = true;
-      this.edit_heading = this.weekdays_arr[this.schedule_arr[indx]['day']] + ' ' + this.schedule_arr[indx]['sTime'] + ' - ' + this.schedule_arr[indx]['eTime'];
+      // this.edit_heading = this.weekdays_arr[this.schedule_arr[indx]['day']] + ' ' + this.schedule_arr[indx]['sTime'] + ' - ' + this.schedule_arr[indx]['eTime'];
       this.selday_arr = [];
-      this.selday_arr.push(this.schedule_arr[indx]['day']);
-      this.dstart_time =  {hour: moment(this.schedule_arr[indx]['sTime'], ['h:mm A']).format('HH'), minute: moment(this.schedule_arr[indx]['sTime'], ['h:mm A']).format('mm')};
-      this.dend_time =  {hour: moment(this.schedule_arr[indx]['eTime'], ['h:mm A']).format('HH'), minute: moment(this.schedule_arr[indx]['eTime'], ['h:mm A']).format('mm')};
+      let sindx;
+      for (let i = 0; i < this.schedule_arr.length; i++) {
+        const timeindx = this.schedule_arr[i]['sTime'].replace(/\s+/, '') + this.schedule_arr[i]['eTime'].replace(/\s+/, '');
+        if (timeindx === indx) {
+          this.selday_arr.push(parseInt(this.schedule_arr[i]['day'], 10));
+          sindx = i;
+        }
+      }
+      // console.log('sel day', this.selday_arr);
+      this.dstart_time =  {hour: moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH'), minute: moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm')};
+      this.dend_time =  {hour: moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH'), minute: moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm')};
 
       this.show_schedule_selection = true;
       if (this.showsavebutton === '1') {

@@ -279,7 +279,7 @@ export class ProviderDetailComponent implements OnInit {
     }
   }
   openImageModalRow(image: Image) {
-    console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
+    // console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -501,7 +501,9 @@ export class ProviderDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getbusinessprofiledetails_json('location', true);
+      if (result === 'reloadlist') {
+        this.getbusinessprofiledetails_json('location', true);
+      }
     });
   }
   showcheckInButton(obj) {

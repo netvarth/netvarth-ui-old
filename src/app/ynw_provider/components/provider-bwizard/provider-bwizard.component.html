@@ -83,7 +83,7 @@
                             </div>
 
                             <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                <div class="form-group">
+                                <div class="form-group mapselection">
                                     <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i data-icon="j"></i>Choose your location in the MAP</button>
                                     <span class="expl">If your location is not available in the MAP, kindly fill the location details manually.</span>
                                 </div>
@@ -148,15 +148,15 @@
                     </div>
                     <div class="content">
                         <div class="flds">
-                            <div class="form-group" *ngIf="ischange_schedule_clicked == false">
+                            <div class="form-group" >
                                 <label class="title16">Working Hours</label>
                                 <span class="expl">This shows your office/business working hours</span>
-                                <ul class="whrs">
+                                <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
                                 <li *ngFor="let schedule of display_schedule">
                                     <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
                                 </li>
                                 </ul>
-                                <span class="cs-btn bt3" (click)="changeSchedule_clicked()">{{(display_schedule.length>0) ? 'Change Schedule': 'Add Schedule'}}</span>
+                                <span class="cs-btn bt3" (click)="changeSchedule_clicked()" *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0) ? 'Change Schedule': 'Add Schedule'}}</span>
                             </div>
                             <app-provider-schedule *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)"></app-provider-schedule>
                         </div>

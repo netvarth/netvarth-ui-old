@@ -283,6 +283,7 @@ export class CheckInComponent implements OnInit {
        this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
         .subscribe( data => {
           this.queuejson = data;
+          // console.log('q json', this.queuejson);
           if (this.queuejson.length > 0) {
               this.sel_queue_id = this.queuejson[0].id;
               this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime;
@@ -414,7 +415,7 @@ export class CheckInComponent implements OnInit {
       this.addCheckInConsumer(post_Data);
     }
 
-    console.log('postdata', JSON.stringify(post_Data));
+    // console.log('postdata', JSON.stringify(post_Data));
   }
 
   addCheckInConsumer(post_Data) {

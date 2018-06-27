@@ -14,6 +14,7 @@ import { KioskComponent } from './kiosk.component';
 import { KioskHomeComponent } from './components/home/kiosk-home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LookupStatusComponent } from './components/lookup-status/lookup-status.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -35,7 +36,8 @@ import 'mousetrap';
         KioskComponent,
         KioskHomeComponent,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        LookupStatusComponent
     ],
     /*exports: [ConfirmBoxComponent],
       entryComponents: [

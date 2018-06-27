@@ -240,7 +240,16 @@ footer {
                         color: $cc-red;
                     }
                 }
-                
+                &.mapselection {
+                    .bt3 {
+                        min-height: 30px;
+                        height: auto;
+                        white-space: pre-wrap;
+                        display: flex;
+                        align-items: center;
+                        padding: 3px 10px;
+                    }
+                }
             }
         }
         

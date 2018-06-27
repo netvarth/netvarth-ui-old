@@ -72,7 +72,7 @@
                                             <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
                                                 <ul class="ph-gal">
                                                     <ng-container *ngFor="let file of image_list_popup;let i = index">
-                                                    <li *ngIf="i<3">
+                                                    <li *ngIf="i<2">
                                                         <div class="galbx">
                                                             <span class="mbt">
                                                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -91,10 +91,11 @@
                                                         </div>
                                                     </li>
                                                     </ng-container>
-                                                    <li *ngIf="image_list_popup.length>3">
+                                                    <li *ngIf="image_list_popup.length>2">
                                                         <div class="galbx">
-                                                            <span class="mre" (click)="openImageModalRow(image_list_popup[3])">+{{(image_list_popup.length-3)}}</span>
-                                                            <div class="img-h"><img *ngIf="image_list_popup[3].modal.img" [src] = "image_list_popup[3].modal.img" /></div>
+                                                            <span class="mre" (click)="openImageModalRow(image_list_popup[2])"  *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                                            <div class="img-h" *ngIf="(image_list_popup.length-3)>0"><img *ngIf="image_list_popup[2].modal.img" [src] = "image_list_popup[2].modal.img" /></div>
+                                                            <div class="img-h" (click)="openImageModalRow(image_list_popup[2])" *ngIf="(image_list_popup.length-3)==0"><img *ngIf="image_list_popup[2].modal.img" [src] = "image_list_popup[2].modal.img" /></div>
                                                         </div>
                                                     </li>
                                                 </ul>
