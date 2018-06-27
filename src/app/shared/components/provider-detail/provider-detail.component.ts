@@ -579,6 +579,9 @@ export class ProviderDetailComponent implements OnInit {
           } else {
             this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 0;
           }
+          if (this.waitlisttime_arr[i]['message']) {
+            this.locationjson[locindx]['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
+          }
         }
         // console.log('loc final', this.locationjson);
       });

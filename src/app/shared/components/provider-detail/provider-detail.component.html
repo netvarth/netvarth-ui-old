@@ -174,10 +174,11 @@
 
                               <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                 <div class="o-now" *ngIf="loc.opennow">Open Now</div>
-                                <div class="timing">
+                                <div class="timing" *ngIf="loc['estimatedtime_det']['caption']">
                                     <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
                                     <span class="time-data">{{loc['estimatedtime_det']['time']}} <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
                                 </div>
+                                <div class="wt-msg" *ngIf="loc['estimatedtime_det']['message']"> {{loc['estimatedtime_det']['message']}}</div>
                             </div>
 
                           </div>
