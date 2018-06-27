@@ -249,4 +249,5 @@ AUDITLOG_FILTER_ACTION: [
   { name: 'VIEW', dispName: 'View'}
 ],
 ALERT_CNT: 10,
+BUSINESS_NAME_MAX_LENGTH: 50
 };

@@ -38,6 +38,8 @@ import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ConsumerWaitlistHistoryComponent } from './shared/components/consumer-waitlist-history/consumer-waitlist-history.component';
+import { ExistingCheckinComponent } from './shared/components/existing-checkin/existing-checkin.component';
+import { ServiceDetailComponent } from './shared/components/service-detail/service-detail.component';
 
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin } from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
@@ -73,14 +75,18 @@ import 'hammerjs';
     SearchMoreOptionsComponent*/,
     ReturnPaymentComponent,
     AddInboxMessagesComponent,
-    ConsumerWaitlistHistoryComponent
+    ConsumerWaitlistHistoryComponent,
+    ExistingCheckinComponent,
+    ServiceDetailComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,
     SignUpComponent,
     LoginComponent,
     ConfirmBoxComponent,
-    AddInboxMessagesComponent
+    AddInboxMessagesComponent,
+    ExistingCheckinComponent,
+    ServiceDetailComponent
     /*SearchMoreOptionsComponent*/
   ],
   imports: [

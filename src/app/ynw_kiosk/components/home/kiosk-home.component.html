@@ -1,0 +1,40 @@
+<ng-container *ngIf="provider_loggedin">
+    <!-- get info from User -->
+        <div class="get-info" *ngIf="!customer_found">
+                <!-- <div class="notice show">
+                    <div class="box error">
+                        <span class="label"><span>Ooops!!</span>You are not a Registered customer, would you like to Register?</span>
+                        <button class="cs-btn ripple">Register</button>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <span class="label">Enter Your <span>Mobile Number</span></span>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <span class="label">Enter first 3 letters of your <span>First Name/Last Name</span></span>
+                    <input type="text" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <button class="cs-btn ripple">Search</button>
+                </div>
+        </div>
+        <!-- get info from User xx ends -->
+
+        <!-- welcome screen -->
+        <ng-container *ngIf="customer_found">
+            <div class="kiosk-customerdet">Welcome {{customer_name}}</div>
+        <ul class="controls">
+            <li><button class="ot"><span class="icon-k-checkin"></span><span class="title">Check-In Yourself</span></button></li>
+            <li><button class="ot"><span class="icon-k-lookup"></span><span class="title">Lookup Your Status</span></button></li>
+            <li><button class="ot"><span class="icon-k-rating"></span><span class="title">Rate Your Visit</span></button></li>
+            <li><button class="ot"><span class="icon-k-arrived"></span><span class="title">Report As Arrived</span></button></li>
+        </ul>
+        </ng-container>
+        <!-- welcome screen ends -->
+
+</ng-container>
+<ng-container *ngIf="!provider_loggedin">
+   <div class="error">Sorry you are not authorized to view this page.</div>
+</ng-container>

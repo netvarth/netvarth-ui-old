@@ -1,0 +1,44 @@
+<h1 class="mat-dialog-title">{{this.data.bname}}
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+    </h1>
+    
+    <mat-dialog-content>
+   
+    <div class="servicedet_outer" *ngIf="service.name !==''">
+        <div class="outer1">
+            <div class="name">
+                <span class="caption">Service:</span><span class="dispvalue">{{this.data.serdet.name}}</span>
+            </div>
+            <div class="duration">
+                <span class="caption">Duration:</span><span class="dispvalue">{{this.data.serdet.serviceDuration}} Mins</span>
+            </div>
+        </div>
+        <div class="outer2">
+            <div class="price">
+                <span class="caption">Price:</span><span class="dispvalue">{{this.data.serdet.totalAmount}} </span> <span class="taxable" *ngIf="this.data.serdet.taxable">(Tax Applicable)</span>
+            </div>
+        </div>
+        <div class="outer3" *ngIf="this.data.serdet.isPrePayment">
+            <div class="prepayment">
+                <span class="caption">Prepayment Amount:</span><span class="dispvalue">{{this.data.serdet.minPrePaymentAmount}} </span>
+            </div>
+        </div>
+        <div class="outer4" *ngIf="this.data.serdet.description != ''">
+                <div class="description">
+                    <span class="caption">Description:</span><span class="dispvalue">{{this.data.serdet.description}} </span>
+                </div>
+            </div>
+    </div> 
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+    <button  type="button" mat-dialog-close class="cs-btn bt2">Close</button>
+    </mat-dialog-actions>
+
+    <app-field-error-display [displayError]="true" *ngIf="api_error"
+    errorMsg="{{api_error}}"></app-field-error-display>
+
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success"
+    successMsg="{{api_success}}"></app-form-success-display>

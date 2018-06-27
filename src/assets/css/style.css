@@ -3714,7 +3714,8 @@ header {
     -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) ;
     -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) ;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) ;
-    width: 230px; }
+    width: 50%;
+    position: absolute; }
     @media only screen and (max-width: 575px) {
       .googlemainmappopup .mat-dialog-content #pac-input {
         top: 40px !important; } }

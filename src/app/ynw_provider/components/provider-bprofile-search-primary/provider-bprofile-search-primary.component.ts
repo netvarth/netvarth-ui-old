@@ -69,8 +69,11 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
 
   // Method to handle the add / edit for bprofile
   onSubmit(form_data) {
-
-    const submit_data: FormData = new FormData();
+    console.log('length', form_data.bname.length);
+    if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
+      this.api_error = Messages.BUSINESS_NAME_MAX_LENGTH_MSG;
+    } else {
+      const submit_data: FormData = new FormData();
       const post_itemdata = {
         'businessName': form_data.bname,
         'businessDesc': form_data.bdesc
@@ -79,6 +82,7 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       };
       // calling the method to update the primarty fields in bProfile edit page
       this.UpdatePrimaryFields(post_itemdata);
+    }
   }
 
   // saving the primary fields from the bprofile create page

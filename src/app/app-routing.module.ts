@@ -21,6 +21,11 @@ const routes: Routes = [
         loadChildren: './ynw_consumer/consumer.module#ConsumerModule',
         canActivate: [AuthGuardConsumer]
     },
+    {
+        path: 'kiosk',
+        loadChildren: './ynw_kiosk/kiosk.module#KioskModule',
+        canActivate: [AuthGuardProvider]
+    },
     { path: '', component: HomeComponent, canActivate: [AuthGuardHome]},
     { path: 'home',   redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
     { path: 'logout',   component: LogoutComponent},

@@ -1203,7 +1203,8 @@
             padding: 10px;
             border: 1px solid $linkblue;
             @include box-shadow(0, 0, 30px, rgba(0,0,0,0.3));
-            width: 230px;
+            width: 50%;
+            position: absolute;
             
             @include respond-to(ynw-575){
                 top: 40px !important;
