@@ -82,6 +82,7 @@ export const projectConstants = {
               ],
   DISPLAY_DATE_FORMAT : 'DD/MM/YYYY',
   PIPE_DISPLAY_DATE_FORMAT : 'dd/MM/y',
+  PIPE_DISPLAY_TIME_FORMAT: 'h:mm a',
   POST_DATE_FORMAT : 'YYYY-MM-DD',
   BASE_SCHEDULE: [
     {

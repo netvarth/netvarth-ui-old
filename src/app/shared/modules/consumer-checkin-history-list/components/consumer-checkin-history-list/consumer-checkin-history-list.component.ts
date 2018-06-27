@@ -28,6 +28,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     perPage : projectConstants.PERPAGING_LIMIT
   };
   history: any = [];
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
   public dialog: MatDialog,
