@@ -839,7 +839,7 @@ doCancelWaitlist(waitlist) {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
       data: {
-        'message' : 'Do you want to remove this Check-In ?',
+        'message' : 'Do you want to cancel this Check-In ?',
         'heading' : 'Confirm'
       }
     });

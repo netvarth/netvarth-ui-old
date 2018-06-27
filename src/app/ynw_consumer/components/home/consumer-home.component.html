@@ -14,16 +14,58 @@
                   <div class="outer">
                     <div class="list" *ngFor=" let waitlist of waitlists">
                         <div class="lt">
-                            <h3 (click)="goWaitlistDetail(waitlist)">{{waitlist.provider.businessName || ''}}</h3>
-                            <span class="location">{{waitlist.queue.location.place || ''}}</span>
+                            <h3 class="pointer-cursor" (click)="providerDetail(waitlist.provider)">{{waitlist.provider.businessName || ''}}</h3>
+                            <span class="location" *ngIf="waitlist.queue.location">
+                              {{waitlist.queue.location.place || ''}}
+                              <a *ngIf="waitlist.queue.location.googleMapUrl" [href]="waitlist.queue.location.googleMapUrl" target="_blank">
+                                  <i data-icon="j"></i>
+                              </a>
+                            </span>
+
+                            <div class="service-for"><span class="service">
+                              {{waitlist.service.name}}</span> for
+                              <span class="waitlist_for"
+                              *ngFor="let user of waitlist.waitlistingFor">
+                                  {{user.firstName}} {{user.lastName}}
+                              </span>
+
+                            </div>
+
                             <div class="est-time">
-                              <span class="ttle">Estimated Waiting Time:</span>
-                              <span class="time"><span class="min">{{getAppxTime(waitlist.appxWaitingTime)}}</span></span>
+                              <ng-container  *ngIf="!waitlist.future">
+                                <span class="ttle">
+                                  Estimated Waiting Time:
+                                </span>
+                                <span class="time">
+                                  <span class="min">{{waitlist.estimated_time }}</span>
+                                </span>
+                              </ng-container>
+
+                              <ng-container  *ngIf="waitlist.future">
+                                <span class="ttle">
+                                  Check-In Time :
+                                </span>
+                                <span class="date">{{waitlist.date | date: dateFormat }}</span>
+                                <span class="time">
+                                  <span class="min">{{waitlist.estimated_time | date: timeFormat}}</span>
+                                </span>
+                              </ng-container>
+
+                            </div>
+                            <div class="token-no">
+                              <span class="ttle">Token No:</span>
+                              <span class="token">{{waitlist.token}}</span>
+                            </div>
+                            <div class="token-no">
+                              <span class="ttle">Persons Ahead:</span>
+                              <span class="time">{{waitlist.personsAhead}}</span>
                             </div>
                         </div>
                         <div class="rt">
                             <ul class="controls">
-                                <li  (click)="addWaitlistMessage(waitlist)"><span class="message">Message</span></li>
+                                <li  (click)="addWaitlistMessage(waitlist)">
+                                  <span class="message">Message</span>
+                                </li>
                                 <li *ngIf="!checkIfFav(waitlist.provider.id)">
                                   <span class="add-fav" (click)="addFavProvider(waitlist.provider.id)">
                                     Add to Favourites</span>
@@ -58,19 +100,41 @@
                   </mat-expansion-panel-header>
                   <div class="outer">
                       <div class="list" *ngFor="let provider of fav_providers">
-                          <div class="lt">
-                              <h3>{{provider.businessName}}</h3>
-                          </div>
-                          <div class="rt">
-                              <ul class="controls">
-                                  <li><span class="checkin">Check-in</span></li>
-                                  <li (click)="addCommonMessage(provider)"><span class="message">Message</span></li>
-                                  <li><span class="add-fav favourited"
+                        <div class="header">
+                            <div class="lt">
+                                <h3 class="pointer-cursor" (click)="providerDetail(provider)">
+                                  {{provider.businessName}}</h3>
+                            </div>
+                            <div class="rt">
+                                <ul class="controls">
+                                    <li (click)="addCommonMessage(provider)"><span class="message">Message</span></li>
+                                    <li>
+                                    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                      <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    </li>
+                                </ul>
+                                <mat-menu #appMenu="matMenu">
+                                  <button mat-menu-item>
+                                    <span class="add-fav favourited"
                                     (click)="doDeleteFavProvider(provider)">
                                     Remove Favourite</span>
-                                  </li>
-                              </ul>
+                                  </button>
+                                  <button mat-menu-item>Manage Privacy</button>
+                                </mat-menu>
+                            </div>
+                        </div>
+                        <div class="detail">
+                          <div class="location" *ngFor="let loc of provider.locations">
+                            <div>
+                              {{loc.place}}
+                            </div>
+                            <div (click)="goCheckin(provider, 'fav_provider')">
+                              <span class="checkin">Check-in</span>
+                            </div>
                           </div>
+                        </div>
+
                       </div>
                       <div *ngIf="loadcomplete.fav_provider && fav_providers && fav_providers.length == 0">
                         <p>You haven't added any favourite providers</p>

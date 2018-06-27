@@ -30,6 +30,8 @@ import { NotificationListBoxComponent} from './shared/component/notification-lis
 import {MembersComponent } from './components/members/members.component';
 import { AddMembersHolderComponent } from './components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from './components/add-member/add-member.component';
+import {CheckinLocationListComponent } from './components/checkin-location-list/checkin-location-list.component';
+
 import { projectConstants } from '../shared/constants/project-constants';
 
 @NgModule({
@@ -53,7 +55,8 @@ import { projectConstants } from '../shared/constants/project-constants';
       WaitlistComponent,
       NotificationListBoxComponent,
       MembersComponent,
-      AddMembersHolderComponent
+      AddMembersHolderComponent,
+      CheckinLocationListComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
