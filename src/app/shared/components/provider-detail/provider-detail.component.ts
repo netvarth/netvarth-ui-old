@@ -37,6 +37,7 @@ import { CheckInComponent } from '../../modules/check-in/check-in.component';
 })
 export class ProviderDetailComponent implements OnInit {
 
+
   s3url;
   retval;
   kwdet: any = [];
@@ -136,6 +137,7 @@ export class ProviderDetailComponent implements OnInit {
                 );
   }
   // gets the various json files based on the value of "section" parameter
+  // Some of functions copied to Consumer Home also.
   getbusinessprofiledetails_json(section, modDateReq: boolean) {
     let  UTCstring = null ;
     if (modDateReq) {
@@ -513,6 +515,7 @@ export class ProviderDetailComponent implements OnInit {
     }
   }
 
+  // Some of functions copied to Consumer Home also.
   private getWaitingTime(provids_locid) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
