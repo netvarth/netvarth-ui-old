@@ -18,6 +18,7 @@ import { ViewConsumerWaitlistCheckInBillComponent} from '../consumer-waitlist-vi
 
 export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
 
+  @Input() reloadapi;
   @Input()  params;
   @Output() getWaitlistBillEvent = new EventEmitter<any>();
 
@@ -38,7 +39,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-
+   // console.log('reloadapi', this.reloadapi);
   }
 
   getHistroy(param) {
@@ -145,6 +146,18 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
     });
+  }
+
+  getStatusLabel(status) {
+    let label_status = status;
+    switch (status) {
+      case 'cancelled' : label_status = 'Cancelled'; break;
+      case 'arrived' : label_status = 'Arrived'; break;
+      case 'done' : label_status = 'Done'; break;
+      case 'checkedIn' : label_status = 'Checked In'; break;
+      case 'started' : label_status = 'Started'; break;
+    }
+    return label_status;
   }
 
 

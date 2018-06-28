@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -13,16 +13,22 @@ import { NotificationListBoxComponent } from '../../shared/component/notificatio
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { CheckinLocationListComponent } from '../checkin-location-list/checkin-location-list.component';
 
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
+
+
+import {Observable} from 'rxjs/Observable';
+import {startWith} from 'rxjs/operators/startWith';
+import {map} from 'rxjs/operators/map';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
   styleUrls: ['./consumer-home.component.scss']
 })
-export class ConsumerHomeComponent implements OnInit {
+export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   waitlists;
   fav_providers: any = [];
@@ -44,7 +50,14 @@ export class ConsumerHomeComponent implements OnInit {
   settings_exists = false;
   futuredate_allowed = false;
 
+  waitlistestimatetimetooltip  = Messages.SEARCH_ESTIMATE_TOOPTIP;
   public searchfields: SearchFields = new SearchFields();
+
+  reload_history_api =  {status : true};
+
+  cronHandle: Subscription;
+  cronStarted;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -57,8 +70,19 @@ export class ConsumerHomeComponent implements OnInit {
     this.getWaitlist();
    // this.getHistoryCount();
    // this.getFavouriteProvider();
+   this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+    this.reloadAPIs();
+   });
+
 
   }
+
+  ngOnDestroy() {
+    if (this.cronHandle) {
+     this.cronHandle.unsubscribe();
+    }
+ }
+
   getWaitlist() {
 
       this.loadcomplete.waitlist = false;
@@ -144,29 +168,33 @@ export class ConsumerHomeComponent implements OnInit {
 
       this.fav_providers = data;
       this.fav_providers_id_list = [];
-      let k = 0;
-      for (const x of this.fav_providers) {
-
-         this.fav_providers_id_list.push(x.id);
-         if (this.s3url) {
-          this.getbusinessprofiledetails_json(x.id, 'settings', true, k);
-         }
-         const locarr = [];
-         let i = 0;
-         for (const loc of x.locations) {
-          locarr.push({'locid': x.id + '-' + loc.id, 'locindx': i});
-          i++;
-         }
-         this.getWaitingTime(locarr, k);
-         k++;
-
-      }
-      console.log( this.fav_providers);
+      this.setWaitlistTimeDetails();
+      // console.log( this.fav_providers);
     },
     error => {
       this.loadcomplete.fav_provider = true;
     }
     );
+  }
+
+  setWaitlistTimeDetails() {
+    let k = 0;
+    for (const x of this.fav_providers) {
+
+       this.fav_providers_id_list.push(x.id);
+       if (this.s3url) {
+        this.getbusinessprofiledetails_json(x.id, 'settings', true, k);
+       }
+       const locarr = [];
+       let i = 0;
+       for (const loc of x.locations) {
+        locarr.push({'locid': x.id + '-' + loc.id, 'locindx': i});
+        i++;
+       }
+       this.getWaitingTime(locarr, k);
+       k++;
+
+    }
   }
 
   private getWaitingTime(provids_locid, index) {
@@ -237,6 +265,10 @@ export class ConsumerHomeComponent implements OnInit {
             }
           } else {
             this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 0;
+          }
+
+          if (waitlisttime_arr[i]['message']) {
+            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['message'] = waitlisttime_arr[i]['message'];
           }
         }
         // console.log('loc final', this.fav_providers[index]['locations']);
@@ -436,7 +468,7 @@ export class ConsumerHomeComponent implements OnInit {
                       location: location_data,
                       sel_date: curdate
                     },
-        datechangereq: true
+        datechangereq: data.chdatereq
       }
     });
 
@@ -449,7 +481,8 @@ export class ConsumerHomeComponent implements OnInit {
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
-  goCheckin(data, type) {
+
+  goCheckin(data, location, chdatereq, type) {
 
     let provider_data = null;
     if (type === 'fav_provider') {
@@ -458,32 +491,16 @@ export class ConsumerHomeComponent implements OnInit {
       provider_data = data.provider || null;
     }
 
-    if (data.locations.length > 1) {
-
-      const dialogRef = this.dialog.open(CheckinLocationListComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
-        autoFocus: true,
-        data: {'location_list' : data.locations }
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.message === 'reloadlist') {
-          this.setCheckinData(provider_data, result.data);
-        }
-      });
-
-    } else {
-      this.setCheckinData(provider_data, data.locations[0]);
-    }
+    this.setCheckinData(provider_data, location, chdatereq);
 
 
   }
 
-  setCheckinData(provider, location) {
+  setCheckinData(provider, location, chdatereq = false) {
     const post_data = {
       'provider_data': null,
-      'location_data': null
+      'location_data': null,
+      'chdatereq': chdatereq
     };
 
     post_data.provider_data = {
@@ -534,10 +551,15 @@ export class ConsumerHomeComponent implements OnInit {
   );
   }
 
-  showcheckInButton(obj) {
-    if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists) {
+  showcheckInButton(provider) {
+    if (provider.settings && provider.settings.onlineCheckIns) {
       return true;
     }
+  }
+
+  reloadAPIs() {
+    this.getWaitlist();
+    this.reload_history_api = {status : true};
   }
 
 

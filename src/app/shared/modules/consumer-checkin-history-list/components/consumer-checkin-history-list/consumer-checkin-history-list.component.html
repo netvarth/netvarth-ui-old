@@ -15,17 +15,14 @@
                 <td data-title="Location" class="td2">{{his_wait.queue.location.place || ''}}</td>
                 <td data-title="Date/Time" class="td3"> {{his_wait.date | date: dateFormat }}</td>
                 <td data-title="Status" class="td4">
-                  <span class="{{his_wait.waitlistStatus}}">{{his_wait.waitlistStatus}}</span>
+                  <span class="{{his_wait.waitlistStatus}}">{{getStatusLabel(his_wait.waitlistStatus)}}</span>
                 </td>
                 <td data-title="" class="td5">
                     <ul class="controls">
                         <li><span class="message" (click)="addWaitlistMessage(his_wait)">Message</span></li>
                         <li><span class="view-bill"
-                          *ngIf="his_wait.billStatus" (click)="getWaitlistBill(his_wait)">View Bill</span></li>
-                        <li><span class="pay-bill"
-                          *ngIf="his_wait.billStatus == 'New' &&
-                          his_wait.paymentStatus!='FullyPaid'">
-                          Pay Bill</span></li>
+                          *ngIf="his_wait.billStatus" (click)="getWaitlistBill(his_wait)">Bill</span></li>
+
                     </ul>
                 </td>
             </tr>
