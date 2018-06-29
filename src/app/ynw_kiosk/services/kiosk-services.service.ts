@@ -20,4 +20,8 @@ export class KioskServices {
         const url = 'provider/customers';
         return this.servicemeta.httpGet(url, null, data);
     }
+    createProviderCustomer(data) {
+        const url = 'provider/customers';
+        return this.servicemeta.httpPost(url, data);
+      }
 }

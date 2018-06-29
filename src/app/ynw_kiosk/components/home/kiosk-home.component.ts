@@ -18,18 +18,24 @@ export class KioskHomeComponent implements OnInit {
   provider_loggedin = false;
   srch_mobile = '';
   srch_fname = '';
+  reg_fname = '';
+  reg_lname = '';
   userdet;
   ctype;
   customer_found = false;
   customerDet: any = [];
   customerDispDet = {
-                  id: 0,
+                  id: '',
                   name: ''
                 };
   blankPattern;
+  namePattern;
   phonePattern;
   cMod;
   loadingNow;
+  showsearch_now = false;
+  show_customernotfoundmsg = false;
+  show_customerRegister = false;
 
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
@@ -39,12 +45,14 @@ export class KioskHomeComponent implements OnInit {
   ngOnInit() {
     this.blankPattern = projectConstants.VALIDATOR_BLANK;
     this.phonePattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
+    this.namePattern = projectConstants.VALIDATOR_CHARONLY;
     this.customer_found = false;
     this.customerDet = [];
-    this.customerDispDet.id = 0;
+    this.customerDispDet.id = '';
     this.customerDispDet.name = '';
     this.getUserdetails();
     this.loadingNow = false;
+    this.cMod = 'main';
   }
 
   getUserdetails() {
@@ -77,16 +85,27 @@ export class KioskHomeComponent implements OnInit {
 
     };
     this.customer_found = false;
+    this.show_customernotfoundmsg = false;
     this.loadingNow = true;
     this.kiosk_services.getCustomer(data)
       .subscribe (rdata => {
-          console.log('returned', rdata);
-          this.customer_found = true;
+          // console.log('returned', rdata);
           this.customerDet = rdata;
-          this.customerDispDet.id = this.customerDet[0].id;
-          this.customerDispDet.name = this.customerDet[0].userProfile.firstName + ' ' + this.customerDet[0].userProfile.lastName;
-          this.cMod = 'main';
-          this.loadingNow = true;
+          if (this.customerDet.length > 0) { // case if searched customer exists
+            this.customer_found = true;
+            this.customerDispDet.id = this.customerDet[0].id;
+            this.customerDispDet.name = this.customerDet[0].userProfile.firstName + ' ' + this.customerDet[0].userProfile.lastName;
+            if (this.cMod === '') {
+              this.cMod = 'main';
+            }
+            this.srch_fname = '';
+            this.srch_mobile = '';
+            this.loadingNow = false;
+          } else { // case if searched customer does not exists, so show the "Not found" page
+              this.show_customernotfoundmsg = true;
+              this.showsearch_now = false;
+              this.loadingNow = false;
+          }
       },
       error => {
         this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -96,7 +115,18 @@ export class KioskHomeComponent implements OnInit {
 
   showMode(val) {
     this.cMod = val;
+    this.srch_fname = '';
+    this.srch_mobile = '';
+    this.reg_fname = '';
+    this.reg_lname = '';
     console.log('cmod', this.cMod);
+    if (this.cMod !== 'main') {
+      if (!this.customer_found) {
+        this.showsearch_now = true;
+      }
+    } else {
+      this.showsearch_now = false;
+    }
   }
   getpassedinDetails() {
     const passedData = {
@@ -104,5 +134,61 @@ export class KioskHomeComponent implements OnInit {
       mod: this.cMod
     };
     return passedData;
+  }
+  logOff() {
+    this.customer_found = false;
+    this.show_customernotfoundmsg = false;
+    this.show_customerRegister = false;
+    this.loadingNow = false;
+    this.customerDet = [];
+    this.showMode('main');
+  }
+  showRegister() {
+    this.show_customernotfoundmsg = false;
+    this.show_customerRegister = true;
+    this.reg_fname = this.srch_fname;
+    this.reg_lname = '';
+  }
+  registerCustomer() {
+    if (this.blankPattern.test(this.reg_fname) || !this.namePattern.test(this.reg_fname)) {
+      this.shared_functions.openSnackBar('Please enter a valid first name', {'panelClass': 'snackbarerror'});
+      return false;
+    }
+    if (this.blankPattern.test(this.reg_lname)  || !this.namePattern.test(this.reg_lname)) {
+      this.shared_functions.openSnackBar('Please enter a valid last name', {'panelClass': 'snackbarerror'});
+      return false;
+    }
+    const postData = {
+      'userProfile': {
+        'firstName': this.reg_fname,
+        'lastName': this.reg_lname,
+        'primaryMobileNo': this.srch_mobile
+      }
+    };
+    this.loadingNow = true;
+    this.kiosk_services.createProviderCustomer(postData)
+      .subscribe ((data: any) => {
+        // console.log('returned', data);
+        const retdata = data;
+        // console.log('retdata', retdata);
+        this.customer_found = true;
+        this.show_customerRegister = false;
+        this.customerDispDet.id = retdata;
+        this.customerDispDet.name = this.reg_fname + ' ' + this.reg_lname;
+        this.reg_fname = '';
+        this.reg_lname = '';
+        this.srch_fname = '';
+        this.srch_mobile = '';
+        this.loadingNow = false;
+      },
+    error => {
+      this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      this.loadingNow = false;
+    });
+  }
+  showSearchNow() {
+    this.show_customerRegister = false;
+    this.show_customernotfoundmsg = false;
+    this.showsearch_now = true;
   }
 }

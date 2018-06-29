@@ -13096,37 +13096,83 @@ header.consumer {
             .consumer-dash .card .outer .list.cancelled .header .cancel-label {
               float: none;
               margin-left: 10px; } }
-    .consumer-dash .card.favourites .outer .list .lt .location {
-      margin-bottom: 0; }
-    .consumer-dash .card.favourites .outer .list .rt .controls li span.checkin {
-      text-transform: uppercase;
-      -webkit-border-radius: 50px;
-      border-radius: 50px;
-      background-clip: padding-box;
-      /* stops bg color from leaking outside the border: */
-      background: #00aef2;
-      /* Old browsers */
-      background: -moz-linear-gradient(left, #00aef2 0%, #1873f2 100%);
-      /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00aef2), color-stop(100%, #1873f2));
-      /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(left, #00aef2 0%, #1873f2 100%);
-      /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(left, #00aef2 0%, #1873f2 100%);
-      /* Opera 11.10+ */
-      background: -ms-linear-gradient(left, #00aef2 0%, #1873f2 100%);
-      /* IE10+ */
-      background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
-      /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
-      /* IE6-9 */
-      color: #fff;
-      padding-left: 10px;
-      padding-right: 10px;
-      font-weight: 600; }
-    .consumer-dash .card.favourites .outer .list .rt .controls li span.add-fav.favourited:before {
-      content: "\27";
-      color: #f24949; }
+    .consumer-dash .card.favourites .outer .list .header {
+      padding: 0;
+      border: none; }
+      .consumer-dash .card.favourites .outer .list .header .lt h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0px;
+        display: table; }
+      .consumer-dash .card.favourites .outer .list .header .rt {
+        margin-left: auto; }
+        .consumer-dash .card.favourites .outer .list .header .rt .controls {
+          margin: 0;
+          margin-left: auto;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          flex-direction: row;
+          justify-content: flex-start;
+          border: none; }
+          @media only screen and (max-width: 767px) {
+            .consumer-dash .card.favourites .outer .list .header .rt .controls {
+              margin-left: 0; } }
+          @media only screen and (max-width: 575px) {
+            .consumer-dash .card.favourites .outer .list .header .rt .controls {
+              justify-content: flex-start;
+              flex-wrap: wrap;
+              flex-direction: row; } }
+          .consumer-dash .card.favourites .outer .list .header .rt .controls li {
+            list-style: none;
+            margin: 0 5px;
+            font-weight: 500;
+            display: flex;
+            align-items: center; }
+            .consumer-dash .card.favourites .outer .list .header .rt .controls li span {
+              padding: 8px;
+              position: relative;
+              padding-left: 25px;
+              padding-right: 6px;
+              cursor: pointer;
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms;
+              color: #222223; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span:before {
+                position: absolute;
+                content: "";
+                left: 5px;
+                top: 50%;
+                margin-top: -8px;
+                font-family: "custom-ynw" !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 16px;
+                height: 16px; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span:hover {
+                color: #00aef2; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span.message:before {
+                content: "\53"; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span.add-fav:before {
+                content: "\26"; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel {
+                position: relative; }
+                .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel:before {
+                  display: flex;
+                  align-items: center;
+                  height: 20px;
+                  position: absolute; }
+                .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel:before {
+                  content: "\69";
+                  font-size: .65rem;
+                  height: 18px; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span.mat-button-wrapper {
+                padding-left: 6px; }
+            .consumer-dash .card.favourites .outer .list .header .rt .controls li:last-child {
+              margin-bottom: 0; }
     .consumer-dash .card.history {
       margin-bottom: 0; }
       .consumer-dash .card.history .history-tbl {

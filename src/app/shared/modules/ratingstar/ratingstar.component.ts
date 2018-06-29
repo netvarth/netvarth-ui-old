@@ -18,6 +18,7 @@ export class RatingStarComponent implements OnInit {
 
   @Input() cloudindex: string;
   @Input() ratingval: string;
+  @Input() includedFrom: string;
   @Output() ratingreturn = new EventEmitter<any>();
   constructor (
     private shared_service: SharedServices,
