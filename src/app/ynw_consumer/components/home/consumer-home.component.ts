@@ -246,6 +246,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
           if (waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
             this.fav_providers[index]['locations'][locindx]['opennow'] = waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
             this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
             if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
@@ -439,22 +440,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   showCheckin(data, origin = 'consumer') {
 
-    const  cdate = new Date();
-    const  mn = cdate.getMonth() + 1;
-    const  dy = cdate.getDate();
-    let mon = '';
-    let day = '';
-    if (mn < 10) {
-      mon = '0' + mn;
-    } else {
-      mon = '' + mn;
-    }
-    if (dy < 10) {
-      day = '0' + dy;
-    } else {
-      day = '' + dy;
-    }
-    const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
+    // const  cdate = new Date();
+    // const  mn = cdate.getMonth() + 1;
+    // const  dy = cdate.getDate();
+    // let mon = '';
+    // let day = '';
+    // if (mn < 10) {
+    //   mon = '0' + mn;
+    // } else {
+    //   mon = '' + mn;
+    // }
+    // if (dy < 10) {
+    //   day = '0' + dy;
+    // } else {
+    //   day = '' + dy;
+    // }
+    // const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
 
     const provider_data = data.provider_data;
     const location_data =  data.location_data;
@@ -469,7 +470,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                       bypassDefaultredirection: 1,
                       provider: provider_data,
                       location: location_data,
-                      sel_date: curdate
+                      sel_date: data.sel_date
                     },
         datechangereq: data.chdatereq
       }
@@ -485,7 +486,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
 
-  goCheckin(data, location, chdatereq, type) {
+  goCheckin(data, location, currdata, chdatereq, type) {
 
     let provider_data = null;
     if (type === 'fav_provider') {
@@ -494,15 +495,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       provider_data = data.provider || null;
     }
 
-    this.setCheckinData(provider_data, location, chdatereq);
+    this.setCheckinData(provider_data, location, currdata, chdatereq);
 
 
   }
 
-  setCheckinData(provider, location, chdatereq = false) {
+  setCheckinData(provider, location, currdate, chdatereq = false) {
     const post_data = {
       'provider_data': null,
       'location_data': null,
+      'sel_date' : currdate,
       'chdatereq': chdatereq
     };
 

@@ -22,7 +22,7 @@
                         <li><span class="message" (click)="addWaitlistMessage(his_wait)">Message</span></li>
                         <li><span class="view-bill"
                           *ngIf="his_wait.waitlistStatus == 'done'" (click)="getWaitlistBill(his_wait)">Bill</span></li>
-                        <li><span class="rate"
+                        <li><span class="icon-star-filled"
                           *ngIf="his_wait.waitlistStatus == 'done'" (click)="rateService(his_wait)">Rate Service</span></li>
                     </ul>
                 </td>
