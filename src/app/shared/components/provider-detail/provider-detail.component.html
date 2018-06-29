@@ -187,9 +187,9 @@
                               <!-- <span class="cs-btn chk-btn" (click)="checkinClicked(loc.id, loc.place, false)" *ngIf="showcheckInButton()">Check-In</span> -->
                               <!-- <span class="cs-btn chk-btn cancel" *ngIf="!showcheckInButton()">Check-In</span> -->
                               <!-- <span class="cs-btn bt10" *ngIf="showcheckInButton()" (click)="checkinClicked(loc.id, loc.place, true)">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span> -->
-                              <span class="cs-btn chk-btn" (click)="checkinClicked(loc.id, loc.place, false)" *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton()">Check-In</span>
-                              <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton()">Check-In</span>
-                              <span class="cs-btn bt10" *ngIf="showcheckInButton()" (click)="checkinClicked(loc.id, loc.place, true)">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
+                              <span class="cs-btn chk-btn" (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)" *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(loc.services.length)">Check-In</span>
+                              <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(loc.services.length)">Check-In</span>
+                              <span class="cs-btn bt10" *ngIf="showcheckInButton(loc.services.length) && loc['estimatedtime_det']['cdate']" (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
                           </div>
                       </div>
                   </div>

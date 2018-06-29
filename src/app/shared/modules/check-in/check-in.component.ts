@@ -37,6 +37,7 @@ export class CheckInComponent implements OnInit {
     pass_loc;
     sel_queue_id;
     sel_queue_waitingmins;
+    sel_queue_servicetime = '';
     sel_queue_name;
     sel_queue_det;
     showfuturediv;
@@ -64,6 +65,7 @@ export class CheckInComponent implements OnInit {
     customer_data: any = [];
     page_source = null;
     main_heading;
+    dispCustomernote = false;
 
     constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -254,7 +256,8 @@ export class CheckInComponent implements OnInit {
             this.sel_ser_det = [];
             if (this.servicesjson.length > 0) {
               this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-              this.setServiceDetails(this.servicesjson[0]); // setting the details of the first service to the holding variable
+             // this.setServiceDetails(this.servicesjson[0]); // setting the details of the first service to the holding variable
+              this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
               this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
             }
         },
@@ -262,8 +265,16 @@ export class CheckInComponent implements OnInit {
         this.sel_ser = '';
       });
     }
-    setServiceDetails(serv) {
-     // console.log('serdet', serv);
+    setServiceDetails(curservid) {
+    // console.log('serdet', curservid, this.servicesjson);
+     let serv;
+     for (let i = 0; i < this.servicesjson.length; i++) {
+       // console.log('compare', this.servicesjson[i].id, curservid);
+       if (this.servicesjson[i].id === curservid) {
+         serv = this.servicesjson[i];
+         // console.log('serv', serv, serv.serviceDuration);
+       }
+     }
       this.sel_ser_det = [];
       if (serv.serviceDuration) {
         this.sel_ser_det = {
@@ -286,11 +297,13 @@ export class CheckInComponent implements OnInit {
           // console.log('q json', this.queuejson);
           if (this.queuejson.length > 0) {
               this.sel_queue_id = this.queuejson[0].id;
-              this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime;
+              this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
+              this.sel_queue_servicetime = this.queuejson[0].serviceTime || '';
               this.sel_queue_name = this.queuejson[0].name;
           } else {
               this.sel_queue_id = 0;
               this.sel_queue_waitingmins = 0;
+              this.sel_queue_servicetime = '';
               this.sel_queue_name = '';
           }
 
@@ -298,7 +311,9 @@ export class CheckInComponent implements OnInit {
     }
 
   handleServiceSel(obj) {
-    this.sel_ser = obj.id;
+   // console.log('serv', obj);
+    // this.sel_ser = obj.id;
+    this.sel_ser = obj;
     this.setServiceDetails(obj);
     this.queuejson = [];
     this.sel_queue_id = 0;
@@ -658,6 +673,13 @@ export class CheckInComponent implements OnInit {
 
     } else {
        this.api_error = derror;
+    }
+  }
+  handleNote() {
+    if (this.dispCustomernote) {
+      this.dispCustomernote = false;
+    } else {
+      this.dispCustomernote = true;
     }
   }
 }

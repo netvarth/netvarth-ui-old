@@ -459,12 +459,12 @@ export class ProviderDetailComponent implements OnInit {
     });
 
   }
-  checkinClicked(locid, locname, chdatereq) {
+  checkinClicked(locid, locname, cdate, chdatereq) {
     this.changedate_req = chdatereq;
-    this.showCheckin(locid, locname, 'consumer');
+    this.showCheckin(locid, locname, cdate, 'consumer');
   }
-  showCheckin(locid, locname, origin?) {
-    const  cdate = new Date();
+  showCheckin(locid, locname, curdate, origin?) {
+    /*const  cdate = new Date();
     const  mn = cdate.getMonth() + 1;
     const  dy = cdate.getDate();
     let mon = '';
@@ -479,7 +479,7 @@ export class ProviderDetailComponent implements OnInit {
     } else {
       day = '' + dy;
     }
-    const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
+    const curdate = cdate.getFullYear() + '-' + mon + '-' + day;*/
     const dialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
        panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
@@ -508,9 +508,9 @@ export class ProviderDetailComponent implements OnInit {
       }
     });
   }
-  showcheckInButton(obj) {
+  showcheckInButton(servcount?) {
     // console.log('ddd', this.settingsjson, this.settingsjson.onlineCheckIns, this.settings_exists, this.business_exists, this.service_exists, this.location_exists);
-    if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists) {
+    if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {
       return true;
     }
   }
@@ -559,6 +559,7 @@ export class ProviderDetailComponent implements OnInit {
 
           if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
             this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+            this.locationjson[locindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
             this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 1;
             if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
               this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
