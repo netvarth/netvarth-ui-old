@@ -33,6 +33,7 @@ export class KioskHomeComponent implements OnInit {
   phonePattern;
   cMod;
   loadingNow;
+  terminologies: any = [];
   showsearch_now = false;
   show_customernotfoundmsg = false;
   show_customerRegister = false;
@@ -54,7 +55,15 @@ export class KioskHomeComponent implements OnInit {
     this.loadingNow = false;
     this.cMod = 'main';
   }
+  /*getTerminologies() {
+    this.kiosk_services.getTerminoligies(this.customerDet,this.customerDet)
+    . subscribe (data => {
 
+    },
+    error => {
+
+    });
+  }*/
   getUserdetails() {
     this.userdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
     if (this.userdet)  {
@@ -79,6 +88,11 @@ export class KioskHomeComponent implements OnInit {
       this.shared_functions.openSnackBar('Please enter atleast the first 3 letters of your first name', {'panelClass': 'snackbarerror'});
       return false;
     }
+    if ( !this.namePattern.test(this.srch_fname)) {
+      this.shared_functions.openSnackBar('Name should contain only characters', {'panelClass': 'snackbarerror'});
+      return false;
+    }
+
     const data = {
       'firstName-eq': this.srch_fname,
       'primaryMobileNo-eq': this.srch_mobile
@@ -119,6 +133,9 @@ export class KioskHomeComponent implements OnInit {
     this.srch_mobile = '';
     this.reg_fname = '';
     this.reg_lname = '';
+    this.show_customernotfoundmsg = false;
+    this.show_customerRegister = false;
+    this.showsearch_now = false;
     console.log('cmod', this.cMod);
     if (this.cMod !== 'main') {
       if (!this.customer_found) {
