@@ -20,6 +20,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
   rate_value = 0;
   waitlist = null;
   newrating = true;
+  load_complete = false;
 
   constructor(
     public dialogRef: MatDialogRef<ConsumerRateServicePopupComponent>,
@@ -39,7 +40,8 @@ export class ConsumerRateServicePopupComponent implements OnInit {
 
   getRateByUser() {
     const params = {
-      account : this.waitlist.provider.id
+      account : this.waitlist.provider.id,
+      'uId-eq' : this.waitlist.ynwUuid
     };
 
     this.shared_services.getConsumerRateService(params)
@@ -50,10 +52,10 @@ export class ConsumerRateServicePopupComponent implements OnInit {
           this.rate_value = data[0]['stars'];
           this.newrating = false;
         }
-
+        this.load_complete = true;
       },
       error => {
-
+        this.load_complete = true;
       });
   }
 
