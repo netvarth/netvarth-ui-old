@@ -27,6 +27,8 @@ app-footer {
 }
 
 .row {
+    border: none !important;
+    
     @include respond-to(ynw-575) {
         margin-left: 0;
         margin-right: 0;

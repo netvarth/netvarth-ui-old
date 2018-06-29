@@ -1367,6 +1367,7 @@ header {
                             width: 60%;
                         }
                         
+                        // provider listing page estimated waiting time
                         .wt-tme {
                             display: flex;
                             align-items: center;
@@ -1445,6 +1446,7 @@ header {
                                 .est-time {
                                     color: $cc-mediumgray;
                                 }
+                                
                                 .time-data {
                                     font-weight: 600;
                                     position: relative;
@@ -1506,6 +1508,13 @@ header {
                                         top: 0;
                                     }
                                 }
+                            }
+                            .wt-msg {
+                                padding: 14px;
+                                border: 2px dashed $cc-warning;
+                                color: $cc-warning;
+                                font-weight: 600;
+                                display: table;
                             }
                         }
                     }
@@ -2054,9 +2063,6 @@ header {
                     display: flex;
                     border-top: 2px solid $cc-body;
                     
-                    @include respond-to(ynw-767) {
-                        flex-direction: column;
-                    }
                     @include respond-to(ynw-575) {
                         flex-direction: column;
                     }
@@ -2072,12 +2078,22 @@ header {
                             width: 70%;
                         }
                         
+                        // detail page estimate waiting time
                         .wt-tme {
                             display: flex;
                             align-items: center;
                             
+                            @include respond-to(ynw-767) {
+                                align-items: flex-start;
+                                flex-direction: column;
+                            }
                             @include respond-to(ynw-575) {
                                 justify-content: center;
+                                align-items: center;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                align-items: flex-start;
+                                flex-direction: column;
                             }
                             
                             .o-now {
@@ -2091,6 +2107,17 @@ header {
                                 font-weight: 600;
                                 margin-right: 30px;
                                 
+                                @include respond-to(ynw-767) {
+                                    height: 30px;
+                                    margin-right: 0;
+                                    margin-bottom: 15px;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    height: 30px;
+                                    margin-right: 0;
+                                    margin-bottom: 15px;
+                                }
+                                
                                 &:after {
                                     position: absolute;
                                     content: "";
@@ -2102,20 +2129,87 @@ header {
                                     border-top: 25px solid transparent;
                                     border-bottom: 25px solid transparent;  
                                     border-left: 15px solid $green;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        @include rotate(90);
+                                        bottom: 0;
+                                        left: 50%;
+                                        margin-left: -6px;
+                                        top: 6px;
+                                    }
+                                    @include respond-to(ynw-768-991) {
+                                        @include rotate(90);
+                                        bottom: 0;
+                                        left: 50%;
+                                        margin-left: -6px;
+                                        top: 6px;
+                                    }
                                 }
                             }
                             .timing {
                                 display: flex;
                                 flex-direction: column;
                                 
+                                @include respond-to(ynw-575) {
+                                    text-align: center;
+                                }
                                 
                                 .est-time {
                                     color: $cc-mediumgray;
                                 }
+                                
                                 .time-data {
                                     font-weight: 600;
                                     position: relative;
                                     padding-left: 20px;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        display: inline-flex;
+                                        align-items: center;
+                                    }
+                                    @include respond-to(ynw-575) {
+                                        display: inline-flex;
+                                        margin: 0 auto;
+                                        align-items: center;
+                                    }
+                                    @include respond-to(ynw-768-991) {
+                                        display: inline-flex;
+                                        align-items: center;
+                                    }
+                                    @include respond-to(ynw-992-1199) {
+                                        display: inline-flex;
+                                        align-items: center;
+                                    }
+                                    @include respond-to(ynw-1200) {
+                                        display: inline-flex;
+                                        align-items: center;
+                                    }
+                                    
+                                    .icon-question {
+                                        vertical-align: middle;
+                                        display: inline-block;
+                                        
+                                        @include respond-to(ynw-767) {
+                                            height: 16px;
+                                            margin-left: 5px;
+                                        }
+                                        @include respond-to(ynw-575) {
+                                            height: 14px;
+                                            margin-left: 5px;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            height: 16px;
+                                            margin-left: 5px;
+                                        }
+                                        @include respond-to(ynw-992-1199) {
+                                            height: 16px;
+                                            margin-left: 5px;
+                                        }
+                                        @include respond-to(ynw-1200) {
+                                            height: 16px;
+                                            margin-left: 5px;
+                                        }
+                                    }
                                     
                                     &:before {
                                         position: absolute;
@@ -2125,6 +2219,13 @@ header {
                                         top: 0;
                                     }
                                 }
+                            }
+                            .wt-msg {
+                                padding: 14px;
+                                border: 2px dashed $cc-warning;
+                                color: $cc-warning;
+                                font-weight: 600;
+                                display: table;
                             }
                         }
                         
@@ -2201,47 +2302,64 @@ header {
                     }
                     .bt-r {
                         padding: 20px;
-                        width: 25%;
+                        width: 35%;
                         
                         @include respond-to(ynw-767) {
-                            width: 100%;
+                            width: 50%;
                             text-align: left;
-                            padding-top: 0;
                         }
                         @include respond-to(ynw-575) {
                             text-align: center;
+                            width: 100%;
+                            padding-top: 0;
                         }
                         @include respond-to(ynw-768-991) {
-                            width: 30%;
+                            width: 40%;
+                        }
+                        @include respond-to(ynw-1200) {
+                            width: 40%;
                         }
                         
                         .chk-btn {
                             margin-bottom: 10px;
                             width: 100%;
                             
+                            
                             @include respond-to(ynw-767) {
-                                width: 250px;
-                                margin-right: auto;
+                                width: 80%;
+                                margin-right: 0;
+                                margin-left: auto;
                             }
                             @include respond-to(ynw-575) {
-                                width: auto;
+                                width: 75%;
+                                margin: 0 auto;
                             }
                             @include respond-to(ynw-768-991) {
                                 width: 100%;
+                            }
+                            @include respond-to(ynw-992-1199) {
+                                width: 200px;
+                                margin-left: auto;
+                            }
+                            @include respond-to(ynw-1200) {
+                                width: 200px;
+                                margin-left: auto;
                             }
                         }
                         
                         .bt10 {
                             text-align: right;
+                            display: block;
                             margin-right: 15px;
                             
                             @include respond-to(ynw-767) {
                                 margin-right: 0;
                             }
-                            @include respond-to(ynw-768-991) {
-                                margin-right: 0;
+                            @include respond-to(ynw-575) {
+                                text-align: center;
+                                margin-top: 10px;
                             }
-                            
+       
                             &.blk {
                                 color: $cc-darkgray;
                                 margin-bottom: 10px;
@@ -2393,139 +2511,177 @@ header {
         }        
         
         .outer {
+            padding: 20px;
+            
             .list {
                 display: flex;
                 font-size: .875rem;
-                margin-bottom: 15px;
-                border-bottom: 1px solid $cc-body;
-                padding-bottom: 15px;
+                margin-bottom: 20px;
+                flex-direction: column;
                 
-                @include respond-to(ynw-767) {
-                    flex-direction: column;
-                }
-                
-                .lt {
-                    width: 40%;
+                .header {
+                    display: flex;
+                    align-items: center;
+                    min-height: 30px;
+                    padding: 10px;
+                    border: 1px solid $cc-ash;
+                    border-bottom: 0;
+                    margin-bottom: 0;
                     
-                    @include respond-to(ynw-767) {
-                        width: 100%;
-                        margin-bottom: 15px;
-                    }
-                    
-                    h3 {
-                        font-size: 1rem;
-                        font-weight: 600;
-                        margin-bottom: 3px;
+                    .title {
+                        h3 {
+                            font-size: 1.125rem;
+                            font-weight: 600;
+                            margin-bottom: 0px;
+                            display: table;
+                        }
                     }
                     .location {
-                        margin-bottom: 10px;
-                        display: block;
-                        font-weight: 500;
-                        color: $cc-gray;
-                    }
-                    .est-time {
-                        font-weight: 500;
-                        display: flex;
-                        flex-wrap: wrap;
-                        color: $cc-gray;
+                        margin-left: 5px;
                         
-                        .ttle {
-                            margin-right: 10px;
-                            flex-shrink: 0;
-                        }
-                        .time {
-                            color: $linkblack;
-                            font-weight: 600;
-                            flex-shrink: 1;
-                            
-                            .min {
-                                color: $green;
-                            }
-                            .date {
-                                color: $cc-warning;
-                            }
+                        .icon-location {
+                            color: $linkblue;
+                            font-weight: 500;
+                            padding-left: 16px;
+                            @include align-icon;
+                            cursor: pointer;
                         }
                     }
                 }
-                .rt {
-                    width: 60%;
+                
+                .details {
                     display: flex;
-                    align-items: flex-end;
+                    flex-direction: column;
                     
-                    @include respond-to(ynw-767) {
-                        width: 100%;
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
                     }
                     
-                    .controls {
-                        margin: 0;
-                        margin-left: auto;
-                        padding: 0;
+                    .lt {
+                        font-weight: 500;
                         display: flex;
                         flex-wrap: wrap;
-                        justify-content: flex-end;
+                        border: 1px solid $cc-ash;
+                        border-bottom: none;
+                        border-right: none;
                         
-                        @include respond-to(ynw-767) {
-                            margin-left: 0;
-                        }
-                        @include respond-to(ynw-575) {
-                            justify-content: flex-start;
-                        }
-                        
-                        li {
-                            list-style: none;
-                            margin: 0 5px;
-                            font-weight: 500;
+                        .lt0 {
+                            padding: 10px;
+                            border: 1px solid $cc-ash;
+                            border-top: none;
+                            border-left: none;
+                            flex-grow: 1;
+                            margin: 0;
                             
-                            @include respond-to(ynw-767) {
-                                margin-top: 5px;
-                                margin-left: 0;
-                            }
-                            @include respond-to(ynw-768-991) {
-                                margin-top: 5px;
-                                margin-left: 0;
-                            }
                             
-                            span {
-                                padding: 3px;
+                            .service, .forwhom, .time, .token, .persons {
+                                font-weight: 600;
+                                
+                                &.now {
+                                    color: $green;
+                                }
+                            }
+                            .forwhom {
                                 position: relative;
-                                padding-left: 25px;
-                                padding-right: 8px;
-                                cursor: pointer;
-                                @include transition(all 300ms);
-                                color: $linkblack;
+                                margin-right: 10px;
                                 
-                                &:before {
+                                &:after {
                                     position: absolute;
-                                    content: "";
-                                    left: 5px;
-                                    top: 4px;
-                                    @include font-custom;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    width: 16px;
-                                    height: 16px;
+                                    content: ",";
+                                    right: -5px;
                                 }
                                 
-                                &:hover {
-                                    color: $linkblue;
-                                }
-                                
-                                &.message {
-                                    &:before {
-                                        content: "\53";
+                                &:last-child {
+                                    &:after {
+                                        display: none;
                                     }
                                 }
-                                &.add-fav {
+                            }
+                            
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                    
+                    .rt {
+                        .controls {
+                            margin: 0;
+                            margin-left: auto;
+                            padding: 0;
+                            display: flex;
+                            flex-direction: column;
+                            flex-direction: row;
+                            justify-content: flex-start;
+                            border: 1px solid$cc-ash;
+                            border-top: none;
+                            
+
+                            @include respond-to(ynw-767) {
+                                margin-left: 0;
+                            }
+                            @include respond-to(ynw-575) {
+                                justify-content: flex-start;
+                                flex-wrap: wrap;
+                                flex-direction: row;
+                            }
+
+                            li {
+                                list-style: none;
+                                margin: 0 5px;
+                                font-weight: 500;
+                                display: flex;
+                                align-items: center;
+
+                                span {
+                                    padding: 8px;
+                                    position: relative;
+                                    padding-left: 25px;
+                                    padding-right: 8px;
+                                    cursor: pointer;
+                                    @include transition(all 300ms);
+                                    color: $linkblack;
+
                                     &:before {
-                                        content: "\26";
+                                        position: absolute;
+                                        content: "";
+                                        left: 5px;
+                                        top: 50%;
+                                        margin-top: -8px;
+                                        @include font-custom;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        width: 16px;
+                                        height: 16px;
+                                    }
+
+                                    &:hover {
+                                        color: $linkblue;
+                                    }
+
+                                    &.message {
+                                        &:before {
+                                            content: "\53";
+                                        }
+                                    }
+                                    &.add-fav {
+                                        &:before {
+                                            content: "\26";
+                                        }
+                                    }
+                                    &.cancel {
+                                        @include align-icon;
+                                        
+                                        &:before {
+                                            content: "\69";
+                                            font-size: .65rem;
+                                            height: 18px;
+                                        }
                                     }
                                 }
-                                &.cancel {
-                                    &:before {
-                                        content: "\69";
-                                        font-size: .65rem;
-                                    }
+                                &:last-child {
+                                    margin-bottom: 0;
                                 }
                             }
                         }
@@ -2534,8 +2690,25 @@ header {
                 
                 &:last-child {
                     margin-bottom: 0;
-                    border: none;
-                    padding: 0;
+                }
+                &.cancelled {
+                    .header {
+                        .cancel-label {
+                            background: $cc-darkgray;
+                            color: $white;
+                            padding: 1px 5px;
+                            float: left;
+                            font-size: .75rem;
+                            font-weight: 600;
+                            text-transform: uppercase;
+                            margin-left: auto;
+
+                            @include respond-to(ynw-400) {
+                                float: none;
+                                margin-left: 10px;
+                            }
+                        }
+                    }
                 }
             }
         }

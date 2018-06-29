@@ -46,7 +46,10 @@ export class CheckInComponent implements OnInit {
     minDate;
     maxDate;
     consumerNote;
+    showCreateMember = false;
     sel_checkindate;
+    hold_sel_checkindate;
+    sel_dayname;
     account_id;
     retval;
     futuredate_allowed = false;
@@ -60,12 +63,13 @@ export class CheckInComponent implements OnInit {
     isFuturedate = false;
     addmemberobj = {'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': ''};
     payment_popup = null;
-    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     customer_data: any = [];
     page_source = null;
     main_heading;
     dispCustomernote = false;
+    CweekDays = {0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat'};
 
     constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -148,6 +152,7 @@ export class CheckInComponent implements OnInit {
         this.sel_checkindate = this.data.moreparams.sel_date;
 
       }
+      this.hold_sel_checkindate = this.sel_checkindate;
       this.getServicebyLocationId (this.sel_loc, this.sel_checkindate);
 
       if ( this.page_source !== 'provider_checkin') {
@@ -388,9 +393,10 @@ export class CheckInComponent implements OnInit {
   handleCheckinClicked() {
     this.resetApi();
     let error = '';
+    // if (this.step === 1) {
+    //  this.step = 2;
+    // } else
     if (this.step === 1) {
-      this.step = 2;
-    } else if (this.step === 2) {
       if (this.sel_ser_det.isPrePayment) {
         // console.log('serv det', this.sel_ser_det);
         if (this.paytype === '') {
@@ -418,8 +424,8 @@ export class CheckInComponent implements OnInit {
           'id': this.sel_ser
         },
         'consumerNote': this.consumerNote,
-        'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
-        'revealPhone': this.revealphonenumber
+        'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))/*,
+        'revealPhone': this.revealphonenumber*/
     };
 
     if (this.page_source === 'provider_checkin') {
@@ -505,6 +511,7 @@ export class CheckInComponent implements OnInit {
       break;
       case 3:
       this.main_heading = 'Family Members';
+      this.showCreateMember = false;
       break;
     }
     this.step = cstep;
@@ -514,11 +521,11 @@ export class CheckInComponent implements OnInit {
   }
   showCheckinButtonCaption() {
     let caption = '';
-    if (this.step === 1) {
+    /*if (this.step === 1) {
       caption = 'Proceed to Check-in';
-    } else if (this.step === 2) {
+    } else if (this.step === 2) {*/
       caption = 'Confirm Check-in';
-    }
+   // }
     return caption;
   }
 
@@ -583,8 +590,9 @@ export class CheckInComponent implements OnInit {
 
   addMember() {
     this.resetApi();
-    this.step = 4; // show add member section
-    this.main_heading = 'Add Family Member';
+    this.showCreateMember = true;
+    // this.step = 4; // show add member section
+    // this.main_heading = 'Add Family Member';
   }
 
   resetApi() {
@@ -681,5 +689,26 @@ export class CheckInComponent implements OnInit {
     } else {
       this.dispCustomernote = true;
     }
+  }
+
+  calculateDate(days) {
+    const date = new Date(this.sel_checkindate);
+    const newdate = new Date(date);
+
+    newdate.setDate(newdate.getDate() + days);
+
+    const dd = newdate.getDate();
+    const mm = newdate.getMonth() + 1;
+    const y = newdate.getFullYear();
+
+    const ndate = y + '-' + mm + '-' + dd;
+
+    const strtDt = new Date(this.hold_sel_checkindate);
+    const nDt = new Date(ndate);
+    if (nDt >= strtDt ) {
+      this.sel_checkindate =  ndate;
+      this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    }
+    // console.log('new date', this.hold_sel_checkindate, this.sel_checkindate);
   }
 }

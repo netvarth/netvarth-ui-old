@@ -337,3 +337,15 @@ $break-1200: 1200px;
     }
     
 }
+
+// Align icons to text ***
+@mixin align-icon{
+    position: relative;
+    
+    &:before {
+        display: flex;
+        align-items: center;
+        height: 20px;
+        position: absolute;
+    }
+}

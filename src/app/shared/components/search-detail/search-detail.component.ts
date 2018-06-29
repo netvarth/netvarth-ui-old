@@ -71,6 +71,7 @@ export class SearchDetailComponent implements OnInit {
   public passrefinedfilters;
   public showopnow = 0;
   public subdomainleft;
+  ratingholder;
   changedate_req = false;
   specialization_exists = false;
   location_cnt = 0;
@@ -1123,7 +1124,13 @@ export class SearchDetailComponent implements OnInit {
           }
         } else {
           const curindx = this.searchrefineresult_arr[sec_indx][fieldname].length;
-          this.searchrefineresult_arr[sec_indx][fieldname][curindx] = new Array(selval, fieldtype);
+          if (fieldtype === 'Rating') { // done to handle the case of rating cleared in refined search
+            if (selval !== '') {
+              this.searchrefineresult_arr[sec_indx][fieldname][curindx] = new Array(selval, fieldtype);
+            }
+          } else {
+            this.searchrefineresult_arr[sec_indx][fieldname][curindx] = new Array(selval, fieldtype);
+          }
         }
       }
     } else {
@@ -1338,6 +1345,8 @@ export class SearchDetailComponent implements OnInit {
   }*/
   handleratingClick(obj) {
     this.searchButtonClick = false;
+    // this.ratingholder = obj.selectedrating;
+    // console.log('rating holder', this.ratingholder);
     this.handle_optionclick(obj.cloudindex, 'Rating', obj.selectedrating, false);
   }
 

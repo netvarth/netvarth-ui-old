@@ -443,10 +443,9 @@ export class ProviderDetailComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
       data: {
-        'message' : 'Do you want to remove this provider from your favourite list?',
-        'heading' : 'Confirm'
+        'message' : 'Do you want to remove this provider from your favourite list?'
       }
     });
 

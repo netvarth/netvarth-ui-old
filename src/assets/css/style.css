@@ -1016,10 +1016,12 @@ app-footer {
 .cont-outer {
   padding-bottom: 40px; }
 
-@media only screen and (max-width: 575px) {
-  .row {
-    margin-left: 0;
-    margin-right: 0; } }
+.row {
+  border: none !important; }
+  @media only screen and (max-width: 575px) {
+    .row {
+      margin-left: 0;
+      margin-right: 0; } }
 
 .row[_ngcontent-c20] {
   border: none; }
@@ -2654,7 +2656,510 @@ header {
     .forgotpasswordmainclass .mat-dialog-content .servicedet_outer,
     .commonpopupmainclass .mat-dialog-content .servicedet_outer,
     .googlemainmappopup .mat-dialog-content .servicedet_outer, .outer-card .mat-dialog-content .servicedet_outer, .consumerpopupmainclass .mat-dialog-content .servicedet_outer {
-      display: flex; }
+      display: flex;
+      margin-bottom: 0px; }
+      .signupmainclass .mat-dialog-content .servicedet_outer .img-outer,
+      .loginmainclass .mat-dialog-content .servicedet_outer .img-outer,
+      .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer,
+      .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer,
+      .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer,
+      .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer, .outer-card .mat-dialog-content .servicedet_outer .img-outer, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer {
+        margin-right: 15px; }
+        .signupmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img,
+        .loginmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img,
+        .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img,
+        .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img,
+        .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img,
+        .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer .pro-img, .outer-card .mat-dialog-content .servicedet_outer .img-outer .pro-img, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img {
+          width: 80px;
+          height: 80px;
+          margin-bottom: 10px;
+          cursor: pointer; }
+          .signupmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img img,
+          .loginmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img img,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img img,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img img,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img img,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer .pro-img img, .outer-card .mat-dialog-content .servicedet_outer .img-outer .pro-img img, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .pro-img img {
+            width: 100%; }
+        .signupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal,
+        .loginmainclass .mat-dialog-content .servicedet_outer .img-outer .gal,
+        .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer .gal,
+        .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer .gal,
+        .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal,
+        .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer .gal, .outer-card .mat-dialog-content .servicedet_outer .img-outer .gal, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal {
+          margin: 0;
+          padding: 0;
+          width: 80px; }
+          .signupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li,
+          .loginmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer .gal li, .outer-card .mat-dialog-content .servicedet_outer .img-outer .gal li, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li {
+            list-style: none;
+            margin-bottom: 10px; }
+            .signupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx,
+            .loginmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx, .outer-card .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx {
+              position: relative;
+              width: 80px;
+              height: 80px;
+              cursor: pointer; }
+              .signupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx .overlay,
+              .loginmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx .overlay,
+              .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx .overlay,
+              .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx .overlay,
+              .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx .overlay,
+              .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx .overlay, .outer-card .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx .overlay, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx .overlay {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                color: #fff;
+                font-weight: 600;
+                visibility: visible;
+                opacity: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.125rem; }
+              .signupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx img,
+              .loginmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx img,
+              .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx img,
+              .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx img,
+              .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx img,
+              .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx img, .outer-card .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx img, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li .galbx img {
+                width: 100%;
+                height: 100%;
+                position: absolute; }
+            .signupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li:last-child,
+            .loginmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li:last-child,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li:last-child,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li:last-child,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li:last-child,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .img-outer .gal li:last-child, .outer-card .mat-dialog-content .servicedet_outer .img-outer .gal li:last-child, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .img-outer .gal li:last-child {
+              margin-bottom: 0; }
+      .signupmainclass .mat-dialog-content .servicedet_outer .outer,
+      .loginmainclass .mat-dialog-content .servicedet_outer .outer,
+      .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer,
+      .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer,
+      .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer,
+      .googlemainmappopup .mat-dialog-content .servicedet_outer .outer, .outer-card .mat-dialog-content .servicedet_outer .outer, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer {
+        display: flex;
+        flex-direction: column;
+        width: 100%; }
+        .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1,
+        .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2,
+        .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3,
+        .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1,
+        .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2,
+        .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3,
+        .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1,
+        .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2,
+        .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3,
+        .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1,
+        .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2,
+        .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3,
+        .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1,
+        .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2,
+        .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3,
+        .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 {
+          width: 100%;
+          display: flex;
+          margin-bottom: 15px; }
+          .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .name,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .duration,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .name,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .duration,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .name,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .duration,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .name,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .duration,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .description, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .name, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .duration, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .price, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .description, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .name, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .duration, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .price, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .description, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .name, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .duration, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .price, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .description, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .name, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .duration, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .price, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .description, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description {
+            width: 50%; }
+            .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .caption, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .caption,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .caption,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .caption,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .caption,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .name .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .duration .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .price .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .description .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .name .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .duration .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .price .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .description .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .name .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .duration .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .price .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .description .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .name .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .duration .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .price .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .caption,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .description .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .name .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .duration .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .price .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .description .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .name .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .duration .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .price .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .description .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .name .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .duration .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .price .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .description .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .name .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .duration .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .price .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .caption, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .description .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .caption, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .caption {
+              display: block;
+              color: #999999; }
+            .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .dispvalue, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .dispvalue,
+            .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .dispvalue,
+            .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .dispvalue,
+            .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .dispvalue,
+            .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .name .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .duration .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .price .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .description .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .name .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .duration .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .price .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .description .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .name .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .duration .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .price .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .description .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .name .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .duration .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .price .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .dispvalue,
+            .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .description .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .name .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .duration .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .price .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .description .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .name .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .duration .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .price .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .description .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .name .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .duration .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .price .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .description .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .name .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .duration .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .price .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .dispvalue, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .description .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .name .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .duration .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .name .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .duration .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .name .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .duration .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .name .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .duration .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment .dispvalue, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description .dispvalue {
+              font-weight: 600;
+              color: #222223; }
+          .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment, .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .price,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer1 .description,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .price,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer2 .description,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .price,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer3 .description,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .price,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment,
+          .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4 .description, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .price, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment, .outer-card .mat-dialog-content .servicedet_outer .outer .outer1 .description, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .price, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment, .outer-card .mat-dialog-content .servicedet_outer .outer .outer2 .description, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .price, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment, .outer-card .mat-dialog-content .servicedet_outer .outer .outer3 .description, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .price, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4 .description, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .price, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .prepayment, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer1 .description, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .price, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .prepayment, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer2 .description, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .price, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .prepayment, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer3 .description, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .price, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .prepayment, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 .description {
+            width: 100%; }
+        .signupmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .loginmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .moreoptionsmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .forgotpasswordmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .commonpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4,
+        .googlemainmappopup .mat-dialog-content .servicedet_outer .outer .outer4, .outer-card .mat-dialog-content .servicedet_outer .outer .outer4, .consumerpopupmainclass .mat-dialog-content .servicedet_outer .outer .outer4 {
+          margin-bottom: 0; }
+      .signupmainclass .mat-dialog-content .servicedet_outer.ng-star-inserted,
+      .loginmainclass .mat-dialog-content .servicedet_outer.ng-star-inserted,
+      .moreoptionsmainclass .mat-dialog-content .servicedet_outer.ng-star-inserted,
+      .forgotpasswordmainclass .mat-dialog-content .servicedet_outer.ng-star-inserted,
+      .commonpopupmainclass .mat-dialog-content .servicedet_outer.ng-star-inserted,
+      .googlemainmappopup .mat-dialog-content .servicedet_outer.ng-star-inserted, .outer-card .mat-dialog-content .servicedet_outer.ng-star-inserted, .consumerpopupmainclass .mat-dialog-content .servicedet_outer.ng-star-inserted {
+        margin-bottom: 0px; }
     .signupmainclass .mat-dialog-content .c-checkin .d-tbl .table,
     .loginmainclass .mat-dialog-content .c-checkin .d-tbl .table,
     .moreoptionsmainclass .mat-dialog-content .c-checkin .d-tbl .table,
@@ -6323,152 +6828,136 @@ footer.dashb {
         .bcrumb a.bt6:hover:before, .bcrumb span.bt6:hover:before {
           display: none; }
 
-.content .title {
-  width: 100%;
-  height: 80px;
-  -webkit-border-top-right-radius: 10px;
-  border-top-right-radius: 10px;
-  -webkit-border-top-left-radius: 10px;
-  border-top-left-radius: 10px;
-  background-clip: padding-box;
-  background: #e0e0e0;
-  /* Old browsers */
-  background: -moz-linear-gradient(top, #e0e0e0 0%, #f2f2f2 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e0e0e0), color-stop(100%, #f2f2f2));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #e0e0e0 0%, #f2f2f2 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #e0e0e0 0%, #f2f2f2 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #e0e0e0 0%, #f2f2f2 100%);
-  /* IE10+ */
-  background: linear-gradient(to bottom, #e0e0e0 0%, #f2f2f2 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 );
-  /* IE6-9 */
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center; }
-  @media only screen and (max-width: 575px) {
-    .content .title {
-      height: 60px; } }
-  .content .title h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-size: 1.75rem;
-    margin-bottom: 0;
-    font-weight: 500 !important; }
-    @media only screen and (max-width: 767px) {
-      .content .title h1 {
-        font-size: 1.5rem; } }
-@media only screen and (max-width: 767px) {
-  .content .col-a.pl0, .content .col-a.pr0, .content .col-b.pl0, .content .col-b.pr0 {
-    padding: 0; } }
-@media (min-width: 768px) and (max-width: 991px) {
-  .content .col-a.pl0, .content .col-a.pr0, .content .col-b.pl0, .content .col-b.pr0 {
-    padding: 0; } }
-.content .col-a .card, .content .col-b .card {
-  margin-bottom: 30px; }
-  .content .col-a .card h2, .content .col-b .card h2 {
-    font-size: 1.25rem;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    margin-bottom: 20px;
-    color: #4c4c4c; }
-    .content .col-a .card h2 a, .content .col-b .card h2 a {
-      color: #676d7c;
-      vertical-align: middle;
-      height: 16px;
-      font-size: 1rem;
-      display: inline-block; }
-  .content .col-a .card .no-dta p, .content .col-b .card .no-dta p {
-    font-size: 1rem; }
-  .content .col-a .card .pubs, .content .col-b .card .pubs {
-    margin-bottom: 30px; }
-    .content .col-a .card .pubs .wbox p, .content .col-b .card .pubs .wbox p {
-      margin-bottom: 10px; }
-      .content .col-a .card .pubs .wbox p:last-child, .content .col-b .card .pubs .wbox p:last-child {
-        margin-bottom: 0; }
-  .content .col-a .card .adwds, .content .col-b .card .adwds {
-    color: #666; }
-    .content .col-a .card .adwds p, .content .col-b .card .adwds p {
-      font-style: italic; }
-  .content .col-a .card .cd-t, .content .col-b .card .cd-t {
-    padding: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #dbdbdb; }
-    .content .col-a .card .cd-t h2, .content .col-b .card .cd-t h2 {
-      text-align: left; }
-    .content .col-a .card .cd-t .basic-i .warning, .content .col-b .card .cd-t .basic-i .warning {
+.content {
+  /*.title {
       width: 100%;
-      text-align: center; }
-      .content .col-a .card .cd-t .basic-i .warning i, .content .col-b .card .cd-t .basic-i .warning i {
-        font-size: 1.5625rem;
-        color: #fda60d; }
-      .content .col-a .card .cd-t .basic-i .warning .bt3, .content .col-b .card .cd-t .basic-i .warning .bt3 {
-        margin-bottom: 5px; }
-      .content .col-a .card .cd-t .basic-i .warning p, .content .col-b .card .cd-t .basic-i .warning p {
+      height: 80px;
+      @include border-top-radius(10px);
+      @include linear-gradient(#e0e0e0, #f2f2f2);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      @include respond-to(ynw-575) {height: 60px;}
+      
+      h1 {
+          @include font-medium;
+          font-size: 1.75rem;
+          margin-bottom: 0;
+          font-weight: 500 !important;
+          
+          @include respond-to(ynw-767) {
+              font-size: 1.5rem;
+          }
+      }
+  }*/ }
+  @media only screen and (max-width: 767px) {
+    .content .col-a.pl0, .content .col-a.pr0, .content .col-b.pl0, .content .col-b.pr0 {
+      padding: 0; } }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .content .col-a.pl0, .content .col-a.pr0, .content .col-b.pl0, .content .col-b.pr0 {
+      padding: 0; } }
+  .content .col-a .card, .content .col-b .card {
+    margin-bottom: 30px; }
+    .content .col-a .card h2, .content .col-b .card h2 {
+      font-size: 1.25rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #4c4c4c; }
+      .content .col-a .card h2 a, .content .col-b .card h2 a {
+        color: #676d7c;
+        vertical-align: middle;
+        height: 16px;
         font-size: 1rem;
-        color: #666; }
-        .content .col-a .card .cd-t .basic-i .warning p span, .content .col-b .card .cd-t .basic-i .warning p span {
-          display: block; }
-        .content .col-a .card .cd-t .basic-i .warning p.smlft, .content .col-b .card .cd-t .basic-i .warning p.smlft {
-          font-size: .75rem; }
-  .content .col-a .card .cd-b, .content .col-b .card .cd-b {
-    border: none;
-    padding-top: 20px; }
-    .content .col-a .card .cd-b .loc-i .warning, .content .col-b .card .cd-b .loc-i .warning {
-      text-align: center;
-      padding: 20px; }
-      .content .col-a .card .cd-b .loc-i .warning i, .content .col-b .card .cd-b .loc-i .warning i {
-        font-size: 1.5625rem;
-        color: #fda60d; }
-      .content .col-a .card .cd-b .loc-i .warning .bt3, .content .col-b .card .cd-b .loc-i .warning .bt3 {
-        margin-bottom: 5px; }
-      .content .col-a .card .cd-b .loc-i .warning p, .content .col-b .card .cd-b .loc-i .warning p {
-        font-size: 1rem;
-        color: #666; }
-        .content .col-a .card .cd-b .loc-i .warning p span, .content .col-b .card .cd-b .loc-i .warning p span {
-          display: block; }
-        .content .col-a .card .cd-b .loc-i .warning p.smlft, .content .col-b .card .cd-b .loc-i .warning p.smlft {
-          font-size: .75rem; }
-  .content .col-a .card .ai-table p, .content .col-b .card .ai-table p {
-    font-size: 1rem; }
-  .content .col-a .card .ai-table .tbl-dta, .content .col-b .card .ai-table .tbl-dta {
-    border: 1px solid #f2f2f2; }
-    .content .col-a .card .ai-table .tbl-dta .tbl-ai, .content .col-b .card .ai-table .tbl-dta .tbl-ai {
-      margin: 0;
-      padding: 0; }
-      .content .col-a .card .ai-table .tbl-dta .tbl-ai li, .content .col-b .card .ai-table .tbl-dta .tbl-ai li {
-        list-style: none;
-        display: flex;
-        border-bottom: 1px solid #f2f2f2;
-        height: 50px;
-        align-items: center;
-        padding: 0 20px; }
-        .content .col-a .card .ai-table .tbl-dta .tbl-ai li h3, .content .col-b .card .ai-table .tbl-dta .tbl-ai li h3 {
-          font-size: .875rem;
-          text-transform: uppercase;
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 500;
-          margin: 0; }
-        .content .col-a .card .ai-table .tbl-dta .tbl-ai li .ad-btn, .content .col-b .card .ai-table .tbl-dta .tbl-ai li .ad-btn {
-          position: relative;
-          width: 24px;
-          height: 24px; }
-          .content .col-a .card .ai-table .tbl-dta .tbl-ai li .ad-btn:before, .content .col-b .card .ai-table .tbl-dta .tbl-ai li .ad-btn:before {
-            position: absolute;
-            font-family: "custom-ynw" !important;
-            content: "\45";
-            left: 0;
-            top: -6px;
-            width: 100%;
-            height: 100%;
-            font-size: 1.5rem; }
-        .content .col-a .card .ai-table .tbl-dta .tbl-ai li:last-child, .content .col-b .card .ai-table .tbl-dta .tbl-ai li:last-child {
-          border: none; }
+        display: inline-block; }
+    .content .col-a .card .no-dta p, .content .col-b .card .no-dta p {
+      font-size: 1rem; }
+    .content .col-a .card .pubs, .content .col-b .card .pubs {
+      margin-bottom: 30px; }
+      .content .col-a .card .pubs .wbox p, .content .col-b .card .pubs .wbox p {
+        margin-bottom: 10px; }
+        .content .col-a .card .pubs .wbox p:last-child, .content .col-b .card .pubs .wbox p:last-child {
+          margin-bottom: 0; }
+    .content .col-a .card .adwds, .content .col-b .card .adwds {
+      color: #666; }
+      .content .col-a .card .adwds p, .content .col-b .card .adwds p {
+        font-style: italic; }
+    .content .col-a .card .cd-t, .content .col-b .card .cd-t {
+      padding: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dbdbdb; }
+      .content .col-a .card .cd-t h2, .content .col-b .card .cd-t h2 {
+        text-align: left; }
+      .content .col-a .card .cd-t .basic-i .warning, .content .col-b .card .cd-t .basic-i .warning {
+        width: 100%;
+        text-align: center; }
+        .content .col-a .card .cd-t .basic-i .warning i, .content .col-b .card .cd-t .basic-i .warning i {
+          font-size: 1.5625rem;
+          color: #fda60d; }
+        .content .col-a .card .cd-t .basic-i .warning .bt3, .content .col-b .card .cd-t .basic-i .warning .bt3 {
+          margin-bottom: 5px; }
+        .content .col-a .card .cd-t .basic-i .warning p, .content .col-b .card .cd-t .basic-i .warning p {
+          font-size: 1rem;
+          color: #666; }
+          .content .col-a .card .cd-t .basic-i .warning p span, .content .col-b .card .cd-t .basic-i .warning p span {
+            display: block; }
+          .content .col-a .card .cd-t .basic-i .warning p.smlft, .content .col-b .card .cd-t .basic-i .warning p.smlft {
+            font-size: .75rem; }
+    .content .col-a .card .cd-b, .content .col-b .card .cd-b {
+      border: none;
+      padding-top: 20px; }
+      .content .col-a .card .cd-b .loc-i .warning, .content .col-b .card .cd-b .loc-i .warning {
+        text-align: center;
+        padding: 20px; }
+        .content .col-a .card .cd-b .loc-i .warning i, .content .col-b .card .cd-b .loc-i .warning i {
+          font-size: 1.5625rem;
+          color: #fda60d; }
+        .content .col-a .card .cd-b .loc-i .warning .bt3, .content .col-b .card .cd-b .loc-i .warning .bt3 {
+          margin-bottom: 5px; }
+        .content .col-a .card .cd-b .loc-i .warning p, .content .col-b .card .cd-b .loc-i .warning p {
+          font-size: 1rem;
+          color: #666; }
+          .content .col-a .card .cd-b .loc-i .warning p span, .content .col-b .card .cd-b .loc-i .warning p span {
+            display: block; }
+          .content .col-a .card .cd-b .loc-i .warning p.smlft, .content .col-b .card .cd-b .loc-i .warning p.smlft {
+            font-size: .75rem; }
+    .content .col-a .card .ai-table p, .content .col-b .card .ai-table p {
+      font-size: 1rem; }
+    .content .col-a .card .ai-table .tbl-dta, .content .col-b .card .ai-table .tbl-dta {
+      border: 1px solid #f2f2f2; }
+      .content .col-a .card .ai-table .tbl-dta .tbl-ai, .content .col-b .card .ai-table .tbl-dta .tbl-ai {
+        margin: 0;
+        padding: 0; }
+        .content .col-a .card .ai-table .tbl-dta .tbl-ai li, .content .col-b .card .ai-table .tbl-dta .tbl-ai li {
+          list-style: none;
+          display: flex;
+          border-bottom: 1px solid #f2f2f2;
+          height: 50px;
+          align-items: center;
+          padding: 0 20px; }
+          .content .col-a .card .ai-table .tbl-dta .tbl-ai li h3, .content .col-b .card .ai-table .tbl-dta .tbl-ai li h3 {
+            font-size: .875rem;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            margin: 0; }
+          .content .col-a .card .ai-table .tbl-dta .tbl-ai li .ad-btn, .content .col-b .card .ai-table .tbl-dta .tbl-ai li .ad-btn {
+            position: relative;
+            width: 24px;
+            height: 24px; }
+            .content .col-a .card .ai-table .tbl-dta .tbl-ai li .ad-btn:before, .content .col-b .card .ai-table .tbl-dta .tbl-ai li .ad-btn:before {
+              position: absolute;
+              font-family: "custom-ynw" !important;
+              content: "\45";
+              left: 0;
+              top: -6px;
+              width: 100%;
+              height: 100%;
+              font-size: 1.5rem; }
+          .content .col-a .card .ai-table .tbl-dta .tbl-ai li:last-child, .content .col-b .card .ai-table .tbl-dta .tbl-ai li:last-child {
+            border: none; }
 
 .content .col-a .card .pubs.w-dta {
   padding: 20px;
@@ -8140,6 +8629,11 @@ footer.dashb {
         margin-left: 10px;
         align-items: center;
         justify-content: center; }
+        .content.loc-list .card .lc-title h5 span.addbt {
+          background: none;
+          color: #00aef2;
+          font-size: 1.4rem;
+          font-weight: 500; }
   .content.loc-list .card.w-dta.active .lc-title h5 {
     color: #00aef2; }
   .content.loc-list .card.w-dta.active .lc-content .q-tbl {
@@ -11674,6 +12168,12 @@ header.consumer {
                     font-family: "custom-ynw" !important;
                     left: 0;
                     top: 0; }
+              .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .wt-msg {
+                padding: 14px;
+                border: 2px dashed #fda60d;
+                color: #fda60d;
+                font-weight: 600;
+                display: table; }
           .content .c-outer .c-body .srlst .bottom-sect .bt-r {
             padding: 20px;
             width: 35%; }
@@ -12098,9 +12598,6 @@ header.consumer {
         .content .c-outer .c-body .location .bottom-sect {
           display: flex;
           border-top: 2px solid #f2f2f2; }
-          @media only screen and (max-width: 767px) {
-            .content .c-outer .c-body .location .bottom-sect {
-              flex-direction: column; } }
           @media only screen and (max-width: 575px) {
             .content .c-outer .c-body .location .bottom-sect {
               flex-direction: column; } }
@@ -12116,9 +12613,18 @@ header.consumer {
             .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme {
               display: flex;
               align-items: center; }
+              @media only screen and (max-width: 767px) {
+                .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme {
+                  align-items: flex-start;
+                  flex-direction: column; } }
               @media only screen and (max-width: 575px) {
                 .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme {
-                  justify-content: center; } }
+                  justify-content: center;
+                  align-items: center; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme {
+                  align-items: flex-start;
+                  flex-direction: column; } }
               .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .o-now {
                 display: flex;
                 align-items: center;
@@ -12129,6 +12635,16 @@ header.consumer {
                 color: #fff;
                 font-weight: 600;
                 margin-right: 30px; }
+                @media only screen and (max-width: 767px) {
+                  .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .o-now {
+                    height: 30px;
+                    margin-right: 0;
+                    margin-bottom: 15px; } }
+                @media (min-width: 768px) and (max-width: 991px) {
+                  .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .o-now {
+                    height: 30px;
+                    margin-right: 0;
+                    margin-bottom: 15px; } }
                 .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .o-now:after {
                   position: absolute;
                   content: "";
@@ -12140,21 +12656,96 @@ header.consumer {
                   border-top: 25px solid transparent;
                   border-bottom: 25px solid transparent;
                   border-left: 15px solid #00cc96; }
+                  @media only screen and (max-width: 767px) {
+                    .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .o-now:after {
+                      -moz-transform: rotate(90deg);
+                      -o-transform: rotate(90deg);
+                      -ms-transform: rotate(90deg);
+                      -webkit-transform: rotate(90deg);
+                      transform: rotate(90deg);
+                      bottom: 0;
+                      left: 50%;
+                      margin-left: -6px;
+                      top: 6px; } }
+                  @media (min-width: 768px) and (max-width: 991px) {
+                    .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .o-now:after {
+                      -moz-transform: rotate(90deg);
+                      -o-transform: rotate(90deg);
+                      -ms-transform: rotate(90deg);
+                      -webkit-transform: rotate(90deg);
+                      transform: rotate(90deg);
+                      bottom: 0;
+                      left: 50%;
+                      margin-left: -6px;
+                      top: 6px; } }
               .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing {
                 display: flex;
                 flex-direction: column; }
+                @media only screen and (max-width: 575px) {
+                  .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing {
+                    text-align: center; } }
                 .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .est-time {
                   color: #999999; }
                 .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data {
                   font-weight: 600;
                   position: relative;
                   padding-left: 20px; }
+                  @media only screen and (max-width: 767px) {
+                    .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data {
+                      display: inline-flex;
+                      align-items: center; } }
+                  @media only screen and (max-width: 575px) {
+                    .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data {
+                      display: inline-flex;
+                      margin: 0 auto;
+                      align-items: center; } }
+                  @media (min-width: 768px) and (max-width: 991px) {
+                    .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data {
+                      display: inline-flex;
+                      align-items: center; } }
+                  @media (min-width: 992px) and (max-width: 1199px) {
+                    .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data {
+                      display: inline-flex;
+                      align-items: center; } }
+                  @media only screen and (min-width: 1200px) {
+                    .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data {
+                      display: inline-flex;
+                      align-items: center; } }
+                  .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data .icon-question {
+                    vertical-align: middle;
+                    display: inline-block; }
+                    @media only screen and (max-width: 767px) {
+                      .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data .icon-question {
+                        height: 16px;
+                        margin-left: 5px; } }
+                    @media only screen and (max-width: 575px) {
+                      .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data .icon-question {
+                        height: 14px;
+                        margin-left: 5px; } }
+                    @media (min-width: 768px) and (max-width: 991px) {
+                      .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data .icon-question {
+                        height: 16px;
+                        margin-left: 5px; } }
+                    @media (min-width: 992px) and (max-width: 1199px) {
+                      .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data .icon-question {
+                        height: 16px;
+                        margin-left: 5px; } }
+                    @media only screen and (min-width: 1200px) {
+                      .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data .icon-question {
+                        height: 16px;
+                        margin-left: 5px; } }
                   .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .timing .time-data:before {
                     position: absolute;
                     content: "\31";
                     font-family: "custom-ynw" !important;
                     left: 0;
                     top: 0; }
+              .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .wt-msg {
+                padding: 14px;
+                border: 2px dashed #fda60d;
+                color: #fda60d;
+                font-weight: 600;
+                display: table; }
             .content .c-outer .c-body .location .bottom-sect .bt-l .c-checkin .ch-l .ch-title {
               font-size: 1rem;
               font-weight: 500;
@@ -12210,40 +12801,56 @@ header.consumer {
                   margin-bottom: 0; }
           .content .c-outer .c-body .location .bottom-sect .bt-r {
             padding: 20px;
-            width: 25%; }
+            width: 35%; }
             @media only screen and (max-width: 767px) {
               .content .c-outer .c-body .location .bottom-sect .bt-r {
-                width: 100%;
-                text-align: left;
-                padding-top: 0; } }
+                width: 50%;
+                text-align: left; } }
             @media only screen and (max-width: 575px) {
               .content .c-outer .c-body .location .bottom-sect .bt-r {
-                text-align: center; } }
+                text-align: center;
+                width: 100%;
+                padding-top: 0; } }
             @media (min-width: 768px) and (max-width: 991px) {
               .content .c-outer .c-body .location .bottom-sect .bt-r {
-                width: 30%; } }
+                width: 40%; } }
+            @media only screen and (min-width: 1200px) {
+              .content .c-outer .c-body .location .bottom-sect .bt-r {
+                width: 40%; } }
             .content .c-outer .c-body .location .bottom-sect .bt-r .chk-btn {
               margin-bottom: 10px;
               width: 100%; }
               @media only screen and (max-width: 767px) {
                 .content .c-outer .c-body .location .bottom-sect .bt-r .chk-btn {
-                  width: 250px;
-                  margin-right: auto; } }
+                  width: 80%;
+                  margin-right: 0;
+                  margin-left: auto; } }
               @media only screen and (max-width: 575px) {
                 .content .c-outer .c-body .location .bottom-sect .bt-r .chk-btn {
-                  width: auto; } }
+                  width: 75%;
+                  margin: 0 auto; } }
               @media (min-width: 768px) and (max-width: 991px) {
                 .content .c-outer .c-body .location .bottom-sect .bt-r .chk-btn {
                   width: 100%; } }
+              @media (min-width: 992px) and (max-width: 1199px) {
+                .content .c-outer .c-body .location .bottom-sect .bt-r .chk-btn {
+                  width: 200px;
+                  margin-left: auto; } }
+              @media only screen and (min-width: 1200px) {
+                .content .c-outer .c-body .location .bottom-sect .bt-r .chk-btn {
+                  width: 200px;
+                  margin-left: auto; } }
             .content .c-outer .c-body .location .bottom-sect .bt-r .bt10 {
               text-align: right;
+              display: block;
               margin-right: 15px; }
               @media only screen and (max-width: 767px) {
                 .content .c-outer .c-body .location .bottom-sect .bt-r .bt10 {
                   margin-right: 0; } }
-              @media (min-width: 768px) and (max-width: 991px) {
+              @media only screen and (max-width: 575px) {
                 .content .c-outer .c-body .location .bottom-sect .bt-r .bt10 {
-                  margin-right: 0; } }
+                  text-align: center;
+                  margin-top: 10px; } }
               .content .c-outer .c-body .location .bottom-sect .bt-r .bt10.blk {
                 color: #4c4c4c;
                 margin-bottom: 10px; }
@@ -12340,113 +12947,155 @@ header.consumer {
         .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
           padding: 20px;
           padding-top: 0px; }
-    .consumer-dash .card .outer .list {
-      display: flex;
-      font-size: .875rem;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #f2f2f2;
-      padding-bottom: 15px; }
-      @media only screen and (max-width: 767px) {
-        .consumer-dash .card .outer .list {
-          flex-direction: column; } }
-      .consumer-dash .card .outer .list .lt {
-        width: 40%; }
-        @media only screen and (max-width: 767px) {
-          .consumer-dash .card .outer .list .lt {
-            width: 100%;
-            margin-bottom: 15px; } }
-        .consumer-dash .card .outer .list .lt h3 {
-          font-size: 1rem;
-          font-weight: 600;
-          margin-bottom: 3px; }
-        .consumer-dash .card .outer .list .lt .location {
-          margin-bottom: 10px;
-          display: block;
-          font-weight: 500;
-          color: #666; }
-        .consumer-dash .card .outer .list .lt .est-time {
-          font-weight: 500;
-          display: flex;
-          flex-wrap: wrap;
-          color: #666; }
-          .consumer-dash .card .outer .list .lt .est-time .ttle {
-            margin-right: 10px;
-            flex-shrink: 0; }
-          .consumer-dash .card .outer .list .lt .est-time .time {
-            color: #222223;
-            font-weight: 600;
-            flex-shrink: 1; }
-            .consumer-dash .card .outer .list .lt .est-time .time .min {
-              color: #00cc96; }
-            .consumer-dash .card .outer .list .lt .est-time .time .date {
-              color: #fda60d; }
-      .consumer-dash .card .outer .list .rt {
-        width: 60%;
+    .consumer-dash .card .outer {
+      padding: 20px; }
+      .consumer-dash .card .outer .list {
         display: flex;
-        align-items: flex-end; }
-        @media only screen and (max-width: 767px) {
-          .consumer-dash .card .outer .list .rt {
-            width: 100%; } }
-        .consumer-dash .card .outer .list .rt .controls {
-          margin: 0;
-          margin-left: auto;
-          padding: 0;
+        font-size: .875rem;
+        margin-bottom: 20px;
+        flex-direction: column; }
+        .consumer-dash .card .outer .list .header {
           display: flex;
-          flex-wrap: wrap;
-          justify-content: flex-end; }
-          @media only screen and (max-width: 767px) {
-            .consumer-dash .card .outer .list .rt .controls {
-              margin-left: 0; } }
-          @media only screen and (max-width: 575px) {
-            .consumer-dash .card .outer .list .rt .controls {
-              justify-content: flex-start; } }
-          .consumer-dash .card .outer .list .rt .controls li {
-            list-style: none;
-            margin: 0 5px;
-            font-weight: 500; }
-            @media only screen and (max-width: 767px) {
-              .consumer-dash .card .outer .list .rt .controls li {
-                margin-top: 5px;
-                margin-left: 0; } }
-            @media (min-width: 768px) and (max-width: 991px) {
-              .consumer-dash .card .outer .list .rt .controls li {
-                margin-top: 5px;
-                margin-left: 0; } }
-            .consumer-dash .card .outer .list .rt .controls li span {
-              padding: 3px;
+          align-items: center;
+          min-height: 30px;
+          padding: 10px;
+          border: 1px solid #dbdbdb;
+          border-bottom: 0;
+          margin-bottom: 0; }
+          .consumer-dash .card .outer .list .header .title h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0px;
+            display: table; }
+          .consumer-dash .card .outer .list .header .location {
+            margin-left: 5px; }
+            .consumer-dash .card .outer .list .header .location .icon-location {
+              color: #00aef2;
+              font-weight: 500;
+              padding-left: 16px;
               position: relative;
-              padding-left: 25px;
-              padding-right: 8px;
-              cursor: pointer;
-              -moz-transition: all 300ms;
-              -o-transition: all 300ms;
-              -webkit-transition: all 300ms;
-              transition: all 300ms;
-              color: #222223; }
-              .consumer-dash .card .outer .list .rt .controls li span:before {
-                position: absolute;
-                content: "";
-                left: 5px;
-                top: 4px;
-                font-family: "custom-ynw" !important;
+              cursor: pointer; }
+              .consumer-dash .card .outer .list .header .location .icon-location:before {
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                width: 16px;
-                height: 16px; }
-              .consumer-dash .card .outer .list .rt .controls li span:hover {
-                color: #00aef2; }
-              .consumer-dash .card .outer .list .rt .controls li span.message:before {
-                content: "\53"; }
-              .consumer-dash .card .outer .list .rt .controls li span.add-fav:before {
-                content: "\26"; }
-              .consumer-dash .card .outer .list .rt .controls li span.cancel:before {
-                content: "\69";
-                font-size: .65rem; }
-      .consumer-dash .card .outer .list:last-child {
-        margin-bottom: 0;
-        border: none;
-        padding: 0; }
+                height: 20px;
+                position: absolute; }
+        .consumer-dash .card .outer .list .details {
+          display: flex;
+          flex-direction: column; }
+          @media only screen and (max-width: 575px) {
+            .consumer-dash .card .outer .list .details {
+              flex-direction: column; } }
+          .consumer-dash .card .outer .list .details .lt {
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            border: 1px solid #dbdbdb;
+            border-bottom: none;
+            border-right: none; }
+            .consumer-dash .card .outer .list .details .lt .lt0 {
+              padding: 10px;
+              border: 1px solid #dbdbdb;
+              border-top: none;
+              border-left: none;
+              flex-grow: 1;
+              margin: 0; }
+              .consumer-dash .card .outer .list .details .lt .lt0 .service, .consumer-dash .card .outer .list .details .lt .lt0 .forwhom, .consumer-dash .card .outer .list .details .lt .lt0 .time, .consumer-dash .card .outer .list .details .lt .lt0 .token, .consumer-dash .card .outer .list .details .lt .lt0 .persons {
+                font-weight: 600; }
+                .consumer-dash .card .outer .list .details .lt .lt0 .service.now, .consumer-dash .card .outer .list .details .lt .lt0 .forwhom.now, .consumer-dash .card .outer .list .details .lt .lt0 .time.now, .consumer-dash .card .outer .list .details .lt .lt0 .token.now, .consumer-dash .card .outer .list .details .lt .lt0 .persons.now {
+                  color: #00cc96; }
+              .consumer-dash .card .outer .list .details .lt .lt0 .forwhom {
+                position: relative;
+                margin-right: 10px; }
+                .consumer-dash .card .outer .list .details .lt .lt0 .forwhom:after {
+                  position: absolute;
+                  content: ",";
+                  right: -5px; }
+                .consumer-dash .card .outer .list .details .lt .lt0 .forwhom:last-child:after {
+                  display: none; }
+              .consumer-dash .card .outer .list .details .lt .lt0:last-child {
+                margin-bottom: 0; }
+          .consumer-dash .card .outer .list .details .rt .controls {
+            margin: 0;
+            margin-left: auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            flex-direction: row;
+            justify-content: flex-start;
+            border: 1px solid #dbdbdb;
+            border-top: none; }
+            @media only screen and (max-width: 767px) {
+              .consumer-dash .card .outer .list .details .rt .controls {
+                margin-left: 0; } }
+            @media only screen and (max-width: 575px) {
+              .consumer-dash .card .outer .list .details .rt .controls {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                flex-direction: row; } }
+            .consumer-dash .card .outer .list .details .rt .controls li {
+              list-style: none;
+              margin: 0 5px;
+              font-weight: 500;
+              display: flex;
+              align-items: center; }
+              .consumer-dash .card .outer .list .details .rt .controls li span {
+                padding: 8px;
+                position: relative;
+                padding-left: 25px;
+                padding-right: 8px;
+                cursor: pointer;
+                -moz-transition: all 300ms;
+                -o-transition: all 300ms;
+                -webkit-transition: all 300ms;
+                transition: all 300ms;
+                color: #222223; }
+                .consumer-dash .card .outer .list .details .rt .controls li span:before {
+                  position: absolute;
+                  content: "";
+                  left: 5px;
+                  top: 50%;
+                  margin-top: -8px;
+                  font-family: "custom-ynw" !important;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 16px;
+                  height: 16px; }
+                .consumer-dash .card .outer .list .details .rt .controls li span:hover {
+                  color: #00aef2; }
+                .consumer-dash .card .outer .list .details .rt .controls li span.message:before {
+                  content: "\53"; }
+                .consumer-dash .card .outer .list .details .rt .controls li span.add-fav:before {
+                  content: "\26"; }
+                .consumer-dash .card .outer .list .details .rt .controls li span.cancel {
+                  position: relative; }
+                  .consumer-dash .card .outer .list .details .rt .controls li span.cancel:before {
+                    display: flex;
+                    align-items: center;
+                    height: 20px;
+                    position: absolute; }
+                  .consumer-dash .card .outer .list .details .rt .controls li span.cancel:before {
+                    content: "\69";
+                    font-size: .65rem;
+                    height: 18px; }
+              .consumer-dash .card .outer .list .details .rt .controls li:last-child {
+                margin-bottom: 0; }
+        .consumer-dash .card .outer .list:last-child {
+          margin-bottom: 0; }
+        .consumer-dash .card .outer .list.cancelled .header .cancel-label {
+          background: #4c4c4c;
+          color: #fff;
+          padding: 1px 5px;
+          float: left;
+          font-size: .75rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          margin-left: auto; }
+          @media only screen and (max-width: 400px) {
+            .consumer-dash .card .outer .list.cancelled .header .cancel-label {
+              float: none;
+              margin-left: 10px; } }
     .consumer-dash .card.favourites .outer .list .lt .location {
       margin-bottom: 0; }
     .consumer-dash .card.favourites .outer .list .rt .controls li span.checkin {

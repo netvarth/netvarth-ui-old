@@ -26,7 +26,7 @@ export class AddProviderMemberComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices
     ) {
-        console.log(data);
+       // console.log(data);
      }
 
   ngOnInit() {

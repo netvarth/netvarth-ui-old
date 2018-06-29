@@ -749,7 +749,7 @@ footer {
 }
 
 .content {
-    .title {
+    /*.title {
         width: 100%;
         height: 80px;
         @include border-top-radius(10px);
@@ -771,7 +771,7 @@ footer {
                 font-size: 1.5rem;
             }
         }
-    }
+    }*/
     
     .col-a, .col-b {
         &.pl0, &.pr0 {
@@ -3256,6 +3256,13 @@ footer {
                         margin-left: 10px;
                         align-items: center;
                         justify-content: center;
+                        
+                        &.addbt {
+                            background: none;
+                            color: $linkblue;
+                            font-size: 1.4rem;
+                            font-weight: 500;
+                        }
                     }
                 }
             }

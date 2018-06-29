@@ -42,7 +42,7 @@
             </ng-container>
 
             <ng-container *ngIf="cMod=='rate'">
-                    Rate visit status page
+                    <app-rate-visit [passedInData]="getpassedinDetails()"></app-rate-visit>
              </ng-container>
 
              <ng-container *ngIf="cMod=='arrived'">
