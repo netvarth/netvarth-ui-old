@@ -468,4 +468,19 @@ export class SharedServices {
     deleteWaitlist(id, params) {
       return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
     }
+
+    getConsumerRateService(params) {
+      const path = 'consumer/waitlist/rating' ;
+      return this.servicemeta.httpGet(path, null , params);
+    }
+
+    postConsumerRateService(params, data) {
+      const path = 'consumer/waitlist/rating' ;
+      return this.servicemeta.httpPost(path, data, null , params);
+    }
+
+    updateConsumerRateService(params, data) {
+      const path = 'consumer/waitlist/rating' ;
+      return this.servicemeta.httpPut(path, data, null , params);
+    }
 }

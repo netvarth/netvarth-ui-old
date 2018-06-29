@@ -10,6 +10,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ViewConsumerWaitlistCheckInBillComponent} from '../consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
+import { ConsumerRateServicePopupComponent} from '../../../../components/consumer-rate-service-popup/consumer-rate-service-popup';
 
 @Component({
   selector: 'app-consumer-checkin-history-list',
@@ -160,5 +161,19 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     return label_status;
   }
 
+  rateService(waitlist) {
+    const dialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      autoFocus: true,
+      data: waitlist
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
+    });
+  }
 
 }

@@ -40,6 +40,7 @@ import { AddInboxMessagesComponent } from './shared/components/add-inbox-message
 import { ConsumerWaitlistHistoryComponent } from './shared/components/consumer-waitlist-history/consumer-waitlist-history.component';
 import { ExistingCheckinComponent } from './shared/components/existing-checkin/existing-checkin.component';
 import { ServiceDetailComponent } from './shared/components/service-detail/service-detail.component';
+import { ConsumerRateServicePopupComponent } from './shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin } from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
@@ -77,7 +78,8 @@ import 'hammerjs';
     AddInboxMessagesComponent,
     ConsumerWaitlistHistoryComponent,
     ExistingCheckinComponent,
-    ServiceDetailComponent
+    ServiceDetailComponent,
+    ConsumerRateServicePopupComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,
@@ -86,7 +88,8 @@ import 'hammerjs';
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
     ExistingCheckinComponent,
-    ServiceDetailComponent
+    ServiceDetailComponent,
+    ConsumerRateServicePopupComponent
     /*SearchMoreOptionsComponent*/
   ],
   imports: [

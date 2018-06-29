@@ -10,6 +10,7 @@ import { ViewBillModule } from '../../modules/view-bill/view-bill.module';
 
 import { ConsumerCheckInHistoryListComponent } from './components/consumer-checkin-history-list/consumer-checkin-history-list.component';
 import { ViewConsumerWaitlistCheckInBillComponent } from './components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
+import { ConsumerWaitlistCheckInPaymentComponent } from './components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 
 import { CheckInHistoryServices } from './consumer-checkin-history-list.service';
 
@@ -18,6 +19,7 @@ import { CheckInHistoryServices } from './consumer-checkin-history-list.service'
         CommonModule,
         RouterModule,
         MaterialModule,
+        FormsModule,
         ReactiveFormsModule,
         FormMessageDisplayModule,
         PagerModule,
@@ -25,13 +27,15 @@ import { CheckInHistoryServices } from './consumer-checkin-history-list.service'
     ],
     declarations: [
       ConsumerCheckInHistoryListComponent,
-      ViewConsumerWaitlistCheckInBillComponent
+      ViewConsumerWaitlistCheckInBillComponent,
+      ConsumerWaitlistCheckInPaymentComponent
     ],
     exports: [
       ConsumerCheckInHistoryListComponent
     ],
     entryComponents: [
-      ViewConsumerWaitlistCheckInBillComponent
+      ViewConsumerWaitlistCheckInBillComponent,
+      ConsumerWaitlistCheckInPaymentComponent
     ],
     providers: [
       CheckInHistoryServices
