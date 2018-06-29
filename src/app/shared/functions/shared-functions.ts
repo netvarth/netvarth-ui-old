@@ -890,7 +890,7 @@ doDeleteFavProvider(fav) {
   return new Promise((resolve, reject) => {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
       data: {
         'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
         'heading' : 'Confirm'

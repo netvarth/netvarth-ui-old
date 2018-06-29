@@ -1,0 +1,33 @@
+<h1 class="mat-dialog-title"> Bill Payment
+  <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content>
+  <div class="full-outer">
+      <div class="btl"><span class="label">Customer Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName}}</span></div>
+      <div class="topay">
+        <span class="label">Amount to pay</span>
+        <span class="label-valu">
+            {{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}
+        </span>
+      </div>
+
+      <div class="payment-options">
+        <span class="label"> Select Payment Options </span>
+        <mat-radio-group [(ngModel)]="pay_data.paymentMode">
+          <mat-radio-button [value]="opt.name"
+          *ngFor="let opt of payment_options">{{opt.Displayname}}
+          </mat-radio-button>
+        </mat-radio-group>
+        <span class="no-data" *ngIf="payment_options.length==0">No payment options available.</span>
+      </div>
+  </div>
+  <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button  type="button" mat-button class="cs-btn bt1 makepayment"
+    [disabled]="!pay_data.amount || pay_data.amount == 0 || payment_options.length == 0"
+    (click)="makePayment()">Make Payment</button>
+</mat-dialog-actions>

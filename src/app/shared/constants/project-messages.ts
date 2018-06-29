@@ -149,6 +149,9 @@ export const Messages = {
   'CHECKIN_SUCC': 'Check in Saved Successfully',
   'CHECKIN_SUCC_REDIRECT': 'Check in Saved Successfully. Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
-  'CHECKIN_CANCELLED' : 'Check-In cancelled successfully'
+  'CHECKIN_CANCELLED' : 'Check-In cancelled successfully',
 
+  // Consumer Dashboard
+
+  'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
 };

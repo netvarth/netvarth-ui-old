@@ -93,7 +93,7 @@ export class ConsumerServices {
     return this.servicemeta.httpGet(url);
   }
 
-  public getEstimatedWaitingTime(prov_arr) {
+  getEstimatedWaitingTime(prov_arr) {
     let str = '';
     for (let i = 0; i < prov_arr.length; i++) {
       if (str !== '') {
@@ -103,6 +103,21 @@ export class ConsumerServices {
     }
     const path = 'provider/waitlist/queues/waitingTime/' + str;
     return this.servicemeta.httpGet(path);
+  }
+
+  getConsumerRateService(params) {
+    const path = 'consumer/waitlist/rating' ;
+    return this.servicemeta.httpGet(path, null , params);
+  }
+
+  postConsumerRateService(params, data) {
+    const path = 'consumer/waitlist/rating' ;
+    return this.servicemeta.httpPost(path, data, null , params);
+  }
+
+  updateConsumerRateService(params, data) {
+    const path = 'consumer/waitlist/rating' ;
+    return this.servicemeta.httpPut(path, data, null , params);
   }
 
 

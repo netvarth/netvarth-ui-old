@@ -133,7 +133,9 @@
 
    <button  type="button" mat-button class="cs-btn bt1 accept"
    *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
-   && bill_data.billStatus != 'Settled'" (click)="makePayment()">Accept Payment</button>
+   && bill_data.billStatus != 'Settled'" (click)="makePayment()">
+  {{ (source !== 'consumer_dashboard') ? 'Accept Payment' : 'Make Payment' }}
+  </button>
 
   </mat-dialog-actions>
 
