@@ -24,6 +24,7 @@ export class ConsumerWaitlistHistoryComponent implements OnInit {
     userDet;
     provider_id = null;
     params = {};
+    domain;
 
   constructor(
     private router: Router, private dialog: MatDialog,

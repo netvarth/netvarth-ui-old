@@ -23,5 +23,9 @@ export class KioskServices {
     createProviderCustomer(data) {
         const url = 'provider/customers';
         return this.servicemeta.httpPost(url, data);
-      }
+    }
+    getTerminoligies(domain, subdomain) {
+        const url = 'ynwConf/terminologies/' + domain + '/' + subdomain;
+        return this.servicemeta.httpGet(url);
+    }
 }
