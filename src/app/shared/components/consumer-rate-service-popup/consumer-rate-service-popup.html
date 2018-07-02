@@ -8,7 +8,7 @@
   <div class="form-group" *ngIf="load_complete">
     <label class="col-form-label" for="displayName">Rate</label>
     <app-rating-star
-    [ratingval]='rate_value' (ratingreturn)="handleratingClick($event)"></app-rating-star>
+    [ratingval]="rate_value" (ratingreturn)="handleratingClick($event)"></app-rating-star>
   </div>
 
   <div class="form-group ">

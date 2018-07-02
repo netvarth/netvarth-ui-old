@@ -34,9 +34,12 @@ export class KioskHomeComponent implements OnInit {
   cMod;
   loadingNow;
   terminologies: any = [];
+  loclist: any = [];
+  todaylist: any = [];
   showsearch_now = false;
   show_customernotfoundmsg = false;
   show_customerRegister = false;
+  loccationId;
 
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
@@ -54,6 +57,8 @@ export class KioskHomeComponent implements OnInit {
     this.getUserdetails();
     this.loadingNow = false;
     this.cMod = 'main';
+    this.getLocationId();
+    // this.getwaitlistForToday();
   }
   /*getTerminologies() {
     this.kiosk_services.getTerminoligies(this.customerDet,this.customerDet)
@@ -64,6 +69,37 @@ export class KioskHomeComponent implements OnInit {
 
     });
   }*/
+  getLocationId() {
+    if (this.shared_functions.getItemOnCookie('provider_selected_location')) { // check whether the location is there in cookie
+      this.loccationId = this.shared_functions.getItemOnCookie('provider_selected_location');
+    } else { // this is to take care of the situation where location id is not there in the cookie
+      this.kiosk_services.getProviderLocations()
+        .subscribe (data => {
+          this.loclist = data;
+          if (this.loclist.length > 0) {
+            this.loccationId = this.loclist[0].id;
+          }
+        },
+          error => {
+            this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          });
+    }
+  }
+  getwaitlistForToday() {
+    const params = {
+      consumerid: this.customerDispDet.id,
+      waitliststatus: 'done',
+      locationid: this.loccationId
+    };
+    this.kiosk_services.getTodayWaitlist(params)
+      .subscribe (data => {
+        this.todaylist = data;
+        console.log('today list', this.todaylist);
+      },
+      error => {
+
+      });
+  }
   getUserdetails() {
     this.userdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
     if (this.userdet)  {

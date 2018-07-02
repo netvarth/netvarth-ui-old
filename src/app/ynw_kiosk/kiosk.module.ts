@@ -9,6 +9,7 @@ import { KioskRouterModule } from './kiosk-routing.module';
 
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
+import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
 
 import { KioskComponent } from './kiosk.component';
 import { KioskHomeComponent } from './components/home/kiosk-home.component';
@@ -31,7 +32,8 @@ import 'mousetrap';
         SharedModule,
         AngularMultiSelectModule,
         PagerModule,
-        CheckInModule
+        CheckInModule,
+        RatingStarModule
     ],
     declarations: [
         KioskComponent,

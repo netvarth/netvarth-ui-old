@@ -740,6 +740,8 @@ export class SearchDetailComponent implements OnInit {
             let locationcnt = 0;
             for (let i = 0 ; i < this.search_data.hits.hit.length ; i++) {
               locationcnt = 0;
+              this.search_data.hits.hit[i].fields.rating =  this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating);
+             // console.log('rating', this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating));
               // const providarr = this.search_data.hits.hit[i].id.split('-');
               const provid = this.search_data.hits.hit[i].id;
               // this.result_provid[i] = this.search_data.hits.hit[i].id;

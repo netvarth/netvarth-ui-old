@@ -930,6 +930,37 @@ deleteFavProvider(id) {
   );
   });
 }
-
+ratingRounding(val) {
+  let retval;
+  for (let i = 0; i <= 4.5; i = i + .5) {
+    if (val > i && val <= (i + .5)) {
+      retval = (i + .5);
+    }
+  }
+  /*if (val > 0 && val <= .5) {
+    retval = .5;
+  } else if (val > .5 && val <= 1) {
+    retval = 1;
+  } else if (val > 1 && val <= 1.5) {
+    retval = 1.5;
+  } else if (val > 1.5 && val <= 2) {
+    retval = 2;
+  } else if (val > 2 && val <= 2.5) {
+    retval = 2.5;
+  } else if (val > 2.5 && val <= 3) {
+    retval = 3;
+  } else if (val > 3 && val <= 3.5) {
+    retval = 3.5;
+  } else if (val > 3.5 && val <= 4) {
+    retval = 4;
+  } else if (val > 4 && val <= 4.5) {
+    retval = 4.5;
+  } else if (val > 4.5 && val <= 5) {
+    retval = 5;
+  } else {
+    retval = val;
+  }*/
+  return retval;
+}
 
 }

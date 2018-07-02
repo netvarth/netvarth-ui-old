@@ -35,7 +35,7 @@ export class LookupStatusComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log('passedin', this.passedInData);
+    // console.log('passedin', this.passedInData);
   }
 
 }

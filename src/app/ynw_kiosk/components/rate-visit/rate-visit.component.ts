@@ -38,4 +38,7 @@ export class RateVisitComponent implements OnInit {
     console.log('passedin', this.passedInData);
   }
 
+  handleratingClick(e) {
+    console.log('rating return', e);
+  }
 }

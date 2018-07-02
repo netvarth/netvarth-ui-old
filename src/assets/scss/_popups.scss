@@ -1123,11 +1123,6 @@
             
         }
         
-        // Invoice
-        .invoice {
-            
-        }
-        
     }
     
     // Popup footer section
@@ -1211,7 +1206,7 @@
 }
 
 // #### Login Popup
-.loginmainclass {
+.loginmainclass {    
     .mat-dialog-actions {
         display: block;
         padding: 20px;
@@ -1243,6 +1238,7 @@
 
 // #### SignUp Popup
 .signupmainclass {
+    
     .mat-dialog-content {
         .mat-radio-group {
             display: flex;
@@ -1815,9 +1811,9 @@
         &:after {
             position: absolute;
             content: "";
-            background: url(../images/c-popup-bg.svg) no-repeat scroll 0 0;
+            background: url(../images/c-popup-bg.svg) no-repeat scroll top right/cover;
             height: 83px;
-            top: -8px;
+            top: -10px;
             right: -3px;
             left: 0;
             width: auto;
@@ -2141,5 +2137,5 @@
 
 .signupmainclass,
 .loginmainclass {
-    width: 600px !important;
+    width: 480px !important;
 }
