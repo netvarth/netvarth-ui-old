@@ -663,4 +663,10 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
 
+  getIdTerminologies(domainid, subDomainid) {
+
+    const url = 'ynwConf/terminologiesInfo/' + domainid + '/' + subDomainid;
+    return this.servicemeta.httpGet(url);
+  }
+
 }

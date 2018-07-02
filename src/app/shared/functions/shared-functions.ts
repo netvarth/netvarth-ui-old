@@ -963,4 +963,8 @@ ratingRounding(val) {
   return retval;
 }
 
+getTerminologyTerm() {
+
+}
+
 }

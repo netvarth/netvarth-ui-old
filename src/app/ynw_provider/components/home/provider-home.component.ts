@@ -6,6 +6,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
+import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -94,6 +95,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
+    private common_datastorage: CommonDataStorageService,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
     private shared_functions: SharedFunctions,
@@ -113,6 +115,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
         this.reloadAPIs();
     });
+    console.log(this.common_datastorage.get('terminologies'));
   }
 
   ngOnDestroy() {
@@ -347,7 +350,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       };
       no_filter = true;
     }
-    console.log(filter);
+    // console.log(filter);
     return new Promise((resolve, reject) => {
 
     this.provider_services.getwaitlistHistoryCount(filter)

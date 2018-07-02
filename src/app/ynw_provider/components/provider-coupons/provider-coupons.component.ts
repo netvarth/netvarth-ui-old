@@ -10,7 +10,6 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provider-coupons.component';
 import { Messages } from '../../../shared/constants/project-messages';
-import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -35,8 +34,7 @@ export class ProviderCouponsComponent implements OnInit {
   breadcrumbs = this.breadcrumbs_init;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
-        private sharedfunctionObj: SharedFunctions,
-        private provider_shared_functions: ProviderSharedFuctions) {}
+        private sharedfunctionObj: SharedFunctions) {}
 
     ngOnInit() {
         this.getCoupons(); // Call function to get the list of discount lists
@@ -104,7 +102,7 @@ export class ProviderCouponsComponent implements OnInit {
       this.provider_servicesobj.deleteCoupon(id)
       .subscribe(
         data => {
-          this.provider_shared_functions.openSnackBar(Messages.COUPON_DELETED);
+          this.sharedfunctionObj.openSnackBar(Messages.COUPON_DELETED);
           this.getCoupons();
         },
         error => {

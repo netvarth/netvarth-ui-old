@@ -139,7 +139,7 @@ export class ProviderSubeaderComponent implements OnInit {
 
     const dialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
      data: {
        type : 'provider',
        is_provider : 'true',
