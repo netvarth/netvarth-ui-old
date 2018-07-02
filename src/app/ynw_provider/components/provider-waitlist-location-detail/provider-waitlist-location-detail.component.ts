@@ -110,7 +110,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
 
             this.provider_services.changeProviderLocationStatus(obj.id, msg_data['chgstatus'])
             .subscribe(data => {
-                this.provider_shared_functions.openSnackBar(msg_data['msg']);
+                this.shared_Functionsobj.openSnackBar(msg_data['msg']);
             /*this.api_success = msg_data['msg'];
             setTimeout(() => {
                 this.resetApiErrors();
@@ -118,7 +118,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
             this.getLocationDetail();
             },
             error => {
-                this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+                this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
             /*this.api_error = error.error;
             setTimeout(() => {
                 this.resetApiErrors();
@@ -134,7 +134,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
         this.resetApiErrors();
         this.provider_services.changeProviderBaseLocationStatus(obj.id)
         .subscribe(data => {
-            this.provider_shared_functions.openSnackBar(Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place));
+            this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place));
             /*this.api_success = Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place);
             setTimeout(() => {
             this.resetApiErrors();
@@ -142,7 +142,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
             this.getLocationDetail();
         },
         error => {
-            this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+            this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
             /*this.api_error = error.error;
             setTimeout(() => {
             this.resetApiErrors();

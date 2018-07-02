@@ -11,7 +11,6 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderItemComponent } from '../add-provider-item/add-provider-item.component';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 import {Http, Headers, Response, RequestOptions} from '@angular/http';
-import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { AddProviderItemImageComponent } from '../add-provider-item-image/add-provider-item-image.component';
 
 @Component({
@@ -39,8 +38,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
         private router: ActivatedRoute, private dialog: MatDialog,
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
-        private sharedfunctionObj: SharedFunctions,
-        private provider_shared_functions: ProviderSharedFuctions) {}
+        private sharedfunctionObj: SharedFunctions) {}
 
     public itemId;
     public selfile: File;
@@ -195,7 +193,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
           this.provider_servicesobj.removeItemImage(this.item_list)
             .subscribe(data => {
               this.getitemDetails();
-              this.provider_shared_functions.openSnackBar(Messages.ITEM_IMGREMOVED);
+              this.sharedfunctionObj.openSnackBar(Messages.ITEM_IMGREMOVED);
               this.image_exists = false;
             });
         }

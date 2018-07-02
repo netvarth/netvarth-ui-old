@@ -301,10 +301,10 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.getServiceDetail();
-          const snackBarRef =  this.provider_shared_functions.openSnackBar (msg);
+          const snackBarRef =  this.shared_Functionsobj.openSnackBar (msg);
         },
         error => {
-          const snackBarRef =  this.provider_shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+          const snackBarRef =  this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
           this.getServiceDetail();
         });
 
@@ -315,10 +315,10 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.getServiceDetail();
-          const snackBarRef =  this.provider_shared_functions.openSnackBar (msg);
+          const snackBarRef =  this.shared_Functionsobj.openSnackBar (msg);
         },
         error => {
-          const snackBarRef =  this.provider_shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+          const snackBarRef =  this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
           this.getServiceDetail();
         });
     }

@@ -86,6 +86,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     .subscribe(
       data => {
         this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+        this.dialogRef.close('reloadlist');
       },
       error => {
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
@@ -98,6 +99,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     .subscribe(
       data => {
         this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+        this.dialogRef.close('reloadlist');
       },
       error => {
         this.sharedfunctionObj.apiErrorAutoHide(this, error);

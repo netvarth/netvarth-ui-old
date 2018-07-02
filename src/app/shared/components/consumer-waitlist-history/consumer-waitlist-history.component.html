@@ -1,5 +1,5 @@
 <app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"></app-header>
-<section class="content">
+<section class="content consumer-dash">
     <div class="container">
         <div class="row">
             <div class="c-outer">
@@ -7,7 +7,7 @@
                     <div class="bk-ctrl">
                         <span class="backtoresults" (click)="backtoProviderDetails()">Back to <span class="strong">Provider Details</span></span>
                     </div>
-                    <div class="card history">
+                    <div class="card history one">
 
                       <app-consumer-checkin-history-list
                       [params]="params" *ngIf="provider_id"></app-consumer-checkin-history-list>

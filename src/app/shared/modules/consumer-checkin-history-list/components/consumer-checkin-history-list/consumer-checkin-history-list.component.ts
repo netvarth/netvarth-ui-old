@@ -11,6 +11,7 @@ import { CheckInHistoryServices } from '../../consumer-checkin-history-list.serv
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ViewConsumerWaitlistCheckInBillComponent} from '../consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerRateServicePopupComponent} from '../../../../components/consumer-rate-service-popup/consumer-rate-service-popup';
+import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 
 @Component({
   selector: 'app-consumer-checkin-history-list',
@@ -145,7 +146,25 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      if ( result === 'makePayment') {
+        this.makePayment(checkin, bill_data);
+      }
+    });
+  }
+
+  makePayment(checkin, bill_data) {
+    const dialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin: checkin,
+        bill_data: bill_data
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getHistoryCount(this.params);
     });
   }
 

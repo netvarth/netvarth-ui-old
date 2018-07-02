@@ -6,7 +6,6 @@ import {HeaderComponent} from '../../../shared/modules/header/header.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderSharedFuctions  } from '../../shared/functions/provider-shared-functions';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -42,7 +41,7 @@ export class ProviderSettingsComponent implements OnInit {
   queues_count: any = 0;
 
   constructor(private provider_services: ProviderServices,
-    private provider_shared_functions: ProviderSharedFuctions,
+    private shared_functions: SharedFunctions,
   private routerobj: Router) {}
 
   ngOnInit() {
@@ -79,7 +78,7 @@ export class ProviderSettingsComponent implements OnInit {
         this.getWaitlistMgr();
       },
       error => {
-        const snackBarRef =  this.provider_shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
+        const snackBarRef =  this.shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
         this.getWaitlistMgr();
       }
     );
@@ -94,7 +93,7 @@ export class ProviderSettingsComponent implements OnInit {
         this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
       },
       error => {
-        const snackBarRef =  this.provider_shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+        const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
       }
     );
 
@@ -162,7 +161,7 @@ export class ProviderSettingsComponent implements OnInit {
         this.getpaymentDetails();
       },
       error => {
-        const snackBarRef =  this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        const snackBarRef =  this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         console.log('reached here');
         this.getpaymentDetails();
       }
@@ -188,7 +187,7 @@ export class ProviderSettingsComponent implements OnInit {
           this.getSearchstatus();
       },
     error => {
-      const snackBarRef =  this.provider_shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      const snackBarRef =  this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       this.getSearchstatus();
     });
   }

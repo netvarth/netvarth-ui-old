@@ -931,5 +931,8 @@ deleteFavProvider(id) {
   });
 }
 
+getTerminologyTerm() {
+
+}
 
 }

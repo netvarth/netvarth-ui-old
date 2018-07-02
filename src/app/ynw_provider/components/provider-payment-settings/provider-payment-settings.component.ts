@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
-import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -59,8 +58,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
         private router: Router,
-        private activated_route: ActivatedRoute,
-        public provider_shared_functions: ProviderSharedFuctions
+        private activated_route: ActivatedRoute
       ) {
             this.activated_route.params.subscribe(params => {
                 this.tabid = (params.id) ? params.id : 0;
@@ -100,7 +98,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 } else {
                     showmsgs = Messages.PAYSETTING_SAV_SUCC;
                 }
-                this.provider_shared_functions.openSnackBar (showmsgs);
+                this.shared_Functionsobj.openSnackBar (showmsgs);
             }
     }
     getTaxpercentage() {
@@ -238,7 +236,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     this.saveEnabled = true;
                 },
             error => {
-                this.provider_shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
+                this.shared_Functionsobj.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
                 this.getPaymentSettings(2);
                 this.saveEnabled = true;
             });
@@ -258,11 +256,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.savetaxEnabled = false;
             this.provider_services.setTaxpercentage(this.taxpercentage)
                 .subscribe (data => {
-                    this.provider_shared_functions.openSnackBar (Messages.PAYSETTING_SAV_TAXPER);
+                    this.shared_Functionsobj.openSnackBar (Messages.PAYSETTING_SAV_TAXPER);
                     this.savetaxEnabled = true;
                 },
             error => {
-                this.provider_shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
+                this.shared_Functionsobj.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
                 this.savetaxEnabled = true;
             });
         }

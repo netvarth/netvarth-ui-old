@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -46,7 +45,6 @@ export class ProviderCustomersComponent implements OnInit {
   loadComplete = false;
 
   constructor(private provider_services: ProviderServices,
-    private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,

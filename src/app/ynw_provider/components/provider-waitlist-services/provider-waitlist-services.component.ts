@@ -74,11 +74,11 @@ export class ProviderWaitlistServicesComponent implements OnInit {
       data => {
         this.getServices();
         // this.shared_functions.apiSuccessAutoHide(this, msg);
-        const snackBarRef =  this.provider_shared_functions.openSnackBar (msg);
+        const snackBarRef =  this.shared_functions.openSnackBar (msg);
       },
       error => {
         // this.shared_functions.apiErrorAutoHide(this, error);
-        const snackBarRef =  this.provider_shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+        const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
         this.getServices();
       });
 
@@ -90,11 +90,11 @@ export class ProviderWaitlistServicesComponent implements OnInit {
       data => {
         this.getServices();
         // this.shared_functions.apiSuccessAutoHide(this, msg);
-        const snackBarRef =  this.provider_shared_functions.openSnackBar (msg);
+        const snackBarRef =  this.shared_functions.openSnackBar (msg);
       },
       error => {
         // this.shared_functions.apiErrorAutoHide(this, error);
-        const snackBarRef =  this.provider_shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+        const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
         this.getServices();
       });
   }

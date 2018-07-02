@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { ProviderServices } from './services/provider-services.service';
+import { SharedFunctions } from '../shared/functions/shared-functions';
+import { CommonDataStorageService } from '../shared/services/common-datastorage.service';
 
 @Component({
     selector: 'app-provider',
@@ -10,7 +13,11 @@ export class ProviderComponent {
 
     evnt;
 
-    constructor(router: Router) {
+    constructor(router: Router,
+    public route: ActivatedRoute,
+    public provider_services: ProviderServices,
+    public shared_functions: SharedFunctions,
+    public provider_datastorage: CommonDataStorageService) {
         // alert('here');
         this.evnt = router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
@@ -24,5 +31,13 @@ export class ProviderComponent {
                 }
             }
           });
+
+          this.route.data.subscribe((data) => {
+            if (data.terminologies) {
+              this.provider_datastorage.set('terminologies', data.terminologies);
+            }
+
+          });
+
     }
 }

@@ -31,11 +31,11 @@ export class ProviderSharedFuctions {
 
         ob.provider_services.changeProviderQueueStatus(obj.id, chgstatus)
         .subscribe(data => {
-          this.openSnackBar (msg);
+          this.shared_functions.openSnackBar (msg);
           this.queueReloadApi(ob, source);
         },
         error => {
-          this.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
           this.queueReloadApi(ob, source);
         });
     }
@@ -80,12 +80,12 @@ export class ProviderSharedFuctions {
 
     }
 
-    openSnackBar(message: string, params: any = []) {
-      // const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
-      // const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
-      // return snackBarRef;
-      return this.shared_functions.openSnackBar(message, params);
-    }
+    // openSnackBar(message: string, params: any = []) {
+    //   // const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
+    //   // const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
+    //   // return snackBarRef;
+    //   return this.shared_functions.openSnackBar(message, params);
+    // }
 
     queueReloadApi(ob, source = 'queue_list') {
       if (source === 'queue_list') {
@@ -159,10 +159,10 @@ export class ProviderSharedFuctions {
             case 'DONE': status_msg = 'COMPLETED'; break;
           }
           const msg = Messages.WAITLIST_STATUS_CHANGE.replace('[status]', status_msg);
-          this.openSnackBar (msg);
+          this.shared_functions.openSnackBar (msg);
         },
         error => {
-          this.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
           reject();
         }
       );

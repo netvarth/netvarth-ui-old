@@ -8,7 +8,6 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
 import {projectConstants} from '../../constants/project-constants';
-// import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-change-email',
@@ -40,8 +39,7 @@ export class ChangeEmailComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router,
-    // public provider_shared_functions: ProviderSharedFuctions
+    public router: Router
   ) {}
 
     ngOnInit() {
