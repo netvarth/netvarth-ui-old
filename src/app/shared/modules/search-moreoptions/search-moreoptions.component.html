@@ -33,7 +33,7 @@
                 </div>  -->
 
                 <ng-container *ngIf="refine_data.dataType=='Rating'">
-                <app-rating-star  [cloudindex]="refine_data.cloudSearchIndex" [ratingval]='' (ratingreturn)="handleratingClick($event)"></app-rating-star>
+                <app-rating-star  [cloudindex]="refine_data.cloudSearchIndex" [ratingval]='' [includedFrom]="'moreoptions'" (ratingreturn)="handleratingClick($event)"></app-rating-star>
                 </ng-container> 
                 
               </div>

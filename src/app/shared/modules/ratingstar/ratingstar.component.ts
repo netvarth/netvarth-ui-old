@@ -25,9 +25,14 @@ export class RatingStarComponent implements OnInit {
     private shared_functions: SharedFunctions,
     ) {}
   curratval: any;
+  showDecimalVals = false;
   ngOnInit() {
-    // console.log('passedin', this.cloudindex);
+    // console.log('includeded from', this.includedFrom);
     this.curratval = this.ratingval || '';
+    this.curratval = this.curratval.toString();
+    if (this.includedFrom === 'refined' || this.includedFrom === 'moreoptions') {
+      this.showDecimalVals = true;
+    }
   }
   handle_ratingclick(val) {
     const retobj = {'cloudindex': this.cloudindex, 'selectedrating': val};

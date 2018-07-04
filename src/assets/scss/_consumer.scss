@@ -2489,15 +2489,53 @@ header {
                 box-shadow: none !important;
                 
                 .mat-expansion-panel-header {
-                    font-size: 1.125rem;
-                    @include font-bold;
+                    font-size: 1.4rem;
+                    @include font-medium;
                     min-height: 40px;
                     padding: 0px 20px 0px 20px;
                     
                     .mat-expansion-panel-header-title {
                         color: $linkblue;
                     }
+                    
+                    .mat-expansion-indicator {
+                        @include align-icon;
+                        transform: rotate(0deg) !important;
+                        width: 16px;
+                        height: 16px;
+                        display: flex;
+                        align-items: center;
+                        
+                        &:after {
+                            display: none;
+                        }
+                        &:before {
+                            position: absolute;
+                            @include font-custom;
+                            content: "\72";
+                            right: 0;
+                            width: 16px;
+                            height: 16px;
+                            font-size: .75rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
+                    
+                    &.mat-expanded {
+                        .mat-expansion-panel-header-title {
+                            color: $linkblack;
+                        }
+                        
+                        .mat-expansion-indicator {
+                            &:before {
+                                content: "\66";
+                            }
+                        }
+                    }
                 }
+                
                 .mat-expansion-panel-content {
                     @include font-regular;
                     
@@ -2508,11 +2546,9 @@ header {
                 }
                 
             }
-        }        
+        }
         
-        .outer {
-            padding: 20px;
-            
+        .outer {            
             .list {
                 display: flex;
                 font-size: .875rem;
@@ -2524,16 +2560,18 @@ header {
                     align-items: center;
                     min-height: 30px;
                     padding: 10px;
-                    border: 1px solid $cc-ash;
+                    border: 1px solid $cc-body;
                     border-bottom: 0;
                     margin-bottom: 0;
                     
                     .title {
                         h3 {
-                            font-size: 1.125rem;
+                            font-size: 1rem;
                             font-weight: 600;
                             margin-bottom: 0px;
                             display: table;
+                            cursor: pointer;
+                            color: $linkblue;
                         }
                     }
                     .location {
@@ -2545,6 +2583,7 @@ header {
                             padding-left: 16px;
                             @include align-icon;
                             cursor: pointer;
+                            font-size: .875rem;
                         }
                     }
                 }
@@ -2561,13 +2600,13 @@ header {
                         font-weight: 500;
                         display: flex;
                         flex-wrap: wrap;
-                        border: 1px solid $cc-ash;
+                        border: 1px solid $cc-body;
                         border-bottom: none;
                         border-right: none;
                         
                         .lt0 {
                             padding: 10px;
-                            border: 1px solid $cc-ash;
+                            border: 1px solid $cc-body;
                             border-top: none;
                             border-left: none;
                             flex-grow: 1;
@@ -2613,7 +2652,7 @@ header {
                             flex-direction: column;
                             flex-direction: row;
                             justify-content: flex-start;
-                            border: 1px solid$cc-ash;
+                            border: 1px solid $cc-body;
                             border-top: none;
                             
 
@@ -2669,6 +2708,12 @@ header {
                                         &:before {
                                             content: "\26";
                                         }
+                                        &:hover {
+                                            &:before {
+                                                content: "\27";
+                                                color: $cc-red;
+                                            }
+                                        }
                                     }
                                     &.cancel {
                                         @include align-icon;
@@ -2716,16 +2761,19 @@ header {
         &.favourites {
             .outer {
                 .list {
+                    margin-bottom: 0;
+                    
                     .header {
-                        padding: 0;
-                        border: none;
+                        /*border-bottom: 1px solid $cc-ash;*/
                         
                         .lt {
                             h3 {
-                                font-size: 1.125rem;
+                                font-size: 1rem;
                                 font-weight: 600;
                                 margin-bottom: 0px;
                                 display: table;
+                                cursor: pointer;
+                                color: $linkblue;
                             }
                         }
                         
@@ -2760,7 +2808,7 @@ header {
                                     align-items: center;
 
                                     span {
-                                        padding: 8px;
+                                        padding: 4px;
                                         position: relative;
                                         padding-left: 25px;
                                         padding-right: 6px;
@@ -2809,11 +2857,216 @@ header {
                                             padding-left: 6px;
                                         }
                                     }
+                                    .mat-icon-button {
+                                        width: 30px;
+                                        height: 30px;
+                                        line-height: 30px;
+                                        
+                                        .mat-button-wrapper {
+                                            padding: 3px;
+                                        }
+                                    }
                                     &:last-child {
                                         margin-bottom: 0;
                                     }
                                 }
                             }
+                        }
+                    }
+                    .detail {
+                        border-left: 1px solid $cc-body;
+                        border-right: 1px solid $cc-body;
+                        
+                        .location {
+                            display: flex;
+                            margin: 10px;
+                            border-bottom: 1px dashed $cc-body;
+                            
+                            @include respond-to(ynw-767) {
+                                flex-direction: column;
+                            }
+                            
+                            .locationname {
+                                flex-grow: 1;
+                                font-weight: 600;
+                                font-size: .875rem;
+                                padding: 10px;
+                            }
+                            
+                            .bt-l {
+                                padding: 10px;
+                                
+                                .wt-tme {
+                                    display: flex;
+                                    align-items: center;
+
+                                    @include respond-to(ynw-767) {
+                                        align-items: flex-start;
+                                        flex-direction: column;
+                                    }
+                                    @include respond-to(ynw-768-991) {
+                                        align-items: flex-start;
+                                        flex-direction: column;
+                                    }
+
+                                    .o-now {
+                                        display: flex;
+                                        align-items: center;
+                                        background: $green;
+                                        height: auto;
+                                        padding: 8px;
+                                        position: relative;
+                                        color: $white;
+                                        font-weight: 600;
+                                        margin-right: 20px;
+
+                                        @include respond-to(ynw-767) {
+                                            height: 30px;
+                                            margin-right: 0;
+                                            margin-bottom: 5px;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            height: 30px;
+                                            margin-right: 0;
+                                            margin-bottom: 15px;
+                                        }
+
+                                        &:after {
+                                            position: absolute;
+                                            content: "";
+                                            right: -10px;
+                                            top: 0;
+                                            z-index: 2;
+                                            width: 10px;
+                                            height: auto;
+                                            border-top: 18px solid transparent;
+                                            border-bottom: 18px solid transparent; 
+                                            border-left: 7px solid $green;
+
+                                            @include respond-to(ynw-767) {
+                                                @include rotate(90);
+                                                bottom: 0;
+                                                left: 50%;
+                                                margin-left: -6px;
+                                                top: 6px;
+                                            }
+                                            @include respond-to(ynw-768-991) {
+                                                @include rotate(90);
+                                                bottom: 0;
+                                                left: 50%;
+                                                margin-left: -6px;
+                                                top: 6px;
+                                            }
+                                        }
+                                    }
+                                    .timing {
+                                        display: flex;
+                                        flex-direction: column;
+
+                                        .est-time {
+                                            color: $cc-mediumgray;
+                                        }
+
+                                        .time-data {
+                                            font-weight: 600;
+                                            position: relative;
+                                            padding-left: 20px;
+
+                                            @include respond-to(ynw-767) {
+                                                display: inline-flex;
+                                                align-items: center;
+                                            }
+                                            @include respond-to(ynw-768-991) {
+                                                display: inline-flex;
+                                                align-items: center;
+                                            }
+                                            @include respond-to(ynw-992-1199) {
+                                                display: inline-flex;
+                                                align-items: center;
+                                            }
+                                            @include respond-to(ynw-1200) {
+                                                display: inline-flex;
+                                                align-items: center;
+                                            }
+
+                                            .icon-question {
+                                                vertical-align: middle;
+                                                display: inline-block;
+
+                                                @include respond-to(ynw-767) {
+                                                    height: 16px;
+                                                    margin-left: 5px;
+                                                }
+                                                @include respond-to(ynw-575) {
+                                                    height: 14px;
+                                                    margin-left: 5px;
+                                                }
+                                                @include respond-to(ynw-768-991) {
+                                                    height: 16px;
+                                                    margin-left: 5px;
+                                                }
+                                                @include respond-to(ynw-992-1199) {
+                                                    height: 16px;
+                                                    margin-left: 5px;
+                                                }
+                                                @include respond-to(ynw-1200) {
+                                                    height: 16px;
+                                                    margin-left: 5px;
+                                                }
+                                            }
+
+                                            &:before {
+                                                position: absolute;
+                                                content: "\31";
+                                                @include font-custom;
+                                                left: 0;
+                                                top: 0;
+                                            }
+                                        }
+                                    }
+                                    .wt-msg {
+                                        padding: 4px 10px;
+                                        border: 2px dashed $cc-warning;
+                                        color: $cc-warning;
+                                        font-weight: 600;
+                                        display: table;
+                                    }
+                                }
+                            }
+                            .bt-r {
+                                padding: 10px;
+                                
+                                .chk-btn {
+                                    margin-left: auto;
+                                    height: auto;
+                                    padding: 5px;
+                                    font-size: .875rem;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        margin-left: inherit;
+                                    }
+                                }
+                                
+                                .bt10 {
+                                    white-space: normal;
+                                    width: 200px;
+                                    text-align: right;
+                                    margin-top: 5px;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        text-align: left;
+                                    }
+                                }
+                            }
+                            
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                        }
+                    }
+                    &:last-child {
+                        .detail {
+                            border-bottom: 1px solid $cc-body;
                         }
                     }
                 }

@@ -161,6 +161,9 @@ export class ProviderDetailComponent implements OnInit {
               this.bNameStart = holdbName;
             }
             this.ratingenabledCnt = this.businessjson.avgRating || 0;
+            if (this.ratingenabledCnt > 0) {
+              this.ratingenabledCnt = this.sharedFunctionobj.ratingRounding(this.ratingenabledCnt);
+            }
             const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
             if (ratingenabledInt < this.ratingenabledCnt) {
               this.ratingenabledHalf = true;
