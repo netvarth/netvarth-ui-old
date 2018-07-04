@@ -1782,10 +1782,14 @@
             top: 50%;
             margin-top: -10px;
             z-index: 121;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             @include transition(all 300ms);
             @include border-radius(30px);
+            background: rgba(0,0,0,.07);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             i {
                 display: flex;
@@ -1811,11 +1815,11 @@
         &:after {
             position: absolute;
             content: "";
-            background: url(../images/c-popup-bg.svg) no-repeat scroll top right/cover;
+            background: url(../images/c-popup-bg.svg) no-repeat scroll bottom right/cover;
             height: 83px;
             top: -10px;
-            right: -3px;
-            left: 0;
+            right: -10px;
+            left: -10px;
             width: auto;
             z-index: -1;
             pointer-events: none;
@@ -1855,9 +1859,62 @@
                 font-size: .875rem;
                 border-bottom: 1px dashed $cc-ash;
                 padding-bottom: 15px;
+                display: flex;
+                align-items: center;
                 
                 .selected-date {
-                    margin-bottom: 5px;
+                    display: inline-block;
+                    margin-left: 10px;
+                    
+                    .icon-add, .icon-minus {
+                        display: inline-block;
+                        vertical-align: bottom;
+                        font-size: 1.2rem;
+                        color: $linkblue;
+                        cursor: pointer;
+                        
+                        &:before {
+                            width: 24px;
+                            height: 24px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        &.disable {
+                            pointer-events: none;
+                            color: $cc-mediumgray;
+                        }
+                    }
+                }
+                
+                .form-group {
+                    margin-bottom: 0;
+                    
+                    &.dt {
+                        width: 30px;
+                        margin-left: 15px;
+                        
+                        .pickerouter {
+                            input[type="text"] {
+                                height: 30px;
+                                visibility: hidden;
+                            }
+
+                            .mat-datepicker-toggle {
+                                margin-right: 5px;
+
+                                button {
+                                    width: 30px;
+                                    height: 30px;
+                                    line-height: 30px;
+
+                                    svg {
+                                        width: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 
                 .future-text {
@@ -1892,6 +1949,7 @@
                     }
                 }
             }
+            
             .service-outer, .queue-outer {
                 border-bottom: 1px dashed $cc-ash;
                 padding-bottom: 15px;
@@ -2000,6 +2058,26 @@
                 .no-queue-available {
                     font-size: .875rem;
                 }
+                
+                .showDetOuter {
+                    .showDetService {
+                        margin-bottom: 5px;
+                        
+                        .selsername {
+                            font-weight: 600;
+                            color: $linkblack;
+                        }
+                    }
+                    .queue-waitingdiv {
+                        .queue-head {
+                            margin-bottom: 0;
+                            
+                            .queue-avail-date {
+                                color: $green;
+                            }
+                        }
+                    }
+                }
             }
             
             .queue-outer {
@@ -2014,6 +2092,8 @@
             }
             
             .servicefor-outer {
+                margin-bottom: 15px;
+                
                 .service-availer {
                     color: $linkblack;
                     font-weight: 600;
@@ -2024,6 +2104,11 @@
                     color: $linkblue;
                     font-size: .75rem;
                     text-decoration: underline;
+                }
+                .editbt {
+                    margin-left: 3px;
+                    display: inline-block;
+                    vertical-align: middle;
                 }
                 
                 &.btborder {
@@ -2055,6 +2140,28 @@
                     .col-form-label {
                         font-weight: 500;
                         color: $cc-gray;
+                        display: table;
+                        padding: 0;
+                        
+                        .icon-add {
+                            display: inline-block;
+                            vertical-align: bottom;
+                            font-size: 1.2rem;
+                            color: $linkblue;
+                            cursor: pointer;
+
+                            &:before {
+                                width: 24px;
+                                height: 24px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                        }
+                    }
+                    
+                    textarea {
+                        margin-top: 5px;
                     }
                 }
             }
@@ -2117,6 +2224,14 @@
                         font-weight: 500;
                     }
                 }
+            }
+            
+            .addMemberHeader {
+                margin-top: 10px;
+                font-size: 1rem;
+                font-weight: 600;
+                display: block;
+                margin-bottom: 5px;
             }
         }
     }

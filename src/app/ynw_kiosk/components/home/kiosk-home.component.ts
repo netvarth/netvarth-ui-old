@@ -40,7 +40,16 @@ export class KioskHomeComponent implements OnInit {
   show_customernotfoundmsg = false;
   show_customerRegister = false;
   loccationId;
-
+  locationName;
+  query_executed = false;
+  data;
+  bprofile: any = [];
+  provider_id;
+  provider_bussiness_id;
+  provider_name;
+  next_avail_queue: any = [];
+  waitlisttime_arr: any = [];
+  kiosk_loading = true;
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -57,8 +66,6 @@ export class KioskHomeComponent implements OnInit {
     this.getUserdetails();
     this.loadingNow = false;
     this.cMod = 'main';
-    this.getLocationId();
-    // this.getwaitlistForToday();
   }
   /*getTerminologies() {
     this.kiosk_services.getTerminoligies(this.customerDet,this.customerDet)
@@ -69,37 +76,6 @@ export class KioskHomeComponent implements OnInit {
 
     });
   }*/
-  getLocationId() {
-    if (this.shared_functions.getItemOnCookie('provider_selected_location')) { // check whether the location is there in cookie
-      this.loccationId = this.shared_functions.getItemOnCookie('provider_selected_location');
-    } else { // this is to take care of the situation where location id is not there in the cookie
-      this.kiosk_services.getProviderLocations()
-        .subscribe (data => {
-          this.loclist = data;
-          if (this.loclist.length > 0) {
-            this.loccationId = this.loclist[0].id;
-          }
-        },
-          error => {
-            this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-          });
-    }
-  }
-  getwaitlistForToday() {
-    const params = {
-      consumerid: this.customerDispDet.id,
-      waitliststatus: 'done',
-      locationid: this.loccationId
-    };
-    this.kiosk_services.getTodayWaitlist(params)
-      .subscribe (data => {
-        this.todaylist = data;
-        console.log('today list', this.todaylist);
-      },
-      error => {
-
-      });
-  }
   getUserdetails() {
     this.userdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
     if (this.userdet)  {
@@ -112,7 +88,144 @@ export class KioskHomeComponent implements OnInit {
           this.provider_loggedin = false;
         }
       }
+      this.getLocationId();
     }
+  }
+  getLocationId() {
+    if (this.shared_functions.getItemOnCookie('provider_selected_location1')) { // check whether the location is there in cookie
+      this.loccationId = this.shared_functions.getItemOnCookie('provider_selected_location');
+      this.getLocationDetails(this.loccationId);
+    } else { // this is to take care of the situation where location id is not there in the cookie
+      this.kiosk_services.getProviderLocations()
+        .subscribe (data => {
+          this.loclist = data;
+          if (this.loclist.length > 0) {
+            this.loccationId = this.loclist[0].id;
+            this.locationName = this.loclist[0].place;
+            this.getBprofile();
+          }
+        },
+          error => {
+            this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          });
+    }
+  }
+  getLocationDetails(id) {
+    this.kiosk_services.getLocationDetail(id)
+      .subscribe (data => {
+        this.locationName = data['place'];
+        this.getBprofile();
+      },
+      error => {
+
+      });
+  }
+  getBprofile() {
+          this.kiosk_services.getBussinessProfile()
+      .subscribe(
+        data => {
+          this.bprofile = data;
+          this.provider_id = this.bprofile.uniqueId;
+          this.provider_bussiness_id = this.bprofile.id;
+          this.provider_name = this.bprofile.businessName;
+          const prov_loc = this.provider_bussiness_id + '-' + this.loccationId;
+          this.getWaitingTime(prov_loc);
+        },
+        error => {
+
+        }
+      );
+  }
+
+  getWaitingTime(provid_locid) {
+    if (provid_locid !== '') {
+      this.kiosk_loading = true;
+    this.kiosk_services.getEstimatedWaitingTime(provid_locid)
+      .subscribe (data => {
+        // console.log('waitingtime api', data);
+        this.waitlisttime_arr = data;
+        this.kiosk_loading = false;
+        if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
+          this.waitlisttime_arr = [];
+        }
+        const today = new Date();
+        const dd = today.getDate();
+        const mm = today.getMonth() + 1; // January is 0!
+        const yyyy = today.getFullYear();
+        let cday = '';
+        if (dd < 10) {
+            cday = '0' + dd;
+        } else {
+          cday = '' + dd;
+        }
+        let cmon;
+        if (mm < 10) {
+          cmon = '0' + mm;
+        } else {
+          cmon = '' + mm;
+        }
+        const dtoday = yyyy + '-' + cmon + '-' + cday;
+        const ctoday = cday + '/' + cmon + '/' + yyyy;
+        for (let i = 0; i < this.waitlisttime_arr.length; i++) {
+          if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+            this.next_avail_queue['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
+            this.next_avail_queue['queue_available'] = 1;
+            if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+              this.next_avail_queue['caption'] = 'Next Available Time ';
+              this.next_avail_queue['isFuture'] = 1;
+              if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                this.next_avail_queue['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                  + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              } else {
+                this.next_avail_queue['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              }
+            } else {
+              this.next_avail_queue['caption'] = 'Estimated Waiting Time';
+              this.next_avail_queue['isFuture'] = 2;
+              if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                this.next_avail_queue['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              } else {
+                this.next_avail_queue['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              }
+            }
+          } else {
+            this.next_avail_queue['queue_available'] = 0;
+          }
+          if (this.waitlisttime_arr[i]['message']) {
+            this.next_avail_queue['message'] = this.waitlisttime_arr[i]['message'];
+          }
+        }
+        console.log('available queue', this.next_avail_queue);
+      });
+    }
+  }
+
+  getParametersforCheckin() {
+    const curdate = this.next_avail_queue['cdate'];
+    const checkIndata = {
+                  type : 'provider',
+                  is_provider : true,
+                  moreparams: { source: 'provider_checkin',
+                                bypassDefaultredirection: 1,
+                                provider: {
+                                            unique_id: this.provider_id,
+                                            account_id: this.provider_bussiness_id,
+                                            name: this.provider_name},
+                                location: {
+                                            id: this.loccationId,
+                                            name: this.locationName
+                                          },
+                                sel_date: curdate
+                              },
+                  datechangereq: true,
+                  fromKiosk: true,
+                  selfDet: {
+                    id: this.customerDispDet.id,
+                    name: this.customerDispDet.name
+                  }
+    };
+    return checkIndata;
   }
 
   searchCustomer() {
@@ -151,6 +264,7 @@ export class KioskHomeComponent implements OnInit {
             this.srch_fname = '';
             this.srch_mobile = '';
             this.loadingNow = false;
+            this.do_operation();
           } else { // case if searched customer does not exists, so show the "Not found" page
               this.show_customernotfoundmsg = true;
               this.showsearch_now = false;
@@ -176,15 +290,46 @@ export class KioskHomeComponent implements OnInit {
     if (this.cMod !== 'main') {
       if (!this.customer_found) {
         this.showsearch_now = true;
+      } else {
+          this.do_operation();
       }
     } else {
       this.showsearch_now = false;
     }
   }
+  do_operation() {
+    console.log('reached here');
+    switch (this.cMod) {
+      case 'status':
+        this.getwaitlistForToday(); // get the waitlist entry for today for current consumer
+      break;
+      case 'arrived':
+        this.getwaitlistForToday('checkedIn'); // get the waitlist entry for today for current consumer
+      break;
+    }
+  }
+  getwaitlistForToday(stat?) {
+    const params = {
+      consumerid: this.customerDispDet.id,
+      locationid: this.loccationId,
+      waitliststatus: stat
+    };
+    this.query_executed = false;
+    this.kiosk_services.getTodayWaitlist(params)
+      .subscribe (data => {
+        this.todaylist = data;
+        this.query_executed = true;
+        console.log('today list', this.todaylist);
+      },
+      error => {
+
+      });
+  }
   getpassedinDetails() {
     const passedData = {
       userdet: this.customerDet,
-      mod: this.cMod
+      mod: this.cMod,
+      waitlist: this.todaylist
     };
     return passedData;
   }
@@ -233,6 +378,7 @@ export class KioskHomeComponent implements OnInit {
         this.srch_fname = '';
         this.srch_mobile = '';
         this.loadingNow = false;
+        this.do_operation();
       },
     error => {
       this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -243,5 +389,16 @@ export class KioskHomeComponent implements OnInit {
     this.show_customerRegister = false;
     this.show_customernotfoundmsg = false;
     this.showsearch_now = true;
+  }
+  arrivedReturn(passedinData) {
+    console.log('arrived', passedinData);
+    this.kiosk_services.changeWaitlistStatus(passedinData.uuid, passedinData.action)
+      .subscribe (data => {
+        console.log('status change', data);
+        this.do_operation();
+        this.shared_functions.openSnackBar ('Arrival Confirmed');
+      }, error => {
+          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      });
   }
 }

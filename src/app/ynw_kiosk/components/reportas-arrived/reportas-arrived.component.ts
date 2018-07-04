@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Input, Output } from '@angular/core';
+import { Component, Inject, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Messages } from '../../../shared/constants/project-messages';
@@ -8,13 +8,15 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
-  selector: 'app-lookup-status',
-  templateUrl: './lookup-status.component.html'
+  selector: 'app-reportas-arrived',
+  templateUrl: './reportas-arrived.component.html'
 })
 
-export class LookupStatusComponent implements OnInit {
+export class ReportasArrivedComponent implements OnInit {
 
   @Input() passedInData: any =  [];
+  @Output() handleArrived = new EventEmitter<any>();
+
   api_error = null;
   api_success = null;
 
@@ -74,4 +76,27 @@ export class LookupStatusComponent implements OnInit {
         return retval.caption;
     }
   }
+  confirmArrival(list) {
+    const passval = { uuid: list.ynwUuid, action: 'REPORT' };
+    this.handleArrived.emit(passval);
+  }
+
+
+  /*confirmArrival(item) {
+    if (!item) {
+      return false;
+    }
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      data: {
+        'message' : 'Confirm the Arrival?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.doConfirmArrival(item);
+      }
+    });
+  }*/
 }

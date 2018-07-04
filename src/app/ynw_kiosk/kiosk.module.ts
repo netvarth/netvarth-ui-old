@@ -17,6 +17,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LookupStatusComponent } from './components/lookup-status/lookup-status.component';
 import { RateVisitComponent } from './components/rate-visit/rate-visit.component';
+import { ReportasArrivedComponent } from './components/reportas-arrived/reportas-arrived.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -41,7 +42,8 @@ import 'mousetrap';
         HeaderComponent,
         FooterComponent,
         LookupStatusComponent,
-        RateVisitComponent
+        RateVisitComponent,
+        ReportasArrivedComponent
     ],
     /*exports: [ConfirmBoxComponent],
       entryComponents: [

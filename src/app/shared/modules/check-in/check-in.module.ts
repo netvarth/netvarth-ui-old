@@ -7,6 +7,7 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { AddMemberModule } from '../../../shared/modules/add-member/add-member.module';
 
 import { CheckInComponent } from './check-in.component';
+import { CheckInInnerComponent } from './check-in-inner/check-in-inner.component';
 
 @NgModule({
     imports: [
@@ -22,9 +23,10 @@ import { CheckInComponent } from './check-in.component';
         CheckInComponent
     ],
     declarations: [
-        CheckInComponent
+        CheckInComponent,
+        CheckInInnerComponent
     ],
-    exports: [CheckInComponent]
+    exports: [CheckInInnerComponent]
 })
 export class CheckInModule {
 }

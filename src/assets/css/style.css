@@ -626,9 +626,6 @@
 .icon-tick:before {
   content: "\32"; }
 
-.icon-time:before {
-  content: "\33"; }
-
 .icon-rupee:before {
   content: "\56"; }
 
@@ -734,6 +731,21 @@
 .icon-createprovider:before {
   content: "\3a"; }
 
+.icon-time:before {
+  content: "\31"; }
+
+.icon-star:before {
+  content: "\3b"; }
+
+.icon-star-filled:before {
+  content: "\3c"; }
+
+.icon-star-half:before {
+  content: "\3d"; }
+
+.icon-minus:before {
+  content: "\3e"; }
+
 html {
   font-size: 16px; }
   @media only screen and (max-width: 575px) {
@@ -821,45 +833,48 @@ select:-webkit-autofill:focus {
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: relative; }
+  position: relative;
+  justify-content: center; }
   @media only screen and (max-width: 575px) {
     .ksk {
       height: auto; } }
-  .ksk .ksk-hd {
+  .ksk app-kioskheader {
     position: absolute;
     width: 100%;
-    padding-top: 50px; }
+    padding-top: 50px;
+    top: 0;
+    left: 0; }
     @media only screen and (max-width: 575px) {
-      .ksk .ksk-hd {
+      .ksk app-kioskheader .ksk-hd {
         position: relative;
         margin-bottom: 100px; } }
-    .ksk .ksk-hd .ksk-tp {
+    .ksk app-kioskheader .ksk-hd .ksk-tp {
       text-align: center;
       width: 100%; }
-  .ksk .ksk-cpy {
+  .ksk app-kiosk-home .ksk-cpy {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center; }
-    .ksk .ksk-cpy .controls {
+    .ksk app-kiosk-home .ksk-cpy .controls {
       margin: 0;
       padding: 0;
       display: flex;
       width: 640px;
       flex-wrap: wrap; }
       @media only screen and (max-width: 575px) {
-        .ksk .ksk-cpy .controls {
+        .ksk app-kiosk-home .ksk-cpy .controls {
           flex-direction: column; } }
-      .ksk .ksk-cpy .controls li {
+      .ksk app-kiosk-home .ksk-cpy .controls li {
         list-style: none;
         width: 50%;
         align-self: center;
         padding: 15px; }
         @media only screen and (max-width: 575px) {
-          .ksk .ksk-cpy .controls li {
+          .ksk app-kiosk-home .ksk-cpy .controls li {
             width: 75%; } }
-        .ksk .ksk-cpy .controls li .ot {
+        .ksk app-kiosk-home .ksk-cpy .controls li .ot {
           width: 100%;
           border: none;
           padding: 20px;
@@ -876,30 +891,30 @@ select:-webkit-autofill:focus {
           font-weight: 500;
           position: relative;
           overflow: hidden; }
-          .ksk .ksk-cpy .controls li .ot .icon-k-checkin,
-          .ksk .ksk-cpy .controls li .ot .icon-k-lookup,
-          .ksk .ksk-cpy .controls li .ot .icon-k-rating,
-          .ksk .ksk-cpy .controls li .ot .icon-k-arrived {
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot .icon-k-checkin,
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot .icon-k-lookup,
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot .icon-k-rating,
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot .icon-k-arrived {
             width: 100px;
             height: 100px;
             display: block;
             background: url(../images/k-checkin.svg) no-repeat scroll 0 0;
             margin-bottom: 15px; }
-          .ksk .ksk-cpy .controls li .ot .icon-k-lookup {
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot .icon-k-lookup {
             background: url(../images/k-lookup.svg) no-repeat scroll 0 0; }
-          .ksk .ksk-cpy .controls li .ot .icon-k-rating {
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot .icon-k-rating {
             background: url(../images/k-rating.svg) no-repeat scroll 0 0; }
-          .ksk .ksk-cpy .controls li .ot .icon-k-arrived {
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot .icon-k-arrived {
             background: url(../images/k-arrived.svg) no-repeat scroll 0 0; }
-          .ksk .ksk-cpy .controls li .ot .title {
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot .title {
             font-size: 1.125rem; }
-          .ksk .ksk-cpy .controls li .ot:focus {
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot:focus {
             background: transparent;
             box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
             -moz-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
             -webkit-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
             -o-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important; }
-          .ksk .ksk-cpy .controls li .ot:after {
+          .ksk app-kiosk-home .ksk-cpy .controls li .ot:after {
             content: '';
             position: absolute;
             top: 50%;
@@ -914,20 +929,59 @@ select:-webkit-autofill:focus {
             /* stops bg color from leaking outside the border: */
             transform: scale(1, 1) translate(-50%);
             transform-origin: 50% 50%; }
-        .ksk .ksk-cpy .controls li .ot:focus:not(:active)::after {
+        .ksk app-kiosk-home .ksk-cpy .controls li .ot:focus:not(:active)::after {
           animation: ripple 1s ease-out; }
-    .ksk .ksk-cpy .get-info {
+      .ksk app-kiosk-home .ksk-cpy .controls.sticky {
+        position: absolute;
+        bottom: 0;
+        width: 100%; }
+        @media only screen and (max-width: 575px) {
+          .ksk app-kiosk-home .ksk-cpy .controls.sticky {
+            flex-direction: row; } }
+        .ksk app-kiosk-home .ksk-cpy .controls.sticky li {
+          width: auto;
+          padding: 0;
+          flex-grow: 1; }
+          @media only screen and (max-width: 575px) {
+            .ksk app-kiosk-home .ksk-cpy .controls.sticky li {
+              width: 50%; } }
+          .ksk app-kiosk-home .ksk-cpy .controls.sticky li .ot {
+            background: transparent; }
+            .ksk app-kiosk-home .ksk-cpy .controls.sticky li .ot .icon-k-checkin,
+            .ksk app-kiosk-home .ksk-cpy .controls.sticky li .ot .icon-k-lookup,
+            .ksk app-kiosk-home .ksk-cpy .controls.sticky li .ot .icon-k-rating,
+            .ksk app-kiosk-home .ksk-cpy .controls.sticky li .ot .icon-k-arrived {
+              height: 80px;
+              width: 80px; }
+            .ksk app-kiosk-home .ksk-cpy .controls.sticky li .ot .title {
+              font-size: 1.125rem;
+              color: #fff; }
+            .ksk app-kiosk-home .ksk-cpy .controls.sticky li .ot:focus {
+              background: transparent;
+              box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
+              -moz-box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
+              -webkit-box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
+              -o-box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3) !important; }
+          .ksk app-kiosk-home .ksk-cpy .controls.sticky li:nth-child(1) {
+            background: #3bcca5; }
+          .ksk app-kiosk-home .ksk-cpy .controls.sticky li:nth-child(2) {
+            background: #ff4c4b; }
+          .ksk app-kiosk-home .ksk-cpy .controls.sticky li:nth-child(3) {
+            background: #ffa449; }
+          .ksk app-kiosk-home .ksk-cpy .controls.sticky li:nth-child(4) {
+            background: #49c4ff; }
+    .ksk app-kiosk-home .ksk-cpy .get-info {
       padding: 20px;
       width: 480px; }
-      .ksk .ksk-cpy .get-info .notice {
+      .ksk app-kiosk-home .ksk-cpy .get-info .notice {
         margin-bottom: 30px;
         display: none; }
-        .ksk .ksk-cpy .get-info .notice.show {
+        .ksk app-kiosk-home .ksk-cpy .get-info .notice.show {
           display: block; }
-          .ksk .ksk-cpy .get-info .notice.show .box {
+          .ksk app-kiosk-home .ksk-cpy .get-info .notice.show .box {
             display: flex;
             animation: hola 1s ease-in-out; }
-            .ksk .ksk-cpy .get-info .notice.show .box.error .label {
+            .ksk app-kiosk-home .ksk-cpy .get-info .notice.show .box.error .label {
               padding: 15px;
               display: block;
               background: #fff;
@@ -935,11 +989,11 @@ select:-webkit-autofill:focus {
               font-weight: 500;
               font-size: .875rem;
               color: #f24949; }
-              .ksk .ksk-cpy .get-info .notice.show .box.error .label span {
+              .ksk app-kiosk-home .ksk-cpy .get-info .notice.show .box.error .label span {
                 display: block;
                 font-weight: 600;
                 font-size: 1rem; }
-            .ksk .ksk-cpy .get-info .notice.show .box.error .cs-btn {
+            .ksk app-kiosk-home .ksk-cpy .get-info .notice.show .box.error .cs-btn {
               background: #00aef2;
               color: #fff;
               font-weight: 600;
@@ -947,17 +1001,17 @@ select:-webkit-autofill:focus {
               text-align: center;
               padding: 0;
               width: 200px; }
-      .ksk .ksk-cpy .get-info .form-group {
+      .ksk app-kiosk-home .ksk-cpy .get-info .form-group {
         text-align: center;
         margin-bottom: 30px; }
-        .ksk .ksk-cpy .get-info .form-group input[type="text"], .ksk .ksk-cpy .get-info .form-group input[type="email"], .ksk .ksk-cpy .get-info .form-group input[type="password"], .ksk .ksk-cpy .get-info .form-group input[type="file"], .ksk .ksk-cpy .get-info .form-group textarea, .ksk .ksk-cpy .get-info .form-group .form-control {
+        .ksk app-kiosk-home .ksk-cpy .get-info .form-group input[type="text"], .ksk app-kiosk-home .ksk-cpy .get-info .form-group input[type="email"], .ksk app-kiosk-home .ksk-cpy .get-info .form-group input[type="password"], .ksk app-kiosk-home .ksk-cpy .get-info .form-group input[type="file"], .ksk app-kiosk-home .ksk-cpy .get-info .form-group textarea, .ksk app-kiosk-home .ksk-cpy .get-info .form-group .form-control {
           background: #fff;
           text-align: center;
           padding: 15px;
           height: auto;
           font-size: 1.125rem;
           font-weight: 500; }
-        .ksk .ksk-cpy .get-info .form-group button {
+        .ksk app-kiosk-home .ksk-cpy .get-info .form-group button {
           background: #f24949;
           width: 100%;
           margin-top: 30px;
@@ -968,24 +1022,26 @@ select:-webkit-autofill:focus {
           font-weight: 600;
           cursor: pointer;
           font-size: 1rem; }
-          .ksk .ksk-cpy .get-info .form-group button.disabled {
+          .ksk app-kiosk-home .ksk-cpy .get-info .form-group button.disabled {
             background: #dbdbdb !important;
             pointer-events: none;
             color: #999999 !important;
             border: transparent; }
-        .ksk .ksk-cpy .get-info .form-group .label {
+        .ksk app-kiosk-home .ksk-cpy .get-info .form-group .label {
           display: block;
           margin-bottom: 5px; }
-          .ksk .ksk-cpy .get-info .form-group .label span {
+          .ksk app-kiosk-home .ksk-cpy .get-info .form-group .label span {
             font-weight: 600; }
-        .ksk .ksk-cpy .get-info .form-group:last-child {
+        .ksk app-kiosk-home .ksk-cpy .get-info .form-group:last-child {
           margin-bottom: 0l; }
   .ksk:before {
     background: url(../images/clouds.svg) no-repeat scroll center bottom/cover;
     position: absolute;
     content: "";
     width: 100%;
-    height: 20vh; }
+    height: 20vh;
+    top: 0;
+    left: 0; }
     @media only screen and (max-width: 575px) {
       .ksk:before {
         height: 28vh; } }
@@ -4583,8 +4639,8 @@ header {
       top: 50%;
       margin-top: -10px;
       z-index: 121;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       -moz-transition: all 300ms;
       -o-transition: all 300ms;
       -webkit-transition: all 300ms;
@@ -4592,7 +4648,11 @@ header {
       -webkit-border-radius: 30px;
       border-radius: 30px;
       background-clip: padding-box;
-      /* stops bg color from leaking outside the border: */ }
+      /* stops bg color from leaking outside the border: */
+      background: rgba(0, 0, 0, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center; }
       .consumerpopupmainclass .mat-dialog-title .modal_close i {
         display: flex; }
         .consumerpopupmainclass .mat-dialog-title .modal_close i:before {
@@ -4611,11 +4671,11 @@ header {
     .consumerpopupmainclass .mat-dialog-title:after {
       position: absolute;
       content: "";
-      background: url(../images/c-popup-bg.svg) no-repeat scroll top right/cover;
+      background: url(../images/c-popup-bg.svg) no-repeat scroll bottom right/cover;
       height: 83px;
       top: -10px;
-      right: -3px;
-      left: 0;
+      right: -10px;
+      left: -10px;
       width: auto;
       z-index: -1;
       pointer-events: none; }
@@ -4644,9 +4704,43 @@ header {
     .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer {
       font-size: .875rem;
       border-bottom: 1px dashed #dbdbdb;
-      padding-bottom: 15px; }
+      padding-bottom: 15px;
+      display: flex;
+      align-items: center; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date {
-        margin-bottom: 5px; }
+        display: inline-block;
+        margin-left: 10px; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-add, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-minus {
+          display: inline-block;
+          vertical-align: bottom;
+          font-size: 1.2rem;
+          color: #00aef2;
+          cursor: pointer; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-add:before, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-minus:before {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-add.disable, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-minus.disable {
+            pointer-events: none;
+            color: #999999; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group {
+        margin-bottom: 0; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt {
+          width: 30px;
+          margin-left: 15px; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter input[type="text"] {
+            height: 30px;
+            visibility: hidden; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle {
+            margin-right: 5px; }
+            .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button {
+              width: 30px;
+              height: 30px;
+              line-height: 30px; }
+              .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button svg {
+                width: 20px; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-text {
         display: table;
         cursor: pointer;
@@ -4733,21 +4827,36 @@ header {
           color: #222223; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .no-queue-available, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .no-queue-available {
         font-size: .875rem; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .showDetOuter .showDetService, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .showDetOuter .showDetService {
+        margin-bottom: 5px; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .showDetOuter .showDetService .selsername, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .showDetOuter .showDetService .selsername {
+          font-weight: 600;
+          color: #222223; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .showDetOuter .queue-waitingdiv .queue-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .showDetOuter .queue-waitingdiv .queue-head {
+        margin-bottom: 0; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date {
+          color: #00cc96; }
     .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
       border-color: #f2f2f2;
       background: #f2f2f2; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .service-availer {
-      color: #222223;
-      font-weight: 600; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .change-button {
-      cursor: pointer;
-      display: table;
-      color: #00aef2;
-      font-size: .75rem;
-      text-decoration: underline; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer.btborder {
-      border-bottom: 1px dashed #dbdbdb;
-      padding-bottom: 15px; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer {
+      margin-bottom: 15px; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .service-availer {
+        color: #222223;
+        font-weight: 600; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .change-button {
+        cursor: pointer;
+        display: table;
+        color: #00aef2;
+        font-size: .75rem;
+        text-decoration: underline; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .editbt {
+        margin-left: 3px;
+        display: inline-block;
+        vertical-align: middle; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer.btborder {
+        border-bottom: 1px dashed #dbdbdb;
+        padding-bottom: 15px; }
     .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv {
       margin-top: 15px; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .revealdiv .form-group {
@@ -4758,7 +4867,23 @@ header {
       margin-bottom: 0px; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group .col-form-label {
         font-weight: 500;
-        color: #666; }
+        color: #666;
+        display: table;
+        padding: 0; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group .col-form-label .icon-add {
+          display: inline-block;
+          vertical-align: bottom;
+          font-size: 1.2rem;
+          color: #00aef2;
+          cursor: pointer; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group .col-form-label .icon-add:before {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .consumer-comment .form-group textarea {
+        margin-top: 5px; }
     .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
       margin-bottom: 0;
       margin-top: 15px;
@@ -4810,6 +4935,12 @@ header {
       color: #00aef2;
       text-decoration: underline;
       font-weight: 500; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .addMemberHeader {
+      margin-top: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px; }
   .consumerpopupmainclass .mat-dialog-actions {
     padding: 20px; }
     @media only screen and (max-width: 767px) {
@@ -12937,7 +13068,7 @@ header.consumer {
         font-size: 1.4rem;
         font-family: 'Montserrat', sans-serif;
         font-weight: 500;
-        min-height: 40px;
+        min-height: 60px;
         padding: 0px 20px 0px 20px; }
         .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-panel-header-title {
           color: #00aef2; }
@@ -13468,6 +13599,56 @@ header.consumer {
           @media only screen and (max-width: 767px) {
             .consumer-dash .card.history .history-tbl .table tbody tr td.td5:before {
               display: none; } }
+        .consumer-dash .card.history .history-tbl .search_paging .container {
+          padding: 0; }
+          .consumer-dash .card.history .history-tbl .search_paging .container .text-center {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 60px; }
+            .consumer-dash .card.history .history-tbl .search_paging .container .text-center .paginghead-outer {
+              width: 120px;
+              margin-right: auto; }
+              .consumer-dash .card.history .history-tbl .search_paging .container .text-center .paginghead-outer .paging {
+                font-size: .875rem;
+                text-align: left;
+                font-weight: 500; }
+                .consumer-dash .card.history .history-tbl .search_paging .container .text-center .paginghead-outer .paging .paging-curr, .consumer-dash .card.history .history-tbl .search_paging .container .text-center .paginghead-outer .paging .paging-max {
+                  font-weight: 600;
+                  display: inline-block;
+                  text-align: center;
+                  color: #00aef2;
+                  padding: 3px; }
+            .consumer-dash .card.history .history-tbl .search_paging .container .text-center .pagination {
+              margin: 0px;
+              display: flex;
+              flex-wrap: wrap; }
+              .consumer-dash .card.history .history-tbl .search_paging .container .text-center .pagination li {
+                padding: 3px 5px;
+                font-size: .875rem;
+                font-weight: 500;
+                color: #00aef2;
+                background: #fff;
+                cursor: pointer;
+                margin-right: 10px;
+                min-width: 30px;
+                border: 1px solid #00aef2;
+                margin-bottom: 5px; }
+                .consumer-dash .card.history .history-tbl .search_paging .container .text-center .pagination li.ng-star-inserted {
+                  border: none; }
+                .consumer-dash .card.history .history-tbl .search_paging .container .text-center .pagination li.disabled {
+                  background: #dbdbdb;
+                  color: #999999;
+                  border: none;
+                  pointer-events: none; }
+                .consumer-dash .card.history .history-tbl .search_paging .container .text-center .pagination li.active {
+                  background: #00aef2;
+                  color: #fff; }
+                .consumer-dash .card.history .history-tbl .search_paging .container .text-center .pagination li:last-child {
+                  margin-right: 0; }
+      .consumer-dash .card.history.one {
+        padding: 20px; }
+  .consumer-dash .c-outer {
+    margin-top: 0; }
 
 /***** Common Pages #### */
 .content.see-pages .outer-card {

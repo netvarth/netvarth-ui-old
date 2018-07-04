@@ -28,12 +28,37 @@ export class KioskServices {
         const url = 'ynwConf/terminologies/' + domain + '/' + subdomain;
         return this.servicemeta.httpGet(url);
     }
+
     getProviderLocations() {
         return this.servicemeta.httpGet('provider/locations');
     }
 
-    getTodayWaitlist(params) {
-        const url = 'provider/waitlist/today?consumer-eq=' + params['consumerId'] + '&waitlistStatus-eq=' + params['waitliststatus'] + '&location-eq=' + params['locationid'];
+    getLocationDetail(location_id) {
+        const url = 'provider/locations/' + location_id;
         return this.servicemeta.httpGet(url);
+    }
+
+    getEstimatedWaitingTime(prov_loc_id) {
+        const path = 'provider/waitlist/queues/waitingTime/' + prov_loc_id;
+        return this.servicemeta.httpGet(path);
+      }
+
+    getTodayWaitlist(params) {
+        let waitlistcondition = '';
+        if (params['waitliststatus'] !== undefined) {
+            waitlistcondition = '&waitlistStatus-eq=' + params['waitliststatus'];
+        }
+        const url = 'provider/waitlist/today?consumer-eq=' + params['consumerid'] + waitlistcondition + '&location-eq=' + params['locationid'];
+        return this.servicemeta.httpGet(url);
+    }
+
+    changeWaitlistStatus(uuid, action) {
+        const url = 'provider/waitlist/' + uuid + '/' + action;
+        const message = {};
+        return this.servicemeta.httpPut(url, message);
+    }
+
+    getBussinessProfile() {
+        return this.servicemeta.httpGet('provider/bProfile');
     }
 }

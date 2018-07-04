@@ -2371,8 +2371,7 @@ header {
                         }
                     }
                 }
-            }
-            
+            }         
             
             .search_paging {
                 .container {
@@ -2491,7 +2490,7 @@ header {
                 .mat-expansion-panel-header {
                     font-size: 1.4rem;
                     @include font-medium;
-                    min-height: 40px;
+                    min-height: 60px;
                     padding: 0px 20px 0px 20px;
                     
                     .mat-expansion-panel-header-title {
@@ -3190,8 +3189,84 @@ header {
                         }
                     }
                 }
+                
+                .search_paging {
+                    .container {
+                        padding: 0;
+
+                        .text-center {
+                            display: flex;
+                            justify-content: flex-end;
+                            margin-bottom: 60px;
+
+                            .paginghead-outer {
+                                width: 120px;
+                                margin-right: auto;
+
+                                .paging {
+                                    font-size: .875rem;
+                                    text-align: left;
+                                    font-weight: 500;
+
+                                    .paging-curr, .paging-max {
+                                        font-weight: 600;
+                                        display: inline-block;
+                                        text-align: center;
+                                        color: $linkblue;
+                                        padding: 3px;
+                                    }
+                                }
+                            }
+
+                            .pagination {
+                                margin: 0px;
+                                display: flex;
+                                flex-wrap: wrap;
+
+                                li {
+                                    padding: 3px 5px;
+                                    font-size: .875rem;
+                                    font-weight: 500;
+                                    color: $linkblue;
+                                    background: $white;
+                                    cursor: pointer;
+                                    margin-right: 10px;
+                                    min-width: 30px;
+                                    border: 1px solid $linkblue;
+                                    margin-bottom: 5px;
+
+                                    &.ng-star-inserted {
+                                        border: none;
+                                    }
+                                    &.disabled {
+                                        background: $cc-ash;
+                                        color: $cc-mediumgray;
+                                        border: none;
+                                        pointer-events: none;
+                                    }
+                                    &.active {
+                                        background: $linkblue;
+                                        color: $white;
+                                    }
+                                    &:last-child {
+                                        margin-right: 0;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            
+            &.one {
+                padding: 20px;
             }
         }
+    }
+    
+    .c-outer {
+        margin-top: 0;
     }
 }
 
