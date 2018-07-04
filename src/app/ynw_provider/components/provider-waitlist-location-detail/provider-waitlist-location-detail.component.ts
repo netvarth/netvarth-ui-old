@@ -118,7 +118,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
             this.getLocationDetail();
             },
             error => {
-                this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+                this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
             /*this.api_error = error.error;
             setTimeout(() => {
                 this.resetApiErrors();
@@ -142,7 +142,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
             this.getLocationDetail();
         },
         error => {
-            this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+            this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
             /*this.api_error = error.error;
             setTimeout(() => {
             this.resetApiErrors();

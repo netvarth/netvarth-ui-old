@@ -4,7 +4,6 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderSchedulesComponent } from '../add-provider-schedule/add-provider-schedule.component';
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
@@ -222,7 +221,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
-        this.api_error = Messages.BPROFILE_LOCNAME_BLANK; // 'Phone label should not be blank';
+        this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
         return;
       }
       post_itemdata2 = {
@@ -245,16 +244,16 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         .subscribe(
           data => {
             if (this.forbadge === true) {
-              this.api_success = Messages.WAITLIST_LOCATION_AMINITIES_SAVED;
+              this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
             } else {
-              this.api_success = Messages.WAITLIST_LOCATION_UPDATED;
+              this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
             }
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
           }
         );
     } else {
@@ -262,13 +261,13 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         this.provider_services.addProviderLocation(post_itemdata2)
         .subscribe(
           data => {
-            this.api_success = Messages.WAITLIST_LOCATION_CREATED;
+            this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED');
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
           }
         );
     }
@@ -330,7 +329,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
-        this.api_error = Messages.BPROFILE_LOCNAME_BLANK; // 'Phone label should not be blank';
+        this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
         return;
       }
       post_itemdata2 = {
@@ -357,9 +356,9 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     .subscribe(
       data => {
         if (this.forbadge === true) {
-          this.api_success = Messages.WAITLIST_LOCATION_AMINITIES_SAVED;
+          this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
         } else {
-          this.api_success = (this.data.type === 'add') ? Messages.WAITLIST_LOCATION_CREATED : Messages.WAITLIST_LOCATION_UPDATED;
+          this.api_success = (this.data.type === 'add') ? this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED') : this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
         }
         setTimeout(() => {
           this.dialogRef.close('reloadlist');
@@ -385,13 +384,13 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     this.provider_services.addProviderLocation(post_data)
         .subscribe(
           data => {
-           this.api_success = Messages.WAITLIST_LOCATION_CREATED;
+           this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED');
            setTimeout(() => {
             this.dialogRef.close('reloadlist');
            }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
           }
         );
   }
@@ -407,13 +406,13 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     this.provider_services.editProviderLocation(post_data)
         .subscribe(
           data => {
-            this.api_success = Messages.WAITLIST_LOCATION_UPDATED;
+            this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
           }
     );
   }

@@ -27,7 +27,7 @@
                                 <div class="bx-ico"><i data-icon="m"></i></div>
                                 <div class="bx-copy">
                                     <p>Currently your profile is <strong>disabled</strong> for public search online.</p>
-                                    <p>Your customers cannot see you online, so they cannot do online checkins!</p>
+                                    <p>Your {{customer_label}}s cannot see you online, so they cannot do online checkins!</p>
                                     <p>Your Profile is incomplete. Need
                                       <span (click)="showBPrimary()">Name</span> and
                                       <span (click)="editLocation()">Location</span>
@@ -50,10 +50,10 @@
                                             <span class="off" *ngIf="!normal_search_active">Off</span>
                                         </span>
                                         <ng-container *ngIf="normal_search_active">
-                                        <span class="success">Good! Your customer can search &amp; find you online at youneverwait.com</span>
+                                        <span class="success">Good! Your {{customer_label}}s can search &amp; find you online at youneverwait.com</span>
                                         </ng-container>
                                         <ng-container *ngIf="!normal_search_active">
-                                            <span class="error"><i data-icon="m" ></i>Your customer can’t find you online</span>
+                                            <span class="error"><i data-icon="m" ></i>Your {{customer_label}}s can’t find you online</span>
                                         </ng-container>
                                 </div>
                                 <div class="ct-r ml-auto">
@@ -69,7 +69,7 @@
                                 <a href="#" class="cs-btn bt3">Buy Adwords</a>
                         </div>
                         <div class="adwds w-dta" *ngIf="normal_adworkds_active && adwordsmaxcount > 0">
-                            <h2>Adwords</h2> 
+                            <h2>Adwords</h2>
                             <div class="ad-tble">
                                 <div class="ad-l">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
                                 <div class="ad-r ml-auto">

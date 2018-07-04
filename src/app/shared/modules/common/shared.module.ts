@@ -14,7 +14,7 @@ import { OtpFormModule } from '../../../shared/modules/otp-form/otp-form.module'
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { NgBootstrapModule } from './ngbootstrap.module';
-
+import { CommonDataStorageService } from '.././../services/common-datastorage.service';
 
 @NgModule({
     declarations   : [
@@ -56,7 +56,8 @@ import { NgBootstrapModule } from './ngbootstrap.module';
     entryComponents: [
     ],
     providers      : [
-      FormMessageDisplayService
+      FormMessageDisplayService,
+      CommonDataStorageService
     ]
 })
 

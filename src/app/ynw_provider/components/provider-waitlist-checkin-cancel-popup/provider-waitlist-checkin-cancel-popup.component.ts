@@ -20,6 +20,9 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   message = [];
   cancel_reasons = projectConstants.WAITLIST_CANCEL_RESON;
 
+  customer_label = '';
+  checkin_label = '';
+
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -29,7 +32,8 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
 
     ) {
-
+      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+      this.checkin_label = this.sharedfunctionObj.getTerminologyTerm('check-In');
      }
 
   ngOnInit() {

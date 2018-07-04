@@ -18,6 +18,12 @@ export class CommonDataStorageService {
     this.storage[type] = data;
   }
 
+  clear() {
+    this.storage = {
+      'terminologies': null
+    };
+  }
+
 
 }
 

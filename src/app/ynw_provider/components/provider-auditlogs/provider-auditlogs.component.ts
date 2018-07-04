@@ -39,7 +39,7 @@ export class ProviderAuditLogComponent implements OnInit {
           this.auditlog_details = data;
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
           this.load_complete = 1;
         },
       () => {

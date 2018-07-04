@@ -36,13 +36,20 @@ export class ProviderbWizardComponent implements OnInit {
   locname_error = '';
   gurl_error = '';
   error_Exists = false;
+
+  customer_label = '';
+  checkin_label = '';
+
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
     public provider_services: ProviderServices,
     private dialog: MatDialog,
     private routerobj: Router
-  ) {}
+  ) {
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+  }
 
   ngOnInit() {
     this.wizard_data_holder = {

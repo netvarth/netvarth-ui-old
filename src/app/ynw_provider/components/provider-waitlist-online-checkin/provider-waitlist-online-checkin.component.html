@@ -29,7 +29,7 @@
                           <div class="form-group">
                             <mat-radio-button value="NoCalc"
                              ></mat-radio-button>
-                            <label for="">Do not show waiting time for customers</label>
+                            <label for="">Do not show waiting time for {{customer_label}}s</label>
                           </div>
                         </div>
                     </mat-radio-group>
@@ -37,7 +37,7 @@
               </div>
               <div class="row">
                   <div class="lbl col-sm-12 col-md-4 col-lg-4">
-                    <label>Accept Future Check-in</label>
+                    <label>Accept Future {{checkin_label | titlecase}}</label>
                   </div>
                   <div class="lbr col-sm-12 col-md-8 col-lg-8">
                     <div class="ctrl">

@@ -272,7 +272,7 @@ export class KioskHomeComponent implements OnInit {
           }
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         this.loadingNow = false;
       });
   }
@@ -381,7 +381,7 @@ export class KioskHomeComponent implements OnInit {
         this.do_operation();
       },
     error => {
-      this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       this.loadingNow = false;
     });
   }

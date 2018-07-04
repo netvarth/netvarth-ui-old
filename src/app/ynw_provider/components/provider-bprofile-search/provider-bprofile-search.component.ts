@@ -86,7 +86,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   adwords_remaining = 0;
   adwordshow_list: any = [];
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
-  searchquestiontooltip = Messages.BRPFOLE_SEARCH_TOOLTIP;
+  searchquestiontooltip = '';
   tooltipcls = projectConstants.TOOLTIP_CLS;
   breadcrumb_moreoptions: any =  [];
   languages_arr: any = [];
@@ -151,13 +151,18 @@ export class ProviderBprofileSearchComponent implements OnInit {
     }
   ];
 
+  customer_label = '';
+
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
   private sharedfunctionobj: SharedFunctions,
   private sanitizer: DomSanitizer,
   private dialog: MatDialog,
   private routerobj: Router,
-  private service: QuestionService) {}
+  private service: QuestionService) {
+    this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
+  }
 
   ngOnInit() {
     this.getSpokenLanguages();

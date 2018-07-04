@@ -7,7 +7,7 @@
       <div class="row">
           <div class="card p0 w-dta customers">
               <div class="head">
-                <span class="cust_count">Customers who have checkedIn: {{customer_count}}</span>
+                <span class="cust_count">{{customer_label  | titlecase}}s who have {{checkedin_label}}: {{customer_count}}</span>
               </div>
               <div class="dash-list">
 
@@ -38,7 +38,7 @@
                       </div>
 
                       <div class="check_in_date">
-                        <label class="col-form-label" for="displayName">Check-In Date</label>
+                        <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} Date</label>
                         <mat-form-field>
                           <input matInput [(ngModel)]="filter.date" [matDatepicker]="picker"
                           (dateChange)="doSearch()">
@@ -78,7 +78,7 @@
 
                       <ng-container *ngIf="loadComplete && customers.length == 0">
                         <div class="qlst no-dta" >
-                          No customers found
+                          You don't have any {{customer_label}}s
                         </div>
                       </ng-container>
 

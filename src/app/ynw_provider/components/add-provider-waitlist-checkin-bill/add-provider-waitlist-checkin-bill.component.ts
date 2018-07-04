@@ -63,6 +63,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   item_service_tax: any = 0;
   pre_payment_log: any = [];
 
+  customer_label = '';
+
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -123,7 +125,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
         );
 
-
+        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
 
      }
 
@@ -197,7 +199,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -215,8 +217,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           resolve();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-          reject(error.error);
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          reject(error);
         }
       );
     });
@@ -238,8 +240,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           resolve();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-          reject(error.error);
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          reject(error);
         }
       );
      });
@@ -261,7 +263,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
 
       }
     );
@@ -276,9 +278,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           resolve();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
 
-          reject(error.error);
+          reject(error);
         }
       );
     });
@@ -550,7 +552,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.dialogRef.close('reloadlist');
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
     } else {
@@ -564,7 +566,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
     }
@@ -579,9 +581,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           resolve();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
 
-          reject(error.error);
+          reject(error);
         }
       );
     });

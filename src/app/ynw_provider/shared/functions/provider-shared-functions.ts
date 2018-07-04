@@ -26,7 +26,7 @@ export class ProviderSharedFuctions {
           chgstatus = 'enable';
           chstatusmsg = 'enabled';
         }
-        let msg = Messages.WAITLIST_QUEUE_CHG_STAT.replace('[qname]', obj.name);
+        let msg = this.shared_functions.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
         msg = msg.replace('[status]', chstatusmsg);
 
         ob.provider_services.changeProviderQueueStatus(obj.id, chgstatus)
@@ -35,7 +35,7 @@ export class ProviderSharedFuctions {
           this.queueReloadApi(ob, source);
         },
         error => {
-          this.shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
           this.queueReloadApi(ob, source);
         });
     }
@@ -72,7 +72,7 @@ export class ProviderSharedFuctions {
           chgstatus = 'enable';
           chstatusmsg = 'enabled';
         }
-        let msg = Messages.WAITLIST_LOCATION_CHG_STATLOCATION.replace('[locname]', obj.place);
+        let msg = this.shared_functions.getProjectMesssages('WAITLIST_LOCATION_CHG_STATLOCATION').replace('[locname]', obj.place);
         msg = msg.replace('[status]', chstatusmsg);
         resolve({msg: msg , chgstatus: chgstatus });
 
@@ -107,7 +107,7 @@ export class ProviderSharedFuctions {
         chstatusmsg = 'enabled';
     }
 
-    let msg = Messages.WAITLIST_SERVICE_CHG_STAT.replace('[sername]', service.name);
+    let msg = this.shared_functions.getProjectMesssages('WAITLIST_SERVICE_CHG_STAT').replace('[sername]', service.name);
     msg = msg.replace('[status]', chstatusmsg);
 
     if (service.status === 'ACTIVE') {
@@ -152,17 +152,17 @@ export class ProviderSharedFuctions {
 
           let status_msg = '';
           switch (action) {
-            case 'REPORT' : status_msg = 'ARRIVED'; break;
-            case 'STARTED' : status_msg = 'STARTED'; break;
-            case 'CANCEL' : status_msg = 'CANCELLED'; break;
-            case 'CHECK_IN' : status_msg = 'CHECK IN'; break;
-            case 'DONE': status_msg = 'COMPLETED'; break;
+            case 'REPORT' : status_msg = '[arrived]'; break;
+            case 'STARTED' : status_msg = '[started]'; break;
+            case 'CANCEL' : status_msg = '[cancelled]'; break;
+            case 'CHECK_IN' : status_msg = '[checkedIn]'; break;
+            case 'DONE': status_msg = '[done]'; break;
           }
-          const msg = Messages.WAITLIST_STATUS_CHANGE.replace('[status]', status_msg);
+          const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
           this.shared_functions.openSnackBar (msg);
         },
         error => {
-          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
           reject();
         }
       );
@@ -193,6 +193,10 @@ export class ProviderSharedFuctions {
         }
       });
     });
+  }
+
+  getTerminologies() {
+
   }
 
 }

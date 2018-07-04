@@ -4,8 +4,8 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-provider-add-member',
@@ -24,7 +24,8 @@ export class AddProviderMemberComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices
+    public provider_services: ProviderServices,
+    public sharedfunctionObj: SharedFunctions
     ) {
        // console.log(data);
      }
@@ -71,7 +72,7 @@ export class AddProviderMemberComponent implements OnInit {
     this.provider_services.addMembers(post_data)
         .subscribe(
           data => {
-           this.api_success = Messages.MEMBER_CREATED;
+           this.api_success = this.sharedfunctionObj.getProjectMesssages('MEMBER_CREATED');
            setTimeout(() => {
              const response = { response: 'reloadlist',
                                 new_member_id: data };
@@ -79,7 +80,7 @@ export class AddProviderMemberComponent implements OnInit {
            }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
           }
         );
   }

@@ -71,14 +71,14 @@ export class LoginComponent implements OnInit {
         this.dialogRef.close();
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       },
-        error => { ob.api_error = error.error; }
+        error => { ob.api_error = this.shared_functions.getProjectErrorMesssages(error); }
       );
     } else if (this.data.type === 'consumer') {
 
       this.shared_functions.consumerLogin(post_data, this.moreParams)
       .then(
         success =>  { this.dialogRef.close('success'); },
-        error => { ob.api_error = error.error; }
+        error => { ob.api_error = this.shared_functions.getProjectErrorMesssages(error); }
       );
     }
   }

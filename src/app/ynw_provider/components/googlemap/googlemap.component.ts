@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, NgZone, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ViewChild } from '@angular/core';

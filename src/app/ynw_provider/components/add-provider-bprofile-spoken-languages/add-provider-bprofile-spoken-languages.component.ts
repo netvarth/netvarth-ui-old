@@ -4,8 +4,8 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
+import {SharedFunctions} from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-provider-bprofile-spoken-languages',
@@ -25,7 +25,8 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices
+    public provider_services: ProviderServices,
+    public shared_functions: SharedFunctions
     ) {
        // console.log(data);
      }
@@ -69,13 +70,13 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
    // console.log('save', postdata);
     this.provider_services.updatePrimaryFields(postdata)
       .subscribe(data => {
-        this.api_success = Messages.BPROFILE_LANGUAGE_SAVED;
+        this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_LANGUAGE_SAVED');
         setTimeout(() => {
           this.dialogRef.close({'mod': 'reloadlist', 'data': data});
           }, projectConstants.TIMEOUT_DELAY);
        },
         error => {
-          this.api_error = error.error;
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
   }

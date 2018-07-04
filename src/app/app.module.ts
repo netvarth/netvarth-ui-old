@@ -51,7 +51,6 @@ import { FormMessageDisplayModule } from './shared/modules/form-message-display/
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
 // import { SearchMoreOptionsComponent } from './shared/components/search-moreoptions/search-moreoptions.component';
-import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 
 import { projectConstants } from './shared/constants/project-constants';
 

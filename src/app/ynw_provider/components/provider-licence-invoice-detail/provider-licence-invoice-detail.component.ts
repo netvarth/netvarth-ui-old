@@ -74,7 +74,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
         this.invoice = data;
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -86,7 +86,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
         this.payment_modes = data;
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -98,7 +98,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
         this.payment_detail = data;
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -119,7 +119,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           }, 2000);
         },
         error => {
-          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
 

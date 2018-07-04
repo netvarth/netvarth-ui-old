@@ -31,6 +31,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   selservice_arr: any = [];
   weekdays = projectConstants.myweekdaysSchedule;
 
+  customer_label = '';
+
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -40,6 +42,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     private provider_datastorageobj: ProviderDataStorageService,
     private sharedfunctionObj: SharedFunctions
     ) {
+      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
      }
 
   ngOnInit() {
@@ -226,17 +229,17 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       }
       // Numeric validation
       if (isNaN(form_data.qserveonce)) {
-        const error  = 'Please enter a numeric value for Number of customers served at a time';
+        const error  = 'Please enter a numeric value for Number of ' + this.customer_label + 's served at a time';
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       }
       if (!this.sharedfunctionObj.checkIsInteger(form_data.qserveonce)) {
-        const error = 'Please enter an integer value for Number of customers served at a time';
+        const error = 'Please enter an integer value for Number of ' + this.customer_label + 's served at a time';
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       } else {
         if (form_data.qserveonce === 0) {
-          const error = 'Number of customers served at a time should be greater than 0';
+          const error = 'Number of ' + this.customer_label + 's served at a time should be greater than 0';
           this.sharedfunctionObj.apiErrorAutoHide(this, error);
           return;
         }
@@ -320,7 +323,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.provider_services.addProviderQueue(post_data)
         .subscribe(
           data => {
-           this.api_success = Messages.WAITLIST_QUEUE_CREATED;
+           this.api_success = this.sharedfunctionObj.getProjectMesssages('WAITLIST_QUEUE_CREATED');
            setTimeout(() => {
             this.dialogRef.close('reloadlist');
            }, projectConstants.TIMEOUT_DELAY);
@@ -338,7 +341,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.provider_services.editProviderQueue(post_data)
         .subscribe(
           data => {
-            this.api_success = Messages.WAITLIST_QUEUE_UPDATED;
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('WAITLIST_QUEUE_UPDATED');
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);

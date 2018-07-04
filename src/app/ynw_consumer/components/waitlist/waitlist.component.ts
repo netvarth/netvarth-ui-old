@@ -72,7 +72,7 @@ export class WaitlistComponent implements OnInit {
         this.getCommunicationHistory();
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -114,7 +114,7 @@ export class WaitlistComponent implements OnInit {
         }
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -133,7 +133,7 @@ export class WaitlistComponent implements OnInit {
         }
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       });
   }
 
@@ -148,7 +148,7 @@ export class WaitlistComponent implements OnInit {
 
     },
     error => {
-      this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
     }
     );
   }
@@ -169,7 +169,7 @@ export class WaitlistComponent implements OnInit {
         this.sortMessages();
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }

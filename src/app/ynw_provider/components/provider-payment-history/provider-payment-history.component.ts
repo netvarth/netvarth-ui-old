@@ -71,7 +71,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
           this.payment_history = data;
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
           this.load_complete = 1;
         },
       () => {

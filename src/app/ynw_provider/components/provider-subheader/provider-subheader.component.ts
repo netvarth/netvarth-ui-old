@@ -26,6 +26,8 @@ export class ProviderSubeaderComponent implements OnInit {
   waitlist_set: any = [];
   locations: any = [];
   bprofile: any = [];
+  customer_label = '';
+  checkin_label = '';
 
   constructor(public dialog: MatDialog,
   public provider_services: ProviderServices,
@@ -33,6 +35,8 @@ export class ProviderSubeaderComponent implements OnInit {
   public routerobj: Router) {}
 
   ngOnInit() {
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
     // this.getWaitlistMgr(); // hide becuause it called on every page change
   }
 

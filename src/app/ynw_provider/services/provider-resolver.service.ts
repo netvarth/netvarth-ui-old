@@ -25,12 +25,14 @@ export class ProviderResolver implements Resolve<{}> {
     const sub_domain =  user_data.subSector || null;
 
     if (domain && sub_domain) {
-      const terminologies = this.provider_datastorage.get('terminologies');
-      if (!terminologies) {
-        return this.provider_services.getIdTerminologies(domain, sub_domain);
-      } else {
-        return terminologies; // this.router.navigate(['/consumer']);
-      }
+        return this.provider_services.getIdTerminologies(domain, sub_domain)
+        .map(term => {
+          return term;
+        })
+      .catch(error => {
+          return Observable.of(null);
+      });
+
     } else {
       return null;
     }

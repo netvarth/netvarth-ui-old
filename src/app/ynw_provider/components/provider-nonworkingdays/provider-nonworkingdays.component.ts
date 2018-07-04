@@ -21,7 +21,7 @@ import {projectConstants} from '../../../shared/constants/project-constants';
 export class ProviderNonworkingdaysComponent implements OnInit {
     nonworking_list: any = [] ;
     query_executed = false;
-    emptyMsg = Messages.HOLIDAY_LISTEMPTY;
+    emptyMsg = '';
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
     breadcrumbs_init = [
@@ -37,7 +37,9 @@ export class ProviderNonworkingdaysComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
-        private sharedfunctionObj: SharedFunctions) {}
+        private sharedfunctionObj: SharedFunctions) {
+          this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('HOLIDAY_LISTEMPTY');
+        }
 
     ngOnInit() {
         this.getNonworkingdays();
@@ -92,7 +94,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
           width: '50%',
           panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
           data: {
-            'message' : Messages.HOLIDAY_DELETE.replace('[date]', date_format )
+            'message' : this.sharedfunctionObj.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format )
           }
         });
         dialogRef.afterClosed().subscribe(result => {

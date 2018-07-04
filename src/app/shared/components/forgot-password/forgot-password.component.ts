@@ -1,6 +1,7 @@
 import { Component, Inject, Output, EventEmitter } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
+import { SharedFunctions } from '../../functions/shared-functions';
 import {NgForm} from '@angular/forms';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
@@ -48,7 +49,8 @@ export class ForgotPasswordComponent  {
     private shared_services: SharedServices,
     private fb: FormBuilder,
     public dialog: MatDialog,
-    public fed_service: FormMessageDisplayService
+    public fed_service: FormMessageDisplayService,
+    public shared_functions: SharedFunctions
     ) {
 
       this.createForm(1);
@@ -103,7 +105,7 @@ export class ForgotPasswordComponent  {
           },
           error => {
             console.log(error);
-            this.api_error = error.error;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
 
@@ -127,7 +129,7 @@ export class ForgotPasswordComponent  {
           },
           error => {
             console.log(error);
-            this.api_error = error.error;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
 
@@ -152,7 +154,7 @@ export class ForgotPasswordComponent  {
         },
         error => {
           console.log(error);
-          this.api_error = error.error;
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           console.log(this.api_error);
         }
       );

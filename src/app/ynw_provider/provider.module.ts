@@ -95,7 +95,6 @@ import { MessageService } from './services/provider-message.service';
 // import { BreadCrumbComponent } from '../shared/components/breadcrumb/breadcrumb.component';
 import { ProviderSharedFuctions } from './shared/functions/provider-shared-functions';
 import { ProviderResolver } from './services/provider-resolver.service';
-import { CommonDataStorageService } from '../shared/services/common-datastorage.service';
 
 import { DynamicFormQuestionComponent } from './components/dynamicforms/dynamic-form-question.component';
 import { DynamicFormComponent } from './components/dynamicforms/dynamic-form.component';
@@ -250,7 +249,6 @@ import 'mousetrap';
        SharedFunctions,
        ProviderServices,
        ProviderDataStorageService,
-       CommonDataStorageService,
        QuestionService,
        MessageService,
        ProviderSharedFuctions,

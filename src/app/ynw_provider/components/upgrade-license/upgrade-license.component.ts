@@ -56,13 +56,13 @@ export class UpgradeLicenseComponent implements OnInit {
     if (this.selected_pac) {
       this.provider_services.upgradeLicensePackage(this.selected_pac)
         .subscribe (data => {
-          this.api_success = Messages.LICENSE_UPGRADED;
+          this.api_success = this.sharedfunctionObj.getProjectMesssages('LICENSE_UPGRADED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
           }
         );
     }

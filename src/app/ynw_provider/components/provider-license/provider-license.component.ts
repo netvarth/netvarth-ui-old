@@ -30,7 +30,7 @@ export class ProviderLicenseComponent implements OnInit {
     license_sub = null;
     all_license_metadata: any = [];
     license_upgarde_sub = {};
-    license_tooltip = Messages.LICENSE_TOOLTIP;
+    license_tooltip = '';
     breadcrumbs = [
       {
         title: 'Settings',
@@ -46,7 +46,9 @@ export class ProviderLicenseComponent implements OnInit {
 
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
-      private sharedfunctionObj: SharedFunctions) {}
+      private sharedfunctionObj: SharedFunctions) {
+       this.license_tooltip = this.sharedfunctionObj.getProjectMesssages('LICENSE_TOOLTIP');
+      }
 
     ngOnInit() {
       this.getLicenseDetails();
@@ -165,7 +167,7 @@ export class ProviderLicenseComponent implements OnInit {
         this.metrics = data;
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -191,7 +193,7 @@ export class ProviderLicenseComponent implements OnInit {
         this.invoices = data;
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -204,7 +206,7 @@ export class ProviderLicenseComponent implements OnInit {
         this.getLicenseMetaData();
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -246,7 +248,7 @@ export class ProviderLicenseComponent implements OnInit {
 
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -258,7 +260,7 @@ export class ProviderLicenseComponent implements OnInit {
         this.getLicenseDetails('update');
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }

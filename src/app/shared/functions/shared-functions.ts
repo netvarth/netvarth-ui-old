@@ -8,6 +8,7 @@ import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.compo
 import {Observable} from 'rxjs/Observable';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
 import { Subject } from 'rxjs/Subject';
+import { CommonDataStorageService } from '../services/common-datastorage.service';
 
 @Injectable()
 
@@ -20,6 +21,7 @@ export class SharedFunctions {
     constructor(private shared_service: SharedServices, private router: Router,
       private dialog: MatDialog,
       private snackBar: MatSnackBar,
+      private common_datastorage: CommonDataStorageService
     ) {}
 
     logout() {
@@ -466,14 +468,16 @@ export class SharedFunctions {
 
   apiErrorAutoHide(ob, error) {
     error = this.getApiError(error);
-    ob.api_error = error;
+    const replaced_message = this.findTerminologyTerm(error);
+    ob.api_error = replaced_message;
     setTimeout(() => {
       ob.api_error = null;
     }, projectConstants.TIMEOUT_DELAY_LARGE);
   }
 
   apiSuccessAutoHide(ob, message) {
-    ob.api_success = message;
+    const replaced_message = this.findTerminologyTerm(message);
+    ob.api_success = replaced_message;
     setTimeout(() => {
       ob.api_success = null;
     }, projectConstants.TIMEOUT_DELAY_LARGE);
@@ -701,7 +705,13 @@ isNumberOnly(str) {
 
 openSnackBar(message: string, params: any = []) {
   const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
-  const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
+
+  if (params['panelClass'] === 'snackbarerror') {
+    message = this.getApiError(message);
+  }
+
+  const replaced_message = this.findTerminologyTerm(message);
+  const snackBarRef = this.snackBar.open(replaced_message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
   // const snackBarRef = this.snackBar.open(message, '', {duration: 100000, panelClass: panelclass });
   return snackBarRef;
 }
@@ -963,8 +973,53 @@ ratingRounding(val) {
   return retval;
 }
 
-getTerminologyTerm() {
+getTerminologyTerm(term) {
+  const terminologies = this.common_datastorage.get('terminologies');
+  if (terminologies) {
+    return (terminologies[term]) ? terminologies[term] : term ;
+  } else {
+    return term;
+  }
+}
 
+removeTerminologyTerm(term, full_message) {
+
+  const term_replace = this.getTerminologyTerm(term);
+  return full_message.replace('[' + term + ']', term_replace);
+
+}
+
+toCamelCase(str) {
+  return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
+      return match.charAt(match.length - 1).toUpperCase();
+  });
+}
+
+firstToUpper(str) {
+  return str.charAt(0).toUpperCase() + str.substr(1);
+}
+
+findTerminologyTerm(message) {
+  const matches = message.match(/\[(.*?)\]/);
+  let replaced_msg = message;
+  if (matches) {
+    for ( const match of matches) {
+      replaced_msg = this.removeTerminologyTerm(match, replaced_msg);
+    }
+  }
+  return replaced_msg;
+}
+
+getProjectMesssages(key) {
+  let message = Messages[key] || '';
+  message = this.findTerminologyTerm(message);
+  return message;
+}
+
+getProjectErrorMesssages(error) {
+  let message = this.getApiError(error);
+  message = this.findTerminologyTerm(message);
+  return message;
 }
 
 }

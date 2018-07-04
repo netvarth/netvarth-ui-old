@@ -19,7 +19,7 @@ export class ProviderItemsComponent implements OnInit {
 
     item_list: any = [] ;
     query_executed = false;
-    emptyMsg = Messages.ITEM_LISTEMPTY;
+    emptyMsg = '';
     breadcrumbs_init = [
       {
         url: '/provider/settings',
@@ -33,7 +33,9 @@ export class ProviderItemsComponent implements OnInit {
   breadcrumbs = this.breadcrumbs_init;
     constructor( private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
-    private sharedfunctionObj: SharedFunctions) {}
+    private sharedfunctionObj: SharedFunctions) {
+      this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('ITEM_LISTEMPTY');
+    }
 
     ngOnInit() {
       this.getitems();
@@ -101,7 +103,7 @@ export class ProviderItemsComponent implements OnInit {
       const dialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         data: {
-          'message' : Messages.ITEM_ENABLE.replace('[status]', status_condition)
+          'message' : this.sharedfunctionObj.getProjectMesssages('ITEM_ENABLE').replace('[status]', status_condition)
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -117,7 +119,7 @@ export class ProviderItemsComponent implements OnInit {
             this.getitems();
           },
           error => {
-            this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+            this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
           }
         );
     }
@@ -137,7 +139,7 @@ export class ProviderItemsComponent implements OnInit {
         width: '50%',
         panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
         data: {
-          'message' : Messages.ITEM_DELETE.replace('[name]', item.displayName)
+          'message' : this.sharedfunctionObj.getProjectMesssages('ITEM_DELETE').replace('[name]', item.displayName)
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -154,7 +156,7 @@ export class ProviderItemsComponent implements OnInit {
           this.getitems();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
 

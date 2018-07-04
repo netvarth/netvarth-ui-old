@@ -91,7 +91,7 @@ export class EditProfileComponent implements OnInit {
           this.phonenoHolder = data['basicInfo']['mobile'] || '';
         }
       },
-      error => { this.api_error = error.error; }
+      error => { this.api_error = this.shared_functions.getProjectErrorMesssages(error); }
     );
   }
 
@@ -140,7 +140,7 @@ export class EditProfileComponent implements OnInit {
       },
       error => {
         // this.api_error = error.error;
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }

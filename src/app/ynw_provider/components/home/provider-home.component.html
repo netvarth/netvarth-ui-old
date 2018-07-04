@@ -54,15 +54,15 @@
                       <ul>
                           <li [ngClass]="{'active': status_type =='all'}"  (click)="changeStatusType('all')"
                           *ngIf="time_type != 1 || (time_type ==1 && selected_queue!=null && selected_queue.id)">
-                          <span>Check-Ins</span>
+                          <span>{{checkin_label |titlecase}}s</span>
                           </li>
                           <ng-container  *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
                             <li [ngClass]="{'active': status_type =='started'}"  (click)="changeStatusType('started')">
-                              <span>Started</span></li>
+                              <span>{{started_upper}}</span></li>
                             <li [ngClass]="{'active': status_type =='done'}"  (click)="changeStatusType('done')">
-                              <span>Completed</span></li>
+                              <span>{{done_upper}}</span></li>
                             <li [ngClass]="{'active': status_type =='cancelled'}"  (click)="changeStatusType('cancelled')">
-                              <span>Cancelled</span></li>
+                              <span>{{cancelled_upper}}</span></li>
                           </ng-container>
                       </ul>
 
@@ -141,7 +141,7 @@
                       </div>
 
                       <div class="check_in_date" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">Check-In Date</label>
+                        <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} Date</label>
                         <mat-form-field>
                             <input matInput [(ngModel)]="filter.check_in_date" [matDatepicker]="picker"
                             (dateChange)="doSearch()" [min]="filter_date_min" [max]="filter_date_max">
@@ -163,7 +163,7 @@
                                   <th>Actions</th>
                                   <th>Payment Status</th>
                                   <th>Message</th>
-                                  <th>Consumer Note</th>
+                                  <th>{{customer_label |titlecase}} Note</th>
                                   <th></th>
                               </tr>
                           </thead>
@@ -175,8 +175,8 @@
                                   <td data-title="Seq No" class="seq pointer-cursor" (click)="goCheckinDetail(checkin)">#{{checkin.token}}</td>
                                   <td data-title="Name" class="name" *ngIf="checkin.consumer">
                                     {{checkin.consumer.userProfile.firstName}}  {{checkin.consumer.userProfile.lastName}}
-                                    <span class="icon-arrived" title="Arrived"  *ngIf="checkin.waitlistStatus == 'arrived'">
-                                      <span class="arrived">Arrived</span>
+                                    <span class="icon-arrived" title="{{arrived_upper}}"  *ngIf="checkin.waitlistStatus == 'arrived'">
+                                      <span class="arrived">{{arrived_upper}}</span>
                                     </span>
                                   </td>
                                   <td data-title="Service" class="service">{{checkin.service.name}}</td>
@@ -185,13 +185,13 @@
                                     <ng-container *ngIf="time_type == 1">
                                         <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
                                         *ngIf="checkin.waitlistStatus == 'checkedIn'">
-                                          <i class="icon-arrived"></i> Arrived
+                                          <i class="icon-arrived"></i> {{arrived_upper}}
                                         </span>
 
                                         <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
                                         *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                         || checkin.waitlistStatus == 'arrived')">
-                                          <i class="icon-play"></i>Start
+                                          <i class="icon-play"></i>{{start_label |titlecase}}
                                         </span>
 
                                         <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
@@ -233,7 +233,7 @@
                                   </td>
                                   <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td>
-                                  <td data-title="Consumer Note" class="cnote">
+                                  <td data-title="{{customer_label |titlecase}} Note" class="cnote">
                                     <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
@@ -245,57 +245,31 @@
                                       <mat-menu #menu="matMenu">
                                           <button type="button" mat-menu-item
                                           (click)="addProviderNote(checkin)">
-                                            Add Provider Note
+                                            Add {{provider_label  | titlecase}} Note
                                           </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                                           *ngIf="time_type!=0 &&
                                           ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
-                                            Cancel Check In
+                                            Cancel {{checkin_label}}
                                           </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'REPORT')"
                                           *ngIf="time_type!=0 &&
                                           (checkin.waitlistStatus == 'started')">
-                                            Change Status to Arrived
+                                            Change Status to {{arrived_upper}}
                                           </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
                                           *ngIf="time_type!=0 &&
                                           (checkin.waitlistStatus == 'cancelled' || checkin.waitlistStatus == 'arrived' ||
                                           checkin.waitlistStatus == 'started')">
-                                            Change Status to Check In
+                                            Change Status to {{checkin_label}}
                                           </button>
                                       </mat-menu>
                                   </span>
                                 </td>
                               </tr>
-                              <!-- <tr>
-                                  <td class="online"></td>
-                                  <td data-title="Seq No" class="seq">#6</td>
-                                  <td data-title="Name" class="name">Sony Joy</td>
-                                  <td data-title="Service" class="service">Service Name</td>
-                                  <td data-title="Actions" class="actions">
-                                      <span class="arrived cs-btn bt7"><i class="icon-arrived"></i> Arrived</span> <span class="start cs-btn bt7"><i class="icon-play"></i>Start</span>
-                                  </td>
-                                  <td data-title="Payment Status" class="payment"><span class="paid-n"><span class="text">Not Paid</span></span> <span class="paid-h"><span class="text">Partially Paid</span></span> <span class="paid-f"><span class="text">Paid</span></span></td>
-                                  <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
-                                  <td data-title="Consumer Note" class="cnote"><span><i class="icon-note"></i></span></td>
-                                  <td class="mre"><span class="mbt"></span></td>
-                              </tr>
-                              <tr>
-                                  <td class="online"><span class="icon-cloud"></span></td>
-                                  <td data-title="Seq No" class="seq">#4</td>
-                                  <td data-title="Name" class="name">Nithin Skariah <span class="icon-arrived" title="Arrived"></span></td>
-                                  <td data-title="Service" class="service">Service Name</td>
-                                  <td data-title="Actions" class="actions">
-                                      <span class="start cs-btn bt7"><i class="icon-play"></i>Start</span>
-                                  </td>
-                                  <td data-title="Payment Status" class="payment"><span class="paid-n"><span class="text">Not Paid</span></span> <span class="paid-h"><span class="text">Partially Paid</span></span> <span class="paid-f"><span class="text">Paid</span></span></td>
-                                  <td data-title="Message" class="message"><span><i class="icon-message"></i></span></td>
-                                  <td data-title="Consumer Note" class="cnote"><span><i class="icon-note"></i></span></td>
-                                  <td class="mre"><span class="mbt"></span></td>
-                              </tr> -->
                           </tbody>
                       </table>
 
@@ -307,7 +281,7 @@
                   </div>
                   <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
                     <div class="qlst no-dta" *ngIf="load_waitlist ==1 && check_in_filtered_list.length == 0">
-                      No check-ins available
+                      No {{checkin_label |titlecase}}s available
                     </div>
                   </ng-container>
 

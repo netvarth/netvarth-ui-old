@@ -39,10 +39,13 @@ export class ProviderSettingsComponent implements OnInit {
   location_count: any = 0;
   service_count: any = 0;
   queues_count: any = 0;
+  checkin_label = '';
 
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
-  private routerobj: Router) {}
+  private routerobj: Router) {
+    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+  }
 
   ngOnInit() {
     this.getLocationCount();
@@ -78,7 +81,7 @@ export class ProviderSettingsComponent implements OnInit {
         this.getWaitlistMgr();
       },
       error => {
-        const snackBarRef =  this.shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
+        const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
         this.getWaitlistMgr();
       }
     );
@@ -161,7 +164,7 @@ export class ProviderSettingsComponent implements OnInit {
         this.getpaymentDetails();
       },
       error => {
-        const snackBarRef =  this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        const snackBarRef =  this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         console.log('reached here');
         this.getpaymentDetails();
       }
@@ -187,7 +190,7 @@ export class ProviderSettingsComponent implements OnInit {
           this.getSearchstatus();
       },
     error => {
-      const snackBarRef =  this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      const snackBarRef =  this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       this.getSearchstatus();
     });
   }

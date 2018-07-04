@@ -99,7 +99,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
           this.auditStatus = 3;
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
           this.load_complete = 2;
           this.auditStatus = 0;
         });

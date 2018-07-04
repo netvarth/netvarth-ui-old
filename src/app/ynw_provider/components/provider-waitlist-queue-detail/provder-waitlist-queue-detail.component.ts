@@ -43,6 +43,7 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
         }
       ];
     breadcrumbs = this.breadcrumbs_init;
+    customer_label = '';
 
     constructor(
         private provider_services: ProviderServices,
@@ -57,6 +58,7 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
             this.activated_route.params.subscribe(params => {
                 this.queue_id = params.id;
             });
+            this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
         }
 
     ngOnInit() {

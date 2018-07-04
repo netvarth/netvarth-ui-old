@@ -123,7 +123,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     this.provider_services.addHoliday(post_data)
         .subscribe(
           data => {
-           this.api_success = Messages.HOLIDAY_CREATED;
+           this.api_success = this.shared_functions.getProjectMesssages('HOLIDAY_CREATED');
            setTimeout(() => {
             this.dialogRef.close('reloadlist');
            }, projectConstants.TIMEOUT_DELAY);
@@ -138,7 +138,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     this.provider_services.editHoliday(post_data)
         .subscribe(
           data => {
-            this.api_success = Messages.HOLIDAY_UPDATED;
+            this.api_success = this.shared_functions.getProjectMesssages('HOLIDAY_UPDATED');
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);

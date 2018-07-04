@@ -14,6 +14,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
 
   checkin ;
+  consumer_label = '';
+
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInConsumerNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -21,6 +23,7 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
 
     ) {
       this.checkin = data.checkin;
+      this.consumer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
      }
 
   ngOnInit() {

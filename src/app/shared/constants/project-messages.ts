@@ -111,15 +111,15 @@ export const Messages = {
 
   'ADD_DELAY': 'New delay added successfully',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
-  'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to "[status]"',
+  'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to [status]',
   'PROVIDER_NOTE_ADD': 'Note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message send successfully',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message send successfully',
 
   'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
-  'CUSTOMER_SEARCH_EXIST': 'Customer already exist',
-  'CUSTOMER_SEARCH_UNAVAILABLE': 'This customer doesnt exist',
-  'PROVIDER_CUSTOMER_CREATED': 'New customer created',
+  'CUSTOMER_SEARCH_EXIST': 'This [customer] already exist',
+  'CUSTOMER_SEARCH_UNAVAILABLE': 'This [customer] doesnt exist',
+  'PROVIDER_CUSTOMER_CREATED': 'New [customer] created',
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',
   'PAYSETTING_SAV_PAYSTATUS': 'Payment Status updated successfully',
@@ -146,10 +146,10 @@ export const Messages = {
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
   'PROVIDER_BILL_PAYMENT_SELFPAY': ' An email and push notification will be send to the consumer',
   'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull',
-  'CHECKIN_SUCC': 'Check in Saved Successfully',
-  'CHECKIN_SUCC_REDIRECT': 'Check in Saved Successfully. Please wait ... You are being redirected to the Payment Gateway ...',
+  'CHECKIN_SUCC': '[check-In] saved successfully',
+  'CHECKIN_SUCC_REDIRECT': '[check-In] saved successfully. Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
-  'CHECKIN_CANCELLED' : 'Check-In cancelled successfully',
+  'CHECKIN_CANCELLED' : '[check-In] [cancelled] successfully',
 
   // Consumer Dashboard
 

@@ -56,6 +56,8 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     ) {
+
+        this.privacypermissiontxt.customersOnly = this.sharedfunctionObj.removeTerminologyTerm('customer', this.privacypermissiontxt.customersOnly);
         this.curmod = (data.editindx >= 0) ? 'edit' : 'add';
         if (this.curmod === 'edit') {
           this.curid = data.editindx;
@@ -260,7 +262,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
       },
       error => {
-        this.api_error = error.error;
+        this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
       }
       );
   }

@@ -11,7 +11,7 @@
         </div>
         <div class="row m-nav">
             <div class="col-xs-12 col-sm-4 col-md-4 nav01 pl0"><a routerLink="/" [class.active]="activeTab=='dashboard'"><i data-icon="w"></i> Dashboard</a></div>
-            <div class="col-xs-12 col-sm-4 col-md-4 nav01"><a routerLink="/provider/customers" [class.active]="activeTab=='customers'"><i data-icon="v"></i> Customers</a></div>
+            <div class="col-xs-12 col-sm-4 col-md-4 nav01"><a routerLink="/provider/customers" [class.active]="activeTab=='customers'"><i data-icon="v"></i> {{customer_label  | titlecase}}s</a></div>
             <div class="col-xs-12 col-sm-4 col-md-4 nav01 pr0"><a routerLink="/provider/settings" [class.active]="activeTab=='settings'"><i data-icon="D"></i> Settings</a></div>
         </div>
     </div>
