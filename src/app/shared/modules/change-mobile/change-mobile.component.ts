@@ -75,7 +75,7 @@ export class ChangeMobileComponent implements OnInit {
             this.is_verified = success['userProfile']['phoneVerified'];
           }
         },
-        error => { ob.api_error = error.error; }
+        error => { ob.api_error = this.shared_functions.getProjectErrorMesssages(error); }
       );
     }
     onSubmit(submit_data) {
@@ -92,7 +92,7 @@ export class ChangeMobileComponent implements OnInit {
           // this.shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
         },
         error => {
-          this.api_error = error.error;
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
     }
@@ -141,7 +141,7 @@ export class ChangeMobileComponent implements OnInit {
         },
         error => {
           // this.api_error = error.error;
-          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
 

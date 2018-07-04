@@ -70,7 +70,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
         console.log(this.payment_options);
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -91,7 +91,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
 
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
     }

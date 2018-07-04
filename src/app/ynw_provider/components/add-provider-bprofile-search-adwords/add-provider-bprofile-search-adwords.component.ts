@@ -3,9 +3,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
-import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
-
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 @Component({
   selector: 'app-addprovider-bprofile-search-adwords',
   templateUrl: './add-provider-bprofile-search-adwords.component.html',
@@ -23,7 +22,8 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices
+    public provider_services: ProviderServices,
+    public shared_functions: SharedFunctions
     ) {}
 
   ngOnInit() {
@@ -44,13 +44,13 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
     this.provider_services.addAdwords(post_data)
         .subscribe(
           data => {
-           this.api_success = Messages.ADWORD_CREATED;
+           this.api_success = this.shared_functions.getProjectMesssages('ADWORD_CREATED');
            setTimeout(() => {
             this.dialogRef.close('reloadlist');
            }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.shared_functions.getProjectMesssages(error);
           }
         );
   }

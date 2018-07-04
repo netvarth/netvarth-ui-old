@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row">
             <div class="top-mnu">
-                <button class="cs-btn bt4"  (click)="searchCustomer('providerCheckin')"><i data-icon="s"></i> Check-In</button>
-                <button class="cs-btn bt4" (click)="searchCustomer('createCustomer')"><i data-icon="u"></i> Create Customer</button>
+                <button class="cs-btn bt4"  (click)="searchCustomer('providerCheckin')"><i data-icon="s"></i> {{checkin_label |titlecase}}</button>
+                <button class="cs-btn bt4" (click)="searchCustomer('createCustomer')"><i data-icon="u"></i> Create {{customer_label  | titlecase}}</button>
                 <!-- <button class="cs-btn bt4"><i data-icon="A"></i> <a routerLink="../kiosk" target="_blank">Kiosk</a></button>  -->
                 <a routerLink="/kiosk" target="_blank"><div class="cs-btn bt4"><i data-icon="A"></i> Kiosk</div></a>
                 <button class="cs-btn bt5"><i data-icon="B"></i> Help</button>
@@ -11,7 +11,7 @@
         </div>
         <div class="row m-nav">
             <div class="col-xs-12 col-sm-4 col-md-4 nav01 pl0"><a routerLink="/" [class.active]="activeTab=='dashboard'"><i data-icon="w"></i> Dashboard</a></div>
-            <div class="col-xs-12 col-sm-4 col-md-4 nav01"><a routerLink="/provider/customers" [class.active]="activeTab=='customers'"><i data-icon="v"></i> Customers</a></div>
+            <div class="col-xs-12 col-sm-4 col-md-4 nav01"><a routerLink="/provider/customers" [class.active]="activeTab=='customers'"><i data-icon="v"></i> {{customer_label  | titlecase}}s</a></div>
             <div class="col-xs-12 col-sm-4 col-md-4 nav01 pr0"><a routerLink="/provider/settings" [class.active]="activeTab=='settings'"><i data-icon="D"></i> Settings</a></div>
         </div>
     </div>

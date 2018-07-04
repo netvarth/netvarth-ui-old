@@ -19,7 +19,7 @@ import {Messages} from '../../../shared/constants/project-messages';
 export class ProviderBprofileSearchAdwordsComponent implements OnInit {
     adword_list: any = [] ;
     query_executed = false;
-    emptyMsg = Messages.ADWORD_LISTEMPTY;
+    emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions) {}
@@ -58,7 +58,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit {
           width: '50%',
           panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
           data: {
-            'message' : Messages.ADWORD_DELETE.replace('[adword]', '"' + adword.name + '"')
+            'message' : this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name + '"')
           }
         });
         dialogRef.afterClosed().subscribe(result => {

@@ -86,7 +86,7 @@ export class ProviderSystemAlertComponent implements OnInit {
           this.alertStatus = 3;
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
           this.load_complete = 2;
           this.alertStatus = 0;
         });
@@ -145,7 +145,7 @@ export class ProviderSystemAlertComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar('Acknowledge Successfull');
         },
       error => {
-        this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       });
 
     }

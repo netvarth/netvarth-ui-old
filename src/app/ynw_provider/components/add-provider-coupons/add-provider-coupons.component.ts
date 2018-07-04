@@ -4,8 +4,8 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
+import {SharedFunctions} from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-provider-add-coupons',
@@ -23,7 +23,8 @@ export class AddProviderCouponsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices
+    public provider_services: ProviderServices,
+    public shared_functions: SharedFunctions
     ) {
         // console.log(data);
      }
@@ -85,13 +86,13 @@ export class AddProviderCouponsComponent implements OnInit {
     this.provider_services.addCoupon(post_data)
         .subscribe(
           data => {
-           this.api_success = Messages.COUPON_CREATED;
+           this.api_success = this.shared_functions.getProjectMesssages('COUPON_CREATED');
            setTimeout(() => {
             this.dialogRef.close('reloadlist');
            }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
   }
@@ -100,13 +101,13 @@ export class AddProviderCouponsComponent implements OnInit {
     this.provider_services.editCoupon(post_data)
         .subscribe(
           data => {
-            this.api_success = Messages.COUPON_UPDATED;
+            this.api_success = this.shared_functions.getProjectMesssages('COUPON_UPDATED');
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
     );
   }

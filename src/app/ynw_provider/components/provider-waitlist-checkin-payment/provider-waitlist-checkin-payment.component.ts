@@ -39,6 +39,10 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
     'amount': 0
   };
 
+  amount_to_pay = 0;
+
+  customer_label = '';
+
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInPaymentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -58,9 +62,9 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       }
 
       this.pay_data.uuid = this.bill_data.uuid;
-      this.pay_data.amount = this.bill_data.netTotal;
+      this.pay_data.amount = this.bill_data.netTotal - this.bill_data.totalAmountPaid;
 
-
+      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     }
 
   ngOnInit() {
@@ -88,7 +92,7 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
           this.dialogRef.close('reloadlist');
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
     }

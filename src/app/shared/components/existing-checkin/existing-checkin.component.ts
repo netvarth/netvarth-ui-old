@@ -129,7 +129,7 @@ export class ExistingCheckinComponent implements OnInit {
         }
       },
       error => {
-        this.api_error = error.error;
+        this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
       }
     );
   }

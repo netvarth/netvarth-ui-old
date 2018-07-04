@@ -3,7 +3,6 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -21,6 +20,8 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
   checkin_id = null;
   message = '';
   source = 'add';
+  provider_label = '';
+
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistCheckInProviderNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,6 +40,8 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
             this.dialogRef.close('error');
             }, projectConstants.TIMEOUT_DELAY);
         }
+
+        this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
      }
 
   ngOnInit() {
@@ -56,7 +59,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     post_data)
     .subscribe(
       data => {
-        this.api_success = Messages.PROVIDER_NOTE_ADD;
+        this.api_success = this.sharedfunctionObj.getProjectMesssages('PROVIDER_NOTE_ADD');
         setTimeout(() => {
         this.dialogRef.close('reloadlist');
         }, projectConstants.TIMEOUT_DELAY);

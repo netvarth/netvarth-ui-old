@@ -70,7 +70,7 @@ export class ChangeEmailComponent implements OnInit {
         },
         error => {
           // ob.api_error = error.error;
-          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
     }
@@ -88,7 +88,7 @@ export class ChangeEmailComponent implements OnInit {
           this.api_success = Messages.OTP_SENT_EMAIL;
         },
         error => {
-          this.api_error = error.error;
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
     }
@@ -134,7 +134,7 @@ export class ChangeEmailComponent implements OnInit {
         },
         error => {
           // this.api_error = error.error;
-          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
 

@@ -99,7 +99,7 @@ export class AdjustQueueDelayComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.api_success = Messages.ADD_DELAY;
+          this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY');
           this.closePopup('reloadlist');
         },
         error => {

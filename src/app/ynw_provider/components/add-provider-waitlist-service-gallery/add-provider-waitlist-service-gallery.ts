@@ -158,7 +158,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
         this.error_list.push('error');
         this.img_save_caption = 'Save';
         this.savedisabled = false;
-        this.error_msg = error.error;
+        this.error_msg =  this.shared_functions.getProjectErrorMesssages(error);
       }
     );
 

@@ -71,7 +71,7 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
   onSubmit(form_data) {
     console.log('length', form_data.bname.length);
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
-      this.api_error = Messages.BUSINESS_NAME_MAX_LENGTH_MSG;
+      this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
     } else {
       const submit_data: FormData = new FormData();
       const post_itemdata = {
@@ -90,11 +90,11 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     this.provider_servicesobj.createPrimaryFields(pdata)
       .subscribe(
       data => {
-        this.api_success = Messages.BPROFILE_CREATED;
+        this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_CREATED');
         this.getBusinessProfile();
       },
       error => {
-        this.api_error = error.error;
+        this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
       }
       );
   }
@@ -104,13 +104,13 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     this.provider_servicesobj.updatePrimaryFields(pdata)
       .subscribe(
       data => {
-        this.api_success = Messages.BPROFILE_UPDATED;
+        this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
         setTimeout(() => {
           this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
       },
       error => {
-        this.api_error = error.error;
+        this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
       }
       );
   }

@@ -27,7 +27,6 @@ import {Observable} from 'rxjs/Observable';
 import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
 import {FormControl} from '@angular/forms';
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import 'rxjs/add/observable/interval';
 
@@ -62,12 +61,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   load_waitlist = 0 ;
 
   open_filter = false;
-  waitlist_status = [
-    {name : 'Check Ins', value: 'checkedIn'},
-    {name : 'Cancelled', value: 'cancelled'},
-    {name : 'Started', value: 'started'},
-    {name : 'Arrived', value: 'arrived'},
-    {name : 'Done', value: 'done'}];
+  waitlist_status = [];
 
   filter = {
     first_name: '',
@@ -82,6 +76,21 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   filter_date_max = moment(new Date()).add(-1, 'days');
   filter_date_min = moment(new Date()).add(+1, 'days');
+
+  customer_label = '';
+  provider_label = '';
+  arrived_label = '';
+  arrived_upper = '';
+  checkedin_label = '';
+  checkedin_upper = '';
+  done_label = '';
+  done_upper = '';
+  started_label = '';
+  started_upper = '';
+  cancelled_label = '';
+  cancelled_upper = '';
+  checkin_label  = '';
+  start_label = '';
 
   pagination: any  = {
     startpageval: 1,
@@ -102,6 +111,34 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private shared_services: SharedServices) {
 
+      this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+      this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+
+      this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
+      this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
+
+      this.checkedin_label = this.shared_functions.getTerminologyTerm('checkedIn');
+      this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
+
+      this.done_label = this.shared_functions.getTerminologyTerm('done');
+      this.done_upper = this.shared_functions.firstToUpper(this.done_label);
+
+      this.started_label = this.shared_functions.getTerminologyTerm('started');
+      this.started_upper = this.shared_functions.firstToUpper(this.started_label);
+
+      this.start_label = this.shared_functions.getTerminologyTerm('start');
+
+      this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
+      this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
+
+      this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+
+      this.waitlist_status = [
+        {name :  this.checkedin_upper, value: 'checkedIn'},
+        {name : this.cancelled_upper, value: 'cancelled'},
+        {name : this.started_upper, value: 'started'},
+        {name : this.arrived_upper, value: 'arrived'},
+        {name : this.done_upper, value: 'done'}];
 
     }
 
@@ -115,7 +152,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
         this.reloadAPIs();
     });
-    console.log(this.common_datastorage.get('terminologies'));
   }
 
   ngOnDestroy() {
@@ -725,7 +761,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         if (error.status === 422 && this.time_type === 1) {
           this.addEditBill(checkin , null);
         } else {
-          this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       },
       () => {

@@ -5,7 +5,6 @@ import { ViewChild, ElementRef } from '@angular/core';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
@@ -86,7 +85,7 @@ export class AddProviderItemImageComponent implements OnInit {
 
         this.provider_services.uploadItemImage(this.data.item.itemId, submit_data)
         .subscribe(data => {
-            this.api_success = Messages.ITEMIMAGE_UPLOADED;
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEMIMAGE_UPLOADED');
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);

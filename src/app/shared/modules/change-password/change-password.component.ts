@@ -74,7 +74,7 @@ export class ChangePasswordComponent implements OnInit {
           },
           error => {
             // this.api_error = error.error;
-            this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+            this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
             if (error.status === 419) { // case of session expired
               this.router.navigate(['/logout']);
             }

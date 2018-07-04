@@ -20,6 +20,8 @@ export class SearchProviderCustomerComponent implements OnInit {
   tday = new Date();
   source  = null;
 
+  customer_label = '';
+
   constructor(
     public dialogRef: MatDialogRef<SearchProviderCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -29,6 +31,7 @@ export class SearchProviderCustomerComponent implements OnInit {
     public shared_functions: SharedFunctions
     ) {
       this.source = this.data.source;
+      this.customer_label = this.shared_functions.getTerminologyTerm('customer');
      }
 
   ngOnInit() {

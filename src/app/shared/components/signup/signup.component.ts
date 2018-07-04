@@ -270,7 +270,7 @@ export class SignUpComponent implements OnInit {
         },
         error => {
             console.log(error);
-            this.api_error = error.error;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
 
@@ -296,7 +296,7 @@ export class SignUpComponent implements OnInit {
         },
         error => {
             console.log(error);
-            this.api_error = error.error;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
 
@@ -314,7 +314,7 @@ export class SignUpComponent implements OnInit {
                 },
                 error => {
                   console.log(error);
-                  this.api_error = error.error;
+                  this.api_error = this.shared_functions.getProjectErrorMesssages(error);
                 }
               );
       } else {
@@ -326,7 +326,7 @@ export class SignUpComponent implements OnInit {
             },
             error => {
               console.log(error);
-              this.api_error = error.error;
+              this.api_error = this.shared_functions.getProjectErrorMesssages(error);
             }
           );
       }
@@ -353,7 +353,7 @@ export class SignUpComponent implements OnInit {
           },
           error => {
             console.log(error);
-            this.api_error = error.error;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
       } else {
@@ -370,7 +370,7 @@ export class SignUpComponent implements OnInit {
             },
             error => {
               console.log(error);
-              this.api_error = error.error;
+              this.api_error = this.shared_functions.getProjectErrorMesssages(error);
             }
           );
       }

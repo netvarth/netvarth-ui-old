@@ -9,7 +9,6 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
 
@@ -35,6 +34,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
   constructor(
     public provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
+    public shared_functions: SharedFunctions,
     public dialogRef: MatDialogRef<ProviderBprofileSearchSocialMediaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
      //  console.log('received data', data);
@@ -79,7 +79,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
       this.provider_services.updateSocialMediaLinks(submit_data)
       .subscribe(
         data => {
-            this.api_success = Messages.BPROFILE_SOCIALMEDIA_SAVED;
+            this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SOCIALMEDIA_SAVED');
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
               }, projectConstants.TIMEOUT_DELAY);
@@ -142,7 +142,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
     const pattern = new RegExp(projectConstants.VALIDATOR_URL);
     const result = pattern.test(curlabel);
     if (!result) {
-      this.api_error = Messages.BPROFILE_SOCIAL_URL_VALID; // 'Please enter a valid URL';
+      this.api_error =  this.shared_functions.getProjectMesssages('BPROFILE_SOCIAL_URL_VALID'); // 'Please enter a valid URL';
       return;
     }
     if (this.curmod === 'add') {

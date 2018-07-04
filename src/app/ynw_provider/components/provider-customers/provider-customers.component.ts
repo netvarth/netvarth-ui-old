@@ -43,12 +43,19 @@ export class ProviderCustomersComponent implements OnInit {
   };
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   loadComplete = false;
+  customer_label = '';
+  checkin_label = '';
+  checkedin_label = '';
+
 
   constructor(private provider_services: ProviderServices,
     private router: Router,
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices) {
+      this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+      this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+      this.checkedin_label = this.shared_functions.getTerminologyTerm('checkedIn');
     }
 
   ngOnInit() {
@@ -73,12 +80,12 @@ export class ProviderCustomersComponent implements OnInit {
             this.loadComplete = true;
           },
           error => {
-            this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+            this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
           }
         );
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
 

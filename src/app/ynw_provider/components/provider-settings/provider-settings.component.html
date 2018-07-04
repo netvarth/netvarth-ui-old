@@ -37,7 +37,7 @@
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Accept Online Check-in <span class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</span>
+                                        Accept Online {{checkin_label |titlecase}} <span class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</span>
                                     </span>
                                     <span class="ctrl"><mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handle_waitliststatus($event)"></mat-slide-toggle></span>
                                 </li>

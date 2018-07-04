@@ -26,7 +26,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
   loc_badges: any = [];
   badge_map_arr: any = [];
   query_executed = false;
-  emptyMsg = Messages.ADWORD_LISTEMPTY;
+  emptyMsg = '';
   api_error = null;
   api_success = null;
   subdomain_fields: any = [];
@@ -57,7 +57,9 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
     private router: Router,
     private shared_services: SharedServices,
     private provider_shared_functions: ProviderSharedFuctions
-  ) {}
+  ) {
+    this.emptyMsg = this.shared_Functionsobj.getProjectMesssages('ADWORD_LISTEMPTY');
+  }
 
   ngOnInit() {
     this.getBusinessConfiguration();
@@ -138,7 +140,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
         this.getProviderLocations();
       },
       error => {
-        this.shared_Functionsobj.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
+        this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
         /*this.api_error = error.error;
         setTimeout(() => {
           this.resetApiErrors();
@@ -162,7 +164,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
       this.getProviderLocations();
     },
     error => {
-     const snackBarRef =  this.shared_Functionsobj.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
+     const snackBarRef =  this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
      /* this.api_error = error.error;
       setTimeout(() => {
         this.resetApiErrors();

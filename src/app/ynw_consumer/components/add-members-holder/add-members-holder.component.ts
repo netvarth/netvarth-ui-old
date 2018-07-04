@@ -123,7 +123,7 @@ export class AddMembersHolderComponent implements OnInit {
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
-              this.api_error = error.error;
+              this.api_error = this.shared_functions.getProjectErrorMesssages(error);
             } );
           } else  if (this.data.type === 'edit') {
               post_data['user'] =  this.data.member.user;
@@ -136,7 +136,7 @@ export class AddMembersHolderComponent implements OnInit {
                   }, projectConstants.TIMEOUT_DELAY);
                 },
                 error => {
-                  this.api_error = error.error;
+                  this.api_error = this.shared_functions.getProjectErrorMesssages(error);
                 }
               );
           }

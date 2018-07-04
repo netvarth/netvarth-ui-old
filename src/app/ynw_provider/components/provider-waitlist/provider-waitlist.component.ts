@@ -26,6 +26,7 @@ export class ProviderWaitlistComponent implements OnInit {
   service_count: any = 0;
   queues_count: any = 0;
 
+  checkin_label = '';
 
   breadcrumbs = [
     {
@@ -39,7 +40,10 @@ export class ProviderWaitlistComponent implements OnInit {
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
-  private router: Router) {}
+  private router: Router,
+  private shared_functions: SharedFunctions) {
+    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+  }
 
   ngOnInit() {
 

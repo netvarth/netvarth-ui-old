@@ -39,12 +39,12 @@
                     <div class="content">
                         <div class="form-group">
                             <label>Bussiness Name</label>
-                            <span class="expl">Your customers will view this in public profile</span>
+                            <span class="expl">Your {{customer_label}}s will view this in public profile</span>
                             <input type="text" class="form-control" id="" maxlength="50" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="">
                         </div>
                         <div class="form-group">
                             <label>Profile Summary</label>
-                            <span class="expl">Your customers will view this in public profile</span>
+                            <span class="expl">Your {{customer_label}}s will view this in public profile</span>
                             <textarea class="form-control" id="" rows="3" maxlength="400" [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>GPS Coordinates</label>
-                                    <span class="expl">GPS coordinates needed for the customerts who uses their mobile phone for search by location proximity.</span>
+                                    <span class="expl">GPS coordinates needed for the {{customer_label}}s who uses their mobile phone for search by location proximity.</span>
                                     <div class="row">
                                         <div class="col-6"><input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"></div>
                                         <div class="col-6"><input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lon']" name="lon" placeholder="Longitude"></div>
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <span class="expl">Enter the Address/Direction where your customers can find you.</span>
+                                    <span class="expl">Enter the Address/Direction where your {{customer_label}}s can find you.</span>
                                     <textarea class="form-control" id="" [(ngModel)]="wizard_data_holder['address']" name="address"></textarea>
                                 </div>
                                 <!-- <div class="form-group pcde">
@@ -108,7 +108,7 @@
                                 </div> -->
                                 <div class="form-group">
                                     <label>Location Name</label>
-                                    <span class="expl">Display name of the location where you render services for your customers. This is what your customers see when they search online.</span>
+                                    <span class="expl">Display name of the location where you render services for your {{customer_label}}s. This is what your {{customer_label}}s see when they search online.</span>
                                     <input type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="">
                                     <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
                                 </div>
@@ -202,7 +202,7 @@
                                     <!-- <input type="radio" name='searchstatus' value="ENABLE" [checked]="search_status==1" (change)="handle_searchstatus('ENABLE')"> -->
                                     <label for="" (click)="handle_searchstatus('ENABLE')">
                                         Turn on Public Search
-                                        <span>Your customers can search your profile online in <strong>youneverwait.com</strong> and they can check-in for your services.</span>
+                                        <span>Your {{customer_label}}s can search your profile online in <strong>youneverwait.com</strong> and they can {{checkin_label |titlecase}} for your services.</span>
                                     </label>
                                 </div>
                                 <div class="rdo toff" [class.active]="search_status==2" >
@@ -210,7 +210,7 @@
                                     <!-- <input type="radio" name='searchstatus' [checked]="search_status==2" value="DISABLE" (change)="handle_searchstatus('DISABLE')"> -->
                                     <label for="" (click)="handle_searchstatus('DISABLE')">
                                         Turn off Public Search
-                                        <span>Your customers can’t see your profile online in <strong>youneverwait.com</strong> and they can’t check-in for your services.</span>
+                                        <span>Your {{customer_label}}s can’t see your profile online in <strong>youneverwait.com</strong> and they can’t {{checkin_label |titlecase}} for your services.</span>
                                     </label>
                                 </div>
                             </div>

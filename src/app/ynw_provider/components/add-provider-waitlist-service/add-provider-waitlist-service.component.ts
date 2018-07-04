@@ -137,12 +137,12 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         if (this.item_pic.files.length > 0) {
           this.saveImages();
         } else {
-          this.closePopup(Messages.SERVICE_ADDED);
+          this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
         }
 
       },
       error => {
-        this.api_error = this.shared_functions.getApiError(error);
+        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
       }
     );
   }
@@ -154,11 +154,11 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         if (this.item_pic.files.length > 0) {
           this.saveImages();
         } else {
-          this.closePopup(Messages.SERVICE_UPDATED);
+          this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
         }
       },
       error => {
-        this.api_error = this.shared_functions.getApiError(error);
+        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
       }
     );
   }
@@ -245,7 +245,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       data => {
         this.getGalleryImages();
         this.resetVariables();
-        this.closePopup(Messages.SERVICE_UPDATED);
+        this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
       },
       error => {
 

@@ -5,11 +5,11 @@
 </h1>
 <mat-dialog-content>
   <div class="full-outer">
-      <div class="btl"><span class="label">Customer Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName}}</span></div>
+      <div class="btl"><span class="label">{{customer_label  | titlecase}} Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName}}</span></div>
       <div class="topay" *ngIf="!pay_data.acceptPaymentBy || pay_data.acceptPaymentBy == 'self_pay'">
         <span class="label">Amount to pay</span>
         <span class="label-valu">
-            {{bill_data.netTotal | currency:'INR':'symbol':'.2-2'}}
+            {{pay_data.amount | currency:'INR':'symbol':'.2-2'}}
         </span>
       </div>
       <div class="form-group"
@@ -33,6 +33,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button  type="button" mat-button class="cs-btn bt1 makepayment"
-    [disabled]="!pay_data.amount || pay_data.amount == 0"
+    [disabled]="!pay_data.amount || pay_data.amount == 0 ||
+    bill_data.billPaymentStatus == 'FullyPaid'"
     (click)="makePayment()">Make Payment</button>
 </mat-dialog-actions>

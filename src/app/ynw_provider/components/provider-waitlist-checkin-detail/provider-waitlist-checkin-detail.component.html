@@ -12,7 +12,7 @@
                   <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
                       <div class="card">
                           <div class="c-details">
-                              <h2>Check-In Details</h2>
+                              <h2>{{checkin_label |titlecase}} Details</h2>
                               <div class="tp" *ngIf="waitlist_data">
                                   <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName}} {{waitlist_data.consumer.userProfile.lastName}}</span></div>
                                   <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date}}</span></div>
@@ -36,10 +36,10 @@
                               </div>
                               <div class="btm" *ngIf="waitlist_data">
                                   <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">Communicate</button>
-                                  <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >Add Provider note</button>
+                                  <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >Add {{provider_label |titlecase}} note</button>
                                   <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()"
                                   *ngIf="!waitlist_data.history &&
-                                  ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">Cancel Check-In</button>
+                                  ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">Cancel {{checkin_label |titlecase}}</button>
                               </div>
                           </div>
                       </div>
@@ -63,7 +63,7 @@
                             <mat-expansion-panel>
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                  Provider Notes
+                                  {{customer_label |titlecase }} Notes
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
                               <div  class="pnotes" *ngFor="let note of waitlist_notes">
@@ -81,7 +81,7 @@
                   </div>
                   <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
                       <div class="card">
-                          <h2>Check-In History</h2>
+                          <h2>{{checkin_label |titlecase}} History</h2>
                           <div class="c-history-outer">
                             <ul class="c-history">
                               <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">

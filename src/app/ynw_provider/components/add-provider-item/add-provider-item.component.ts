@@ -5,7 +5,6 @@ import { ViewChild, ElementRef } from '@angular/core';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
@@ -147,13 +146,13 @@ export class AddProviderItemComponent implements OnInit {
     this.provider_services.addItem(post_data)
         .subscribe(
           data => {
-            this.api_success = Messages.ITEM_CREATED;
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
           }
     );
   }
@@ -162,13 +161,13 @@ export class AddProviderItemComponent implements OnInit {
     this.provider_services.editItem(post_data)
         .subscribe(
           data => {
-            this.api_success = Messages.ITEM_UPDATED;
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = error.error;
+            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
           }
     );
   }

@@ -20,7 +20,7 @@ export class ProviderDiscountsComponent implements OnInit {
 
     discount_list: any = [] ;
     query_executed = false;
-    emptyMsg = Messages.DISCOUNT_LISTEMPTY;
+    emptyMsg = '';
     breadcrumbs_init = [
         {
           url: '/provider/settings',
@@ -34,7 +34,9 @@ export class ProviderDiscountsComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
-        private sharedfunctionObj: SharedFunctions) {}
+        private sharedfunctionObj: SharedFunctions) {
+          this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('DISCOUNT_LISTEMPTY');
+        }
 
     ngOnInit() {
         this.getDiscounts(); // Call function to get the list of discount lists
@@ -89,7 +91,7 @@ export class ProviderDiscountsComponent implements OnInit {
         width: '50%',
         panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
         data: {
-          'message' : Messages.DISCOUNT_DELETE.replace('[name]', discount.name),
+          'message' :  this.sharedfunctionObj.getProjectMesssages('DISCOUNT_DELETE').replace('[name]', discount.name),
           'heading' : 'Delete Confirmation'
         }
       });

@@ -166,7 +166,7 @@ SOCIAL_MEDIA : [
 ],
 PRIVACY_PERMISSIONS : {
                           'all': 'Public',
-                          'customersOnly': 'My Customers Only',
+                          'customersOnly': 'My [customer]s only',
                           'self': 'None'
 },
 TOOLTIP_CLS: 'ynwtooltipcls',

@@ -31,10 +31,15 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   formChange = 0;
 
   api_success = null;
+  customer_label = '';
+  checkin_label = '';
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
-  private shared_functions: SharedFunctions) {}
+  private shared_functions: SharedFunctions) {
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+  }
 
   ngOnInit() {
 
@@ -62,7 +67,6 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     .subscribe(
       data => {
         this.getWaitlistMgr();
-        this.api_success = Messages.ONLINE_CHECKIN_SAVED;
         this.shared_functions.apiSuccessAutoHide(this, Messages.ONLINE_CHECKIN_SAVED);
       },
       error => {

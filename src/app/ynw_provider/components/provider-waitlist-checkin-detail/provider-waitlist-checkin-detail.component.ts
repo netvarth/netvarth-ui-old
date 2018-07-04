@@ -29,20 +29,21 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     waitlist_notes: any = [];
     waitlist_history: any = [];
     communication_history: any = [];
-    breadcrumbs_init = [
+    breadcrumbs_init: any = [
         {
           title: 'Dashboard',
           url: '/provider'
-        },
-        {
-          title: 'Check-In'
-        },
+        }
       ];
     breadcrumbs = this.breadcrumbs_init;
     api_success = null;
     api_error = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     today = new Date();
+    customer_label = '';
+    provider_label = '';
+    checkin_label = '';
+    checkin_upper = '';
 
     constructor(
         private provider_services: ProviderServices,
@@ -57,6 +58,14 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
             this.activated_route.params.subscribe(params => {
                 this.waitlist_id = params.id;
             });
+            this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
+            this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
+            this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('check-In');
+            this.checkin_upper  = this.shared_Functionsobj.firstToUpper(this.checkin_label);
+
+            this.breadcrumbs_init.push({
+                'title': this.checkin_upper
+              });
         }
 
     ngOnInit() {
@@ -91,7 +100,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
             this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           },
           error => {
-            this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+            this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
             this.goBack();
           }
       );

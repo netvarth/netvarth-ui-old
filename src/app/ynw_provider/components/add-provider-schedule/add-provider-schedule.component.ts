@@ -4,7 +4,6 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -81,12 +80,12 @@ export class AddProviderSchedulesComponent implements OnInit {
     // validate the fields
     // check whether any day is selected
     if (this.selday_arr.length === 0) {
-      this.api_error = Messages.BPROFILE_ATLEASTONEDAY;
+      this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_ATLEASTONEDAY');
       return;
     }
     // check whether the start and end times are selected
     if (!this.dstart_time || !this.dend_time) {
-      this.api_error = Messages.BPROFILE_SELECTTIME;
+      this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SELECTTIME');
       return;
     }
     // today
@@ -95,7 +94,7 @@ export class AddProviderSchedulesComponent implements OnInit {
     const today_curtime = moment(moment(curday).format('LT'), ['h:mm A']).format('HH:mm');
 
     if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
-      this.api_error = Messages.BPROFILE_STIMEERROR;
+      this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_STIMEERROR');
       return;
     }
     // convert start time to 12 hour format
@@ -136,17 +135,17 @@ export class AddProviderSchedulesComponent implements OnInit {
           // // console.log('obtained', this.dstart_time, stime, etime, this.dend_time);
             if ((this.sharedfunctionObj.getminutesOfDay(this.dstart_time) >= this.sharedfunctionObj.getminutesOfDay(stime))
                 && (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) <= this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start time within the existing range
-                this.api_error = Messages.BPROFILE_SCHOVERLAP.replace('[day]', this.getDay(selday)) ;
+                this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday)) ;
                 return;
             }
             if ((this.sharedfunctionObj.getminutesOfDay(this.dend_time) >= this.sharedfunctionObj.getminutesOfDay(stime))
                 && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) <= this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current end time within the existing range
-              this.api_error = Messages.BPROFILE_SCHOVERLAP.replace('[day]', this.getDay(selday)) ;
+              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday)) ;
               return;
             }
             if ((this.sharedfunctionObj.getminutesOfDay(this.dstart_time) < this.sharedfunctionObj.getminutesOfDay(stime))
                 && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) > this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start & end outside existing range
-              this.api_error = Messages.BPROFILE_SCHOVERLAP.replace('[day]', this.getDay(selday)) ;
+              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday)) ;
               return;
             }
           }
@@ -165,7 +164,7 @@ export class AddProviderSchedulesComponent implements OnInit {
         // this.api_success = Messages.BPROFILE_SCHADDEDFOR + this.getDay(selday);
       } else { // case if adding the schedule
         this.schedule_arr.push(add_schedule);
-        this.api_success = Messages.BPROFILE_SCHADDEDFOR + this.getDay(selday);
+        this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHADDEDFOR') + this.getDay(selday);
       }
     }
     if (this.edit_mode && this.edit_index !== '') {

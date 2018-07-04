@@ -91,7 +91,7 @@ export class FooterComponent implements OnInit {
            this.getAlerts();
         },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       });
     }
     getAlerts() {

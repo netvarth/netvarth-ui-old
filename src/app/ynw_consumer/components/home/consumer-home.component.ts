@@ -293,7 +293,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -313,7 +313,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       });
   }
 
@@ -576,7 +576,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.viewBill(waitlist, bill_data);
       },
       error => {
-        this.shared_functions.openSnackBar(error.error,  {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error,  {'panelClass': 'snackbarerror'});
       }
     );
   }

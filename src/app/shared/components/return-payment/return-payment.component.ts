@@ -50,7 +50,7 @@ export class ReturnPaymentComponent implements OnInit {
         this.loading = 0;
       },
       error => {
-        this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         this.loading = 0;
       }
     );

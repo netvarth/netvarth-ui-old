@@ -94,7 +94,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         // this.getGalleryImages();
       },
       error => {
-        this.error_list.push(error.error);
+        this.error_list.push(this.shared_functions.getApiError(error));
       }
     );
 
@@ -181,8 +181,8 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         this.dialogRef.close('reloadlist');
       },
       error => {
-        this.error_list.push(error.error);
-        this.error_msg = error.error;
+        this.error_list.push(this.shared_functions.getProjectErrorMesssages(error));
+        this.error_msg = this.shared_functions.getProjectErrorMesssages(error);
       }
     );
 
