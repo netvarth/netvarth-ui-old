@@ -60,7 +60,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
             });
             this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
             this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
-            this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('check-In');
+            this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('waitlist');
             this.checkin_upper  = this.shared_Functionsobj.firstToUpper(this.checkin_label);
 
             this.breadcrumbs_init.push({

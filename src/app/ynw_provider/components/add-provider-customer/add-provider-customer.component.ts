@@ -75,7 +75,7 @@ export class AddProviderCustomerComponent implements OnInit {
       data => {
         this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
         setTimeout( () => {
-          this.dialogRef.close('reloadlist');
+          this.dialogRef.close({message: 'reloadlist', data: data});
         } , projectConstants.TIMEOUT_DELAY);
       },
       error => {

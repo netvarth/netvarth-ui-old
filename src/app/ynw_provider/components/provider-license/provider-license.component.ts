@@ -44,6 +44,8 @@ export class ProviderLicenseComponent implements OnInit {
     unpaid_invoice_show = 0;
     dateFormat =  projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
+    reload_adword_api =  {status : true};
+
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions) {
@@ -82,6 +84,7 @@ export class ProviderLicenseComponent implements OnInit {
           this.getLicenseUsage();
           this.getInvoiceList();
           this.getSubscriptionDetail();
+          this.reload_adword_api =  {status : true};
 
         }
     }

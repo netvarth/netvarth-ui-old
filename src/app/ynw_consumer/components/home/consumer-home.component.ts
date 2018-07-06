@@ -25,11 +25,19 @@ import {Observable} from 'rxjs/Observable';
 import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
+import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
 
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
-  styleUrls: ['./consumer-home.component.scss']
+  styleUrls: ['./consumer-home.component.scss'],
+  animations: [
+    trigger('hideShowAnimator', [
+        state('true' , style({ opacity: 1 , height: '100%' })),
+        state('false', style({ opacity: 0 , height: 0 })),
+        transition('0 <=> 1', animate('.5s ease-out'))
+    ])
+  ]
 })
 export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
@@ -61,6 +69,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   cronHandle: Subscription;
   cronStarted;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  open_fav_div = null;
+  hideShowAnimator = false;
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -630,5 +640,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  toogleDetail(i) {
+      let open_fav_div = null;
+      if (this.open_fav_div === i) {
+        this.hideShowAnimator = false;
+        open_fav_div = null;
+      } else {
+        this.hideShowAnimator = true;
+        open_fav_div = i;
+      }
+      setTimeout( () => {
+        this.open_fav_div = open_fav_div;
+      }, 500);
+  }
 }
 

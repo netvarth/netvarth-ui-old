@@ -63,6 +63,11 @@ export class SearchProviderCustomerComponent implements OnInit {
             this.dialogRef.close(return_data);
           } else if (this.source === 'providerCheckin') {
             this.shared_functions.apiErrorAutoHide(this, Messages.CUSTOMER_SEARCH_UNAVAILABLE);
+            const return_data = {
+              'message': 'noCustomer',
+              'data': form_data
+            };
+            this.dialogRef.close(return_data);
           }
 
         } else {

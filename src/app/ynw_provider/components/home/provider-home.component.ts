@@ -117,7 +117,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
       this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
 
-      this.checkedin_label = this.shared_functions.getTerminologyTerm('checkedIn');
+      this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
       this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
 
       this.done_label = this.shared_functions.getTerminologyTerm('done');
@@ -131,7 +131,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
       this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
 
-      this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+      this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
 
       this.waitlist_status = [
         {name :  this.checkedin_upper, value: 'checkedIn'},
@@ -226,8 +226,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.selected_location = null;
     this.provider_services.getProviderLocations()
     .subscribe(
-      data => {
-        this.locations = data;
+      (data: any) => {
+        const locations = data;
+        this.locations = [];
+
+        for ( const loc of locations) {
+          if (loc.status === 'ACTIVE') {
+            this.locations.push(loc);
+          }
+        }
+
         const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider checkin button page
         if ( cookie_location_id === '') {
           if (this.locations[0]) {
@@ -332,12 +340,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.getTodayCheckinCount()
-    .then(
-      result => {
-        this.today_waitlist_count = result;
-      }
-    );
+    // this.getTodayCheckinCount()
+    // .then(
+    //   result => {
+    //     this.today_waitlist_count = result;
+    //   }
+    // );
     // this.getHistoryCheckinCount();
   }
 
@@ -357,7 +365,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     let no_filter = false;
     if (!filter) {
       filter = {
-        'location-eq' : this.selected_location.id
+        'location-eq' : this.selected_location.id,
       };
       no_filter = true;
     }
@@ -408,7 +416,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
     if (!filter) {
       filter = {
-        'location-eq' : this.selected_location.id
+        'location-eq' : this.selected_location.id,
+        'queue-eq' : this.selected_queue.id
       };
 
       no_filter = true;

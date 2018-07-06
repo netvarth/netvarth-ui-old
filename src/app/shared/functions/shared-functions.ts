@@ -469,7 +469,7 @@ export class SharedFunctions {
   apiErrorAutoHide(ob, error) {
     error = this.getApiError(error);
     const replaced_message = this.findTerminologyTerm(error);
-    ob.api_error = replaced_message;
+    ob.api_error = this.firstToUpper(replaced_message);
     setTimeout(() => {
       ob.api_error = null;
     }, projectConstants.TIMEOUT_DELAY_LARGE);
@@ -477,7 +477,7 @@ export class SharedFunctions {
 
   apiSuccessAutoHide(ob, message) {
     const replaced_message = this.findTerminologyTerm(message);
-    ob.api_success = replaced_message;
+    ob.api_success = this.firstToUpper(replaced_message);
     setTimeout(() => {
       ob.api_success = null;
     }, projectConstants.TIMEOUT_DELAY_LARGE);
@@ -974,18 +974,21 @@ ratingRounding(val) {
 }
 
 getTerminologyTerm(term) {
+
+  const term_only = term.replace(/[\[\]']/g, '' ); // term may me with or without '[' ']'
   const terminologies = this.common_datastorage.get('terminologies');
   if (terminologies) {
-    return (terminologies[term]) ? terminologies[term] : term ;
+    return (terminologies[term_only]) ? terminologies[term_only] :  (( term === term_only) ? term_only : term  );
   } else {
-    return term;
+    return ( term === term_only) ? term_only : term;
   }
+
 }
 
 removeTerminologyTerm(term, full_message) {
-
   const term_replace = this.getTerminologyTerm(term);
-  return full_message.replace('[' + term + ']', term_replace);
+  const term_only = term.replace(/[\[\]']/g, '' ); // term may me with or without '[' ']'
+  return full_message.replace('[' + term_only + ']', term_replace);
 
 }
 
@@ -1000,7 +1003,7 @@ firstToUpper(str) {
 }
 
 findTerminologyTerm(message) {
-  const matches = message.match(/\[(.*?)\]/);
+  const matches = message.match(/\[(.*?)\]/g);
   let replaced_msg = message;
   if (matches) {
     for ( const match of matches) {
@@ -1013,13 +1016,13 @@ findTerminologyTerm(message) {
 getProjectMesssages(key) {
   let message = Messages[key] || '';
   message = this.findTerminologyTerm(message);
-  return message;
+  return this.firstToUpper(message);
 }
 
 getProjectErrorMesssages(error) {
   let message = this.getApiError(error);
   message = this.findTerminologyTerm(message);
-  return message;
+  return this.firstToUpper(message);
 }
 
 }

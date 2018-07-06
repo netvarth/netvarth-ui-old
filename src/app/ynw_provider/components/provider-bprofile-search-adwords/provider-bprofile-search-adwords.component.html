@@ -1,7 +1,8 @@
 <div class="lc33">
     <div class="lc3-1 lcd">
         <div class="ttle">Ad-words
-          <span class="addbt" (click)="addAdwords()"></span>
+          <span class="addbt" (click)="addAdwords()"
+          *ngIf="adwordsmaxcount > 0"></span>
         </div>
     </div>
     <div class="lc3-2 lcd" *ngFor="let adword of adword_list">
@@ -9,7 +10,15 @@
         <div class="ctrl"><span class="icon-delete"
           (click)="doRemoveAdwords(adword)"></span></div>
     </div>
-    <div class="lc3-2 lcd" *ngIf="adword_list.length ==0 && query_executed == true">
+    <div class="lc3-2 lcd" *ngIf="adwordsmaxcount > 0 && adword_list.length ==0 && query_executed == true">
         <div class="ttle">{{emptyMsg}}</div>
     </div>
+
+    <div class="lc3-2 lcd" *ngIf="adwordsmaxcount == 0 &&
+    adword_list.length ==0 && query_executed == true">
+      <div  class="ttle">
+          <p><strong>Sorry!</strong> Currently you did not have any adwords. Please upgrade your Licence Package/Add-On </p>
+      </div>
+    </div>
+
 </div>

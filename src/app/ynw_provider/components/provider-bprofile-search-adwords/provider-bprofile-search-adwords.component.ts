@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -16,8 +16,14 @@ import {Messages} from '../../../shared/constants/project-messages';
   templateUrl: './provider-bprofile-search-adwords.component.html',
   styleUrls: ['./provider-bprofile-search-adwords.component.css']
 })
-export class ProviderBprofileSearchAdwordsComponent implements OnInit {
+export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges {
+
+    @Input() reloadadwordapi;
+
     adword_list: any = [] ;
+    adwordsmaxcount: any = 0;
+    remaining_adword = 0;
+
     query_executed = false;
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
     constructor( private provider_servicesobj: ProviderServices,
@@ -25,16 +31,32 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit {
         private sharedfunctionObj: SharedFunctions) {}
 
     ngOnInit() {
-        this.getAdwords();
+        this.getTotalAllowedAdwordsCnt();
     }
+
+    ngOnChanges() {
+      this.getTotalAllowedAdwordsCnt();
+    }
+
+    getTotalAllowedAdwordsCnt() {
+      this.provider_servicesobj.getTotalAllowedAdwordsCnt()
+        .subscribe ((data: any) => {
+
+          this.adwordsmaxcount = data;
+          this.getAdwords();
+        });
+    }
+
     getAdwords() {
         this.provider_servicesobj.getAdwords()
         .subscribe(data => {
             this.adword_list = data;
+            this.remaining_adword = this.adwordsmaxcount - this.adword_list.length;
             this.query_executed = true;
         });
     }
     addAdwords() {
+      if (this.remaining_adword > 0) {
         const dialogRef = this.dialog.open(AddProviderBprofileSearchAdwordsComponent, {
           width: '50%',
           data: {
@@ -48,6 +70,10 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit {
             this.getAdwords();
           }
         });
+      } else {
+        this.sharedfunctionObj.openSnackBar(Messages.ADWORD_EXCEED_LIMIT,  {'panelClass': 'snackbarerror'});
+      }
+
     }
     doRemoveAdwords(adword) {
         const id = adword.id;
@@ -75,7 +101,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(Messages.ADWORD_DELETE_SUCCESS);
           },
           error => {
-
+            this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
           }
         );
       }
