@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @Input() headerTitle: string;
   @Input() includedfrom: string;
+  bname;
+  blogo;
 
   constructor(
     private dialog: MatDialog,
@@ -34,11 +36,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
     ngOnInit() {
-
+      this.getBusinessdetFromLocalstorage();
     }
 
     ngOnDestroy() {
 
+    }
+    getBusinessdetFromLocalstorage() {
+      const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
+      if (bdetails) {
+        this.bname = bdetails.bn || '';
+        this.blogo = bdetails.logo || '';
+       // console.log('logo', this.blogo);
+      }
     }
 
 }

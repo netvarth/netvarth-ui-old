@@ -82,10 +82,10 @@
                           </div>    
                   
                           <ng-container *ngFor="let refine_data of searchrefine_arr; let refindx=index">
-                          <div  class="bx-block" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean'">
+                          <div  class="bx-block" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean' && refine_data.dataType!='URL'">
                             <ng-container *ngIf="refine_data.cloudSearchIndex!='specialization'">
                               <mat-accordion>
-                                  <mat-expansion-panel [expanded]="true">
+                                  <mat-expansion-panel [expanded]="isExpanded(refine_data.dataType, refine_data.cloudSearchIndex)">
                                       <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                         <mat-panel-title>
                                         <span class="refine-head">{{refine_data.displayName}}</span>
@@ -94,7 +94,8 @@
                                       
                                           <div *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'" >
                                               <mat-form-field class="example-full-width">
-                                                <input matInput placeholder="Enter {{refine_data.displayName}}" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (blur)="handleTextrefineblur(refine_data.cloudSearchIndex	,$event.target.value,refine_data.dataType, false)">
+                                                <!-- <input matInput placeholder="Enter {{refine_data.displayName}}" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (blur)="handleTextrefineblur(refine_data.cloudSearchIndex	,$event.target.value,refine_data.dataType, false)"> -->
+                                                <input matInput autocomplete="off" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (keyup)="handleTextrefineKeypress($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)">
                                               </mat-form-field>
                                               <span class="glyphicon glyphicon-search"></span>
                                           </div>

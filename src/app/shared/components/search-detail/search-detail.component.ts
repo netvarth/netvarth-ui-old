@@ -988,7 +988,7 @@ export class SearchDetailComponent implements OnInit {
     }
     let pasdomain = (this.domain !== 'All') ? this.domain : '';
     if (subdom === '') {
-      pasdomain = '';
+     // pasdomain = '';
     }
     // console.log('pass dom subdom', pasdomain, subdom);
     if (fromrefine === 1) { // case of coming to this function from left side domain or subdomain selection
@@ -1004,13 +1004,14 @@ export class SearchDetailComponent implements OnInit {
         subdom = this.refined_subdomain;
       }
       if (subdom === '') {
-        pasdomain = '';
+        // pasdomain = '';
       }
     }
+    // console.log('ref', pasdomain, subdom);
     this.searchdetailserviceobj.getRefinedSearch(pasdomain, subdom)
       .subscribe( data => {
-         // console.log(this.domain, this.kw);
-          if (pasdomain && subdom) { // case if domain and subdomain are available
+          // if (pasdomain && subdom) { // case if domain and subdomain are available
+          if (pasdomain) { // case if domain and subdomain are available
             if (data['refinedFilters']) {
               this.searchrefine_arr = data['refinedFilters'];
             }
@@ -1201,11 +1202,15 @@ export class SearchDetailComponent implements OnInit {
     }
     /* Handling the case of text boxes */
     let textstr = '';
+    let tmpholder = '';
     for (const field in this.searchrefinetextresult_arr) {
       if (field) {
         if (this.searchrefinetextresult_arr[field] !== '') {
           // textstr += ' ' + field + '_cust:' + '\'' + this.searchrefinetextresult_arr[field] + '\'' + ' ';
-          textstr += ' ' + field + ':' + '\'' + this.searchrefinetextresult_arr[field] + '\'' + ' ';
+          tmpholder = this.searchrefinetextresult_arr[field];
+          tmpholder = tmpholder.replace(/'/g, '\\\'');
+          // textstr += ' ' + field + ':' + '\'' + this.searchrefinetextresult_arr[field] + '\'' + ' ';
+          textstr += ' ' + field + ':' + '\'' + tmpholder + '\'' + ' ';
           this.refined_options_url_str += ';myref_' + field + '=' + this.searchrefinetextresult_arr[field];
         }
       }
@@ -1283,7 +1288,6 @@ export class SearchDetailComponent implements OnInit {
   // method which will be called onblur on textbox fields of refined filters
   handleTextrefineblur (fieldname, fieldvalue, fieldtype, bypassbuildquery?) {
     this.searchButtonClick = false;
-    // check whether fieldname already exists
     this.searchrefinetextresult_arr[fieldname] = fieldvalue;
     if (fieldvalue === '') {
       delete this.searchrefinetextresult_arr[fieldname];
@@ -1291,6 +1295,17 @@ export class SearchDetailComponent implements OnInit {
     if (bypassbuildquery === false) {
       // calling method to rebuild the query with the details selected from the refine search aswell
       this.buildQuery(false);
+    }
+  }
+
+  handleTextrefineKeypress (ev, fieldname, fieldvalue, fieldtype, bypassbuildquery?) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) {
+      console.log('enter key');
+       // replacing unwanted characters
+      fieldvalue = fieldvalue.replace(/;/g, '');
+      fieldvalue = fieldvalue.replace(/\//g, '');
+      this.handleTextrefineblur (fieldname, fieldvalue, fieldtype, bypassbuildquery);
     }
   }
 
@@ -1512,5 +1527,18 @@ export class SearchDetailComponent implements OnInit {
       retval =  true;
     }
     return retval;
+  }
+  isExpanded(datatype, cloudSearchIndex) {
+    let vals;
+    if (datatype === 'TEXT' || datatype === 'TEXT_MED') {
+      vals = this.returnRefineCheckboxRetainValue(cloudSearchIndex, '', datatype);
+      if (vals !== '') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+        return true;
+    }
   }
 }

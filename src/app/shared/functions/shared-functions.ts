@@ -832,8 +832,13 @@ formatDate(psdate, params: any = []) { /* convert year-month-day to day-monthnam
   const darr =  psdate.split('-');
   if (params['rettype'] === 'monthname') {
     darr[1] = monthNames[darr[1]];
+    return  darr[1] + ' ' + darr[2];
+  } else if (params['rettype'] === 'fullarr') {
+    darr[1] = monthNames[darr[1]];
+    return darr;
+  } else {
+    return  darr[1] + ' ' + darr[2];
   }
-  return  darr[1] + ' ' + darr[2];
 }
 addZero(i) {
   if (i < 10) {

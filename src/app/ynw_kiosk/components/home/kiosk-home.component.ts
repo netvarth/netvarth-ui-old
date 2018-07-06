@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -14,10 +14,16 @@ import { projectConstants } from '../../../shared/constants/project-constants';
   templateUrl: './kiosk-home.component.html'
 })
 export class KioskHomeComponent implements OnInit {
+ @ViewChild ('srchmobile') private srchmob: ElementRef;
+ @ViewChild ('srchname') private srchname: ElementRef;
 
+ @ViewChild ('regmobile') private regmobile: ElementRef;
+ @ViewChild ('regfname') private regfname: ElementRef;
+ @ViewChild ('reglname') private reglname: ElementRef;
   provider_loggedin = false;
   srch_mobile = '';
   srch_fname = '';
+  reg_mobile = '';
   reg_fname = '';
   reg_lname = '';
   userdet;
@@ -50,6 +56,7 @@ export class KioskHomeComponent implements OnInit {
   next_avail_queue: any = [];
   waitlisttime_arr: any = [];
   kiosk_loading = true;
+  showregmobile = false;
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -181,7 +188,7 @@ export class KioskHomeComponent implements OnInit {
                 + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             } else {
-              this.next_avail_queue['caption'] = 'Estimated Waiting Time';
+              this.next_avail_queue['caption'] = 'Appox Waiting Time';
               this.next_avail_queue['isFuture'] = 2;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.next_avail_queue['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
@@ -220,25 +227,40 @@ export class KioskHomeComponent implements OnInit {
                               },
                   datechangereq: true,
                   fromKiosk: true,
-                  selfDet: {
+                  customer_data: {
                     id: this.customerDispDet.id,
                     name: this.customerDispDet.name
                   }
     };
     return checkIndata;
   }
+  handleCheckinReturn(retdata) {
+    // console.log('kiosk return checkin', retdata);
+    if (retdata === 'reloadlist') {
+      this.showMode('main');
+    }
+  }
 
   searchCustomer() {
     if (!this.phonePattern.test(this.srch_mobile)) {
       this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
+      if (this.srchmob.nativeElement) {
+        this.srchmob.nativeElement.focus();
+      }
       return false;
     }
     if (this.blankPattern.test(this.srch_fname) || this.srch_fname.length < 3) {
       this.shared_functions.openSnackBar('Please enter atleast the first 3 letters of your first name', {'panelClass': 'snackbarerror'});
+      if (this.srchname.nativeElement) {
+        this.srchname.nativeElement.focus();
+      }
       return false;
     }
     if ( !this.namePattern.test(this.srch_fname)) {
       this.shared_functions.openSnackBar('Name should contain only characters', {'panelClass': 'snackbarerror'});
+      if (this.srchname.nativeElement) {
+        this.srchname.nativeElement.focus();
+      }
       return false;
     }
 
@@ -266,9 +288,11 @@ export class KioskHomeComponent implements OnInit {
             this.loadingNow = false;
             this.do_operation();
           } else { // case if searched customer does not exists, so show the "Not found" page
+              this.reg_fname = this.srch_fname;
               this.show_customernotfoundmsg = true;
               this.showsearch_now = false;
               this.loadingNow = false;
+              this.showRegister();
           }
       },
       error => {
@@ -278,11 +302,13 @@ export class KioskHomeComponent implements OnInit {
   }
 
   showMode(val) {
+    this.showregmobile = false;
     this.cMod = val;
     this.srch_fname = '';
     this.srch_mobile = '';
     this.reg_fname = '';
     this.reg_lname = '';
+    this.reg_mobile = '';
     this.show_customernotfoundmsg = false;
     this.show_customerRegister = false;
     this.showsearch_now = false;
@@ -304,7 +330,8 @@ export class KioskHomeComponent implements OnInit {
         this.getwaitlistForToday(); // get the waitlist entry for today for current consumer
       break;
       case 'arrived':
-        this.getwaitlistForToday('checkedIn'); // get the waitlist entry for today for current consumer
+        // this.getwaitlistForToday('checkedIn'); // get the waitlist entry for today for current consumer
+        this.getwaitlistForToday(); // get the waitlist entry for today for current consumer
       break;
     }
   }
@@ -334,6 +361,7 @@ export class KioskHomeComponent implements OnInit {
     return passedData;
   }
   logOff() {
+    this.showregmobile = false;
     this.customer_found = false;
     this.show_customernotfoundmsg = false;
     this.show_customerRegister = false;
@@ -348,19 +376,39 @@ export class KioskHomeComponent implements OnInit {
     this.reg_lname = '';
   }
   registerCustomer() {
+
+    let curmobile = '';
+    if (this.showregmobile) {
+      if (!this.phonePattern.test(this.reg_mobile)) {
+        this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
+        if (this.regmobile.nativeElement) {
+          this.regmobile.nativeElement.focus();
+        }
+        return false;
+      }
+      curmobile = this.reg_mobile;
+    } else {
+      curmobile = this.srch_mobile;
+    }
     if (this.blankPattern.test(this.reg_fname) || !this.namePattern.test(this.reg_fname)) {
       this.shared_functions.openSnackBar('Please enter a valid first name', {'panelClass': 'snackbarerror'});
+      if (this.regfname.nativeElement) {
+        this.regfname.nativeElement.focus();
+      }
       return false;
     }
     if (this.blankPattern.test(this.reg_lname)  || !this.namePattern.test(this.reg_lname)) {
       this.shared_functions.openSnackBar('Please enter a valid last name', {'panelClass': 'snackbarerror'});
+      if (this.reglname.nativeElement) {
+        this.reglname.nativeElement.focus();
+      }
       return false;
     }
     const postData = {
       'userProfile': {
         'firstName': this.reg_fname,
         'lastName': this.reg_lname,
-        'primaryMobileNo': this.srch_mobile
+        'primaryMobileNo': curmobile
       }
     };
     this.loadingNow = true;
@@ -378,7 +426,12 @@ export class KioskHomeComponent implements OnInit {
         this.srch_fname = '';
         this.srch_mobile = '';
         this.loadingNow = false;
-        this.do_operation();
+        if (this.showregmobile) { // case if reached here by clicking the signu link
+          this.showMode('main');
+        } else {
+          this.do_operation();
+        }
+        // this.showMode(this.cMod);
       },
     error => {
       this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
@@ -386,9 +439,15 @@ export class KioskHomeComponent implements OnInit {
     });
   }
   showSearchNow() {
+    this.showregmobile = false;
     this.show_customerRegister = false;
     this.show_customernotfoundmsg = false;
     this.showsearch_now = true;
+    setTimeout(function() {
+      if (this.srchmob.nativeElement) {
+        this.srchmob.nativeElement.focus();
+      }
+    }, 5000);
   }
   arrivedReturn(passedinData) {
     console.log('arrived', passedinData);
@@ -400,5 +459,13 @@ export class KioskHomeComponent implements OnInit {
       }, error => {
           this.shared_functions.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       });
+  }
+  showSignup() {
+    this.cMod = '';
+    this.show_customernotfoundmsg = true;
+    this.showsearch_now = false;
+    this.loadingNow = false;
+    this.showregmobile = true;
+    this.showRegister();
   }
 }

@@ -1,9 +1,9 @@
-<h1 class="mat-dialog-title">{{main_heading}}
-        <button #queue mat-dialog-close class="modal_close">
+<h1 [class.mat-dialog-title]="!fromKiosk" [class.kioskinnertitle]="fromKiosk">{{main_heading}}
+        <button #queue mat-dialog-close class="modal_close" *ngIf="!fromKiosk">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
-      </h1>
-      <div class="mat-dialog-content">
+</h1>
+      <div [class.mat-dialog-content]="!fromKiosk" [class.kioskcontent]="fromKiosk">
     
             <div class="mainouter">
               <ng-container *ngIf="step==1">
@@ -53,7 +53,16 @@
                             <span class="qtime">&nbsp; [ {{que.queueSchedule.timeSlots[0].sTime}} - {{que.queueSchedule.timeSlots[0].eTime}} ]</span>
                         </mat-chip>
                         </mat-chip-list>
-    
+                        
+                        <div class="consumer-comment"  *ngIf="step==1">
+                            <div class="form-group">
+                                <label for="reason" class="col-form-label" (click)="handleNote()">If you have a note, Click here. <span class="icon-add"></span></label>
+                                <ng-container *ngIf="dispCustomernote">
+                                    <textarea matInput #consumernote (change)="handleConsumerNote(consumernote.value)"></textarea>
+                                </ng-container>
+                            </div>
+                        </div>
+
                         <div class="showDetOuter">
                             <div class="showDetService">
                                 Check-In for service:  <span class='selsername'>{{ sel_ser_det.name }}</span>
@@ -71,17 +80,8 @@
                     </ng-container>
                     
               </div>
-    
               <ng-container *ngIf="step==1">
-              <div class="consumer-comment">
-                    <div class="form-group">
-                        <label for="reason" class="col-form-label" (click)="handleNote()">If you have a note, Click here. <span class="icon-add"></span></label>
-                        <ng-container *ngIf="dispCustomernote">
-                            <textarea matInput #consumernote (change)="handleConsumerNote(consumernote.value)"></textarea>
-                        </ng-container>
-                    </div>
-              </div>
-              <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment">
+              <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
                 <div class="prepay-dur-pr">
                     <div class="prepay-amt">Amount to Pay: <span class="prepaymin-cls">{{sel_ser_det.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span></div>
                     <div class="prepay-gateway-outer">
@@ -130,18 +130,20 @@
               </ng-container>
               <ng-container *ngIf="showCreateMember">
                 <div class="addMemberHeader">Add Member</div>
-                <app-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)"></app-consumer-add-member>
+                <!-- <app-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)"></app-consumer-add-member> -->
+                <app-checkin-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)"></app-checkin-consumer-add-member>
+                
               </ng-container>
               <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>
           </div>
      
         </div>
 
-        <div class="mat-dialog-actions">
+        <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk">
           <ng-container *ngIf="step==1">
               <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" *ngIf="isCheckinenable()" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
               <div class="disable-msg" *ngIf="!isCheckinenable() && checkindisablemsg !=''">{{checkindisablemsg}}</div>
-              <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+              <!-- <button  type="button" mat-dialog-close class="cs-btn bt2" *ngIf="!fromKiosk">Cancel</button> -->
           </ng-container>
       
           <ng-container *ngIf="step==3 && !showCreateMember">

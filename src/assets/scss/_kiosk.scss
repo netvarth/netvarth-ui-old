@@ -1,0 +1,1362 @@
+.ksk {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    
+    @include respond-to(ynw-767) {
+        display: block;
+    }
+    @include respond-to(ynw-575) {
+        height: auto;
+    }
+    
+    app-kioskheader {
+        position: absolute;
+        width: 100%;
+        padding-top: 30px;
+        top: 0;
+        left: 0;
+        
+        @include respond-to(ynw-767) {
+            position: relative;
+        }
+        
+        .ksk-hd {
+            display: flex;
+            padding: 0 20px;
+            
+            @include respond-to(ynw-767) {
+                padding: 20px;
+                margin-bottom: 40px;
+            }
+            @include respond-to(ynw-575) {
+                position: relative;
+                margin-bottom: 50px;
+                flex-direction: column;
+            }
+
+            .ksk-ynw-logo {
+                flex-grow: 0;
+                width: 160px;
+                order: 2;
+                align-self: center;
+                
+                @include respond-to(ynw-575) {
+                    order: 1;
+                    margin-bottom: 30px;
+                }
+            }
+            .ksk-company-logo {
+                flex-grow: 1;
+                text-align: center;
+                display: flex;
+                
+                @include respond-to(ynw-575) {
+                    order: 2;
+                    justify-content: center;
+                }
+                
+                .logo {
+                    margin: 0;
+                    width: 100px;
+                    height: 100px;
+                    @include border-radius(100%);
+                    overflow: hidden;
+                    @include box-shadow(2px, 3px, 0px, rgba(0,0,0,.08) !important);
+                    
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .title {
+                    font-weight: 600;
+                    font-size: 1.125rem;
+                    align-self: center;
+                    margin-left: 15px;
+                }
+            }
+        }
+    }
+    
+    app-kiosk-home {
+        
+        /*@include respond-to(ynw-767) {
+            display: flex;
+            flex-direction: column;
+        }*/
+        
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+            text-align: center;
+
+            span {
+                font-weight: 700;
+            }
+        }
+        
+        .ksk-cpy {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            @include respond-to(ynw-767) {
+                height: auto;
+                width: 80%;
+                margin: 0 auto;
+            }
+
+            //Common Styles
+            .form-group {
+                .label {
+                    font-size: 1.1rem;
+                }
+            }
+            
+            //Welcome Screen + Sticky Navigation at the Bottom on Inner Pages
+            &.welcome, &.navigation {
+                flex-direction: column;
+                
+                h2 {
+                    font-size: 1.25rem;
+                    margin-bottom: 30px;
+                    font-weight: 500;
+                    text-align: center;
+                    
+                    span {
+                        font-weight: 700;
+                    }
+                }
+
+                
+                .outer {
+                    display: flex;
+                    
+                    @include respond-to(ynw-767) {
+                        flex-direction: column;
+                    }
+                    
+                    .controls {
+                        margin: 0;
+                        padding: 0;
+                        display: flex;
+                        width: 320px;
+                        flex-wrap: wrap;
+                        align-content: center;
+                        justify-content: space-around;
+
+                        @include respond-to(ynw-767) {
+                            width: 80%;
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 320px;
+                        }
+
+                        li {
+                            list-style: none;
+                            width: 100%;
+                            align-self: center;
+                            padding: 15px;
+
+                            @include respond-to(ynw-767) {
+                                width: 100%;
+                                padding-left: 0;
+                                padding-right: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                width: 100%;
+                            }
+
+                            .ot {
+                                width: 100%;
+                                border: none;
+                                padding: 20px;
+                                height: auto;
+                                min-height: 200px;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+                                @include box-shadow(0, 20px, 30px, rgba(0, 0, 0, .03) !important);
+                                background: $white;
+                                cursor: pointer;
+                                font-weight: 500;
+                                position: relative;
+                                overflow: hidden;
+
+                                .icon-k-checkin,
+                                .icon-k-home,
+                                .icon-k-lookup,
+                                .icon-k-rating,
+                                .icon-k-arrived {
+                                    width: 60px;
+                                    height: 60px;
+                                    display: block;
+                                    background: url(../images/k-checkin.svg) no-repeat scroll 0 0;
+                                    margin-bottom: 15px;
+                                }
+                                .icon-k-lookup {
+                                    background: url(../images/k-lookup.svg) no-repeat scroll 0 0;
+                                }
+                                .icon-k-rating {
+                                    background: url(../images/k-rating.svg) no-repeat scroll 0 0;
+                                }
+                                .icon-k-arrived {
+                                    background: url(../images/k-arrived.svg) no-repeat scroll 0 0;
+                                }
+                                .icon-k-home {
+                                    background: url(../images/k-home.svg) no-repeat scroll 0 0;
+                                }
+
+                                .title {
+                                    font-size: 1.125rem;
+                                    font-weight: 600;
+                                    margin-bottom: 5px;
+                                }
+                                .sub-title {
+                                    color: $cc-gray;
+                                    font-size: 1rem;
+
+                                    .time {
+                                        font-weight: 600;
+                                        color: $green;
+                                        display: block;
+                                    }
+                                }
+                                &:focus {
+                                    background: transparent;
+                                    box-shadow: inset 0px 0px 0px 5px $kbtn-bdr !important;
+                                    -moz-box-shadow: inset 0px 0px 0px 5px $kbtn-bdr !important;
+                                    -webkit-box-shadow: inset 0px 0px 0px 5px $kbtn-bdr !important;
+                                    -o-box-shadow: inset 0px 0px 0px 5px $kbtn-bdr !important;
+                                }
+                                &:after {
+                                    content: '';
+                                    position: absolute;
+                                    top: 50%;
+                                    left: 50%;
+                                    width: 5px;
+                                    height: 5px;
+                                    background: rgba(0, 0, 0, .03);
+                                    opacity: 0;
+                                    @include border-radius(200px);
+                                    transform: scale(1, 1) translate(-50%);
+                                    transform-origin: 50% 50%;
+                                }
+                            }
+                            .ot:focus:not(:active)::after {
+                                animation: ripple 1s ease-out;
+                            }
+                            &:nth-child(1) {
+                                opacity: 0;
+                                animation: k1 600ms forwards 0s ease-in-out;
+                            }
+                            &:nth-child(2) {
+                                opacity: 0;
+                                animation: k1 600ms forwards 300ms ease-in-out;
+                            }
+                            &:nth-child(3) {
+                                opacity: 0;
+                                animation: k1 600ms forwards 600ms ease-in-out;
+                            }
+                        }
+                    }
+                    .signup-promotion {
+                        margin: 15px;
+                        padding: 20px;
+                        width: 250px;
+                        text-align: center;
+                        display: flex;
+                        box-shadow: inset 0px 0px 0px 5px $kbtn-bdr !important;
+                        -moz-box-shadow: inset 0px 0px 0px 5px $kbtn-bdr !important;
+                        -webkit-box-shadow: inset 0px 0px 0px 5px $kbtn-bdr !important;
+                        -o-box-shadow: inset 0px 0px 0px 5px $kbtn-bdr !important;
+                        cursor: pointer;
+                        opacity: 0;
+                        animation: k2 600ms forwards 600ms ease-in-out;
+
+                        @include respond-to(ynw-767) {
+                            width: 80%;
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
+
+                        .outer {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+
+                            .icon-person {
+                                font-size: 1.5rem;
+                                width: 50px;
+                                height: 50px;
+                                background: #ffc107;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                @include border-radius(50px);
+                                margin-bottom: 10px;
+                            }
+                            .title {
+                                font-size: 1.125rem;
+                                font-weight: 600;
+                                margin-bottom: 15px;
+                            }
+                        }
+                    }
+                }
+                &.loggedin {
+                    padding-bottom: 50px;
+                    
+                    @include respond-to(ynw-768-991) {
+                        padding-bottom: 50px;
+                    }
+                    @include respond-to(ynw-768-991) {
+                        padding-bottom: 20px;
+                    }
+                    
+                    .outer {
+                        .controls {
+                            width: auto;
+                            
+                            @include respond-to(ynw-768-991) {
+                                width: auto;
+                            }
+                            
+                            li {
+                                width: 50%;
+                                
+                                @include respond-to(ynw-768-991) {
+                                    width: 50%;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            //Get Information Screen
+            &.get-info {
+                
+                @include respond-to(ynw-767) {
+                    align-items: flex-start;
+                    order: 2;
+                    height: auto;
+                }
+                .outer{
+                    padding: 20px;
+                    width: 480px;
+                    
+                    h2 {
+                        font-size: 1.25rem;
+                        margin-bottom: 30px;
+                    }
+
+                    .form-group {
+                        margin-bottom: 30px;
+
+                        input[type="text"], input[type="email"], input[type="password"], input[type="file"], textarea, .form-control {
+                            background: $white;
+                            padding: 15px;
+                            height: auto;
+                            font-size: 1.125rem;
+                            font-weight: 500;
+                        }
+
+                        button {
+                            background: $cc-red;
+                            width: 100%;
+                            margin-top: 30px;
+                            border: none;
+                            color: $white;
+                            padding: 15px;
+                            text-transform: uppercase;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-size: 1rem;
+
+                            &.disabled {
+                                background: $cc-ash !important;
+                                pointer-events: none;
+                                color: $cc-mediumgray !important;
+                                border: transparent;
+                            }
+                        }
+
+                        .label {
+                            display: block;
+                            margin-bottom: 5px;
+
+                            span {
+                                font-weight: 600;
+                            }
+                        }
+
+                        &:last-child {
+                            margin-bottom: 0px;
+                        }
+                    }
+                }       
+            }
+            
+            //Consumer Registration 
+            &.signup {
+                
+                @include respond-to(ynw-767) {
+                    align-items: flex-start;
+                }
+                .outer{
+                    padding: 20px;
+                    width: 480px;
+
+                    h3 {
+                        font-size: 1.1rem;
+                        margin-bottom: 20px;
+                    }
+
+                    .notice {
+                        margin-bottom: 30px;
+                        display: none;
+
+                        &.show {
+                            display: block;
+
+                            .box {
+                                display: flex;
+                                animation: hola 1s ease-in-out;
+
+                                &.error {
+                                    .label {
+                                        padding: 15px;
+                                        display: block;
+                                        background: $white;
+                                        /*border: 2px solid $cc-red;*/
+                                        font-weight: 500;
+                                        font-size: 1rem;
+                                        color: $cc-red;
+                                        width: 100%;
+
+                                        span {
+                                            display: block;
+                                            font-weight: 600;
+                                            font-size: 1.1rem;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+
+                    .form-group {
+                        margin-bottom: 30px;
+
+                        input[type="text"], input[type="email"], input[type="password"], input[type="file"], textarea, .form-control {
+                            background: $white;
+                            text-align: center;
+                            padding: 15px;
+                            height: auto;
+                            font-size: 1.125rem;
+                            font-weight: 500;
+                        }
+
+                        button {
+                            background: $cc-red;
+                            width: 100%;
+                            margin-top: 30px;
+                            border: none;
+                            color: $white;
+                            padding: 15px;
+                            text-transform: uppercase;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-size: 1rem;
+
+                            &.disabled {
+                                background: $cc-ash !important;
+                                pointer-events: none;
+                                color: $cc-mediumgray !important;
+                                border: transparent;
+                            }
+                        }
+
+                        .label {
+                            display: block;
+                            margin-bottom: 5px;
+
+                            span {
+                                font-weight: 600;
+                            }
+                        }
+
+                        &:last-child {
+                            margin-bottom: 0px;
+                        }
+                    }
+                    
+                    .goback {
+                        button {
+                            margin: 0 auto;
+                            display: block;
+                            font-weight: 600;
+                            width: 100%;
+                            height: 50px;
+                        }
+                    }
+                }       
+            }
+            
+            //Check-In
+            &.checkin {
+                background: $white;
+                padding: 20px;
+                padding-bottom: 75px;
+                @include box-shadow(0px, 0px, 30px, rgba(0,0,0,.03));
+                
+                @include respond-to(ynw-767){
+                    width: 80%;
+                    margin: 0 auto;
+                    align-items: flex-start;
+                    padding-bottom: 30px;
+                    
+                    app-check-in-inner {
+                        width: 100%;
+                    }
+                }
+                
+                .kioskinnertitle {
+                    font-size: 1.25rem;
+                    margin-bottom: 20px;
+                }
+                .kioskcontent {
+                    .mainouter {
+                        font-weight: 500;
+                        font-size: 1rem;
+                        color: $linkblack;
+                        width: 500px;
+                        
+                        @include respond-to(ynw-767){
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-768-991){
+                            width: 420px;
+                        }
+                        
+                        div, span, label, li, .form-group, .form-check {
+                            @include font-medium;
+                            font-size: 1rem;
+                        }
+                        
+                        .outer {
+                            display: flex;
+                            
+                            .form-group {
+                                flex-grow: 1;
+                                margin-right: 10px;
+                                
+                                input[type="text"] {
+                                    height: 60px;
+                                    font-size: 1rem;
+                                }
+                                
+                                &:last-child {
+                                    margin-right: 0;
+                                }
+                            }
+                        }
+                        
+                        .main-head, .date-outer, .service-outer, .queue-outer, .prepay-outer {
+                            margin-bottom: 15px;
+                            font-size: 1rem;
+
+                            .prov_name, .loc_name, .selected-date, .prepaymin-cls {
+                                color: $linkblack;
+                                font-weight: 600;
+                            }
+                            .prov_name {
+                                font-weight: 700;
+                            }
+                            .loc_name {
+                                font-size: .875rem;
+                            }
+                        }
+                        
+                        .date-outer {
+                            border-bottom: 1px dashed $cc-ash;
+                            padding-bottom: 15px;
+                            display: flex;
+                            align-items: center;
+
+                            .selected-date {
+                                display: flex;
+                                align-items: center;
+
+                                .icon-add, .icon-minus {
+                                    display: inline-block;
+                                    vertical-align: bottom;
+                                    font-size: 1.5rem;
+                                    color: $linkblue;
+                                    cursor: pointer;
+
+                                    &:before {
+                                        width: 50px;
+                                        height: 50px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                    }
+                                    &.disable {
+                                        pointer-events: none;
+                                        color: $cc-mediumgray;
+                                    }
+                                }
+                            }
+
+                            .form-group {
+                                margin-bottom: 0;
+
+                                &.dt {
+                                    width: 30px;
+
+                                    .pickerouter {
+                                        display: flex;
+                                        
+                                        input[type="text"] {
+                                            height: 30px;
+                                            visibility: hidden;
+                                        }
+
+                                        .mat-datepicker-toggle {
+                                            margin-right: 5px;
+
+                                            button {
+                                                width: 40px;
+                                                height: 40px;
+                                                line-height: 30px;
+
+                                                svg {
+                                                    width: 30px;
+                                                    height: 30px;
+                                                    color: $linkblue;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .future-text {
+                                display: table;
+                                cursor: pointer;
+                                color: $linkblue;
+                                text-decoration: underline;
+                                font-weight: 500;
+                                font-size: .75rem;
+                            }
+                            .future-date-outer {
+                                margin-top: 5px;
+
+                                .form-group {
+                                    margin-bottom: 0px;
+                                    display: flex;
+
+                                    .col-form-label {
+                                        font-weight: 500;
+                                        margin-right: 10px;
+                                        align-self: center;
+                                    }
+
+                                    .pickerouter {
+                                        .mat-datepicker-toggle {
+                                            margin-right: 0;
+                                        }
+                                        .form-control {
+                                            background: $white;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .service-outer, .queue-outer {
+                            padding-bottom: 15px;
+
+                            .service-head, .queue-head {
+                                margin-bottom: 5px;
+                                color: $linkblack;
+                            }
+
+                            .mat-chip-list {
+                                .mat-chip-list-wrapper {
+                                    margin-bottom: 5px;
+
+                                    .mat-chip.mat-chip-selected.mat-primary {
+                                        font-weight: 600;
+                                        background: $green;
+                                        color: $white;
+                                        border: none;
+                                        border: 1px solid $green;
+                                    }
+
+                                    .mat-chip {
+                                        padding: 5px 10px;
+                                        margin-right: 5px;
+                                        margin-left: 0;
+                                        margin-bottom: 5px;
+                                        cursor: pointer;
+                                        background: $white;
+                                        border: 1px solid $cc-mediumgray;
+                                        display: inline-block;
+
+                                        .qname {
+                                            display: inline-block;
+                                        }
+                                        .qtime {
+                                            display: inline-block;
+                                        }
+
+                                        &:focus {
+                                            box-shadow: none;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .service-details {
+                                .service-dur-pr {
+                                    display: flex;
+
+                                    @include respond-to(ynw-575) {
+                                        flex-direction: column;
+                                    }
+
+                                    .service-duration {
+                                        width: 200px;
+
+                                        .min-cls {
+                                            font-weight: 600;
+                                            color: $linkblack;
+                                        }
+                                    }
+                                    .service-price {
+                                        flex-grow: 1;
+
+                                        @include respond-to(ynw-575) {
+                                            margin-top: 10px;
+                                        }
+
+                                        .price {
+                                            font-weight: 600;
+                                            color: $linkblack;
+                                        }
+                                        .taxable {
+                                            font-size: .75rem;
+                                        }
+                                    }
+                                }
+                                .service-desc {
+                                    margin-top: 5px;
+                                }
+                            }
+
+                            .selected-ser, .selected-que {
+                                margin-bottom: 5px;
+
+                                .selected-ser-name {
+                                    font-weight: 600;
+                                    color: $linkblack;
+                                }
+                            }
+
+                            .queue-waitingdiv {
+                                .queue-head {
+                                    font-weight: 500;
+
+                                    .queue-avail-date {
+                                        font-weight: 600;
+                                        color: $linkblack;
+                                    }
+                                }
+                            }
+
+                            .no-queue-available {
+                                font-size: .875rem;
+                            }
+
+                            .showDetOuter {
+                                .showDetService {
+                                    margin-bottom: 15px;
+
+                                    .selsername {
+                                        font-weight: 600;
+                                        color: $linkblack;
+                                    }
+                                }
+                                .queue-waitingdiv {
+                                    .queue-head {
+                                        margin-bottom: 0;
+
+                                        .queue-avail-date {
+                                            color: $green;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .queue-outer {
+                            .mat-chip-list {
+                                .mat-chip-list-wrapper {
+                                    .mat-chip {
+                                        border-color: $cc-body;
+                                        background: $cc-body;
+                                    }
+                                }
+                            }
+                        }
+
+                        .servicefor-outer {
+                            margin-bottom: 15px;
+
+                            .service-availer {
+                                color: $linkblack;
+                                font-weight: 600;
+                            }
+                            .change-button {
+                                cursor: pointer;
+                                display: table;
+                                color: $linkblue;
+                                font-size: .75rem;
+                                text-decoration: underline;
+                            }
+                            .editbt {
+                                margin-left: 3px;
+                                display: inline-block;
+                                vertical-align: middle;
+                                width: 40px;
+                                height: 40px;
+                            }
+
+                            &.btborder {
+                                border-bottom: 1px dashed $cc-ash;
+                                padding-bottom: 15px;
+                            }
+                        }
+
+                        .revealdiv {
+                            margin-top: 15px;
+
+                            .form-group {
+                                margin-bottom: 0;
+
+                                .mat-checkbox {
+                                    .mat-checkbox-layout {
+                                        .mat-checkbox-label {
+                                            white-space: pre-wrap;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .consumer-comment {
+                            margin-bottom: 15px;
+                            border-bottom: 1px dashed $cc-ash;
+                            padding-bottom: 15px;
+                            
+                            .form-group {
+                                margin-bottom: 0px;
+
+                                .col-form-label {
+                                    font-size: 1rem;
+                                    display: flex;
+                                    align-items: center;
+                                    padding: 0;
+                                    font-weight: 500;
+
+                                    .icon-add {
+                                        display: inline-block;
+                                        vertical-align: bottom;
+                                        font-size: 1.5rem;
+                                        color: $linkblue;
+                                        cursor: pointer;
+
+                                        &:before {
+                                            width: 50px;
+                                            height: 50px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                        }
+                                    }
+                                }
+
+                                textarea {
+                                    margin-top: 5px;
+                                }
+                            }
+                        }
+
+                        .prepay-outer {
+                            margin-bottom: 0;
+                            margin-top: 15px;
+                            padding: 20px 15px 15px;
+                            @include top-to-bottom(#f8f8f8, #fff);
+
+                            .prepay-amt {
+                                margin-bottom: 15px;
+                                font-size: .875rem;
+                                font-weight: 600;
+                                color: $linkblack;
+
+                                .prepaymin-cls {
+                                    font-weight: 700;
+                                    color: $green;
+                                    font-size: 1rem;
+                                }
+                            }
+                            .prepay-gateway-outer {
+
+                                .prepay-head {
+                                    margin-bottom: 5px;
+                                    color: $linkblack;
+                                    font-weight: 600;
+                                }
+
+                                .mat-radio-group {
+                                    .mat-radio-button {
+                                        color: $linkblack;
+                                    }
+                                }
+                            }
+                        }
+
+                        .member-outer {
+                            .member-head {
+                                margin-bottom: 15px;
+                            }
+                            .member-list {
+                                .member-ul {
+                                    margin: 0 0 0 20px;
+                                    padding: 0;
+
+                                    li {
+                                        list-style: none;
+                                    }
+                                }
+                                .member-add {
+                                    margin-bottom: 20px;
+                                    padding: 10px 20px;
+                                    cursor: pointer;
+                                    display: table;
+                                    color: $linkblue;
+                                    font-weight: 500;
+                                    border: 2px solid $linkblue;
+                                    @include border-radius(5px);
+                                }
+                            }
+                        }
+
+                        .addMemberHeader {
+                            margin-top: 10px;
+                            font-size: 1rem;
+                            font-weight: 600;
+                            display: block;
+                            margin-bottom: 5px;
+                        }
+                        
+                        .mat-form-field {
+                            width: 100%;
+
+                            .mat-input-wrapper {
+                                padding: 0;
+                                margin: 0;
+
+                                .error-msg {
+                                    color: $cc-red;
+                                }
+
+                                .mat-input-infix {
+                                    margin: 0;
+                                    padding: 0;
+                                    border: none;
+
+                                    .mat-form-field-label {
+                                        display: none;
+                                    }
+
+                                    .mat-input-element {
+                                        padding: 10px;
+                                        background: $cc-formbg;
+                                        height: 40px;
+
+                                        &:focus {
+                                            @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                            border: 1px solid $linkblue;
+                                            background: $white;
+                                        }
+                                    }
+                                    .mat-select {
+                                        padding: 15px;
+                                        height: 50px;
+                                        background: $cc-formbg;
+                                        @include font-medium;
+                                        display: flex;
+                                        align-items: center;
+
+                                        .mat-select-arrow {
+                                            color: $cc-black;
+                                            border: none;
+                                            position: relative;
+                                            width: 10px;
+                                            height: 10px;
+                                            font-size: .65rem;
+                                            font-weight: 700;
+                                            display: flex;
+                                            align-items: center;
+                                            margin: 0;
+
+                                            &:after {
+                                                @include font-custom;
+                                                content: "\72";
+                                                position: absolute;
+                                                right: 0;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .mat-input-underline {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
+                .kioskactions {
+                    button {
+                        height: 50px;
+                        width: 100%;
+                        font-size: 1rem !important;
+                        letter-spacing: .5px;
+                    }
+                    .backbtn {
+                        background: $cc-ash !important;
+                        color: $cc-gray !important;
+                        margin-top: 15px;
+                        border: none !important;
+                    }
+                }
+            }
+            
+            //Check Your Status
+            &.arrived {
+                background: $white;
+                padding: 20px;
+                padding-bottom: 50px;
+                @include box-shadow(0px, 0px, 30px, rgba(0,0,0,.03));
+                display: block;
+                width: 480px;
+                
+                @include respond-to(ynw-767){
+                    width: 80%;
+                    padding-bottom: 20px;
+                    
+                    .q-tbl {
+                        .table {
+                            td {
+                                display: flex;
+                                flex-direction: column;
+                                
+                                &:before {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                .q-tbl {
+                    padding: 0;
+                    
+                    .maindate {
+                        margin-bottom: 20px;
+                        font-weight: 600;
+                    }
+                    
+                    .table {
+                        border: none;
+                        margin-bottom: 0;
+                        
+                        tbody{
+                            tr {
+                                display: flex;
+                                flex-direction: column;
+                                margin-bottom: .75rem;
+                                background: rgba(0, 0, 0, 0.03);
+
+                                td {
+                                    font-size: 1rem;
+                                    border: none;
+
+                                    .kioskservicename {
+                                        font-weight: 600;
+                                        margin-bottom: 10px;
+                                    }
+                                    .kiosknameouter, .kioskstatuouter, .kioskwaiting {
+                                        font-weight: 500;
+                                        display: flex;
+                                        margin-bottom: 5px;
+
+                                        .kiosknamecaption, .kioskstatuscaption {
+                                            margin-right: 10px;
+                                        }
+                                    }
+                                    .kioskstatuouter{
+                                        .arrived-class, .started-class, .checkedin-class, .done-class, .cancelled-class {    
+                                            color: $arrived;
+                                            padding: 0;
+                                            font-weight: 600;
+                                        }
+                                        .started-class {
+                                            color: $start;
+                                        }
+                                        .checkedin-class {
+                                            color: $checkedin;
+                                        }
+                                        .done-class {
+                                            color: $done;
+                                        }
+                                        .cancelled-class {
+                                            color: $cc-red;
+                                        }
+                                    }
+                                    .kioskwaiting {
+                                        margin-bottom: 0px;
+                                        
+                                        .waitingtime {
+                                            color: $green;
+                                            margin-left: 5px;
+                                            font-weight: 600;
+                                        }
+                                    }
+                                    &:nth-child(2) {
+                                        padding-bottom: 1.5rem; 
+                                        .bt1 {
+                                            width: 100%;
+                                        }
+                                    }
+                                }
+                                
+                                &:last-child {
+                                    border: none;
+                                    margin-bottom: 0;
+                                }
+                            }
+                        }
+                        
+                    }
+                    
+                }
+            }
+            
+            //Sticky Navigation at Bottom on Inner Pages
+            &.navigation {
+                position: absolute;
+                width: 20%;
+                height: auto;
+                bottom: 20%;
+                top: 20%;
+                left: 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                @include respond-to(ynw-767){
+                    order: 1;
+                    position: relative;
+                    width: 80%;
+                    margin: 0 auto;
+                }
+                
+                .outer {
+                    @include respond-to(ynw-767) {
+                        width: 100%;
+                    }
+                    .controls {
+                        width: 100%;
+                        flex-wrap: wrap;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        
+                        @include respond-to(ynw-767){
+                            flex-direction: row;
+                            flex-wrap: nowrap;
+                            margin-bottom: 20px;
+                        }
+                        @include respond-to(ynw-575) {
+                            flex-direction: row;
+                        }
+
+                        li {
+                            width: 100%;
+                            padding: 0;
+                            
+                            @include respond-to(ynw-767){
+                                min-height: 215px;
+                            }
+                            @include respond-to(ynw-575) {
+                                width: 50%;
+                            }
+
+                            .ot {
+                                background: transparent;
+                                min-height: inherit;
+                                margin-bottom: 0;
+                                box-shadow: none;
+
+                                .icon-k-checkin,
+                                .icon-k-home,
+                                .icon-k-lookup,
+                                .icon-k-rating,
+                                .icon-k-arrived {
+                                    height: 80px;
+                                    width: 80px;
+                                    margin-bottom: 10px;
+                                    
+                                    @include respond-to(ynw-768-991) {
+                                        height: 60px;
+                                        width: 60px;
+                                    }
+                                }
+
+                                .title {
+                                    font-size: 1.125rem;
+                                    color: $white;
+                                    font-weight: 500;
+                                    margin-bottom: 0;
+                                    
+                                    @include respond-to(ynw-768-991) {
+                                        font-size: 1rem;
+                                    }
+                                }
+                                &:focus {
+                                    background: transparent;
+                                    box-shadow: inset 0px 0px 0px 5px rgba(0,0,0,.3)!important;
+                                    -moz-box-shadow: inset 0px 0px 0px 5px rgba(0,0,0,.3) !important;
+                                    -webkit-box-shadow: inset 0px 0px 0px 5px rgba(0,0,0,.3) !important;
+                                    -o-box-shadow: inset 0px 0px 0px 5px rgba(0,0,0,.3) !important;
+                                }
+                            }
+                            &.k1 {
+                                background: $kc1;
+                            }
+                            &.k2 {
+                                background: $kc2;
+                            }
+                            &.k3 {
+                                background: $kc3;
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        // Exit button
+        .ksk-exit {
+            margin-top: 20px;
+            top: 50%;
+            margin-top: -50px;
+            right: 30px;
+            
+            @include respond-to(ynw-767) {
+                margin-top: 0px;
+                padding-bottom: 30px;
+            }
+            
+            .exit {
+                width: 100px;
+                height: 100px;
+                margin-left: auto;
+                margin-right: auto;
+                border: none;
+                padding: 20px;
+                background: $cc-red;
+                @include border-radius(150px);
+                color: $white;
+                font-size: 1.125rem;
+                font-weight: 600;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-transform: uppercase;
+                letter-spacing: .4px;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+
+                .icon-logout {
+                    width: 24px;
+                    height: 24px;
+                    margin-right: 2px;
+
+                    &:before {
+                        width: inherit;
+                        height: inherit;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 5px;
+                    height: 5px;
+                    background: rgba(0, 0, 0, .2);
+                    opacity: 0;
+                    @include border-radius(200px);
+                    transform: scale(1, 1) translate(-50%);
+                    transform-origin: 50% 50%;
+                }
+            }
+            .exit:focus:not(:active)::after {
+                animation: ripple 1s ease-out;
+            }
+        }
+    }
+
+    /*&:before {
+        background: url(../images/clouds.svg) no-repeat scroll center bottom/cover;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 20vh;
+        top: 0;
+        left: 0;
+        
+        @include respond-to(ynw-575) {
+            height: 28vh;
+        }
+    }*/
+}

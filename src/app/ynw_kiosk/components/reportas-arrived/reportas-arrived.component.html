@@ -1,23 +1,26 @@
-<section>
-        <div class="content loc-list">
-            <div class="container">
-                <div class="row">
-                    <div class="card p0">
-                    <div class="nolist" *ngIf="waitlist && waitlist.length==0">Sorry no Check-In exists</div>
-    
-                    <div class="table-outer q-tbl">
-                        <table class="table">
-                            <tbody>
-                                <tr *ngFor="let list of waitlist">
-                                    <td>{{list.service.name}} for <ng-container><span class="service-availer" *ngFor="let waitfor of list.waitlistingFor; let i=index"><ng-container *ngIf="i>0">, </ng-container>{{waitfor.firstName | titlecase}} {{waitfor.lastName | titlecase}}</span></ng-container>, <span *ngIf="list.waitlistStatus=='cancelled'" [class]="getStatus(list,'class')">{{getStatus(list,'caption')}}</span><span *ngIf="list.waitlistStatus!='cancelled'" [class]="getStatus(list,'class')">{{getStatus(list,'caption')}}</span></td>
-                                    <td><button type="button" mat-button class="cs-btn bt1" (click)="confirmArrival(list)">Confirm Arrival</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-    
-                    </div>
+<div class="nolist" *ngIf="waitlist && waitlist.length>0">Sorry no Check-In exists</div>
+
+<div class="table-outer q-tbl">
+<div class="maindate" *ngIf="waitlist && waitlist.length > 0">{{curdate | date: dateFormat}}</div>
+<table class="table">
+    <tbody>
+        <tr *ngFor="let list of waitlist">
+            <td>
+                <div class="kioskservicename">{{list.service.name}}</div>
+                <div class="kiosknameouter"><span class="kiosknamecaption">Name:</span><span class="kioskname"><ng-container><span class="service-availer" *ngFor="let waitfor of list.waitlistingFor; let i=index"><ng-container *ngIf="i>0">, </ng-container>{{waitfor.firstName | titlecase}} {{waitfor.lastName | titlecase}}</span></ng-container></span></div>
+                <div class="kioskstatuouter"><span class="kioskstatuscaption">Status: </span>
+                    <span [class]="getStatus(list,'class')">{{getStatus(list,'caption')}}</span>
                 </div>
-            </div>
-        </div>
-    </section>
+                <div class="kioskwaiting" *ngIf="getStatus(list,'waitingcaption') !=''">
+                    <span class="wiatingcaption">{{getStatus(list,'waitingcaption')}}</span><span class="waitingtime">{{getStatus(list,'waitingmins')}}</span></div>
+                </td>
+            <td *ngIf="list.waitlistStatus=='checkedIn'">
+                <button type="button" mat-button class="cs-btn bt1" (click)="confirmArrival(list)">Confirm Arrival</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+    
+               
+              

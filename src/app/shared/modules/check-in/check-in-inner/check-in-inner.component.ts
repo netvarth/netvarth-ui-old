@@ -91,10 +91,9 @@ export class CheckInInnerComponent implements OnInit {
       console.log('check-inpassed data', this.data);
       this.customer_data = this.data.customer_data || [];
       console.log('init', this.customer_data);
-      if (this.customer_data.fromKiosk !== undefined) {
-        if (this.customer_data.fromKiosk) {
+      if (this.data.fromKiosk !== undefined) {
+        if (this.data.fromKiosk) {
           this.fromKiosk = true;
-          console.log('dddddd');
         }
       }
       this.page_source = this.data.moreparams.source;
@@ -127,13 +126,7 @@ export class CheckInInnerComponent implements OnInit {
 
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
       if (this.page_source === 'provider_checkin') {
-        if (this.fromKiosk === true) {
-          console.log('now here', this.customer_data);
-          this.waitlist_for.push ({id: this.customer_data.selfDet.id, name: 'Self'});
-        } else {
           this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-        }
-
       } else {
         this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
       }
@@ -200,25 +193,14 @@ export class CheckInInnerComponent implements OnInit {
       let self_obj;
 
       if (this.page_source === 'provider_checkin') {
-        if (this.fromKiosk === true) {
-          fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.selfDet.id);
-          self_obj = {
-            'userProfile': {
-              'id': this.customer_data.selfDet.id,
-              'firstName': 'Self',
-              'lastName' : ''
-            }
-          };
-        } else {
-          fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-          self_obj = {
-            'userProfile': {
-              'id': this.customer_data.id,
-              'firstName': 'Self',
-              'lastName' : ''
-            }
-          };
-        }
+        fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
+        self_obj = {
+          'userProfile': {
+            'id': this.customer_data.id,
+            'firstName': 'Self',
+            'lastName' : ''
+          }
+        };
       } else {
         fn = this.shared_services.getConsumerFamilyMembers();
          self_obj = {
@@ -424,7 +406,7 @@ export class CheckInInnerComponent implements OnInit {
     //  this.step = 2;
     // } else
     if (this.step === 1) {
-      if (this.sel_ser_det.isPrePayment) {
+      if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin') {
         // console.log('serv det', this.sel_ser_det);
         if (this.paytype === '') {
           error = 'Please select the payment mode';
@@ -456,13 +438,8 @@ export class CheckInInnerComponent implements OnInit {
     };
 
     if (this.page_source === 'provider_checkin') {
-      if (this.fromKiosk === true) {
-        post_Data['consumer'] =  {id : this.customer_data.selfDet.id};
-        post_Data['ignorePrePayment'] = true;
-      } else {
-        post_Data['consumer'] =  {id : this.customer_data.id };
-        post_Data['ignorePrePayment'] = true;
-      }
+      post_Data['consumer'] =  {id : this.customer_data.id };
+      post_Data['ignorePrePayment'] = true;
       this.addCheckInProvider(post_Data);
     } else {
       this.addCheckInConsumer(post_Data);
@@ -696,11 +673,7 @@ export class CheckInInnerComponent implements OnInit {
 
         let fn;
         if (this.page_source === 'provider_checkin') {
-          if (this.fromKiosk === true) {
-            post_data['parent'] = this.customer_data.selfDet.id;
-          } else {
-            post_data['parent'] = this.customer_data.id;
-          }
+         post_data['parent'] = this.customer_data.id;
          fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
         } else {
           fn =   this.shared_services.addMembers(post_data);

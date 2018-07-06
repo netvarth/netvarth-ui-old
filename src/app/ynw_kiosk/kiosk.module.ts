@@ -10,6 +10,7 @@ import { KioskRouterModule } from './kiosk-routing.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
+import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
 
 import { KioskComponent } from './kiosk.component';
 import { KioskHomeComponent } from './components/home/kiosk-home.component';
@@ -23,6 +24,7 @@ import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { KioskServices } from './services/kiosk-services.service';
 import { projectConstants } from '../shared/constants/project-constants';
+
 
 import 'hammerjs';
 import 'mousetrap';

@@ -66,3 +66,28 @@
         opacity: 1;
         }
 }
+
+//Kiosk Keyframes
+
+//kiosk welcome screen
+@keyframes k1{
+    0%{
+        transform: rotate(0) translateX(-50px);
+        opacity: 0;
+        }
+    100%{
+        transform: rotate(0) translateX(0px);
+        opacity: 1;
+        }
+}
+
+@keyframes k2{
+    0%{
+        transform: rotate(0) translateX(50px);
+        opacity: 0;
+        }
+    100%{
+        transform: rotate(0) translateX(0px);
+        opacity: 1;
+        }
+}

@@ -28,6 +28,7 @@ export class ReportasArrivedComponent implements OnInit {
   locid;
   changeOccured = false;
   waitlist: any = [];
+  curdate;
 
   constructor(
     public shared_services: SharedServices,
@@ -39,43 +40,76 @@ export class ReportasArrivedComponent implements OnInit {
 
   ngOnInit() {
     this.waitlist = this.passedInData.waitlist;
-    console.log('passedin', this.passedInData);
+    const cdate = new Date();
+    let mon = '';
+    let day = '';
+    if ((cdate.getMonth() + 1) < 10) {
+      mon = '0' + (cdate.getMonth() + 1);
+    } else {
+      mon = '' + (cdate.getMonth() + 1);
+    }
+    if ((cdate.getDate()) < 10) {
+      day = '0' + cdate.getDate();
+    } else {
+      day = '' + cdate.getDate();
+    }
+    this.curdate =  cdate.getFullYear() + '-' + mon + '-' + day;
+    const retdate = this.sharedfunctionObj.formatDate(this.curdate, {'rettype': 'fullarr'});
+   //  this.curdate = retdate[2] + '/' + retdate[1] + '/' + retdate[0];
+    // console.log('passedin', this.passedInData);
   }
 
   getStatus(stat, mod) {
-    const retval = { class: '', caption: ''};
+    const retval = { class: '', caption: '', waitingtimecaption: '', waitingtimemins: ''};
     switch (stat.waitlistStatus) {
       case 'checkedIn':
         retval.class = 'checkedin-class';
-        retval.caption = 'Your Approximate Wait Time is ' + stat.appxWaitingTime + ' Mins';
+        retval.caption = 'Checked In';
+        retval.waitingtimecaption = 'Your Approximate Wait Time is ';
+        retval.waitingtimemins = stat.appxWaitingTime + ' Mins';
       break;
       case 'started':
         retval.class = 'started-class';
         retval.caption = 'Started';
+        retval.waitingtimecaption = '';
+        retval.waitingtimemins = '';
       break;
       case 'arrived':
         retval.class = 'arrived-class';
         retval.caption = 'Arrived';
+        retval.waitingtimecaption = '';
+        retval.waitingtimemins = '';
       break;
       case 'done':
         retval.class = 'done-class';
         retval.caption = 'Done';
+        retval.waitingtimecaption = '';
+        retval.waitingtimemins = '';
       break;
       case 'cancelled':
         retval.class = 'cancelled-class';
         retval.caption = 'Cancelled';
+        retval.waitingtimecaption = '';
+        retval.waitingtimemins = '';
       break;
       default:
         retval.class = stat;
         retval.caption = stat;
+        retval.waitingtimecaption = '';
+        retval.waitingtimemins = '';
       break;
     }
     if (mod === 'class') {
       return retval.class;
-    } else {
+    } else if (mod === 'caption') {
         return retval.caption;
+    } else if (mod === 'waitingcaption') {
+      return retval.waitingtimecaption;
+    } else if (mod === 'waitingmins') {
+      return retval.waitingtimemins;
     }
   }
+
   confirmArrival(list) {
     const passval = { uuid: list.ynwUuid, action: 'REPORT' };
     this.handleArrived.emit(passval);
