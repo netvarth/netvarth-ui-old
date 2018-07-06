@@ -70,7 +70,7 @@ export class ProviderSubeaderComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (next_page) {
+      if (next_page && result.message === 'reloadlist') {
         this.beforeCheckIn(result.data);
       }
     });
