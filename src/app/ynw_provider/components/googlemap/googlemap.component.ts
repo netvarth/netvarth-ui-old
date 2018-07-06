@@ -173,8 +173,8 @@ export class GoogleMapComponent implements OnInit {
         const retvalues = {
           'map_point': this.lat_lng,
           'status': 'selectedonmap',
-          'address': this.obtained_address,
-          'pincode': this.obtained_pin
+          'address': this.obtained_address/*,
+          'pincode': this.obtained_pin*/
         };
         this.dialogRef.close(retvalues);
     }

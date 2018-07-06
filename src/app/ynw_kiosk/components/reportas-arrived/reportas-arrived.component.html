@@ -1,4 +1,4 @@
-<div class="nolist" *ngIf="waitlist && waitlist.length>0">Sorry no Check-In exists</div>
+<div class="nolist" *ngIf="waitlist && waitlist.length==0">Sorry no Check-In exists</div>
 
 <div class="table-outer q-tbl">
 <div class="maindate" *ngIf="waitlist && waitlist.length > 0">{{curdate | date: dateFormat}}</div>

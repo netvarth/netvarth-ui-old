@@ -81,7 +81,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
         locmapurl: [''],
        /* locparkingtype: [''],*/
-        locpincode: [''] /*,
+       /* locpincode: [''] ,
         loct24hour: ['']*/
       });
     } else {
@@ -96,8 +96,8 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
           loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
           loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-          locmapurl: [''],
-          locpincode: ['']
+          locmapurl: ['']/*,
+          locpincode: ['']*/
         });
       }
     }
@@ -120,8 +120,8 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         locaddress: this.data.location.address || null,
         loclattitude: this.data.location.lattitude || null,
         loclongitude: this.data.location.longitude || null,
-        locmapurl: this.data.location.googleMapUrl || null,
-        locpincode: this.data.location.pinCode || null,
+        locmapurl: this.data.location.googleMapUrl || null/*,
+        locpincode: this.data.location.pinCode || null,*/
       });
       this.schedule_arr = [];
         // extracting the schedule intervals
@@ -229,7 +229,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
                             'longitude': form_data.loclongitude || '',
                             'lattitude': form_data.loclattitude || '',
                             'googleMapUrl': form_data.locmapurl || '',
-                            'pinCode': form_data.locpincode || '',
+                            // 'pinCode': form_data.locpincode || '',
                             'address': form_data.locaddress || ''
       };
       if (this.schedule_json.length > 0) {
@@ -338,7 +338,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
                             'longitude': form_data.loclongitude || '',
                             'lattitude': form_data.loclattitude || '',
                             'googleMapUrl': form_data.locmapurl || '',
-                            'pinCode': form_data.locpincode || '',
+                           // 'pinCode': form_data.locpincode || '',
                             'address': form_data.locaddress || ''
                           }
       };
@@ -469,8 +469,8 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           });
         }
         this.amForm.patchValue({
-          locaddress: result['address'] || null,
-          locpincode: result['pincode'] || null
+          locaddress: result['address'] || null/*,
+          locpincode: result['pincode'] || null*/
         });
       }
     }

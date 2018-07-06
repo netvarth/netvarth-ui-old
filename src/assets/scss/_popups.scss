@@ -29,6 +29,18 @@
                 font-weight: 500;
             }
         }
+        .search_provider {
+            .create_new {
+                padding: 20px;
+                font-weight: 500;
+                color: $cc-red;
+                padding-top: 0;
+                
+                .cs-btn {
+                    margin-left: 10px;
+                }
+            }
+        }
     }
 
     .mat-select-panel {

@@ -935,6 +935,9 @@ select:-webkit-autofill:focus {
           height: auto;
           width: 80%;
           margin: 0 auto; } }
+      .ksk app-kiosk-home .ksk-cpy .nolist {
+        text-align: center;
+        font-weight: 500; }
       .ksk app-kiosk-home .ksk-cpy .form-group .label {
         font-size: 1.1rem; }
       .ksk app-kiosk-home .ksk-cpy.welcome, .ksk app-kiosk-home .ksk-cpy.navigation {
@@ -2471,6 +2474,13 @@ header {
       font-weight: normal;
       font-size: .875rem;
       font-weight: 500; }
+  .cdk-overlay-container .mat-dialog-container .search_provider .create_new {
+    padding: 20px;
+    font-weight: 500;
+    color: #f24949;
+    padding-top: 0; }
+    .cdk-overlay-container .mat-dialog-container .search_provider .create_new .cs-btn {
+      margin-left: 10px; }
 .cdk-overlay-container .mat-select-panel {
   box-shadow: none !important;
   font-family: 'Montserrat', sans-serif;

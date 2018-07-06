@@ -42,8 +42,8 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 
 <div class="create_new" *ngIf="create_new">
   <span class="create_new_oops">Ooops!!</span>
-  <span>This is not a Registered Customer</span>
-  <button class="create_new_button" (click)="createNew()" >Create</button>
+  <span>This is not a Registered {{customer_label}}</span>
+  <button class="create_new_button cs-btn bt3" (click)="createNew()" >Create {{customer_label}}</button>
 </div>
 
 </div>
