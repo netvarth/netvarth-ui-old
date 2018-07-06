@@ -33,7 +33,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
     ) {
       this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-      this.checkin_label = this.sharedfunctionObj.getTerminologyTerm('check-In');
+      this.checkin_label = this.sharedfunctionObj.getTerminologyTerm('waitlist');
      }
 
   ngOnInit() {

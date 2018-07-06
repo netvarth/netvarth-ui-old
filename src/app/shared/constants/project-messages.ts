@@ -85,6 +85,7 @@ export const Messages = {
   'ADWORD_CREATED' : 'Adword created successfully',
   'ADWORD_DELETE'  : 'Do you really want to remove the Adword "[adword]"?',
   'ADWORD_DELETE_SUCCESS'  : 'Adword deleted successfully',
+  'ADWORD_EXCEED_LIMIT' : 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/addon for more benefits',
 
   // WaitlistManager
   'ONLINE_CHECKIN_SAVED' : 'Saved successfully',

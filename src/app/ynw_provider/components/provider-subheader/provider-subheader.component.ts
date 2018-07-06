@@ -36,7 +36,7 @@ export class ProviderSubeaderComponent implements OnInit {
 
   ngOnInit() {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     // this.getWaitlistMgr(); // hide becuause it called on every page change
   }
 
@@ -54,11 +54,13 @@ export class ProviderSubeaderComponent implements OnInit {
         this.createCustomer(result.data);
       } else if (result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
         this.beforeCheckIn(result.data);
+      } else if (result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
+        this.createCustomer(result.data, source);
       }
     });
   }
 
-  createCustomer(search_data) {
+  createCustomer(search_data, next_page = null) {
 
     const dialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
@@ -68,7 +70,9 @@ export class ProviderSubeaderComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      if (next_page && result.message === 'reloadlist') {
+        this.beforeCheckIn(result.data);
+      }
     });
   }
 

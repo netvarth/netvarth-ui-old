@@ -53,6 +53,7 @@ export class AddproviderAddonComponent implements OnInit {
       });
   }
   onSubmit (form_data) {
+    this.resetApiErrors();
     if (this.selected_addon) {
       this.provider_services.addAddonPackage(this.selected_addon)
         .subscribe (data => {
@@ -62,7 +63,7 @@ export class AddproviderAddonComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+            this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
           }
         );
     }

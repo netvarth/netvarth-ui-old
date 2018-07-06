@@ -62,7 +62,7 @@ export class ProviderSharedFuctions {
 
     changeProviderLocationStatusMessage(obj) {
 
-      return new Promise(function (resolve, reject) {
+      return new Promise((resolve, reject) => {
         let chgstatus = '';
         let chstatusmsg = '';
         if (obj.status === 'ACTIVE') {
@@ -155,7 +155,7 @@ export class ProviderSharedFuctions {
             case 'REPORT' : status_msg = '[arrived]'; break;
             case 'STARTED' : status_msg = '[started]'; break;
             case 'CANCEL' : status_msg = '[cancelled]'; break;
-            case 'CHECK_IN' : status_msg = '[checkedIn]'; break;
+            case 'CHECK_IN' : status_msg = '[waitlisted]'; break;
             case 'DONE': status_msg = '[done]'; break;
           }
           const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);

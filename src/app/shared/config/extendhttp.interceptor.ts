@@ -20,18 +20,32 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                           base_url +   'provider/login',
                           base_url +   'consumer/login/reset/\d{10,12}'
                        ];
+    reload_path = [
+                      base_url +  'consumer/communications/unreadCount',
+                      base_url +  'consumer/waitlist',
+                      base_url +  'provider/communications/unreadCount',
+                      base_url + 'provider/waitlist/history/count/?location-eq=\d{10,12}',
+                      base_url + 'provider/waitlist/future/count/?location-eq=\d{10,12}',
+                      base_url + 'provider/waitlist/today'
+                  ];
     constructor(private slimLoadingBarService: SlimLoadingBarService,
     private router: Router, private shared_functions: SharedFunctions) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        this.showLoader();
+
+
         let url = '';
         if (req.url.substr(0, 4) === 'http') {
           url =  req.url;
         } else {
 
           url =  base_url + req.url;
+
+          if (!this.checkLoaderHideUrl(url)) {
+            this.showLoader();
+          }
+
           if (!req.headers.has('Content-Type')) {
           // req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
           }
@@ -65,6 +79,20 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
     }
 
+    checkLoaderHideUrl(url) {
+      let check = false;
+      this.reload_path.forEach(element => {
+        element = element.replace(/[\/]/g, '\\$&');
+
+        if (url.match(element)) {
+           if (check === false) { check = true; }
+
+        }
+
+      });
+      return check;
+    }
+
     checkUrl(url) {
       let check = false;
       this.no_redirect_path.forEach(element => {
@@ -78,6 +106,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       });
       return check;
     }
+
 
     private showLoader(): void {
       setTimeout(() => {  this.slimLoadingBarService.start(() => {

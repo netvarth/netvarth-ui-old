@@ -37,6 +37,7 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
   }
 
   onSubmit (form_data) {
+    this.resetApiErrors();
     this.addAdword(form_data.adwordname);
   }
 
@@ -50,7 +51,7 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
            }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = this.shared_functions.getProjectMesssages(error);
+            this.shared_functions.apiErrorAutoHide(this, error);
           }
         );
   }

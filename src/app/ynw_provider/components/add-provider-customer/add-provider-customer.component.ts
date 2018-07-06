@@ -45,9 +45,9 @@ export class AddProviderCustomerComponent implements OnInit {
         Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
         first_name: ['', Validators.compose([Validators.required])],
         last_name: ['', Validators.compose([Validators.required])],
-        email_id: ['', Validators.compose([Validators.required, Validators.email])],
-        dob: ['', Validators.compose([Validators.required])],
-        gender: ['male', Validators.compose([Validators.required])],
+        email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+        dob: [''],
+        gender: [''],
         address: ['']
       });
 
@@ -74,8 +74,9 @@ export class AddProviderCustomerComponent implements OnInit {
     .subscribe(
       data => {
         this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+        const user_data = {'id': data, 'userProfile': post_data.userProfile};
         setTimeout( () => {
-          this.dialogRef.close('reloadlist');
+          this.dialogRef.close({message: 'reloadlist', data: user_data});
         } , projectConstants.TIMEOUT_DELAY);
       },
       error => {

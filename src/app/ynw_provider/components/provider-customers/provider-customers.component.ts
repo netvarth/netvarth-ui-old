@@ -54,8 +54,8 @@ export class ProviderCustomersComponent implements OnInit {
     private dialog: MatDialog,
     private shared_services: SharedServices) {
       this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-      this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
-      this.checkedin_label = this.shared_functions.getTerminologyTerm('checkedIn');
+      this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+      this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
     }
 
   ngOnInit() {

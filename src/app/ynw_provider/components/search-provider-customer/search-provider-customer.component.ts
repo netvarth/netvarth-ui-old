@@ -21,6 +21,8 @@ export class SearchProviderCustomerComponent implements OnInit {
   source  = null;
 
   customer_label = '';
+  create_new = false;
+  form_data = null;
 
   constructor(
     public dialogRef: MatDialogRef<SearchProviderCustomerComponent>,
@@ -47,6 +49,10 @@ export class SearchProviderCustomerComponent implements OnInit {
   }
 
   searchCustomer(form_data) {
+    this.resetApiErrors();
+    this.form_data = null;
+    this.create_new = false;
+
     const post_data = {
       'firstName-eq' : form_data.first_last_name,
       'primaryMobileNo-eq' : form_data.mobile_number
@@ -62,7 +68,8 @@ export class SearchProviderCustomerComponent implements OnInit {
             };
             this.dialogRef.close(return_data);
           } else if (this.source === 'providerCheckin') {
-            this.shared_functions.apiErrorAutoHide(this, Messages.CUSTOMER_SEARCH_UNAVAILABLE);
+            this.form_data = form_data;
+            this.create_new = true;
           }
 
         } else {
@@ -83,7 +90,17 @@ export class SearchProviderCustomerComponent implements OnInit {
     );
   }
 
+  createNew() {
+
+    const return_data = {
+      'message': 'noCustomer',
+      'data': this.form_data
+    };
+    this.dialogRef.close(return_data);
+  }
+
   resetApiErrors () {
+    this.create_new = false;
     this.api_error = null;
     this.api_success = null;
   }

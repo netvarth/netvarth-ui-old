@@ -38,7 +38,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   private provider_datastorage: ProviderDataStorageService,
   private shared_functions: SharedFunctions) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
 
   ngOnInit() {

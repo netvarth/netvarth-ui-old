@@ -44,7 +44,7 @@ export class ProviderSettingsComponent implements OnInit {
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
   private routerobj: Router) {
-    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
 
   ngOnInit() {

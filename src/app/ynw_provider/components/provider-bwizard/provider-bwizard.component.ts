@@ -48,7 +48,7 @@ export class ProviderbWizardComponent implements OnInit {
     private routerobj: Router
   ) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.checkin_label = this.shared_functions.getTerminologyTerm('check-In');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
 
   ngOnInit() {
