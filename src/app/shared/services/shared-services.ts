@@ -483,4 +483,9 @@ export class SharedServices {
       const path = 'consumer/waitlist/rating' ;
       return this.servicemeta.httpPut(path, data, null , params);
     }
+
+    getUpgradableLicensePackages() {
+      // return this.servicemeta.httpGet('accounts/license/upgradablePackages');
+      return this.servicemeta.httpGet('provider/license/upgradablePackages');
+    }
 }

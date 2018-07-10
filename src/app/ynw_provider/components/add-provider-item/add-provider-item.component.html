@@ -22,7 +22,7 @@
         <li>
         <div class="galimg_outer">
         <div class="gal_img"><img [src]="item_pic.base64"></div>
-        <div class="gal_caption"><input type="text" name="caption" #caption placeholder="Caption"></div>
+        <div class="gal_caption"><input matInput type="text" name="caption" #caption placeholder="Caption" autocomplete="off"></div>
         <div class="gal_action">
             <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
                 <mat-icon>more_vert</mat-icon>
@@ -51,28 +51,28 @@
 
 <div class="form-group">
     <label class="col-form-label" for="displayName">Item Name *</label>
-    <input type="text" class="form-control" id="displayName" placeholder="Item Name" formControlName="displayName">
+    <input matInput type="text" class="form-control" id="displayName" placeholder="Item Name" formControlName="displayName" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayName')" errorMsg="Please enter item name.">
    </app-field-error-display>
 </div>
 
 <div class="form-group">
     <label class="col-form-label" for="shortDesc">Short Description *</label>
-    <input type="text" class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc">
+    <input matInput type="text" class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" errorMsg="Please enter the short description">
    </app-field-error-display>
 </div>
 
 <div class="form-group">
     <label class="col-form-label" for="displayDesc">Detailed Description *</label>
-    <input type="text" class="form-control" id="displayDesc" placeholder="Detailed Description" formControlName="displayDesc">
+    <input matInput type="text" class="form-control" id="displayDesc" placeholder="Detailed Description" formControlName="displayDesc" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')"  errorMsg="Please enter display description.">
    </app-field-error-display>
 </div>
 
 <div class="form-group">
     <label class="col-form-label" for="price">Price *</label>
-    <input type="text" class="form-control" id="price" placeholder="Price" formControlName="price">
+    <input matInput type="text" class="form-control" id="price" placeholder="Price" formControlName="price" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')"  errorMsg="Please enter valid price.">
    </app-field-error-display>
 </div>

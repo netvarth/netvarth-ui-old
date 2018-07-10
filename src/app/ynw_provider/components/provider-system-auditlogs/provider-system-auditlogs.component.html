@@ -47,9 +47,10 @@
                             <label for="reason" class="col-form-label">Select Date</label>
                             <div class="pickerouter">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker> 
-                            <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" matInput [matDatepicker]="picker">
-                            </div> 
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" matInput
+                            [matDatepicker]="picker" autocomplete="off">
+                            </div>
                     </div>
                 </div>
                 <div class="actions-div">
@@ -90,7 +91,7 @@
                                     <td data-title="Text" class="td2">{{log.text}}</td>
                                     <td data-title="Subject" class="td3">{{log.subject}}</td>
                                     <td data-title="User Name" class="td4">{{log.userName}}</td>
-                                    
+
                                 </tr>
                                 </ng-container>
                             </tbody>

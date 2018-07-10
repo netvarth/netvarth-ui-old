@@ -10,8 +10,8 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 <mat-dialog-content>
 <div class="form-group">
     <label class="col-form-label" for="mobile_number">Mobile Number *</label>
-    <input type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
-    formControlName="mobile_number">
+    <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
+    formControlName="mobile_number" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
     {
@@ -25,8 +25,8 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 
 <div class="form-group">
     <label class="col-form-label" for="first_last_name">First Name / Last Name *</label>
-    <input type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
-    formControlName="first_last_name">
+    <input matInput type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
+    formControlName="first_last_name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')"
     errorMsg="Please enter First Name / Last Name.">
    </app-field-error-display>

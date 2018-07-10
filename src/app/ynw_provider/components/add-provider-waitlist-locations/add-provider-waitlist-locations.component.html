@@ -11,7 +11,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="form-group">
         <mat-form-field class="example-full-width">
             <label class="col-form-label">Location Name *</label>
-            <input matInput placeholder="Location Name *" formControlName="locname">
+            <input matInput placeholder="Location Name *" formControlName="locname" autocomplete="off">
         </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')"
             [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
@@ -24,7 +24,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="form-group">
             <mat-form-field class="example-full-width">
                 <label class="col-form-label">Latitude *</label>
-                <input matInput type="text" placeholder="Latitude *" formControlName="loclattitude">
+                <input matInput type="text" placeholder="Latitude *" formControlName="loclattitude" autocomplete="off">
         </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')"
             [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
@@ -37,7 +37,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="form-group">
             <mat-form-field class="example-full-width">
                 <label class="col-form-label">Longitude *</label>
-                <input matInput type="text" placeholder="Longitude *" formControlName="loclongitude">
+                <input matInput type="text" placeholder="Longitude *" formControlName="loclongitude" autocomplete="off">
         </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')"
             [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
@@ -75,7 +75,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="form-group">
             <mat-form-field class="example-full-width">
                 <label class="col-form-label">Google Map URL</label>
-                <input matInput type="text" placeholder="Google Map URL" formControlName="locmapurl">
+                <input matInput type="text" placeholder="Google Map URL" formControlName="locmapurl" autocomplete="off">
         </mat-form-field>
         </div>
         <!-- <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">  -->

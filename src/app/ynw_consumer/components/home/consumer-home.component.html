@@ -63,11 +63,11 @@
                                   </li>
 
                                   <li *ngIf="waitlist.waitlistStatus == 'done'">
-                                    <span class="icon-invoice" (click)="getWaitlistBill(waitlist)">Bill</span>
+                                    <span class="view-bill" (click)="getWaitlistBill(waitlist)">Bill</span>
                                   </li>
 
                                   <li *ngIf="waitlist.waitlistStatus == 'done'">
-                                    <span class="icon-star-filled" (click)="rateService(waitlist)">Rate Service</span>
+                                    <span class="rate-service" (click)="rateService(waitlist)">Rate Service</span>
                                   </li>
                               </ul>
                           </div>
@@ -121,7 +121,7 @@
                         <div class="detail"  [@hideShowAnimator]="hideShowAnimator" *ngIf="open_fav_div == i">
                           <div class="location" *ngFor="let loc of provider.locations">
                             <div class="locationname">
-                              {{loc.place}}
+                              {{loc.place}} <span class="icon-location"></span>
                             </div>
 
                             <div class="bt-l">

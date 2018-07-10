@@ -15,7 +15,7 @@
     <div class="form-group">
     <label class="col-form-label" for="socialkey">
         <i [class]="getSocialdet(socialkey, 'iconClass')"></i>
-        {{getSocialdet(socialkey, 'displayName')}} 
+        {{getSocialdet(socialkey, 'displayName')}}
     </label>
     </div>
 </div>
@@ -23,7 +23,7 @@
 <div class="form-group">
 <mat-form-field class="example-full-width">
     <label class="col-form-label">Enter the URL</label>
-    <input placeholder="URL" type="url" [(ngModel)]="socialurl" name="socialurl" matInput>
+    <input placeholder="URL" type="url" [(ngModel)]="socialurl" name="socialurl" matInput autocomplete="off">
 </mat-form-field>
 </div>
 </mat-dialog-content>

@@ -147,10 +147,10 @@ export const Messages = {
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
   'PROVIDER_BILL_PAYMENT_SELFPAY': ' An email and push notification will be send to the consumer',
   'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull',
-  'CHECKIN_SUCC': '[check-In] saved successfully',
-  'CHECKIN_SUCC_REDIRECT': '[check-In] saved successfully. Please wait ... You are being redirected to the Payment Gateway ...',
+  'CHECKIN_SUCC': '[waitlist] saved successfully',
+  'CHECKIN_SUCC_REDIRECT': '[waitlist] saved successfully. Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
-  'CHECKIN_CANCELLED' : '[check-In] [cancelled] successfully',
+  'CHECKIN_CANCELLED' : '[waitlist] [cancelled] successfully',
 
   // Consumer Dashboard
 

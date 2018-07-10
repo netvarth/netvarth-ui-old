@@ -1,7 +1,7 @@
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home'">
     <div class="container">
         <div class="row">
-                
+
             <div class="lgo col-md-3"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
             <div class="tc1 col-md-3 ml-auto" *ngIf="!shared_functions.checkLogin()">
                 <div class="topsignouter"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span></div>
@@ -58,7 +58,8 @@
                         </button>
                         </mat-menu>
                     </span>
-                    <span (click)="upgradeMembership()" class="membership" *ngIf="headercls!='itl-steps' && isprovider"><i class="icon-membership"></i> Upgrade <span>Membership</span></span>
+                    <span (click)="upgradeMembership()" class="membership"
+                    *ngIf="headercls!='itl-steps' && isprovider && upgradablepackages.length > 0"><i class="icon-membership"></i> Upgrade <span>Membership</span></span>
                 </div>
             </div>
         </div>
@@ -83,7 +84,7 @@
                                         <i data-icon="H"></i>
                                     </div>
                                 </div>
-            
+
                             </div>
                         </ng-container>
                         <div class="lgmem" *ngIf="ctype=='consumer'">
@@ -153,7 +154,7 @@
                         </div>
                     </div> -->
                 </div>
-               
+
             </div>
         </div>
     </div>

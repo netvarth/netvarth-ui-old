@@ -45,11 +45,21 @@ export class ProviderLicenseComponent implements OnInit {
     dateFormat =  projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
     reload_adword_api =  {status : true};
+    type = null;
 
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
-      private sharedfunctionObj: SharedFunctions) {
-       this.license_tooltip = this.sharedfunctionObj.getProjectMesssages('LICENSE_TOOLTIP');
+      private sharedfunctionObj: SharedFunctions,
+      private route: ActivatedRoute) {
+        this.license_tooltip = this.sharedfunctionObj.getProjectMesssages('LICENSE_TOOLTIP');
+
+        this.route.params.subscribe((data) => {
+          this.type = data.type;
+          if (this.type) {
+            this.showupgradeLicense();
+          }
+        });
+
       }
 
     ngOnInit() {

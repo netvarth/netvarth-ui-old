@@ -1,6 +1,6 @@
 <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> 
+</section>
 <section>
   <div class="content see-pages">
       <div class="container">
@@ -13,8 +13,8 @@
 
                 <div class="form-group">
                   <label class="col-form-label" for="email">Email *</label>
-                  <input type="text" class="form-control" id="email" 
-                  formControlName="email" (keyup)="isVerified(spForm.controls['email'].value)" autocomplete="off"> 
+                  <input type="text" class="form-control" id="email" autofocus
+                  formControlName="email" (keyup)="isVerified(spForm.controls['email'].value)" autocomplete="off">
                   <div *ngIf="is_verified" class="verified">Verified</div>
                   <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'email')"
                   errorMsg="Please enter a valid email.">
@@ -32,7 +32,7 @@
               (resendOtp)="resendOtp($event)"></app-otp-form>
             </div>
 
-            
+
             <app-field-error-display [displayError]="true" *ngIf="api_error"
             errorMsg="{{api_error}}"></app-field-error-display>
 
@@ -48,7 +48,7 @@
                   <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">Family Members</li>
               </ul>
           </div>
-      </div> 
+      </div>
     </div>
   </div>
 </section>
