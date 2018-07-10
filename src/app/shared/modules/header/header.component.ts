@@ -62,6 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   selected_domain = '';
   avoidClear = 1;
   upgradablepackages: any = [];
+  main_loading = false;
 
   constructor(
     private dialog: MatDialog,
@@ -85,7 +86,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     // subscribe to home component messages
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-    //  console.log('message', message.ttype);
+      /// console.log('message', message);
       switch (message.ttype) {
         case 'updateuserdetails':
           this.getUserdetails();
@@ -93,6 +94,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         break;
         case 'upgradelicence':
         this.getUpgradablePackages();
+        break;
+        case 'main_loading':
+        this.main_loading = message.action || false;
         break;
       }
       /*if (message.ttype === 'updateuserdetails') {
@@ -271,6 +275,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   switchtoConsumer() {
+
     const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
     // console.log('credentials', ynw.loginId, ynw.password);
     this.shared_service.ProviderLogout()

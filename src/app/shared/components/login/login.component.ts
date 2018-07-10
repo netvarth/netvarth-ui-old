@@ -81,7 +81,6 @@ export class LoginComponent implements OnInit {
          }
       );
     } else if (this.data.type === 'consumer') {
-
       this.shared_functions.consumerLogin(post_data, this.moreParams)
       .then(
         success =>  { this.dialogRef.close('success'); },

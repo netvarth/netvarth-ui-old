@@ -94,7 +94,7 @@ export class SharedFunctions {
       }
 
      consumerLogin(post_data, moreParams?) {
-
+      this.sendMessage({ttype: 'main_loading' , action: true});
       const promise = new Promise((resolve, reject) => {
         this.shared_service.ConsumerLogin(post_data)
         .subscribe(
@@ -113,6 +113,7 @@ export class SharedFunctions {
                 }
             },
             error => {
+                this.sendMessage({ttype: 'main_loading' , action: false});
                 if (error.status === 401) {
                 // Not registred consumer or session alredy exists
                     reject(error);
@@ -162,7 +163,7 @@ export class SharedFunctions {
      }*/
 
      providerLogin(post_data) {
-
+        this.sendMessage({ttype: 'main_loading' , action: true});
         const promise = new Promise((resolve, reject) => {
         this.shared_service.ProviderLogin(post_data)
         .subscribe(
@@ -174,6 +175,7 @@ export class SharedFunctions {
 
             },
             error => {
+              this.sendMessage({ttype: 'main_loading' , action: false});
               if (error.status === 401) {
                 reject(error);
                 this.logout();
