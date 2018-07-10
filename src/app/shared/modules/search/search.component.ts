@@ -719,6 +719,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.keywordholder.domain = '';
       this.keywordholder.subdomain = '';
       this.keywordholder.typ = 'kwtitle';
+
+      this.curlabel.typ = '';
+      this.curlabel.query = '';
       // console.log('reached here', this.keywordholder);
     break;
   }
@@ -728,7 +731,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
  }
  do_search(labelqpassed?) {
    this.closeMoreoptions();
-   // // console.log('search clicked');
+   // console.log('search clicked');
 
    // done to handle the case if something is typed in the last text box and nothing else is selected by consumer, but some text is there
    // in such as case the text will be used to search against the index "title"
@@ -874,7 +877,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // if (this.searchfields.labelq != '') {
     if (labelq !== '' && labelq !== undefined && labelq !== 'undefined') {
       const ret_arr =  this.parsesearchLabelsQuerystring (this.searchfields.labelq);
-     // console.log('label return', ret_arr);
+      // console.log('label return', ret_arr);
       if (ret_arr['sector'] !== '') {
         this.searchfields.domain = ret_arr['sector'];
         this.selected_domain = this.searchfields.domain;
@@ -906,6 +909,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     } else {
       this.searchfields.passrefinedfilters = [];
     }
+    // console.log('emitted fields', this.searchfields);
     this.searchclick.emit(this.searchfields);
   }
   getdomainofaSubdomain(subdomname) {
@@ -1021,7 +1025,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
   }
   deselect() {
-    console.log('blur');
+   // console.log('blur');
     if (this.locRef.nativeElement) {
       this.locRef.nativeElement.value  = this.locRef.nativeElement.value;
     }

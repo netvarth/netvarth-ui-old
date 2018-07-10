@@ -2650,7 +2650,7 @@ header {
                             display: flex;
                             flex-direction: column;
                             flex-direction: row;
-                            justify-content: flex-start;
+                            justify-content: flex-end;
                             border: 1px solid $cc-body;
                             border-top: none;
                             
@@ -2927,7 +2927,7 @@ header {
                                         @include respond-to(ynw-768-991) {
                                             height: 30px;
                                             margin-right: 0;
-                                            margin-bottom: 15px;
+                                            margin-bottom: 5px;
                                         }
 
                                         &:after {
@@ -2947,14 +2947,14 @@ header {
                                                 bottom: 0;
                                                 left: 50%;
                                                 margin-left: -6px;
-                                                top: 6px;
+                                                top: 17px;
                                             }
                                             @include respond-to(ynw-768-991) {
                                                 @include rotate(90);
                                                 bottom: 0;
                                                 left: 50%;
                                                 margin-left: -6px;
-                                                top: 6px;
+                                                top: 17px;
                                             }
                                         }
                                     }
@@ -3064,6 +3064,8 @@ header {
                         }
                     }
                     &:last-child {
+                        border-bottom: 1px solid $cc-body;
+                        
                         .detail {
                             border-bottom: 1px solid $cc-body;
                         }
@@ -3173,6 +3175,11 @@ header {
                                                 &.pay-bill {
                                                     &:before {
                                                         content: "\57";
+                                                    }
+                                                }
+                                                &.icon-star {
+                                                    &:before {
+                                                        content: "\3b";
                                                     }
                                                 }
                                             }

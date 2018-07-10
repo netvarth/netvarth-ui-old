@@ -1089,7 +1089,7 @@ select:-webkit-autofill:focus {
               flex-direction: column;
               justify-content: center;
               align-items: center; }
-              .ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion .outer .icon-person, .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion .outer .icon-person {
+              .ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion .outer [class^="icon-"], .ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion .outer [class*=" icon-"], .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion .outer [class^="icon-"], .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion .outer [class*=" icon-"] {
                 font-size: 1.5rem;
                 width: 50px;
                 height: 50px;
@@ -1669,7 +1669,7 @@ select:-webkit-autofill:focus {
         position: absolute;
         width: 20%;
         height: auto;
-        bottom: 20%;
+        bottom: 15%;
         top: 20%;
         left: 0px;
         display: flex;
@@ -1686,7 +1686,7 @@ select:-webkit-autofill:focus {
             width: 100%; } }
         .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls {
           width: 100%;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
           flex-direction: column;
           justify-content: center;
           align-items: center; }
@@ -1717,17 +1717,9 @@ select:-webkit-autofill:focus {
               .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-lookup,
               .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-rating,
               .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-arrived {
-                height: 80px;
-                width: 80px;
+                height: 60px;
+                width: 60px;
                 margin-bottom: 10px; }
-                @media (min-width: 768px) and (max-width: 991px) {
-                  .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-checkin,
-                  .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-home,
-                  .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-lookup,
-                  .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-rating,
-                  .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-arrived {
-                    height: 60px;
-                    width: 60px; } }
               .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .title {
                 font-size: 1.125rem;
                 color: #fff;
@@ -13958,7 +13950,7 @@ header.consumer {
           display: flex;
           flex-direction: column;
           flex-direction: row;
-          justify-content: flex-start;
+          justify-content: flex-end;
           border: 1px solid #f2f2f2;
           border-top: none; }
           @media only screen and (max-width: 767px) {
@@ -14168,7 +14160,7 @@ header.consumer {
                   .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .o-now {
                     height: 30px;
                     margin-right: 0;
-                    margin-bottom: 15px; } }
+                    margin-bottom: 5px; } }
                 .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .o-now:after {
                   position: absolute;
                   content: "";
@@ -14190,7 +14182,7 @@ header.consumer {
                       bottom: 0;
                       left: 50%;
                       margin-left: -6px;
-                      top: 6px; } }
+                      top: 17px; } }
                   @media (min-width: 768px) and (max-width: 991px) {
                     .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .o-now:after {
                       -moz-transform: rotate(90deg);
@@ -14201,7 +14193,7 @@ header.consumer {
                       bottom: 0;
                       left: 50%;
                       margin-left: -6px;
-                      top: 6px; } }
+                      top: 17px; } }
               .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .timing {
                 display: flex;
                 flex-direction: column; }
@@ -14282,8 +14274,10 @@ header.consumer {
                   text-align: left; } }
           .consumer-dash .card.favourites .outer .list .detail .location:last-child {
             border-bottom: none; }
-      .consumer-dash .card.favourites .outer .list:last-child .detail {
+      .consumer-dash .card.favourites .outer .list:last-child {
         border-bottom: 1px solid #f2f2f2; }
+        .consumer-dash .card.favourites .outer .list:last-child .detail {
+          border-bottom: 1px solid #f2f2f2; }
     .consumer-dash .card.history {
       margin-bottom: 0; }
       .consumer-dash .card.history .history-tbl {
@@ -14371,6 +14365,8 @@ header.consumer {
                   content: "\4f"; }
                 .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.pay-bill:before {
                   content: "\57"; }
+                .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.icon-star:before {
+                  content: "\3b"; }
           @media only screen and (max-width: 767px) {
             .consumer-dash .card.history .history-tbl .table tbody tr td.td5:before {
               display: none; } }

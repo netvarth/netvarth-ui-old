@@ -1,3 +1,4 @@
+
 import { Component, OnInit, Input, Output, EventEmitter, HostListener} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -163,7 +164,12 @@ export class SearchDetailComponent implements OnInit {
         this.showsearchsection = true;
         if (!bypassotherfunction) {
           this.setfields();
-          this.getRefinedSearch(true);
+          // this.getRefinedSearch(true);
+          if (this.labelq === '') {
+            this.getRefinedSearch(true, 0, 'domainlist');
+          } else {
+            this.buildQuery(false);
+          }
         }
       }
     }
@@ -207,7 +213,7 @@ export class SearchDetailComponent implements OnInit {
             this.showsearchsection = true;
             if (!bypassotherfunction) {
               this.setfields();
-              this.getRefinedSearch(true);
+              this.getRefinedSearch(true, 0, 'domainlist');
             }
         }
       );
@@ -283,10 +289,10 @@ export class SearchDetailComponent implements OnInit {
       }
       if (this.labelq !== '') { // if came to details page by clicking the search labels
         // console.log('case1');
-          this.parsesearchLabelsQuerystring(this.labelq); // function which parse and set the respective public variable
+          this.parsesearchLabelsQuerystring(this.labelq, false); // function which parse and set the respective public variable
       } else { // to handle the case of splitting the query string in case of refresh from search result page
        // console.log('case2', obj.lq, this.labelq);
-          this.parsesearchLabelsQuerystring(obj.q);
+          this.parsesearchLabelsQuerystring(obj.q, false);
       }
     } else if (src === 2) { // case of setting values in response to call from the searchdetails page
       // console.log('details obj', obj);
@@ -384,7 +390,7 @@ export class SearchDetailComponent implements OnInit {
       }
       // console.log('passed refine filter', this.passrefinedfilters);
       if (this.labelq !== '') { // if came to details page by clicking the search labels
-        this.parsesearchLabelsQuerystring(this.labelq); // function which parse and set the respective public variable
+        this.parsesearchLabelsQuerystring(this.labelq, true); // function which parse and set the respective public variable
       }
     }
   }
@@ -457,7 +463,7 @@ export class SearchDetailComponent implements OnInit {
     return exists_indx;
   }
   // function which parse the querystring from search labels
-  parsesearchLabelsQuerystring(str = null) {
+  parsesearchLabelsQuerystring(str = null, calldosearch?) {
     const retarr = {
                   'sector': '',
                   'subsector': '',
@@ -476,16 +482,17 @@ export class SearchDetailComponent implements OnInit {
         retarr['specialization'] = str.match(/specialization:'(.*?)'/)[1];
         this.specialization_exists = true;
       }
-      this.setvariablesbasedonSearchlabel(retarr);
+      this.setvariablesbasedonSearchlabel(retarr, calldosearch);
     }
   }
-  setvariablesbasedonSearchlabel(obj) {
+  setvariablesbasedonSearchlabel(obj, calldosearch?) {
       this.domain = obj.sector || '';
       this.subsector = obj.subsector || '';
       this.specialization = obj.specialization || '';
-      //  console.log('subsec', this.subsector);
+      console.log('subsec', this.subsector);
       if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
         const domainobtain = this.getdomainofaSubdomain(this.subsector);
+        console.log(domainobtain);
         this.kw = this.subsector;
         this.kwsubdomain = this.kw;
         // console.log('domainobtained', domainobtain);
@@ -508,7 +515,7 @@ export class SearchDetailComponent implements OnInit {
             this.specialization_hide = true;
           }
       }
-      this.getRefinedSearch(false);
+      this.getRefinedSearch(calldosearch, 0, 'setvariablesbasedonSearchlabel');
   }
   goback() {
     this.routerobj.navigateByUrl('');
@@ -533,9 +540,10 @@ export class SearchDetailComponent implements OnInit {
     // changing the url of the search result page based on the selected criteria
     this.change_url_on_criteria_change();
 
+    if (obj.labelq === '') {
     // Calling api to get the search refine filters
-    this.getRefinedSearch(true);
-
+      this.getRefinedSearch(true, 0, 'handlesearchClick');
+    }
     // Calling the search function to perform the search
     // this.do_search();
 
@@ -964,7 +972,8 @@ export class SearchDetailComponent implements OnInit {
   }
 
   // method which get the refined filters
-  getRefinedSearch(call_dosearch?, fromrefine?) {
+  getRefinedSearch(call_dosearch?, fromrefine?, src?) {
+    // console.log('src', src);
     let subdom = '';
     this.searchrefine_arr = '';
     if (this.kw !== '') {
@@ -974,7 +983,8 @@ export class SearchDetailComponent implements OnInit {
          subdom = this.kwsubdomain;
        }
     }
-    if (this.kwtyp === 'label') {
+    // if (this.kwtyp === 'label') {
+      if (this.kwtyp === 'label' || (this.labelq !== '' && this.labelq !== undefined)) {
       subdom = this.kwsubdomain;
     }
     // console.log('obtained domain prefix', subdom, this.domain, this.kwtyp);
@@ -1054,6 +1064,7 @@ export class SearchDetailComponent implements OnInit {
       });
   }
   getdomainofaSubdomain(subdomname) {
+    console.log('domain data list', this.domainlist_data);
     if (this.domainlist_data) {
       for (let i = 0; i < this.domainlist_data.length; i++) {
         for (const subdom of this.domainlist_data[i].subDomains) {
@@ -1301,7 +1312,7 @@ export class SearchDetailComponent implements OnInit {
   handleTextrefineKeypress (ev, fieldname, fieldvalue, fieldtype, bypassbuildquery?) {
     const kCode = parseInt(ev.keyCode, 10);
     if (kCode === 13) {
-      console.log('enter key');
+     // console.log('enter key');
        // replacing unwanted characters
       fieldvalue = fieldvalue.replace(/;/g, '');
       fieldvalue = fieldvalue.replace(/\//g, '');
@@ -1486,7 +1497,7 @@ export class SearchDetailComponent implements OnInit {
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {
-          console.log('communicate provid ', providforCommunicate);
+         // console.log('communicate provid ', providforCommunicate);
           this.showCommunicate(providforCommunicate);
         }
       } else { // show consumer login
