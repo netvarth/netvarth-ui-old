@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { SharedFunctions } from '../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-consumer',
@@ -7,4 +8,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class ConsumerComponent {
   // title = 'consumer';
+  constructor(public shared_functions: SharedFunctions) {
+    this.shared_functions.sendMessage({ttype: 'main_loading', action: false});
+  }
 }

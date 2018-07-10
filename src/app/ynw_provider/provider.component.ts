@@ -39,5 +39,7 @@ export class ProviderComponent {
 
           });
 
+          this.shared_functions.sendMessage({ttype: 'main_loading', action: false});
+
     }
 }
