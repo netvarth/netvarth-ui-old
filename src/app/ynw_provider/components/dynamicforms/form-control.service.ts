@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { FormBase } from './form-base';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Injectable()
 export class FormControlService {
@@ -47,7 +48,7 @@ export class FormControlService {
     }
 
     if (question.type === 'url') {
-      validators.push(Validators.pattern('(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)'));
+      validators.push(Validators.pattern(projectConstants.VALIDATOR_URL));
       this.createError(question, 'pattern',
       'Please enter a valid URL');
     }

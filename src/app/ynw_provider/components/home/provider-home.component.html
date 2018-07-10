@@ -84,7 +84,7 @@
                       <div class="form-group first_name">
                         <mat-form-field class="example-full-width">
                           <label class="col-form-label">First name</label>
-                          <input matInput [(ngModel)]="filter.first_name"  (blur)="doSearch()">
+                          <input matInput [(ngModel)]="filter.first_name"  (blur)="doSearch()" autocomplete="off">
                         </mat-form-field>
                       </div>
 
@@ -144,7 +144,7 @@
                         <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} Date</label>
                         <mat-form-field>
                             <input matInput [(ngModel)]="filter.check_in_date" [matDatepicker]="picker"
-                            (dateChange)="doSearch()" [min]="filter_date_min" [max]="filter_date_max">
+                            (dateChange)="doSearch()" [min]="filter_date_min" [max]="filter_date_max" autocomplete="off">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>

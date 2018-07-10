@@ -10,14 +10,14 @@
         <input matInput [formControlName]="question.key"
         [id]="question.key" [type]="question.type"
         [min]="question.min" [max]="question.max"
-        placeholder="{{question.label}}">
+        placeholder="{{question.label}}" autocomplete="off">
     </mat-form-field>
 
-    <mat-slide-toggle 
+    <mat-slide-toggle
     [id]="question.key"
     *ngIf="question.type === 'checkbox'"
     labelPosition="before"
-    [checked]="(question.value == 'true') ? 'true' : 'false'" 
+    [checked]="(question.value == 'true') ? 'true' : 'false'"
     (change)="setCheckBoxValue()" >
     {{question.label}}
     </mat-slide-toggle>
@@ -47,7 +47,7 @@
 
     <div class="form-check" *ngSwitchCase="'radio'" [id]="question.key">
       <mat-radio-group [formControlName]="question.key" >
-          <mat-radio-button [value]="option.name" 
+          <mat-radio-button [value]="option.name"
           *ngFor="let option of question.options;">
           {{option.displayName}}
           </mat-radio-button>

@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
   is_provider = 'true';
   step = 1;
   moreParams = [];
+  api_loading = true;
+
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -40,6 +42,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.moreParams = this.data.moreparams;
     this.createForm();
+    this.api_loading = false;
   }
 
   createForm() {
@@ -62,6 +65,7 @@ export class LoginComponent implements OnInit {
       'loginId': data.phonenumber,
       'password': data.password
     };
+    this.api_loading = true;
     if (this.data.type === 'provider') {
       this.shared_functions.providerLogin(post_data)
       .then(
@@ -71,19 +75,26 @@ export class LoginComponent implements OnInit {
         this.dialogRef.close();
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       },
-        error => { ob.api_error = this.shared_functions.getProjectErrorMesssages(error); }
+        error => {
+          ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_loading = false;
+         }
       );
     } else if (this.data.type === 'consumer') {
 
       this.shared_functions.consumerLogin(post_data, this.moreParams)
       .then(
         success =>  { this.dialogRef.close('success'); },
-        error => { ob.api_error = this.shared_functions.getProjectErrorMesssages(error); }
+        error => {
+          ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_loading = false;
+        }
       );
     }
   }
 
   doForgotPassword() {
+    this.api_loading = false;
     // this.dialogRef.close(); // closing the signin window
     // const dialogRef = this.dialog.open(ForgotPasswordComponent, {
     //   width: '60%',
@@ -103,6 +114,7 @@ export class LoginComponent implements OnInit {
     this.step = 1;
   }
   doSignup() {
+    this.api_loading = false;
     this.dialogRef.close(); // closing the signin window
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',

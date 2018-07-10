@@ -11,8 +11,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
   <div class="form-group">
     <label class="col-form-label" for="service_name">Service Name *</label>
-    <input type="text" class="form-control" id="service_name" placeholder="Service Name"
-    formControlName="name">
+    <input matInput type="text" class="form-control" id="service_name" placeholder="Service Name"
+    formControlName="name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
     errorMsg="Please enter service name.">
   </app-field-error-display>
@@ -20,8 +20,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
   <div class="form-group">
     <label class="col-form-label" for="description">Description </label>
-    <input type="text" class="form-control" id="description" placeholder="Description"
-    formControlName="description">
+    <input matInput type="text" class="form-control" id="description" placeholder="Description"
+    formControlName="description" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
     errorMsg="Please enter service description.">
   </app-field-error-display>
@@ -29,8 +29,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
   <div class="form-group">
     <label class="col-form-label" for="estimated_duration">Estimated Duration (min)*</label>
-    <input type="text" class="form-control" id="estimated_duration" placeholder="Estimated Duration"
-    formControlName="serviceDuration">
+    <input matInput type="text" class="form-control" id="estimated_duration" placeholder="Estimated Duration"
+    formControlName="serviceDuration" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
     {'required' : 'Please enter estimated duration.',
@@ -40,8 +40,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
   <div class="form-group">
     <label class="col-form-label" for="price">Price </label>
-    <input type="text" class="form-control" id="price" placeholder="Price"
-    formControlName="totalAmount">
+    <input matInput type="text" class="form-control" id="price" placeholder="Price"
+    formControlName="totalAmount" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
     {'required' : 'Please enter price',
@@ -59,8 +59,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
   </div>
   <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
     <label class="col-form-label" for="prepayment_amount">Prepayment Amount *</label>
-    <input type="text" class="form-control" id="prepayment_amount" placeholder="Prepayment Amount"
-    formControlName="minPrePaymentAmount">
+    <input matInput type="text" class="form-control" id="prepayment_amount" placeholder="Prepayment Amount"
+    formControlName="minPrePaymentAmount" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
     {'required' : 'Please enter prepayment amount',
@@ -128,9 +128,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
       <li *ngFor="let file of item_pic.files;let i = index ">
         <div class="galimg_outer">
         <div class="gal_img" *ngIf="item_pic.base64[i]"><img [src]="item_pic.base64[i]"></div>
-        <div class="gal_caption"><input type="text" [(ngModel)]="item_pic.caption[i]"
+        <div class="gal_caption"><input matInput type="text" [(ngModel)]="item_pic.caption[i]"
           [ngModelOptions]="{standalone: true}"
-          placeholder="Caption"></div>
+          placeholder="Caption" autocomplete="off"></div>
         <div class="gal_action">
             <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
                 <mat-icon>more_vert</mat-icon>

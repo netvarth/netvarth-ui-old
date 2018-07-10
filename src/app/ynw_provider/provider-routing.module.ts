@@ -119,6 +119,10 @@ const routes: Routes = [
         component: ProviderLicenseComponent
       },
       {
+        path: 'license/:type',
+        component: ProviderLicenseComponent
+      },
+      {
         path: 'license',
         children: [
           // {

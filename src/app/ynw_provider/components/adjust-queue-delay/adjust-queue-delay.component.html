@@ -29,7 +29,7 @@ onSubmit(amForm.value)">
         <div class="form-group">
           <mat-form-field class="example-full-width"  *ngIf="amForm.get('send_message').value === true">
             <label class="col-form-label">Message</label>
-            <input matInput type="text" placeholder="Message" formControlName="message">
+            <input matInput type="text" placeholder="Message" formControlName="message" autocomplete="off">
           </mat-form-field>
         </div>
     </div>

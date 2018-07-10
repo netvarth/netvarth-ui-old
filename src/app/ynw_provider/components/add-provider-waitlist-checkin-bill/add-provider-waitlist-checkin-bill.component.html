@@ -50,11 +50,11 @@
                     <tr *ngFor="let item of cart.items; let i = index">
                       <td data-title="Service/Item">{{item.name}}</td>
                       <td data-title="Quantity">
-                        <input type="number" min="1" [disabled]="cart.items[i].type == 'Services'" [(ngModel)]="cart.items[i].quantity"
-                        [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)"> </td>
+                        <input matInput type="number" min="1" [disabled]="cart.items[i].type == 'Services'" [(ngModel)]="cart.items[i].quantity"
+                        [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)" autocomplete="off"> </td>
                       <td data-title="StdRate">
-                        <input type="number" [(ngModel)]="item.price"
-                        [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)">
+                        <input matInput type="number" [(ngModel)]="item.price"
+                        [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)" autocomplete="off">
                       </td>
                       <td data-title="Discount">
                         <div class="form-group" *ngIf="discounts.length >0">

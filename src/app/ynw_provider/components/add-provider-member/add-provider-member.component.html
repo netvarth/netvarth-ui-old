@@ -4,16 +4,16 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 <div class="form-group">
     <label class="col-form-label" for="first_name">First Name *</label>
-    <input type="text" class="form-control" id="first_name" placeholder="First Name"
+    <input matInput type="text" class="form-control" id="first_name" placeholder="First Name"
     formControlName="first_name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
     errorMsg="Please enter your first name.">
-   </app-field-error-display> 
+   </app-field-error-display>
 </div>
 
 <div class="form-group">
     <label class="col-form-label" for="last_name">Last Name *</label>
-    <input type="text" class="form-control" id="last_name" placeholder="Last Name"
+    <input matInput type="text" class="form-control" id="last_name" placeholder="Last Name"
     formControlName="last_name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
     errorMsg="Please enter your last name.">
@@ -21,7 +21,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 <div class="form-group">
     <label class="col-form-label" for="mobile">Mobile Number *</label>
-    <input type="text" class="form-control" id="mobile" placeholder="Mobile Number"
+    <input matInput type="text" class="form-control" id="mobile" placeholder="Mobile Number"
     formControlName="mobile" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
     errorMsg="Please enter mobile number.">

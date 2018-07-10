@@ -17,8 +17,8 @@
           <label class="col-form-label" for="Amount to pay">
             Amount to pay *
           </label>
-          <input type="text" class="form-control" id="amount_to_pay"
-            [(ngModel)]="pay_data.amount">
+          <input matInput type="text" class="form-control" id="amount_to_pay"
+            [(ngModel)]="pay_data.amount" autocomplete="off">
       </div>
 
       <div class="payment-options">

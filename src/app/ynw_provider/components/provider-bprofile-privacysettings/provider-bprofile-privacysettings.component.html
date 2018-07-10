@@ -3,11 +3,13 @@
     <div class="phoneouter" *ngIf="curtype=='phone'">
         <div class="form-group">
             <label class="col-form-label" for="phone1">Phone Number *</label>
-            <input type="text" class="form-control" id="phone1" placeholder="Phone#" [(ngModel)]="phonenumber"  [ngModelOptions]="{standalone: true}">
+            <input type="text" matInput class="form-control" id="phone1" placeholder="Phone#" [(ngModel)]="phonenumber"
+            [ngModelOptions]="{standalone: true}" autocomplete="off">
         </div>
         <div class="form-group">
            <label class="col-form-label" for="label1">Phone Label * <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltiphone"  data-icon="F"></span></label>
-           <input type="text" class="form-control" placeholder="Label" [(ngModel)]="phonelabel"  [ngModelOptions]="{standalone: true}">
+           <input type="text" matInput class="form-control" placeholder="Label"
+           [(ngModel)]="phonelabel"  [ngModelOptions]="{standalone: true}" autocomplete="off">
         </div>
         <div class="form-group">
                 <div>
@@ -49,11 +51,13 @@
     <div class="emailouter" *ngIf="curtype=='email'">
         <div class="form-group">
                 <label class="col-form-label" for="phone1">Email Id *</label>
-                <input type="text" class="form-control" id="phone1" placeholder="Email Id" [(ngModel)]="emailemailid"  [ngModelOptions]="{standalone: true}">
+                <input type="text" matInput class="form-control" id="phone1" placeholder="Email Id" [(ngModel)]="emailemailid"
+                [ngModelOptions]="{standalone: true}" autocomplete="off">
         </div>
         <div class="form-group">
                 <label class="col-form-label" for="label1">Email Label * <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltemail" data-icon="F"></span></label>
-                <input type="text" class="form-control" placeholder="Label" [(ngModel)]="emaillabel"  [ngModelOptions]="{standalone: true}">
+                <input type="text" matInput class="form-control" placeholder="Label"
+                [(ngModel)]="emaillabel"  [ngModelOptions]="{standalone: true}" autocomplete="off">
         </div>
         <div class="form-group">
                 <div>

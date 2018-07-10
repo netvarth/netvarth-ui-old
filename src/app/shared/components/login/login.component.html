@@ -29,7 +29,10 @@ onSubmit(loginForm.value)" (keyup)="resetApiErrors()" *ngIf="step==1">
 </div>
 <div class="mat-dialog-actions">
 <button  type="submit" mat-button
-[disabled]="!loginForm.valid">Submit</button>
+[disabled]="!loginForm.valid && api_loading">
+    <span *ngIf="!api_loading">Submit</span>
+    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
+</button>
 
 <div class="forgotpass" (click)="doForgotPassword()">Forgot Password?</div>
 <div class="newuser" (click)="doSignup()">New User? <span>Signup here</span></div>

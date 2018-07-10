@@ -9,8 +9,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 <mat-dialog-content>
 <div class="form-group">
     <label class="col-form-label" for="first_name">Name *</label>
-    <input type="text" class="form-control" id="name" placeholder="Name"
-    formControlName="name">
+    <input matInput type="text" class="form-control" id="name" placeholder="Name"
+    formControlName="name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
     errorMsg="Please enter your discount name.">
    </app-field-error-display>
@@ -28,7 +28,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
    <mat-form-field class="example-full-width">
    <span matPrefix *ngIf="amForm.get('calculationType').value == 'Fixed'"> ₹ &nbsp;</span>
    <input matInput type="text" class="form-control" id="discValue" [placeholder]="valueCaption"
-   formControlName="discValue">
+   formControlName="discValue" autocomplete="off">
    <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span>
    </mat-form-field>
 
@@ -39,8 +39,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 <div class="form-group">
     <label class="col-form-label" for="last_name">Description *</label>
-    <input type="text" class="form-control" id="description" placeholder="Description"
-    formControlName="description">
+    <input matInput type="text" class="form-control" id="description" placeholder="Description"
+    formControlName="description" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
     errorMsg="Please enter the description.">
    </app-field-error-display>

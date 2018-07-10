@@ -61,6 +61,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': ''};
   selected_domain = '';
   avoidClear = 1;
+  upgradablepackages: any = [];
+
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -83,11 +85,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     // subscribe to home component messages
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      // console.log('message', message.ttype);
+    //  console.log('message', message.ttype);
       switch (message.ttype) {
         case 'updateuserdetails':
           this.getUserdetails();
           this.handleHeaderclassbasedonURL();
+        break;
+        case 'upgradelicence':
+        this.getUpgradablePackages();
         break;
       }
       /*if (message.ttype === 'updateuserdetails') {
@@ -158,8 +163,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.consumer_loggedin = true;
           this.provider_loggedin = false;
         }
+
+        if (this.ctype === 'provider') {
+
+          this.getUpgradablePackages();
+        }
+
       }
     }
+  }
+
+  getUpgradablePackages() {
+    this.shared_service.getUpgradableLicensePackages()
+      .subscribe( data => {
+          this.upgradablepackages = data;
+      });
   }
 
   handleHeaderclassbasedonURL() {
@@ -223,7 +241,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['logout']);
   }
   upgradeMembership() {
-    alert('Upgrade Membership');
+    this.router.navigate(['provider', 'settings', 'license', 'upgrade']);
   }
   inboxiconClick() {
     this.redirectto('inbox');

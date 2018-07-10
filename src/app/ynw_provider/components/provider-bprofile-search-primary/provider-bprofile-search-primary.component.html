@@ -4,8 +4,8 @@
 <mat-dialog-content>
 <div class="form-group">
     <label class="col-form-label" for="first_name">Business Name *</label>
-    <input type="text" class="form-control" id="bname" #bname
-    formControlName="bname">
+    <input type="text" matInput class="form-control" id="bname" #bname
+    formControlName="bname" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bname')"
     errorMsg="Please enter the business name">
    </app-field-error-display>

@@ -9,8 +9,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 <mat-dialog-content>
 <div class="form-group">
     <label class="col-form-label" for="mobile_number">Mobile Number *</label>
-    <input type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
-    formControlName="mobile_number">
+    <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
+    formControlName="mobile_number" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
     {
@@ -24,8 +24,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 <div class="form-group" >
     <label class="col-form-label" for="first_name">First Name *</label>
-    <input type="text" class="form-control" id="first_name" placeholder="First Name"
-    formControlName="first_name">
+    <input matInput type="text" class="form-control" id="first_name" placeholder="First Name"
+    formControlName="first_name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
     errorMsg="Please enter first name.">
    </app-field-error-display>
@@ -34,8 +34,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 <div class="form-group">
     <label class="col-form-label" for="last_name">Last Name *</label>
-    <input type="text" class="form-control" id="last_name" placeholder="Last Name"
-    formControlName="last_name">
+    <input matInput type="text" class="form-control" id="last_name" placeholder="Last Name"
+    formControlName="last_name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
     errorMsg="Please enter last name.">
    </app-field-error-display>
@@ -43,8 +43,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 <div class="form-group">
     <label class="col-form-label" for="email_id">Email Id</label>
-    <input type="text" class="form-control" id="email_id" placeholder="Email Id"
-    formControlName="email_id">
+    <input matInput type="text" class="form-control" id="email_id" placeholder="Email Id"
+    formControlName="email_id" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')"
     errorMsg="Please enter valid email.">
    </app-field-error-display>
@@ -67,7 +67,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <div class="pickerouter">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday">
+    <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday"
+    autocomplete="off">
     </div>
 
 

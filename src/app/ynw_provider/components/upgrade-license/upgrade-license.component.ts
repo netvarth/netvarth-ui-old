@@ -7,6 +7,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { MessageService } from '../../services/provider-message.service';
 
 @Component({
   selector: 'app-upgrade-license',
@@ -31,6 +32,7 @@ export class UpgradeLicenseComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+    public message_service: MessageService
 
     ) {
        // console.log(data);
@@ -57,6 +59,8 @@ export class UpgradeLicenseComponent implements OnInit {
       this.provider_services.upgradeLicensePackage(this.selected_pac)
         .subscribe (data => {
           this.api_success = this.sharedfunctionObj.getProjectMesssages('LICENSE_UPGRADED');
+          const pdata = { 'ttype': 'upgradelicence' };
+          this.sharedfunctionObj.sendMessage(pdata);
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

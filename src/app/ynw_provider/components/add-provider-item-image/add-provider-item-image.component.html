@@ -1,5 +1,5 @@
 <form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Item Image - {{ data.type | titlecase }}  
+<h1 class="mat-dialog-title">Item Image - {{ data.type | titlecase }}
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
@@ -12,7 +12,9 @@
         <li>
         <div class="galimg_outer">
         <div class="gal_img"><img [src]="item_pic.base64"></div>
-        <div class="gal_caption"><input type="text" name="caption" #caption placeholder="Caption"></div>
+        <div class="gal_caption">
+          <input matInput type="text" name="caption" #caption placeholder="Caption" autocomplete="off">
+        </div>
         <div class="gal_action">
             <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
                 <mat-icon>more_vert</mat-icon>

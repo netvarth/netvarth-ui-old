@@ -11,7 +11,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <div class="form-group">
         <mat-form-field class="example-full-width">
             <label class="col-form-label">Queue Name *</label>
-            <input matInput placeholder="Queue Name *" formControlName="qname">
+            <input matInput placeholder="Queue Name *" formControlName="qname" autocomplete="off">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')"
         errorMsg="Please enter the Queue name">
@@ -81,14 +81,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <div class="form-group">
         <mat-form-field class="example-full-width">
             <label class="col-form-label">Maximum Capacity</label>
-            <input matInput type="text" placeholder="Maximum Capacity" formControlName="qcapacity">
+            <input matInput type="text" placeholder="Maximum Capacity" formControlName="qcapacity" autocomplete="off">
     </mat-form-field>
     </div>
 
     <div class="form-group">
         <mat-form-field class="example-full-width">
                 <label class="col-form-label">No of {{customer_label}}s served at a time</label>
-            <input matInput type="text" placeholder="No of {{customer_label}}s served at a time" formControlName="qserveonce">
+            <input matInput type="text" placeholder="No of {{customer_label}}s served at a time" formControlName="qserveonce" autocomplete="off">
         </mat-form-field>
     </div>
 </mat-dialog-content>

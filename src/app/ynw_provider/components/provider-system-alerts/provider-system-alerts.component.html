@@ -24,9 +24,10 @@
                         <label for="reason" class="col-form-label">Select Date</label>
                          <div class="pickerouter">
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker> 
-                          <input class="form-control1" name="alert-datepicker" [(ngModel)]="alertSeldate" [value]="alertSeldate" type="text" matInput [matDatepicker]="picker">
-                        </div> 
+                          <mat-datepicker #picker></mat-datepicker>
+                          <input class="form-control1" name="alert-datepicker" [(ngModel)]="alertSeldate" [value]="alertSeldate" type="text"
+                          matInput [matDatepicker]="picker" autocomplete="off">
+                        </div>
                 </div>
                 </div>
                 <div class="actions-div">
@@ -43,7 +44,7 @@
                                     <th>Details</th>
                                     <th>Acknowledged</th>
                                     <th>Date</th>
-                                    <th>Action</th>         
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,30 +62,30 @@
                                 </ng-container>
                                 <ng-container *ngIf="alertStatus==3">
                                 <tr *ngFor="let alrt of alert_details">
-                                    <td data-title="Subject" class="td1" 
-                                        [class.info]="alrt.severity.name=='Info'" 
-                                        [class.warning]="alrt.severity.name=='Warning'" 
-                                        [class.high]="alrt.severity.name=='High'" 
+                                    <td data-title="Subject" class="td1"
+                                        [class.info]="alrt.severity.name=='Info'"
+                                        [class.warning]="alrt.severity.name=='Warning'"
+                                        [class.high]="alrt.severity.name=='High'"
                                         [class.error]="alrt.severity.name=='Critical'">{{alrt.subject}}</td>
-                                    <td data-title="Details" class="td2" 
-                                        [class.info]="alrt.severity.name=='Info'" 
-                                        [class.warning]="alrt.severity.name=='Warning'" 
-                                        [class.high]="alrt.severity.name=='High'" 
+                                    <td data-title="Details" class="td2"
+                                        [class.info]="alrt.severity.name=='Info'"
+                                        [class.warning]="alrt.severity.name=='Warning'"
+                                        [class.high]="alrt.severity.name=='High'"
                                         [class.error]="alrt.severity.name=='Critical'">{{alrt.text}}</td>
-                                    <td data-title="Act Status" class="td3" 
-                                        [class.info]="alrt.severity.name=='Info'" 
-                                        [class.warning]="alrt.severity.name=='Warning'" 
-                                        [class.high]="alrt.severity.name=='High'" 
+                                    <td data-title="Act Status" class="td3"
+                                        [class.info]="alrt.severity.name=='Info'"
+                                        [class.warning]="alrt.severity.name=='Warning'"
+                                        [class.high]="alrt.severity.name=='High'"
                                         [class.error]="alrt.severity.name=='Critical'">{{ (alrt.ackStatus) ? 'Yes' : 'No'}}</td>
-                                    <td data-title="Date" class="td4" 
-                                    [class.info]="alrt.severity.name=='Info'" 
-                                        [class.warning]="alrt.severity.name=='Warning'" 
-                                        [class.high]="alrt.severity.name=='High'" 
+                                    <td data-title="Date" class="td4"
+                                    [class.info]="alrt.severity.name=='Info'"
+                                        [class.warning]="alrt.severity.name=='Warning'"
+                                        [class.high]="alrt.severity.name=='High'"
                                         [class.error]="alrt.severity.name=='Critical'">{{alrt.createdOn | date:dateFormat}}</td>
-                                    <td data-title="Action" class="td5" 
-                                        [class.info]="alrt.severity.name=='Info'" 
-                                        [class.warning]="alrt.severity.name=='Warning'" 
-                                        [class.high]="alrt.severity.name=='High'" 
+                                    <td data-title="Action" class="td5"
+                                        [class.info]="alrt.severity.name=='Info'"
+                                        [class.warning]="alrt.severity.name=='Warning'"
+                                        [class.high]="alrt.severity.name=='High'"
                                         [class.error]="alrt.severity.name=='Critical'"><span class="icon-delete" *ngIf="alrt.ackStatus==false && alrt.ackRequired==true" (click)="alertAcknowledge(alrt)"></span></td>
                                 </tr>
                                 </ng-container>
