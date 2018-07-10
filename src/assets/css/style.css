@@ -2255,6 +2255,16 @@ app-footer {
 a {
   color: #00aef2; }
 
+.outer-loader-div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8); }
+
 header {
   padding: 20px 0;
   font-family: 'Montserrat', sans-serif;
@@ -9045,6 +9055,8 @@ footer.dashb {
         width: 100px;
         margin-left: 15px;
         display: inline-block; }
+      .content.w-manager .card .copy .lbr .rw.fxd .form-group .mins {
+        margin-left: 10px; }
   .content.w-manager .card .b-link {
     padding: 20px;
     border: 1px solid #00aef2;
