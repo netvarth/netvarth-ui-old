@@ -23,6 +23,7 @@
                             <input type="number"  min="0" class="form-control"
                             [(ngModel)]="form['trnArndTime']" ngDefaultControl
                             *ngIf="form['calculationMode'] == 'Fixed'">
+                            <span class='mins' *ngIf="form['calculationMode'] == 'Fixed'"> Minutes</span>
                           </div>
                         </div>
                         <div class="rw">

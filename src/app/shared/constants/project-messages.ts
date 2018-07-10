@@ -78,6 +78,7 @@ export const Messages = {
   'BPROFILE_LANGUAGE_SAVED': 'Languages Saved succesfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations Saved succesfully',
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
+  'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 400 characters',
 
 
   // Adwords

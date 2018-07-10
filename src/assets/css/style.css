@@ -5081,7 +5081,7 @@ header {
     -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) ;
     -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) ;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) ;
-    width: 50%;
+    width: 80%;
     position: absolute; }
     @media only screen and (max-width: 575px) {
       .googlemainmappopup .mat-dialog-content #pac-input {
@@ -5525,8 +5525,9 @@ header {
           .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .future-date-outer .form-group .pickerouter .form-control {
             background: #fff; }
     .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer {
-      margin-bottom: 0;
-      padding-bottom: 0px; }
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #dbdbdb; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .service-head, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .queue-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .service-head, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .queue-head {
         font-size: .875rem;
         margin-bottom: 5px;
@@ -5599,9 +5600,13 @@ header {
         margin-bottom: 0; }
         .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date {
           color: #00cc96; }
-    .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
-      border-color: #f2f2f2;
-      background: #f2f2f2; }
+    .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer {
+      margin-bottom: 0;
+      padding: 0;
+      border: none; }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
+        border-color: #f2f2f2;
+        background: #f2f2f2; }
     .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer {
       margin-bottom: 15px; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .service-availer {
@@ -14030,96 +14035,100 @@ header.consumer {
     .consumer-dash .card.favourites .outer .list {
       margin-bottom: 0; }
       .consumer-dash .card.favourites .outer .list .header {
-        /*border-bottom: 1px solid $cc-ash;*/ }
-        .consumer-dash .card.favourites .outer .list .header .lt h3 {
-          font-size: 1rem;
-          font-weight: 600;
-          margin-bottom: 0px;
-          display: table;
-          cursor: pointer;
-          color: #00aef2; }
-        .consumer-dash .card.favourites .outer .list .header .rt {
-          margin-left: auto; }
-          .consumer-dash .card.favourites .outer .list .header .rt .controls {
-            margin: 0;
-            margin-left: auto;
-            padding: 0;
+        /*border-bottom: 1px solid $cc-ash;*/
+        padding: 0; }
+        .consumer-dash .card.favourites .outer .list .header .lt {
+          padding: 10px;
+          flex-grow: 1;
+          cursor: pointer; }
+          .consumer-dash .card.favourites .outer .list .header .lt h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0px;
+            display: table;
+            cursor: pointer;
+            color: #00aef2; }
+        .consumer-dash .card.favourites .outer .list .header .rt .controls {
+          margin: 0;
+          margin-left: auto;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          flex-direction: row;
+          justify-content: flex-start;
+          border: none; }
+          @media only screen and (max-width: 767px) {
+            .consumer-dash .card.favourites .outer .list .header .rt .controls {
+              margin-left: 0; } }
+          @media only screen and (max-width: 575px) {
+            .consumer-dash .card.favourites .outer .list .header .rt .controls {
+              justify-content: flex-start;
+              flex-wrap: wrap;
+              flex-direction: row; } }
+          .consumer-dash .card.favourites .outer .list .header .rt .controls li {
+            list-style: none;
+            margin: 0 5px;
+            font-weight: 500;
             display: flex;
-            flex-direction: column;
-            flex-direction: row;
-            justify-content: flex-start;
-            border: none; }
-            @media only screen and (max-width: 767px) {
-              .consumer-dash .card.favourites .outer .list .header .rt .controls {
-                margin-left: 0; } }
-            @media only screen and (max-width: 575px) {
-              .consumer-dash .card.favourites .outer .list .header .rt .controls {
-                justify-content: flex-start;
-                flex-wrap: wrap;
-                flex-direction: row; } }
-            .consumer-dash .card.favourites .outer .list .header .rt .controls li {
-              list-style: none;
-              margin: 0 5px;
-              font-weight: 500;
-              display: flex;
-              align-items: center; }
-              .consumer-dash .card.favourites .outer .list .header .rt .controls li span {
-                padding: 4px;
-                position: relative;
-                padding-left: 25px;
-                padding-right: 6px;
-                cursor: pointer;
-                -moz-transition: all 300ms;
-                -o-transition: all 300ms;
-                -webkit-transition: all 300ms;
-                transition: all 300ms;
-                color: #222223; }
-                .consumer-dash .card.favourites .outer .list .header .rt .controls li span:before {
-                  position: absolute;
-                  content: "";
-                  left: 5px;
-                  top: 50%;
-                  margin-top: -8px;
-                  font-family: "custom-ynw" !important;
+            align-items: center; }
+            .consumer-dash .card.favourites .outer .list .header .rt .controls li span {
+              padding: 4px;
+              position: relative;
+              padding-left: 25px;
+              padding-right: 6px;
+              cursor: pointer;
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms;
+              color: #222223; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span:before {
+                position: absolute;
+                content: "";
+                left: 5px;
+                top: 50%;
+                margin-top: -8px;
+                font-family: "custom-ynw" !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 16px;
+                height: 16px; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span:hover {
+                color: #00aef2; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span.message:before {
+                content: "\53"; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span.add-fav:before {
+                content: "\26"; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel {
+                position: relative; }
+                .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel:before {
                   display: flex;
                   align-items: center;
-                  justify-content: center;
-                  width: 16px;
-                  height: 16px; }
-                .consumer-dash .card.favourites .outer .list .header .rt .controls li span:hover {
-                  color: #00aef2; }
-                .consumer-dash .card.favourites .outer .list .header .rt .controls li span.message:before {
-                  content: "\53"; }
-                .consumer-dash .card.favourites .outer .list .header .rt .controls li span.add-fav:before {
-                  content: "\26"; }
-                .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel {
-                  position: relative; }
-                  .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel:before {
-                    display: flex;
-                    align-items: center;
-                    height: 20px;
-                    position: absolute; }
-                  .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel:before {
-                    content: "\69";
-                    font-size: .65rem;
-                    height: 18px; }
-                .consumer-dash .card.favourites .outer .list .header .rt .controls li span.mat-button-wrapper {
-                  padding-left: 6px; }
-              .consumer-dash .card.favourites .outer .list .header .rt .controls li .mat-icon-button {
-                width: 30px;
-                height: 30px;
-                line-height: 30px; }
-                .consumer-dash .card.favourites .outer .list .header .rt .controls li .mat-icon-button .mat-button-wrapper {
-                  padding: 3px; }
-              .consumer-dash .card.favourites .outer .list .header .rt .controls li:last-child {
-                margin-bottom: 0; }
+                  height: 20px;
+                  position: absolute; }
+                .consumer-dash .card.favourites .outer .list .header .rt .controls li span.cancel:before {
+                  content: "\69";
+                  font-size: .65rem;
+                  height: 18px; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li span.mat-button-wrapper {
+                padding-left: 6px; }
+            .consumer-dash .card.favourites .outer .list .header .rt .controls li .mat-icon-button {
+              width: 30px;
+              height: 30px;
+              line-height: 30px; }
+              .consumer-dash .card.favourites .outer .list .header .rt .controls li .mat-icon-button .mat-button-wrapper {
+                padding: 3px; }
+            .consumer-dash .card.favourites .outer .list .header .rt .controls li:last-child {
+              margin-bottom: 0; }
       .consumer-dash .card.favourites .outer .list .detail {
         border-left: 1px solid #f2f2f2;
-        border-right: 1px solid #f2f2f2; }
+        border-right: 1px solid #f2f2f2;
+        background: #f2f2f2; }
         .consumer-dash .card.favourites .outer .list .detail .location {
           display: flex;
           margin: 10px;
-          border-bottom: 1px dashed #f2f2f2; }
+          border-bottom: 1px dashed #dbdbdb; }
           @media only screen and (max-width: 767px) {
             .consumer-dash .card.favourites .outer .list .detail .location {
               flex-direction: column; } }

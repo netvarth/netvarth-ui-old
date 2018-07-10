@@ -149,10 +149,15 @@ export class ProviderbWizardComponent implements OnInit {
               this.error_Exists = true;
               this.coord_error = 'Both coordinates are required';
             }
+            if (this.wizard_data_holder.location === undefined) {
+              this.wizard_data_holder.location = '';
+            }
             const locname_validate = blankpattern.test(this.wizard_data_holder.location);
+            console.log('name check', locname_validate, this.wizard_data_holder.location);
             if (locname_validate) {
               this.error_Exists = true;
               this.locname_error = 'Please enter the location name';
+              console.log('iamhere');
             }
             const mapurlexists_validate = blankpattern.test(this.wizard_data_holder.mapurl);
             if (!mapurlexists_validate) {
@@ -267,11 +272,14 @@ export class ProviderbWizardComponent implements OnInit {
         }
       };
       // console.log('schedule save', post_itemdata3);
+      // this.loading_active = false;
+
       // adding the schedule for the location
       /* const blob_itemdata3 = new Blob([JSON.stringify(post_itemdata3)], { type: 'application/json' });
       const submit_data3: FormData = new FormData();
       submit_data3.append('data', blob_itemdata3);*/
       // this.provider_services.createPrimaryFields(submit_data3)
+
       this.provider_services.patchbProfile(post_itemdata3)
         .subscribe(
           data => {
