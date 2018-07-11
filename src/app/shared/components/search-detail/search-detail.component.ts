@@ -720,7 +720,7 @@ setEnvironment(bypassotherfunction?) {
        const coordinates = retcoordinates['locationRange'];
        // const locstr = 'location1:' + coordinates + ' ' + 'location2:' + coordinates + 'location3:' + coordinates + 'location4:' + coordinates + 'location5:' + coordinates;
        // q_str = q_str + ' ( or ' + locstr + ')';
-       projectConstants.searchpass_criteria.distance = 'haversin(' + retcoordinates['lowerRightLat'] + ',' + retcoordinates['lowerRightLon'] + ',location1.latitude,location1.longitude)';
+       projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
        locstr = 'location1:' + coordinates;
        q_str = q_str + locstr;
      }

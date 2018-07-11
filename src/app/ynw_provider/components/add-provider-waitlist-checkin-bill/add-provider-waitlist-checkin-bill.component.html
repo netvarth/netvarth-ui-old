@@ -22,10 +22,11 @@
               <input type="text" #itemservicesearch aria-label="Number" matInput
               [formControl]="itemServiceSearch" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
-                <mat-optgroup *ngFor="let group of ItemServiceGroupOptions | async" [label]="group.type">
+                <mat-optgroup *ngFor="let group of ItemServiceGroupOptions | async" [label]="group.type" >
                   <mat-option *ngFor="let value of group.values; let i = index" [value]="value" (click)="itemServiceSelected(group.type, i)">
                     {{ value }}
                   </mat-option>
+                  <mat-option *ngIf="group.values.length==0"><span class="no-data"></span>No {{group.type}} Available</mat-option>
                 </mat-optgroup>
               </mat-autocomplete>
             </mat-form-field>

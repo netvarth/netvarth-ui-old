@@ -12,15 +12,24 @@
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <div class="outer">
-                    <div class="list" *ngFor=" let waitlist of waitlists">
+                    <div class="list" *ngFor=" let waitlist of waitlists"
+                    [ngClass]="{'cancelled': waitlist.waitlistStatus == 'cancelled'}">
                       <div class="header">
-                          <div class="title" (click)="providerDetail(waitlist.provider)">
-                            <h3>{{waitlist.provider.businessName || ''}}</h3>
+                          <div class="lt">
+                            <div class="title" (click)="providerDetail(waitlist.provider)">
+                              <h3>{{waitlist.provider.businessName || ''}}</h3>
+                            </div>
+                            <div class="location" *ngIf="waitlist.queue.location">
+                                <a *ngIf="waitlist.queue.location.googleMapUrl"
+                                [href]="waitlist.queue.location.googleMapUrl" target="_blank"
+                                class="icon-location"> {{waitlist.queue.location.place || ''}}</a>
+                            </div>
                           </div>
-                          <div class="location" *ngIf="waitlist.queue.location">
-                              <a *ngIf="waitlist.queue.location.googleMapUrl"
-                              [href]="waitlist.queue.location.googleMapUrl" target="_blank"
-                              class="icon-location"> {{waitlist.queue.location.place || ''}}</a>
+                          <div class="rt">
+                              <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)">Favorite</div>
+                            <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
+                              Cancelled
+                            </div>
                           </div>
                       </div>
 
@@ -94,7 +103,7 @@
                   <div class="outer">
                       <div class="list" *ngFor="let provider of fav_providers; index as i">
                         <div class="header">
-                            <div class="lt"  (click)="toogleDetail(i)">
+                            <div class="lt"  (click)="toogleDetail(provider, i)">
                                 <h3 class="pointer-cursor">
                                   {{provider.businessName}}</h3>
                             </div>
@@ -119,9 +128,9 @@
                             </div>
                         </div>
                         <div class="detail"  [@hideShowAnimator]="hideShowAnimator" *ngIf="open_fav_div == i">
-                          <div class="location" *ngFor="let loc of provider.locations">
+                          <div class="location" *ngFor="let loc of provider.locations;">
                             <div class="locationname">
-                                <span class="icon-location"></span> {{loc.place}} 
+                                <span class="icon-location"></span> {{loc.place}}
                             </div>
 
                             <div class="bt-l">
