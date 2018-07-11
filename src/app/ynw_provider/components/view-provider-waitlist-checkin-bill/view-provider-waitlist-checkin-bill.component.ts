@@ -94,7 +94,7 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
         this.bill_data = data;
       },
       error => {
-        console.log(error);
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       },
       () => {
       }
@@ -108,7 +108,7 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
         this.pre_payment_log = data;
       },
       error => {
-
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -130,7 +130,7 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
         this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_SETTLE);
       },
       error => {
-
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }
@@ -142,7 +142,7 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
         this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_EMAIL);
       },
       error => {
-
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }

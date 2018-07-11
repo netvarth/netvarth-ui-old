@@ -24,11 +24,13 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
   grid_row_index = null;
   title = null;
   subdomain = null;
+  api_error = null;
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
   private service: QuestionService,
   private router: Router,
+  public shared_functions: SharedFunctions,
   public dialogRef: MatDialogRef<ProviderBprofileSearchDynamicComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any) {}
 
@@ -127,6 +129,8 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
   onDomainFormSubmit(submit_data) {
 
+    this.resetApiError();
+
     submit_data = this.checkEnumList(this.domain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.domain_questions, submit_data);
     const post_data = this.setPostData(submit_data);
@@ -137,12 +141,14 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
         this.dialogRef.close('reloadlist');
       },
       error => {
-
+        this.shared_functions.apiErrorAutoHide(this, error);
       }
     );
   }
 
   onSubDomainFormSubmit(submit_data) {
+
+    this.resetApiError();
 
     submit_data = this.checkEnumList(this.subdomain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.subdomain_questions, submit_data);
@@ -266,6 +272,10 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
       }
     );
 
+  }
+
+  resetApiError() {
+    this.api_error = null;
   }
 
 }

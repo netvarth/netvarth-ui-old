@@ -195,19 +195,23 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     for (const x of this.fav_providers) {
 
        this.fav_providers_id_list.push(x.id);
-       if (this.s3url) {
-        this.getbusinessprofiledetails_json(x.id, 'settings', true, k);
-       }
-       const locarr = [];
-       let i = 0;
-       for (const loc of x.locations) {
-        locarr.push({'locid': x.id + '-' + loc.id, 'locindx': i});
-        i++;
-       }
-       this.getWaitingTime(locarr, k);
+       /// setWaitlistTimeDetailsProvider
        k++;
 
     }
+  }
+
+  setWaitlistTimeDetailsProvider(provider, k) {
+    if (this.s3url) {
+      this.getbusinessprofiledetails_json(provider.id, 'settings', true, k);
+     }
+     const locarr = [];
+     let i = 0;
+     for (const loc of provider.locations) {
+      locarr.push({'locid': provider.id + '-' + loc.id, 'locindx': i});
+      i++;
+     }
+     this.getWaitingTime(locarr, k);
   }
 
   getWaitingTime(provids_locid, index) {
@@ -546,6 +550,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   // gets the various json files based on the value of "section" parameter
   getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
     let  UTCstring = null ;
+
+    if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
+      return false;
+    }
+
     if (modDateReq) {
       UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     }
@@ -640,7 +649,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  toogleDetail(i) {
+  toogleDetail(provider, i) {
       let open_fav_div = null;
       if (this.open_fav_div === i) {
         this.hideShowAnimator = false;
@@ -648,6 +657,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       } else {
         this.hideShowAnimator = true;
         open_fav_div = i;
+        this.setWaitlistTimeDetailsProvider(provider, i);
       }
       setTimeout( () => {
         this.open_fav_div = open_fav_div;

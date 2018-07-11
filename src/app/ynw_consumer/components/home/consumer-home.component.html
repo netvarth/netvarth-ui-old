@@ -103,7 +103,7 @@
                   <div class="outer">
                       <div class="list" *ngFor="let provider of fav_providers; index as i">
                         <div class="header">
-                            <div class="lt"  (click)="toogleDetail(i)">
+                            <div class="lt"  (click)="toogleDetail(provider, i)">
                                 <h3 class="pointer-cursor">
                                   {{provider.businessName}}</h3>
                             </div>
@@ -128,9 +128,9 @@
                             </div>
                         </div>
                         <div class="detail"  [@hideShowAnimator]="hideShowAnimator" *ngIf="open_fav_div == i">
-                          <div class="location" *ngFor="let loc of provider.locations">
+                          <div class="location" *ngFor="let loc of provider.locations;">
                             <div class="locationname">
-                                <span class="icon-location"></span> {{loc.place}} 
+                                <span class="icon-location"></span> {{loc.place}}
                             </div>
 
                             <div class="bt-l">

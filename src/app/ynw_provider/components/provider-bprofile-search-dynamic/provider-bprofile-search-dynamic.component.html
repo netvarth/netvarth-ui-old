@@ -13,3 +13,6 @@
 
     </app-dynamic-form>
 
+    <app-field-error-display [displayError]="true" *ngIf="api_error"
+    errorMsg="{{api_error}}"></app-field-error-display>
+
