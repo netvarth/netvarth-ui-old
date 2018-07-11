@@ -63,7 +63,8 @@ export class GoogleMapComponent implements OnInit {
       const mapProp = {
         center: new google.maps.LatLng( this.lat_lng.latitude, this.lat_lng.longitude),
         zoom: projectConstants.MAP_ZOOM,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapTypeControl: false
       };
       const center = {lat: this.lat_lng.latitude, lng: this.lat_lng.longitude};
       this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);

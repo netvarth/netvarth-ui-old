@@ -1,4 +1,4 @@
-<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"></app-header>
+<app-header *ngIf="showsearchsection"  [headerTitle]="'Header'" (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"></app-header>
 <!-- <app-search *ngIf="showsearchsection" [showopennow]="0" [searchfields] = "searchfields" [subdomainpassedfromrefined]="subdomainleft" [domainpassedfromrefined]="domain"  (searchclick)="handlesearchClick($event)"></app-search> -->
 
 <section class="content">

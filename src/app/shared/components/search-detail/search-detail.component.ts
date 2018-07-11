@@ -17,7 +17,6 @@ import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
 import { Messages } from '../../../shared/constants/project-messages';
 
-
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
@@ -105,11 +104,16 @@ export class SearchDetailComponent implements OnInit {
 
   ngOnInit() {
     // this.activaterouterobj.queryParams
-    this.activaterouterobj.params
-          .subscribe(paramsv => {
-            this.setSearchfields (paramsv, 1);
-            this.getDomainList(false);
-            // this.do_search();
+    this.getDomainListMain()
+      .then(data => {
+        this.domainlist_data = data;
+
+        this.activaterouterobj.params
+              .subscribe(paramsv => {
+                this.setSearchfields (paramsv, 1);
+                this.setEnvironment(false);
+                // this.do_search();
+        });
     });
     this.sortfieldsels = 'titleasc';
     this.nosearch_results = false;
@@ -123,7 +127,76 @@ export class SearchDetailComponent implements OnInit {
     }
    // console.log('here', this.screenWidth, this.screenHeight);
 }
-  getDomainList(bypassotherfunction?) {
+getDomainListMain() {
+  return new Promise( (resolve, reject) => {
+    const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    let run_api = true;
+    if (bconfig) { // case if data is there in local storage
+      const bdate = bconfig.cdate;
+      const bdata = bconfig.bdata;
+      const saveddate = new Date(bdate);
+      const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+      if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+        run_api = false;
+        resolve(bdata);
+      }
+    }
+    if (run_api) { // case if data is not there in data
+      this.shared_service.bussinessDomains()
+      .subscribe (
+        res => {
+          const today = new Date();
+          const postdata = {
+            cdate: today,
+            bdata: this.domainlist_data
+          };
+          this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+          resolve(res);
+        }
+      );
+    }
+  });
+}
+setEnvironment(bypassotherfunction?) {
+    // console.log('diff hours search', diff['hours']);
+      if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
+        const domainobtain = this.getdomainofaSubdomain(this.subsector);
+        if (domainobtain !== undefined && domainobtain) {
+          this.kwautoname = domainobtain['subdom_dispname'] || '';
+          this.kwdomain = domainobtain['dom'] || '';
+        }
+        this.kwsubdomain = '';
+        this.kwtyp = 'subdom';
+      }
+      let fetchsubdom = true;
+      if (this.domain) {
+         if (this.kw) {
+            if (this.kwtyp === 'subdom') {
+              fetchsubdom = false;
+            }
+            if (this.kwtyp === 'special') {
+              if (this.kwsubdomain !== '') {
+                fetchsubdom = false;
+              }
+              this.specialization_exists = true;
+            }
+         }
+         if (fetchsubdom) {
+          this.getlistofSubdomains(this.domain);
+         }
+      }
+      this.showsearchsection = true;
+      if (!bypassotherfunction) {
+        this.setfields();
+        // this.getRefinedSearch(true);
+        if (this.labelq === '') {
+          this.getRefinedSearch(true, 0, 'domainlist');
+        } else {
+          this.buildQuery(false);
+        }
+      }
+}
+  /*getDomainList(bypassotherfunction?) {
     const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
     if (bconfig) { // case if data is there in local storage
@@ -218,7 +291,7 @@ export class SearchDetailComponent implements OnInit {
         }
       );
     }
-  }
+  }*/
 
   setSearchfields(obj, src) {
     // console.log('src', src, 'details', obj);
@@ -647,7 +720,7 @@ export class SearchDetailComponent implements OnInit {
        const coordinates = retcoordinates['locationRange'];
        // const locstr = 'location1:' + coordinates + ' ' + 'location2:' + coordinates + 'location3:' + coordinates + 'location4:' + coordinates + 'location5:' + coordinates;
        // q_str = q_str + ' ( or ' + locstr + ')';
-       projectConstants.searchpass_criteria.distance = 'haversin(' + retcoordinates['lowerRightLat'] + ',' + retcoordinates['lowerRightLon'] + ',location1.latitude,location1.longitude)';
+       projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
        locstr = 'location1:' + coordinates;
        q_str = q_str + locstr;
      }

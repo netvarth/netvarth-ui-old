@@ -72,6 +72,8 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     console.log('length', form_data.bname.length);
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
       this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+    } else  if (form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
+      this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
     } else {
       const submit_data: FormData = new FormData();
       const post_itemdata = {
