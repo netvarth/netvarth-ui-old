@@ -2563,27 +2563,43 @@ header {
                     border-bottom: 0;
                     margin-bottom: 0;
                     
-                    .title {
-                        h3 {
-                            font-size: 1rem;
-                            font-weight: 600;
-                            margin-bottom: 0px;
-                            display: table;
-                            cursor: pointer;
-                            color: $linkblue;
+                    .lt {
+                        flex-grow: 1;
+                        display: flex;
+                        
+                        @include respond-to(ynw-400) {
+                            flex-direction: column;
+                        }
+                        
+                        .title {
+                            h3 {
+                                font-size: 1rem;
+                                font-weight: 600;
+                                margin-bottom: 0px;
+                                display: table;
+                                cursor: pointer;
+                                color: $linkblue;
+                            }
+                        }
+                        .location {
+                            margin-left: 5px;
+                            
+                            @include respond-to(ynw-400) {
+                                margin-left: 0;
+                            }
+
+                            .icon-location {
+                                color: $linkblue;
+                                font-weight: 500;
+                                padding-left: 16px;
+                                @include align-icon;
+                                cursor: pointer;
+                                font-size: .875rem;
+                            }
                         }
                     }
-                    .location {
-                        margin-left: 5px;
-                        
-                        .icon-location {
-                            color: $linkblue;
-                            font-weight: 500;
-                            padding-left: 16px;
-                            @include align-icon;
-                            cursor: pointer;
-                            font-size: .875rem;
-                        }
+                    .rt {
+                        display: flex;
                     }
                 }
                 
@@ -2703,6 +2719,22 @@ header {
                                             content: "\53";
                                         }
                                     }
+                                    &.view-bill {
+                                        &:before {
+                                            content: "\4f";
+                                        }
+                                    }
+                                    &.rate-service {
+                                        &:before {
+                                            content: "\3b";
+                                        }
+                                        &:hover {
+                                            &:before {
+                                                content: "\3c";
+                                                color: $cc-warning;
+                                            }
+                                        }
+                                    }
                                     &.add-fav {
                                         &:before {
                                             content: "\26";
@@ -2737,19 +2769,21 @@ header {
                 }
                 &.cancelled {
                     .header {
-                        .cancel-label {
-                            background: $cc-darkgray;
-                            color: $white;
-                            padding: 1px 5px;
-                            float: left;
-                            font-size: .75rem;
-                            font-weight: 600;
-                            text-transform: uppercase;
-                            margin-left: auto;
+                        .rt {
+                            .cancel-label {
+                                background: $cc-darkgray;
+                                color: $white;
+                                padding: 1px 5px;
+                                float: left;
+                                font-size: .75rem;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                margin-left: 15px;
 
-                            @include respond-to(ynw-400) {
-                                float: none;
-                                margin-left: 10px;
+                                @include respond-to(ynw-400) {
+                                    float: none;
+                                    margin-left: 10px;
+                                }
                             }
                         }
                     }
@@ -3176,14 +3210,20 @@ header {
                                                         content: "\4f";
                                                     }
                                                 }
+                                                &.rate-service {
+                                                    &:before {
+                                                        content: "\3b";
+                                                    }
+                                                    &:hover {
+                                                        &:before {
+                                                            content: "\3c";
+                                                            color: $cc-warning;
+                                                        }
+                                                    }
+                                                }
                                                 &.pay-bill {
                                                     &:before {
                                                         content: "\57";
-                                                    }
-                                                }
-                                                &.icon-star {
-                                                    &:before {
-                                                        content: "\3b";
                                                     }
                                                 }
                                             }

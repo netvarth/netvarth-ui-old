@@ -406,7 +406,10 @@
     .mat-button.backbtn:hover {
       background: #00aef2 !important;
       color: #fff !important; }
-  .mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email, .mat-button.save {
+  .mat-button.billcancel {
+    background: #dbdbdb !important;
+    color: #666 !important; }
+  .mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email, .mat-button.save, .mat-button.billcancel {
     padding: 5px 15px !important;
     margin-left: 0px !important;
     margin-right: 10px !important;
@@ -416,7 +419,7 @@
     -webkit-transition: all 300ms;
     transition: all 300ms; }
     @media only screen and (max-width: 575px) {
-      .mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email, .mat-button.save {
+      .mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email, .mat-button.save, .mat-button.billcancel {
         margin-bottom: 5px; } }
   .mat-button.update, .mat-button.print {
     background: #fda60d !important; }
@@ -13904,27 +13907,38 @@ header.consumer {
         border: 1px solid #f2f2f2;
         border-bottom: 0;
         margin-bottom: 0; }
-        .consumer-dash .card .outer .list .header .title h3 {
-          font-size: 1rem;
-          font-weight: 600;
-          margin-bottom: 0px;
-          display: table;
-          cursor: pointer;
-          color: #00aef2; }
-        .consumer-dash .card .outer .list .header .location {
-          margin-left: 5px; }
-          .consumer-dash .card .outer .list .header .location .icon-location {
-            color: #00aef2;
-            font-weight: 500;
-            padding-left: 16px;
-            position: relative;
+        .consumer-dash .card .outer .list .header .lt {
+          flex-grow: 1;
+          display: flex; }
+          @media only screen and (max-width: 400px) {
+            .consumer-dash .card .outer .list .header .lt {
+              flex-direction: column; } }
+          .consumer-dash .card .outer .list .header .lt .title h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0px;
+            display: table;
             cursor: pointer;
-            font-size: .875rem; }
-            .consumer-dash .card .outer .list .header .location .icon-location:before {
-              display: flex;
-              align-items: center;
-              height: 20px;
-              position: absolute; }
+            color: #00aef2; }
+          .consumer-dash .card .outer .list .header .lt .location {
+            margin-left: 5px; }
+            @media only screen and (max-width: 400px) {
+              .consumer-dash .card .outer .list .header .lt .location {
+                margin-left: 0; } }
+            .consumer-dash .card .outer .list .header .lt .location .icon-location {
+              color: #00aef2;
+              font-weight: 500;
+              padding-left: 16px;
+              position: relative;
+              cursor: pointer;
+              font-size: .875rem; }
+              .consumer-dash .card .outer .list .header .lt .location .icon-location:before {
+                display: flex;
+                align-items: center;
+                height: 20px;
+                position: absolute; }
+        .consumer-dash .card .outer .list .header .rt {
+          display: flex; }
       .consumer-dash .card .outer .list .details {
         display: flex;
         flex-direction: column; }
@@ -14011,6 +14025,13 @@ header.consumer {
                 color: #00aef2; }
               .consumer-dash .card .outer .list .details .rt .controls li span.message:before {
                 content: "\53"; }
+              .consumer-dash .card .outer .list .details .rt .controls li span.view-bill:before {
+                content: "\4f"; }
+              .consumer-dash .card .outer .list .details .rt .controls li span.rate-service:before {
+                content: "\3b"; }
+              .consumer-dash .card .outer .list .details .rt .controls li span.rate-service:hover:before {
+                content: "\3c";
+                color: #fda60d; }
               .consumer-dash .card .outer .list .details .rt .controls li span.add-fav:before {
                 content: "\26"; }
               .consumer-dash .card .outer .list .details .rt .controls li span.add-fav:hover:before {
@@ -14031,7 +14052,7 @@ header.consumer {
               margin-bottom: 0; }
       .consumer-dash .card .outer .list:last-child {
         margin-bottom: 0; }
-      .consumer-dash .card .outer .list.cancelled .header .cancel-label {
+      .consumer-dash .card .outer .list.cancelled .header .rt .cancel-label {
         background: #4c4c4c;
         color: #fff;
         padding: 1px 5px;
@@ -14039,9 +14060,9 @@ header.consumer {
         font-size: .75rem;
         font-weight: 600;
         text-transform: uppercase;
-        margin-left: auto; }
+        margin-left: 15px; }
         @media only screen and (max-width: 400px) {
-          .consumer-dash .card .outer .list.cancelled .header .cancel-label {
+          .consumer-dash .card .outer .list.cancelled .header .rt .cancel-label {
             float: none;
             margin-left: 10px; } }
     .consumer-dash .card.favourites .outer .list {
@@ -14384,10 +14405,13 @@ header.consumer {
                   content: "\53"; }
                 .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.view-bill:before {
                   content: "\4f"; }
+                .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.rate-service:before {
+                  content: "\3b"; }
+                .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.rate-service:hover:before {
+                  content: "\3c";
+                  color: #fda60d; }
                 .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.pay-bill:before {
                   content: "\57"; }
-                .consumer-dash .card.history .history-tbl .table tbody tr td.td5 .controls li span.icon-star:before {
-                  content: "\3b"; }
           @media only screen and (max-width: 767px) {
             .consumer-dash .card.history .history-tbl .table tbody tr td.td5:before {
               display: none; } }

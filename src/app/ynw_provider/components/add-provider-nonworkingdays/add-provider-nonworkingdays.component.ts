@@ -37,7 +37,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
      }
 
   ngOnInit() {
-     this.createForm();
+    this.createForm();
   }
   createForm() {
     this.amForm = this.fb.group({
@@ -65,7 +65,10 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     // today
     const curday = new Date();
     const today_date = moment(curday).format('YYYY-MM-DD');
-    const today_curtime = moment(moment(curday).format('LT'), ['h:mm A']).format('HH:mm');
+    // const today_curtime = moment(moment(curday).format('LT'), ['h:mm A']).format('HH:mm');
+    const today_curtime = curday.getHours() + ':' + curday.getMinutes();
+
+    // console.log('today_curtime', today_curtime);
     let startdate;
     if (this.data.type === 'edit') {
       startdate = this.data.holiday.startDay;
@@ -75,17 +78,34 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     // convert date to required format
     const date =  new Date(startdate);
     const date_format = moment(date).format('YYYY-MM-DD');
-
-    if (today_date === date_format) {
-      const curtime = today_curtime;
-      const selstarttime = form_data.starttime;
+    // console.log('date', today_date, date_format, 'compare', moment(today_date).isSame(date_format));
+    // console.log('date1', form_data.endtime, form_data.starttime );
+    // if (today_date === date_format) {
+    if (moment(today_date).isSame(date_format)) { // if the selected date is today
+      const curtime = this.shared_functions.getTimeAsNumberOfMinutes(today_curtime);
+      const selstarttime = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
+      // console.log('curtime', curtime, 'selstarttime', selstarttime, 'compare', (selstarttime < curtime));
       if (selstarttime < curtime) {
+        // console.log('now here');
         this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
         return;
       }
     }
+    const Start_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
+    const End_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
 
-    if (form_data.endtime < form_data.starttime) {
+    // const dif = ( moment(form_data.endtime).format('hh:mm A') - moment(form_data.starttime).format('hh:mm A'));
+     // console.log('stime', Start_time, 'etime', End_time, 'compare', (End_time <= Start_time));
+    /*if (form_data.endtime.hour === form_data.starttime.hour) {
+        if (form_data.endtime.minute <= form_data.starttime.minute) {
+          this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
+          return;
+        }
+    } else if (form_data.endtime.hour < form_data.starttime.hour) {
+      this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
+      return;
+    }*/
+    if (End_time <= Start_time) {
       this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
       return;
     }

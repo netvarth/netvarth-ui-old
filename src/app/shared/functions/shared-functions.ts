@@ -779,6 +779,11 @@ getdaysdifffromDates(date1, date2) {
   const hours = Math.abs(firstdate.getTime() - seconddate.getTime()) / 36e5; // 36e5 is the scientific notation for 60*60*1000
   return {'hours' : hours};
 }
+getTimeAsNumberOfMinutes(time) {
+    const timeParts = time.split(':');
+    const timeInMinutes = (parseInt(timeParts[0], 10) * 60) + parseInt(timeParts[1], 10);
+    return timeInMinutes;
+}
 
 Lbase64Encode(str) {
   let retstr = '';

@@ -422,7 +422,11 @@
             color: $white !important;
         }
     }
-    &.update, &.settle, &.accept, &.makepayment, &.print, &.email, &.save {
+    &.billcancel {
+        background: $cc-ash !important;
+        color: $cc-gray !important;
+    }
+    &.update, &.settle, &.accept, &.makepayment, &.print, &.email, &.save, &.billcancel {
         padding: 5px 15px !important;
         margin-left: 0px !important;
         margin-right: 10px !important;

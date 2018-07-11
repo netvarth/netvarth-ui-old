@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { MatInput } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -8,6 +9,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import {Messages} from '../../constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
+
 
 
 @Component({
@@ -49,8 +51,10 @@ export class EditProfileComponent implements OnInit {
     this.editProfileForm = this.fb.group({
       first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-      gender: ['male', Validators.compose([Validators.required])],
-      dob: ['', Validators.compose([Validators.required])]
+      /*gender: ['', Validators.compose([Validators.required])],
+      dob: ['', Validators.compose([Validators.required])]*/
+      gender: [''],
+      dob: ['']
     });
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     const ob = this;
@@ -149,6 +153,9 @@ export class EditProfileComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+  }
+  resetdob() {
+    this.editProfileForm.get('dob').setValue(null);
   }
 
 }

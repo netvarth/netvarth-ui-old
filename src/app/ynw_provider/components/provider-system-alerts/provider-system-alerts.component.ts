@@ -58,6 +58,9 @@ export class ProviderSystemAlertComponent implements OnInit {
       this.getAlertListTotalCnt('', '');
     }
     getAlertListTotalCnt(ackStatus, sdate) {
+      if (ackStatus === '') {
+        ackStatus = 'false,true';
+      }
       this.shared_services.getAlertsTotalCnt(ackStatus, sdate)
         .subscribe(data => {
           this.totalCnt = data;
@@ -74,6 +77,9 @@ export class ProviderSystemAlertComponent implements OnInit {
     }
     getAlertList(ackStatus, sdate) {
       let pageval;
+      if (ackStatus === '') {
+        ackStatus = 'false,true';
+      }
       if (this.startpageval) {
           pageval = (this.startpageval - 1) * this.perPage;
       } else {
@@ -100,6 +106,7 @@ export class ProviderSystemAlertComponent implements OnInit {
 
       if (pagecall === false) {
         // console.log('search false');
+        this.startpageval = 1;
         this.holdalertSelAck = this.alertSelAck;
         this.holdalertSeldate = this.alertSeldate;
       }
@@ -139,10 +146,11 @@ export class ProviderSystemAlertComponent implements OnInit {
       return this.startpageval;
     }
     alertAcknowledge(obj) {
-      this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC + obj.id);
+      // this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC + obj.id);
       this.provider_servicesobj.acknowledgeAlert(obj.id)
         .subscribe (data => {
-          this.sharedfunctionObj.openSnackBar('Acknowledge Successfull');
+          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
+          this.getAlertListTotalCnt(this.holdalertSelAck || '', this.holdalertSeldate);
         },
       error => {
         this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
