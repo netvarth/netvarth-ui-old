@@ -995,6 +995,7 @@ getTerminologyTerm(term) {
 removeTerminologyTerm(term, full_message) {
   const term_replace = this.getTerminologyTerm(term);
   const term_only = term.replace(/[\[\]']/g, '' ); // term may me with or without '[' ']'
+  // console.log(term_replace,term_only,term);
   return full_message.replace('[' + term_only + ']', term_replace);
 
 }

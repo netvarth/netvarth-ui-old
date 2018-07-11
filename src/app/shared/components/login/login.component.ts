@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   step = 1;
   moreParams = [];
   api_loading = true;
+  show_error = false;
 
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
@@ -55,6 +56,10 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.compose([Validators.required])]
 
     });
+  }
+
+  showError () {
+    this.show_error = true;
   }
 
   onSubmit(data) {

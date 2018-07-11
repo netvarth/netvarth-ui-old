@@ -179,8 +179,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getServiceList() {
     this.provider_services.getServicesList()
     .subscribe(
-      data => {
-        this.services = data;
+      (data: any) => {
+
+        for (const ser of data) {
+          if (ser.status === 'ACTIVE') {
+            this.services.push(ser);
+          }
+        }
+
         const services = this.services.map((ob) => ob.name );
 
         this.itemServicesGroup[0]['values'] = services;
@@ -252,7 +258,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getItemsList() {
     this.provider_services.getProviderItems()
     .subscribe(
-      data => {
+      (data: any) => {
+
         this.items = data;
         const items = this.items.map((ob) => ob.displayName );
 

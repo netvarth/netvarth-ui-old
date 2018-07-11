@@ -472,22 +472,22 @@ export class CheckInInnerComponent implements OnInit {
             .subscribe (pData => {
                 if (pData['response']) {
                   this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                  this.api_success = Messages.CHECKIN_SUCC_REDIRECT;
+                  this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT');
                     setTimeout(() => {
                       this.document.getElementById('payuform').submit();
                     }, 2000);
                 } else {
-                  this.api_error = Messages.CHECKIN_ERROR;
+                  this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
                 }
             },
             error => {
-              this.api_error = error.error;
+              this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
             });
         } else {
-          this.api_error = Messages.CHECKIN_ERROR;
+          this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
         }
       } else {
-        this.api_success = Messages.CHECKIN_SUCC;
+        this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
         setTimeout(() => {
           // this.dialogRef.close('reloadlist');
           this.returntoParent.emit('reloadlist');
@@ -495,21 +495,21 @@ export class CheckInInnerComponent implements OnInit {
       }
     },
     error => {
-      this.api_error = error.error;
+      this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
     });
   }
 
   addCheckInProvider(post_Data) {
     this.shared_services.addProviderCheckin(post_Data)
     .subscribe(data => {
-      this.api_success = Messages.CHECKIN_SUCC;
+      this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
       setTimeout(() => {
         // this.dialogRef.close('reloadlist');
         this.returntoParent.emit('reloadlist');
       }, projectConstants.TIMEOUT_DELAY);
     },
     error => {
-      this.api_error = error.error;
+      this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
     });
   }
 
@@ -680,7 +680,7 @@ export class CheckInInnerComponent implements OnInit {
         }
 
         fn.subscribe(data => {
-            this.api_success = Messages.MEMBER_CREATED;
+            this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
             this.getFamilyMembers();
             setTimeout(() => {
               this.handleGoBack(3);

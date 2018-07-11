@@ -12,15 +12,24 @@
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <div class="outer">
-                    <div class="list" *ngFor=" let waitlist of waitlists">
+                    <div class="list" *ngFor=" let waitlist of waitlists"
+                    [ngClass]="{'cancelled': waitlist.waitlistStatus == 'cancelled'}">
                       <div class="header">
-                          <div class="title" (click)="providerDetail(waitlist.provider)">
-                            <h3>{{waitlist.provider.businessName || ''}}</h3>
+                          <div class="lt">
+                            <div class="title" (click)="providerDetail(waitlist.provider)">
+                              <h3>{{waitlist.provider.businessName || ''}}</h3>
+                            </div>
+                            <div class="location" *ngIf="waitlist.queue.location">
+                                <a *ngIf="waitlist.queue.location.googleMapUrl"
+                                [href]="waitlist.queue.location.googleMapUrl" target="_blank"
+                                class="icon-location"> {{waitlist.queue.location.place || ''}}</a>
+                            </div>
                           </div>
-                          <div class="location" *ngIf="waitlist.queue.location">
-                              <a *ngIf="waitlist.queue.location.googleMapUrl"
-                              [href]="waitlist.queue.location.googleMapUrl" target="_blank"
-                              class="icon-location"> {{waitlist.queue.location.place || ''}}</a>
+                          <div class="rt">
+                              <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)">Favorite</div>
+                            <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
+                              Cancelled
+                            </div>
                           </div>
                       </div>
 
