@@ -130,7 +130,7 @@ export class SharedServices {
         'size': params.size ,
         'q.parser': params.parser, // 'q.parser'
         'q.options': params.options, // 'q.options'
-        'q.sort': 'distance asc,' + params.sort,
+        'sort': 'distance asc,' + params.sort,
         // 'q.sort': params.sort,
         'expr.distance': params.distance
       };
