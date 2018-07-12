@@ -1487,9 +1487,10 @@ setEnvironment(bypassotherfunction?) {
       if (result === 'success') {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
+        this.shared_functions.sendMessage({ttype: 'main_loading', action: false});
         if (passParam['callback'] === 'communicate') {
             this.showCommunicate(passParam['providerId']);
-        } if (passParam['callback'] === 'providerdetail') {
+        } else if (passParam['callback'] === 'providerdetail') {
             this.showProviderDetails(passParam['providerId']);
         } else {
             this.showCheckin('consumer');

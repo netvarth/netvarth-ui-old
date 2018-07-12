@@ -63,14 +63,15 @@ export class AddproviderAddonComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            // this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
           }
         );
     }
   }
 
   licenseaddon_Select(id) {
-    console.log('value', id);
+   // console.log('value', id);
     this.selected_addon = id;
     for (const addon of this.upgradableaddons) {
      if (addon.addons[0].addonId === id) {

@@ -56,7 +56,7 @@ export class ProviderDetailComponent implements OnInit {
   gallery_exists = false;
   location_exists = false;
   isInFav;
-  terminologiesjson: any = [];
+  terminologiesjson: any = null;
   futuredate_allowed = false;
   maxsize = 0;
   viewallServices = false;
@@ -129,7 +129,7 @@ export class ProviderDetailComponent implements OnInit {
                     // this.getbusinessprofiledetails_json('services', true);
                     this.getbusinessprofiledetails_json('gallery', true);
                     this.getbusinessprofiledetails_json('settings', true);
-                    // this.getbusinessprofiledetails_json('terminologies', true);
+                    this.getbusinessprofiledetails_json('terminologies', true);
                   },
                   error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -498,7 +498,8 @@ export class ProviderDetailComponent implements OnInit {
                                   id: locid,
                                   name: locname
                                 },
-                      sel_date: curdate
+                      sel_date: curdate,
+                      terminologies: this.terminologiesjson
                     },
         datechangereq: this.changedate_req
       }
@@ -608,7 +609,8 @@ export class ProviderDetailComponent implements OnInit {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
     data: {
-      locdet: obj
+      locdet: obj,
+      terminologies: this.terminologiesjson
     }
   });
 

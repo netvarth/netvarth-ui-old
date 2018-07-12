@@ -10,6 +10,7 @@ import { SharedServices } from '../../../services/shared-services';
 import { SharedFunctions } from '../../../functions/shared-functions';
 import { Messages } from '../../../constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-check-in-inner',
@@ -25,6 +26,7 @@ export class CheckInInnerComponent implements OnInit {
     galleryjson: any = [];
     settingsjson: any = [];
     locationjson: any = [];
+    terminologiesjson: any = [];
     queuejson: any = [];
     familymembers: any = [];
     sel_loc;
@@ -80,6 +82,7 @@ export class CheckInInnerComponent implements OnInit {
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
     public router: Router,
+    public provider_datastorage: CommonDataStorageService,
     // public dialogRef: MatDialogRef<CheckInInnerComponent>,
     public _sanitizer: DomSanitizer,
     @Inject(DOCUMENT) public document,
@@ -90,7 +93,10 @@ export class CheckInInnerComponent implements OnInit {
     ngOnInit() {
       console.log('check-inpassed data', this.data);
       this.customer_data = this.data.customer_data || [];
-      console.log('init', this.customer_data);
+      if (this.data.moreparams.terminologies) {
+        this.terminologiesjson = this.data.moreparams.terminologies;
+      }
+      // console.log('init', this.customer_data);
       if (this.data.fromKiosk !== undefined) {
         if (this.data.fromKiosk) {
           this.fromKiosk = true;
@@ -130,7 +136,7 @@ export class CheckInInnerComponent implements OnInit {
       } else {
         this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
       }
-      if (this.data.moreparams.source === 'searchlist_checkin') { // case check-in from search result page
+      if (this.page_source === 'searchlist_checkin') { // case check-in from search result page
 
         this.search_obj = this.data.srchprovider;
         // console.log('locs', this.search_obj);
@@ -142,7 +148,7 @@ export class CheckInInnerComponent implements OnInit {
         this.sel_loc = this.search_obj.fields.location_id1;
         this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
 
-      } else if (this.data.moreparams.source === 'provdet_checkin'
+      } else if (this.page_source === 'provdet_checkin'
       || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
 
         // this.search_obj = this.data.srchprovider;
@@ -232,6 +238,11 @@ export class CheckInInnerComponent implements OnInit {
                     res => {
                       this.s3url = res;
                       this.getbusinessprofiledetails_json('settings', true);
+                      if (!this.terminologiesjson) {
+                        this.getbusinessprofiledetails_json('terminologies', true);
+                      } else {
+                        this.provider_datastorage.set('terminologies', this.terminologiesjson);
+                      }
                     },
                     error => { }
                   );
@@ -246,7 +257,7 @@ export class CheckInInnerComponent implements OnInit {
       this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
       .subscribe (res => {
           switch (section) {
-            case 'settings': {
+            case 'settings':
               this.settingsjson = res;
               this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
               this.maxsize = this.settingsjson.maxPartySize;
@@ -254,7 +265,10 @@ export class CheckInInnerComponent implements OnInit {
                 this.maxsize = 1;
               }
             break;
-            }
+            case 'terminologies':
+              this.terminologiesjson = res;
+              this.provider_datastorage.set('terminologies', this.terminologiesjson);
+            break;
           }
       },
       error => {

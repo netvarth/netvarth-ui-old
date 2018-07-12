@@ -6,6 +6,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-existing-checkin',
@@ -23,6 +24,7 @@ export class ExistingCheckinComponent implements OnInit {
   source = null;
   loc: any = [];
   locid;
+  terminologiesjson: any = null;
   changeOccured = false;
 
   constructor(
@@ -30,7 +32,8 @@ export class ExistingCheckinComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public provider_datastorage: CommonDataStorageService
     ) {
 
      }
@@ -38,6 +41,8 @@ export class ExistingCheckinComponent implements OnInit {
   ngOnInit() {
     // this.loc = this.data.locdet;
     this.getExistingCheckinsByLocation(this.data.locdet.id);
+    this.terminologiesjson = this.data.terminologies;
+    this.provider_datastorage.set('terminologies', this.terminologiesjson);
     this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close(this.changeOccured);
     });
@@ -124,7 +129,8 @@ export class ExistingCheckinComponent implements OnInit {
       data => {
         if (data === 'reloadlist') {
           this.changeOccured = true;
-          this.api_success = Messages.CHECKIN_CANCELLED;
+          // this.api_success = Messages.CHECKIN_CANCELLED;
+          this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED');
           this.getExistingCheckinsByLocation(this.data.locdet.id);
         }
       },

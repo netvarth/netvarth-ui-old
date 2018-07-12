@@ -7,9 +7,9 @@
     
             <div class="mainouter">
               <ng-container *ngIf="step==1">
-              <div class="main-head">
+              <!-- <div class="main-head">
               <span class="pro-loc"><span class='prov_name'>{{search_obj.fields.title}},</span> <span class="loc_name">{{search_obj.fields.place1}}</span></span>
-              </div>
+              </div> -->
               <div class="service-outer" *ngIf="servicesjson.length > 1">
               <div class="service-head" *ngIf="step==1">Select Service</div>
               <ng-container *ngIf="step==1">
@@ -27,8 +27,21 @@
               </ng-container>
               </div>
     
-              <div class="servicefor-outer btborder">
+              <!-- <div class="servicefor-outer btborder">
                     Service is for <ng-container><span class="service-availer" *ngFor="let waitfor of waitlist_for; let i=index"><ng-container *ngIf="i>0">, </ng-container>{{waitfor.name}}</span> <span class="editbt" (click)="handleServiceForWhom()"></span></ng-container>
+              </div> -->
+              <div class="servicefor-outer btborder">
+                <label class="title"> Service is for </label>
+                <ul class="availer-ul">
+                    <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
+                        <li>
+                            {{waitfor.name}}
+                        </li>
+                        <span class="cs-btn bt3 changemember" (click)="handleServiceForWhom()" *ngIf="i==0">Change Member</span>
+                    </ng-container>
+                    
+                </ul>
+                
               </div>
     
               <div class="date-outer" *ngIf="step==1">
@@ -40,12 +53,10 @@
                         <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" disabled>
                     </div>
                 </div>
-    
               </div>
     
               <div class="queue-outer">
                     <div class="queue-head" *ngIf="step==1 && queuejson.length > 1">Queue </div>
-    
                     <ng-container *ngIf="queuejson.length > 0">
                         <mat-chip-list *ngIf="step==1 && queuejson.length > 1">
                         <mat-chip *ngFor="let que of queuejson" (click)="handleQueueSel(que)" [selected] ="isSelectedQueue(que.id)">
@@ -56,14 +67,14 @@
                         
                         <div class="consumer-comment"  *ngIf="step==1">
                             <div class="form-group">
-                                <label for="reason" class="col-form-label" (click)="handleNote()">If you have a note, Click here. <span class="icon-add"></span></label>
+                                <label for="reason" class="col-form-label" (click)="handleNote()">If you have a note, Click here. <span [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote"></span></label>
                                 <ng-container *ngIf="dispCustomernote">
                                     <textarea matInput #consumernote (change)="handleConsumerNote(consumernote.value)"></textarea>
                                 </ng-container>
                             </div>
                         </div>
 
-                        <div class="showDetOuter">
+                        <!-- <div class="showDetOuter" *ngIf="queuejson.length > 0">
                             <div class="showDetService">
                                 Check-In for service:  <span class='selsername'>{{ sel_ser_det.name }}</span>
                             </div>
@@ -73,7 +84,7 @@
                             <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!=''">
                                 <div class="queue-head">Check In Time: <span class="queue-avail-date">{{sel_queue_servicetime}}</span></div>
                             </div>
-                        </div>
+                        </div> -->
                     </ng-container>
                     <ng-container *ngIf="queuejson.length == 0">
                         <span class='no-queue-available'>No Queues available for the date.</span>
@@ -85,7 +96,7 @@
                 <div class="prepay-dur-pr">
                     <div class="prepay-amt">Amount to Pay: <span class="prepaymin-cls">{{sel_ser_det.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span></div>
                     <div class="prepay-gateway-outer" *ngIf="paymentModes.length == 0">
-                        <div class='prepay-head'> Sorry not payment modes available </div>
+                        <div class='prepay-head-sorry'> Sorry not payment modes available </div>
                     </div>
                     <div class="prepay-gateway-outer" *ngIf="paymentModes.length > 0">
                         <div class='prepay-head'>Select Payment Mode</div>
@@ -127,15 +138,16 @@
                             </ng-container>
     
                         </ul>
-                        <div class='member-add' (click)="addMember()" *ngIf="!showCreateMember">Add Member</div>
+                        <div class="cs-btn bt3 member-add" (click)="addMember()" *ngIf="!showCreateMember">Add Member</div>
                     </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="showCreateMember">
+                <div class="addmember-outer">
                 <div class="addMemberHeader">Add Member</div>
                 <!-- <app-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)"></app-consumer-add-member> -->
                 <app-checkin-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)"></app-checkin-consumer-add-member>
-                
+                </div>
               </ng-container>
               <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>
           </div>
@@ -143,11 +155,26 @@
         </div>
 
         <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk">
-          <ng-container *ngIf="step==1">
-              <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" *ngIf="isCheckinenable()" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
-              <div class="disable-msg" *ngIf="!isCheckinenable() && checkindisablemsg !=''">{{checkindisablemsg}}</div>
-              <!-- <button  type="button" mat-dialog-close class="cs-btn bt2" *ngIf="!fromKiosk">Cancel</button> -->
-          </ng-container>
+
+           <div class="waitlist-button-outer">
+                <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
+                    <div class="showDetService">
+                    Check-In for service:  <span class='selsername'>{{ sel_ser_det.name }}</span>
+                    </div>
+                    <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime==''">
+                    <div class="queue-head">Estimated Waiting Time: <span class="queue-avail-date">{{sel_queue_waitingmins}}</span></div>
+                    </div>
+                    <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!=''">
+                    <div class="queue-head">Check In Time: <span class="queue-avail-date">{{sel_queue_servicetime}}</span></div>
+                    </div>
+                </div>
+
+                <div class="waitlist-action" *ngIf="step==1">
+                    <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" *ngIf="isCheckinenable()" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
+                    <div class="disable-msg" *ngIf="!isCheckinenable() && checkindisablemsg !=''">{{checkindisablemsg}}</div>
+                    <!-- <button  type="button" mat-dialog-close class="cs-btn bt2" *ngIf="!fromKiosk">Cancel</button> -->
+                </div>
+          </div>
       
           <ng-container *ngIf="step==3 && !showCreateMember">
               <button mat-button class="cs-btn bt1" (click)="handleGoBack(1)">Back to Check-In</button>
