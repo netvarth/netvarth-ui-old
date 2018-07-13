@@ -23,7 +23,7 @@ import { projectConstants } from '../../constants/project-constants';
 })
 export class HomeComponent implements OnInit {
 
-  public domainlist_data;
+  public domainlist_data: any = [];
   sector_info: any = [];
   special_info: any = [];
   public searchfields: SearchFields = new SearchFields();
@@ -122,12 +122,14 @@ export class HomeComponent implements OnInit {
         const bdate = bconfig.cdate;
         const bdata = bconfig.bdata;
         const saveddate = new Date(bdate);
-        const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
-        // console.log('diff hours', diff['hours']);
-        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
-          run_api = false;
-          this.domainlist_data = bdata;
-          this.domain_obtained = true;
+        if (bconfig.bdata) {
+          const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+          // console.log('diff hours', diff['hours']);
+          if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+            run_api = false;
+            this.domainlist_data = bdata;
+            this.domain_obtained = true;
+          }
         }
       }
       if (run_api) { // case if data is not there in data

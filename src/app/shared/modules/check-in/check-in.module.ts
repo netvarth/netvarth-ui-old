@@ -9,6 +9,7 @@ import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-memb
 import { CheckInComponent } from './check-in.component';
 import { CheckInInnerComponent } from './check-in-inner/check-in-inner.component';
 
+
 @NgModule({
     imports: [
         CommonModule,

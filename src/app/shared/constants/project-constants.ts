@@ -1,6 +1,7 @@
 export const projectConstants = {
   PERPAGING_LIMIT: 10,
   INBOX_REFRESH_TIME: 30, // seconds
+  ALERT_REFRESH_TIME: 30, // seconds
   searchpass_criteria : {
     'start': 0,
     'return': 'title,sector,logo,place1,business_phone_no,unique_id',
