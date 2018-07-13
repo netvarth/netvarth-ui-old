@@ -18,7 +18,7 @@
             Amount to pay *
           </label>
           <input matInput type="number" min="1" class="form-control" id="amount_to_pay"
-            [(ngModel)]="pay_data.amount" autocomplete="off" (keyup)="checkAmount($event)">
+            [(ngModel)]="pay_data.amount" autocomplete="off" (keydown)="checkAmount($event)">
       </div>
 
       <div class="payment-options">

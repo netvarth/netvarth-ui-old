@@ -100,8 +100,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
                     this.getTaxDetails()
                     .then(
                       () => {
+                          this.getDomainSubdomainSettings()
+                          .then(
+                            () => {
+                              this.getServiceList();
+                            },
+                            error => {
+                            }
 
-                          this.getServiceList();
+                          );
+
                           this.getItemsList();
 
                           this.bill_load_complete = 1;
@@ -174,6 +182,27 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         this.bill_load_complete = 1;
       }
     );
+  }
+
+  getDomainSubdomainSettings() {
+
+    const user_data = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+
+    const domain = user_data.sector || null;
+    const sub_domain =  user_data.subSector || null;
+
+    return new Promise((resolve, reject) => {
+      this.provider_services.domainSubdomainSettings(domain, sub_domain)
+      .subscribe(
+        data => {
+          resolve();
+        },
+        error => {
+         reject(error);
+        }
+      );
+    });
+
   }
 
   getServiceList() {
@@ -447,11 +476,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     this.cart.sub_total = (total < 0 ) ? 0 : total;
     this.cart.total = total;
-    console.log(this.cart.total );
+    // console.log(this.cart.total );
     this.reduceDiscount();
     this.reduceCoupon();
     this.reducePrePaidAmount();
-    console.log(this.cart.total );
+    // console.log(this.cart.total );
 
   }
 
@@ -494,9 +523,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     let pre_total = 0;
     for (const pay of this.pre_payment_log) {
       pre_total = pre_total + pay.amount;
-    }console.log(pre_total);
+    } // console.log(pre_total);
     this.cart.total = this.cart.total - pre_total;
-    console.log(this.cart.total);
+    // console.log(this.cart.total);
     this.cart.total = (this.cart.total > 0) ? this.cart.total : 0;
   }
 

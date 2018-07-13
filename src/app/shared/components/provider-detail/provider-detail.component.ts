@@ -395,7 +395,8 @@ export class ProviderDetailComponent implements OnInit {
      data: {
        user_id : provid,
        source: 'consumer-common',
-       type: 'send'
+       type: 'send',
+       terminologies: this.terminologiesjson
      }
    });
 

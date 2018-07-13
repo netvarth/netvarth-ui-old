@@ -130,7 +130,7 @@ const routes: Routes = [
           //   component: ProviderAuditLogComponent
           // },
           {
-            path: 'paymenthistory',
+            path: 'payment/history',
             component: ProviderPaymentHistoryComponent
           }
         ]

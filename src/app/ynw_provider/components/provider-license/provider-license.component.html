@@ -20,7 +20,7 @@
                                                <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span>
                                             </div>
 
-                                          <div class="bt"><span class="cs-btn bt3" (click)="showupgradeLicense()">
+                                          <div class="bt"><span class="cs-btn bt3" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">
                                             Upgrade License</span></div>
                                       </div>
                                       <div class="lc-buttons">

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -7,13 +7,14 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
+import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
 })
 
-export class AddInboxMessagesComponent implements OnInit {
+export class AddInboxMessagesComponent implements OnInit, OnDestroy {
 
   amForm: FormGroup;
   api_error = null;
@@ -23,6 +24,9 @@ export class AddInboxMessagesComponent implements OnInit {
   uuid = null;
   message = '';
   source = null;
+  message_label = null;
+  api_loading = true;
+  terminologies = null;
 
   title = 'Send Message';
   constructor(
@@ -32,19 +36,83 @@ export class AddInboxMessagesComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
+    public common_datastorage: CommonDataStorageService
 
     ) {
 
         this.user_id = this.data.user_id || null;
         this.uuid = this.data.uuid || null;
         this.source = this.data.source || null;
+
+        this.terminologies = data.terminologies;
+        // console.log(data.terminologies);
+
         this.title = (this.data.type === 'reply') ? 'Send Reply' : 'Send Message';
 
+
+        if (!data.terminologies &&
+          (this.source === 'consumer-waitlist' ||
+          this.source === 'consumer-common')) {
+          this.gets3curl()
+          .then(
+            result => {
+              this.setLabel();
+            },
+            error => {
+              this.setLabel();
+            }
+          );
+        } else {
+          this.setLabel();
+        }
      }
 
   ngOnInit() {
      this.createForm();
   }
+
+  ngOnDestroy() {
+
+  }
+
+  gets3curl() {
+    return new Promise((resolve, reject) => {
+      this.sharedfunctionObj.getS3Url('provider')
+      .then(
+        res => {
+          let  UTCstring = null ;
+          UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+          this.shared_services.getbusinessprofiledetails_json(this.data.user_id, res, 'terminologies', UTCstring)
+          .subscribe (termi => {
+            this.terminologies = termi;
+            resolve();
+          },
+          error => {
+            reject();
+          });
+        },
+        error => {
+          reject();
+        }
+      );
+    });
+
+
+  }
+
+  setLabel () {
+    this.api_loading = false;
+    const provider_label = (this.terminologies['provider']) ? this.terminologies['provider'] : 'provider';
+    const consumer_label = (this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
+
+    switch (this.source) {
+      case 'provider-waitlist' : this.message_label = 'Message to ' + consumer_label; break;
+      case 'consumer-waitlist' : this.message_label = 'Message to ' + provider_label;  break;
+      case 'consumer-common' : this.message_label = 'Message to ' + provider_label;  break;
+      case 'provider-common' : this.message_label = 'Message to ' + consumer_label;  break;
+    }
+  }
+
   createForm() {
     this.amForm = this.fb.group({
       message: ['', Validators.compose([Validators.required])]
