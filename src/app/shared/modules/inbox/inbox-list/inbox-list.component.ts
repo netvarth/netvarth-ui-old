@@ -20,7 +20,7 @@ import { AddInboxMessagesComponent } from '../../../components/add-inbox-message
 export class InboxListComponent implements OnInit {
 
 
-  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   selectedMsg = -1;
   userDet;
   shownomsgdiv = false;

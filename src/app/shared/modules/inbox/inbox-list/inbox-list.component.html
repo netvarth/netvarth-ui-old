@@ -5,6 +5,7 @@
                       <div class="outer">
                          <div class="th th0"></div>
                           <div class="th th3">From</div>
+                          <div class="th th3">To</div>
                           <div class="th th4">Message</div>
                           <div class="th th2">Service</div>
                           <div class="th th1">Date</div>
@@ -24,6 +25,10 @@
                           <div class="td td3">
                             <div class="label">From</div>
                             <div class="result">{{message.owner.userName}}</div>
+                          </div>
+                          <div class="td td3">
+                            <div class="label">To</div>
+                            <div class="result">{{message.receiver.userName}}</div>
                           </div>
                           <div class="td td4">
                               <div class="label">Message</div>

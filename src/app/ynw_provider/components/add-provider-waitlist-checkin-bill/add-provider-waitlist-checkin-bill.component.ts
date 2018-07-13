@@ -374,7 +374,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (!this.cart['items'][i]['price'] ||
     isNaN(this.cart['items'][i]['price']) ||
     this.cart['items'][i]['price'] < 0) {
-      this.cart['items'][i]['price'] = 0;
+      this.cart['items'][i]['price'] = 1;
     }
 
     this.calculateItemTotal(i);
@@ -447,9 +447,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     this.cart.sub_total = (total < 0 ) ? 0 : total;
     this.cart.total = total;
+    console.log(this.cart.total );
     this.reduceDiscount();
     this.reduceCoupon();
     this.reducePrePaidAmount();
+    console.log(this.cart.total );
 
   }
 
@@ -492,8 +494,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     let pre_total = 0;
     for (const pay of this.pre_payment_log) {
       pre_total = pre_total + pay.amount;
-    }
+    }console.log(pre_total);
     this.cart.total = this.cart.total - pre_total;
+    console.log(this.cart.total);
     this.cart.total = (this.cart.total > 0) ? this.cart.total : 0;
   }
 
@@ -501,14 +504,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     const item_array = [];
     const service_array = [];
-    console.log(this.cart.items);
+    // console.log(this.cart.items);
     for ( const item of  this.cart.items) {
       const ob = {
         'reason': '',
         'price': item.price,
         'quantity': item.quantity,
       };
-      console.log(item, ob);
+     // console.log(item, ob);
       if (item.coupon != null && this.coupons[item.coupon]) {
         ob['couponId'] = this.coupons[item.coupon]['id'];
       }
@@ -554,7 +557,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.provider_services.createWaitlistBill(post_data)
       .subscribe(
         data => {
-          console.log(data);
+          // console.log(data);
           this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_CREATE);
           this.dialogRef.close('reloadlist');
         },
@@ -566,7 +569,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.provider_services.updateWaitlistBill(post_data)
       .subscribe(
         data => {
-          console.log(data);
+          // console.log(data);
           if (data) {
             this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_UPDATE);
             this.dialogRef.close('reloadlist');
@@ -602,8 +605,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     for (const service of services) {
       this.services
       .map((ob) => {
-        console.log(ob, service);
-        if (ob.id === service.serviceId) {console.log('here');
+        // console.log(ob, service);
+        if (ob.id === service.serviceId) {// console.log('here');
           this.pushCartItem(ob, 'Services');
           this.cart.items[this.cart.items.length - 1] ['quantity']  = service.quantity || 1;
           this.cart.items[this.cart.items.length - 1]['price'] = service.price || ob.totalAmount;

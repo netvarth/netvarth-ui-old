@@ -22,11 +22,11 @@
                             <div class="location" *ngIf="waitlist.queue.location">
                                 <a *ngIf="waitlist.queue.location.googleMapUrl"
                                 [href]="waitlist.queue.location.googleMapUrl" target="_blank"
-                                class="icon-location"> {{waitlist.queue.location.place || ''}}</a>
+                                class="icon-location" matTooltip="Click to navigate"> {{waitlist.queue.location.place || ''}}</a>
                             </div>
                           </div>
                           <div class="rt">
-                              <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)">Favorite</div>
+                              <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)">Favourite</div>
                             <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
                               Cancelled
                             </div>

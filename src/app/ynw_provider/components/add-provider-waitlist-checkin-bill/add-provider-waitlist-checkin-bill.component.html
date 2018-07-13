@@ -54,7 +54,7 @@
                         <input matInput type="number" min="1" [disabled]="cart.items[i].type == 'Services'" [(ngModel)]="cart.items[i].quantity"
                         [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)" autocomplete="off"> </td>
                       <td data-title="StdRate">
-                        <input matInput type="number" [(ngModel)]="item.price"
+                        <input matInput type="number" [(ngModel)]="item.price" min="1"
                         [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)" autocomplete="off">
                       </td>
                       <td data-title="Discount">

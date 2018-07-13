@@ -54,7 +54,7 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       this.checkin = this.data.checkin || null;
       this.bill_data = this.data.bill_data || null;
 
-
+      console.log(this.bill_data);
       if ( !this.bill_data) {
         setTimeout(() => {
           this.dialogRef.close('error');
@@ -63,7 +63,7 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
 
       this.pay_data.uuid = this.bill_data.uuid;
       this.pay_data.amount = this.bill_data.netTotal - this.bill_data.totalAmountPaid;
-
+      this.pay_data.amount  = (this.pay_data.amount > 0) ? this.pay_data.amount : 0;
       this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     }
 
@@ -97,6 +97,12 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       );
     }
 
+  }
+
+  checkAmount(evt) {
+    if (evt.which !== 8 && evt.which !== 0 && evt.which < 48 || evt.which > 57 || isNaN(this.amount_to_pay) || this.amount_to_pay < 0) {
+      this.pay_data.amount = 0;
+    }
   }
 
 
