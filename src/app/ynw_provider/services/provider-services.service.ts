@@ -663,9 +663,14 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
 
-  getIdTerminologies(domainid, subDomainid) {
+  getIdTerminologies(domain, subDomain) {
 
-    const url = 'ynwConf/terminologiesInfo/' + domainid + '/' + subDomainid;
+    const url = 'ynwConf/terminologies/' + domain + '/' + subDomain;
+    return this.servicemeta.httpGet(url);
+  }
+
+  domainSubdomainSettings(domain, subDomain) {
+    const url = 'ynwConf/settings/' + domain + '/' + subDomain;
     return this.servicemeta.httpGet(url);
   }
 

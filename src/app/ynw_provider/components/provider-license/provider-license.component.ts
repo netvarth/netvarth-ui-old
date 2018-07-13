@@ -46,6 +46,7 @@ export class ProviderLicenseComponent implements OnInit {
 
     reload_adword_api =  {status : true};
     type = null;
+    upgradablepackages = [];
 
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
@@ -55,7 +56,7 @@ export class ProviderLicenseComponent implements OnInit {
 
         this.route.params.subscribe((data) => {
           this.type = data.type;
-          if (this.type) {
+          if (this.type === 'upgrade') {
             this.showupgradeLicense();
           }
         });
@@ -67,6 +68,7 @@ export class ProviderLicenseComponent implements OnInit {
       this.getLicenseUsage();
       this.getInvoiceList();
       this.getSubscriptionDetail();
+      this.getUpgradablePackages();
 
     }
 
@@ -92,11 +94,19 @@ export class ProviderLicenseComponent implements OnInit {
 
         if (call_type === 'update') {
           this.getLicenseUsage();
+          this.getUpgradablePackages();
           this.getInvoiceList();
           this.getSubscriptionDetail();
           this.reload_adword_api =  {status : true};
 
         }
+    }
+
+    getUpgradablePackages() {
+      this.provider_servicesobj.getUpgradableLicensePackages()
+        .subscribe( (data: any) => {
+            this.upgradablepackages = data;
+        });
     }
 
     showupgradeLicense() {
@@ -279,7 +289,7 @@ export class ProviderLicenseComponent implements OnInit {
   }
 
   goPaymentHistory() {
-    this.router.navigate(['provider' , 'settings', 'license' , 'paymenthistory']);
+    this.router.navigate(['provider' , 'settings', 'license' , 'payment', 'history']);
   }
 
   showUnpaidInvoice() {

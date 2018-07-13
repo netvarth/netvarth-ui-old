@@ -854,6 +854,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     .then(
       result => {
 
+      },
+      error => {
+
       }
     );
   }
