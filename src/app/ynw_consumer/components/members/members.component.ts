@@ -88,7 +88,7 @@ export class MembersComponent implements OnInit {
         this.getMembers();
       },
       error => {
-
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );
   }

@@ -10,6 +10,7 @@ import { SharedServices } from '../../../../services/shared-services';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
+
 @Component({
   selector: 'app-consumer-waitlist-checkin-payment',
   templateUrl: './consumer-waitlist-checkin-payment.component.html'
@@ -24,10 +25,11 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
 
   pay_data = {
     'uuid': null,
-    'paymentMode': 'cash',
+    'paymentMode': null,
     'amount': 0
   };
   payment_popup = null;
+  gateway_redirection = false;
 
   constructor(
     public dialogRef: MatDialogRef<ConsumerWaitlistCheckInPaymentComponent>,
@@ -67,7 +69,11 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     .subscribe(
       data => {
         this.payment_options = data;
-        console.log(this.payment_options);
+        if (this.payment_options.length > 0) {
+          // console.log('test', this.payment_options[0].name);
+          this.pay_data.paymentMode = this.payment_options[0].name;
+        }
+        // console.log(this.payment_options);
       },
       error => {
         this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
@@ -79,10 +85,10 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     if ( this.pay_data.uuid != null &&
     this.pay_data.paymentMode != null &&
     this.pay_data.amount !== 0) {
+      this.gateway_redirection = true;
       this.shared_services.consumerPayment(this.pay_data)
       .subscribe(
         data => {
-
           this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
           setTimeout(() => {
             console.log(this.document.getElementById('payuform'));

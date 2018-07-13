@@ -43,8 +43,8 @@ export class AddProviderCustomerComponent implements OnInit {
   this.amForm = this.fb.group({
       mobile_number: ['', Validators.compose([Validators.required,  Validators.maxLength(10),
         Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-        first_name: ['', Validators.compose([Validators.required])],
-        last_name: ['', Validators.compose([Validators.required])],
+        first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+        last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
         email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
         dob: [''],
         gender: [''],
@@ -80,7 +80,7 @@ export class AddProviderCustomerComponent implements OnInit {
         } , projectConstants.TIMEOUT_DELAY);
       },
       error => {
-
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
       });
   }
 

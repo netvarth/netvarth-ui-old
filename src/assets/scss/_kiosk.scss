@@ -699,6 +699,7 @@
 
                         .service-outer, .queue-outer {
                             padding-bottom: 15px;
+                            border-bottom: 1px dashed $cc-ash;
 
                             .service-head, .queue-head {
                                 margin-bottom: 5px;
@@ -798,28 +799,8 @@
                                 }
                             }
 
-                            .no-queue-available {
-                                font-size: .875rem;
-                            }
-
-                            .showDetOuter {
-                                .showDetService {
-                                    margin-bottom: 15px;
-
-                                    .selsername {
-                                        font-weight: 600;
-                                        color: $linkblack;
-                                    }
-                                }
-                                .queue-waitingdiv {
-                                    .queue-head {
-                                        margin-bottom: 0;
-
-                                        .queue-avail-date {
-                                            color: $green;
-                                        }
-                                    }
-                                }
+                            .no-queue-available, .no-service-available {
+                                color: $cc-red;
                             }
                         }
 
@@ -836,6 +817,34 @@
 
                         .servicefor-outer {
                             margin-bottom: 15px;
+                            
+                            .availer-ul {
+                                margin: 0px;
+                                padding: 0;
+
+                                li {
+                                    list-style: none;
+                                    position: relative;
+                                    margin-bottom: 15px;
+
+                                    .changemember {
+                                        margin-left: 15px;
+                                    }
+
+                                    &:before {
+                                        position: absolute;
+                                        content: "\67";
+                                        @include font-custom;
+                                        left: -14px;
+                                        top: 4px;
+                                        font-size: .50rem;
+                                        display: none;
+                                    }
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                    }
+                                }
+                            }
 
                             .service-availer {
                                 color: $linkblack;
@@ -879,9 +888,9 @@
                         }
 
                         .consumer-comment {
-                            margin-bottom: 15px;
+                            /*margin-bottom: 15px;
                             border-bottom: 1px dashed $cc-ash;
-                            padding-bottom: 15px;
+                            padding-bottom: 15px;*/
                             
                             .form-group {
                                 margin-bottom: 0px;
@@ -893,7 +902,7 @@
                                     padding: 0;
                                     font-weight: 500;
 
-                                    .icon-add {
+                                    .icon-add, .icon-minus {
                                         display: inline-block;
                                         vertical-align: bottom;
                                         font-size: 1.5rem;
@@ -972,6 +981,10 @@
                                     font-weight: 500;
                                     border: 2px solid $linkblue;
                                     @include border-radius(5px);
+                                    
+                                    &:hover {
+                                        color: $white;
+                                    }
                                 }
                             }
                         }
@@ -1053,6 +1066,31 @@
                     }
                 }
                 .kioskactions {
+                    .waitlist-button-outer {
+                        .showDetOuter {
+                            margin-bottom: 15px;
+                            font-weight: 500;
+                            
+                            .showDetService {
+                                margin-bottom: 15px;
+
+                                .selsername {
+                                    font-weight: 600;
+                                    color: $linkblack;
+                                }
+                            }
+                            .queue-waitingdiv {
+                                .queue-head {
+                                    margin-bottom: 0;
+
+                                    .queue-avail-date {
+                                        color: $green;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
                     button {
                         height: 50px;
                         width: 100%;

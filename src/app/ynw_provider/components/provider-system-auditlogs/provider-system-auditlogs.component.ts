@@ -148,9 +148,9 @@ export class ProviderSystemAuditLogComponent implements OnInit {
         }
         seldate = this.holdlogSeldate['_i']['year'] + '-' + mn + '-' + this.holdlogSeldate['_i']['date'];
       }
-      if (pagecall === false && this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
+      /*if (pagecall === false && this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
         this.sharedfunctionObj.openSnackBar('Please select atleast one filter option', {'panelClass': 'snackbarerror'});
-      } else {
+      } else { */
         let ccat = '';
         if (this.holdlogSelcat !== '') {
           ccat = this.logCategories[this.holdlogSelcat].name;
@@ -160,7 +160,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
         } else {
           this.getAuditList(ccat || '', this.holdlogSelsubcat || '', this.holdlogSelaction || '', seldate);
         }
-      }
+      // }
       // // console.log('search', this.logSelcat, this.logSelsubcat, this.logSelaction, 'seldate', seldate, this.startpageval);
     }
     handle_pageclick(pg) {

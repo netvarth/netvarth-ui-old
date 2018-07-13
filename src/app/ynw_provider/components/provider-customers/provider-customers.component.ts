@@ -158,12 +158,22 @@ export class ProviderCustomersComponent implements OnInit {
     }
 
     if (this.filter.mobile !== '') {
-      api_filter['email-eq'] = this.filter.mobile;
+      const pattern = projectConstants.VALIDATOR_NUMBERONLY;
+      const mval = pattern.test(this.filter.mobile);
+      if (mval) {
+        api_filter['primaryMobileNo-eq'] = this.filter.mobile;
+      } else {
+        this.filter.mobile = '';
+      }
+
     }
 
     return api_filter;
   }
-
-
-
+  focusInput(ev, input) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) {
+      input.focus();
+    }
+  }
 }

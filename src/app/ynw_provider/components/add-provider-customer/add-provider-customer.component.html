@@ -27,7 +27,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <input matInput type="text" class="form-control" id="first_name" placeholder="First Name"
     formControlName="first_name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
-    errorMsg="Please enter first name.">
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+    {
+      'required' : 'Please enter first name',
+      'pattern' : 'Only letters are allowed'
+    })">
    </app-field-error-display>
 </div>
 
@@ -37,7 +41,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <input matInput type="text" class="form-control" id="last_name" placeholder="Last Name"
     formControlName="last_name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
-    errorMsg="Please enter last name.">
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+    {
+      'required' : 'Please enter last name',
+      'pattern' : 'Only letters are allowed'
+    })">
    </app-field-error-display>
 </div>
 

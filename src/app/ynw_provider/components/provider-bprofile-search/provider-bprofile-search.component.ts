@@ -1080,7 +1080,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     this.provider_services.getTotalAllowedAdwordsCnt()
       .subscribe (data => {
         this.currentlicense_details = data;
-        console.log('this', this.currentlicense_details);
+        // console.log('this', this.currentlicense_details);
         this.adwordsmaxcount = this.currentlicense_details;
         this.getAdwords();
       });
@@ -1277,7 +1277,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   setFieldValue(data, subdomin) {
 
         let fields = [];
-        console.log(data, subdomin);
+        // console.log(data, subdomin);
         if (subdomin) {
           fields = (this.bProfile['subDomainVirtualFields'] &&
           this.bProfile['subDomainVirtualFields'][0]) ?
@@ -1364,6 +1364,10 @@ export class ProviderBprofileSearchComponent implements OnInit {
         this.getAdwords();
       }
     });
+  }
+
+  buyAdwords() {
+      this.routerobj.navigate(['provider' , 'settings', 'license']);
   }
 
 }

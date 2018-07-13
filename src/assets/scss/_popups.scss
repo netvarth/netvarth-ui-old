@@ -1136,6 +1136,25 @@
             
         }
         
+        // Rate Popup
+        .ratingdiv {
+            .form-group {
+                .col-form-label {
+                    padding: 0;
+                    margin-bottom: 5px;
+                }
+                fieldset {
+                    float: none;
+                    width: 134px;
+                    
+                    label {
+                        margin-bottom: 0;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        
     }
     
     // Popup footer section
@@ -1160,6 +1179,43 @@
                 
                 &:last-child {
                     margin-bottom: 0;
+                }
+            }
+        }
+        
+        .waitlist-button-outer {
+            display: flex;
+            
+            @include respond-to(ynw-575) {
+                flex-direction: column;
+            }
+            
+            .showDetOuter {
+                flex-grow: 1;
+                
+                @include respond-to(ynw-575) {
+                    margin-bottom: 10px;
+                }
+
+                .showDetService {
+                    margin-bottom: 3px;
+                    font-size: .75rem;
+                    
+                    .selsername {
+                        font-weight: 600;
+                        color: $linkblack;
+                    }
+                }
+                .queue-waitingdiv {
+                    .queue-head {
+                        margin-bottom: 0;
+                        font-size: .75rem;
+
+                        .queue-avail-date {
+                            color: $green;
+                            font-weight: 600;
+                        }
+                    }
                 }
             }
         }
@@ -2069,8 +2125,9 @@
                     }
                 }
                 
-                .no-queue-available {
+                .no-queue-available, .no-service-available {
                     font-size: .875rem;
+                    color: $cc-red;
                 }
                 
                 .showDetOuter {
@@ -2107,10 +2164,48 @@
                         }
                     }
                 }
+                
+                .no-queue-available {
+                    padding-bottom: 15px;
+                    color: $cc-red;
+                }
             }
             
             .servicefor-outer {
                 margin-bottom: 15px;
+                
+                .title {
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                }
+                
+                .availer-ul {
+                    margin: 0px;
+                    padding: 0;
+                    
+                    li {
+                        list-style: none;
+                        position: relative;
+                        margin-bottom: 15px;
+                        
+                        .changemember {
+                            margin-left: 15px;
+                        }
+                        
+                        &:before {
+                            position: absolute;
+                            content: "\67";
+                            @include font-custom;
+                            left: -14px;
+                            top: 4px;
+                            font-size: .50rem;
+                            display: none;
+                        }
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
                 
                 .service-availer {
                     color: $linkblack;
@@ -2153,8 +2248,6 @@
             
             .consumer-comment {
                 padding-bottom: 15px;
-                margin-bottom: 15px;
-                border-bottom: 1px dashed $cc-ash;
                 
                 .form-group {
                     margin-bottom: 0px;
@@ -2165,7 +2258,7 @@
                         display: table;
                         padding: 0;
                         
-                        .icon-add {
+                        .icon-add, .icon-minus {
                             display: inline-block;
                             vertical-align: bottom;
                             font-size: 1.2rem;
@@ -2190,33 +2283,37 @@
             
             .prepay-outer {
                 margin-bottom: 0;
-                margin-top: 15px;
-                padding: 20px 15px 15px;
-                @include top-to-bottom(#f8f8f8, #fff);
+                padding-top: 15px;
+                border-top: 1px dashed $cc-ash;
                 
-                .prepay-amt {
-                    margin-bottom: 15px;
-                    font-size: .875rem;
-                    font-weight: 600;
-                    color: $linkblack;
+                .prepay-dur-pr {
+                    padding: 20px 15px 15px;
+                    @include top-to-bottom(#f8f8f8, #fff);
                     
-                    .prepaymin-cls {
-                        font-weight: 700;
-                        color: $green;
-                        font-size: 1rem;
-                    }
-                }
-                .prepay-gateway-outer {
-                    
-                    .prepay-head {
-                        margin-bottom: 5px;
-                        color: $linkblack;
+                    .prepay-amt {
+                        margin-bottom: 15px;
+                        font-size: .875rem;
                         font-weight: 600;
+                        color: $linkblack;
+
+                        .prepaymin-cls {
+                            font-weight: 700;
+                            color: $green;
+                            font-size: 1rem;
+                        }
                     }
-                    
-                    .mat-radio-group {
-                        .mat-radio-button {
+                    .prepay-gateway-outer {
+
+                        .prepay-head {
+                            margin-bottom: 5px;
                             color: $linkblack;
+                            font-weight: 600;
+                        }
+
+                        .mat-radio-group {
+                            .mat-radio-button {
+                                color: $linkblack;
+                            }
                         }
                     }
                 }
@@ -2228,7 +2325,7 @@
                 }
                 .member-list {
                     .member-ul {
-                        margin: 0 0 0 20px;
+                        margin: 0 0 20px 20px;
                         padding: 0;
                         
                         li {
@@ -2237,19 +2334,32 @@
                     }
                     .member-add {
                         margin-left: 20px;
-                        margin-top: 10px;
                         cursor: pointer;
                         display: table;
                         font-size: .75rem;
-                        color: $linkblue;
-                        text-decoration: underline;
                         font-weight: 500;
                     }
                 }
             }
             
+            .addmember-outer {
+                padding: 20px;
+                @include box-shadow(0, 0, 30px, rgba(0,0,0,.1));
+                
+                .outer {
+                    display: flex;
+                    
+                    .form-group {
+                        flex-grow: 1;
+                        
+                        &:first-child {
+                            margin-right: 15px;
+                        }
+                    }
+                }
+            }
+            
             .addMemberHeader {
-                margin-top: 10px;
                 font-size: 1rem;
                 font-weight: 600;
                 display: block;

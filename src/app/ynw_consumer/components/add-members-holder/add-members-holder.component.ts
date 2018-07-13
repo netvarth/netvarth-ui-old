@@ -61,7 +61,7 @@ export class AddMembersHolderComponent implements OnInit {
     this.addmemberobj.mobile = obj.mobile || '';
     this.addmemberobj.gender = obj.gender || '';
     this.addmemberobj.dob = obj.dob || '';
-    console.log('add member return in holder', this.addmemberobj);
+    // console.log('add member return in holder', this.addmemberobj);
   }
   handleSaveMember() {
     this.resetApi();
@@ -70,12 +70,11 @@ export class AddMembersHolderComponent implements OnInit {
     const phonepattern =   new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
     const phonecntpattern =   new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
 
+    if (!namepattern.test(this.addmemberobj.lname) || this.addmemberobj.lname.trim() === '') {
+      derror = 'Please enter a valid last name';
+    }
     if (!namepattern.test(this.addmemberobj.fname)) {
       derror = 'Please enter a valid first name';
-    }
-
-    if (derror === '' && !namepattern.test(this.addmemberobj.lname)) {
-      derror = 'Please enter a valid last name';
     }
 
     if (derror === '') {

@@ -63,10 +63,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="adwds" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0">
+                        <!-- <div class="adwds" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0"> -->
+                        <div class="adwds w-dta" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0">    
                                 <h2>Adwords</h2>
                                 <p><strong>Sorry!</strong> Currently you did not have any adwords. Would you like to buy adwords?</p>
-                                <a href="#" class="cs-btn bt3">Buy Adwords</a>
+                                <span (click)="buyAdwords()" class="cs-btn bt3">Buy Adwords</span>
                         </div>
                         <div class="adwds w-dta" *ngIf="normal_adworkds_active && adwordsmaxcount > 0">
                             <h2>Adwords</h2>

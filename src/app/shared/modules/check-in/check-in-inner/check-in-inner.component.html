@@ -31,13 +31,13 @@
                     Service is for <ng-container><span class="service-availer" *ngFor="let waitfor of waitlist_for; let i=index"><ng-container *ngIf="i>0">, </ng-container>{{waitfor.name}}</span> <span class="editbt" (click)="handleServiceForWhom()"></span></ng-container>
               </div> -->
               <div class="servicefor-outer btborder">
-                <label class="title"> Service is for </label>
+                <!-- <label class="title"> Service is for </label> -->
                 <ul class="availer-ul">
                     <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                         <li>
-                            {{waitfor.name}}
+                            {{waitfor.name}} <span class="cs-btn bt8 changemember" (click)="handleServiceForWhom()" *ngIf="i==0">Add / Change Member</span>
                         </li>
-                        <span class="cs-btn bt3 changemember" (click)="handleServiceForWhom()" *ngIf="i==0">Change Member</span>
+                        
                     </ng-container>
                     
                 </ul>
@@ -154,7 +154,7 @@
      
         </div>
 
-        <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk">
+        <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
 
            <div class="waitlist-button-outer">
                 <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">

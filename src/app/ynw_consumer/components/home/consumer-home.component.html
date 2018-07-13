@@ -27,9 +27,7 @@
                           </div>
                           <div class="rt">
                               <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)"><span class="icon-favourite-filled"></span></div>
-                            <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
-                              Cancelled
-                            </div>
+                           
                           </div>
                       </div>
 
@@ -59,6 +57,9 @@
                               </div>
                           </div>
                           <div class="rt">
+                              <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
+                                  Cancelled
+                                </div>
                               <ul class="controls">
                                   <li (click)="addWaitlistMessage(waitlist)">
                                     <span class="message">Message</span>
@@ -101,7 +102,7 @@
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <div class="outer">
-                      <div class="list" *ngFor="let provider of fav_providers; index as i">
+                      <div class="list" [class.active]="open_fav_div == i" *ngFor="let provider of fav_providers; index as i">
                         <div class="header">
                             <div class="lt"  (click)="toogleDetail(provider, i)">
                                 <h3 class="pointer-cursor">

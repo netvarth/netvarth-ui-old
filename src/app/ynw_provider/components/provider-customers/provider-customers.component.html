@@ -20,27 +20,27 @@
                       <div class="form-group first_name">
                         <mat-form-field class="example-full-width">
                           <label class="col-form-label">First name</label>
-                          <input matInput [(ngModel)]="filter.first_name"  (blur)="doSearch()" autocomplete="off">
+                          <input matInput [(ngModel)]="filter.first_name" #Ffname (blur)="doSearch()" (keyup)="focusInput($event, Fmobile)" autocomplete="off">
                         </mat-form-field>
                       </div>
                       <div class="form-group mobile">
                         <mat-form-field class="example-full-width">
                           <label class="col-form-label">Mobile</label>
-                          <input matInput [(ngModel)]="filter.mobile"  (blur)="doSearch()" autocomplete="off">
+                          <input matInput [(ngModel)]="filter.mobile"  #Fmobile (blur)="doSearch()" (keyup)="focusInput($event, Femail)" autocomplete="off">
                         </mat-form-field>
                       </div>
 
                       <div class="form-group email">
                         <mat-form-field class="example-full-width">
                           <label class="col-form-label">Email</label>
-                          <input matInput [(ngModel)]="filter.email"  (blur)="doSearch()" autocomplete="off">
+                          <input matInput [(ngModel)]="filter.email"  #Femail (blur)="doSearch()" (keyup)="focusInput($event, Fdate)" autocomplete="off">
                         </mat-form-field>
                       </div>
 
                       <div class="check_in_date">
                         <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} Date</label>
                         <mat-form-field>
-                          <input matInput [(ngModel)]="filter.date" [matDatepicker]="picker"
+                          <input matInput [(ngModel)]="filter.date" [matDatepicker]="picker" #Fdate
                           (dateChange)="doSearch()" autocomplete="off">
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker></mat-datepicker>

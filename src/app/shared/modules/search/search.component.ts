@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, Ele
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatAutocompleteTrigger } from '@angular/material';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
@@ -118,6 +119,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   showmoreoptionsSec = false;
   holdsrchlocname = '';
   @ViewChild('locrefrence') private locRef: ElementRef;
+  @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
+
   constructor (
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
@@ -710,6 +713,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         // do nothing for above keys
     break;
     case 13: // enter key
+      // this.provRef.nativeElement.closePanel();
+      // this.provRef.closePanel();
+      this.provRef.closePanel();
       this.setKeyword(this.keywordholder);
     break;
     default: // if other than above keys, then by default set the type as "kwtitle"

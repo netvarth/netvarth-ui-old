@@ -2476,34 +2476,45 @@ header {
     }
     
     .card {
-        margin-bottom: 30px;
+        margin-bottom: 15px;
         @include border-radius(0);
         padding: 0;
+        box-shadow: none !important;
+        background: transparent;
         
         .mat-accordion {
             .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
-                background: $white;
+                background: transparent;
             }
             .mat-expansion-panel {
                 box-shadow: none !important;
+                background: none;
                 
                 .mat-expansion-panel-header {
                     font-size: 1.4rem;
                     @include font-medium;
-                    min-height: 60px;
                     padding: 0px 20px 0px 20px;
+                    display: flex;
                     
-                    .mat-expansion-panel-header-title {
-                        color: $linkblue;
+                    .mat-content {
+                        flex: auto;
+                        flex-grow: 0;
+                        
+                        .mat-expansion-panel-header-title {
+                            color: $linkblack;
+                        }
                     }
                     
                     .mat-expansion-indicator {
                         @include align-icon;
                         transform: rotate(0deg) !important;
-                        width: 16px;
-                        height: 16px;
+                        width: 20px;
+                        height: 20px;
                         display: flex;
                         align-items: center;
+                        justify-content: center;
+                        @include border-radius(30px);
+                        background: $linkblack;
                         
                         &:after {
                             display: none;
@@ -2513,21 +2524,24 @@ header {
                             @include font-custom;
                             content: "\72";
                             right: 0;
-                            width: 16px;
-                            height: 16px;
-                            font-size: .75rem;
+                            width: 20px;
+                            height: 20px;
+                            font-size: .65rem;
                             display: flex;
                             align-items: center;
                             justify-content: center;
+                            color: $white;
                         }
                     }
                     
                     &.mat-expanded {
                         .mat-expansion-panel-header-title {
-                            color: $linkblack;
+                            color: lighten($linkblack, 40%);
                         }
                         
                         .mat-expansion-indicator {
+                            background: lighten($linkblack, 40%);
+                            
                             &:before {
                                 content: "\66";
                             }
@@ -2551,17 +2565,20 @@ header {
             .list {
                 display: flex;
                 font-size: .875rem;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 flex-direction: column;
                 
                 .header {
                     display: flex;
+                    position: relative;
                     align-items: center;
                     min-height: 30px;
-                    padding: 10px;
-                    border: 1px solid $cc-body;
-                    border-bottom: 0;
+                    padding: 15px 20px;
+                    background: $white;
                     margin-bottom: 0;
+                    @include box-shadow(0px, 10px, 20px, rgba(0,0,0,.03));
+                    @include border-radius(30px);
+                    
                     
                     .lt {
                         flex-grow: 1;
@@ -2600,12 +2617,29 @@ header {
                     }
                     .rt {
                         display: flex;
+                        
+                        .favourite {
+                            .icon-favourite-filled {
+                                &:before {
+                                    color: $cc-red;
+                                    width: 20px;
+                                    height: 20px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 1rem;
+                                }
+                            }
+                        }
                     }
                 }
                 
                 .details {
                     display: flex;
                     flex-direction: column;
+                    margin: 0 20px;
+                    background: $white;
+                    @include border-bottom-radius(5px);
                     
                     @include respond-to(ynw-575) {
                         flex-direction: column;
@@ -2615,18 +2649,22 @@ header {
                         font-weight: 500;
                         display: flex;
                         flex-wrap: wrap;
-                        border: 1px solid $cc-body;
+                        /*border: 1px solid $cc-body;*/
                         border-bottom: none;
+                        border-top: none;
                         border-right: none;
                         
                         .lt0 {
-                            padding: 10px;
-                            border: 1px solid $cc-body;
+                            padding: 15px;
+                            /*border: 1px solid $cc-body;*/
                             border-top: none;
                             border-left: none;
                             flex-grow: 1;
                             margin: 0;
                             
+                            @include respond-to(ynw-575) {
+                                padding: 10px;
+                            }
                             
                             .service, .forwhom, .time, .token, .persons {
                                 font-weight: 600;
@@ -2659,17 +2697,16 @@ header {
                     }
                     
                     .rt {
+                        border-top: 2px solid $cc-body;
+                        
                         .controls {
                             margin: 0;
                             margin-left: auto;
-                            padding: 0;
+                            padding: 0 10px;
                             display: flex;
                             flex-direction: column;
                             flex-direction: row;
                             justify-content: flex-end;
-                            border: 1px solid $cc-body;
-                            border-top: none;
-                            
 
                             @include respond-to(ynw-767) {
                                 margin-left: 0;
@@ -2682,19 +2719,25 @@ header {
 
                             li {
                                 list-style: none;
-                                margin: 0 5px;
+                                margin: 0;
                                 font-weight: 500;
                                 display: flex;
                                 align-items: center;
 
                                 span {
-                                    padding: 8px;
+                                    padding: 10px;
                                     position: relative;
                                     padding-left: 25px;
-                                    padding-right: 8px;
+                                    padding-right: 10px;
                                     cursor: pointer;
                                     @include transition(all 300ms);
                                     color: $linkblack;
+                                    
+                                    @include respond-to(ynw-575) {
+                                        padding: 5px;
+                                        padding-left: 25px;
+                                        padding-right: 10px;
+                                    }
 
                                     &:before {
                                         position: absolute;
@@ -2768,21 +2811,35 @@ header {
                     margin-bottom: 0;
                 }
                 &.cancelled {
-                    .header {
+                    .details {
                         .rt {
+                            display: flex;
+                            
                             .cancel-label {
-                                background: $cc-darkgray;
-                                color: $white;
-                                padding: 1px 5px;
-                                float: left;
-                                font-size: .75rem;
+                                color: $cc-red;
+                                padding: 10px 0px 10px 12px;
+                                font-size: .65rem;
+                                line-height: 1.2rem;
                                 font-weight: 600;
-                                text-transform: uppercase;
                                 margin-left: 15px;
+                                letter-spacing: .5px;
+                                @include border-radius(20px);
+                                position: relative;
 
                                 @include respond-to(ynw-400) {
-                                    float: none;
                                     margin-left: 10px;
+                                }
+                                
+                                &:before {
+                                    position: absolute;
+                                    width: 6px;
+                                    height: 6px;
+                                    background: $cc-red;
+                                    content: "";
+                                    left: 0;
+                                    top: 50%;
+                                    margin-top: -4px;
+                                    @include border-radius(20px);
                                 }
                             }
                         }
@@ -2794,14 +2851,14 @@ header {
         &.favourites {
             .outer {
                 .list {
-                    margin-bottom: 0;
+                    margin-bottom: 30px;
                     
                     .header {
                         /*border-bottom: 1px solid $cc-ash;*/
                         padding: 0;
                         
                         .lt {
-                            padding: 10px;
+                            padding: 17px 10px 17px 20px;
                             flex-grow: 1;
                             cursor: pointer;
                             
@@ -2816,6 +2873,8 @@ header {
                         }
                         
                         .rt {
+                            padding-right: 10px;
+                            
                             .controls {
                                 margin: 0;
                                 margin-left: auto;
@@ -2908,16 +2967,59 @@ header {
                                 }
                             }
                         }
+                        &:after {
+                            width: 95%;
+                            height: 10px;
+                            position: absolute;
+                            content: "";
+                            left: 0;
+                            right: 0;
+                            bottom: -10px;
+                            @include box-shadow(0px, 10px, 20px, rgba(0,0,0,.05));
+                            @include border-bottom-radius(10px);
+                            opacity: .7;
+                            margin: 0 auto;
+                            background: $white;
+                            
+                            @include respond-to(ynw-767) {
+                                width: 90%
+                            }
+                            @include respond-to(ynw-768-991) {
+                                width: 92%
+                            }
+                        }
+                        &:before {
+                            width: 90%;
+                            height: 10px;
+                            position: absolute;
+                            content: "";
+                            left: 0;
+                            right: 0;
+                            bottom: -20px;
+                            @include box-shadow(0px, 10px, 20px, rgba(0,0,0,.03));
+                            @include border-bottom-radius(10px);
+                            opacity: .4;
+                            margin: 0 auto;
+                            background: $white;
+                            
+                            @include respond-to(ynw-767) {
+                                width: 85%
+                            }
+                            @include respond-to(ynw-768-991) {
+                                width: 87%
+                            }
+                        }
                     }
                     .detail {
+                        margin: 0 20px;
                         border-left: 1px solid $cc-body;
                         border-right: 1px solid $cc-body;
-                        background: $cc-body;
+                        background: $white;
+                        @include border-bottom-radius(5px);
                         
                         .location {
                             display: flex;
-                            margin: 10px;
-                            border-bottom: 1px dashed $cc-ash;
+                            border-bottom: 2px solid $cc-body;
                             
                             @include respond-to(ynw-767) {
                                 flex-direction: column;
@@ -2927,11 +3029,11 @@ header {
                                 flex-grow: 1;
                                 font-weight: 600;
                                 font-size: .875rem;
-                                padding: 10px;
+                                padding: 15px;
                             }
                             
                             .bt-l {
-                                padding: 10px;
+                                padding: 15px;
                                 
                                 .wt-tme {
                                     display: flex;
@@ -3002,6 +3104,7 @@ header {
 
                                         .est-time {
                                             color: $cc-mediumgray;
+                                            font-weight: 500;
                                         }
 
                                         .time-data {
@@ -3063,15 +3166,15 @@ header {
                                     }
                                     .wt-msg {
                                         padding: 4px 10px;
-                                        border: 2px dashed $cc-warning;
+                                        border: 1px dashed $cc-warning;
                                         color: $cc-warning;
-                                        font-weight: 600;
+                                        font-weight: 500;
                                         display: table;
                                     }
                                 }
                             }
                             .bt-r {
-                                padding: 10px;
+                                padding: 15px;
                                 
                                 .chk-btn {
                                     margin-left: auto;
@@ -3101,11 +3204,16 @@ header {
                             }
                         }
                     }
-                    &:last-child {
-                        border-bottom: 1px solid $cc-body;
-                        
+                    &:last-child {                        
                         .detail {
                             border-bottom: 1px solid $cc-body;
+                        }
+                    }
+                    &.active {
+                        .header {
+                            &:before, &:after {
+                                opacity: 0;
+                            }
                         }
                     }
                 }
@@ -3116,10 +3224,15 @@ header {
             margin-bottom: 0;
             
             .history-tbl {
-                padding: 0;
+                padding: 0px;
                 font-weight: 500;
+                background: $white;
+                @include box-shadow(0px, 10px, 20px, rgba(0,0,0,.03));
                 
                 .table {
+                    border: none;
+                    margin: 0;
+                    
                     thead {
                         tr {
                             th {
@@ -3135,11 +3248,54 @@ header {
                                 &.td4 {
                                     border-right: 1px solid $cc-body;
                                     
-                                    .completed {
-                                        color: $green;
+                                    .arrived, .started, .done, .cancelled, .checkedIn {
+                                        color: $start;
+                                        padding: 2px 5px 2px 14px;
+                                        font-size: .75rem;
+                                        font-weight: 600;
+                                        position: relative;
+
+                                        &:before {
+                                            position: absolute;
+                                            content: "";
+                                            background: $start;
+                                            width: 6px;
+                                            height: 6px;
+                                            @include border-radius(10px);
+                                            top: 50%;
+                                            left: 4px;
+                                            margin-top: -4px;
+                                        }
+                                    }
+                                    
+                                    .arrived {
+                                        color: $arrived;
+                                        
+                                        &:before {
+                                            background: $arrived;
+                                        }
+                                    }
+                                    
+                                    .done {
+                                        color: $done;
+                                        
+                                        &:before {
+                                            background: $done;
+                                        }
                                     }
                                     .cancelled {
                                         color: $cc-red;
+                                        
+                                        &:before {
+                                            background: $cc-red;
+                                        }
+                                    }
+                                    .checkedIn {
+                                        color: $checkedin;
+                                        
+                                        &:before {
+                                            background: $checkedin;
+                                        }
                                     }
                                 }
                                 &.td5 {
@@ -3242,13 +3398,16 @@ header {
                 }
                 
                 .search_paging {
+                    padding: 20px;
+                    border-top: 1px solid $cc-body;
+                    
                     .container {
                         padding: 0;
 
                         .text-center {
                             display: flex;
                             justify-content: flex-end;
-                            margin-bottom: 60px;
+                            margin-bottom: 0px;
 
                             .paginghead-outer {
                                 width: 120px;
@@ -3284,7 +3443,10 @@ header {
                                     margin-right: 10px;
                                     min-width: 30px;
                                     border: 1px solid $linkblue;
-                                    margin-bottom: 5px;
+                                    
+                                    @include respond-to(ynw-575) {
+                                        margin-bottom: 5px;
+                                    }
 
                                     &.ng-star-inserted {
                                         border: none;
