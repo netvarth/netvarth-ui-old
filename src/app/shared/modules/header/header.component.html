@@ -140,7 +140,7 @@
                         <div class="isprovidertop ng-star-inserted" *ngIf="!shared_functions.checkLogin()">Are you a Provider? <span (click)="doLogin('provider')">Click Here</span></div>
                     </div>
 
-                    <app-search [showopennow]="0" [searchfields]="searchfields" [includedfrom]="'consumer_header'" (searchclick)="handlesearchClick($event)" [passedDomain]="passedDomain" [passedkwdet]="passedkwdet"></app-search>
+                    <app-search [showopennow]="0" [searchfields]="searchfields" [includedfrom]="'consumer_header'" [passedRefine]="passedRefine" (searchclick)="handlesearchClick($event)" [passedDomain]="passedDomain" [passedkwdet]="passedkwdet"></app-search>
                     <!-- <div class="tp-srch">
                         <div class="sa-lc flex-shrink-0">
                         </div>

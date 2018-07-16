@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -18,6 +18,7 @@ export class SearchMoreOptionsComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
+  @Input() passedRefine: any =  [];
   @Output() searchmoreclick = new EventEmitter<any>();
   @Output() closemoreclick = new EventEmitter<any>();
 
@@ -42,20 +43,26 @@ export class SearchMoreOptionsComponent implements OnInit {
      }
 
   ngOnInit() {
+    // console.log('more option', this.passedRefine);
     this.getCommonFilters();
   }
   getCommonFilters() {
-    this.searchdetailserviceobj.getRefinedSearch('', '')
-      .subscribe( data => {
-        if (data['commonFilters']) {
-          for (let i = 0; i < data['commonFilters'].length; i++) {
-            if (data['commonFilters'][i].name === 'opennow') {
-              data['commonFilters'][i].cloudSearchIndex = 'opennow';
+    if (this.passedRefine && this.passedRefine.length > 0) {
+      this.searchrefine_arr = this.passedRefine;
+    }
+    if (this.searchrefine_arr.length === 0) {
+        this.searchdetailserviceobj.getRefinedSearch('', '')
+          .subscribe( data => {
+            if (data['commonFilters']) {
+              for (let i = 0; i < data['commonFilters'].length; i++) {
+                if (data['commonFilters'][i].name === 'opennow') {
+                  data['commonFilters'][i].cloudSearchIndex = 'opennow';
+                }
+              }
+              this.searchrefine_arr = data['commonFilters'];
             }
-          }
-          this.searchrefine_arr = data['commonFilters'];
-        }
-      });
+        });
+    }
   }
   handle_morebuttonclick () {
     this.searchmoreclick.emit(this.searchrefineresult_arr);

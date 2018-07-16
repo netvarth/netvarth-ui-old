@@ -86,7 +86,7 @@ export class KioskHomeComponent implements OnInit {
   getUserdetails() {
     this.userdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
     if (this.userdet)  {
-       console.log(this.userdet);
+       // console.log(this.userdet);
       if (this.shared_functions.checkLogin()) {
         this.ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (this.userdet.isProvider === true) {
@@ -203,7 +203,7 @@ export class KioskHomeComponent implements OnInit {
             this.next_avail_queue['message'] = this.waitlisttime_arr[i]['message'];
           }
         }
-        console.log('available queue', this.next_avail_queue);
+        // console.log('available queue', this.next_avail_queue);
       });
     }
   }
@@ -232,6 +232,7 @@ export class KioskHomeComponent implements OnInit {
                     name: this.customerDispDet.name
                   }
     };
+   // console.log('checindata get', checkIndata);
     return checkIndata;
   }
   handleCheckinReturn(retdata) {
@@ -312,7 +313,7 @@ export class KioskHomeComponent implements OnInit {
     this.show_customernotfoundmsg = false;
     this.show_customerRegister = false;
     this.showsearch_now = false;
-    console.log('cmod', this.cMod);
+    // console.log('cmod', this.cMod);
     if (this.cMod !== 'main') {
       if (!this.customer_found) {
         this.showsearch_now = true;
@@ -324,7 +325,7 @@ export class KioskHomeComponent implements OnInit {
     }
   }
   do_operation() {
-    console.log('reached here');
+   // console.log('reached here');
     switch (this.cMod) {
       case 'status':
         this.getwaitlistForToday(); // get the waitlist entry for today for current consumer
@@ -346,7 +347,7 @@ export class KioskHomeComponent implements OnInit {
       .subscribe (data => {
         this.todaylist = data;
         this.query_executed = true;
-        console.log('today list', this.todaylist);
+       // console.log('today list', this.todaylist);
       },
       error => {
 
@@ -450,10 +451,10 @@ export class KioskHomeComponent implements OnInit {
     }, 5000);
   }
   arrivedReturn(passedinData) {
-    console.log('arrived', passedinData);
+   // console.log('arrived', passedinData);
     this.kiosk_services.changeWaitlistStatus(passedinData.uuid, passedinData.action)
       .subscribe (data => {
-        console.log('status change', data);
+        // console.log('status change', data);
         this.do_operation();
         this.shared_functions.openSnackBar ('Arrival Confirmed');
       }, error => {

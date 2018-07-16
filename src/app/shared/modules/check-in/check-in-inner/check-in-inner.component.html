@@ -86,12 +86,12 @@
                             </div>
                         </div> -->
                     </ng-container>
-                    <ng-container *ngIf="queuejson.length == 0">
+                    <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                         <span class='no-queue-available'>No Queues available for the date.</span>
                     </ng-container>
                     
               </div>
-              <ng-container *ngIf="step==1">
+              <ng-container *ngIf="step==1 && queuejson.length > 0">
               <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
                 <div class="prepay-dur-pr">
                     <div class="prepay-amt">Amount to Pay: <span class="prepaymin-cls">{{sel_ser_det.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span></div>

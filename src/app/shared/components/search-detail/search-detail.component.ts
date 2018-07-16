@@ -59,6 +59,7 @@ export class SearchDetailComponent implements OnInit {
   public specialization;
   public rating;
   public searchrefine_arr: any = [];
+  public searchcommononlyrefine_arr: any = [];
   public searchrefineresult_arr: any = [];
   public refined_querystr = '';
   public searchrefinetextresult_arr: any = [];
@@ -66,6 +67,7 @@ export class SearchDetailComponent implements OnInit {
   public refined_options_url_str = '';
   public querystringrefineretain_arr: any = [];
   public showsearchsection = false;
+  obtainedRefined = false;
   public arraycreatedfromquerystring = false;
   public commonfilters;
   public passrefinedfilters;
@@ -1113,6 +1115,8 @@ setEnvironment(bypassotherfunction?) {
                 this.searchrefine_arr = data['commonFilters'];
               }
           }
+          this.searchcommononlyrefine_arr = data['commonFilters'];
+          this.obtainedRefined = true;
          // console.log('refined', this.searchrefine_arr);
           // console.log('qrystr', this.querystringrefineretain_arr);
 

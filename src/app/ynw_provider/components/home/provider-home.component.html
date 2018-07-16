@@ -175,7 +175,7 @@
                                   <td data-title="Seq No" class="seq pointer-cursor" (click)="goCheckinDetail(checkin)">
                                     <ng-container  *ngIf="checkin.token">#{{checkin.token}}</ng-container></td>
                                   <td data-title="Name" class="name" *ngIf="checkin.consumer">
-                                    {{checkin.consumer.userProfile.firstName}}  {{checkin.consumer.userProfile.lastName}}
+                                    {{checkin.waitlistingFor[0].firstName}}  {{checkin.waitlistingFor[0].lastName}}
                                     <span class="icon-arrived" title="{{arrived_upper}}"  *ngIf="checkin.waitlistStatus == 'arrived'">
                                       <span class="arrived">{{arrived_upper}}</span>
                                     </span>
