@@ -238,10 +238,15 @@ export class CheckInInnerComponent implements OnInit {
                     res => {
                       this.s3url = res;
                       this.getbusinessprofiledetails_json('settings', true);
+                      console.log('terminologies ext', this.terminologiesjson);
                       if (!this.terminologiesjson) {
                         this.getbusinessprofiledetails_json('terminologies', true);
                       } else {
-                        this.provider_datastorage.set('terminologies', this.terminologiesjson);
+                        if (this.terminologiesjson.length === 0) {
+                          this.getbusinessprofiledetails_json('terminologies', true);
+                        } else {
+                          this.provider_datastorage.set('terminologies', this.terminologiesjson);
+                        }
                       }
                     },
                     error => { }
@@ -267,7 +272,7 @@ export class CheckInInnerComponent implements OnInit {
             break;
             case 'terminologies':
               this.terminologiesjson = res;
-              this.provider_datastorage.set('terminologies', this.terminologiesjson);
+              this.provider_datastorage.set('terminologies inside', this.terminologiesjson);
             break;
           }
       },
