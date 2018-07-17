@@ -20,7 +20,7 @@
                                 <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                         </div>
                     </div>
-                    <div class="card" *ngIf="normal_profile_active==2">
+                    <div class="card" *ngIf="normal_profile_active==2 || normal_locationinfo_show==4">
                         <div class="pubs" >
                             <h2>Public Search <span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span></h2>
                             <div class="wbox" >
@@ -37,7 +37,7 @@
                         </div>
                     </div>
 
-                    <div class="card p0" *ngIf="normal_profile_active==3">
+                    <div class="card p0" *ngIf="normal_profile_active==3 && normal_locationinfo_show==3">
                         <div class="pubs w-dta">
 
 
@@ -134,6 +134,12 @@
                                         <p><span>You haven’t added any</span> <strong>Location &amp; Working Hours*</strong> information.</p>
                                         <span class="cs-btn bt3" (click)="addLocation()">Add It Now</span>
                                         <p class="smlft">* Need Location &amp; Working Hours to turn on Public Search</p>
+                                    </div>
+                                    <div class="warning" *ngIf="normal_locationinfo_show==4">
+                                            <i data-icon="m"></i>
+                                            <p><span><strong>Your Base Location details are Incomplete.</strong></span></p> <p><span>Please use the <strong>Edit Location</strong> button to complete it.</span></p>
+                                            <span class="cs-btn bt3" (click)="editLocation()">Edit Location</span>
+                                            <p class="smlft">* Need Location &amp; Working Hours to turn on Public Search</p>
                                     </div>
                                     <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
                                         <span (click)="editLocation()" class="editbt"></span>

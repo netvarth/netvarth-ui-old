@@ -254,12 +254,12 @@
                                           ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
                                             Cancel {{checkin_label}}
                                           </button>
-                                          <button type="button" mat-menu-item
+                                          <!-- <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'REPORT')"
                                           *ngIf="time_type!=0 &&
                                           (checkin.waitlistStatus == 'started')">
-                                            Change Status to {{arrived_upper}}
-                                          </button>
+                                            Change Status to {{arrived_upper}} 
+                                          </button> -->
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
                                           *ngIf="time_type!=0 &&

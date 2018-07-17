@@ -44,7 +44,7 @@
                 
               </div>
     
-              <div class="date-outer" *ngIf="step==1">
+              <div class="date-outer" *ngIf="step==1 && data.datechangereq">
                 Check-in Date: <span class="selected-date"> <span class="icon-minus" [class.disable]="disableMinus()" (click)="calculateDate(-1)" *ngIf="futuredate_allowed && data.datechangereq"></span>{{sel_day}} {{sel_checkindate | date: dateFormat}} <span class="icon-add" (click)="calculateDate(1)" *ngIf="futuredate_allowed && data.datechangereq"></span></span>
                 <div class="form-group dt" *ngIf="futuredate_allowed && data.datechangereq">
                     <div class="pickerouter">
@@ -162,10 +162,14 @@
                     Check-In for service:  <span class='selsername'>{{ sel_ser_det.name }}</span>
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime==''">
-                    <div class="queue-head">Estimated Waiting Time: <span class="queue-avail-date">{{sel_queue_waitingmins}}</span></div>
+                    <div class="queue-head">
+                        Today, Estimated Waiting Time: <span class="queue-avail-date">{{sel_queue_waitingmins}}</span></div>
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!=''">
-                    <div class="queue-head">Check In Time: <span class="queue-avail-date">{{sel_queue_servicetime}}</span></div>
+                    <div class="queue-head">
+                        <ng-container *ngIf="isFuturedate">{{sel_day}} {{sel_checkindate | date: dateFormat}}, </ng-container>
+                        <ng-container *ngIf="!isFuturedate">Today, </ng-container>
+                        Check In Time: <span class="queue-avail-date">{{sel_queue_servicetime}}</span></div>
                     </div>
                 </div>
 

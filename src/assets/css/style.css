@@ -2004,6 +2004,21 @@ app-footer {
             position: absolute;
         }*/ }
 
+.payment-message {
+  padding: 30px;
+  text-align: center; }
+  .payment-message span {
+    font-size: 1.2rem;
+    font-weight: 500; }
+    .payment-message span.success {
+      color: #00cc96; }
+    .payment-message span.error {
+      color: #f24949; }
+  .payment-message .cs-btn.gohome {
+    margin: 0 auto;
+    margin-top: 30px;
+    display: flex; }
+
 .mat-menu-panel {
   -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
   -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
@@ -5806,26 +5821,20 @@ header {
           margin-top: 5px; }
     .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
       margin-bottom: 0;
-      padding-top: 15px;
-      border-top: 1px dashed #dbdbdb; }
+      margin-top: 15px;
+      /*padding-top: 15px;
+      border-top: 1px dashed $cc-ash;*/ }
       .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-dur-pr {
-        padding: 20px 15px 15px;
-        background: #f8f8f8;
-        /* Old browsers */
-        background: -moz-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-        /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8f8f8), color-stop(100%, #fff));
-        /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-        /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-        /* Opera 11.10+ */
-        background: -ms-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-        /* IE10+ */
-        background: linear-gradient(to bottom, #f8f8f8 0%, #fff 100%);
-        /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
-        /* IE6-9 */ }
+        padding: 15px;
+        border: 1px solid #dbdbdb;
+        -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08) ;
+        -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08) ;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08) ;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background-clip: padding-box;
+        /* stops bg color from leaking outside the border: */
+        /*@include top-to-bottom(#f8f8f8, #fff);*/ }
         .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-dur-pr .prepay-amt {
           margin-bottom: 15px;
           font-size: .875rem;
@@ -13998,9 +14007,12 @@ header.consumer {
       font-size: .875rem;
       font-weight: 500;
       flex-grow: 1;
-      padding-top: 60px;
-      /*background: url(../images/no-results.svg) no-repeat scroll center top /70%;
-      text-indent: -9999px;*/ }
+      background: url(../images/no-search-results.png) no-repeat scroll center top;
+      text-indent: -9999px;
+      max-width: 360px;
+      height: 360px;
+      display: flex;
+      margin: 0 auto; }
 
 .consumer-dash {
   padding: 30px 0;

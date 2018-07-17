@@ -190,6 +190,32 @@ app-footer {
     }
 }
 
+// payment Success/Error Message
+.payment-message {
+    padding: 30px;
+    text-align: center;
+    
+    span {
+        font-size: 1.2rem;
+        font-weight: 500;
+        
+        &.success {
+            color: $green;
+        }
+        &.error {
+            color: $cc-red;
+        }
+    }
+    
+    .cs-btn {
+        &.gohome {
+            margin: 0 auto;
+            margin-top: 30px;
+            display: flex;
+        }
+    }
+}
+
 // MENU Style Popup ####
 .mat-menu-panel {
     @include box-shadow(0, 0, 30px, rgba(0,0,0,.1));

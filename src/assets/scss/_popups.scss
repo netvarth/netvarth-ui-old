@@ -2283,12 +2283,16 @@
             
             .prepay-outer {
                 margin-bottom: 0;
-                padding-top: 15px;
-                border-top: 1px dashed $cc-ash;
+                margin-top: 15px;
+                /*padding-top: 15px;
+                border-top: 1px dashed $cc-ash;*/
                 
                 .prepay-dur-pr {
-                    padding: 20px 15px 15px;
-                    @include top-to-bottom(#f8f8f8, #fff);
+                    padding: 15px;
+                    border: 1px solid $cc-ash;
+                    @include box-shadow(0px, 0px, 20px, rgba(0,0,0,.08));
+                    @include border-radius(10px);
+                    /*@include top-to-bottom(#f8f8f8, #fff);*/
                     
                     .prepay-amt {
                         margin-bottom: 15px;

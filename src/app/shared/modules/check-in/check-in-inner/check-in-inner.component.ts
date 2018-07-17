@@ -74,7 +74,7 @@ export class CheckInInnerComponent implements OnInit {
     dispCustomernote = false;
     CweekDays = {0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat'};
     queueQryExecuted = false;
-
+    todaydate;
 
     @Input() data: any =  [];
     @Output() returntoParent = new EventEmitter<any>();
@@ -131,6 +131,7 @@ export class CheckInInnerComponent implements OnInit {
         cmon = '' + mm;
       }
       const dtoday = yyyy + '-' + cmon + '-' + cday;
+      this.todaydate = dtoday;
 
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
       // console.log('custdata', this.customer_data, 'loggedinuser', this.loggedinuser, 'kiosk', this.fromKiosk);
@@ -179,13 +180,14 @@ export class CheckInInnerComponent implements OnInit {
       this.hold_sel_checkindate = this.sel_checkindate;
       this.getServicebyLocationId (this.sel_loc, this.sel_checkindate);
 
-      if ( this.page_source !== 'provider_checkin') {
-        this.getPaymentModesofProvider(this.account_id);
-      }
+      // if ( this.page_source !== 'provider_checkin') {
+      //   this.getPaymentModesofProvider(this.account_id);
+      // }
 
       // console.log('selcheckindate', this.sel_checkindate);
-      if (this.sel_checkindate !== dtoday) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
         this.isFuturedate = true;
+        // console.log('future', this.isFuturedate);
       }
       // const retdatedet = this.getQueueDateTimeDetails(this.search_obj.fields.waitingtime_res.nextAvailableQueue);
      // this.sel_queue_det = retdatedet;
@@ -193,14 +195,16 @@ export class CheckInInnerComponent implements OnInit {
       this.revealphonenumber = true;
     }
     getPaymentModesofProvider(provid) {
-      this.shared_services.getPaymentModesofProvider(provid)
-        .subscribe (data => {
-          this.paymentModes = data;
-          // console.log ('paymodes', this.paymentModes);
-        },
-      error => {
-        // console.log ('error', error);
-      });
+      if (this.paymentModes.length === 0) {
+        this.shared_services.getPaymentModesofProvider(provid)
+          .subscribe (data => {
+            this.paymentModes = data;
+            // console.log ('paymodes', this.paymentModes);
+          },
+        error => {
+          // console.log ('error', error);
+        });
+      }
     }
     getFamilyMembers() {
 
@@ -354,6 +358,11 @@ export class CheckInInnerComponent implements OnInit {
             status: serv.status,
             taxable: serv.taxable
           };
+          if (this.page_source !== 'provider_checkin') {
+            if (serv.isPrePayment) {
+              this.getPaymentModesofProvider(this.account_id);
+            }
+          }
         }
     }
 
@@ -365,11 +374,18 @@ export class CheckInInnerComponent implements OnInit {
           this.queueQryExecuted = true;
           // console.log('q json', this.queuejson);
           if (this.queuejson.length > 0) {
-              this.sel_queue_id = this.queuejson[0].id;
+            let selindx = 0;
+              for (let i = 0; i < this.queuejson.length; i++) {
+                if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
+                  selindx = i;
+                }
+              }
+              this.sel_queue_id = this.queuejson[selindx].id;
               // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
-              this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[0].queueWaitingTime);
-              this.sel_queue_servicetime = this.queuejson[0].serviceTime || '';
-              this.sel_queue_name = this.queuejson[0].name;
+              this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+              this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
+              this.sel_queue_name = this.queuejson[selindx].name;
+
           } else {
               this.sel_queue_id = 0;
               this.sel_queue_waitingmins = 0;
@@ -794,6 +810,9 @@ export class CheckInInnerComponent implements OnInit {
     if (nDt >= strtDt ) {
       this.sel_checkindate =  ndate;
       this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    }
+    if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      this.isFuturedate = true;
     }
     // console.log('new date', this.hold_sel_checkindate, this.sel_checkindate);
   }

@@ -2451,9 +2451,12 @@ header {
             font-size: .875rem;
             font-weight: 500;            
             flex-grow: 1;
-            padding-top: 60px;
-            /*background: url(../images/no-results.svg) no-repeat scroll center top /70%;
-            text-indent: -9999px;*/
+            background: url(../images/no-search-results.png) no-repeat scroll center top;
+            text-indent: -9999px;
+            max-width: 360px;
+            height: 360px;
+            display: flex;
+            margin: 0 auto;
         }
     }
     

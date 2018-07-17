@@ -158,6 +158,22 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 ); /* IE6-9 */
 }
 
+//border-gradient-color
+@mixin border-left-to-right($left, $right) {
+    border-width: 3px 0 3px 3px;
+    border-style: solid;
+    -webkit-border-image: 
+      -webkit-gradient(linear, 100% 0, 0 0, from($left), to($right)) 1 100%;
+    -webkit-border-image: 
+      -webkit-linear-gradient(right, $left, $right) 1 100%;
+    -moz-border-image:
+      -moz-linear-gradient(right, $left, $right) 1 100%;  
+    -o-border-image:
+      -o-linear-gradient(right, $left, $right) 1 100%;
+    border-image:
+      linear-gradient(to right, $left, $right) 1 100%; 
+}
+
 //transitions
 
 @mixin transition($transition...) {

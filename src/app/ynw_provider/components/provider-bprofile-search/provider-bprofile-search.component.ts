@@ -296,7 +296,11 @@ export class ProviderBprofileSearchComponent implements OnInit {
         // check whether normal location section can be displayed
         this.normal_locationinfo_show = 2;
         if (this.bProfile.baseLocation) {
-          this.normal_locationinfo_show = 3;
+          if (this.base_loc.place === '') { // case if base location name is blank
+            this.normal_locationinfo_show = 4;
+          } else {
+            this.normal_locationinfo_show = 3;
+          }
             if (this.bProfile.baseLocation.bSchedule) {
               if (this.bProfile.baseLocation.bSchedule.timespec) {
                 if (this.bProfile.baseLocation.bSchedule.timespec.length > 0) {

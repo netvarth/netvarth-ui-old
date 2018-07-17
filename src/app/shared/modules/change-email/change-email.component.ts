@@ -85,7 +85,9 @@ export class ChangeEmailComponent implements OnInit {
         data => {
           this.step = 2;
           this.submit_data = submit_data;
-          this.api_success = Messages.OTP_SENT_EMAIL;
+          const email = (submit_data.email) ? submit_data.email : 'your email';
+          this.api_success  = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
+          // this.api_success = Messages.OTP_SENT_EMAIL;
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
