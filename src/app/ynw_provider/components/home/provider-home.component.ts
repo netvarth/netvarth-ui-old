@@ -101,6 +101,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   cronHandle: Subscription;
   cronStarted;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -863,6 +864,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   reloadActionSubheader(data) {
     this.reloadAPIs();
+  }
+
+  getStatusLabel(status) {
+    const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
+    return label_status;
   }
 
 }

@@ -161,7 +161,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
         this.dialogRef.close('reloadlist');
       },
       error => {
-
+        this.shared_functions.apiErrorAutoHide(this, error);
       }
     );
   }

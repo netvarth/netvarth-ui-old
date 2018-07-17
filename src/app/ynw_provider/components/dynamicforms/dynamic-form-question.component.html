@@ -45,6 +45,24 @@
     </mat-form-field>
 
 
+    <mat-form-field  *ngSwitchCase="'month_field'" >
+      <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"  [formControlName]="question.key" >
+        <mat-option *ngFor="let opt of question.options;first as isFirst"  [value]="opt.name" >
+            {{opt.displayName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field  *ngSwitchCase="'year_field'" >
+      <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"  [formControlName]="question.key" >
+        <mat-option *ngFor="let opt of question.options;first as isFirst"  [value]="opt.name" >
+            {{opt.displayName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
     <div class="form-check" *ngSwitchCase="'radio'" [id]="question.key">
       <mat-radio-group [formControlName]="question.key" >
           <mat-radio-button [value]="option.name"

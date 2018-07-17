@@ -124,7 +124,7 @@ export class QuestionService {
         list.push( {name: '' + i,  displayName: i});
     }
 
-    return this.createDropDownField(que, list);
+    return this.createDropDownField(que, list, 'year_field');
 
   }
 
@@ -140,16 +140,21 @@ export class QuestionService {
       {name: 'July' , displayName : 'July'},
       {name: 'August' , displayName : 'August'},
       {name: 'September' , displayName : 'September'},
-      {name: 'October ' , displayName : 'October '},
+      {name: 'October' , displayName : 'October'},
       {name: 'November' , displayName : 'November'},
-      {name: 'December ' , displayName : 'December '}
+      {name: 'December' , displayName : 'December'}
     ];
-    return this.createDropDownField(que, list);
+    return this.createDropDownField(que, list, 'month_field');
   }
 
-  createDropDownField(que , list) {
+  createDropDownField(que , list, type = null) {
     const obj = this.defaultObj(que);
     obj['options'] = list;
+
+    if (type) {
+      obj['controlType'] = type;
+    }
+
     const txt =  new DropdownQuestion(obj);
     return txt;
   }

@@ -207,6 +207,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
       .then(
         result => {
           this.getCommunicationHistory(uuid);
+        },
+        error => {
+
         }
       );
     }

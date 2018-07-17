@@ -985,6 +985,10 @@ ratingRounding(val) {
   return retval;
 }
 
+getTerminologies() {
+  return this.common_datastorage.get('terminologies');
+}
+
 getTerminologyTerm(term) {
 
   const term_only = term.replace(/[\[\]']/g, '' ); // term may me with or without '[' ']'

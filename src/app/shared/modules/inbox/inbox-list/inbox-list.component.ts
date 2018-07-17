@@ -25,7 +25,7 @@ export class InboxListComponent implements OnInit {
   userDet;
   shownomsgdiv = false;
   hide_reply_button = false;
-
+  terminologies = null;
   @Input() messages: any;
   @Input() fromsource: any;
   @Output() reloadApi = new EventEmitter<any>();
@@ -42,6 +42,7 @@ export class InboxListComponent implements OnInit {
     } else {
       this.hide_reply_button = false;
     }
+    this.terminologies = this.shared_functions.getTerminologies();
   }
 
 
@@ -60,12 +61,13 @@ export class InboxListComponent implements OnInit {
     pass_ob['source'] = source;
     pass_ob['user_id'] = message['owner']['id'];
     pass_ob['type'] = 'reply';
+    pass_ob['terminologies'] = this.terminologies;
 
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
       autoFocus: true,
-      data: pass_ob
+      data: pass_ob,
     });
 
     dialogRef.afterClosed().subscribe(result => {

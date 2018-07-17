@@ -157,13 +157,15 @@
                           <thead>
                               <tr>
                                   <th></th>
-                                  <th>Seq No</th>
+                                  <th *ngIf="time_type == 1">Seq No</th>
+                                  <th *ngIf="time_type != 1">Date</th>
                                   <th>Name</th>
                                   <th>Service</th>
                                   <th>Actions</th>
                                   <th>Payment Status</th>
+                                  <th *ngIf="time_type != 1">{{checkin_label |titlecase}} Status</th>
                                   <th>Message</th>
-                                  <th>{{customer_label |titlecase}} Note</th>
+                                  <th *ngIf="time_type == 1">{{customer_label |titlecase}} Note</th>
                                   <th></th>
                               </tr>
                           </thead>
@@ -172,12 +174,18 @@
                                   <td class="online">
                                     <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'"></span>
                                   </td>
-                                  <td data-title="Seq No" class="seq pointer-cursor" (click)="goCheckinDetail(checkin)">
-                                    <ng-container  *ngIf="checkin.token">#{{checkin.token}}</ng-container></td>
-                                  <td data-title="Name" class="name" *ngIf="checkin.consumer">
+                                  <td data-title="Seq No" class="seq pointer-cursor"
+                                  *ngIf="time_type ==1" (click)="goCheckinDetail(checkin)">
+                                    <ng-container  *ngIf="checkin.token">#{{checkin.token}}</ng-container>
+                                  </td>
+                                  <td data-title="Date" class="date pointer-cursor"
+                                  *ngIf="time_type !=1" (click)="goCheckinDetail(checkin)">
+                                  {{checkin.date | date:dateFormat}}
+                                  </td>
+                                  <td data-title="Name" class="name pointer-cursor" *ngIf="checkin.consumer" (click)="goCheckinDetail(checkin)">
                                     {{checkin.consumer.userProfile.firstName}}  {{checkin.consumer.userProfile.lastName}}
                                     <span class="icon-arrived" title="{{arrived_upper}}"  *ngIf="checkin.waitlistStatus == 'arrived'">
-                                      <span class="arrived">{{arrived_upper}}</span>
+                                      <span class="arrived" *ngIf="time_type==1">{{arrived_upper}}</span>
                                     </span>
                                   </td>
                                   <td data-title="Service" class="service">{{checkin.service.name}}</td>
@@ -232,9 +240,13 @@
 
                                     </ng-container>
                                   </td>
+                                  <td data-title="{{checkin_label |titlecase}} Status" class="checkin_status {{checkin.waitlistStatus}}"
+                                  *ngIf="time_type !=1">
+                                    {{getStatusLabel(checkin.waitlistStatus)}}
+                                  </td>
                                   <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td>
-                                  <td data-title="{{customer_label |titlecase}} Note" class="cnote">
+                                  <td data-title="{{customer_label |titlecase}} Note" class="cnote" *ngIf="time_type ==1">
                                     <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
@@ -266,6 +278,11 @@
                                           (checkin.waitlistStatus == 'cancelled' || checkin.waitlistStatus == 'arrived' ||
                                           checkin.waitlistStatus == 'started')">
                                             Change Status to {{checkin_label}}
+                                          </button>
+                                          <button type="button"  mat-menu-item
+                                          *ngIf="time_type!=1 && checkin.consumerNote"
+                                          (click)="showConsumerNote(checkin)">
+                                           View {{customer_label |titlecase}} Note
                                           </button>
                                       </mat-menu>
                                   </span>

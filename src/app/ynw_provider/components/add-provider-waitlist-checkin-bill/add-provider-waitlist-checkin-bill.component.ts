@@ -194,8 +194,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.provider_services.domainSubdomainSettings(domain, sub_domain)
       .subscribe(
-        data => {
-          resolve();
+        (data: any) => {
+          if (data.serviceBillable === false) {
+            reject();
+          } else {
+            resolve();
+          }
         },
         error => {
          reject(error);

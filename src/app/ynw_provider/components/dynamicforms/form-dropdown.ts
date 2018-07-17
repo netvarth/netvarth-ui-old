@@ -7,6 +7,7 @@ export class DropdownQuestion extends FormBase<string> {
   constructor(options: {} = {}) {
     super(options);
     this.options = options['options'] || [];
+    this.controlType = options['controlType'];
     // this.value =  this.value || this.options[0]['name'];
   }
 }
