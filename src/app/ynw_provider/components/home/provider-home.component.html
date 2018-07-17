@@ -183,7 +183,7 @@
                                   {{checkin.date | date:dateFormat}}
                                   </td>
                                   <td data-title="Name" class="name pointer-cursor" *ngIf="checkin.consumer" (click)="goCheckinDetail(checkin)">
-                                    {{checkin.consumer.userProfile.firstName}}  {{checkin.consumer.userProfile.lastName}}
+                                    {{checkin.waitlistingFor[0].firstName}}  {{checkin.waitlistingFor[0].lastName}}
                                     <span class="icon-arrived" title="{{arrived_upper}}"  *ngIf="checkin.waitlistStatus == 'arrived'">
                                       <span class="arrived" *ngIf="time_type==1">{{arrived_upper}}</span>
                                     </span>

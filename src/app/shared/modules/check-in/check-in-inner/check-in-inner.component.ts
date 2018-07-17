@@ -73,6 +73,8 @@ export class CheckInInnerComponent implements OnInit {
     main_heading;
     dispCustomernote = false;
     CweekDays = {0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat'};
+    queueQryExecuted = false;
+
 
     @Input() data: any =  [];
     @Output() returntoParent = new EventEmitter<any>();
@@ -91,12 +93,12 @@ export class CheckInInnerComponent implements OnInit {
     }
 
     ngOnInit() {
-      console.log('check-inpassed data', this.data);
+      // console.log('check-inpassed data', this.data);
       this.customer_data = this.data.customer_data || [];
       if (this.data.moreparams.terminologies) {
         this.terminologiesjson = this.data.moreparams.terminologies;
       }
-      // console.log('init', this.customer_data);
+      // // console.log('init', this.customer_data);
       if (this.data.fromKiosk !== undefined) {
         if (this.data.fromKiosk) {
           this.fromKiosk = true;
@@ -131,10 +133,17 @@ export class CheckInInnerComponent implements OnInit {
       const dtoday = yyyy + '-' + cmon + '-' + cday;
 
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+      // console.log('custdata', this.customer_data, 'loggedinuser', this.loggedinuser, 'kiosk', this.fromKiosk);
       if (this.page_source === 'provider_checkin') {
-          this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+          // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+          if (this.fromKiosk) {
+            this.waitlist_for.push ({id: this.customer_data.id, name: this.customer_data.name});
+          } else {
+            this.waitlist_for.push ({id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName});
+          }
       } else {
-        this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+       // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+        this.waitlist_for.push ({id: this.loggedinuser.id, name: this.loggedinuser.firstName + ' ' + this.loggedinuser.lastName});
       }
       if (this.page_source === 'searchlist_checkin') { // case check-in from search result page
 
@@ -190,7 +199,7 @@ export class CheckInInnerComponent implements OnInit {
           // console.log ('paymodes', this.paymentModes);
         },
       error => {
-        console.log ('error', error);
+        // console.log ('error', error);
       });
     }
     getFamilyMembers() {
@@ -200,20 +209,44 @@ export class CheckInInnerComponent implements OnInit {
 
       if (this.page_source === 'provider_checkin') {
         fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-        self_obj = {
+        /*self_obj = {
           'userProfile': {
             'id': this.customer_data.id,
             'firstName': 'Self',
             'lastName' : ''
           }
-        };
+        };*/
+        if (this.fromKiosk) {
+          self_obj = {
+            'userProfile': {
+              'id': this.customer_data.id,
+              'firstName': this.customer_data.name,
+              'lastName' : ''
+            }
+          };
+        } else {
+          self_obj = {
+            'userProfile': {
+              'id': this.customer_data.id,
+              'firstName': this.customer_data.userProfile.firstName,
+              'lastName' : this.customer_data.userProfile.lastName
+            }
+          };
+        }
       } else {
         fn = this.shared_services.getConsumerFamilyMembers();
-         self_obj = {
+         /*self_obj = {
           'userProfile': {
             'id': this.loggedinuser.id,
             'firstName': 'Self',
             'lastName' : ''
+          }
+         };*/
+        self_obj = {
+          'userProfile': {
+            'id': this.loggedinuser.id,
+            'firstName': this.loggedinuser.firstName,
+            'lastName' : this.loggedinuser.lastName
           }
         };
       }
@@ -238,10 +271,15 @@ export class CheckInInnerComponent implements OnInit {
                     res => {
                       this.s3url = res;
                       this.getbusinessprofiledetails_json('settings', true);
+                      // console.log('terminologies ext', this.terminologiesjson);
                       if (!this.terminologiesjson) {
                         this.getbusinessprofiledetails_json('terminologies', true);
                       } else {
-                        this.provider_datastorage.set('terminologies', this.terminologiesjson);
+                        if (this.terminologiesjson.length === 0) {
+                          this.getbusinessprofiledetails_json('terminologies', true);
+                        } else {
+                          this.provider_datastorage.set('terminologies', this.terminologiesjson);
+                        }
                       }
                     },
                     error => { }
@@ -278,6 +316,7 @@ export class CheckInInnerComponent implements OnInit {
     }
 
     getServicebyLocationId(locid, pdate) {
+      this.resetApi();
       this.shared_services.getServicesByLocationId (locid)
         .subscribe ( data => {
             this.servicesjson = data;
@@ -319,13 +358,16 @@ export class CheckInInnerComponent implements OnInit {
     }
 
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+      this.queueQryExecuted = false;
        this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
         .subscribe( data => {
           this.queuejson = data;
+          this.queueQryExecuted = true;
           // console.log('q json', this.queuejson);
           if (this.queuejson.length > 0) {
               this.sel_queue_id = this.queuejson[0].id;
-              this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
+              // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
+              this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[0].queueWaitingTime);
               this.sel_queue_servicetime = this.queuejson[0].serviceTime || '';
               this.sel_queue_name = this.queuejson[0].name;
           } else {
@@ -346,6 +388,7 @@ export class CheckInInnerComponent implements OnInit {
     this.queuejson = [];
     this.sel_queue_id = 0;
     this.sel_queue_waitingmins = 0;
+    this.sel_queue_servicetime = '';
     this.sel_queue_name = '';
     this.resetApi();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
@@ -372,9 +415,13 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   handleQueueSel(obj) {
+    this.resetApi();
+    // this.queueReloaded = false;
     this.sel_queue_id = obj.id;
-    this.sel_queue_waitingmins = obj.queueWaitingTime;
+    this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(obj.queueWaitingTime);
+    this.sel_queue_servicetime = obj.serviceTime || '';
     this.sel_queue_name = obj.name;
+    // this.queueReloaded = true;
   }
 
   handleFuturetoggle() {
@@ -541,7 +588,20 @@ export class CheckInInnerComponent implements OnInit {
     }
     this.step = cstep;
     if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-      this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+      // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+
+      if (this.page_source === 'provider_checkin') {
+        // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+        if (this.fromKiosk) {
+          this.waitlist_for.push ({id: this.customer_data.id, name: this.customer_data.name});
+        } else {
+          this.waitlist_for.push ({id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName});
+        }
+      } else {
+      // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+        this.waitlist_for.push ({id: this.loggedinuser.id, name: this.loggedinuser.firstName + ' ' + this.loggedinuser.lastName});
+      }
+
     }
   }
   showCheckinButtonCaption() {
@@ -717,6 +777,7 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   calculateDate(days) {
+    this.resetApi();
     const date = new Date(this.sel_checkindate);
     const newdate = new Date(date);
 

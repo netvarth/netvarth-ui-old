@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() includedfrom: string;
   @Input() passedDomain: string;
   @Input() passedkwdet: any =  [];
+  @Input() passedRefine: any =  [];
   @Output() searchclick = new EventEmitter<any>();
   userdet: any = [];
   headercls = '';
@@ -111,6 +112,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
    // console.log('passeddomain', this.passedDomain);
    // console.log('passedkw', this.passedkwdet);
+   // console.log('passedRefine', this.passedRefine);
     this.getUserdetails();
     this.getBusinessdetFromLocalstorage();
     // this.handleHeaderclassbasedonURL();

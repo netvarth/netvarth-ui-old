@@ -48,6 +48,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   @Input() includedfrom: any;
   @Input() passedDomain: string;
   @Input() passedkwdet: any =  [];
+  @Input() passedRefine: any =  [];
   @Output() searchclick = new EventEmitter<any>();
 
   myControl_prov: FormControl = new FormControl();
@@ -138,6 +139,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   ngOnInit() {
     // console.log('srch pass kw', this.passedkwdet);
+   // console.log('Refined search ', this.passedRefine);
     if (this.passedkwdet.kwtyp === 'label') {
       if (this.passedkwdet.kwdomain !== '' && this.passedkwdet.kwdomain !== undefined) {
         this.curlabel.typ = 'label';
@@ -600,14 +602,23 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
 
   getAllsearchlabels() {
-    this.shared_service.getAllSearchlabels()
-    .subscribe (
-      res => {
-        this.searchlabels_data = res || [];
-        this.searchdataserviceobj.set(this.searchlabels_data);
-        this.handledomainchange(this.selected_domain, 1);
-      }
-    );
+    // check whether search labels exists in local storage
+    const srchlabels = this.shared_functions.getitemfromLocalStorage('srchLabels');
+    if (srchlabels) {
+      this.searchlabels_data = srchlabels || [];
+      this.searchdataserviceobj.set(this.searchlabels_data);
+      this.handledomainchange(this.selected_domain, 1);
+    } else {
+      this.shared_service.getAllSearchlabels()
+      .subscribe (
+        res => {
+          this.searchlabels_data = res || [];
+          this.shared_functions.setitemonLocalStorage('srchLabels', res);
+          this.searchdataserviceobj.set(this.searchlabels_data);
+          this.handledomainchange(this.selected_domain, 1);
+        }
+      );
+    }
   }
  /*private do_domain_sel(domainname) {
     this.selected_domain = domainname;

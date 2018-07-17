@@ -26,7 +26,7 @@ export class CheckInComponent implements OnInit {
     public _sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-      console.log('check-inpassed outer', data);
+      // console.log('check-inpassed outer', data);
       this.customer_data = this.data || [];
       this.page_source = this.data.moreparams.source;
       this.showinner = true;
@@ -37,7 +37,7 @@ export class CheckInComponent implements OnInit {
     }
     handleCheckinReturn(retVal) {
       if (retVal === 'reloadlist') {
-        console.log('returned from inner ', retVal);
+        // console.log('returned from inner ', retVal);
         this.dialogRef.close('reloadlist');
       }
     }

@@ -59,7 +59,7 @@
   <div class="more-opt" [class.show]="showmoreoptionsSec" >
     <span class="closebtn" (click)="closeMoreoptions()"></span>
     <div class="mo-content">
-        <app-search-moreoptions  (searchmoreclick)="handleSearchmoreSearchClick($event)"></app-search-moreoptions>
+        <app-search-moreoptions  (searchmoreclick)="handleSearchmoreSearchClick($event)" [passedRefine]="passedRefine"></app-search-moreoptions>
     </div>
   </div>
 </ng-container>
