@@ -34,7 +34,7 @@
                   </div>
               </div>
 
-              <div class="qlst" *ngIf="time_type ==1 && queues.length != 0">
+              <div class="qlst" *ngIf="time_type ==1 && queues.length > 1">
                   <ul>
                       <li
                       [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
@@ -270,7 +270,7 @@
                                           (click)="changeWaitlistStatus(checkin, 'REPORT')"
                                           *ngIf="time_type!=0 &&
                                           (checkin.waitlistStatus == 'started')">
-                                            Change Status to {{arrived_upper}} 
+                                            Change Status to {{arrived_upper}}
                                           </button> -->
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
