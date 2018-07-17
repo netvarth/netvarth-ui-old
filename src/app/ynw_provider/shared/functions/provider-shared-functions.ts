@@ -6,12 +6,13 @@ import {SharedFunctions} from '../../../shared/functions/shared-functions';
 import { AddProviderWaitlistQueuesComponent } from '../../components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-
+import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 @Injectable()
 export class ProviderSharedFuctions {
 
     constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
-    public shared_functions: SharedFunctions) {
+    public shared_functions: SharedFunctions,
+    public common_datastorage: CommonDataStorageService) {
 
     }
 
@@ -174,6 +175,7 @@ export class ProviderSharedFuctions {
   }
 
   addConsumerInboxMessage(uuid) {
+    const terminologies = this.common_datastorage.get('terminologies');
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
         width: '50%',
@@ -181,7 +183,8 @@ export class ProviderSharedFuctions {
         data: {
           uuid : uuid,
           source: 'provider-waitlist',
-          type: 'send'
+          type: 'send',
+          terminologies: terminologies
         }
       });
 

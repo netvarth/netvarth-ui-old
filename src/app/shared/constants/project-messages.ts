@@ -156,4 +156,7 @@ export const Messages = {
   // Consumer Dashboard
 
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
+
+  // Dynamic Field
+  'YEAR_MONTH_VALID' : 'Future date not allowed'
 };

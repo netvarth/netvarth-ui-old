@@ -32,6 +32,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   };
   payment_popup = null;
   source = 'payment-history';
+  payment_loading = false;
+
   constructor(
     public dialogRef: MatDialogRef<ProviderLicenceInvoiceDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,6 +58,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
 
     this.invoiceDetail();
     if (this.payment_status === 'NotPaid' && this.source !== 'payment-history') {
+      this.payment_loading = true;
       this.getPaymentModes();
     } else if (this.payment_status === 'Paid') {
       this.getPaymentDetails();
@@ -84,6 +87,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     .subscribe(
       data => {
         this.payment_modes = data;
+        this.payment_loading = false;
       },
       error => {
         this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
@@ -108,10 +112,11 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0 && this.pay_data.paymentMode) {
 
+      this.payment_loading = true;
+
       this.provider_services.providerPayment(this.pay_data)
       .subscribe(
         data => {
-
           this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
           setTimeout(() => {
             console.log(this.document.getElementById('payuform'));
@@ -119,6 +124,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           }, 2000);
         },
         error => {
+          this.payment_loading = false;
           this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );

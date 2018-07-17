@@ -21,6 +21,7 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.errors = this.messages[this.question.key] || [];
+   // console.log(this.question);
    // console.log(this.form.controls);
     // if (this.question.controlType === 'datagrid') {
     //   if (this.checkGridValue()) {
