@@ -202,6 +202,7 @@ export class CheckInInnerComponent implements OnInit {
             // console.log ('paymodes', this.paymentModes);
           },
         error => {
+          this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           // console.log ('error', error);
         });
       }

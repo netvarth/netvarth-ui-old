@@ -117,7 +117,7 @@ export class SharedFunctions {
                 if (error.status === 401) {
                 // Not registred consumer or session alredy exists
                     reject(error);
-                    this.logout();
+                    // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
                 } else {
                     console.log('Something went wrong. Please try after sometime');
                     if (error.error && typeof(error.error) === 'object') {
@@ -178,7 +178,7 @@ export class SharedFunctions {
               this.sendMessage({ttype: 'main_loading' , action: false});
               if (error.status === 401) {
                 reject(error);
-                this.logout();
+                // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
               } else {
                 console.log('Something went wrong. Please try after sometime', error);
                 if (error.error && typeof(error.error) === 'object') {
