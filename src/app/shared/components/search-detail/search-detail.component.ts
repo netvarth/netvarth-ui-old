@@ -1493,7 +1493,7 @@ setEnvironment(bypassotherfunction?) {
         this.shared_functions.sendMessage(pdata);
         this.shared_functions.sendMessage({ttype: 'main_loading', action: false});
         if (passParam['callback'] === 'communicate') {
-            this.showCommunicate(passParam['providerId']);
+            this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
             this.showProviderDetails(passParam['providerId']);
         } else {
@@ -1567,7 +1567,9 @@ setEnvironment(bypassotherfunction?) {
   hidemore(indx) {
     this.searchrefine_arr[indx]['showhiddendet'] = false;
   }
-  communicateHandler(obj) {
+  communicateHandler(search_result) {
+    const name = search_result.fields.title || null; // providername
+    const obj = search_result.id || null;
     if (obj) {
       const arr = obj.split('-');
       const providforCommunicate = arr[0];
@@ -1576,22 +1578,23 @@ setEnvironment(bypassotherfunction?) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {
          // console.log('communicate provid ', providforCommunicate);
-          this.showCommunicate(providforCommunicate);
+          this.showCommunicate(providforCommunicate, name);
         }
       } else { // show consumer login
-        const passParam = {callback: 'communicate', providerId: providforCommunicate };
+        const passParam = {callback: 'communicate', providerId: providforCommunicate, provider_name: name };
         this.doLogin('consumer', passParam);
       }
     }
   }
-  showCommunicate(provid) {
+  showCommunicate(provid, provider_name) {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
      data: {
        user_id : provid,
        source: 'consumer-common',
-       type: 'send'
+       type: 'send',
+       name: provider_name
      }
    });
 

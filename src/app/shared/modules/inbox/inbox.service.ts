@@ -28,4 +28,8 @@ export class InboxServices {
         }
         return this.servicemeta.httpPost(url, data);
     }
+
+    getBussinessProfile() {
+      return this.servicemeta.httpGet('provider/bProfile');
+    }
 }

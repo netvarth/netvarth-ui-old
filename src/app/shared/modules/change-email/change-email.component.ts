@@ -122,6 +122,8 @@ export class ChangeEmailComponent implements OnInit {
 
     onOtpSubmit(submit_data) {
 
+      this.resetApiErrors();
+
       const post_data = {'loginId': this.submit_data.email};
       this.shared_services.verifyNewPhoneOTP(submit_data.phone_otp, post_data, this.shared_functions.isBusinessOwner('returntyp'))
       .subscribe(

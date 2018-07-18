@@ -39,6 +39,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     api_success = null;
     api_error = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
     today = new Date();
     customer_label = '';
     provider_label = '';

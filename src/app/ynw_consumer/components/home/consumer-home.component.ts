@@ -412,6 +412,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.provider.id;
+    pass_ob['name'] = waitlist.provider.businessName;
     this.addNote(pass_ob);
 
   }
@@ -420,6 +421,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-common';
     pass_ob['user_id'] = provider.id;
+    pass_ob['name'] = provider.businessName;
     this.addNote(pass_ob);
   }
 

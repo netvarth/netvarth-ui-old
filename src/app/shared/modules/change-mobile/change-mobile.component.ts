@@ -123,12 +123,13 @@ export class ChangeMobileComponent implements OnInit {
 
     onOtpSubmit(submit_data) {
 
+      this.resetApiErrors();
+
       const post_data = {'loginId': this.submit_data.phonenumber};
       this.shared_services.verifyNewPhoneOTP(submit_data.phone_otp, post_data, this.shared_functions.isBusinessOwner('returntyp'))
       .subscribe(
         data => {
          // this.api_success = Messages.PHONE_VERIFIED;
-         this.resetApiErrors();
          this.api_success = null;
           this.shared_functions.openSnackBar(Messages.PHONE_VERIFIED);
           const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable

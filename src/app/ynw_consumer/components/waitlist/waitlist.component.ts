@@ -81,6 +81,7 @@ export class WaitlistComponent implements OnInit {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.provider.id;
+    pass_ob['name'] = waitlist.provider.businessName;
     this.addNote(pass_ob);
 
   }

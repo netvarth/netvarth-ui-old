@@ -27,7 +27,7 @@
                           </div>
                           <div class="rt">
                               <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)"><span class="icon-favourite-filled"></span></div>
-                           
+
                           </div>
                       </div>
 
@@ -39,16 +39,23 @@
                                     {{user.firstName}} {{user.lastName}}
                                   </span>
                               </div>
-                              <div class="lt0" *ngIf="!waitlist.future">
-                                  Estimated Time <span class="time now">
-                                    {{waitlist.estimated_time }}</span>
-                              </div>
-                              <div class="lt0" *ngIf="waitlist.future">
-                                  Check-In Time  <span class="time now">
-                                      {{waitlist.date | date: dateFormat }}
-                                      {{waitlist.estimated_time | date: timeFormat}}
-                                    </span>
-                              </div>
+
+                              <ng-container *ngIf="waitlist.waitlistStatus == 'checkedIn'  ||
+                              waitlist.waitlistStatus == 'arrived' ">
+
+                                  <div class="lt0" *ngIf="!waitlist.future">
+                                      Estimated Time <span class="time now">
+                                        {{waitlist.estimated_time }}</span>
+                                  </div>
+                                  <div class="lt0" *ngIf="waitlist.future">
+                                      Check-In Time  <span class="time now">
+                                          {{waitlist.date | date: dateFormat }}
+                                          {{waitlist.estimated_time | date: timeFormat}}
+                                        </span>
+                                  </div>
+
+                              </ng-container>
+
                               <div class="lt0" *ngIf="waitlist.token">
                                   Token No <span class="token">{{waitlist.token}}</span>
                               </div>

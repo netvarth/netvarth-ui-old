@@ -1,6 +1,6 @@
 <h1 class="mat-dialog-title">Choose Your Location in the MAP  <span>Mark your location by clicking on the map or by dragging the Marker</span> <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
-    
+
 
 <mat-accordion > <!-- older class obtained-address-outer-->
     <mat-expansion-panel *ngIf="mapaddress.length>1" [expanded]="true">
@@ -21,8 +21,8 @@
 </mat-accordion>
 
 <div>
- <input id="pac-input"  autocorrect="off" autocapitalize="off" spellcheck="off" 
- type="text" #search placeholder="Enter a location">
+ <input id="pac-input"  autocorrect="off" autocapitalize="off" spellcheck="off"
+ type="text" #search placeholder="Enter a location" [style.visibility]="!show_search ? 'hidden': 'initial'">
 </div>
 <div #gmap style='width:100%;height:400px'></div>
 </mat-dialog-content>

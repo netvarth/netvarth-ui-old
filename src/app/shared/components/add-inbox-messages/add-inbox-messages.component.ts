@@ -27,6 +27,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   message_label = null;
   api_loading = true;
   terminologies = null;
+  receiver_name = null;
 
   title = 'Send Message';
   constructor(
@@ -43,6 +44,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         this.user_id = this.data.user_id || null;
         this.uuid = this.data.uuid || null;
         this.source = this.data.source || null;
+        this.receiver_name = this.data.name || null;
 
         this.terminologies = data.terminologies;
         // console.log(data.terminologies);
@@ -102,7 +104,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
 
   setLabel () {
     this.api_loading = false;
-    const provider_label = (this.terminologies && this.terminologies['provider']) ? this.terminologies['provider'] : 'provider';
+    let provider_label = this.receiver_name;
+    if (!provider_label) {
+      provider_label = (this.terminologies && this.terminologies['provider']) ? this.terminologies['provider'] : 'provider';
+    }
     const consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
 
     switch (this.source) {
@@ -119,6 +124,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit (form_data) {
+
+    this.resetApiErrors();
+
     const post_data =  {
           communicationMessage: form_data.message
       };

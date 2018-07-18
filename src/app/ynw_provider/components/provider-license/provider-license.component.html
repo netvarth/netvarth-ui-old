@@ -27,7 +27,8 @@
                                           <span class="cs-btn bt7" (click)="showLicenceHistory()">License Change History</span>
                                           <span class="cs-btn bt7" (click)="showLicenseUsage()">License Usage</span>
                                       </div>
-                                      <div class="subs">
+                                      <div class="subs" *ngIf="license_upgarde_sub['price'] != 0">
+                                          <!--- If it is gold free trial no need of subcription 0.00/month and also for basic package -->
                                           <h4>Subscription</h4>
 
                                           <span class="ttle">You have currently enrolled to</span>

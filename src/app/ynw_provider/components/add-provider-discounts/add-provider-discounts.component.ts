@@ -55,7 +55,10 @@ export class AddProviderDiscountsComponent implements OnInit {
     });
   }
   onSubmit (form_data) {
-        if (isNaN(form_data.discValue)) {
+
+    this.resetApiErrors();
+
+    if (isNaN(form_data.discValue)) {
           if (form_data.calculationType === 'Percentage') {
             this.api_error = 'Please enter a numeric discount percentage value';
           } else {
@@ -113,7 +116,7 @@ export class AddProviderDiscountsComponent implements OnInit {
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
     );
   }
