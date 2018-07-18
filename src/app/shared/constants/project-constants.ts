@@ -142,7 +142,8 @@ export const projectConstants = {
                             'autoname': 'All of Bangalore, Karnataka',
                             'name': 'Bangalore',
                             'lat': '12.971599',
-                            'lon': '77.594563'
+                            'lon': '77.594563',
+                            'typ' : 'state'
                           },
 MAP_ZOOM: 15,
 MAP_BASE_URL: 'https://www.google.com/maps/place/', // this is used to implement google map related API calls

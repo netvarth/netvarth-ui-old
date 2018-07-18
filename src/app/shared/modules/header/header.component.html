@@ -100,6 +100,10 @@
                                     <i class="icon-angle-down"></i>
                                 </button>
                                     <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="redirectto('dashboard')">
+                                            <i class="icon-dashboard"></i>
+                                            <span>Dashboard</span>
+                                    </button>    
                                     <button mat-menu-item (click)="redirectto('profile')">
                                             <i class="icon-profile"></i>
                                             <span>Profile</span>

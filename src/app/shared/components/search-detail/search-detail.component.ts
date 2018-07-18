@@ -13,6 +13,7 @@ import { SearchDetailServices } from '../search-detail/search-detail-services.se
 import { SharedFunctions } from '../../functions/shared-functions';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { LoginComponent } from '../../components/login/login.component';
+import { SignUpComponent } from '../../components/signup/signup.component';
 
 import { SearchFields } from '../../modules/search/searchfields';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -21,6 +22,8 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
+
+
 @Component({
   selector: 'app-search-detail',
   templateUrl: './search-detail.component.html',
@@ -134,13 +137,15 @@ getDomainListMain() {
     const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
     if (bconfig) { // case if data is there in local storage
-      const bdate = bconfig.cdate;
-      const bdata = bconfig.bdata;
-      const saveddate = new Date(bdate);
-      const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
-      if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
-        run_api = false;
-        resolve(bdata);
+      if (bconfig.bdata) {
+        const bdate = bconfig.cdate;
+        const bdata = bconfig.bdata;
+        const saveddate = new Date(bdate);
+        const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+          run_api = false;
+          resolve(bdata);
+        }
       }
     }
     if (run_api) { // case if data is not there in data
@@ -294,6 +299,27 @@ setEnvironment(bypassotherfunction?) {
       );
     }
   }*/
+  checklocationExistsinStorage() {
+      const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
+
+     // if (!localloc) {
+        const holdLocObj = {
+                          autoname:  this.locautoname  || '',
+                          name: this.locname || '',
+                          lat: this.latitude  || '',
+                          lon: this.longitude || '',
+                          typ: this.loctype  || ''
+        };
+        if (this.locname === '') {
+          holdLocObj.autoname = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
+          holdLocObj.name =  projectConstants.SEARCH_DEFAULT_LOCATION.name;
+          holdLocObj.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
+          holdLocObj.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
+          holdLocObj.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
+        }
+        this.shared_functions.setitemonLocalStorage('ynw-locdet', holdLocObj);
+     // }
+  }
 
   setSearchfields(obj, src) {
     // console.log('src', src, 'details', obj);
@@ -312,7 +338,7 @@ setEnvironment(bypassotherfunction?) {
       this.kwtyp = obj.kwtyp;
       this.labelq = this.shared_functions.Lbase64Decode(obj.lq) || '';
       this.commonfilters = obj.cfilter || '';
-
+      this.checklocationExistsinStorage();
       this.kwdet = {
         kw: this.kw,
         kwautoname: this.kwautoname,
@@ -388,6 +414,7 @@ setEnvironment(bypassotherfunction?) {
       this.kwdomain = obj.kwdomain;
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;
+      this.checklocationExistsinStorage();
       this.getlistofSubdomains(this.domain);
      // console.log('kwtyp', this.kwtyp);
      // console.log('obj', obj);
@@ -1473,6 +1500,32 @@ setEnvironment(bypassotherfunction?) {
       this.doLogin('consumer', passParam);
     }
   }
+  doSignup(passParam?) {
+    // this.api_loading = false;
+    const dialogRef = this.dialog.open(SignUpComponent, {
+      width: '50%',
+      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+      data: {
+        is_provider : 'false',
+        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.shared_functions.sendMessage(pdata);
+        this.shared_functions.sendMessage({ttype: 'main_loading', action: false});
+        if (passParam['callback'] === 'communicate') {
+            this.showCommunicate(passParam['providerId']);
+        } else if (passParam['callback'] === 'providerdetail') {
+            this.showProviderDetails(passParam['providerId']);
+        } else {
+            this.showCheckin('consumer');
+        }
+      }
+    });
+  }
 
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
@@ -1487,7 +1540,7 @@ setEnvironment(bypassotherfunction?) {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log('login return ', result);
+      // console.log('login / signup return ', result);
       if (result === 'success') {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
@@ -1499,6 +1552,8 @@ setEnvironment(bypassotherfunction?) {
         } else {
             this.showCheckin('consumer');
         }
+      } else if (result === 'showsignup') {
+        this.doSignup(passParam);
       }
     });
 
@@ -1584,6 +1639,7 @@ setEnvironment(bypassotherfunction?) {
       }
     }
   }
+ 
   showCommunicate(provid) {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',

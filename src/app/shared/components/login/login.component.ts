@@ -118,19 +118,23 @@ export class LoginComponent implements OnInit {
     this.step = 1;
   }
   doSignup() {
-    this.api_loading = false;
-    this.dialogRef.close(); // closing the signin window
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
-      data: { is_provider : this.is_provider}
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
-      // this.animal = result;
-    });
+    if (this.moreParams['source'] === 'searchlist_checkin') {
+      this.dialogRef.close('showsignup');
+    } else {
+      this.api_loading = false;
+      this.dialogRef.close(); // closing the signin window
+      const dialogRef = this.dialog.open(SignUpComponent, {
+        width: '50%',
+        panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+        data: { is_provider : this.is_provider}
+      });
 
+      dialogRef.afterClosed().subscribe(result => {
+        // console.log('The dialog was closed');
+        // this.animal = result;
+      });
+    }
   }
 
   resetApiErrors() {

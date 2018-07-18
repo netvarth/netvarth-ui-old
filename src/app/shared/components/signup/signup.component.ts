@@ -35,6 +35,7 @@ export class SignUpComponent implements OnInit {
   user_details;
   domainIsthere;
   selectedpackage;
+  moreParams;
   heading = 'Activation Process';
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
@@ -45,11 +46,13 @@ export class SignUpComponent implements OnInit {
     public shared_functions: SharedFunctions
     ) {
         this.is_provider = data.is_provider || 'true';
-        console.log('signup', data);
+        // console.log('signup', data);
      }
 
      ngOnInit() {
       this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
+      this.moreParams = this.data.moreParams;
+      // console.log('more params begining signup', this.moreParams);
       if (this.data.moreOptions === undefined) {
         this.data.moreOptions = { isCreateProv: false};
       }
@@ -66,7 +69,7 @@ export class SignUpComponent implements OnInit {
              // this.setDomain(0);
           },
           error => {
-              console.log(error);
+              // console.log(error);
           }
         );
 
@@ -258,7 +261,7 @@ export class SignUpComponent implements OnInit {
       this.shared_services.signUpConsumer(user_details)
       .subscribe(
         data => {
-          console.log(user_details);
+          // console.log(user_details);
             this.createForm(2);
             if (user_details.userProfile &&
               user_details.userProfile.email) {
@@ -269,7 +272,7 @@ export class SignUpComponent implements OnInit {
               }
         },
         error => {
-            console.log(error);
+            // console.log(error);
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
@@ -280,11 +283,11 @@ export class SignUpComponent implements OnInit {
 
       this.resetApiErrors();
 
-      console.log(user_details);
+      // console.log(user_details);
       this.shared_services.signUpProvider(user_details)
       .subscribe(
         data => {
-            console.log(user_details);
+            // console.log(user_details);
             this.createForm(2);
             if (user_details.userProfile &&
               user_details.userProfile.email) {
@@ -295,7 +298,7 @@ export class SignUpComponent implements OnInit {
               }
         },
         error => {
-            console.log(error);
+            // console.log(error);
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
@@ -313,7 +316,7 @@ export class SignUpComponent implements OnInit {
                   this.createForm(3);
                 },
                 error => {
-                  console.log(error);
+                  // console.log(error);
                   this.api_error = this.shared_functions.getProjectErrorMesssages(error);
                 }
               );
@@ -325,7 +328,7 @@ export class SignUpComponent implements OnInit {
               this.createForm(3);
             },
             error => {
-              console.log(error);
+              // console.log(error);
               this.api_error = this.shared_functions.getProjectErrorMesssages(error);
             }
           );
@@ -335,6 +338,7 @@ export class SignUpComponent implements OnInit {
 
     onPasswordSubmit(submit_data) {
       this.resetApiErrors();
+      const ob = this;
       const post_data = { password: submit_data.new_password };
 
       if (this.is_provider === 'true') {
@@ -352,7 +356,7 @@ export class SignUpComponent implements OnInit {
             this.shared_functions.providerLogin(login_data);
           },
           error => {
-            console.log(error);
+            // console.log(error);
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
@@ -365,11 +369,19 @@ export class SignUpComponent implements OnInit {
                 'loginId': this.user_details.userProfile.primaryMobileNo,
                 'password': post_data.password
               };
-              this.dialogRef.close();
-              this.shared_functions.consumerLogin(login_data);
+              // this.dialogRef.close();
+              // console.log('more params after signup', this.moreParams);
+              this.shared_functions.consumerLogin(login_data, this.moreParams)
+              .then(
+                success =>  { this.dialogRef.close('success'); },
+                error => {
+                  ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                  // this.api_loading = false;
+                }
+              );
             },
             error => {
-              console.log(error);
+              // console.log(error);
               this.api_error = this.shared_functions.getProjectErrorMesssages(error);
             }
           );
@@ -406,7 +418,7 @@ export class SignUpComponent implements OnInit {
 
     setMessage (type, data) {
       this.api_error = '';
-      console.log('setmsg', type, data);
+      // console.log('setmsg', type, data);
       if (type === 'email') {
         const email = (data) ? data : 'your email';
         this.api_success  = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);

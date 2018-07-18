@@ -274,6 +274,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       case 'members':
         this.router.navigate([usertype, 'members']);
       break;
+      case 'dashboard':
+        this.router.navigate([usertype]);
+      break;
     }
   }
   switchtoConsumer() {

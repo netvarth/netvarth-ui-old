@@ -143,7 +143,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
     this.email_json = [];
     this.phone_json = [];
     if (this.curtype === 'phone') { // case of phone numbers
-      if (this.phonelabel === '' || this.phonenumber === '') {
+      if (this.phonelabel === '' && this.phonenumber === '') {
         this.api_error = Messages.BPROFILE_PHONEDET;
         return;
       }
@@ -200,7 +200,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
 
     } else if (this.curtype === 'email') { // case of email ids
 
-      if (this.emaillabel === '' || this.emailemailid === '') {
+      if (this.emaillabel === '' && this.emailemailid === '') {
         this.api_error = Messages.BPROFILE_EMAILDET;
         return;
       }

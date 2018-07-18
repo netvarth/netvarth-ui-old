@@ -149,10 +149,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // console.log('included from', this.includedfrom);
     this.selected_domain = 'All';
     if (this.domainlistpassed.length > 0) {
+      // console.log('reached exists');
        this.domainlist_data = this.domainlistpassed;
        this.loadkeywordAPIreponsetoArray();
     } else {
-       // console.log('reached here');
+        // console.log('reached not exists');
         this.getDomainList();
     }
     this.getAllsearchlabels();
@@ -166,7 +167,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   }
   checktoSetLocationtoDefaultLocation() {
-    // console.log('loccheck', this.locationholder.autoname);
+    // console.log('loccheck search', this.locationholder);
     if (this.locationholder.autoname === '' || this.locationholder.autoname === undefined || this.locationholder.autoname === null) {
       /* if the location details are saved in the local storage, fetch them and set it as the location */
 
@@ -181,6 +182,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
             this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
             this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
             this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
+            this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
             this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
         }
       } else {
@@ -189,6 +191,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
             this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
             this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
             this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
+            this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
             this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
       }
 
@@ -572,16 +575,18 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   getDomainList() {
     const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
-    if (bconfig) { // case if data is there in local storage
-      const bdate = bconfig.cdate;
-      const bdata = bconfig.bdata;
-      const saveddate = new Date(bdate);
-      const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
-      // console.log('diff hours search', diff['hours']);
-      if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
-        run_api = false;
-        this.domainlist_data = bdata;
-        this.loadkeywordAPIreponsetoArray();
+    if (bconfig) {
+      if (bconfig.bdata) { // case if data is there in local storage
+        const bdate = bconfig.cdate;
+        const bdata = bconfig.bdata;
+        const saveddate = new Date(bdate);
+        const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+        // console.log('diff hours search', diff['hours']);
+        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+          run_api = false;
+          this.domainlist_data = bdata;
+          this.loadkeywordAPIreponsetoArray();
+        }
       }
     }
     if (run_api) { // case if data is not there in data
