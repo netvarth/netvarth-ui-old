@@ -1,6 +1,6 @@
 
   <div class="copy">
-          <ul class="inbox-table" *ngIf="messages.length>0">
+          <ul class="inbox-table" *ngIf="messages.length>0 && !loading">
                   <li class="tth">
                       <div class="outer">
                          <div class="th th0"></div>
@@ -13,22 +13,22 @@
                   </li>
 
                   <li class="ttd" [class.active]="selectedMsg==i"
-                  [class.outer-received]="userDet.id != message.owner.id"
-                  [class.outer-sent]="userDet.id == message.owner.id"
+                  [class.outer-received]="user_id != message.owner.id"
+                  [class.outer-sent]="user_id == message.owner.id"
                   *ngFor="let message of messages; let i = index">
                       <div class="outer" (click)="showMsg(i)">
                           <div class="td td0">
-                              <span class="icon-received" *ngIf="userDet.id != message.owner.id"></span>
-                              <span class="icon-sent" *ngIf="userDet.id == message.owner.id"></span>
+                              <span class="icon-received" *ngIf="user_id != message.owner.id"></span>
+                              <span class="icon-sent" *ngIf="user_id == message.owner.id"></span>
                           </div>
 
                           <div class="td td3">
                             <div class="label">From</div>
-                            <div class="result">{{message.owner.userName}}</div>
+                            <div class="result">{{(user_id != message.owner.id) ? message.owner.userName : 'Me'}}</div>
                           </div>
                           <div class="td td3">
                             <div class="label">To</div>
-                            <div class="result">{{message.receiver.userName}}</div>
+                            <div class="result">{{(user_id != message.receiver.id) ? message.receiver.userName : 'Me'}}</div>
                           </div>
                           <div class="td td4">
                               <div class="label">Message</div>
@@ -51,7 +51,7 @@
                               {{message.msg}}
                           </div>
                           <div class="action">
-                              <span class="icon-reply" (click)="replyMessage(message)" *ngIf="userDet.id != message.owner.id && !hide_reply_button">
+                              <span class="icon-reply" (click)="replyMessage(message)" *ngIf="user_id != message.owner.id && !hide_reply_button">
                                   Reply
                               </span>
                               <span class="icon-close" (click)="closeMsg()">

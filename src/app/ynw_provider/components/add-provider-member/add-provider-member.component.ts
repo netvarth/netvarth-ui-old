@@ -46,25 +46,26 @@ export class AddProviderMemberComponent implements OnInit {
   }
 
   onSubmit (form_data) {
+      this.resetApiErrors();
 
-        const post_data = {
-        'userProfile': {
-                          'firstName': form_data.first_name,
-                          'lastName':  form_data.last_name,
-                          'primaryMobileNo': form_data.mobile,
-                          'countryCode': '+91',
-                        }
-        };
+      const post_data = {
+      'userProfile': {
+                        'firstName': form_data.first_name,
+                        'lastName':  form_data.last_name,
+                        'primaryMobileNo': form_data.mobile,
+                        'countryCode': '+91',
+                      }
+      };
 
-        if (this.data.parent_id) {
-          post_data['parent'] = this.data.parent_id;
-        }
+      if (this.data.parent_id) {
+        post_data['parent'] = this.data.parent_id;
+      }
 
-        if (this.data.type === 'edit') {
-          // this.editMember(post_data);
-        } else if (this.data.type === 'add') {
-          this.addMember(post_data);
-        }
+      if (this.data.type === 'edit') {
+        // this.editMember(post_data);
+      } else if (this.data.type === 'add') {
+        this.addMember(post_data);
+      }
   }
 
   addMember(post_data) {

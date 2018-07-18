@@ -5,17 +5,20 @@
           *ngIf="adwordsmaxcount > 0"></span>
         </div>
     </div>
-    <div class="lc3-2 lcd" *ngFor="let adword of adword_list">
-        <div class="ttle">{{adword.name}}</div>
-        <div class="ctrl"><span class="icon-delete"
-          (click)="doRemoveAdwords(adword)"></span></div>
-    </div>
-    <div class="lc3-2 lcd" *ngIf="adwordsmaxcount > 0 && adword_list.length ==0 && query_executed == true">
-        <div class="ttle">{{emptyMsg}}</div>
-    </div>
+    <ng-container *ngIf="adwordsmaxcount != 0">
 
-    <div class="lc3-2 lcd" *ngIf="adwordsmaxcount == 0 &&
-    adword_list.length ==0 && query_executed == true">
+        <div class="lc3-2 lcd" *ngFor="let adword of adword_list">
+            <div class="ttle">{{adword.name}}</div>
+            <div class="ctrl"><span class="icon-delete"
+              (click)="doRemoveAdwords(adword)"></span></div>
+        </div>
+        <div class="lc3-2 lcd" *ngIf="adwordsmaxcount > 0 && adword_list.length ==0 && query_executed == true">
+            <div class="ttle">{{emptyMsg}}</div>
+        </div>
+    </ng-container>
+
+
+    <div class="lc3-2 lcd" *ngIf="adwordsmaxcount == 0 && query_executed == true">
       <div  class="ttle">
           <p><strong>Sorry!</strong> Currently you did not have any adwords. Please upgrade your Licence Package/Add-On </p>
       </div>

@@ -22,10 +22,13 @@ export class InboxListComponent implements OnInit {
 
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   selectedMsg = -1;
-  userDet;
+  user_id;
   shownomsgdiv = false;
   hide_reply_button = false;
   terminologies = null;
+  usertype = null;
+  loading = true;
+
   @Input() messages: any;
   @Input() fromsource: any;
   @Output() reloadApi = new EventEmitter<any>();
@@ -35,7 +38,7 @@ export class InboxListComponent implements OnInit {
     private shared_functions: SharedFunctions) {}
 
   ngOnInit() {
-    this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+
     if (this.fromsource === 'provider_checkin_detail' ||
     this.fromsource === 'consumer_checkin_detail' ) {
       this.hide_reply_button = true;
@@ -43,14 +46,34 @@ export class InboxListComponent implements OnInit {
       this.hide_reply_button = false;
     }
     this.terminologies = this.shared_functions.getTerminologies();
+    this.usertype = this.shared_functions.isBusinessOwner('returntyp');
+
+    if (this.usertype === 'provider') {
+      this.inbox_services.getBussinessProfile()
+      .subscribe(
+        (data: any) => {
+          this.user_id = data.id;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+        }
+      );
+    } else {
+      const userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+      this.user_id = userDet.id;
+      this.loading = false;
+    }
+
   }
 
 
   replyMessage(message, type) {
 
     const pass_ob = {};
-    const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    let source = usertype + '-';
+    let name = null;
+
+    let source = this.usertype + '-';
     if (message.waitlistId) {
       source = source + 'waitlist';
       pass_ob['uuid'] = message.waitlistId;
@@ -58,10 +81,15 @@ export class InboxListComponent implements OnInit {
       source = source + 'common';
     }
 
+    if (this.usertype === 'consumer') {
+      name = message.owner.userName || null;
+    }
+
     pass_ob['source'] = source;
     pass_ob['user_id'] = message['owner']['id'];
     pass_ob['type'] = 'reply';
     pass_ob['terminologies'] = this.terminologies;
+    pass_ob['name'] = name;
 
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',

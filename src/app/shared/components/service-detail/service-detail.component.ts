@@ -83,6 +83,7 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   onButtonAfterHook(event: ButtonEvent) {}
+
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;

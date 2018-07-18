@@ -74,6 +74,8 @@ export class ProviderLicenseComponent implements OnInit {
 
 
     getLicenseDetails(call_type = 'init') {
+
+      this.license_message = '';
       this.provider_servicesobj.getLicenseDetails()
         .subscribe(data => {
           this.currentlicense_details = data;

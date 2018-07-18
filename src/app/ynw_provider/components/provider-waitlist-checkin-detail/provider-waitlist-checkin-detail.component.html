@@ -67,8 +67,8 @@
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
                               <div  class="pnotes" *ngFor="let note of waitlist_notes">
-                                <p>Message: {{note.note}}</p>
-                                <p>time: {{note.timeStamp | date: dateFormat}}</p>
+                                <p>{{note.note}}</p>
+                                <p>{{note.timeStamp | date: dateTimeFormat}}</p>
                               </div>
                               <div *ngIf="waitlist_notes.length == 0">
                                 <p>No notes found</p>

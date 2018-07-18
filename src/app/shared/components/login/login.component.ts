@@ -64,6 +64,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit(data) {
 
+    this.resetApiErrors();
+
     const ob = this;
     const post_data = {
       'countryCode': '+91',
@@ -98,6 +100,7 @@ export class LoginComponent implements OnInit {
   }
 
   doForgotPassword() {
+    this.resetApiErrors();
     this.api_loading = false;
     // this.dialogRef.close(); // closing the signin window
     // const dialogRef = this.dialog.open(ForgotPasswordComponent, {

@@ -53,7 +53,10 @@ export class AddProviderCouponsComponent implements OnInit {
     });
   }
   onSubmit (form_data) {
-        if (isNaN(form_data.discValue)) {
+
+    this.resetApiErrors();
+
+    if (isNaN(form_data.discValue)) {
           this.api_error = 'Please enter a numeric coupon amount';
           return;
         } else {
