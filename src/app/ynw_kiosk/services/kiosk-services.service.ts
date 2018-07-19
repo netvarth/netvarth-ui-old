@@ -61,4 +61,9 @@ export class KioskServices {
     getBussinessProfile() {
         return this.servicemeta.httpGet('provider/bProfile');
     }
+
+    getWaitlistMgr() {
+        const url = 'provider/settings/waitlistMgr/';
+        return this.servicemeta.httpGet(url);
+    }
 }

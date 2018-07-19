@@ -55,6 +55,7 @@ export class KioskHomeComponent implements OnInit {
   provider_name;
   next_avail_queue: any = [];
   waitlisttime_arr: any = [];
+  waitlistmngr;
   kiosk_loading = true;
   showregmobile = false;
   constructor(private kiosk_services: KioskServices,
@@ -63,6 +64,7 @@ export class KioskHomeComponent implements OnInit {
     private dialog: MatDialog, private router: Router) {}
 
   ngOnInit() {
+    this.getWaitlistManager();
     this.blankPattern = projectConstants.VALIDATOR_BLANK;
     this.phonePattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
     this.namePattern = projectConstants.VALIDATOR_CHARONLY;
@@ -469,4 +471,16 @@ export class KioskHomeComponent implements OnInit {
     this.showregmobile = true;
     this.showRegister();
   }
+
+  getWaitlistManager() {
+    this.kiosk_services.getWaitlistMgr()
+      .subscribe ( data => {
+        this.waitlistmngr = data;
+        // console.log('waitlist', this.waitlistmngr);
+      },
+      error => {
+
+      });
+  }
+
 }

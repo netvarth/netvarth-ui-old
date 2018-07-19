@@ -296,7 +296,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         // check whether normal location section can be displayed
         this.normal_locationinfo_show = 2;
         if (this.bProfile.baseLocation) {
-          if (this.base_loc.place === '') { // case if base location name is blank
+          if (this.bProfile.baseLocation.place === '') { // case if base location name is blank
             this.normal_locationinfo_show = 4;
           } else {
             this.normal_locationinfo_show = 3;
@@ -580,6 +580,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
+          console.log('edit location return', result);
           if (result) {
             if (result === 'reloadlist') {
               this.getBusinessProfile();

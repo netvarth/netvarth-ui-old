@@ -161,11 +161,11 @@
                     <div class="showDetService">
                     Check-In for service:  <span class='selsername'>{{ sel_ser_det.name }}</span>
                     </div>
-                    <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime==''">
+                    <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">
                         Today, Estimated Waiting Time: <span class="queue-avail-date">{{sel_queue_waitingmins}}</span></div>
                     </div>
-                    <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!=''">
+                    <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">
                         <ng-container *ngIf="isFuturedate">{{sel_day}} {{sel_checkindate | date: dateFormat}}, </ng-container>
                         <ng-container *ngIf="!isFuturedate">Today, </ng-container>

@@ -97,6 +97,7 @@ export class SearchDetailComponent implements OnInit {
   showmore_defaultcnt = projectConstants.REFINE_ENUMLIST_DEFAULT_SHOW_CNT;
   holdprovidforCommunicate = 0;
   searchButtonClick = false;
+  genderArr = { '': 'Any', 'male': 'Male', 'female': 'Female'};
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
@@ -528,7 +529,7 @@ setEnvironment(bypassotherfunction?) {
 
   returnRefineCheckboxRetainValue(fieldheader, fieldname, fieldtype ) {
     // console.log('nowhere', fieldheader, fieldtype);
-    if (fieldtype === 'EnumList' || fieldtype === 'Enum') { // case of multiple selection of checkbox
+    if (fieldtype === 'EnumList' || fieldtype === 'Enum' || fieldtype === 'Gender') { // case of multiple selection of checkbox
       let retval = false;
       if (this.querystringrefineretain_arr[fieldheader]) {
         // console.log('flxname',fieldheader,fieldname, this.querystringrefineretain_arr[fieldheader].indexOf(fieldname));
@@ -851,6 +852,7 @@ setEnvironment(bypassotherfunction?) {
             for (let i = 0 ; i < this.search_data.hits.hit.length ; i++) {
               locationcnt = 0;
               this.search_data.hits.hit[i].fields.rating =  this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating);
+              this.search_data.hits.hit[i].fields['checkInsallowed'] =  (this.search_data.hits.hit[i].fields.hasOwnProperty('online_checkins')) ? true : false;
              // console.log('rating', this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating));
               // const providarr = this.search_data.hits.hit[i].id.split('-');
               const provid = this.search_data.hits.hit[i].id;
@@ -1154,7 +1156,7 @@ setEnvironment(bypassotherfunction?) {
             if (obtainedobj) {
               if (obtainedobj.dataType === 'TEXT' || obtainedobj.dataType === 'TEXT_MED') {
                 this.handleTextrefineblur(obtainedobj.cloudSearchIndex	, this.querystringrefineretain_arr[key], obtainedobj.dataType, true);
-              } else if (obtainedobj.dataType === 'EnumList' || obtainedobj.dataType === 'Enum' || obtainedobj.dataType === 'Boolean' || obtainedobj.dataType === 'Rating') {
+              } else if (obtainedobj.dataType === 'EnumList' || obtainedobj.dataType === 'Enum' || obtainedobj.dataType === 'Gender' || obtainedobj.dataType === 'Boolean' || obtainedobj.dataType === 'Rating') {
                 Object.keys(this.querystringrefineretain_arr[key]).forEach(qkey => {
                   this.handle_optionclick(obtainedobj.cloudSearchIndex	, obtainedobj.dataType, this.querystringrefineretain_arr[key][qkey], true);
                 });
@@ -1217,7 +1219,7 @@ setEnvironment(bypassotherfunction?) {
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
     this.searchButtonClick = false;
-   // console.log('click', fieldname, fieldtype, selval);
+    // console.log('click', fieldname, fieldtype, selval);
     if (this.searchrefineresult_arr.length) {
       const sec_indx = this.check_fieldexistsinArray(fieldname, fieldtype);
       if (sec_indx === -1) {
@@ -1686,6 +1688,20 @@ setEnvironment(bypassotherfunction?) {
       }
     } else {
         return true;
+    }
+  }
+
+  isOnlineCheckinEnabled(obj) {
+    if (obj) {
+      if (obj.fields.hasOwnProperty('online_checkins')) {
+        // if (obj.fields.online_checkins === 1) {
+        //  return true;
+        // } else {
+          return false;
+        // }
+      } else {
+        return false;
+      }
     }
   }
 }

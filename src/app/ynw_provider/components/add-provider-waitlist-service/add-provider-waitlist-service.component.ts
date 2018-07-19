@@ -39,7 +39,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   error_list = [];
   type = 'add';
   button_title = 'Save';
-
+  payment_loading = false;
+  payment_settings: any = [];
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -179,6 +180,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     if (this.amForm.get('isPrePayment').value === false) {
       this.amForm.removeControl('minPrePaymentAmount');
     } else {
+      if (this.amForm.get('isPrePayment').value === true) {
+        this.getPaymentSettings();
+      }
       const value = (this.data.type === 'edit' && this.service['minPrePaymentAmount']) ?
       this.service['minPrePaymentAmount'] : '';
 
@@ -335,4 +339,22 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       }, projectConstants.TIMEOUT_DELAY);
   }
 
+  getPaymentSettings() {
+    this.payment_loading = true;
+    this.provider_services.getPaymentSettings()
+    .subscribe(
+      data => {
+        this.payment_settings = data;
+        this.payment_loading = false;
+        if (!this.payment_settings.onlinePayment) {
+          this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
+          this.amForm.get('isPrePayment').setValue(false);
+        }
+      },
+      error => {
+        // this.shared_functions.apiErrorAutoHide(this, error);
+        // this.amForm.get('isPrePayment').setValue(false);
+      }
+    );
+  }
 }

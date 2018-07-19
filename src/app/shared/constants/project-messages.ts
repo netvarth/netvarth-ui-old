@@ -94,6 +94,7 @@ export const Messages = {
   'SERVICE_ADDED' : 'New service added successfully. Please add this service to the relevant queue',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
+  'SERVICE_PRE_PAY_ERROR': 'Payment settings needs to be completed before enabling the Pre-Payment option',
   'WAITLIST_LOCATION_CREATED': 'Location created successfully',
   'WAITLIST_LOCATION_UPDATED': 'Location updated successfully',
   'WAITLIST_LOCATION_AMINITIES_SAVED': 'Location aminities saved successfully',

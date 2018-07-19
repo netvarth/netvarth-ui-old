@@ -310,11 +310,11 @@ export class ProviderbWizardComponent implements OnInit {
     let changeid = -1;
     if (curstep === 2 && changetostep === 3) { // from location to schedule
       // check whether the is sufficient location details to show the schedule
-      if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon  === '' || this.wizard_data_holder.location === '' ) {
+      /*if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon  === '' || this.wizard_data_holder.location === '' ) {
         // case if sufficient info is not there to show the schedule page, so navigate user to the no sufficient page
         changerequired = true;
-        changeid = 5;
-      }
+        changeid = 5; // commented since ynw told that schedule page should be shown even if location details are blank
+      }*/
     } else  if (curstep === 3 && changetostep === 4) { // from schedule to search
       if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon  === '' || this.wizard_data_holder.location === '' ||
           this.wizard_data_holder.name === '' ) {

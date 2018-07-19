@@ -9,7 +9,7 @@
                 <button class="ot" (click)="showMode('checkin')">
                     <span class="icon-k-checkin"></span>
                     <span class="title" >Check-In Yourself</span>
-                    <span class="sub-title" *ngIf="next_avail_queue['caption']">{{next_avail_queue['caption']}} <span class="time">{{next_avail_queue['time']}}</span></span>
+                    <span class="sub-title" *ngIf="next_avail_queue['caption'] && waitlistmngr.calculationMode && waitlistmngr.calculationMode != 'NoCalc'">{{next_avail_queue['caption']}} <span class="time">{{next_avail_queue['time']}}</span></span>
                 </button>
             </li>
             <!-- <li>

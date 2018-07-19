@@ -100,18 +100,18 @@
                                               <span class="glyphicon glyphicon-search"></span>
                                           </div>
 
-                                          <div *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum'">
+                                          <div *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum' || refine_data.dataType=='Gender1'">
                                               <div *ngIf="refine_data.enumeratedConstants.length>0">
                                                     <ng-container *ngFor="let refine_field of refine_data.enumeratedConstants; let i=index">
                                                         <div class="refine_field_subouter" >
                                                             <ng-container *ngIf="i<showmore_defaultcnt">
                                                                 <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                 </ng-container>
-                                                                <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefine || !refine_data.showhiddendet)">
+                                                                <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefined || !refine_data.showhiddendet)">
                                                                 <div class="refinemore" (click)="showmore(refindx)">show more</div>
                                                             </ng-container>
 
-                                                            <ng-container *ngIf="refine_data.showhiddendet != undefine && refine_data.showhiddendet">
+                                                            <ng-container *ngIf="refine_data.showhiddendet != undefined && refine_data.showhiddendet">
                                                                 <ng-container *ngIf="i>=showmore_defaultcnt">
                                                                     <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                     </ng-container>
@@ -156,11 +156,11 @@
                                                                 <ng-container *ngIf="i<showmore_defaultcnt">
                                                                     <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefine || !refine_data.showhiddendet)">
+                                                                    <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefined || !refine_data.showhiddendet)">
                                                                     <div class="refinemore" (click)="showmore(refindx)">show more</div>
                                                                 </ng-container>
 
-                                                                <ng-container *ngIf="refine_data.showhiddendet != undefine && refine_data.showhiddendet">
+                                                                <ng-container *ngIf="refine_data.showhiddendet != undefined && refine_data.showhiddendet">
                                                                     <ng-container *ngIf="i>=showmore_defaultcnt">
                                                                         <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                         </ng-container>
@@ -364,23 +364,23 @@
                         </div>
                         <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']">
                             <div class="bt-l">
-                                <div class="wt-tme" *ngIf="waitlisttime_arr.length>0 && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1">
+                                <div class="wt-tme" *ngIf="waitlisttime_arr.length>0 && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1 && (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==1)">
                                     <div class="o-now" *ngIf="search_result.fields['opennow']==true">Open Now</div>
-                                    <div class="timing" >
+                                    <div class="timing" *ngIf="(search_result.fields.hasOwnProperty('show_waiting_time') && search_result.fields.show_waiting_time==1)">
                                         <span class="est-time" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
                                         <span class="time-data" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['time']}} <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
                                     </div>
                                 </div>
 
-                                <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0">
+                                <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0 || (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==0)">
                                     Sorry!! Check-ins not allowed
                                 </div>
                             </div>
-                            <div class="bt-r" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1">
+                            <div class="bt-r" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1 && (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==1)">
                                 <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==2">Check-In</span>
                                 <span class="cs-btn chk-btn disabled" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">Check-In</span>
                                 <!-- <span class="future-text" (click)="checkinClicked(search_result)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">Do you want to Check in for this date ?</span>   -->
-                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
+                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span>
                             </div>
 
 

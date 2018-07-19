@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
   }
   doSignup() {
 
-    if (this.moreParams['source'] === 'searchlist_checkin') {
+    if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin')) {
       this.dialogRef.close('showsignup');
     } else {
       this.api_loading = false;
