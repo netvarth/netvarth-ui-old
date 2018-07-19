@@ -684,8 +684,8 @@ export class SharedFunctions {
       buss_det.logo = logo;
     }
     this.setitemonLocalStorage('ynwbp', buss_det);
-    const pdata = { 'test': 'this is a test' };
-    this.sendMessage(pdata);
+    // const pdata = { 'test': 'this is a test' };
+    // this.sendMessage(pdata);
   }
 
   sendMessage(message: any) {
