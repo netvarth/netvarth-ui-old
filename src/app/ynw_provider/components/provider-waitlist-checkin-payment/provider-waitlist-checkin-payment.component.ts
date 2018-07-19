@@ -26,10 +26,6 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
     {
       label: 'Other',
       value : 'other'
-    },
-    {
-      label: 'Self Pay',
-      value : 'self_pay'
     }
   ];
 
@@ -65,6 +61,7 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       this.pay_data.amount = this.bill_data.netTotal - this.bill_data.totalAmountPaid;
       this.pay_data.amount  = (this.pay_data.amount > 0) ? this.pay_data.amount : 0;
       this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+      this.getPaymentSettings();
     }
 
   ngOnInit() {
@@ -109,5 +106,22 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
     }
   }
 
+  getPaymentSettings() {
+
+    this.provider_services.getPaymentSettings()
+    .subscribe(
+      (data: any) => {
+        if (data.payUVerified || data.payTmVerified) {
+          this.payment_options.push(
+            {
+              label: 'Self Pay',
+              value : 'self_pay'
+            });
+        }
+      },
+      error => {
+
+      });
+  }
 
 }

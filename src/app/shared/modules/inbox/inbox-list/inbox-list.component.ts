@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -9,6 +9,11 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { InboxServices } from '../inbox.service';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
+
+
 import { AddInboxMessagesComponent } from '../../../components/add-inbox-messages/add-inbox-messages.component';
 
 @Component({
@@ -17,7 +22,7 @@ import { AddInboxMessagesComponent } from '../../../components/add-inbox-message
   /*,
   styleUrls: ['./provider-inbox.component.scss']*/
 })
-export class InboxListComponent implements OnInit {
+export class InboxListComponent implements OnInit, OnDestroy {
 
 
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
@@ -28,6 +33,9 @@ export class InboxListComponent implements OnInit {
   terminologies = null;
   usertype = null;
   loading = true;
+
+  cronHandle: Subscription;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
 
   @Input() messages: any;
   @Input() fromsource: any;
@@ -65,8 +73,17 @@ export class InboxListComponent implements OnInit {
       this.loading = false;
     }
 
+    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+      this.reloadApi.emit();
+    });
+
   }
 
+  ngOnDestroy() {
+     if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+     }
+  }
 
   replyMessage(message, type) {
 

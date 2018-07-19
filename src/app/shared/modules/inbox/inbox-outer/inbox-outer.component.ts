@@ -47,6 +47,7 @@ export class InboxOuterComponent implements OnInit {
           this.messages = data;
           this.sortMessages();
           this.obtainedMsgs = true;
+          this.shared_functions.sendMessage({'ttype': 'load_unread_count', 'action': 'setzero'});
       },
       error => {
 

@@ -144,6 +144,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
               }
             }
             this.sortMessages();
+            this.shared_Functionsobj.sendMessage({'ttype': 'load_unread_count', 'action': 'setzero'});
 
           },
           error => {

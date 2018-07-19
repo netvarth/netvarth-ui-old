@@ -80,7 +80,7 @@ export class OtpFormComponent  implements OnInit {
     } else if (this.type === 'signup') {
       this.submitdata.userProfile.email = email_form.otp_email;
       this.resendOtp.emit(this.submitdata);
-      console.log('here',  this.submitdata,  this.submitdata.userProfile.email);
+      // console.log('here',  this.submitdata,  this.submitdata.userProfile.email);
       this.email_otp_req = false;
       this.showOTPEmailContainer = false;
       this.showOTPContainer = true;

@@ -80,6 +80,11 @@ export class ProviderLicenseComponent implements OnInit {
         .subscribe(data => {
           this.currentlicense_details = data;
 
+          const ynw_user = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+          // console.log(ynw_user.accountLicenseDetails);
+          ynw_user.accountLicenseDetails = this.currentlicense_details;
+          this.sharedfunctionObj.setitemonLocalStorage('ynw-user', ynw_user);
+
           if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
 
             const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
