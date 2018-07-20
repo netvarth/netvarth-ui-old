@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, Inject, OnInit, OnChanges, EventEmitter, Output, Input } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
 import {NgForm} from '@angular/forms';
@@ -11,7 +11,7 @@ import {Messages} from '../../constants/project-messages';
   selector: 'app-otp-form',
   templateUrl: './otp-form.component.html'
 })
-export class OtpFormComponent  implements OnInit {
+export class OtpFormComponent  implements OnInit, OnChanges {
 
   otp_form: FormGroup;
   email_form: FormGroup;
@@ -21,9 +21,11 @@ export class OtpFormComponent  implements OnInit {
   message;
   showOTPContainer = true;
   showOTPEmailContainer = false;
+  checking_email_otpsuccess = false;
 
   @Input()  submitdata;
   @Input()  type;
+  @Input()  resendemailotpsuccess;
   @Output() retonOtpSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   @Output() resendOtp: EventEmitter<any> = new EventEmitter();
@@ -36,13 +38,24 @@ export class OtpFormComponent  implements OnInit {
     this.createForm();
   }
 
+  ngOnChanges() {
+
+    if (this.checking_email_otpsuccess && this.resendemailotpsuccess) {
+      this.email_otp_req = false;
+      this.showOTPEmailContainer = false;
+      this.showOTPContainer = true;
+      this.otp_email = null;
+    }
+
+  }
+
   createForm() {
     this.otp_form = this.fb.group({
       phone_otp: ['', Validators.compose(
       [Validators.required]) ]
       });
 
-    this.setMessageType();
+    // this.setMessageType();
 
   }
 
@@ -51,13 +64,15 @@ export class OtpFormComponent  implements OnInit {
   }
 
   doResetApiErrors() {
-    this.message = null;
+    // this.message = null;
     this.resetApiErrors.emit();
   }
 
-  resendOTP() {
+  resendOTPMobile() {
+    this.submitdata.userProfile.email = null;
+    // delete this.submitdata.userProfile.email;
     this.resendOtp.emit(this.submitdata);
-    this.setMessageType();
+    // this.setMessageType();
   }
 
   setResendViaEmail() {
@@ -67,6 +82,11 @@ export class OtpFormComponent  implements OnInit {
       otp_email: ['', Validators.compose(
       [Validators.required, Validators.email]) ]
       });
+
+    if (this.submitdata.userProfile && this.submitdata.userProfile.email) {
+      this.email_form.get('otp_email').setValue(this.submitdata.userProfile.email);
+    }
+
     this.email_otp_req = true;
     this.showOTPEmailContainer = true;
     this.showOTPContainer = false;
@@ -80,16 +100,13 @@ export class OtpFormComponent  implements OnInit {
     } else if (this.type === 'signup') {
       this.submitdata.userProfile.email = email_form.otp_email;
       this.resendOtp.emit(this.submitdata);
+      this.checking_email_otpsuccess = true;
       // console.log('here',  this.submitdata,  this.submitdata.userProfile.email);
-      this.email_otp_req = false;
-      this.showOTPEmailContainer = false;
-      this.showOTPContainer = true;
-      this.otp_email = null;
 
-      // delete this.submitdata.userProfile.email;
+
 
     }
-    this.setMessage('email', email_form.otp_email);
+    // this.setMessage('email', email_form.otp_email);
   }
 
   setMessageType() {
@@ -116,6 +133,7 @@ export class OtpFormComponent  implements OnInit {
     this.showOTPEmailContainer = true;
   }
   doCancelEmailOTP() {
+    this.doResetApiErrors();
     this.showOTPEmailContainer = false;
     this.showOTPContainer = true;
   }

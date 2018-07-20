@@ -1,18 +1,18 @@
 
 <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> 
+</section>
 <section>
   <div class="content see-pages">
       <div class="container">
         <div class="outer-card">
         <div class="card">
-        <div *ngIf="step==1">
+        <div *ngIf="step==1" class="change-phone-div">
           <form [formGroup]="spForm" novalidate
           (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
           (keyup)="resetApiErrors()">
 
-            <div class="form-group">
+            <div class="form-group phonenumber">
               <label class="col-form-label" for="phonenumber">Mobile *</label>
               <input type="text" class="form-control" id="phonenumber" placeholder="Mobile"
               formControlName="phonenumber" (keyup)="isVerified(spForm.controls['phonenumber'].value)" autocomplete="off">

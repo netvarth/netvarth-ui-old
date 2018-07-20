@@ -37,6 +37,8 @@ export class SignUpComponent implements OnInit {
   selectedpackage;
   moreParams;
   heading = 'Activation Process';
+  resendemailotpsuccess = true;
+
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -257,12 +259,14 @@ export class SignUpComponent implements OnInit {
      }
 
     signUpApiConsumer(user_details) {
-
+      this.resendemailotpsuccess = false;
       this.shared_services.signUpConsumer(user_details)
       .subscribe(
         data => {
           // console.log(user_details);
             this.createForm(2);
+            this.resendemailotpsuccess = true;
+
             if (user_details.userProfile &&
               user_details.userProfile.email) {
 
@@ -282,13 +286,14 @@ export class SignUpComponent implements OnInit {
     signUpApiProvider(user_details) {
 
       this.resetApiErrors();
-
+      this.resendemailotpsuccess = false;
       // console.log(user_details);
       this.shared_services.signUpProvider(user_details)
       .subscribe(
         data => {
             // console.log(user_details);
             this.createForm(2);
+            this.resendemailotpsuccess = true;
             if (user_details.userProfile &&
               user_details.userProfile.email) {
 
