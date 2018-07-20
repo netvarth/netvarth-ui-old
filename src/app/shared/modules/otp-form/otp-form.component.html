@@ -18,7 +18,7 @@
     <mat-dialog-actions>
         <button  type="submit" mat-button [disabled]="!otp_form.valid">Submit</button>
         <div class="resendouter">
-          <span (click)="resendOTP()" mat-button> Resend OTP</span>
+          <span (click)="resendOTPMobile()" mat-button> Resend OTP To Mobile</span>
           <span (click)="setResendViaEmail()" *ngIf="type=='signup'" mat-button> Resend OTP Via Email</span>
         </div>
     </mat-dialog-actions>
@@ -33,7 +33,7 @@
   <mat-dialog-content>
       <div class="form-group">
         <mat-form-field>
-          <label class="col-form-label" for="otp">Enter Email id</label>
+          <label class="col-form-label" for="otp">Enter Email</label>
           <input type="email"  [formControl]="email_form.controls['otp_email']" matInput  autocomplete="off"/>
         </mat-form-field>
 

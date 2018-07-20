@@ -104,7 +104,7 @@ onSubmit()" (keyup)="resetApiErrors()">
 </form>
 <div class="example-container" *ngIf="step==2">
   <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
-  (resendOtp)="resendOtp($event)"></app-otp-form>
+  (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess"></app-otp-form>
 </div>
 
 
