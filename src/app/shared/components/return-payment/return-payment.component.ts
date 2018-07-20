@@ -12,6 +12,7 @@ import {Messages} from '../../constants/project-messages';
 export class ReturnPaymentComponent implements OnInit {
 
   status = null;
+  statussmall = null;
   user_type = null;
   unq_id = null;
   loading = 1;
@@ -41,12 +42,12 @@ export class ReturnPaymentComponent implements OnInit {
   }
 
   getPaymentStatus() {
-
     this.user_type = this.shared_functions.isBusinessOwner('returntyp');
     this.shared_services.getPaymentStatus(this.user_type, this.unq_id)
     .subscribe(
       data => {
         this.status = data;
+        this.status = this.status.toLowerCase();
         this.loading = 0;
       },
       error => {
@@ -55,7 +56,10 @@ export class ReturnPaymentComponent implements OnInit {
       }
     );
 
-   // this.status = 'Success'; // Success // 'Failed' // 'NoResult'
+    /*this.user_type = 'consumer';
+    this.loading = 0;
+    this.status = 'Success'; // Success // 'Failed' // 'NoResult'
+    this.status = this.status.toLowerCase();*/
 
   }
 

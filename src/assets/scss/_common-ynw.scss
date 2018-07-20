@@ -192,26 +192,46 @@ app-footer {
 
 // payment Success/Error Message
 .payment-message {
-    padding: 30px;
+    padding: 50px;
     text-align: center;
+    display: flex;
+    width: 100%;
+    height: 100vh;
     
-    span {
-        font-size: 1.2rem;
-        font-weight: 500;
+    .card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .icon-tick, .icon-warning {
+            font-size: 1.7rem;
+            animation: payment 1s forwards 500ms ease-in-out;
+            transform: translateY(-5px);
+            opacity: 0;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .cs-btn {
+            &.gohome {
+                margin: 0 auto;
+                margin-top: 30px;
+                display: flex;
+            }
+        }
         
         &.success {
-            color: $green;
+            .message, .icon-tick {
+                color: $green;
+            }
         }
-        &.error {
-            color: $cc-red;
-        }
-    }
-    
-    .cs-btn {
-        &.gohome {
-            margin: 0 auto;
-            margin-top: 30px;
-            display: flex;
+        &.failed {
+            .message, .icon-warning {
+                color: $cc-red;
+            }
         }
     }
 }

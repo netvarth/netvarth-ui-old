@@ -4122,6 +4122,7 @@ footer {
                                 td {
                                     border-top: none;
                                     padding: 10px 8px;
+                                    font-weight: 500;
                                     
                                     &.online {
                                         text-align: center;
@@ -4276,6 +4277,57 @@ footer {
                                                 top: 0;
                                                 background: transparent;
                                                 z-index: 0;
+                                            }
+                                        }
+                                    }
+                                    &.checkin_status {
+                                        .arrived, .started, .done, .cancelled, .checkedIn {
+                                            color: $start;
+                                            padding: 2px 5px 2px 14px;
+                                            font-size: .75rem;
+                                            font-weight: 600;
+                                            position: relative;
+
+                                            &:before {
+                                                position: absolute;
+                                                content: "";
+                                                background: $start;
+                                                width: 6px;
+                                                height: 6px;
+                                                @include border-radius(10px);
+                                                top: 50%;
+                                                left: 4px;
+                                                margin-top: -4px;
+                                            }
+                                        }
+
+                                        .arrived {
+                                            color: $arrived;
+
+                                            &:before {
+                                                background: $arrived;
+                                            }
+                                        }
+
+                                        .done {
+                                            color: $done;
+
+                                            &:before {
+                                                background: $done;
+                                            }
+                                        }
+                                        .cancelled {
+                                            color: $cc-red;
+
+                                            &:before {
+                                                background: $cc-red;
+                                            }
+                                        }
+                                        .checkedIn {
+                                            color: $checkedin;
+
+                                            &:before {
+                                                background: $checkedin;
                                             }
                                         }
                                     }
@@ -6217,7 +6269,7 @@ footer {
                                 flex-grow: 0;
                             }
                             &.th1, &.td1 {
-                                width: 15%;
+                                width: 10%;
                                 flex-grow: 0;
                             }
                             &.th2, &.td2 {
@@ -6229,7 +6281,7 @@ footer {
                                 flex-grow: 0;
                             }
                             &.th4, &.td4 {
-                                width: 45%;
+                                width: 35%;
                                 flex-grow: 0;
                             }
                             /*&.th5, &.td5 {

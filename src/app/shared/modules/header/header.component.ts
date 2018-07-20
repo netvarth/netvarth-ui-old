@@ -87,25 +87,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     // subscribe to home component messages
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      console.log('message', message);
+      // console.log('message', message);
       switch (message.ttype) {
         case 'updateuserdetails':
           this.getUserdetails();
           this.handleHeaderclassbasedonURL();
         break;
         case 'upgradelicence':
-        this.getUpgradablePackages();
+          this.getUpgradablePackages();
         break;
         case 'main_loading':
-        this.main_loading = message.action || false;
+          this.main_loading = message.action || false;
         break;
         case 'load_unread_count' :
-        if (!message.action) {
-          this.getInboxUnreadCnt();
-        } else if (message.action === 'setzero') {
-          this.inboxUnreadCnt = 0;
-          this.inboxCntFetched = true;
-        }
+          if (!message.action) {
+            this.getInboxUnreadCnt();
+          } else if (message.action === 'setzero') {
+            this.inboxUnreadCnt = 0;
+            this.inboxCntFetched = true;
+          }
         break;
       }
       /*if (message.ttype === 'updateuserdetails') {

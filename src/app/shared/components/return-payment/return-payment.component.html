@@ -1,16 +1,33 @@
 <div class="welcome-page">
   <div class="row">
       <div class="col-md-10 push-md-1">
-          <h1>Payment Status</h1>
 
-          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+
+            <div class="payment-message" *ngIf="!loading">
+                <div class="card success" *ngIf="status=='success'">
+                    <span class="icon-tick"></span>
+                    <span class="message">Your payment has done successfully!</span>
+                    <a class="btn rounded-btn" *ngIf="user_type == 'consumer'" [routerLink]="['/consumer']">Go Back to home</a>
+                    <a class="btn rounded-btn" *ngIf="user_type == 'provider'" [routerLink]="['/provider']">Go Back to home</a>
+                </div>
+                
+                <div class="card failed" *ngIf="status=='failed'">
+                    <span class="icon-warning"></span>
+                    <span class="message">Your payment has failed!</span>
+                    <a class="btn rounded-btn" *ngIf="user_type == 'consumer'" [routerLink]="['/consumer']">Go Back to home</a>
+                    <a class="btn rounded-btn" *ngIf="user_type == 'provider'" [routerLink]="['/provider']">Go Back to home</a>
+                </div>
+            </div>
+
+          <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
           <ng-container *ngIf="!loading">
             <p class="lead">Status : {{status}}</p>
             <p class="lead">
                 <a class="btn rounded-btn" *ngIf="user_type == 'consumer'" [routerLink]="['/consumer']">Go to home</a>
                 <a class="btn rounded-btn" *ngIf="user_type == 'provider'" [routerLink]="['/provider']">Go to home</a>
             </p>
-          </ng-container>
+          </ng-container> -->
       </div>
   </div>
 </div>

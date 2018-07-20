@@ -240,9 +240,9 @@
 
                                     </ng-container>
                                   </td>
-                                  <td data-title="{{checkin_label |titlecase}} Status" class="checkin_status {{checkin.waitlistStatus}}"
+                                  <td data-title="{{checkin_label |titlecase}} Status" class="checkin_status"
                                   *ngIf="time_type !=1">
-                                    {{getStatusLabel(checkin.waitlistStatus)}}
+                                    <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
                                   </td>
                                   <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td>

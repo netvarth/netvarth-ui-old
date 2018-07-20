@@ -100,7 +100,7 @@
                                               <span class="glyphicon glyphicon-search"></span>
                                           </div>
 
-                                          <div *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum' || refine_data.dataType=='Gender1'">
+                                          <div *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum' || refine_data.dataType=='Gender'">
                                               <div *ngIf="refine_data.enumeratedConstants.length>0">
                                                     <ng-container *ngFor="let refine_field of refine_data.enumeratedConstants; let i=index">
                                                         <div class="refine_field_subouter" >
@@ -316,15 +316,19 @@
                                 </div>
                                 <div class="tp2">
                                     <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div>
-                                    <h3 (click)="providerDetClicked(search_result)">{{search_result.fields.title}}</h3>
+                                    <h3 (click)="providerDetClicked(search_result)">{{search_result.fields.title}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
                                     <span class="address">{{search_result.fields.place1}}</span>
 
                                     <div class="clr">
-                                        <div class="otr-elements">
+                                        <!-- <div class="otr-elements">
                                             <span class="category">{{search_result.fields.sector}}</span>
                                             <span class="cert">{{search_result.fields.qualification}}</span>
-                                            <!-- <span class="exp">10 yrs Experience </span> -->
+                                        </div> -->
+                                        <div class="otr-elements">
+                                        <span class="category">{{search_result.fields.sub_sector_displayname}}</span>
+                                        <span *ngIf="search_result.fields.specialization"><span class="categoryspec" *ngFor="let spec of search_result.fields.specialization_displayname; let i = index"><span *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
                                         </div>
+
                                         <div class="schedule" *ngIf="search_result.fields.display_schedule">
                                             <ul>
                                                 <li *ngFor="let schedule of search_result.fields.display_schedule">

@@ -368,6 +368,10 @@
                     font-weight: 600;
                 }
             }
+            
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
 
         .mat-form-field {
@@ -2384,6 +2388,105 @@
             }
         }
     } 
+}
+
+// #### Adjust Delay Popup
+.adjustdelay {
+    .form-group {
+        
+        .col-form-label {
+            margin-bottom: 5px;
+            padding: 0;
+        }
+        
+        fieldset {
+            .ngb-tp-hour,
+            .ngb-tp-minute {
+                input[type="text"] {
+                    background: $cc-formbg;
+
+                    &:focus {
+                        @include box-shadow(0, 0, 1px, $linkblue, inset);
+                        border: 1px solid $linkblue;
+                        background: $white;
+                    }
+                }
+                .btn-link {
+                    display: flex;
+
+                    &:first-child {
+                        .chevron {
+                            width: 16px;
+                            height: 16px;
+
+                            &:before {
+                                border: none;
+                                content: "\66";
+                                @include font-custom;
+                                color: $linkblue;
+                                display: flex;
+                                transform: rotate(0);
+                                font-size: 1rem;
+                                font-weight: 700;
+                                align-items: center;
+                            }
+                        }
+                    }
+                    &:last-child {
+                        .chevron.bottom {
+                            width: 16px;
+                            height: 16px;
+
+                            &:before {
+                                border: none;
+                                content: "\72";
+                                @include font-custom;
+                                color: $linkblue;
+                                display: flex;
+                                transform: rotate(0);
+                                font-size: 1rem;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        text-decoration: none;
+                    }
+                }
+            }
+            .ngb-tp-meridian {
+                .btn-outline-primary {
+                    border-color: $linkblue;
+                    color: $linkblue;
+                    font-weight: 600;
+                    font-size: .875rem;
+
+                    &:hover {
+                        background: $linkblue;
+                        color: $white;
+                    }
+                    &:focus {
+                        outline: none;
+                        box-shadow: none;
+                    }
+                }
+            }
+            &:first-child {
+                margin-bottom: 15px;
+            }
+        }
+        
+        &.inline {            
+            .col-form-label {
+                margin-right: 15px;
+            }
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 }
 
 .signupmainclass,

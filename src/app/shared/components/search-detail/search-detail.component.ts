@@ -97,7 +97,6 @@ export class SearchDetailComponent implements OnInit {
   showmore_defaultcnt = projectConstants.REFINE_ENUMLIST_DEFAULT_SHOW_CNT;
   holdprovidforCommunicate = 0;
   searchButtonClick = false;
-  genderArr = { '': 'Any', 'male': 'Male', 'female': 'Female'};
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,

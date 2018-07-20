@@ -1065,6 +1065,7 @@
                         }
                     }
                 }
+                
                 .kioskactions {
                     .waitlist-button-outer {
                         .showDetOuter {
@@ -1102,6 +1103,34 @@
                         color: $cc-gray !important;
                         margin-top: 15px;
                         border: none !important;
+                    }
+                }
+            }
+            
+            app-field-error-display {
+                .sts-msg {
+                    font-weight: 600;
+                    font-size: .875rem;
+                    padding: 5px;
+                    background: transparent;
+                    text-align: center;
+
+                    &.error {
+                        color: $cc-red;
+                    }
+                }
+            }
+            
+            app-form-success-display {
+                .sts-msg {
+                    font-weight: 600;
+                    font-size: .875rem;
+                    padding: 5px;
+                    background: transparent;
+                    text-align: center;
+                    
+                    &.success {
+                        color: $green;
                     }
                 }
             }
