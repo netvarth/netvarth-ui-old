@@ -665,5 +665,28 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.open_fav_div = open_fav_div;
       }, 500);
   }
+
+  providerManagePrivacy(provider, i) {
+
+    const status = this.fav_providers[i]['revealPhoneNumber'];
+    this.consumer_services.managePrivacy(provider.id, status)
+    .subscribe(
+      data => {
+        this.shared_functions.openSnackBar(Messages.Manage_Privacy);
+        setTimeout(() => {
+          this.fav_providers[i]['revealPhoneNumber'] = status;
+        }, 1000);
+
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        setTimeout(() => {
+          this.fav_providers[i]['revealPhoneNumber'] = !status;
+        }, 1000);
+      });
+
+
+  }
+
 }
 

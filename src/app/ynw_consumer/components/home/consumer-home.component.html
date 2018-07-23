@@ -131,7 +131,9 @@
                                     (click)="doDeleteFavProvider(provider)">
                                     Remove Favourite</span>
                                   </button>
-                                  <button mat-menu-item>Manage Privacy</button>
+                                  <button mat-menu-item>
+                                      <mat-checkbox [(ngModel)]="provider.revealPhoneNumber" (change)="providerManagePrivacy(provider,i)">Manage Privacy</mat-checkbox>
+                                  </button>
                                 </mat-menu>
                             </div>
                         </div>
