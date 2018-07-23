@@ -152,7 +152,7 @@ export class ProviderDetailComponent implements OnInit {
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             this.getFavProviders();
-            const holdbName = this.businessjson.businessDesc;
+            const holdbName = this.businessjson.businessDesc || '';
             const maxCnt = 120;
             if (holdbName.length > maxCnt ) {
               this.bNameStart = holdbName.substr(0, maxCnt);

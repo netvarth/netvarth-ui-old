@@ -221,6 +221,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
         this.specialization_title = (data['serviceSubSector']['displayName'])  ?
          data['serviceSubSector']['displayName'] : '';
+
         // console.log('bprofile', this.bProfile);
         // console.log('bprofile - status', this.bProfile.status);
         if (this.bProfile.status === 'ACTIVE') {
@@ -269,6 +270,10 @@ export class ProviderBprofileSearchComponent implements OnInit {
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
            || '', this.bProfile['serviceSector']['displayName'] || '', '');
+
+           const pdata = { 'ttype': 'updateuserdetails' };
+           this.sharedfunctionobj.sendMessage(pdata);
+
           this.getProviderLogo();
           this.getDomainVirtualFields();
 
@@ -895,6 +900,9 @@ export class ProviderBprofileSearchComponent implements OnInit {
         // calling function which saves the business related details to show in the header
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
          || '', this.bProfile['serviceSector']['displayName'] || '', logo );
+
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedfunctionobj.sendMessage(pdata);
       },
       error => {
 
@@ -918,6 +926,9 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
         || '', this.bProfile['serviceSector']['displayName'] || '', blogo || '' );
+
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedfunctionobj.sendMessage(pdata);
        /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
       },
       error => {

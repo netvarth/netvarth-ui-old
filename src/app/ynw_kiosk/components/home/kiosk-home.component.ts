@@ -269,6 +269,7 @@ export class KioskHomeComponent implements OnInit {
 
     const data = {
       'firstName-eq': this.srch_fname,
+      'lastName-eq': this.srch_fname,
       'primaryMobileNo-eq': this.srch_mobile
 
     };

@@ -173,6 +173,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
            || '', bProfile['serviceSector']['displayName'] || '', '');
            this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '');
+
+           const pdata = { 'ttype': 'updateuserdetails' };
+           this.shared_functions.sendMessage(pdata);
           }
       },
       error => {
@@ -214,6 +217,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         }
         // calling function which saves the business related details to show in the header
         this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', logo );
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.shared_functions.sendMessage(pdata);
       },
       error => {
 

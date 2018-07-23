@@ -45,6 +45,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     tabid = 0;
     emailidVerified = false;
     profileQueryExecuted = false;
+    ineditMode = false;
     breadcrumbs = [
         {
           title: 'Settings',
@@ -227,13 +228,14 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             postData['dcOrCcOrNb'] = false;
         }
         if (!this.errorExist) {
-            console.log('postdata', JSON.stringify(postData));
+           // console.log('postdata', JSON.stringify(postData));
             this.saveEnabled = false;
             this.provider_services.setPaymentSettings(postData)
                 .subscribe (data => {
                     // console.log('save ret', data);
                     this.getPaymentSettings(1);
                     this.saveEnabled = true;
+                    this.handleEditPaySettings(false);
                 },
             error => {
                 this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
@@ -270,7 +272,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.shared_Functionsobj.getProfile()
         .then(
           success =>  {
-           console.log('succ', success);
+           // console.log('succ', success);
            this.profileQueryExecuted = true;
            this.emailidVerified =  success['basicInfo']['emailVerified'];
           },
@@ -297,5 +299,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             'bankactype' : {status: false, msg: ''},
             'taxpercentage' : {status: false, msg: ''}
         };
+    }
+    handleEditPaySettings (mod) {
+        if (this.ineditMode && mod === false) {
+            this.getPaymentSettings(2);
+        }
+        this.ineditMode = mod;
     }
 }

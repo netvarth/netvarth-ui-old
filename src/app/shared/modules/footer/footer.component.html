@@ -1,6 +1,6 @@
 <div class="overlay" [class.show]="showbottompopup" (click)="closebottompopup()"></div>
 <footer [class.dashb]="ctype=='provider'" [class.consumer]="ctype!='provider'" [class.show]="showbottompopup">
-    <section class="sect1" *ngIf="ctype!='provider'">
+    <section class="sect1" *ngIf="ctype!='provider' && includedFrom == 'home'">
         <div class="container">
         <div class="row">
             <div class="col-12">
@@ -41,7 +41,7 @@
     </div>    
     </section>
     
-    <section class="sect2" *ngIf="ctype!='provider'">
+    <section class="sect2" *ngIf="ctype!='provider' && includedFrom == 'home'">
         <div class="container">
             <div class="row">
             <div class="col-12">

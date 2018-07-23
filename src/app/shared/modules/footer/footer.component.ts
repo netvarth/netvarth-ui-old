@@ -15,6 +15,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 
 export class FooterComponent implements OnInit {
+
+  @Input() includedfrom: string;
   curyear;
   ctype;
   auditlog: any = [];
@@ -31,8 +33,16 @@ export class FooterComponent implements OnInit {
   alertStatus = 1;
   checkinStatus = 1;
   waitlistmgr: any = [];
+  includedFrom;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   ngOnInit() {
+    // console.log('includedfrom1', this.includedfrom);
+    if (this.includedfrom !== undefined) {
+      this.includedFrom = this.includedfrom;
+    } else {
+      this.includedFrom = '';
+    }
+    // console.log('includedfrom2', this.includedFrom);
     this.curyear = new Date().getFullYear();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.selOpt = '';

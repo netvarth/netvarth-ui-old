@@ -55,6 +55,7 @@ export class SearchProviderCustomerComponent implements OnInit {
 
     const post_data = {
       'firstName-eq' : form_data.first_last_name,
+      'lastName-eq' : form_data.first_last_name,
       'primaryMobileNo-eq' : form_data.mobile_number
     };
     this.provider_services.getCustomer(post_data)

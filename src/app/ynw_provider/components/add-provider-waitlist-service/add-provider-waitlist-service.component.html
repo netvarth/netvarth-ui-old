@@ -61,7 +61,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
   </mat-slide-toggle>
   </div>
   <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
-    <label class="col-form-label" for="prepayment_amount">Prepayment Amount *</label>
+    <label class="col-form-label" for="prepayment_amount">Prepayment Amount (<i class="fa fa-inr"></i>) *</label>
     <input matInput type="text" class="form-control" id="prepayment_amount" placeholder="Prepayment Amount"
     formControlName="minPrePaymentAmount" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
