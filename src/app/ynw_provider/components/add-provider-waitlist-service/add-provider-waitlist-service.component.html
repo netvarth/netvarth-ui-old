@@ -169,6 +169,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 <mat-dialog-actions>
     <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{button_title}}</button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+
+    <span class="service-tooltip" *ngIf="type == 'add'">
+        <i class="icon-bell"></i>
+        {{tooltip}}
+    </span>
 </mat-dialog-actions>
 
 <app-field-error-display [displayError]="(error_list.length > 0) ? true : false"  errorMsg="Please upload images with size < 5mb">

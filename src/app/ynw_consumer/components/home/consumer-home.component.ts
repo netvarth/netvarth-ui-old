@@ -16,6 +16,7 @@ import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-
 import { ViewConsumerWaitlistCheckInBillComponent} from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
+import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -665,5 +666,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.open_fav_div = open_fav_div;
       }, 500);
   }
+
+  providerManagePrivacy(provider, i) {
+
+    const dialogRef = this.dialog.open(AddManagePrivacyComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      data: {'provider': provider}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.message === 'reloadlist') {
+        this.fav_providers[i]['revealPhoneNumber'] = result.data.revealPhoneNumber;
+      }
+    });
+
+  }
+
 }
 

@@ -9,7 +9,7 @@
               <div class="head">
                   <div class="locn" *ngIf="selected_location">
                       <span class="loc-name" *ngIf="!edit_location">{{selected_location.place}}</span>
-                      <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location"></span>
+                      <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
 
                         <mat-form-field class="example-full-width" *ngIf="edit_location">
 
@@ -140,11 +140,21 @@
                         </mat-chip-list>
                       </div>
 
-                      <div class="check_in_date" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} Date</label>
+                      <div class="check_in_date start_date" *ngIf="time_type !== 1">
+                        <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} Start Date</label>
                         <mat-form-field>
-                            <input matInput [(ngModel)]="filter.check_in_date" [matDatepicker]="picker"
-                            (dateChange)="doSearch()" [min]="filter_date_min" [max]="filter_date_max" autocomplete="off">
+                            <input matInput [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker"
+                            (dateChange)="checkFilterDateMaxMin('check_in_start_date')" [min]="filter_date_start_min" [max]="filter_date_start_max" autocomplete="off">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                      </div>
+
+                      <div class="check_in_date end_date" *ngIf="time_type !== 1">
+                        <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} End Date</label>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker"
+                            (dateChange)="checkFilterDateMaxMin('check_in_end_date')" [min]="filter_date_end_min" [max]="filter_date_end_max" autocomplete="off">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>

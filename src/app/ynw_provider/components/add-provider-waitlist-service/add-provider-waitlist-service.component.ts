@@ -41,6 +41,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   button_title = 'Save';
   payment_loading = false;
   payment_settings: any = [];
+  tooltip = Messages.NEW_SERVICE_TOOLTIP;
+
+
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

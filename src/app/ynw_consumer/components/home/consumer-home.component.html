@@ -131,7 +131,9 @@
                                     (click)="doDeleteFavProvider(provider)">
                                     Remove Favourite</span>
                                   </button>
-                                  <button mat-menu-item>Manage Privacy</button>
+                                  <button mat-menu-item (click)="providerManagePrivacy(provider,i)">
+                                      Manage Privacy
+                                  </button>
                                 </mat-menu>
                             </div>
                         </div>

@@ -71,22 +71,15 @@ export class AdjustQueueDelayComponent implements OnInit {
      getDefaultMessages () {
        this.provider_services.getProviderMessages()
        .subscribe(
-         data => {
-
-           if (data['communicateMessages']) {
-
-            for (const message of data['communicateMessages']) {
-              if (message.key === 'delay') {
-                this.default_message = message.message;
-              }
-            }
-           }
+         (data: any) => {
+          this.default_message = data.delay || '';
          },
          error => {
 
          }
        );
      }
+
      onSubmit (form_data) {
        const time = this.getTimeinMin();
        console.log(form_data);

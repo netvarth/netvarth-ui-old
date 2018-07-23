@@ -120,5 +120,9 @@ export class ConsumerServices {
     return this.servicemeta.httpPut(path, data, null , params);
   }
 
+  managePrivacy(accountId, status) {
+    const path = 'consumer/providers/revealPhoneNo/' + accountId + '/' + status;
+    return this.servicemeta.httpPut(path);
+  }
 
 }
