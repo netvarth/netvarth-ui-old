@@ -106,7 +106,7 @@ export const Messages = {
   'WAITLIST_QUEUE_STIMEERROR' : 'End time should be greater than start time',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
-
+  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant queue by editing it',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
 

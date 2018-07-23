@@ -68,14 +68,20 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
-    check_in_date: null,
+    check_in_start_date: null,
+    check_in_end_date: null,
     location_id: 'all',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   }; // same in resetFilter Fn
 
-  filter_date_max = moment(new Date()).add(-1, 'days');
-  filter_date_min = moment(new Date()).add(+1, 'days');
+  // filter_date_max = moment(new Date()).add(-1, 'days');
+  // filter_date_min = moment(new Date()).add(+1, 'days');
+
+  filter_date_start_min = null;
+  filter_date_start_max = null;
+  filter_date_end_min = null;
+  filter_date_end_max = null;
 
   customer_label = '';
   provider_label = '';
@@ -535,14 +541,36 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   setFilterDateMaxMin() {
 
-    this.filter_date_max = null;
-    this.filter_date_min = null;
+    this.filter_date_start_min = null;
+    this.filter_date_start_max = null;
+    this.filter_date_end_min = null;
+    this.filter_date_end_max = null;
 
     if (this.time_type === 0) {
-      this.filter_date_max = moment(new Date()).add(-1, 'days');
+      this.filter_date_start_max = moment(new Date()).add(-1, 'days');
+      this.filter_date_end_max = moment(new Date()).add(-1, 'days');
     } else if (this.time_type === 2) {
-      this.filter_date_min = moment(new Date()).add(+1, 'days');
+      this.filter_date_start_min = moment(new Date()).add(+1, 'days');
+      this.filter_date_end_min = moment(new Date()).add(+1, 'days');
     }
+
+  }
+
+  checkFilterDateMaxMin(type) {
+    if (type === 'check_in_start_date') {
+      this.filter_date_end_min = this.filter.check_in_start_date;
+      if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
+        this.filter.check_in_end_date = this.filter.check_in_start_date;
+      }
+    } else if (type === 'check_in_end_date') {
+      this.filter_date_start_max = this.filter.check_in_end_date;
+
+      if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
+        this.filter.check_in_start_date = this.filter.check_in_end_date;
+      }
+
+    }
+    this.doSearch();
 
   }
 
@@ -700,8 +728,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
       }
 
-      if (this.filter.check_in_date != null) {
-        api_filter['date-eq'] = this.filter.check_in_date.format('YYYY-MM-DD');
+      // if (this.filter.check_in_date != null) {
+      //   api_filter['date-eq'] = this.filter.check_in_date.format('YYYY-MM-DD');
+      // }
+
+      if (this.filter.check_in_start_date != null) {
+        api_filter['date-ge'] = this.filter.check_in_start_date.format('YYYY-MM-DD');
+      }
+
+      if (this.filter.check_in_end_date != null) {
+        api_filter['date-le'] = this.filter.check_in_end_date.format('YYYY-MM-DD');
       }
 
     }
@@ -729,7 +765,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       queue: 'all',
       service: 'all',
       waitlist_status: 'all',
-      check_in_date: null,
+      check_in_start_date: null,
+      check_in_end_date: null,
       location_id: 'all',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 0
