@@ -40,8 +40,8 @@
                                   </span>
                               </div>
 
-                              <ng-container *ngIf="waitlist.waitlistStatus == 'checkedIn'  ||
-                              waitlist.waitlistStatus == 'arrived' ">
+                              <ng-container *ngIf="waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
+                              waitlist.waitlistStatus == 'arrived')">
 
                                   <div class="lt0" *ngIf="!waitlist.future">
                                       Estimated Time <span class="time now">
@@ -54,6 +54,19 @@
                                         </span>
                                   </div>
 
+                              </ng-container>
+
+                              <ng-container  *ngIf="!waitlist.estimated_time">
+                                  <div class="lt0" *ngIf="waitlist.future">
+                                      Check-In Date  <span class="time now">
+                                          {{waitlist.date | date: dateFormat }}
+                                        </span>
+                                  </div>
+                                  <div class="lt0" *ngIf="!waitlist.future">
+                                      Check-In Date  <span class="time now">
+                                          Today
+                                        </span>
+                                  </div>
                               </ng-container>
 
                               <div class="lt0" *ngIf="waitlist.token">
@@ -146,7 +159,9 @@
                             <div class="bt-l">
                               <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                   <div class="o-now" *ngIf="loc.opennow">Open Now</div>
-                                  <div class="timing" *ngIf="loc['estimatedtime_det']['caption']">
+                                  <div class="timing" *ngIf="loc['estimatedtime_det']['caption']
+                                  && provider.settings && provider.settings.calculationMode
+                                  && provider.settings.calculationMode!='NoCalc'">
                                       <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
                                       <span class="time-data">{{loc['estimatedtime_det']['time']}}
                                         <span class="icon-question"
@@ -155,12 +170,13 @@
                                   <div class="wt-msg" *ngIf="loc['estimatedtime_det']['message']">
                                     {{loc['estimatedtime_det']['message']}}</div>
                               </div>
+
                             </div>
 
                             <div class="bt-r" *ngIf="loc['estimatedtime_det']">
                                 <span class="cs-btn chk-btn" (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')" *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(provider)">Check-In</span>
                                 <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(provider)">Check-In</span>
-                                <span class="cs-btn bt10" *ngIf="showcheckInButton(provider)" (click)="goCheckin(provider, loc,  loc['estimatedtime_det']['cdate'], true, 'fav_provider')">
+                                <span class="cs-btn bt10" *ngIf="showcheckInButton(provider) && provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate']" (click)="goCheckin(provider, loc,  loc['estimatedtime_det']['cdate'], true, 'fav_provider')">
                                   Do you want to <span>Check-in</span> for <span>different Date/Time?</span>
                                 </span>
                             </div>
