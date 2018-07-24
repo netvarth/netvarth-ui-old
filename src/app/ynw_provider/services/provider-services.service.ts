@@ -320,8 +320,14 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
   }
 
-  getServicesList() {
-    const url = 'provider/services/';
+  getServicesList(params?) {
+    let stat = '';
+    if (params !== undefined) {
+      if (params['status'] !== undefined && params['status'] !== '') {
+        stat = '?status-eq=' + params['status'];
+      }
+    }
+    const url = 'provider/services/' + stat;
     return this.servicemeta.httpGet(url);
   }
 

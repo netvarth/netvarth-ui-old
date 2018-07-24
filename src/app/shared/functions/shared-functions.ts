@@ -755,9 +755,9 @@ convertMinutesToHourMinute(mins) {
     }
     if (min > 0) {
       if (min > 1) {
-        retmin = ' ' + min + ' minute';
-      } else {
         retmin = ' ' + min + ' minutes';
+      } else {
+        retmin = ' ' + min + ' minute';
       }
     }
   } else {

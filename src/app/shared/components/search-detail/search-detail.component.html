@@ -241,7 +241,7 @@
                                     <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>
                                             <div class="galbx">
-                                                <div class="overlay" (click)="providerDetClicked(search_result)">+{{(search_result.fields.gallery_thumb_nails.length-1)}}</div>
+                                                <div class="overlay" (click)="providerDetClicked(search_result)">+{{(search_result.fields.gallery_thumb_nails.length)}}</div>
                                                 <img [src]="search_result.fields.gallery_thumb_nails[0]" alt="" style="width:50px;height:auto;">
                                             </div>
                                         </li>
