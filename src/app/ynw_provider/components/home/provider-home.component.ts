@@ -298,6 +298,18 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     .subscribe(
       data => {
         this.all_queues = data;
+
+        for (let ii = 0; ii < this.all_queues.length; ii++) {
+          let schedule_arr = [];
+          // extracting the schedule intervals
+          if (this.all_queues[ii].queueSchedule) {
+           schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
+          }
+          let display_schedule = [];
+          display_schedule =  this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+          this.all_queues[ii]['displayschedule'] = display_schedule[0];
+        }
+        console.log(this.all_queues);
       },
       error => {
       },

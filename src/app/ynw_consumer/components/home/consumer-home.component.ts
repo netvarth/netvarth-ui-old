@@ -124,7 +124,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (today.valueOf() < waitlist_date.valueOf()) {
               this.waitlists[i].future = true;
             }
-            this.waitlists[i].estimated_time = this.getAppxTime(waitlist);
+            this.waitlists[i].estimated_time = (waitlist.appxWaitingTime) ? this.getAppxTime(waitlist) : null;
             i++;
         }
 
@@ -204,7 +204,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   setWaitlistTimeDetailsProvider(provider, k) {
     if (this.s3url) {
-      this.getbusinessprofiledetails_json(provider.id, 'settings', true, k);
+      this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
      }
      const locarr = [];
      let i = 0;
@@ -352,7 +352,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       if (!waitlist.future && waitlist.appxWaitingTime === 0) {
         return 'Now';
       } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
-        return waitlist.appxWaitingTime + ' Minutes';
+        return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
 
       }  else {
         const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
@@ -494,6 +494,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.getWaitlist();
+      }
 
     });
   }

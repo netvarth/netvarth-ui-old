@@ -26,7 +26,7 @@
                   <mat-option *ngFor="let value of group.values; let i = index" [value]="value" (click)="itemServiceSelected(group.type, i)">
                     {{ value }}
                   </mat-option>
-                  <mat-option *ngIf="group.values.length==0"><span class="no-data"></span>No {{group.type}} Available</mat-option>
+                  <mat-option *ngIf="group.values.length==0" [disabled]="true"><span class="no-data"></span>No {{group.type}} Available</mat-option>
                 </mat-optgroup>
               </mat-autocomplete>
             </mat-form-field>

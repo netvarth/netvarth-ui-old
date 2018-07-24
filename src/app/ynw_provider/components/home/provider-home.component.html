@@ -90,7 +90,7 @@
 
                       <div class="form-group queues" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Queues</label>
-                        <mat-chip-list>
+                        <!-- <mat-chip-list>
                           <mat-chip
                           color="{{(filter.queue === 'all') ? 'primary' : ''}}"
                           selected="{{(filter.queue === 'all' )? true : false}}"
@@ -103,12 +103,27 @@
                               {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
                           </mat-chip>
 
-                        </mat-chip-list>
+                        </mat-chip-list> -->
+
+                        <mat-form-field>
+                          <mat-select [(value)]="filter.queue">
+                            <mat-option
+                            (click)="setFilterData('queue', 'all')" [value]="'all'">
+                            All
+                            </mat-option>
+                            <mat-option *ngFor="let queue of all_queues"
+                            (click)="setFilterData('queue', queue.id)" [value]="queue.id">
+                              <span class="day_label">{{queue.displayschedule.dstr}}</span>
+                              <span class="time_label">{{queue.displayschedule.time}}</span>
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
                       </div>
 
                       <div class="form-group services">
                         <label class="col-form-label" for="displayName">Services</label>
-                        <mat-chip-list>
+                        <!-- <mat-chip-list>
                           <mat-chip
                           color="{{(filter.service === 'all') ? 'primary' : ''}}"
                           selected="{{(filter.service === 'all' )? true : false}}"
@@ -120,12 +135,26 @@
                           *ngFor="let service of services">
                               {{service.name}}
                           </mat-chip>
-                        </mat-chip-list>
+                        </mat-chip-list> -->
+
+                        <mat-form-field>
+                          <mat-select [(value)]="filter.service">
+                            <mat-option
+                            (click)="setFilterData('service', 'all')" [value]="'all'">
+                            All
+                            </mat-option>
+                            <mat-option *ngFor="let service of services"
+                            (click)="setFilterData('service', service.id)" [value]="service.id">
+                            {{service.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
                       </div>
 
                       <div class="form-group waitlist_status" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Waitlist Status</label>
-                        <mat-chip-list>
+                        <!-- <mat-chip-list>
                           <mat-chip
                           color="{{(filter.waitlist_status === 'all') ? 'primary' : ''}}"
                           selected="{{(filter.waitlist_status === 'all' )? true : false}}"
@@ -137,7 +166,20 @@
                           (click)="setFilterData('waitlist_status', status.value)" *ngFor="let status of waitlist_status">
                               {{status.name}}
                           </mat-chip>
-                        </mat-chip-list>
+                        </mat-chip-list> -->
+                        <mat-form-field>
+                          <mat-select [(value)]="filter.waitlist_status">
+                            <mat-option
+                            (click)="setFilterData('waitlist_status', 'all')" [value]="'all'">
+                            All
+                            </mat-option>
+                            <mat-option  *ngFor="let status of waitlist_status"
+                            (click)="setFilterData('waitlist_status', status.value)" [value]="status.value">
+                            {{status.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
                       </div>
 
                       <div class="check_in_date start_date" *ngIf="time_type !== 1">
