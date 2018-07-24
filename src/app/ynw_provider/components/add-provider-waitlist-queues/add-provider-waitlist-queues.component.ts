@@ -131,7 +131,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
   // get the list of services
   getProviderServices() {
-    this.provider_services.getServicesList()
+    const params = { 'status': 'ACTIVE'};
+    this.provider_services.getServicesList(params)
       .subscribe(data => {
         this.serv_list = data;
       });

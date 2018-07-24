@@ -47,6 +47,7 @@ export class ProviderDetailComponent implements OnInit {
   businessjson: any = [];
   servicesjson: any = [];
   galleryjson: any = [];
+  tempgalleryjson: any = [];
   locationjson: any = [];
   waitlisttime_arr: any = [];
   favprovs: any = [];
@@ -74,6 +75,7 @@ export class ProviderDetailComponent implements OnInit {
   inboxCntFetched = false;
   inboxUnreadCnt;
   changedate_req = false;
+  bLogo = '';
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -127,7 +129,7 @@ export class ProviderDetailComponent implements OnInit {
                     // console.log('s3', this.s3url);
                     this.getbusinessprofiledetails_json('businessProfile', true);
                     // this.getbusinessprofiledetails_json('services', true);
-                    this.getbusinessprofiledetails_json('gallery', true);
+                    // this.getbusinessprofiledetails_json('gallery', true);
                     this.getbusinessprofiledetails_json('settings', true);
                     this.getbusinessprofiledetails_json('terminologies', true);
                   },
@@ -151,6 +153,12 @@ export class ProviderDetailComponent implements OnInit {
             // console.log('bprofile', JSON.stringify(this.businessjson));
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
+            if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
+              if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
+                this.bLogo = this.businessjson.logo.url;
+              }
+            }
+            this.getbusinessprofiledetails_json('gallery', true);
             this.getFavProviders();
             const holdbName = this.businessjson.businessDesc || '';
             const maxCnt = 120;
@@ -189,7 +197,15 @@ export class ProviderDetailComponent implements OnInit {
           break;
           }
           case 'gallery': {
-            this.galleryjson = res;
+            this.tempgalleryjson = res;
+            let indx = 0;
+            if (this.bLogo !== '') {
+              this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: ''};
+              indx = 1;
+            }
+            for (let i = 0; i < this.tempgalleryjson.length; i++) {
+              this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
+            }
             this.gallery_exists = true;
             this.image_list_popup = [];
             if (this.galleryjson.length > 0) {
@@ -612,7 +628,8 @@ export class ProviderDetailComponent implements OnInit {
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
     data: {
       locdet: obj,
-      terminologies: this.terminologiesjson
+      terminologies: this.terminologiesjson,
+      settings: this.settingsjson
     }
   });
 

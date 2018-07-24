@@ -39,6 +39,7 @@ export class ExistingCheckinComponent implements OnInit {
      }
 
   ngOnInit() {
+    // console.log('passed in', this.data);
     // this.loc = this.data.locdet;
     this.getExistingCheckinsByLocation(this.data.locdet.id);
     this.terminologiesjson = this.data.terminologies;
