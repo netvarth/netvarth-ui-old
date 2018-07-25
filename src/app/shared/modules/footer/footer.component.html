@@ -14,33 +14,38 @@
         <div class="row ft-cpy">
             <div class="col-5 col-sm-12 col-md-5 col-lg-5" >
                 <h4>About</h4>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+                <p>YouNeverWait is an all-in-one web portal integrated with mobile application. It manages service providers’ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.
+                </p><p>Youneverwait’s cloud-based platform is scalable, secure, and ready for any size deployment. YouNeverWait is owned and operated by Netvarth technologies Pvt Ltd.</p>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <h4>Contact</h4>
-                <p>Company Address goes here...</p>
+                <p>Netvarth Technologies Pvt Ltd<br>
+                Museum cross lane<br>
+                Chembukavu<br>
+                Thrissur- 680020<br>
+                Kerala, India<br>
                 <p>
-                    E-mail : test@test.com<br/>
-                    Phone : 123456789
+                    E-mail : support@netvarth.com<br/>
+                    Phone : 0487-2325650
                 </p>
             </div>
             <div class="col-sm-12 col-md-3 col-lg-3">
                 <ul class="sbi-bt">
                     <li>
-                        <a href="#"><span class="smi-a"><i class="fa fa-facebook fb"></i></span></a>                       
+                        <a href="https://www.facebook.com/youneverwait" target="_blank"><span class="smi-a"><i class="fa fa-facebook fb"></i></span></a>
                     </li>
                     <li>
-                        <a href="#"><span class="smi-b"><i class="fa fa-twitter tw"></i></span></a>
+                        <a href="https://twitter.com/youneverwait" target="_blank"><span class="smi-b"><i class="fa fa-twitter tw"></i></span></a>
                     </li>
-                    <li>                        
+                    <li>
                         <a href="#"><span class="smi-c"><i class="fa fa-youtube-play ytb"></i></span></a>
-                    </li>  
+                    </li>
                 </ul>
             </div>
         </div>
-    </div>    
+    </div>
     </section>
-    
+
     <section class="sect2" *ngIf="ctype!='provider' && includedFrom == 'home'">
         <div class="container">
             <div class="row">
@@ -57,7 +62,7 @@
         </div>
         </div>
     </section>
-  
+
 
     <div class="stp-box" *ngIf="ctype=='provider'">
             <div class="stp-header">
@@ -78,24 +83,24 @@
                     </div>
                 </div>
             </div>
-            
+
             <!--Audit Log-->
 
             <div class="audit" *ngIf="showAuditDiv">
                     <div class="container">
-                        <div class="row"> 
+                        <div class="row">
                             <div class="table-outer stp-tbl">
                                 <span class="loading" *ngIf="auditStatus==1">
                                     <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
                                 </span>
-        
+
                                 <table class="table" *ngIf="auditStatus==3">
                                     <thead>
                                         <tr>
                                             <th>Date</th>
                                             <th>Text</th>
-                                            <th>Subject</th>                            
-                                            <th>User Name</th>                            
+                                            <th>Subject</th>
+                                            <th>User Name</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -123,7 +128,7 @@
                                 <div class="th th2">Text</div>
                                 <div class="th th3">Subject</div>
                                 <div class="th th4">User Name</div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -154,19 +159,19 @@
                 </div>
             </div> -->
             <!-- // Audit Log-->
-            
+
             <!--Alerts-->
             <div class="alerts" *ngIf="showAlertDiv">
                     <div class="container">
-                        <div class="row">        
+                        <div class="row">
                             <div class="table-outer stp-tbl">
                                 <span class="loading" *ngIf="alertStatus==1"><app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner></span>
-        
+
                                 <table class="table" *ngIf="alertStatus==3">
                                     <tbody>
-                                        <tr [class.info]="alert.severity.name=='Info'" 
-                                            [class.warning]="alert.severity.name=='Warning'" 
-                                            [class.high]="alert.severity.name=='High'" 
+                                        <tr [class.info]="alert.severity.name=='Info'"
+                                            [class.warning]="alert.severity.name=='Warning'"
+                                            [class.high]="alert.severity.name=='High'"
                                             [class.error]="alert.severity.name=='Critical'"
                                                          *ngFor="let alert of alerts">
                                             <td class="td1">{{alert.text}}</td>
@@ -174,9 +179,11 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <span *ngIf="alert_count > alertsCnt" class="alert-view-all"
+                                  (click)="handleMaximize()"> View All</span>
                                 <span class="no-info" *ngIf="alertStatus==2">No Alerts so far</span>
                             </div>
-                        </div>   
+                        </div>
                     </div>
                 </div>
 
@@ -195,10 +202,10 @@
                                 <ul class="stp-list" *ngIf="alertStatus==3">
                                     <ng-container *ngFor="let alert of alerts">
                                     <li>
-                                        <div class="td td1" 
-                                        [class.info]="alert.severity.name=='Info'" 
-                                        [class.warning]="alert.severity.name=='Warning'" 
-                                        [class.high]="alert.severity.name=='High'" 
+                                        <div class="td td1"
+                                        [class.info]="alert.severity.name=='Info'"
+                                        [class.warning]="alert.severity.name=='Warning'"
+                                        [class.high]="alert.severity.name=='High'"
                                         [class.error]="alert.severity.name=='Critical'">{{alert.text}}</div>
                                         <div class="td td2"><span class="icon-delete" *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></span></div>
                                     </li>
@@ -209,7 +216,7 @@
                 </div>
             </div> -->
             <!-- // Alerts-->
-            
+
             <!--Online Chekin-->
             <div class="o-checkin" *ngIf="showCheckinDiv">
                 <div class="table-body">
@@ -224,7 +231,7 @@
                                  </div>
                                 <div class="checkin-bx" *ngIf="checkinStatus==3">
                                     <span class="ttle">
-                                        Accept Online Check-in 
+                                        Accept Online Check-in
                                         <span class="sts" [class.active]="waitlistmgr.onlineCheckIns">{{(waitlistmgr.onlineCheckIns)? 'On': 'Off'}}</span>
                                     </span>
                                     <span class="ctrl"><mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns" (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle></span>
@@ -253,12 +260,12 @@
                     <div class="spt-controls ml-auto" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
                         <ul class="list">
                             <li [class.active]="selOpt=='Audit'" (click)="showAuditlog()"><span class="icon-audit" matTooltip="Audit Log"></span></li>
-                            <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="icon-bell" matTooltip="Alerts"></span></li>
+                            <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="alert-count">{{alert_count}}</span><span class="icon-bell" matTooltip="Alerts"></span></li>
                             <li [class.active]="selOpt=='Checkin'" (click)="showCheckinED()"><span class="icon-checkin" matTooltip="Enable / Disable Check-in"></span></li>
                             <li [class.active]="selOpt=='License'" (click)="showLicense()"><span class="icon-license" matTooltip="License Details"></span></li>
                         </ul>
                     </div>
                 </div>
-             </div>        
+             </div>
      </section>
 </footer>

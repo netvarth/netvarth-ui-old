@@ -255,6 +255,12 @@ export class ProviderLicenseComponent implements OnInit {
               license_meta ['discPercFor12Months'] = meta ['discPercFor12Months'] || 0;
               license_meta ['discPercFor6Months'] = meta ['discPercFor6Months'] || 0;
               license_meta ['current_sub'] = (this.license_sub === 'Monthly') ? 'month' : 'year';
+
+              if (license_meta ['current_sub'] === 'year') {
+                const year_amount =  (license_meta ['price'] * 12);
+                license_meta ['price'] = year_amount - (year_amount * license_meta ['discPercFor12Months'] / 100);
+              }
+
               license_meta ['next_sub'] = null;
 
               if (license_meta ['current_sub'] === 'month' &&
@@ -323,5 +329,20 @@ export class ProviderLicenseComponent implements OnInit {
 
     });
 
+  }
+
+  doUpgradeSubcription(value) {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      data: {
+        'message' : 'Are you sure you wanted to change the subscription ?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updateSubscription(value);
+      }
+    });
   }
 }

@@ -58,10 +58,13 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       }
 
       this.pay_data.uuid = this.bill_data.uuid;
-      this.pay_data.amount = this.bill_data.netTotal - this.bill_data.totalAmountPaid;
+      this.pay_data.amount = this.bill_data.netRate - this.bill_data.totalAmountPaid;
+      this.pay_data.amount = this.sharedfunctionObj.roundToTwoDecimel(this.pay_data.amount); // for only two decimal
       this.pay_data.amount  = (this.pay_data.amount > 0) ? this.pay_data.amount : 0;
       this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
       this.getPaymentSettings();
+       console.log(this.pay_data.amount.toFixed(2));
+      // console.log(Math.round(this.pay_data.amount * 100) / 100);
     }
 
   ngOnInit() {

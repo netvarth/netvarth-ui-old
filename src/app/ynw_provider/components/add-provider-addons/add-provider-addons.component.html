@@ -13,17 +13,18 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <mat-form-field>
           <mat-select name="addons_selpackage" #addons_selpackage formControlName="addons_selpackage" *ngIf="upgradableaddons"
           (change)="licenseaddon_Select(addons_selpackage.value)">
-          <ng-container *ngFor="let adpackage of upgradableaddons">
-            <mat-option *ngFor="let addons of adpackage.addons"
+            <mat-option *ngFor="let addons of upgradableaddons"
             [value]="addons.addonId">
             {{addons.addonName}}
             </mat-option>
-          </ng-container>
           </mat-select>
         </mat-form-field>
 
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'addons_selpackage')" errorMsg="Please select the addon.">
         </app-field-error-display>
+      </div>
+      <div class="addon-desc" *ngIf="obtainedaddons && upgradableaddons.length!=0 && selected_addondesc">
+        {{selected_addondesc}}
       </div>
       <div *ngIf="obtainedaddons && upgradableaddons.length==0">
           Sorry no upgradable addons found.

@@ -1042,4 +1042,8 @@ getProjectErrorMesssages(error) {
   return this.firstToUpper(message);
 }
 
+roundToTwoDecimel(amt) {
+  return Math.round(amt * 100) / 100; // for only two decimal
+}
+
 }
