@@ -12,7 +12,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <input matInput type="text" class="form-control" id="name" placeholder="Name"
     formControlName="name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
-    errorMsg="Please enter your coupon name.">
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'name',
+    {
+      'required' : 'Please enter the coupon name.',
+      'maxlength' : 'Name can contain only ' + maxChars + ' characters'
+    })">
    </app-field-error-display>
 </div>
 
@@ -27,14 +31,18 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
    </app-field-error-display>
 
     <mat-form-field class="example-full-width">
-      <span matPrefix *ngIf="amForm.get('calculationType').value == 'Fixed'"> ₹ &nbsp;</span>
+      <span *ngIf="amForm.get('calculationType').value == 'Fixed'"> ₹ &nbsp;</span> 
       <input matInput type="text" class="form-control" id="discValue" [placeholder]="valueCaption"
       formControlName="discValue" autocomplete="off">
       <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span>
     </mat-form-field>
 
    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'discValue')"
-   [errorMsg]="valueCaption">
+  [errorMsgs]="fed_service.getErrorMessage(amForm,'discValue',
+   {
+     'required' : valueCaption,
+     'maxlength' : 'Only ' + maxNumbers + ' digits are allowed'
+   })">
   </app-field-error-display>
 </div>
 
@@ -43,7 +51,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <input matInput type="text" class="form-control" id="description" placeholder="Description"
     formControlName="description"  autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
-    errorMsg="Please enter the description.">
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'description',
+    {
+      'required' : 'Please enter the description.',
+      'maxlength' : 'Description can contain only ' + maxChars + ' characters'
+    })">
    </app-field-error-display>
 </div>
 </mat-dialog-content>

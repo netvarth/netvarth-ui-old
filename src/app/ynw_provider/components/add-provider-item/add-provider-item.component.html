@@ -52,29 +52,49 @@
 <div class="form-group">
     <label class="col-form-label" for="displayName">Item Name *</label>
     <input matInput type="text" class="form-control" id="displayName" placeholder="Item Name" formControlName="displayName" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayName')" errorMsg="Please enter item name.">
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayName')" 
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
+    {
+      'required' : 'Please enter item name',
+      'maxlength' : 'Name can contain only ' + maxChars + ' characters'
+    })">
    </app-field-error-display>
 </div>
 
 <div class="form-group">
     <label class="col-form-label" for="shortDesc">Short Description *</label>
-    <!-- <input matInput type="text" class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc" autocomplete="off"> -->
-    <textarea class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc"></textarea>
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" errorMsg="Please enter the short description">
+    <input matInput type="text" class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc" autocomplete="off">
+    <!-- <textarea class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc"></textarea> -->
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" 
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDesc',
+    {
+      'required' : 'Please enter the short description',
+      'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+    })">
    </app-field-error-display>
 </div>
 
 <div class="form-group">
     <label class="col-form-label" for="displayDesc">Detailed Description *</label>
-    <input matInput type="text" class="form-control" id="displayDesc" placeholder="Detailed Description" formControlName="displayDesc" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')"  errorMsg="Please enter display description.">
+    <textarea class="form-control" id="shortDesc" placeholder="Detailed Description" formControlName="displayDesc"></textarea>
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')"
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
+    {
+      'required' : 'Please enter display description.',
+      'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+    })">
    </app-field-error-display>
 </div>
 
 <div class="form-group">
     <label class="col-form-label" for="price">Price (<i class="fa fa-inr"></i>) *</label>
     <input matInput type="text" class="form-control" id="price" placeholder="Price" formControlName="price" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')"  errorMsg="Please enter valid price.">
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')"  errorMsg=""
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
+    {
+      'required' : 'Please enter valid price.',
+      'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
+    })">
    </app-field-error-display>
 </div>
 

@@ -679,5 +679,7 @@ export class ProviderServices {
     const url = 'ynwConf/settings/' + domain + '/' + subDomain;
     return this.servicemeta.httpGet(url);
   }
-
+  getgeneralBusinessSchedules() {
+    return this.servicemeta.httpGet('provider/ynwConf/bSchedule');
+  }
 }

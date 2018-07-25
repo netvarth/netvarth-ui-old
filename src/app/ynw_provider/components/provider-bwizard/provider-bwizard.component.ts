@@ -28,6 +28,8 @@ export class ProviderbWizardComponent implements OnInit {
   schedule_arr: any = [];
   schedule_json: any = [];
   display_schedule: any = [];
+  general_scheduleholder: any = [];
+  general_schedule: any = [];
   schedule_alreadyexists_for_location = false;
   ischange_schedule_clicked = false;
   loading_active = true;
@@ -61,8 +63,9 @@ export class ProviderbWizardComponent implements OnInit {
                                 'searchstatus': false,
                                 'accountstatus': ''
                               };
-    this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
-    this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
+    this.getgeneralBusinessSchedules(); // method to fetch the default schedule from the ynwconf API respose
+    // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+    // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     this.getUserdetails();
     this.getBusinessProfile();
     this.active_step = 0;
@@ -188,7 +191,8 @@ export class ProviderbWizardComponent implements OnInit {
 
           // Check whether atleast one schedule is added. If not setting the base schedule from constants to save it as the schedule for base location
           if (this.schedule_arr.length === 0) {
-            this.schedule_arr = projectConstants.BASE_SCHEDULE;
+            // this.schedule_arr = projectConstants.BASE_SCHEDULE;
+            this.setDefaultSchedules();
           }
 
           // Preparing the respective json variable with the schedule details
@@ -500,5 +504,44 @@ export class ProviderbWizardComponent implements OnInit {
     this.coord_error = '';
     this.locname_error = '';
     this.gurl_error = '';
+  }
+
+  getgeneralBusinessSchedules() {
+    this.provider_services.getgeneralBusinessSchedules()
+      .subscribe (data => {
+        this.general_scheduleholder = data;
+        this.general_schedule = [];
+        for (let j = 0; j < this.general_scheduleholder.length; j++) {
+          const obt_sch = this.general_scheduleholder[j];
+         // console.log('business', obt_sch[0].repeatIntervals);
+            for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+              // pushing the schedule details to the respective array to show it in the page
+              for (let l = 0; l < obt_sch.timeSlots.length; l++) {
+                this.general_schedule.push({
+                    day: obt_sch.repeatIntervals[k],
+                    sTime: obt_sch.timeSlots[l].sTime,
+                    eTime: obt_sch.timeSlots[l].eTime
+                });
+              }
+            }
+        }
+        this.setDefaultSchedules();
+        console.log('genschedule', this.general_schedule);
+        console.log('arranged Schedule', this.shared_functions.arrageScheduleforDisplay(this.general_schedule));
+      },
+      error => {
+
+      });
+  }
+
+  setDefaultSchedules() {
+    if (this.general_schedule.length > 0) {
+      this.schedule_arr = this.general_schedule;
+    } else {
+      this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+    }
+    this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
+    console.log('genschedule', this.general_schedule, 'gen sch length', this.general_schedule.length);
+    console.log('display schedule', this.schedule_arr);
   }
 }

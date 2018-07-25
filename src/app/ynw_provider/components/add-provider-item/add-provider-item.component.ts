@@ -27,6 +27,8 @@ export class AddProviderItemComponent implements OnInit {
   holdtaxable = false;
   file_error_msg = '';
   img_exists = false;
+  maxChars = projectConstants.VALIDATOR_MAX50;
+  maxNumbers = projectConstants.VALIDATOR_MAX9;
   @ViewChild('caption') private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemComponent>,
@@ -46,21 +48,22 @@ export class AddProviderItemComponent implements OnInit {
   createForm() {
     if (this.data.type === 'add') {
       this.amForm = this.fb.group({
-        displayName: ['', Validators.compose([Validators.required])],
-        shortDesc: ['', Validators.compose([Validators.required])],
-        displayDesc: ['', Validators.compose([Validators.required])],
+        displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        shortDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
         taxable: [false, Validators.compose([Validators.required])],
-        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])] // ,
+        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+        // price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)]), Validators.maxLength(projectConstants.VALIDATOR_MAX10)] // ,
         /*file: ['', Validators.compose([Validators.required])],*/
         // caption: ['Itempic']
       });
     } else {
       this.amForm = this.fb.group({
-        displayName: ['', Validators.compose([Validators.required])],
-        shortDesc: ['', Validators.compose([Validators.required])],
-        displayDesc: ['', Validators.compose([Validators.required])],
+        displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        shortDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
         taxable: [false, Validators.compose([Validators.required])],
-        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])]
+        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
       });
     }
 

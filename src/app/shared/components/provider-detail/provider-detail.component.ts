@@ -49,6 +49,7 @@ export class ProviderDetailComponent implements OnInit {
   galleryjson: any = [];
   tempgalleryjson: any = [];
   locationjson: any = [];
+  virtualfieldsjson: any = [];
   waitlisttime_arr: any = [];
   favprovs: any = [];
   settings_exists = false;
@@ -132,6 +133,7 @@ export class ProviderDetailComponent implements OnInit {
                     // this.getbusinessprofiledetails_json('gallery', true);
                     this.getbusinessprofiledetails_json('settings', true);
                     this.getbusinessprofiledetails_json('terminologies', true);
+                    this.getbusinessprofiledetails_json('virtualFields', false);
                   },
                   error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -275,6 +277,11 @@ export class ProviderDetailComponent implements OnInit {
           }*/
           case 'terminologies': {
             this.terminologiesjson = res;
+          break;
+          }
+          case 'virtualFields' : {
+            this.virtualfieldsjson = res;
+            console.log('virtual', this.virtualfieldsjson);
           break;
           }
         }

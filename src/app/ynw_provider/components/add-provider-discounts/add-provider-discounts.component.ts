@@ -19,6 +19,8 @@ export class AddProviderDiscountsComponent implements OnInit {
   api_success = null;
   parent_id ;
   valueCaption = 'Enter value';
+  maxChars = projectConstants.VALIDATOR_MAX50;
+  maxNumbers = projectConstants.VALIDATOR_MAX9;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderDiscountsComponent>,
@@ -36,9 +38,9 @@ export class AddProviderDiscountsComponent implements OnInit {
   }
   createForm() {
     this.amForm = this.fb.group({
-    name: ['', Validators.compose([Validators.required])],
-    description: ['', Validators.compose([Validators.required])],
-    discValue: ['', Validators.compose([Validators.required])],
+    name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+    description: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+    discValue: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxNumbers)])],
     calculationType: ['Fixed', Validators.compose([Validators.required])]
     });
 

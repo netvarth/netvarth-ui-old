@@ -185,6 +185,14 @@ VALIDATOR_PHONENUMBERCOUNT10: /^\d{10}$/,
 VALIDATOR_CHARONLY: /^[a-zA-Z ]+$/,
 // VALIDATOR_CHARONLY: /^[a-zA-Z][a-zA-Z ]+$/,
 VALIDATOR_EMAIL: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$/,
+VALIDATOR_MAX9: 9, // max char count
+VALIDATOR_MAX10: 10, // max char count
+VALIDATOR_MAX50: 50, // max char count
+VALIDATOR_MAX100: 100, // max char count
+VALIDATOR_MAX150: 150, // max char count
+VALIDATOR_MAX200: 200, // max char count
+VALIDATOR_MAX250: 250, // max char count
+VALIDATOR_MAX500: 500, // max char count
 WAITLIST_CANCEL_RESON: [ { title : 'No Show Up', value: 'noshowup'},
                          {title : 'Self', value: 'self'},
                          {title : 'Blocked', value: 'blocked'},
