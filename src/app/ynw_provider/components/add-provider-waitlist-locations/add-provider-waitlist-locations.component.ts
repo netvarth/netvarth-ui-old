@@ -21,6 +21,8 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   api_success = null;
   schedule_arr: any = [];
   schedule_json: any = [];
+  general_scheduleholder: any = [];
+  general_schedule: any = [];
   bProfile: any = [];
   parking_list: any = [];
   schedule_alreadyexists_for_location = false;
@@ -29,6 +31,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   checked_sel_badges = false;
   data_source = 'location';
   forbadge = false;
+  proceedwithschedule = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistLocationsComponent>,
@@ -66,11 +69,47 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
      // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     // }
     if (this.data_source === 'bprofile') {
-       this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+      console.log('i am here', this.data_source);
+       // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+       this.getgeneralBusinessSchedules();
+    } else {
+      this.proceedwithschedule = true;
     }
 
     this.createForm();
     this.elementRef.nativeElement.focus();
+  }
+  getgeneralBusinessSchedules() {
+    this.provider_services.getgeneralBusinessSchedules()
+      .subscribe (data => {
+        this.general_scheduleholder = data;
+        this.general_schedule = [];
+        for (let j = 0; j < this.general_scheduleholder.length; j++) {
+          const obt_sch = this.general_scheduleholder[j];
+         // console.log('business', obt_sch[0].repeatIntervals);
+            for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+              // pushing the schedule details to the respective array to show it in the page
+              for (let l = 0; l < obt_sch.timeSlots.length; l++) {
+                this.general_schedule.push({
+                    day: obt_sch.repeatIntervals[k],
+                    sTime: obt_sch.timeSlots[l].sTime,
+                    eTime: obt_sch.timeSlots[l].eTime
+                });
+              }
+            }
+        }
+        if (this.general_schedule.length > 0) {
+          this.schedule_arr = this.general_schedule;
+        } else {
+          this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+        }
+        this.proceedwithschedule = true;
+       // console.log('genschedule', this.general_schedule);
+        // console.log('arranged Schedule', this.shared_functions.arrageScheduleforDisplay(this.general_schedule));
+      },
+      error => {
+
+      });
   }
   createForm() {
     if (this.data.type === 'add') {

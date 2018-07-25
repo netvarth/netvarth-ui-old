@@ -585,7 +585,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
-          console.log('edit location return', result);
+          // console.log('edit location return', result);
           if (result) {
             if (result === 'reloadlist') {
               this.getBusinessProfile();

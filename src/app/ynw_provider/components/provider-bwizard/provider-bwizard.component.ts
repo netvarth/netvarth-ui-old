@@ -156,11 +156,11 @@ export class ProviderbWizardComponent implements OnInit {
               this.wizard_data_holder.location = '';
             }
             const locname_validate = blankpattern.test(this.wizard_data_holder.location);
-            console.log('name check', locname_validate, this.wizard_data_holder.location);
+            // console.log('name check', locname_validate, this.wizard_data_holder.location);
             if (locname_validate) {
               this.error_Exists = true;
               this.locname_error = 'Please enter the location name';
-              console.log('iamhere');
+             // console.log('iamhere');
             }
             const mapurlexists_validate = blankpattern.test(this.wizard_data_holder.mapurl);
             if (!mapurlexists_validate) {
@@ -526,8 +526,8 @@ export class ProviderbWizardComponent implements OnInit {
             }
         }
         this.setDefaultSchedules();
-        console.log('genschedule', this.general_schedule);
-        console.log('arranged Schedule', this.shared_functions.arrageScheduleforDisplay(this.general_schedule));
+       // console.log('genschedule', this.general_schedule);
+        // console.log('arranged Schedule', this.shared_functions.arrageScheduleforDisplay(this.general_schedule));
       },
       error => {
 
@@ -540,8 +540,8 @@ export class ProviderbWizardComponent implements OnInit {
     } else {
       this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     }
-    this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
-    console.log('genschedule', this.general_schedule, 'gen sch length', this.general_schedule.length);
-    console.log('display schedule', this.schedule_arr);
+    // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
+   // console.log('genschedule', this.general_schedule, 'gen sch length', this.general_schedule.length);
+   // console.log('display schedule', this.schedule_arr);
   }
 }
