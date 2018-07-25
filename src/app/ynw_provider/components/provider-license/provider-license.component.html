@@ -45,7 +45,7 @@
                                                   <span class="change">Change plan to</span>
 
                                                   <div class="pack not-active" *ngFor="let sub of license_upgarde_sub['next_sub']"
-                                                  (click)="updateSubscription(sub['value'])">
+                                                  (click)="doUpgradeSubcription(sub['value'])">
                                                       <span class="price">{{sub['amount'] | currency:'INR':'symbol':'.2-2'}}</span> / {{sub['type']}}
                                                       <span class="discount" *ngIf="sub['discount_per'] != 0">
                                                          ( {{sub['discount_per']}}% discount )

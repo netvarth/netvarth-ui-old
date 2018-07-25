@@ -49,13 +49,13 @@ export class ProviderSystemAlertComponent implements OnInit {
 
     ngOnInit() {
       // this.getAlertList();
-      this.alertSelAck = '';
+      this.alertSelAck = 'false'; // default becuase maximise from footer alert panel
       this.alertSeldate = '';
       this.alertStatus = 4;
 
       this.holdalertSelAck = this.alertSelAck;
       this.holdalertSeldate = this.alertSeldate;
-      this.getAlertListTotalCnt('', '');
+      this.getAlertListTotalCnt(this.alertSelAck, '');
     }
     getAlertListTotalCnt(ackStatus, sdate) {
       if (ackStatus === '') {
@@ -151,6 +151,7 @@ export class ProviderSystemAlertComponent implements OnInit {
         .subscribe (data => {
           this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
           this.getAlertListTotalCnt(this.holdalertSelAck || '', this.holdalertSeldate);
+          this.sharedfunctionObj.sendMessage({'ttype': 'alert_count_update'});
         },
       error => {
         this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});

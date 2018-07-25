@@ -42,8 +42,15 @@ export class AddproviderAddonComponent implements OnInit {
   }
   getUpgradableaddonPackages() {
     this.provider_services.getUpgradableAddonPackages()
-      .subscribe( data => {
-          this.upgradableaddons = data;
+      .subscribe( (data: any) => {
+
+        this.upgradableaddons = [];
+
+          for (const metric of data) {
+            for (const addon of metric.addons) {
+              this.upgradableaddons.push(addon);
+            }
+          }
           this.obtainedaddons = true;
       });
   }
@@ -73,13 +80,14 @@ export class AddproviderAddonComponent implements OnInit {
   licenseaddon_Select(id) {
    // console.log('value', id);
     this.selected_addon = id;
+    this.selected_addondesc = null;
     for (const addon of this.upgradableaddons) {
-     if (addon.addons[0].addonId === id) {
-       this.selected_addondesc = addon.addons[0].addonDesc;
+     if (addon.addonId === id) {
+       this.selected_addondesc = addon.addonDesc;
      }
     }
     // this.selected_addondesc = obj.addonDesc;
-
+    // console.log(this.selected_addondesc);
   }
   resetApiErrors () {
     this.api_error = null;
