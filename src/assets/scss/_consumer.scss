@@ -1249,7 +1249,7 @@ header {
                                             font-size: .75rem;
                                             padding: 0 5px;
                                             @include border-radius(20px);
-                                            cursor: pointer;
+                                            cursor: default;
                                             margin-bottom: 5px;
                                         }
                                     }

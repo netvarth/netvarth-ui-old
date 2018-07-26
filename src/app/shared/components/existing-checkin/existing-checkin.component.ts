@@ -26,6 +26,7 @@ export class ExistingCheckinComponent implements OnInit {
   locid;
   terminologiesjson: any = null;
   changeOccured = false;
+  checkinLabel;
 
   constructor(
     public dialogRef: MatDialogRef<ExistingCheckinComponent>,
@@ -44,6 +45,8 @@ export class ExistingCheckinComponent implements OnInit {
     this.getExistingCheckinsByLocation(this.data.locdet.id);
     this.terminologiesjson = this.data.terminologies;
     this.provider_datastorage.set('terminologies', this.terminologiesjson);
+    this.checkinLabel = this.sharedfunctionObj.firstToUpper(this.sharedfunctionObj.getTerminologyTerm('waitlist'));
+    console.log('term', this.checkinLabel);
     this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close(this.changeOccured);
     });
@@ -112,7 +115,7 @@ export class ExistingCheckinComponent implements OnInit {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
       data: {
-        'message' : 'Do you want to cancel this Check-In?',
+        'message' : 'Do you want to cancel this ' + this.checkinLabel + '?',
         'heading' : 'Confirm'
       }
     });

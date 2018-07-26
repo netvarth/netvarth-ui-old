@@ -1,4 +1,4 @@
-    <h1 class="mat-dialog-title">Your Check-Ins at {{this.data.locdet.place}}
+    <h1 class="mat-dialog-title">Your {{checkinLabel}} at {{this.data.locdet.place}}
     <button #queue [mat-dialog-close]="changeOccured" class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -30,7 +30,7 @@
         </div>
     </div> 
     <div class="c-checkin-blank" *ngIf="loc.length==0">
-        No Check-Ins exists at {{this.data.locdet.place}}
+        No {{checkinLabel}} exists at {{this.data.locdet.place}}
     </div>
     </mat-dialog-content>
 

@@ -13165,7 +13165,7 @@ header.consumer {
                       border-radius: 20px;
                       background-clip: padding-box;
                       /* stops bg color from leaking outside the border: */
-                      cursor: pointer;
+                      cursor: default;
                       margin-bottom: 5px; }
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .more-clinics span {
                 color: #00aef2;

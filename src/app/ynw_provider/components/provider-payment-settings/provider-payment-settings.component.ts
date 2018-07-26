@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Inject} from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
@@ -20,6 +20,8 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 export class ProviderPaymentSettingsComponent implements OnInit {
 
+    @ViewChild('paymobref') private paymobrefRef: ElementRef;
+    @ViewChild('acholdernameref') private acholdernameRef: ElementRef;
     paytmenabled;
     paytmmobile;
     ccenabled;
@@ -305,5 +307,18 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.getPaymentSettings(2);
         }
         this.ineditMode = mod;
+        if (mod === true) {
+            setTimeout(() => {
+                if (this.paymobrefRef) {
+                    if (this.paymobrefRef.nativeElement) { // adding a small delay to field disabled get off before setting the focus
+                        this.paymobrefRef.nativeElement.focus();
+                    }
+                } else if (this.acholdernameRef) {
+                    if (this.acholdernameRef.nativeElement) {
+                        this.acholdernameRef.nativeElement.focus();
+                    }
+                }
+            }, 50);
+        }
     }
 }

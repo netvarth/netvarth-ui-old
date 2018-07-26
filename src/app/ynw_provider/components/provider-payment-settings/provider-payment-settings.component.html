@@ -33,7 +33,7 @@
                                         <div class="form-group">
                                             <label class="caption">Enter Mobile Number *</label>
                                             <mat-form-field>
-                                                <input matInput [(ngModel)]="paytmmobile" (keypress)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                <input matInput #paymobref [(ngModel)]="paytmmobile" (keypress)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
                                             </mat-form-field>
                                             <app-field-error-display [displayError]="showError['paytmmobile']['status']" [errorMsg]="showError['paytmmobile']['msg']"></app-field-error-display>
                                         </div>
@@ -65,7 +65,7 @@
                                             <div class="form-group">
                                                 <label class="caption">Account Holder Name *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="bankacname" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput #acholdernameref [(ngModel)]="bankacname" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['bankacname']['status']" [errorMsg]="showError['bankacname']['msg']"></app-field-error-display>
                                             </div>
@@ -133,7 +133,7 @@
                         <div class="actiondiv" *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
                                 <button type="button" mat-button class="cs-btn bt1" (click)="savePaySettings(false)" *ngIf="ineditMode">Save Settings</button>
                                 <button type="button" mat-button class="cs-btn bt2" (click)="handleEditPaySettings(false)" *ngIf="ineditMode">Cancel Edit</button>
-                                <button type="button" mat-button class="cs-btn bt1" (click)="handleEditPaySettings(true)" *ngIf="!ineditMode">Edit Payment Settings</button>
+                                <button type="button" mat-button class="cs-btn bt1" (click)="handleEditPaySettings(true)" *ngIf="!ineditMode">Change Payment Settings</button>
                         </div>
                     </mat-tab>
                     <mat-tab label="Tax Settings">

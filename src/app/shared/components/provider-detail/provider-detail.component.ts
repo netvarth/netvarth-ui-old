@@ -281,7 +281,7 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'virtualFields' : {
             this.virtualfieldsjson = res;
-            console.log('virtual', this.virtualfieldsjson);
+            // console.log('virtual', this.virtualfieldsjson);
           break;
           }
         }
@@ -662,5 +662,19 @@ export class ProviderDetailComponent implements OnInit {
   });
 }
 
+getTerminologyTerm(term) {
+  // console.log('term', term, fields, 'terminologies', terminologies);
+  if (this.terminologiesjson) {
+    const term_only = term.replace(/[\[\]']/g, '' ); // term may me with or without '[' ']'
+    // const terminologies = this.common_datastorage.get('terminologies');
+    if (this.terminologiesjson) {
+      return this.sharedFunctionobj.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] :  (( term === term_only) ? term_only : term  ));
+    } else {
+      return this.sharedFunctionobj.firstToUpper(( term === term_only) ? term_only : term);
+    }
+  } else {
+      return term;
+  }
 }
 
+}

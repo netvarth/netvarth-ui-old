@@ -35,10 +35,6 @@ export class ReturnPaymentComponent implements OnInit {
       }
 
     });
-
-
-
-
   }
 
   getPaymentStatus() {

@@ -53,7 +53,6 @@ export class ProviderDiscountsComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderDiscountsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
-          autoFocus: false,
           data: {
             type : 'add'
           }
@@ -69,7 +68,6 @@ export class ProviderDiscountsComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderDiscountsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
-          autoFocus: false,
           data: {
             discount : obj,
             type : 'edit'

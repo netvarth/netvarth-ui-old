@@ -849,6 +849,8 @@ setEnvironment(bypassotherfunction?) {
             let schedule_arr = [];
             let locationcnt = 0;
             for (let i = 0 ; i < this.search_data.hits.hit.length ; i++) {
+              // console.log('result terminologies', this.search_data.hits.hit[i].fields.title, JSON.parse(this.search_data.hits.hit[i].fields.terminologies));
+              // this.getTerminologyTerm('waitlist', this.search_data.hits.hit[i].fields);
               locationcnt = 0;
               this.search_data.hits.hit[i].fields.rating =  this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating);
               this.search_data.hits.hit[i].fields['checkInsallowed'] =  (this.search_data.hits.hit[i].fields.hasOwnProperty('online_checkins')) ? true : false;
@@ -966,6 +968,7 @@ setEnvironment(bypassotherfunction?) {
           this.search_data.hits.hit[srchindx].fields['estimatedtime_det'] = [];
 
           if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
             this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 1;
             this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
             if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
@@ -1703,4 +1706,25 @@ setEnvironment(bypassotherfunction?) {
       }
     }
   }
+
+  getTerminologyTerm(term, fields) {
+    let terminologies = null;
+    // console.log('fields.terminolog', fields.terminologies, terminologies);
+    if (fields.terminologies !== undefined) {
+      terminologies = JSON.parse(fields.terminologies[0]);
+    }
+    // console.log('term', term, fields, 'terminologies', terminologies);
+    if (terminologies !== null) {
+      const term_only = term.replace(/[\[\]']/g, '' ); // term may me with or without '[' ']'
+      // const terminologies = this.common_datastorage.get('terminologies');
+      if (terminologies) {
+        return this.shared_functions.firstToUpper((terminologies[term_only]) ? terminologies[term_only] :  (( term === term_only) ? term_only : term  ));
+      } else {
+        return this.shared_functions.firstToUpper(( term === term_only) ? term_only : term);
+      }
+    } else {
+        return this.shared_functions.firstToUpper(term);
+    }
+  }
+
 }
