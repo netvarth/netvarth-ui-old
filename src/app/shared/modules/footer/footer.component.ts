@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { SharedServices } from '../../services/shared-services';
@@ -18,7 +18,7 @@ import { Subscription, ISubscription } from 'rxjs/Subscription';
 })
 
 
-export class FooterComponent implements OnInit {
+export class FooterComponent implements OnInit, OnDestroy {
 
   @Input() includedfrom: string;
   curyear;
@@ -40,6 +40,7 @@ export class FooterComponent implements OnInit {
   includedFrom;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   alert_count = 0;
+  subscription: Subscription;
 
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   cronHandle: Subscription;
@@ -62,14 +63,21 @@ export class FooterComponent implements OnInit {
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.selOpt = '';
     this.clearDivs();
-    this.getAlertCount();
-
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
-      this.reloadHandler();
-    });
+    if (this.ctype === 'provider') {
+      this.getAlertCount();
+    }
+    if (this.ctype === 'provider') {
+      this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+        this.reloadHandler();
+      });
+    } else {
+      if (this.cronHandle) {
+        this.cronHandle.unsubscribe();
+      }
+    }
 
     // Update from alert page
-    this.shared_functions.getMessage()
+    this.subscription = this.shared_functions.getMessage()
     .subscribe(
       data => {
 
@@ -82,6 +90,15 @@ export class FooterComponent implements OnInit {
       }
     );
 
+  }
+
+
+  ngOnDestroy() {
+     // unsubscribe to ensure no memory leaks
+     this.subscription.unsubscribe();
+     if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+     }
   }
 
 

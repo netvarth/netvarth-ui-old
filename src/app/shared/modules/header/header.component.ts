@@ -16,7 +16,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import { projectConstants } from '../../constants/project-constants';
 
-import { ViewChild } from '@angular/core';
+// import { ViewChild } from '@angular/core';
 // import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 @Component({
