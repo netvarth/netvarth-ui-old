@@ -985,6 +985,10 @@ ratingRounding(val) {
   return retval;
 }
 
+setTerminologies(terminologies) {
+  this.common_datastorage.set('terminologies', terminologies);
+}
+
 getTerminologies() {
   return this.common_datastorage.get('terminologies');
 }

@@ -279,11 +279,15 @@ export class CheckInInnerComponent implements OnInit {
                       // console.log('terminologies ext', this.terminologiesjson);
                       if (!this.terminologiesjson) {
                         this.getbusinessprofiledetails_json('terminologies', true);
+                        // console.log('term1');
                       } else {
                         if (this.terminologiesjson.length === 0) {
                           this.getbusinessprofiledetails_json('terminologies', true);
+                          // console.log('term2');
                         } else {
+                          // console.log('term3');
                           this.provider_datastorage.set('terminologies', this.terminologiesjson);
+                          this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
                         }
                       }
                     },
@@ -310,7 +314,10 @@ export class CheckInInnerComponent implements OnInit {
             break;
             case 'terminologies':
               this.terminologiesjson = res;
+              // console.log('reached here1', this.terminologiesjson);
               this.provider_datastorage.set('terminologies', this.terminologiesjson);
+              this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+              // console.log('term datastorage', this.sharedFunctionobj.getTerminologies());
             break;
           }
       },

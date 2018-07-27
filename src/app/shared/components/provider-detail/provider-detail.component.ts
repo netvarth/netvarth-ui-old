@@ -49,9 +49,11 @@ export class ProviderDetailComponent implements OnInit {
   galleryjson: any = [];
   tempgalleryjson: any = [];
   locationjson: any = [];
-  virtualfieldsjson: any = [];
+  virtualfieldsjson = null;
   waitlisttime_arr: any = [];
   favprovs: any = [];
+  specializationslist: any = [];
+  socialMedialist: any = [];
   settings_exists = false;
   business_exists = false;
   service_exists = false;
@@ -62,6 +64,7 @@ export class ProviderDetailComponent implements OnInit {
   futuredate_allowed = false;
   maxsize = 0;
   viewallServices = false;
+  viewallSpec = false;
   showmoreDesc = false;
   bNameStart = '';
   bNameEnd = '';
@@ -73,10 +76,16 @@ export class ProviderDetailComponent implements OnInit {
   ratingenabledArr;
   ratingdisabledArr;
   serMaxcnt = 3;
+  specMaxcnt = 5;
   inboxCntFetched = false;
   inboxUnreadCnt;
   changedate_req = false;
+  gender = '';
   bLogo = '';
+  orgsocial_list;
+  emaillist: any = [];
+  phonelist: any = [];
+  showEmailPhonediv = false;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -112,6 +121,7 @@ export class ProviderDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.getInboxUnreadCnt();
     this.activaterouterobj.paramMap
     .subscribe(params => {
@@ -121,6 +131,12 @@ export class ProviderDetailComponent implements OnInit {
   }
   backtoSearchResult() {
     this.locationobj.back();
+  }
+  getSocialdet(key, field) {
+    const retdet = this.orgsocial_list.filter(
+      soc => soc.key === key);
+    const returndet = retdet[0][field];
+    return returndet;
   }
   gets3curl() {
     this.retval = this.sharedFunctionobj.getS3Url('provider')
@@ -133,7 +149,7 @@ export class ProviderDetailComponent implements OnInit {
                     // this.getbusinessprofiledetails_json('gallery', true);
                     this.getbusinessprofiledetails_json('settings', true);
                     this.getbusinessprofiledetails_json('terminologies', true);
-                    this.getbusinessprofiledetails_json('virtualFields', false);
+                    this.getbusinessprofiledetails_json('virtualFields', true);
                   },
                   error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -159,6 +175,18 @@ export class ProviderDetailComponent implements OnInit {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url;
               }
+            }
+            if (this.businessjson.specialization) {
+              this.specializationslist = this.businessjson.specialization;
+            }
+            if (this.businessjson.socialMedia) {
+              this.socialMedialist = this.businessjson.socialMedia;
+            }
+            if (this.businessjson.emails) {
+              this.emaillist = this.businessjson.emails;
+            }
+            if (this.businessjson.phoneNumbers) {
+              this.phonelist = this.businessjson.phoneNumbers;
             }
             this.getbusinessprofiledetails_json('gallery', true);
             this.getFavProviders();
@@ -281,7 +309,7 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'virtualFields' : {
             this.virtualfieldsjson = res;
-            // console.log('virtual', this.virtualfieldsjson);
+            console.log('virtual', this.virtualfieldsjson);
           break;
           }
         }
@@ -297,6 +325,13 @@ export class ProviderDetailComponent implements OnInit {
       this.viewallServices = false;
     } else {
       this.viewallServices = true;
+    }
+  }
+  showallSpecial() {
+    if (this.viewallSpec) {
+      this.viewallSpec = false;
+    } else {
+      this.viewallSpec = true;
     }
   }
   showDesc() {
@@ -674,6 +709,13 @@ getTerminologyTerm(term) {
     }
   } else {
       return term;
+  }
+}
+handleEmailPhonediv() {
+  if (this.showEmailPhonediv) {
+    this.showEmailPhonediv = false;
+  } else {
+    this.showEmailPhonediv = true;
   }
 }
 

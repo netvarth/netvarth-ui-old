@@ -39,10 +39,30 @@
                               <div class="tp2" *ngIf="businessjson">
                                   <!-- <div class="ynw-verified"></div> -->
                                   <h3>{{businessjson.businessName}}</h3>
-                                  <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName}}</span>
+                                  <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName}} ({{businessjson.serviceSubSector.displayName}})</span>
 
                                   <div class="clr">
-                                      <div class="otr-elements">
+                                        <div class="services" *ngIf="specializationslist.length > 0">
+                                            <span class="sub-title">Specializations</span>
+                                            <ul>
+                                                <ng-container *ngIf="specializationslist.length <=specMaxcnt">
+                                                <li *ngFor="let special of specializationslist">{{special}}</li>
+                                                </ng-container>
+                                                <ng-container *ngIf="specializationslist.length > 3">
+                                                    <ng-container *ngFor="let special of specializationslist; let i = index">
+                                                    <li *ngIf="i<specMaxcnt">{{special}}</li>
+                                                    </ng-container>
+                                                    <li class="viewall" *ngIf="!viewallSpec"><span (click)="showallSpecial()" ><i class="icon-enable"></i></span></li>
+                                                    <ng-container *ngIf="viewallSpec">
+                                                    <ng-container *ngFor="let special of specializationslist; let j = index" >
+                                                        <li *ngIf="j >=specMaxcnt">{{special}}</li>
+                                                    </ng-container>
+                                                    <li class="viewall" *ngIf="viewallSpec"><span (click)="showallSpecial()" ><i class="icon-disable"></i></span></li>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ul>
+                                        </div>
+                                      <!-- <div class="otr-elements">
                                           <span class="exp" *ngIf="businessjson.domainVirtualFields?.experience">{{businessjson.domainVirtualFields.experience}}</span>
                                           <ng-container *ngIf="businessjson.domainVirtualFields?.awardsrecognitions">
                                             <span class="awards" *ngIf="businessjson.domainVirtualFields?.awardsrecognitions.length > 0">Awards &amp; Recognition</span>
@@ -67,15 +87,32 @@
                                                 </table>
                                             </div>
                                           </ng-container>
-                                          <!-- <span class="memberships">Memberships</span> -->
-                                      </div>
+                                      </div> -->
 
                                       <div class="pro-desc">
                                           <ng-container *ngIf="bNameStart!=''">{{bNameStart}}</ng-container><ng-container *ngIf="bNameEnd!='' && showmoreDesc">{{bNameEnd}}</ng-container>
                                           <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">More</span> <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">Less</span>
                                       </div>
+                                      
+                                      <div class="emails-phones-outer" *ngIf="( emaillist.length > 0 || phonelist.length > 0)">
+                                          <span class="email-phone-title" (click)="handleEmailPhonediv()"><ng-container>Contact Details</ng-container> <i [class]="(showEmailPhonediv)? 'icon-disable' : 'icon-enable'"></i></span>
+                                          <ng-container *ngIf="showEmailPhonediv">
+                                                <div class="phone-outer" *ngIf="phonelist.length > 0">
+                                                    <div class="phones" *ngFor="let phone of phonelist">
+                                                        <span class="caption">{{phone.label}}</span>
+                                                        <span class="cvalue">{{phone.instance}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="email-outer" *ngIf="emaillist.length > 0">
+                                                    <div class="emails" *ngFor="let email of emaillist">
+                                                        <span class="caption">{{email.label}}</span>
+                                                        <span class="cvalue">{{email.instance}}</span>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
 
-                                      <div class="services" *ngIf="servicesjson.length > 0">
+                                      <!-- <div class="services" *ngIf="servicesjson.length > 0">
                                           <span class="sub-title">Services Offered</span>
                                           <ul>
                                             <ng-container *ngIf="servicesjson.length <=serMaxcnt">
@@ -94,12 +131,12 @@
                                                 </ng-container>
                                             </ng-container>
                                           </ul>
-                                      </div>
+                                      </div> -->
                                   </div>
                               </div>
                           </div>
                           <div class="tp-r">
-                              <div class="ynw-verified" *ngIf="businessjson.verifiedOn != null"></div>
+                              <div class="ynw-verified" *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"></div>
                               <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
                               <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
                                   <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
@@ -109,10 +146,35 @@
                                   <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">Communicate</span></li>
                                   <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li>
                               </ul>
+                              <div class="socialmedia" *ngIf="socialMedialist.length>0">
+                                    <a [href]="soc.value" target="_blank" *ngFor="let soc of socialMedialist"><i [class]="getSocialdet(soc.resource, 'iconClass')" [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
+                              </div>
                           </div>
                       </div>
+                      <ng-container>
+                            <div class="middle-sect" *ngIf="virtualfieldsjson">
+                                <div class="tp-l">
+                                    <div class="tp1">
+                                        <mat-accordion>
+                                            <mat-expansion-panel>
+                                                <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Click here to View More Details
+                                                </mat-panel-title>
+                                                <!-- <mat-panel-description>
+                                                    Description
+                                                </mat-panel-description> -->
+                                                </mat-expansion-panel-header>
+                                                <div>
+                                                    The details from virtualfieldsjson will be displayed here, as soon as its format is corrected in the s3 by the YNW support team.
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
+                            </div>    
+                      </ng-container>
                   </div>
-
                   <ng-container *ngIf="locationjson.length > 0">
                   <div class="location" *ngFor ="let loc of locationjson">
                       <div class="top-sect">
