@@ -26,7 +26,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                       base_url +  'provider/communications/unreadCount',
                       base_url + 'provider/waitlist/history/count/?location-eq=\d{10,12}',
                       base_url + 'provider/waitlist/future/count/?location-eq=\d{10,12}',
-                      base_url + 'provider/waitlist/today'
+                      base_url + 'provider/waitlist/today',
+                      base_url + 'provider/alerts/count',
+                      // base_url + 'provider/alerts/count?ackStatus-eq=false'
                   ];
     constructor(private slimLoadingBarService: SlimLoadingBarService,
     private router: Router, private shared_functions: SharedFunctions) {}
@@ -36,6 +38,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
 
         let url = '';
+        // console.log('req' + req.url);
         if (req.url.substr(0, 4) === 'http') {
           url =  req.url;
         } else {
@@ -85,8 +88,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         element = element.replace(/[\/]/g, '\\$&');
 
         if (url.match(element)) {
-           if (check === false) { check = true; }
-
+          // console.log('match', url.match(element));
+          // if (check === false) { check = true; }
+          check = true;
         }
 
       });

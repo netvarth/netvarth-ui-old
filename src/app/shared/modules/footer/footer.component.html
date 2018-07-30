@@ -253,12 +253,12 @@
                 </div>
          </div>
      </section> -->
-     <section class="sect3" *ngIf="ctype=='provider'">
+     <section class="sect3" *ngIf="ctype=='provider' && show_prov_bottomicons">
              <div class="container">
                  <div class="row">
                     <div class="copy-text">&copy; {{curyear}} youneverwait</div>
                     <div class="spt-controls ml-auto" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
-                        <ul class="list">
+                        <ul class="list" *ngIf="show_prov_bottomicons">
                             <li [class.active]="selOpt=='Audit'" (click)="showAuditlog()"><span class="icon-audit" matTooltip="Audit Log"></span></li>
                             <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="alert-count">{{alert_count}}</span><span class="icon-bell" matTooltip="Alerts"></span></li>
                             <li [class.active]="selOpt=='Checkin'" (click)="showCheckinED()"><span class="icon-checkin" matTooltip="Enable / Disable Check-in"></span></li>

@@ -179,7 +179,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     this.getBusinessProfile();
     this.getGalleryImages();
     this.getProviderLocations();
-    this.breadcrumb_moreoptions = {'show_learnmore': true};
+    this.breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'bprofile'};
   }
   getPublicSearch() {
     this.provider_services.getPublicSearch()

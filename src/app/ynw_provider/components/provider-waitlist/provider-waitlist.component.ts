@@ -37,7 +37,7 @@ export class ProviderWaitlistComponent implements OnInit {
     title: 'Waitlist Manager'
     }
   ];
-
+  breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'waitlistmanager'};
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
   private router: Router,
@@ -46,7 +46,6 @@ export class ProviderWaitlistComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.getBusinessProfile();
     this.getWaitlistMgr();
     this.getLocationCount();

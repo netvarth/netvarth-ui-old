@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnDestroy, DoCheck } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { SharedServices } from '../../services/shared-services';
@@ -18,7 +18,7 @@ import { Subscription, ISubscription } from 'rxjs/Subscription';
 })
 
 
-export class FooterComponent implements OnInit, OnDestroy {
+export class FooterComponent implements OnInit, OnDestroy, DoCheck {
 
   @Input() includedfrom: string;
   curyear;
@@ -44,7 +44,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   cronHandle: Subscription;
-
+  show_prov_bottomicons = false;
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -53,6 +53,10 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // console.log('includedfrom1', this.includedfrom);
+    // console.log('url', this.router.url.substr(-8));
+    if (this.router.url.substr(-8) !== '/bwizard') {
+      this.show_prov_bottomicons = true;
+    }
     if (this.includedfrom !== undefined) {
       this.includedFrom = this.includedfrom;
     } else {
@@ -101,6 +105,13 @@ export class FooterComponent implements OnInit, OnDestroy {
      }
   }
 
+  ngDoCheck() {
+    if (this.ctype === 'provider') {
+      if (this.router.url.substr(-8) !== '/bwizard') {
+        this.show_prov_bottomicons = true;
+      }
+    }
+  }
 
   reloadHandler(type = '') {
     this.getAlertCount();

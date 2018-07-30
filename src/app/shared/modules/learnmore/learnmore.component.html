@@ -1,0 +1,14 @@
+<h1 class="mat-dialog-title">Learn More Contents
+        <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+      </h1>
+      <mat-dialog-content>
+        <div style="height:130px" id="{{cont.key}}" *ngFor="let cont of topicContentArr">
+            <div><strong>{{cont.key}}</strong></div>
+            {{cont.content}}
+        </div>
+      </mat-dialog-content>
+      <mat-dialog-actions>
+        <button  type="button" mat-dialog-close class="cs-btn bt2">Close</button>
+      </mat-dialog-actions>

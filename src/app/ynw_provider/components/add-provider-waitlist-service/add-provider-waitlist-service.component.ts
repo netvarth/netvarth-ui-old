@@ -24,6 +24,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   api_error = null;
   api_success = null;
   number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
+  number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
   service;
   base_licence = false;
   gallery: any = [];
@@ -89,7 +90,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.amForm = this.fb.group({
     name: ['', Validators.compose([Validators.required])],
     description: [''],
-    serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
+    // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
+    serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern)])],
     totalAmount: ['', Validators.compose([Validators.pattern(this.number_decimal_pattern)])],
     isPrePayment: [{'value': false , 'disabled': this.base_licence }],
     // taxable: [false],

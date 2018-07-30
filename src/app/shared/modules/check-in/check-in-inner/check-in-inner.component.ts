@@ -41,6 +41,8 @@ export class CheckInInnerComponent implements OnInit {
     sel_queue_waitingmins;
     sel_queue_servicetime = '';
     sel_queue_name;
+    sel_queue_timecaption;
+    sel_queue_indx;
     sel_queue_det;
     showfuturediv;
     revealphonenumber;
@@ -389,16 +391,20 @@ export class CheckInInnerComponent implements OnInit {
                 }
               }
               this.sel_queue_id = this.queuejson[selindx].id;
+              this.sel_queue_indx = selindx;
               // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
               this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
               this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
               this.sel_queue_name = this.queuejson[selindx].name;
+              this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
 
           } else {
+              this.sel_queue_indx = -1;
               this.sel_queue_id = 0;
               this.sel_queue_waitingmins = 0;
               this.sel_queue_servicetime = '';
               this.sel_queue_name = '';
+              this.sel_queue_timecaption = '';
           }
 
         });
@@ -438,16 +444,36 @@ export class CheckInInnerComponent implements OnInit {
     return clr;
   }
 
-  handleQueueSel(obj) {
-    this.resetApi();
-    // this.queueReloaded = false;
-    this.sel_queue_id = obj.id;
-    this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(obj.queueWaitingTime);
-    this.sel_queue_servicetime = obj.serviceTime || '';
-    this.sel_queue_name = obj.name;
-    // this.queueReloaded = true;
-  }
+  // handleQueueSel(obj) {
+  //   this.resetApi();
+  //   // this.queueReloaded = false;
+  //   this.sel_queue_id = obj.id;
+  //   this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(obj.queueWaitingTime);
+  //   this.sel_queue_servicetime = obj.serviceTime || '';
+  //   this.sel_queue_name = obj.name;
+  //   // this.queueReloaded = true;
+  // }
 
+  handleQueueSel(mod) {
+    this.resetApi();
+    if (mod === 'next') {
+      if ((this.queuejson.length - 1) > this.sel_queue_indx) {
+        this.sel_queue_indx = this.sel_queue_indx + 1;
+      }
+    } else if (mod === 'prev') {
+      if ((this.queuejson.length > 0) && (this.sel_queue_indx > 0)) {
+        this.sel_queue_indx = this.sel_queue_indx - 1;
+      }
+    }
+    if (this.sel_queue_indx !== -1) {
+      this.sel_queue_id = this.queuejson[this.sel_queue_indx].id;
+      this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
+      this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
+      this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
+      this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+      // this.queueReloaded = true;
+    }
+  }
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
   }

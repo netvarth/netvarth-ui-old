@@ -230,7 +230,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="srlst" *ngFor = "let search_result of search_data.hits.hit">
+                    <!-- <div class="srlst" *ngFor = "let search_result of search_data.hits.hit" [@search_data]="search_data.length"> -->
+                        <div class="srlst" *ngFor = "let search_result of search_data.hits.hit">   
                         <div class="top-sect">
                             <div class="tp-l">
                                 <div class="tp1">

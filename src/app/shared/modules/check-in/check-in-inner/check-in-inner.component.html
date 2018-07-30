@@ -58,12 +58,20 @@
               <div class="queue-outer">
                     <div class="queue-head" *ngIf="step==1 && queuejson.length > 1">Queue </div>
                     <ng-container *ngIf="queuejson.length > 0">
-                        <mat-chip-list *ngIf="step==1 && queuejson.length > 1">
+                        
+                        <!-- <mat-chip-list *ngIf="step==1 && queuejson.length > 1">
                         <mat-chip *ngFor="let que of queuejson" (click)="handleQueueSel(que)" [selected] ="isSelectedQueue(que.id)">
                             <span class="qname">{{que.name}}</span>
                             <span class="qtime">&nbsp; [ {{que.queueSchedule.timeSlots[0].sTime}} - {{que.queueSchedule.timeSlots[0].eTime}} ]</span>
                         </mat-chip>
-                        </mat-chip-list>
+                        </mat-chip-list> -->
+                        
+                        <div class='q-list-outer' *ngIf="step==1 && queuejson.length > 1">
+                            <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i class="fa fa-angle-left"></i></span>
+                            <span class="sel-queue">{{sel_queue_name}} {{sel_queue_timecaption}}</span>
+                            <span class="rightarrow" (click)="handleQueueSel('next')" *ngIf="(queuejson.length -1) > sel_queue_indx"> <i class="fa fa-angle-right"></i> </span>
+
+                        </div>
                         
                         <div class="consumer-comment"  *ngIf="step==1">
                             <div class="form-group">

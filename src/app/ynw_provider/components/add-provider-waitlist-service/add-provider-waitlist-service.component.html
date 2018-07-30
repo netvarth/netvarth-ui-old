@@ -37,7 +37,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
     {'required' : 'Please enter estimated duration.',
-    'pattern' : 'Enter a valid duration'})">
+    'pattern' : 'Estimated duration should be an integer value (eg. 1, 10, 15 etc)'})">
   </app-field-error-display>
   </div>
 

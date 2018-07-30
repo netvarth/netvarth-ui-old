@@ -30,10 +30,28 @@ import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.c
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 
+import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
+
 @Component({
   selector: 'app-provider-detail',
   templateUrl: './provider-detail.component.html',
-  styleUrls: ['./provider-detail.component.css']
+  styleUrls: ['./provider-detail.component.css'],
+  animations: [
+    trigger('locationjson', [
+      transition('* => *', [
+
+        query(':enter', style({ opacity: 0 }), {optional: true}),
+
+        query(':enter', stagger('300ms', [
+          animate('.6s ease-in', keyframes([
+            style({opacity: 0, transform: 'translateY(-75%)', offset: 0}),
+            style({opacity: .5, transform: 'translateY(35px)',  offset: 0.3}),
+            style({opacity: 1, transform: 'translateY(0)',     offset: 1.0}),
+          ]))]), {optional: true})
+      ])
+    ])
+
+  ]
 })
 export class ProviderDetailComponent implements OnInit {
 
