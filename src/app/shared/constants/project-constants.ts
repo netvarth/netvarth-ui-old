@@ -1,7 +1,7 @@
 export const projectConstants = {
   PERPAGING_LIMIT: 10,
-  INBOX_REFRESH_TIME: 10, // seconds
-  ALERT_REFRESH_TIME: 10, // seconds
+  INBOX_REFRESH_TIME: 30, // seconds
+  ALERT_REFRESH_TIME: 30, // seconds
   searchpass_criteria : {
     'start': 0,
     'return': 'title,sector,logo,place1,business_phone_no,unique_id',
@@ -156,8 +156,9 @@ LOCATION_BADGE_ICON : { // images to be used for the location badges
                     'firstaid' : {'icon': 'noimage.png', 'class': 'icon-first-aid'}, // dynamic
                     '24hour': {'icon': 'noimage.png', 'class': 'icon-open-time'},
                     'parkingtype': {'icon': 'noimage.png', 'class': 'icon-parking'},
-                    'autopaymentoptions': {'icon': 'noimage.png', 'class': 'icon-auto-payment'},
-                    'none': {'icon': 'noimage.png', 'class': 'icon-trauma'} // un-identified
+                    'autopaymentoptions': {'icon': 'autopay.png', 'class': 'icon-auto-payment'},
+                    'docambulance': {'icon': 'ambulance.png', 'class': 'icon-ambulance'},
+                    'none': {'icon': 'noimage.png', 'class': 'icon-trauma'}
 },
 SOCIAL_MEDIA : [
                   { key: 'facebook', iconClass: 'fa fa-facebook-square fb', iconImg: 'facebook.png', displayName: 'Facebook'},

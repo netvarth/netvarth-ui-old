@@ -360,6 +360,7 @@
                                     <li *ngIf="search_result.fields.traumacentre_location1==1" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
                                     <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1"><span class="icon-emergency"></span></li>
                                     <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
+                                    <li *ngIf="search_result.fields.docambulance_location1==1" [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
                                     <!-- <li><span class="icon-ambulance"></span></li>
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
@@ -378,7 +379,8 @@
                                 </div>
 
                                 <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0 || (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==0) || (!search_result.fields.hasOwnProperty('online_checkins'))">
-                                    Sorry!! {{getTerminologyTerm('waitlist', search_result.fields)}} not allowed
+                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">Sorry!! {{getTerminologyTerm('waitlist', search_result.fields)}} not allowed</ng-container>
+                                    <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">{{search_result.fields['estimatedtime_det']['message']}}</ng-container>
                                 </div>
                             </div>
                             <div class="bt-r" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1 && (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==1)">

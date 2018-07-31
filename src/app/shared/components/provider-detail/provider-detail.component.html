@@ -137,6 +137,7 @@
                           </div>
                           <div class="tp-r">
                               <div class="ynw-verified" *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"></div>
+                              <div [class.femaleicon]="genderType=='female'" [class.maleicon]="genderType=='male'" *ngIf="genderType">M</div>
                               <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
                               <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
                                   <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
@@ -152,7 +153,7 @@
                           </div>
                       </div>
                       <ng-container>
-                            <div class="middle-sect" *ngIf="virtualfieldsjson">
+                            <div class="middle-sect" *ngIf="showVirtualfieldsSection">
                                 <div class="tp-l">
                                     <div class="tp1">
                                         <mat-accordion>
@@ -165,8 +166,24 @@
                                                     Description
                                                 </mat-panel-description> -->
                                                 </mat-expansion-panel-header>
-                                                <div>
-                                                    The details from virtualfieldsjson will be displayed here, as soon as its format is corrected in the s3 by the YNW support team.
+                                                <div class="question-main-outer">
+                                                    <ng-container *ngFor="let vfield of virtualfieldsCombinedjson">
+                                                        <div class="question-outer">
+                                                            <ng-container>
+                                                                <div class="question-header">{{vfield.displayName}}</div>
+                                                                <div class="question-value" *ngIf="vfield.type!= 'object'" >{{vfield.value}}</div>
+                                                                <div class="question-valuearr" *ngIf="vfield.type== 'object'" >
+                                                                    <table class="table">
+                                                                        <tr *ngFor="let vals of vfield.value">
+                                                                            <td *ngFor="let field of vals">
+                                                                                {{field}}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </ng-container>
                                                 </div>
                                             </mat-expansion-panel>
                                         </mat-accordion>
@@ -209,6 +226,7 @@
                                   <li *ngIf="loc.open24hours==true"><span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span></li>
 
                                   <li *ngIf="loc?.locationVirtualFields?.traumacentre=='true'" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
+                                  <li *ngIf="loc?.locationVirtualFields?.docambulance=='true'" [matTooltip]="'Ambulance Services'"><span class="icon-ambulance"></span></li>
                                   <li [matTooltip]="'Emergency Services'" *ngIf="loc?.locationVirtualFields?.physiciansemergencyservices=='true' || loc?.locationVirtualFields?.dentistemergencyservices=='true' || loc?.locationVirtualFields?.altemergencyservices=='true'"><span class="icon-emergency"></span></li>
                                   <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'" [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
 

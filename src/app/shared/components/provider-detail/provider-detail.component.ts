@@ -68,6 +68,11 @@ export class ProviderDetailComponent implements OnInit {
   tempgalleryjson: any = [];
   locationjson: any = [];
   virtualfieldsjson = null;
+  virtualfieldsDomainjson = null;
+  virtualfieldsSubdomainjson = null;
+  virtualfieldsCombinedjson = null;
+  genderType = null;
+  showVirtualfieldsSection = false;
   waitlisttime_arr: any = [];
   favprovs: any = [];
   specializationslist: any = [];
@@ -327,7 +332,31 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'virtualFields' : {
             this.virtualfieldsjson = res;
-            console.log('virtual', this.virtualfieldsjson);
+            this.virtualfieldsCombinedjson = [];
+            this.virtualfieldsDomainjson = [];
+            this.virtualfieldsSubdomainjson = [];
+            if (this.virtualfieldsjson.domain) {
+              this.virtualfieldsDomainjson = this.sortVfields(this.virtualfieldsjson.domain);
+            }
+            if (this.virtualfieldsjson.subdomain) {
+              this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);
+            }
+
+            if (this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
+              this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson.concat(this.virtualfieldsDomainjson);
+            } else if (this.virtualfieldsSubdomainjson.length && !this.virtualfieldsDomainjson.length) {
+              this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson;
+            } else if (!this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
+              this.virtualfieldsCombinedjson = this.virtualfieldsDomainjson;
+            }
+            // console.log('domain', this.virtualfieldsDomainjson, 'subdomain', this.virtualfieldsSubdomainjson);
+            // console.log('virtual', this.virtualfieldsjson);
+            // console.log('combined', this.virtualfieldsCombinedjson);
+            // console.log('dd', this.objectToVal(this.virtualfieldsCombinedjson));
+
+            if (this.virtualfieldsCombinedjson.length > 0) {
+              this.showVirtualfieldsSection = true;
+            }
           break;
           }
         }
@@ -336,6 +365,55 @@ export class ProviderDetailComponent implements OnInit {
 
     }
   );
+  }
+  sortVfields(dataF) {
+    let temp;
+    const temp1 = new Array();
+    const temp2 = new Array();
+    for (let i = 0; i < dataF.length; i++) {
+      // console.log(dataF[i].name, typeof dataF[i].value);
+      dataF[i]['type'] = typeof dataF[i].value;
+      if (dataF[i].name !== 'gender') {
+        if (dataF[i]['type'] === 'object') {
+          const tempVals = new Array();
+          for (let ii = 0; ii < dataF[i].value.length; ii++) {
+            const temp3 = new Array();
+            Object.keys(dataF[i].value[ii]).forEach(nkeys => {
+              temp3.push(dataF[i].value[ii][nkeys]);
+            });
+            temp2.push(temp3);
+          }
+          dataF[i].value = temp2;
+        }
+        temp1.push(dataF[i]);
+      } else {
+          this.genderType = dataF[i].value;
+      }
+    }
+    dataF = temp1;
+    for (let i = 0; i < dataF.length; i++) {
+      for (let j = i + 1; j < dataF.length; j++) {
+        if (dataF[i].order > dataF[j].order) {
+          temp = dataF[i];
+          dataF[i] = dataF[j];
+          dataF[j] = temp;
+        }
+      }
+    }
+    return dataF;
+  }
+  objectToVal(dataF) {
+    const dd = new Array();
+    for (let i = 0; i < dataF.length; i++) {
+      if (dataF[i]['type'] === 'object') {
+        Object.keys(dataF[i].value).forEach(key => {
+          Object.keys(dataF[i].value[key]).forEach(keys => {
+            dd.push(keys);
+          });
+        });
+      }
+    }
+    return dd;
   }
 
   showallServices() {

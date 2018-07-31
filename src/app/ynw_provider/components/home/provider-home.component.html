@@ -8,14 +8,14 @@
           <div class="card p0 w-dta">
               <div class="head">
                   <div class="locn" *ngIf="selected_location">
-                      <span class="loc-name" *ngIf="!edit_location">{{selected_location.place}}</span>
+                      <span class="loc-name" *ngIf="!edit_location">{{selected_location.place | titlecase}}</span>
                       <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
 
                         <mat-form-field class="example-full-width" *ngIf="edit_location">
 
                           <mat-select placeholder="Locations" [(value)]="selected_location_index" (change)="onChangeLocationSelect($event)">
                             <mat-option *ngFor="let location of locations;let i = index" [value]="i">
-                              {{ location.place }}
+                              {{ location.place | titlecase }}
                             </mat-option>
                           </mat-select>
 
@@ -310,7 +310,8 @@
                                       <mat-menu #menu="matMenu">
                                           <button type="button" mat-menu-item
                                           (click)="addProviderNote(checkin)">
-                                            Add {{provider_label  | titlecase}} Note
+                                            <!-- Add {{provider_label  | titlecase}} Note -->
+                                            Add Note
                                           </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"

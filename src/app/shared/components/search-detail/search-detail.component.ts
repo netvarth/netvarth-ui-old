@@ -1009,6 +1009,9 @@ setEnvironment(bypassotherfunction?) {
           } else {
             this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 0;
           }
+          if (this.waitlisttime_arr[i]['message']) {
+            this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
+          }
         }
       });
     }
