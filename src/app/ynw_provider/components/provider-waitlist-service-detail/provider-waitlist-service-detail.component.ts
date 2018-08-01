@@ -143,7 +143,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
     setGalleryImages(data) {
 
         this.image_list = data;
-        console.log(this.image_list);
+        // console.log(this.image_list);
         this.image_showlist = [];
         this.image_list_popup = [];
         this.image_remaining_cnt = 0;

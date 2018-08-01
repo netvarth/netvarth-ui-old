@@ -124,7 +124,7 @@ export class AdjustQueueDelayComponent implements OnInit {
      convertTime(time) {
       this.time.hour = Math.floor(time / 60);
       this.time.minute = time % 60;
-      console.log(this.time);
+      // console.log(this.time);
       this.amForm.get('delay').setValue(this.time);
      }
 

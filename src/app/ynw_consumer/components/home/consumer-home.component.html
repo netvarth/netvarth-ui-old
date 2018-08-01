@@ -49,7 +49,7 @@
                                   </div>
                                   <div class="lt0" *ngIf="waitlist.future">
                                       Check-In Time  <span class="time now">
-                                          {{waitlist.date | date: dateFormat }}
+                                          {{waitlist.date | date: dateFormatSp }}
                                           {{waitlist.estimated_time | date: timeFormat}}
                                         </span>
                                   </div>
@@ -58,13 +58,14 @@
 
                               <ng-container  *ngIf="!waitlist.estimated_time">
                                   <div class="lt0" *ngIf="waitlist.future">
-                                      Check-In Date  <span class="time now">
-                                          {{waitlist.date | date: dateFormat }}
+                                      Check-In Time  <span class="time now">
+                                         {{waitlist.date | date: dateFormatSp }}
+                                         {{waitlist.estimated_time | date: timeFormat}} 
                                         </span>
                                   </div>
                                   <div class="lt0" *ngIf="!waitlist.future">
-                                      Check-In Date  <span class="time now">
-                                          Today
+                                      Estimated Time  <span class="time now">
+                                          Now
                                         </span>
                                   </div>
                               </ng-container>
@@ -79,7 +80,13 @@
                           <div class="rt">
                               <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
                                   Cancelled
-                                </div>
+                              </div>
+                              <div class="started-label" *ngIf="waitlist.waitlistStatus == 'started'">
+                                  Started
+                              </div>
+                              <div class="done-label" *ngIf="waitlist.waitlistStatus == 'done'">
+                                  Done
+                              </div>
                               <ul class="controls">
                                   <li (click)="addWaitlistMessage(waitlist)">
                                     <span class="message">Message</span>
@@ -92,7 +99,8 @@
                                     <span class="cancel" (click)="doCancelWaitlist(waitlist)">Cancel Check-in</span>
                                   </li>
 
-                                  <li *ngIf="waitlist.waitlistStatus == 'done'">
+                                  <!-- <li *ngIf="waitlist.waitlistStatus == 'done'"> -->
+                                  <li *ngIf="waitlist.billStatus"> 
                                     <span class="view-bill" (click)="getWaitlistBill(waitlist)">Bill</span>
                                   </li>
 

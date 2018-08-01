@@ -118,7 +118,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   onSubmit (form_data) {
-
+    this.resetApiErrors();
     form_data.bType = 'Waitlist';
     form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
                                      0 : form_data.minPrePaymentAmount;
@@ -354,6 +354,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         if (!this.payment_settings.onlinePayment) {
           this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
           this.amForm.get('isPrePayment').setValue(false);
+          this.changePrepayment();
         }
       },
       error => {

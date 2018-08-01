@@ -393,7 +393,7 @@ export class ProviderDetailComponent implements OnInit {
     dataF = temp1;
     for (let i = 0; i < dataF.length; i++) {
       for (let j = i + 1; j < dataF.length; j++) {
-        if (dataF[i].order > dataF[j].order) {
+        if (parseInt(dataF[i].order, 10) > parseInt(dataF[j].order, 10)) {
           temp = dataF[i];
           dataF[i] = dataF[j];
           dataF[j] = temp;
@@ -403,17 +403,17 @@ export class ProviderDetailComponent implements OnInit {
     return dataF;
   }
   objectToVal(dataF) {
-    const dd = new Array();
+    const retval = new Array();
     for (let i = 0; i < dataF.length; i++) {
       if (dataF[i]['type'] === 'object') {
         Object.keys(dataF[i].value).forEach(key => {
           Object.keys(dataF[i].value[key]).forEach(keys => {
-            dd.push(keys);
+            retval.push(keys);
           });
         });
       }
     }
-    return dd;
+    return retval;
   }
 
   showallServices() {

@@ -108,6 +108,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   cronStarted;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  settings;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -155,6 +156,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.getBusinessProfile();
     this.getLocationList();
     this.getServiceList();
+    this.getProviderSettings();
 
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
         this.reloadAPIs();
@@ -230,6 +232,15 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
       }
       );
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe (data => {
+        this.settings = data;
+        // console.log('prov settings', this.settings);
+      }, error => {
+
+      });
   }
 
   getLocationList() {

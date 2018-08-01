@@ -47,6 +47,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   history ;
   fav_providers_id_list = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
 
   loadcomplete = {waitlist: false , fav_provider: false, history: false};
@@ -123,8 +124,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
             if (today.valueOf() < waitlist_date.valueOf()) {
               this.waitlists[i].future = true;
+              this.waitlists[i].estimated_time = (waitlist.appxWaitingTime || waitlist.appxWaitingTime === 0) ? this.getAppxTime(waitlist) : null;
+            } else {
+              this.waitlists[i].estimated_time = (waitlist.appxWaitingTime) ? this.getAppxTime(waitlist) : null;
             }
-            this.waitlists[i].estimated_time = (waitlist.appxWaitingTime) ? this.getAppxTime(waitlist) : null;
             i++;
         }
 
@@ -349,6 +352,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getAppxTime(waitlist) {
+    // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
       if (!waitlist.future && waitlist.appxWaitingTime === 0) {
         return 'Now';
       } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {

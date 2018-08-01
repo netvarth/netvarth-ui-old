@@ -31,7 +31,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
    </app-field-error-display>
 
     <mat-form-field class="example-full-width">
-      <span *ngIf="amForm.get('calculationType').value == 'Fixed'"> ₹ &nbsp;</span> 
+      <span matPrefix *ngIf="amForm.get('calculationType').value == 'Fixed'" class='rupee'> ₹ &nbsp;</span> 
       <input matInput type="text" class="form-control" id="discValue" [placeholder]="valueCaption"
       formControlName="discValue" autocomplete="off">
       <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span>

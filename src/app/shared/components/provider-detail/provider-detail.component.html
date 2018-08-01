@@ -170,16 +170,21 @@
                                                     <ng-container *ngFor="let vfield of virtualfieldsCombinedjson">
                                                         <div class="question-outer">
                                                             <ng-container>
-                                                                <div class="question-header">{{vfield.displayName}}</div>
+                                                                <div class="question-header"><strong>{{vfield.displayName}}</strong></div>
                                                                 <div class="question-value" *ngIf="vfield.type!= 'object'" >{{vfield.value}}</div>
                                                                 <div class="question-valuearr" *ngIf="vfield.type== 'object'" >
-                                                                    <table class="table">
+                                                                    <!-- <table class="table">
                                                                         <tr *ngFor="let vals of vfield.value">
                                                                             <td *ngFor="let field of vals">
                                                                                 {{field}}
                                                                             </td>
                                                                         </tr>
-                                                                    </table>
+                                                                    </table> -->
+                                                                        <ng-container *ngFor="let vals of vfield.value">
+                                                                            <span *ngFor="let field of vals" class="morevalspan">
+                                                                                {{field}}
+                                                                            </span>
+                                                                        </ng-container>
                                                                 </div>
                                                             </ng-container>
                                                         </div>

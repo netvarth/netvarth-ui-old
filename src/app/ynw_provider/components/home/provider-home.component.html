@@ -209,7 +209,7 @@
                           <thead>
                               <tr>
                                   <th></th>
-                                  <th *ngIf="time_type == 1">Seq No</th>
+                                  <th *ngIf="time_type == 1 && settings.showTokenId">Seq No</th>
                                   <th *ngIf="time_type != 1">Date</th>
                                   <th>Name</th>
                                   <th>Service</th>
@@ -227,7 +227,7 @@
                                     <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'"></span>
                                   </td>
                                   <td data-title="Seq No" class="seq pointer-cursor"
-                                  *ngIf="time_type ==1" (click)="goCheckinDetail(checkin)">
+                                  *ngIf="time_type ==1 && settings.showTokenId" (click)="goCheckinDetail(checkin)">
                                     <ng-container  *ngIf="checkin.token">#{{checkin.token}}</ng-container>
                                   </td>
                                   <td data-title="Date" class="date pointer-cursor"
