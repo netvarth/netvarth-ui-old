@@ -7,6 +7,7 @@ import { KioskServices } from '../../services/kiosk-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
+import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
@@ -61,6 +62,7 @@ export class KioskHomeComponent implements OnInit {
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    public provider_datastorage: CommonDataStorageService,
     private dialog: MatDialog, private router: Router) {}
 
   ngOnInit() {
@@ -76,15 +78,17 @@ export class KioskHomeComponent implements OnInit {
     this.loadingNow = false;
     this.cMod = 'main';
   }
-  /*getTerminologies() {
-    this.kiosk_services.getTerminoligies(this.customerDet,this.customerDet)
+  getTerminologies() {
+    this.kiosk_services.getTerminoligies(this.userdet.sector, this.userdet.subSector)
     . subscribe (data => {
-
+      this.terminologies = data;
+      this.provider_datastorage.set('terminologies', this.terminologies);
+      console.log(this.terminologies);
     },
     error => {
 
     });
-  }*/
+  }
   getUserdetails() {
     this.userdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
     if (this.userdet)  {
@@ -93,6 +97,7 @@ export class KioskHomeComponent implements OnInit {
         this.ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (this.userdet.isProvider === true) {
           this.provider_loggedin = true;
+          this.getTerminologies();
         } else {
           this.provider_loggedin = false;
         }
@@ -300,7 +305,7 @@ export class KioskHomeComponent implements OnInit {
           }
       },
       error => {
-        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), {'panelClass': 'snackbarerror'});
         this.loadingNow = false;
       });
   }
@@ -448,8 +453,10 @@ export class KioskHomeComponent implements OnInit {
     this.show_customernotfoundmsg = false;
     this.showsearch_now = true;
     setTimeout(function() {
-      if (this.srchmob.nativeElement) {
-        this.srchmob.nativeElement.focus();
+      if (this.srchmob !== undefined) {
+        if (this.srchmob.nativeElement) {
+          this.srchmob.nativeElement.focus();
+        }
       }
     }, 5000);
   }

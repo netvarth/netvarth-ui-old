@@ -111,7 +111,7 @@
                                                     <!-- <div [ngClass]="(profimg_exists)?'pro-pic yes':'pro-pic'"> -->
                                                             <div class="pro-pic" [class.yes]="profimg_exists">
                                                             <div class="pro-pic-img"><img [src]="showimg()" *ngIf="blogo[0] && blogo[0].url"></div>
-                                                            <input #logofile type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif" style="display:none;" (change)="imageSelect(logofile,$event)">
+                                                            <input #logofile type="file" accept=".jpg,.png,.bmp,.gif" style="display:none;" (change)="imageSelect(logofile,$event)">
                                                         <div class="add"><span (click)="logofile.click()">Add <br/> Profile Picture</span></div>
                                                         <div class="change"><span (click)="logofile.click()">Change <br/> Profile Picture</span></div>
                                                     </div>
@@ -683,7 +683,7 @@
 
                                                     <ng-container *ngSwitchCase="'Gender'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <p> {{fields.value | titlecase}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -845,8 +845,8 @@
 
                                                     <ng-container *ngSwitchCase="'Gender'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
-                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                            <p> {{fields.value | titlecase}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
@@ -1017,11 +1017,11 @@
 
                                             </li>
                                         </ul>
-                                        <span (click)="handleSocialmedia()" class="addbt"></span>
+                                        <span (click)="handleSocialmedia()" class="addbt" *ngIf="showaddsocialmedia"></span>
                                     </div>
                                 </div>
                                <div class="cd-b" >  <!-- *ngIf="normal_socialmedia_show==2" -->
-                                    <ul class="info-lst">
+                                    <ul class="info-lst" *ngIf="showaddsocialmedia">
                                         <li>You can add your social media links here.</li>
                                     </ul>
                                 </div>

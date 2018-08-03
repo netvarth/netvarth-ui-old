@@ -204,6 +204,14 @@
                 .mat-input-wrapper {
                     padding: 0;
                     margin: 0;
+                    
+                    .mat-input-prefix {
+                        align-self: center;
+                        
+                        .rupee {
+                            font-size: 1.5rem;
+                        }
+                    }
 
                     .mat-input-infix {
                         margin: 0;
@@ -1766,6 +1774,28 @@
 
     .mat-dialog-actions {
         padding: 20px;
+        
+        .service-tooltip {
+            @include font-script;
+            font-size: .875rem;
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            color: $black;
+            
+            i {
+                width: 22px;
+                height: 22px;
+                font-size: .875rem;
+                @include border-radius(50px);
+                background: #ffc107;
+                color: $black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 5px;
+            }
+        }
     }
 
     &.locationoutermainclass {
@@ -2160,6 +2190,54 @@
                 padding: 0;
                 border: none;
                 
+                .q-list-outer {
+                    display: flex;
+                    align-items: center;
+                    padding-bottom: 15px;
+                    margin-bottom: 15px;
+                    border-bottom: 1px dashed $cc-ash;
+                    
+                    .queue-head {
+                        font-size: .875rem;
+                        margin-bottom: 0px;
+                        margin-right: 10px;
+                        color: $cc-gray;
+                        font-weight: 500;
+                    }
+                    
+                    .sel-queue {
+                        color: $linkblack;
+                        font-weight: 600;
+                    }
+                    
+                    .leftarrow, .rightarrow {                        
+                        i {
+                            display: flex;
+                            width: 20px;
+                            height: 20px;
+                            align-items: center;
+                            justify-content: center;
+                            border: 1px solid $linkblue;
+                            @include border-radius(50px);
+                            color: $linkblue;
+                            cursor: pointer;
+                            
+                            &.disable {
+                                pointer-events: none;
+                                color: $cc-mediumgray;
+                                border-color: $cc-mediumgray;
+                                cursor: default;
+                            }
+                        }
+                    }
+                    .leftarrow {
+                        margin-right: 10px;
+                    }
+                    .rightarrow {
+                        margin-left: 10px;
+                    }
+                }
+                
                 .mat-chip-list {
                     .mat-chip-list-wrapper {
                         .mat-chip {
@@ -2342,6 +2420,7 @@
                     }
                     .member-add {
                         margin-left: 20px;
+                        margin-bottom: 20px;
                         cursor: pointer;
                         display: table;
                         font-size: .75rem;

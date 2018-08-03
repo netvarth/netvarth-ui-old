@@ -175,7 +175,7 @@
                                             [class.error]="alert.severity.name=='Critical'"
                                                          *ngFor="let alert of alerts">
                                             <td class="td1">{{alert.text}}</td>
-                                            <td class="td2"><span class="icon-delete" *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></span></td>
+                                            <td class="td2"><span class="fa fa-thumbs-o-up" [matTooltip]="'Acknowledge'" *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>

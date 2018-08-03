@@ -25,8 +25,8 @@
                       </thead>
                       <tbody>
                           <tr *ngFor="let member of member_list">
-                              <td data-title="First Name" class="fname">{{member.userProfile.firstName}}</td>
-                              <td data-title="Last Name" class="lname">{{member.userProfile.lastName}}</td>
+                              <td data-title="First Name" class="fname">{{member.userProfile.firstName | titlecase}}</td>
+                              <td data-title="Last Name" class="lname">{{member.userProfile.lastName | titlecase}}</td>
                               <td data-title="Mobile Number" class="actions">{{member.userProfile.primaryMobileNo}}</td>
                               <td data-title="Gender" class="payment">{{member.userProfile.gender}}</td>
                               <td data-title="Date of Birth" class="message">{{member.userProfile.dob | date: dateFormat }}</td>

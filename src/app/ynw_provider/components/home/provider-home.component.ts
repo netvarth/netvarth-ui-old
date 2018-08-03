@@ -365,9 +365,15 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
-
+    this.today_waitlist_count = 0;
+    this.future_waitlist_count = 0;
     this.getQueueList();
-
+    /*this.getTodayCheckinCount()
+    .then(
+      (result) => {
+        this.today_waitlist_count = result;
+      }
+    );*/
     this.getFutureCheckinCount()
     .then(
       (result) => {
@@ -387,6 +393,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   selectedQueue(selected_queue) {
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
+    this.today_waitlist_count = 0;
     this.getTodayCheckinCount()
       .then(
         result => {

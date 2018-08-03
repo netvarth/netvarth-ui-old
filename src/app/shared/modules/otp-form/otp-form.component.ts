@@ -36,6 +36,7 @@ export class OtpFormComponent  implements OnInit, OnChanges {
 
   ngOnInit() {
     this.createForm();
+    console.log('type', this.type);
   }
 
   ngOnChanges() {
@@ -69,7 +70,10 @@ export class OtpFormComponent  implements OnInit, OnChanges {
   }
 
   resendOTPMobile() {
-    this.submitdata.userProfile.email = null;
+    // console.log('test', this.submitdata.userProfile);
+    if (this.submitdata.userProfile !== undefined) {
+      this.submitdata.userProfile.email = null;
+  }
     // delete this.submitdata.userProfile.email;
     this.resendOtp.emit(this.submitdata);
     // this.setMessageType();

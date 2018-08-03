@@ -36,6 +36,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log('passed in data', this.data);
     this.que_type = this.data.type || 'domain_questions';
 
     this.bProfile = this.data['bProfile'];

@@ -236,12 +236,6 @@
 .icon-auto-payment:before {
   content: "\25";
 }
-.icon-favourite:before {
-  content: "\26";
-}
-.icon-favourite-filled:before {
-  content: "\27";
-}
 .icon-history:before {
   content: "\28";
 }
@@ -289,4 +283,19 @@
 }
 .icon-minus:before {
   content: "\3e";
+}
+.icon-favourite:before {
+  content: "\26";
+}
+.icon-favourite-filled:before {
+  content: "\27";
+}
+.icon-female:before {
+  content: "\3f";
+}
+.icon-male:before {
+  content: "\40";
+}
+.icon-none:before {
+  content: "\5b";
 }

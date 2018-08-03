@@ -106,6 +106,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   normal_language_show = 1;
   normal_specilization_show = 1;
   loadingParams: any = {'diameter' : 40, 'strokewidth': 15};
+  showaddsocialmedia = false;
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -203,6 +204,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   }
 
   getBusinessProfile() {
+    this.showaddsocialmedia = false;
     this.bProfile = [];
 
     this.getBussinessProfileApi()
@@ -345,6 +347,10 @@ export class ProviderBprofileSearchComponent implements OnInit {
               }
             }
           }
+        }
+       // console.log('social', this.social_arr.length, this.orgsocial_list.length);
+        if (this.social_arr.length < this.orgsocial_list.length) {
+          this.showaddsocialmedia = true;
         }
         // this.prepare_sociallist();
 

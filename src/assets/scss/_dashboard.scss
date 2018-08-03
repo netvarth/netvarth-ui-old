@@ -289,6 +289,7 @@ footer {
                     li {
                         list-style: none;
                         @include transition(all 300ms);
+                        position: relative;
                         
                         [class^="icon-"], [class*=" icon-"] {
                             font-size: 1.5rem;
@@ -296,6 +297,22 @@ footer {
                             display: block;
                             height: 50px;
                             cursor: pointer;
+                        }
+                        
+                        .alert-count {
+                            position: absolute;
+                            width: auto;
+                            height: auto;
+                            @include border-radius(10px);
+                            background-color: $green;
+                            color: $footer-darkgray;
+                            text-align: center;
+                            @include font-bold;
+                            font-size: .70rem;
+                            top: 2px;
+                            right:6px;
+                            vertical-align: middle;
+                            padding: 1px 5px;
                         }
                         
                         &:hover {
@@ -306,6 +323,10 @@ footer {
                             [class^="icon-"], [class*=" icon-"] {
                                 background: $white;
                                 color: $linkblue;
+                            }
+                            
+                            .alert-count {
+                                color: $white;
                             }
                         }
                     }

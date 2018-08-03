@@ -67,6 +67,7 @@
     font-size: .875rem;
     padding-left: 30px;
     padding-right: 30px;
+    line-height: inherit;
     @include transition(all 300ms);
     
     &.off {

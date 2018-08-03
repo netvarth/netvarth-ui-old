@@ -19,8 +19,8 @@
                         <img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/>
                     </div>
                     <div class="mn-title">
-                        <span class="title-bn">{{bname}}</span>
-                        <span class="title-ps">{{bsector}}</span>
+                        <span class="title-bn">{{bname | titlecase}}</span>
+                        <span class="title-ps">{{bsector | titlecase }}</span>
                     </div>
 
                     <div class="inbx" (click)="inboxiconClick()">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="lgmem">
                     <span class="lgin">
-                    {{userdet.userName}}
+                    {{userdet.userName | titlecase}}
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <i class="icon-angle-down"></i>
                     </button>

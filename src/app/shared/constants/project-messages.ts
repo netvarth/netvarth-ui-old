@@ -148,6 +148,7 @@ export const Messages = {
   'PROVIDER_BILL_EMAIL' : 'Bill emailed successfully',
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
   'PROVIDER_BILL_PAYMENT_SELFPAY': ' An email and push notification will be send to the consumer',
+  'PROVIDER_BILL_SETTLE_CONFIRM': 'Settle the Bill?',
   'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull',
   'CHECKIN_SUCC': '[waitlist] saved successfully',
   'CHECKIN_SUCC_REDIRECT': '[waitlist] saved successfully. Please wait ... You are being redirected to the Payment Gateway ...',

@@ -37,7 +37,7 @@ export class AddMemberComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public sharedservice: SharedServices
     ) {
-        console.log(data);
+       // console.log(data);
         if (data.type === 'edit') {
           this.firstname = data.member.userProfile.firstName || '';
           this.lastname = data.member.userProfile.lastName || '';
@@ -49,7 +49,7 @@ export class AddMemberComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log('called from', this.calledFrom);
+    // console.log('called from', this.calledFrom);
   }
 
   /*createForm() {

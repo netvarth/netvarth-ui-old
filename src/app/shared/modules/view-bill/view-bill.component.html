@@ -122,7 +122,7 @@
       <button  type="button" mat-button class="cs-btn bt1 update"
       *ngIf="bill_data.billStatus == 'New'" (click)="updateBill()">Update Bill</button>
       <button  type="button" mat-button class="cs-btn bt1 settle"
-      *ngIf="bill_data.billStatus != 'Settled'" (click)="settleBill()">Settle Bill</button>
+      *ngIf="bill_data.billStatus != 'Settled'" (click)="confirmSettleBill()">Settle Bill</button>
       <button  type="button" mat-button class="cs-btn bt1 print"
       *ngIf="bill_data.billStatus == 'Settled'" >Print Bill</button>
       <button  type="button" mat-button class="cs-btn bt1 email"

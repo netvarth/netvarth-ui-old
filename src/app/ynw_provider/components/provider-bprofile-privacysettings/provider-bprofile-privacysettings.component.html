@@ -9,7 +9,7 @@
         <div class="form-group">
            <label class="col-form-label" for="label1">Phone Label * <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltiphone"  data-icon="F"></span></label>
            <input type="text" matInput class="form-control" placeholder="Label"
-           [(ngModel)]="phonelabel"  [ngModelOptions]="{standalone: true}" autocomplete="off">
+           [(ngModel)]="phonelabel"  [ngModelOptions]="{standalone: true}" autocomplete="off" maxlength="50">
         </div>
         <div class="form-group">
                 <div>
@@ -57,7 +57,7 @@
         <div class="form-group">
                 <label class="col-form-label" for="label1">Email Label * <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltemail" data-icon="F"></span></label>
                 <input type="text" matInput class="form-control" placeholder="Label"
-                [(ngModel)]="emaillabel"  [ngModelOptions]="{standalone: true}" autocomplete="off">
+                [(ngModel)]="emaillabel"  [ngModelOptions]="{standalone: true}" autocomplete="off" maxlength="50">
         </div>
         <div class="form-group">
                 <div>

@@ -760,6 +760,15 @@ header {
                                             float: none;
                                             width: 135px;
                                         }
+                                        span {
+                                            text-transform: uppercase;
+                                            font-weight: 600;
+                                            font-size: 0.625rem;
+                                            color: $linkblue;
+                                            display: inline;
+                                            cursor: pointer;
+                                            position: relative;
+                                        }
                                     }
                                     
                                     .mat-checkbox {
@@ -1692,7 +1701,7 @@ header {
                                         }
                                     }
                                     .services {
-                                        margin-bottom: 0;
+                                        /*margin-bottom: 0;*/
                                         
                                         .sub-title {
                                             margin-bottom: 3px;
@@ -1709,11 +1718,70 @@ header {
                                                     
                                                     span {
                                                         color: $linkblue;
-                                                        font-size: .75rem;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
                                                         cursor: pointer;
+                                                        
+                                                        i {
+                                                            font-size: 1.2rem;
+                                                            display: flex;
+                                                            width: 20px;
+                                                            height: 20px;
+                                                            align-items: center;
+                                                        }
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                    
+                                    .emails-phones-outer {
+                                        .email-phone-title {
+                                            color: $linkblue;
+                                            cursor: pointer;
+                                            
+                                            i {
+                                                font-size: 1.2rem;
+                                                display: inline-flex;
+                                                width: 20px;
+                                                height: 16px;
+                                                align-items: center;
+                                                vertical-align: text-top;
+                                                margin-left: 5px;
+                                            }
+                                        }
+                                        
+                                        .phone-outer, .email-outer {
+                                            margin-top: 10px;
+                                            .phones, .emails {
+                                                padding: 5px 0;
+                                                
+                                                .caption {
+                                                    display: block;
+                                                }
+                                                .cvalue {
+                                                    font-weight: 600;
+                                                }
+                                            }
+                                            .phones, .emails {
+                                                position: relative;
+                                                padding-left: 24px;
+                                                
+                                                &:before {
+                                                    @include font-custom;
+                                                    content: "\22";
+                                                    position: absolute;
+                                                    left: 0;
+                                                    top: 6px;
+                                                }
+                                            }
+                                            .emails {
+                                                &:before {
+                                                    content: "\48";
+                                                }
+                                            }
+                                            
                                         }
                                     }
                                 }
@@ -1722,15 +1790,53 @@ header {
                         
                         .tp-r{
                             padding: 20px;
+                            padding-left: 24px;
                             background: $cc-detailgray;
+                            position: relative;
+                            
+                            @include respond-to(ynw-767) {
+                                padding-top: 30px;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                padding-top: 30px;
+                            }
                             
                             .ynw-verified {
                                 margin-left: 0;
                                 margin-bottom: 20px;
                             }
                             
+                            .gender {
+                                text-align: left;
+                                margin-bottom: 15px;
+                                position: absolute;
+                                top: 16px;
+                                left: -17px;
+                                background: #ffffff;
+                                width: 34px;
+                                height: 34px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                @include border-radius(50px);
+                                @include box-shadow(0,0,16px,(rgba(0,0,0,0.08)));
+                                
+                                @include respond-to(ynw-767) {
+                                    top: -15px;
+                                    left: 17px;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    top: -15px;
+                                    left: 17px;
+                                }
+                                
+                                span {
+                                    font-size: 1.2rem;
+                                }
+                            }
+                            
                             .side-menu {
-                                margin: 0 0 0 5px;
+                                margin: 0;
                                 padding: 0;
                                 
                                 li {
@@ -1777,6 +1883,78 @@ header {
                                     &:last-child {
                                         margin-bottom: 0;
                                     }
+                                }
+                            }
+                            
+                            .socialmedia {
+                                display: flex;
+                                margin: 20px 0 0 0px;
+                                
+                                a {
+                                    margin-right: 15px;
+                                    width: 22px;
+                                    height: 22px;
+                                    display: flex;
+                                    color: $linkblack;
+                                    @include transition(all 300ms);
+                                    
+                                    &:hover {
+                                        color: $linkblue;
+                                    }
+                                    
+                                    i {
+                                        font-size: 1.4rem;
+                                    }
+                                    
+                                    &:last-child {
+                                        margin: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    .middle-sect {
+                        .mat-accordion {
+                            .mat-expansion-panel {
+                                box-shadow: none !important;
+
+                                .mat-expansion-panel-header {
+                                    @include font-regular;
+                                    font-weight: 500;
+                                    color: $linkblue;
+                                    padding: 20px;
+                                    
+                                    .mat-expansion-indicator {
+                                        &:after {
+                                            color: $linkblue;
+                                        }
+                                    }
+                                    
+                                    .mat-expansion-panel-header-title {
+                                        color: $linkblue;
+                                    }
+                                }
+                                
+                                .mat-expansion-panel-content {
+                                    @include font-regular;
+                                    color: $cc-gray;
+                                    
+                                    .mat-expansion-panel-body {
+                                        padding: 0 20px 20px;
+                                            
+                                        .question-main-outer {
+                                            .question-outer {
+                                                margin-bottom: 15px;
+                                                
+                                                &:last-child {
+                                                    margin: 0;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    
                                 }
                             }
                         }
@@ -2481,7 +2659,7 @@ header {
             max-width: 360px;
             height: 360px;
             display: flex;
-            margin: 0 auto;
+            margin: 50px auto;
         }
     }
     
@@ -2727,6 +2905,7 @@ header {
                     
                     .rt {
                         border-top: 2px solid $cc-body;
+                        display: flex;
                         
                         .controls {
                             margin: 0;
@@ -2833,6 +3012,51 @@ header {
                                 }
                             }
                         }
+                        
+                        .started-label, .done-label {
+                                color: $cc-red;
+                                padding: 10px 0px 10px 12px;
+                                font-size: .65rem;
+                                line-height: 1.2rem;
+                                font-weight: 600;
+                                margin-left: 15px;
+                                letter-spacing: .5px;
+                                @include border-radius(20px);
+                                position: relative;
+                                align-self: center;
+
+                                @include respond-to(ynw-400) {
+                                    margin-left: 10px;
+                                }
+                                
+                                &:before {
+                                    position: absolute;
+                                    width: 6px;
+                                    height: 6px;
+                                    background: $cc-red;
+                                    content: "";
+                                    left: 0;
+                                    top: 50%;
+                                    margin-top: -4px;
+                                    @include border-radius(20px);
+                                }
+                            }
+                            
+                            .started-label {
+                                color: $start;
+                                
+                                &:before {
+                                    background: $start;
+                                }
+                            }
+                            
+                            .done-label {
+                                color: $done;
+                                
+                                &:before {
+                                    background: $done;
+                                }
+                            }
                     }
                 }
                 
@@ -2844,7 +3068,7 @@ header {
                         .rt {
                             display: flex;
                             
-                            .cancel-label {
+                            .cancel-label, .started-label, .done-label {
                                 color: $cc-red;
                                 padding: 10px 0px 10px 12px;
                                 font-size: .65rem;
@@ -2869,6 +3093,22 @@ header {
                                     top: 50%;
                                     margin-top: -4px;
                                     @include border-radius(20px);
+                                }
+                            }
+                            
+                            .started-label {
+                                color: $start;
+                                
+                                &:before {
+                                    background: $start;
+                                }
+                            }
+                            
+                            .done-label {
+                                color: $done;
+                                
+                                &:before {
+                                    background: $done;
                                 }
                             }
                         }

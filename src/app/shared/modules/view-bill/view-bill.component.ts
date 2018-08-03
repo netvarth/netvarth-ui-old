@@ -6,6 +6,8 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+
 
 
 @Component({
@@ -54,6 +56,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
 
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public sharedfunctionObj: SharedFunctions,
@@ -109,6 +112,21 @@ export class ViewBillComponent implements OnInit, OnChanges {
 
   settleBill() {
     this.settlebill.emit('settleBill');
+  }
+
+  confirmSettleBill() {
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      data: {
+        'message' : this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+          this.settleBill();
+      }
+    });
   }
 
   emailBill() {

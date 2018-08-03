@@ -137,7 +137,11 @@
                           </div>
                           <div class="tp-r">
                               <div class="ynw-verified" *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"></div>
-                              <div [class.femaleicon]="genderType=='female'" [class.maleicon]="genderType=='male'" *ngIf="genderType">M</div>
+                              <div class ="gender" >
+                                  <span class="icon-male" *ngIf="genderType=='male'"></span>
+                                  <span class="icon-female" *ngIf="genderType=='female'"></span>
+                              </div>
+                              <!-- <div [class.femaleicon]="genderType=='female'" [class.maleicon]="genderType=='male'" *ngIf="genderType"></div> -->
                               <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
                               <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
                                   <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>

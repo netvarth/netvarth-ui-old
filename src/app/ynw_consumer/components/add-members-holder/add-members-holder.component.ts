@@ -41,7 +41,7 @@ export class AddMembersHolderComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private router: Router, private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      console.log('received data', this.data);
+     // console.log('received data', this.data);
       if (data.type === 'edit') {
         this.addmemberobj.fname = data.member.userProfile.firstName || '';
         this.addmemberobj.lname = data.member.userProfile.lastName || '';
