@@ -31,3 +31,4 @@
     [disabled]="!pay_data.amount || pay_data.amount == 0 || payment_options.length == 0 || !pay_data.paymentMode  || gateway_redirection"
     (click)="makePayment()">Make Payment</button>
 </mat-dialog-actions>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

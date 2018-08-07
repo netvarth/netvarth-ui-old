@@ -206,15 +206,15 @@ export class SignUpComponent implements OnInit {
         userProfile = {
           countryCode: '+91',
           primaryMobileNo: this.data.moreOptions.dataCreateProv.ph || null, // this.signupForm.get('phonenumber').value || null,
-          firstName: this.data.moreOptions.dataCreateProv.fname || null,
-          lastName: this.data.moreOptions.dataCreateProv.lname || null
+          firstName: this.toCamelCase(this.data.moreOptions.dataCreateProv.fname) || null,
+          lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
         };
       } else {
         userProfile = {
           countryCode: '+91',
           primaryMobileNo: this.signupForm.get('phonenumber').value || null,
-          firstName: this.signupForm.get('first_name').value || null,
-          lastName: this.signupForm.get('last_name').value || null,
+          firstName: this.toCamelCase(this.signupForm.get('first_name').value) || null,
+          lastName: this.toCamelCase(this.signupForm.get('last_name').value) || null,
           // licensePackage: this.signupForm.get('package_id').value || null,
         };
     }
@@ -432,5 +432,17 @@ export class SignUpComponent implements OnInit {
         this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
       }
 
+    }
+
+    onFieldBlur(key) {
+      this.signupForm.get(key).setValue(this.toCamelCase(this.signupForm.get(key).value));
+    }
+
+    toCamelCase(word) {
+      if (word) {
+        return this.shared_functions.toCamelCase(word);
+      } else {
+        return word;
+      }
     }
 }
