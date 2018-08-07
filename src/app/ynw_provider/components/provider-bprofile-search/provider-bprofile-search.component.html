@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <!-- <div class="adwds" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0"> -->
-                        <div class="adwds w-dta" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0">    
+                        <div class="adwds w-dta" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0">
                                 <h2>Adwords</h2>
                                 <p><strong>Sorry!</strong> Currently you did not have any adwords. Would you like to buy adwords?</p>
                                 <span (click)="buyAdwords()" class="cs-btn bt3">Buy Adwords</span>
@@ -215,7 +215,7 @@
 
                                             <div class="schedule_msgdiv" *ngIf="display_schedule.length > 0">
                                             <ul class="info-lst">
-                                                <li>You can change the working hours by editing the queues of this location. <span (click)="editQueue()">Click here</span> to go to view the queues.</li>
+                                                <li>You can change the working hours by editing the queues of this location. <span (click)="editQueue()" class="pointer-cursor"><b>Click here</b></span> to go to view the queues.</li>
                                             </ul>
                                             <!-- <span  class="cs-btn bt3" (click)="change_schedulepopup()">Change</span> -->
                                             </div>
@@ -597,14 +597,14 @@
                                                 <ng-container [ngSwitch]="fields.dataType">
                                                     <ng-container *ngSwitchCase="'TEXT'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <p> {{fields.value   | titlecase}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'TEXT_MED'">
                                                             <div class="cont-btn">
-                                                                <p [innerHTML]="fields.value"> {{fields.value}}</p>
+                                                                <p [innerHTML]="fields.value | titlecase"> {{fields.value   | titlecase}}</p>
                                                                 <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                             </div>
                                                     </ng-container>
@@ -670,14 +670,14 @@
 
                                                     <ng-container *ngSwitchCase="'Enum'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <p> {{fields.value   | titlecase}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'EnumList'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <p> {{fields.value   | titlecase}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -700,7 +700,7 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr *ngFor="let row of fields.value;let i = index">
-                                                                            <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">{{row[column.key]}}</td>
+                                                                            <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">{{row[column.key]   | titlecase}}</td>
                                                                             <td class="action"><span class="mbt">
                                                                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                                 <mat-icon>more_vert</mat-icon>
@@ -760,14 +760,14 @@
                                                 <ng-container [ngSwitch]="fields.dataType">
                                                     <ng-container *ngSwitchCase="'TEXT'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <p> {{fields.value  | titlecase }}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'TEXT_MED'">
                                                             <div class="cont-btn">
-                                                                <p [innerHTML]="fields.value"> {{fields.value}}</p>
+                                                                <p [innerHTML]="fields.value  | titlecase"> {{fields.value  | titlecase }}</p>
                                                                 <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                             </div>
                                                     </ng-container>
@@ -839,7 +839,7 @@
 
                                                     <ng-container *ngSwitchCase="'EnumList'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <p> {{fields.value  | titlecase}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -862,7 +862,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr *ngFor="let row of fields.value;let i = index">
-                                                                        <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">{{row[column.key]}}</td>
+                                                                        <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">{{row[column.key]   | titlecase}}</td>
                                                                         <td class="action">
                                                                             <span class="mbt">
                                                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">

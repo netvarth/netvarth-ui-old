@@ -31,6 +31,8 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   payment_popup = null;
   gateway_redirection = false;
 
+  api_success = null;
+
   constructor(
     public dialogRef: MatDialogRef<ConsumerWaitlistCheckInPaymentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -82,26 +84,37 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   }
 
   makePayment() {
+
+    this.resetApiError();
+
     if ( this.pay_data.uuid != null &&
     this.pay_data.paymentMode != null &&
     this.pay_data.amount !== 0) {
+
+      this.api_success = Messages.PAYMENT_REDIRECT;
+
       this.gateway_redirection = true;
       this.shared_services.consumerPayment(this.pay_data)
       .subscribe(
         data => {
           this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
           setTimeout(() => {
-            console.log(this.document.getElementById('payuform'));
+            // console.log(this.document.getElementById('payuform'));
             this.document.getElementById('payuform').submit();
           }, 2000);
 
         },
         error => {
+          this.resetApiError();
           this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
     }
 
+  }
+
+  resetApiError() {
+    this.api_success = null;
   }
 
 

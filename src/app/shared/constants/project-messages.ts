@@ -156,6 +156,8 @@ export const Messages = {
   'CHECKIN_SUCC_REDIRECT': '[waitlist] saved successfully. Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
   'CHECKIN_CANCELLED' : '[waitlist] [cancelled] successfully',
+  'PAYMENT_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
+
 
   // Consumer Dashboard
 
