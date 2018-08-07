@@ -13,11 +13,11 @@
                             <div class="copy locd">
                                     <div class="lbl col-sm-12 col-md-8 col-lg-8">
                                         <div class="cl1">
-                                            <span class="editbt" (click)="editService()"></span>
+                                            <span class="editbt" (click)="editService()" *ngIf="service_data.status=='ACTIVE'"></span>
                                             <div class="ot-it">
-                                                <h4>{{service_data.name}}</h4>
+                                                <h4>{{service_data.name | titlecase}}</h4>
                                                 <div class="it-des">
-                                                    {{service_data.description}}
+                                                    {{service_data.description | titlecase}}
                                                 </div>
                                                 <div class="c-ot">
                                                     <div class="item">
@@ -99,7 +99,7 @@
                                                         </div>
                                                     </li>
                                                 </ul>
-                                                <span (click)="editImageGallery()" class="addbt"></span>
+                                                <span (click)="editImageGallery()" class="addbt" *ngIf="service_data.status=='ACTIVE'"></span>
 
                                                 <ks-modal-gallery [modalImages]="image_list_popup"
                                                 [plainGalleryConfig]="customPlainGalleryRowConfig"

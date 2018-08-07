@@ -23,7 +23,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             <label class="col-form-label">Location *</label>
             <mat-select placeholder="Location" formControlName="qlocation">
             <mat-option *ngFor="let loc of loc_list" [value]="loc.id" >
-                {{ loc.place }}
+                {{ loc.place | titlecase }}
             </mat-option>
             </mat-select>
         </mat-form-field>

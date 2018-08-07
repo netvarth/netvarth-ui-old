@@ -35,7 +35,7 @@
                 <ul class="availer-ul">
                     <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                         <li>
-                            {{waitfor.name}} <span class="cs-btn bt8 changemember" (click)="handleServiceForWhom()" *ngIf="i==0">Add / Change Member</span>
+                            {{waitfor.name}} <span class="cs-btn bt8 changemember" (click)="handleServiceForWhom()" *ngIf="i==0 && queuejson.length > 0">Add / Change Member</span>
                         </li>
                         
                     </ng-container>

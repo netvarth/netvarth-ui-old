@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ElementRef, Inject} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,7 +13,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
-
+import { ViewChild } from '@angular/core';
 
 @Component({
     selector: 'app-provider-bwizard',
@@ -20,6 +21,8 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 })
 
 export class ProviderbWizardComponent implements OnInit {
+
+  @ViewChild('bnameId') bnameIdref: ElementRef;
   amForm: FormGroup;
   userdet: any = [];
   active_step: number;
@@ -47,7 +50,8 @@ export class ProviderbWizardComponent implements OnInit {
     public shared_functions: SharedFunctions,
     public provider_services: ProviderServices,
     private dialog: MatDialog,
-    private routerobj: Router
+    private routerobj: Router,
+    @Inject(DOCUMENT) public document
   ) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -69,7 +73,6 @@ export class ProviderbWizardComponent implements OnInit {
     this.getUserdetails();
     this.getBusinessProfile();
     this.active_step = 0;
-
     localStorage.removeItem('new_provider');
   }
 
@@ -88,6 +91,19 @@ export class ProviderbWizardComponent implements OnInit {
 
     const curstep = this.active_step; // taking the current step number to a local variable
     this.save_setDetails(curstep, changetostep);
+    if (changetostep === 1) {
+      setTimeout(() => {
+        if (this.document.getElementById('bnameId')) {
+          this.document.getElementById('bnameId').focus();
+        }
+      }, 1000);
+    } else if (changetostep === 2) {
+      setTimeout(() => {
+        if (this.document.getElementById('blatId')) {
+          this.document.getElementById('blatId').focus();
+        }
+      }, 1000);
+    }
   }
 
   save_setDetails(stepid, changetostep) {

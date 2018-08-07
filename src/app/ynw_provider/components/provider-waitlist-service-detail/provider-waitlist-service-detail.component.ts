@@ -152,7 +152,8 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
               const imgobj = new Image(
                 i,
                 { // modal
-                  img: this.image_list[i].url
+                  img: this.image_list[i].url,
+                  description: this.image_list[i].caption || ''
                 });
               this.image_list_popup.push(imgobj);
             }

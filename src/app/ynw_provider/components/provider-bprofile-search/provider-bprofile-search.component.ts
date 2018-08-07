@@ -151,6 +151,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
       title: 'Profile & Search'
     }
   ];
+  businessConfig: any = [];
+  multipeLocationAllowed = false;
 
   customer_label = '';
 
@@ -160,6 +162,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   private sanitizer: DomSanitizer,
   private dialog: MatDialog,
   private routerobj: Router,
+  private shared_services: SharedServices,
   private service: QuestionService) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
@@ -177,7 +180,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
     // this.display_schedule =  this.sharedfunctionobj.arrageScheduleforDisplay(this.schedule_arr);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.getPublicSearch();
-    this.getBusinessProfile();
+    // this.getBusinessProfile();
+    this.getBusinessConfiguration();
     this.getGalleryImages();
     this.getProviderLocations();
     this.breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'bprofile'};
@@ -194,6 +198,17 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
       }
     );
+  }
+  getBusinessConfiguration() {
+    this.shared_services.bussinessDomains()
+      .subscribe (data => {
+        this.businessConfig = data;
+        // console.log('config', this.businessConfig);
+        this.getBusinessProfile();
+      },
+    error => {
+
+    });
   }
   handle_searchstatus() {
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
@@ -212,6 +227,14 @@ export class ProviderBprofileSearchComponent implements OnInit {
       data => {
         this.bProfile = data;
         this.provider_datastorage.set('bProfile', data);
+        for (let i = 0; i < this.businessConfig.length ; i++) {
+          if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
+            if (this.businessConfig[i].multipleLocation) {
+              this.multipeLocationAllowed = true;
+              // console.log('multiple', this.multipeLocationAllowed, this.businessConfig[i].multipleLocation, this.businessConfig[i].id, this.bProfile.serviceSector.id);
+            }
+          }
+        }
         const loginuserdata = this.sharedfunctionobj.getitemfromLocalStorage('ynw-user');
         // setting the status of the customer from the profile details obtained from the API call
         loginuserdata.accStatus = this.bProfile.status;
@@ -449,7 +472,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
               const imgobj = new Image(
                 i,
                 { // modal
-                  img: this.image_list[i].url
+                  img: this.image_list[i].url,
+                  description: this.image_list[i].caption || ''
                 });
               this.image_list_popup.push(imgobj);
             }
@@ -941,6 +965,26 @@ export class ProviderBprofileSearchComponent implements OnInit {
        // this.api_error = error.error;
       }
       );
+  }
+
+  confirmLogoremove(keyname) {
+    this.sharedfunctionobj.confirmLogoImageDelete(this, keyname);
+  }
+  removeLogo(keyname) {
+    this.provider_services.deleteLogo(keyname)
+      .subscribe (data => {
+        // calling function which saves the business related details to show in the header
+        this.blogo = [];
+        this.profimg_exists = false;
+        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+         || '', this.bProfile['serviceSector']['displayName'] || '', '', true);
+
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedfunctionobj.sendMessage(pdata);
+      },
+      error => {
+
+      });
   }
   // handles the image display on load and on change
   imageSelect(input, ev) {

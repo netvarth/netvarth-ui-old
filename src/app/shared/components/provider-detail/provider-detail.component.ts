@@ -109,6 +109,7 @@ export class ProviderDetailComponent implements OnInit {
   emaillist: any = [];
   phonelist: any = [];
   showEmailPhonediv = false;
+  virtualsectionHeader = 'Click here to View More Details';
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -351,7 +352,7 @@ export class ProviderDetailComponent implements OnInit {
             }
             // console.log('domain', this.virtualfieldsDomainjson, 'subdomain', this.virtualfieldsSubdomainjson);
             // console.log('virtual', this.virtualfieldsjson);
-            // console.log('combined', this.virtualfieldsCombinedjson);
+            console.log('combined', this.virtualfieldsCombinedjson);
             // console.log('dd', this.objectToVal(this.virtualfieldsCombinedjson));
 
             if (this.virtualfieldsCombinedjson.length > 0) {
@@ -369,19 +370,37 @@ export class ProviderDetailComponent implements OnInit {
   sortVfields(dataF) {
     let temp;
     const temp1 = new Array();
-    const temp2 = new Array();
+    let temp2 = new Array();
+    let temp3 = new Array();
     for (let i = 0; i < dataF.length; i++) {
+      temp2 = [];
       // console.log(dataF[i].name, typeof dataF[i].value);
       dataF[i]['type'] = typeof dataF[i].value;
       if (dataF[i].name !== 'gender') {
         if (dataF[i]['type'] === 'object') {
           const tempVals = new Array();
-          for (let ii = 0; ii < dataF[i].value.length; ii++) {
-            const temp3 = new Array();
-            Object.keys(dataF[i].value[ii]).forEach(nkeys => {
-              temp3.push(dataF[i].value[ii][nkeys]);
-            });
+          // console.log('typ', dataF[i].value, typeof dataF[i].value[0]);
+          let str = '';
+          temp3 = [];
+          if (typeof dataF[i].value[0] === 'string') {
+            for ( let jj = 0; jj < dataF[i].value.length; jj++) {
+                str +=  ' ' + dataF[i].value[jj];
+            }
+            temp3.push(str);
             temp2.push(temp3);
+          } else {
+            for (let ii = 0; ii < dataF[i].value.length; ii++) {
+              temp3 = [];
+              if (typeof dataF[i].value[ii] === 'string') {
+                temp3.push(dataF[i].value[ii]);
+              } else {
+                Object.keys(dataF[i].value[ii]).forEach(nkeys => {
+                  // console.log('keys', nkeys, dataF[i].value[ii]);
+                  temp3.push(dataF[i].value[ii][nkeys]);
+                });
+              }
+              temp2.push(temp3);
+            }
           }
           dataF[i].value = temp2;
         }
@@ -641,6 +660,7 @@ export class ProviderDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
        panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+       disableClose: true,
       data: {
         type : origin,
         is_provider : false,
@@ -813,6 +833,12 @@ handleEmailPhonediv() {
   } else {
     this.showEmailPhonediv = true;
   }
+}
+handlepanelClose() {
+  this.virtualsectionHeader = 'Click here to View More Details';
+}
+handlepanelOpen() {
+  this.virtualsectionHeader = 'Click here to View Less Details';
 }
 
 }

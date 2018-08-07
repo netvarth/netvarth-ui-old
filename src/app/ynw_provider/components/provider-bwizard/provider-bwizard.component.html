@@ -38,9 +38,9 @@
                     </div>
                     <div class="content">
                         <div class="form-group">
-                            <label>Bussiness Name</label>
+                            <label>Business Name</label>
                             <span class="expl">Your {{customer_label}}s will view this in public profile</span>
-                            <input type="text" class="form-control" id="" maxlength="50" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="">
+                            <input type="text" class="form-control" id="bnameId" maxlength="50" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="">
                         </div>
                         <div class="form-group">
                             <label>Profile Summary</label>
@@ -91,7 +91,7 @@
                                     <label>GPS Coordinates</label>
                                     <span class="expl">GPS coordinates needed for the {{customer_label}}s who uses their mobile phone for search by location proximity.</span>
                                     <div class="row">
-                                        <div class="col-6"><input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lat']" name="lat"
+                                        <div class="col-6"><input matInput type="text" class="form-control" id="blatId" [(ngModel)]="wizard_data_holder['lat']" name="lat"
                                           placeholder="Latitude" autocomplete="off"></div>
                                         <div class="col-6"><input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lon']" name="lon"
                                           placeholder="Longitude" autocomplete="off"></div>
@@ -111,7 +111,7 @@
                                 <div class="form-group">
                                     <label>Location Name</label>
                                     <span class="expl">Display name of the location where you render services for your {{customer_label}}s. This is what your {{customer_label}}s see when they search online.</span>
-                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="" autocomplete="off">
+                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="" autocomplete="off" maxlength="50">
                                     <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
                                 </div>
                                 <div class="form-group">

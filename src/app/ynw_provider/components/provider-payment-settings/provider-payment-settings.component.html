@@ -33,7 +33,7 @@
                                         <div class="form-group">
                                             <label class="caption">Enter Mobile Number *</label>
                                             <mat-form-field>
-                                                <input matInput #paymobref [(ngModel)]="paytmmobile" (keypress)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                <input matInput #paymobref [(ngModel)]="paytmmobile" (keypress)="resetApi('paytmmobile')" autocomplete="off" [disabled]="!ineditMode" (blur)="paytmBlur()">
                                             </mat-form-field>
                                             <app-field-error-display [displayError]="showError['paytmmobile']['status']" [errorMsg]="showError['paytmmobile']['msg']"></app-field-error-display>
                                         </div>
@@ -49,14 +49,14 @@
                                             <div class="form-group">
                                                 <label class="caption">Pan Card Number *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="pannumber" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput [(ngModel)]="pannumber" (change)="resetApi('pannumber')" autocomplete="off" [disabled]="!ineditMode">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['pannumber']['status']" [errorMsg]="showError['pannumber']['msg']"></app-field-error-display>
                                             </div>
                                             <div class="form-group">
                                                 <label class="caption">Name on Pan Card *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="panname" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput [(ngModel)]="panname" (change)="resetApi('panname')" autocomplete="off" [disabled]="!ineditMode" (blur)="panNameBlur()">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['panname']['status']" [errorMsg]="showError['panname']['msg']"></app-field-error-display>
                                             </div>
@@ -65,43 +65,43 @@
                                             <div class="form-group">
                                                 <label class="caption">Account Holder Name *</label>
                                                 <mat-form-field>
-                                                    <input matInput #acholdernameref [(ngModel)]="bankacname" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput #acholdernameref [(ngModel)]="bankacname" (change)="resetApi('bankacname')" autocomplete="off" [disabled]="!ineditMode" (blur)="acholderNameBlur()">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['bankacname']['status']" [errorMsg]="showError['bankacname']['msg']"></app-field-error-display>
                                             </div>
                                             <div class="form-group">
                                                 <label class="caption">Bank Account Number *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="bankacnumber" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput [(ngModel)]="bankacnumber" (change)="resetApi('bankacnumber')" autocomplete="off" [disabled]="!ineditMode" (blur)="bankAcnumberBlur()">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['bankacnumber']['status']" [errorMsg]="showError['bankacnumber']['msg']"></app-field-error-display>
                                             </div>
                                             <div class="form-group">
                                                 <label class="caption">Bank Name *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="bankname" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput [(ngModel)]="bankname" (change)="resetApi('bankname')" autocomplete="off" [disabled]="!ineditMode" (blur)="bankNameBlur()">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['bankname']['status']" [errorMsg]="showError['bankname']['msg']"></app-field-error-display>
                                             </div>
                                             <div class="form-group">
                                                 <label class="caption">IFSC Code *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="bankifsc" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput [(ngModel)]="bankifsc" (change)="resetApi('bankifsc')" autocomplete="off" [disabled]="!ineditMode">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['bankifsc']['status']" [errorMsg]="showError['bankifsc']['msg']"></app-field-error-display>
                                             </div>
                                             <div class="form-group">
                                                 <label class="caption">Branch Name *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="bankbranch" (change)="resetApi()" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput [(ngModel)]="bankbranch" (change)="resetApi('bankbranch')" autocomplete="off" [disabled]="!ineditMode"  (blur)="bankBranchBlur()">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['bankbranch']['status']" [errorMsg]="showError['bankbranch']['msg']"></app-field-error-display>
                                             </div>
                                             <div class="form-group">
                                                 <label class="caption">Business Filing Status *</label>
                                                 <mat-form-field>
-                                                    <mat-select [(ngModel)]="bankfiling" (change)="resetApi()" [disabled]="!ineditMode">
-                                                        <mat-option>-- Select --</mat-option>
+                                                    <mat-select [(ngModel)]="bankfiling" (change)="resetApi('bankfiling')" [disabled]="!ineditMode">
+                                                        <mat-option value="">-- Select --</mat-option>
                                                         <mat-option value="Proprietorship">Proprietorship</mat-option>
                                                         <mat-option value="Individual">Individual</mat-option>
                                                         <mat-option value="Partnership">Partnership</mat-option>
@@ -117,8 +117,8 @@
                                             <div class="form-group">
                                                 <label class="caption">Account Type *</label>
                                                 <mat-form-field>
-                                                <mat-select [(ngModel)]="bankactype" (change)="resetApi()" [disabled]="!ineditMode">
-                                                    <mat-option>-- Select --</mat-option>
+                                                <mat-select [(ngModel)]="bankactype" (change)="resetApi('bankactype')" [disabled]="!ineditMode">
+                                                    <mat-option value="">-- Select --</mat-option>
                                                     <mat-option value="Current">Current</mat-option>
                                                     <mat-option value="Saving">Savings</mat-option>
                                                 </mat-select>

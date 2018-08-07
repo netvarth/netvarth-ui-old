@@ -1,3 +1,5 @@
+
+
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
@@ -8,7 +10,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     </button>
 </h1>
 <mat-dialog-content>
-
+  <ng-container *ngIf="mode=='normal'">
   <div class="form-group">
     <label class="col-form-label" for="service_name">Service Name *</label>
     <input matInput type="text" class="form-control" id="service_name" placeholder="Service Name"
@@ -161,16 +163,21 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
   </ng-container>
 
+  </ng-container>
 
+  <ng-container *ngIf="mode=='afteradd'">
+    <div class="message-one">{{normaladd_msg}}</div>
+    <div class="message-two" (click)="gotoManageQueue()">Please click here to go to the Queue List</div>
+  </ng-container>
 
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{button_title}}</button>
-    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+    <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{button_title}}</button>
+    <button *ngIf="mode=='normal'" type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 
-    <span class="service-tooltip" *ngIf="type == 'add'">
+    <span class="service-tooltip" *ngIf="type == 'add' && mode=='normal'">
         <i class="icon-bell"></i>
         {{tooltip}}
     </span>

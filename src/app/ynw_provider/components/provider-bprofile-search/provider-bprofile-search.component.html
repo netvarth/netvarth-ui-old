@@ -111,14 +111,15 @@
                                                     <!-- <div [ngClass]="(profimg_exists)?'pro-pic yes':'pro-pic'"> -->
                                                             <div class="pro-pic" [class.yes]="profimg_exists">
                                                             <div class="pro-pic-img"><img [src]="showimg()" *ngIf="blogo[0] && blogo[0].url"></div>
-                                                            <input #logofile type="file" accept=".jpg,.png,.bmp,.gif" style="display:none;" (change)="imageSelect(logofile,$event)">
+                                                            <input #logofile type="file" accept=".jpeg,.jpg,.png,.bmp,.gif" style="display:none;" (change)="imageSelect(logofile,$event)">
                                                         <div class="add"><span (click)="logofile.click()">Add <br/> Profile Picture</span></div>
                                                         <div class="change"><span (click)="logofile.click()">Change <br/> Profile Picture</span></div>
                                                     </div>
+                                                    <div class='remove-logo' *ngIf="blogo[0] && blogo[0].url" (click)="confirmLogoremove(blogo.keyName)">Remove Profile Picture</div>
                                                 </div>
                                                 <div class="bi-r">
-                                                    <h3>{{bProfile.businessName}}</h3>
-                                                    <p>{{bProfile.businessDesc}} <!--...  <a href="#" class="smr">See More</a> --></p>
+                                                    <h3>{{bProfile.businessName | titlecase }}</h3>
+                                                    <p>{{bProfile.businessDesc  | titlecase}} <!--...  <a href="#" class="smr">See More</a> --></p>
                                                 </div>
                                             </div>
                                     </div>
@@ -148,13 +149,13 @@
                                         </div>
                                         <div class="copy">
                                             <div class="cop-l" *ngIf="loc_list.length>0">
-                                                <h4>{{base_loc.place}}</h4>
-                                                <span>{{base_loc.address}}</span>
+                                                <h4>{{base_loc.place | titlecase}}</h4>
+                                                <span>{{base_loc.address | titlecase}}</span>
                                                 <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
                                                   Pin : {{base_loc.pinCode}}
                                                 </span>
 
-                                                <ul class="info-lst">
+                                                <ul class="info-lst" *ngIf="multipeLocationAllowed">
                                                     <li>You can add more locations in the <a routerLink="/provider/settings/waitlist-manager/locations">locations</a> page.</li>
                                                 </ul>
                                             </div>
@@ -254,7 +255,7 @@
                                                     <ng-container *ngIf="phonearr.length>0">
                                                         <li class="ttd" *ngFor="let phone of phonearr; let i = index">
                                                             <div class="otr">
-                                                                <div class="ctd">{{phone.label}}</div>
+                                                                <div class="ctd">{{phone.label | titlecase}}</div>
                                                                 <div class="ctd">{{phone.number}}</div>
                                                                 <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[phone.permission]}}</div>
                                                                 <!-- <a href="#" class="mbt"></a> -->
@@ -296,7 +297,7 @@
                                                     <ng-container *ngIf="emailarr.length>0">
                                                         <li class="ttd" *ngFor="let email of emailarr; let i = index">
                                                             <div class="otr">
-                                                                <div class="ctd">{{email.label}}</div>
+                                                                <div class="ctd">{{email.label | titlecase}}</div>
                                                                 <div class="ctd">{{email.emailid}}</div>
                                                                 <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[email.permission]}}</div>
                                                                 <span class="mbt">

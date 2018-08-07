@@ -16,8 +16,8 @@
                                         <span class="editbt"  (click)="editLocation()" ></span>
                                         <div class="cop-l">
                                             <span class="bse-lcn-label" *ngIf="location_data.baseLocation==true">Base Location</span>
-                                            <h4>{{location_data.place}}</h4>
-                                            <span>{{location_data.address}}</span>
+                                            <h4>{{location_data.place | titlecase}}</h4>
+                                            <span>{{location_data.address | titlecase}}</span>
                                             <!-- <span *ngIf="location_data.pinCode">
                                                 Pin : {{location_data.pinCode}}
                                             </span> -->
@@ -68,7 +68,7 @@
                                         ">
                                             <div class="no-dta">
 
-                                                <p>You haven’t added any Location Aminities. </p>
+                                                <p>You haven’t added any Location Amenities. </p>
                                                 <span class="cs-btn bt3" (click)="editLocation('badge')" >Add It Now</span>
                                             </div>
                                         </ng-container>
@@ -106,7 +106,7 @@
                                 <tr *ngFor="let queue of queues">
                                     <td data-title="Queue" class="pointer-cursor"
                                     (click)="goQueueDetail(queue)" [class.disabled]="queue.queueState=='DISABLED'">
-                                    {{queue.name}}</td>
+                                    {{queue.name | titlecase}}</td>
                                     <td data-title="Shedule">
                                         <div class="schtd">
                                             <ng-container *ngFor="let schedule of queue.displayschedule">

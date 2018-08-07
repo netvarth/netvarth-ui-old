@@ -503,6 +503,24 @@ export class SharedFunctions {
 
     });
   }
+  confirmLogoImageDelete(ob, file) {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      data: {
+        'message' : 'Do you want to remove your profile picture?',
+        'heading' : 'Delete Confirmation'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        ob.removeLogo(file);
+      }
+
+    });
+  }
 
   checkIsInteger(val) {
     return /^\d*$/.test(val);
@@ -671,13 +689,17 @@ export class SharedFunctions {
     return displaysch;
   }
 
-  setBusinessDetailsforHeaderDisp(bname, sector, logo) {
+  setBusinessDetailsforHeaderDisp(bname, sector, logo, forcelogoblank?) {
     const buss_det = {'bn': '', 'bs': '', 'logo': '' };
     const exist_det = this.getitemfromLocalStorage('ynwbp');
     if (exist_det) {
       buss_det.bn = bname || '';
       buss_det.bs = sector || '';
-      buss_det.logo =  (logo !== '') ? logo : exist_det['logo'];
+      if (forcelogoblank !== undefined) {
+        buss_det.logo = '';
+      } else {
+        buss_det.logo =  (logo !== '') ? logo : exist_det['logo'];
+      }
     } else {
       buss_det.bn = bname;
       buss_det.bs = sector;

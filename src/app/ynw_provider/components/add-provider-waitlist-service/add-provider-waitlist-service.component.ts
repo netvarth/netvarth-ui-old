@@ -5,6 +5,7 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { ProviderServices } from '../../services/provider-services.service';
 import {Messages} from '../../../shared/constants/project-messages';
 import {projectConstants} from '../../../shared/constants/project-constants';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
 import { Observable } from 'rxjs/Observable';
@@ -43,7 +44,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   payment_loading = false;
   payment_settings: any = [];
   tooltip = Messages.NEW_SERVICE_TOOLTIP;
-
+  mode = 'normal';
+  normaladd_msg = this.shared_functions.getProjectMesssages('SERVICE_ADDED');
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
@@ -51,7 +53,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    public router: Router
     ) {}
 
   ngOnInit() {
@@ -141,9 +144,10 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         this.service = [];
         this.service['id'] = service_id;
         if (this.item_pic.files.length > 0) {
-          this.saveImages();
+          this.saveImages('add');
         } else {
-          this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
+          // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
+          this.mode = 'afteradd';
         }
 
       },
@@ -158,7 +162,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     .subscribe(
       data => {
         if (this.item_pic.files.length > 0) {
-          this.saveImages();
+          this.saveImages('edit');
         } else {
           this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
         }
@@ -201,7 +205,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       this.success_error = null;
       this.error_list = [];
 
-      console.log(input.files);
+      // console.log(input.files);
       if (input.files) {
         for ( const file of input.files) {
           this.success_error = this.shared_functions.imageValidation(file);
@@ -222,7 +226,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       }
   }
 
-  saveImages() {
+  saveImages(from) {
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
@@ -243,18 +247,23 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     // console.log(JSON.stringify(propertiesDet));
     submit_data.append('properties', blobPropdata);
 
-    this.uploadApi(submit_data);
+    this.uploadApi(submit_data, from);
 
   }
 
-  uploadApi(submit_data) {
+  uploadApi(submit_data, from) {
 
     this.provider_services.uploadServiceGallery(this.service.id, submit_data)
     .subscribe(
       data => {
         this.getGalleryImages();
         this.resetVariables();
-        this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
+        if (from === 'add') {
+          // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
+          this.mode = 'afteradd';
+        } else if (from === 'edit') {
+          this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
+        }
       },
       error => {
 
@@ -363,4 +372,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       }
     );
   }
+  gotoManageQueue() {
+    this.dialogRef.close('reloadlist');
+    this.router.navigate(['/provider/settings/waitlist-manager/queues']);
+  }
+
 }
