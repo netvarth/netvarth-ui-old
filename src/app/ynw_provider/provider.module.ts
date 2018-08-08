@@ -108,6 +108,8 @@ import { InboxModule } from '../shared/modules/inbox/inbox.module';
 import { ViewBillModule } from '../shared/modules/view-bill/view-bill.module';
 import { LearnmoreModule } from '../shared/modules/learnmore/learnmore.module';
 
+import {Nl2BrPipeModule} from 'nl2br-pipe';
+
 
 import 'hammerjs';
 import 'mousetrap';
@@ -125,7 +127,8 @@ import 'mousetrap';
         InboxModule,
         CheckInModule,
         ViewBillModule,
-        LearnmoreModule
+        LearnmoreModule,
+        Nl2BrPipeModule
     ],
     declarations: [
         ProviderComponent,

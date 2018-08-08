@@ -422,7 +422,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   }
 
-  addCommonMessage(provider) {console.log(provider);
+  addCommonMessage(provider) { // console.log(provider);
     const pass_ob = {};
     pass_ob['source'] = 'consumer-common';
     pass_ob['user_id'] = provider.id;

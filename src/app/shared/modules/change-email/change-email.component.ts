@@ -77,7 +77,6 @@ export class ChangeEmailComponent implements OnInit {
     onSubmit(submit_data) {
 
       this.resetApiErrors();
-
       if (!submit_data.email) { return false; }
 
       this.shared_services.verifyNewPhone(submit_data.email, this.shared_functions.isBusinessOwner('returntyp'))
@@ -87,6 +86,7 @@ export class ChangeEmailComponent implements OnInit {
           this.submit_data = submit_data;
           const email = (submit_data.email) ? submit_data.email : 'your email';
           this.api_success  = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
+
           /* setTimeout(() => {
             this.api_success = '';
             }, projectConstants.TIMEOUT_DELAY);*/
@@ -136,7 +136,13 @@ export class ChangeEmailComponent implements OnInit {
           this.api_success = null;
           setTimeout(() => {
             // this.router.navigate(['/']);
-            this.getProviderProfile();
+            const e_ret = this.shared_functions.getitemfromLocalStorage('e_ret');
+            if (e_ret && e_ret === 'pset') {
+              this.shared_functions.removeitemfromLocalStorage('e_ret');
+              this.router.navigate(['provider', 'settings', 'paymentsettings']);
+            } else {
+              this.getProviderProfile();
+            }
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {

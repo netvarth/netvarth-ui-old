@@ -16,8 +16,8 @@
                       </tr>
                       <tr *ngFor="let metric of metrics">
                           <td>{{metric.metricName}}</td>
-                          <td>{{metric.total }}</td>
-                          <td>{{metric.used }}</td>
+                          <td>{{metric.total }} {{metric.unitValue}}</td>
+                          <td>{{metric.used }} {{metric.unitValue}}</td>
                           <td>{{metric.ComplainceInfo}}</td>
                       </tr>
                   </table>

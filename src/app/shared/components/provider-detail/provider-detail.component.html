@@ -90,7 +90,7 @@
                                       </div> -->
 
                                       <div class="pro-desc">
-                                          <ng-container *ngIf="bNameStart!=''">{{bNameStart | titlecase}}</ng-container><ng-container *ngIf="bNameEnd!='' && showmoreDesc">{{bNameEnd | titlecase}}</ng-container>
+                                          <span *ngIf="bNameStart!=''" [innerHTML]="bNameStart | nl2br | titlecase"></span><span *ngIf="bNameEnd!='' && showmoreDesc" [innerHTML]="bNameEnd | nl2br | titlecase"></span>
                                           <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">More</span> <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">Less</span>
                                       </div>
                                       
@@ -175,7 +175,8 @@
                                                         <div class="question-outer">
                                                             <ng-container>
                                                                 <div class="question-header"><strong>{{vfield.displayName  | titlecase}}</strong></div>
-                                                                <div class="question-value" *ngIf="vfield.type!= 'object'" >{{vfield.value  | titlecase}}</div>
+                                                                <div class="question-value1" *ngIf="vfield.type!= 'object'" [innerHTML]="vfield.value | nl2br">
+                                                                </div>
                                                                 <div class="question-valuearr" *ngIf="vfield.type== 'object'" >
                                                                     <!-- <table class="table">
                                                                         <tr *ngFor="let vals of vfield.value">

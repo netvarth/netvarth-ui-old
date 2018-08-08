@@ -12,19 +12,19 @@
                   <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
                       <div class="card">
                           <div class="c-details">
-                              <h2>{{checkin_label |titlecase}} Details</h2>
+                              <h2>{{checkin_label | titlecase}} Details</h2>
                               <div class="tp" *ngIf="waitlist_data">
-                                  <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName}} {{waitlist_data.consumer.userProfile.lastName}}</span></div>
+                                  <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName | titlecase}} {{waitlist_data.consumer.userProfile.lastName | titlecase}}</span></div>
                                   <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div>
                                   <div class="item"><span class="ttle">Location:</span><span>{{waitlist_data.queue.location.place}}</span></div>
                                   <div class="item"><span class="ttle">Waitlist For:</span>
                                     <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
-                                        {{user.firstName}} {{user.lastName}}
+                                        {{user.firstName | titlecase}} {{user.lastName | titlecase}}
                                     </span>
                                   </div>
 
-                                  <div class="item"><span class="ttle">Service:</span><span> {{waitlist_data.service.name}}</span></div>
-                                  <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_data.queue.name}}</span></div>
+                                  <div class="item"><span class="ttle">Service:</span><span> {{waitlist_data.service.name | titlecase}}</span></div>
+                                  <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_data.queue.name | titlecase}}</span></div>
                                   <div class="item"><span class="ttle">Payment Status:</span>
                                     <ng-container *ngIf="waitlist_data && waitlist_data.paymentStatus">
                                         <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span class="text">Not Paid</span></span>
@@ -85,8 +85,8 @@
                           <div class="c-history-outer">
                             <ul class="c-history">
                               <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
-                                  <div class="time">{{ history.time}}</div>
-                                  <div class="action">{{ history.waitlistStatus}}</div>
+                                  <div class="time">{{ history.time }}</div>
+                                  <div class="action">{{ history.waitlistStatus  | titlecase}}</div>
                               </li>
                             </ul>
 

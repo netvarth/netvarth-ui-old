@@ -840,5 +840,8 @@ handlepanelClose() {
 handlepanelOpen() {
   this.virtualsectionHeader = 'Click here to View Less Details';
 }
+converNewlinetoBr(value: any): any {
+  return value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+}
 
 }

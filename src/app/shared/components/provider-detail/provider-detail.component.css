@@ -103,3 +103,6 @@
   float:right;
   padding:5px;
 }
+.line-breaker {
+  white-space: pre-wrap;
+}

@@ -48,7 +48,11 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     .subscribe(
       data => {
         if (data[0]) {
-          this.message = data[0]['feedback'][0]['comments'];
+          if (data[0]['feedback'].length > 0) {
+            this.message = data[0]['feedback'][(data[0]['feedback'].length - 1)]['comments'];
+          } else {
+            this.message = '';
+          }
           this.rate_value = data[0]['stars'];
           this.newrating = false;
         }

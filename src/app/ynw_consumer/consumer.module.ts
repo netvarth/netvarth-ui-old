@@ -17,6 +17,7 @@ import { PagerModule } from '../shared/modules/pager/pager.module';
 import { ConsumerCheckinHistoryListModule } from '../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
 import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
+import {Nl2BrPipeModule} from 'nl2br-pipe';
 
 import {ConsumerServices } from './services/consumer-services.service';
 import { ConsumerDataStorageService } from './services/consumer-datastorage.service';
@@ -48,7 +49,8 @@ import { projectConstants } from '../shared/constants/project-constants';
         PagerModule,
         ConsumerCheckinHistoryListModule,
         InboxModule,
-        RatingStarModule
+        RatingStarModule,
+        Nl2BrPipeModule
     ],
     declarations: [
       ConsumerComponent,

@@ -976,10 +976,15 @@ deleteFavProvider(id) {
 }
 ratingRounding(val) {
   let retval;
+  val = parseFloat(val);
   for (let i = 0; i <= 4.5; i = i + .5) {
     if (val > i && val <= (i + .5)) {
       retval = (i + .5);
     }
+  }
+  if (val === 0.0) {
+    console.log('retval', retval);
+    retval = 0;
   }
   /*if (val > 0 && val <= .5) {
     retval = .5;

@@ -374,6 +374,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         );
     }
     redirectToEmail() {
+        this.shared_Functionsobj.setitemonLocalStorage('e_ret', 'pset');
         this.router.navigate(['provider', 'change-email']);
     }
     resetApi(code?) {
