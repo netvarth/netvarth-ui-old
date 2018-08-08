@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
@@ -9,13 +9,17 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
+
 
 @Component({
     selector: 'app-provider-settings',
     templateUrl: './provider-settings.component.html'
 })
 
-export class ProviderSettingsComponent implements OnInit {
+export class ProviderSettingsComponent implements OnInit, OnDestroy {
 
   waitlist_status = false;
   waitlist_statusstr = 'Off';
@@ -41,6 +45,8 @@ export class ProviderSettingsComponent implements OnInit {
   queues_count: any = 0;
   checkin_label = '';
 
+  subscription: Subscription;
+
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
   private routerobj: Router) {
@@ -57,6 +63,26 @@ export class ProviderSettingsComponent implements OnInit {
     this.getDiscounts();
     this.getCoupons();
     this.getitems();
+
+
+    // Update from footer
+    this.subscription = this.shared_functions.getMessage()
+    .subscribe(
+      data => {
+        if (data.ttype === 'online_checkin_status') {
+          this.getWaitlistMgr();
+        }
+      },
+      error => {
+
+      }
+    );
+
+  }
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
   }
 
   getWaitlistMgr() {
@@ -72,6 +98,7 @@ export class ProviderSettingsComponent implements OnInit {
     );
 
   }
+
   handle_waitliststatus(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
     // this.provider_services.setWaitlistMgrStatus(is_check)
@@ -293,5 +320,9 @@ export class ProviderSettingsComponent implements OnInit {
           this.item_list = data;
           this.item_count = this.item_list.length;
       });
+  }
+
+  reloadHandler() {
+
   }
 }

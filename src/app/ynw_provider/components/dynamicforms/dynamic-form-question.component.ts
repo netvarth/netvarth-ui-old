@@ -5,6 +5,8 @@ import { FormBase } from './form-base';
 import { FormControlService } from './form-control.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
+
 @Component({
   selector: 'app-question',
   templateUrl: './dynamic-form-question.component.html'
@@ -17,7 +19,8 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   errors = [];
   constructor(private qcs: FormControlService,
-    public fed_service: FormMessageDisplayService) {}
+    public fed_service: FormMessageDisplayService,
+  public shared_functions: SharedFunctions) {}
 
   ngOnInit() {
     this.errors = this.messages[this.question.key] || [];
@@ -76,6 +79,25 @@ setCheckBoxValue() {
     this.form.controls[this.question.key].setValue('false');
   }
  // console.log(this.form.controls[this.question.key]['value'] );
+}
+
+onFieldBlur(question) {
+  const key = question.key;
+
+  if (question.type !== 'url' &&
+  question.type !== 'number' &&
+  question.type !== 'email' &&
+  question.type !== 'tel' ) {
+    this.form.get(key).setValue(this.toCamelCase(this.form.get(key).value));
+  }
+}
+
+toCamelCase(word) {
+  if (word) {
+    return this.shared_functions.toCamelCase(word);
+  } else {
+    return word;
+  }
 }
 
 }
