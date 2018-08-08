@@ -24,7 +24,7 @@ export class ProviderLicenseUsageComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    console.log(this.data);
+    // console.log(this.data);
     this.metrics = this.data.metrics;
   }
 
