@@ -10,7 +10,7 @@
         <input matInput [formControlName]="question.key"
         [id]="question.key" [type]="question.type"
         [min]="question.min" [max]="question.max"
-        placeholder="{{question.label}}" autocomplete="off">
+        placeholder="{{question.label}}" autocomplete="off" (blur)="onFieldBlur(question)">
     </mat-form-field>
 
     <mat-slide-toggle
@@ -25,7 +25,7 @@
 
     <mat-form-field  *ngSwitchCase="'textarea'">
         <textarea matInput [id]="question.key"  placeholder="{{question.label}}"
-         [formControlName]="question.key"></textarea>
+         [formControlName]="question.key"  (blur)="onFieldBlur(question.key)"></textarea>
     </mat-form-field>
 
     <div *ngSwitchCase="'datagrid'" [formArrayName]="question.key">

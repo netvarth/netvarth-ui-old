@@ -270,6 +270,8 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
         } else {
           this.waitlistmgr.onlineCheckIns = false;
         }
+
+        this.shared_functions.sendMessage({ttype: 'online_checkin_status', action: this.waitlistmgr.onlineCheckIns});
       },
     error => {
 

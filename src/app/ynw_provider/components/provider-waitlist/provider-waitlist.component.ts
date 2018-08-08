@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -10,6 +10,10 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
+
 
 
 @Component({
@@ -17,7 +21,7 @@ import { FormMessageDisplayService } from '../../../shared/modules/form-message-
     templateUrl: './provider-waitlist-component.html'
 })
 
-export class ProviderWaitlistComponent implements OnInit {
+export class ProviderWaitlistComponent implements OnInit, OnDestroy {
 
   bProfile = null;
   online_checkin = false ;
@@ -38,6 +42,9 @@ export class ProviderWaitlistComponent implements OnInit {
     }
   ];
   breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'waitlistmanager'};
+
+  subscription: Subscription;
+
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
   private router: Router,
@@ -52,7 +59,28 @@ export class ProviderWaitlistComponent implements OnInit {
     this.getQueuesCount();
     this.getServiceCount();
 
+    // Update from footer
+    this.subscription = this.shared_functions.getMessage()
+    .subscribe(
+      data => {
+        if (data.ttype === 'online_checkin_status') {
+          this.getWaitlistMgr();
+        }
+      },
+      error => {
+
+      }
+    );
+
+
   }
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
+  }
+
+
 
   getWaitlistMgr() {
 
@@ -63,7 +91,7 @@ export class ProviderWaitlistComponent implements OnInit {
         // this.online_checkin = data['enabledWaitlist'];
         this.online_checkin = data['onlineCheckIns'];
 
-        console.log(this.online_checkin);
+       // console.log(this.online_checkin);
         this.provider_datastorage.set('waitlistManage', data);
       },
       error => {
