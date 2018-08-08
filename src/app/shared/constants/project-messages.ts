@@ -164,6 +164,9 @@ export const Messages = {
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
   'Manage_Privacy': 'Manage privacy changed successfully',
 
+  // Provider Dashboard
+  'ADJUSTDELAY_TOOPTIP': 'Use this button to adjust the delay.',
+
   // Dynamic Field
   'YEAR_MONTH_VALID' : 'Future date not allowed'
 };

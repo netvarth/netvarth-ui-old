@@ -10,6 +10,7 @@ import { CommonDataStorageService } from '../../../shared/services/common-datast
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../shared/constants/project-messages';
 
 import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-delay.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
@@ -109,6 +110,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   settings;
+  delayTooltip = Messages.ADJUSTDELAY_TOOPTIP;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,

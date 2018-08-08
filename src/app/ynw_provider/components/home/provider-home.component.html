@@ -68,8 +68,9 @@
 
                       <span *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id"
                       class="ml-auto cs-btn bt5" (click)="showAdjustDelay()">
-                          Adjust Delay <i class="icon-question"></i>
+                          Adjust Delay
                       </span>
+                       <span><i class="icon-question" [matTooltip]="delayTooltip"></i></span>
                   </div>
 
                   <!-- <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
