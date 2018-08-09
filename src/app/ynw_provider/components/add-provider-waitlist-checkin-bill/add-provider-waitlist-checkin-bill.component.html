@@ -62,7 +62,7 @@
                         <mat-form-field>
                           <mat-select [(ngModel)]="cart.items[i].discount" [ngModelOptions]="{standalone: true}"
                           (selectionChange)="itemDiscountChange(i)">
-                            <mat-option [value]="null">Select one </mat-option>
+                            <mat-option [value]="''">Select one </mat-option>
                             <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
                               {{ discount.name }}
                             </mat-option>
@@ -76,7 +76,7 @@
                               <mat-form-field>
                                   <mat-select [(ngModel)]="cart.items[i].coupon" [ngModelOptions]="{standalone: true}"
                                   (selectionChange)="itemCouponChange(i)">
-                                    <mat-option [value]="null">Select one </mat-option>
+                                    <mat-option [value]="''">Select one </mat-option>
                                     <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
                                       {{ coupon.name }}
                                     </mat-option>
@@ -100,6 +100,41 @@
                   </div>
               </div>
 
+              <div class="form-group bill-total">
+
+                  <div class="discount form-group" *ngIf="discounts.length >0">
+                      <mat-form-field>
+                          <label class="col-form-label" for="displayName">Discounts For Total Amount</label>
+                          <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
+                          (selectionChange)="discountChange()">
+                            <mat-option [value]="''">Select one </mat-option>
+                            <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
+                              {{ discount.name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                  </div>
+
+                  <div class="coupon form-group" *ngIf="coupons.length > 0">
+                      <mat-form-field>
+                          <label class="col-form-label" for="displayName">Coupons For Total Amount</label>
+                          <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
+                          (selectionChange)="couponChange()">
+                            <mat-option [value]="''">Select one </mat-option>
+                            <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
+                              {{ coupon.name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                  </div>
+
+                  <div  class="topay"><span class="label">Amount to pay</span>
+                    <span class="label-valu">{{cart.total | currency:'INR':'symbol':'.2-2'}}</span></div>
+
+              </div>
+
               <div class="table-outer log-tbl">
                   <p class="paymentlogs">Payment Logs</p>
                   <p *ngIf="pre_payment_log.length == 0">
@@ -120,41 +155,6 @@
                       </tr>
                     </tbody>
                   </table>
-              </div>
-
-              <div class="form-group bill-total">
-
-                  <div class="discount form-group" *ngIf="discounts.length >0">
-                      <mat-form-field>
-                          <label class="col-form-label" for="displayName">Discounts</label>
-                          <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
-                          (selectionChange)="discountChange()">
-                            <mat-option [value]="null">Select one </mat-option>
-                            <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
-                              {{ discount.name }}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-
-                  </div>
-
-                  <div class="coupon form-group" *ngIf="coupons.length > 0">
-                      <mat-form-field>
-                          <label class="col-form-label" for="displayName">Coupons</label>
-                          <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
-                          (selectionChange)="couponChange()">
-                            <mat-option [value]="null">Select one </mat-option>
-                            <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
-                              {{ coupon.name }}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-
-                  </div>
-
-                  <div  class="topay"><span class="label">Amount to pay</span>
-                    <span class="label-valu">{{cart.total | currency:'INR':'symbol':'.2-2'}}</span></div>
-
               </div>
 
 

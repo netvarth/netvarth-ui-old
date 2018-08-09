@@ -7,6 +7,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+import { ProviderRefundComponent } from '../../../ynw_provider/components/provider-refund/provider-refund.component';
 
 
 
@@ -53,9 +54,11 @@ export class ViewBillComponent implements OnInit, OnChanges {
   };
   bill_load_complete = 0;
   item_service_tax: any = 0;
+  Pipe_disp_date = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
+    public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
@@ -133,6 +136,23 @@ export class ViewBillComponent implements OnInit, OnChanges {
     this.emailbill.emit('emailBill');
   }
 
+  showRefund() {
+
+   const dialogrefundRef = this.dialog.open(ProviderRefundComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass'],
+      data: {
+        /*queues: this.queues,
+        queue_id: this.selected_queue.id*/
+      }
+    });
+
+    dialogrefundRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
+    });
+  }
 
 
 

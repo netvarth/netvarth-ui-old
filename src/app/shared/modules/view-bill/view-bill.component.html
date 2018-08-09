@@ -60,28 +60,7 @@
              </tbody>
          </table>
 
-         <div class="table-outer log-tbl">
-           <p class="paymentlogs">Payment Logs</p>
-           <p *ngIf="pre_payment_log.length == 0">
-             No  payments found
-           </p>
-
-           <table class="table" *ngIf="pre_payment_log.length > 0">
-             <thead>
-               <tr>
-                   <th>Date and Time</th>
-                   <th>Amount</th>
-               </tr>
-             </thead>
-             <tbody>
-               <tr *ngFor="let payment of pre_payment_log; let i = index">
-                 <td data-title="Date and Time">{{payment.paymentOn}}</td>
-                 <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
-               </tr>
-             </tbody>
-           </table>
-         </div>
-
+       
          <div class="form-group bill-total">
              <div class="table-outer pay-tbl">
                  <table class="table">
@@ -111,6 +90,37 @@
             </div>
 
          </div>
+
+         <div class="table-outer log-tbl">
+            <p class="paymentlogs">Payment Logs</p>
+            <p *ngIf="pre_payment_log.length == 0">
+              No  payments found
+            </p>
+ 
+            <table class="table" *ngIf="pre_payment_log.length > 0">
+              <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                    <th>Refunded Amount</th>
+                    <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let payment of pre_payment_log; let i = index">
+                  <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td>
+                  <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | titlecase}}</span></td>
+                  <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
+                  <td data-title="Refund">-</td>
+                  <td>
+                      <!-- <button  type="button" mat-button class="cs-btn bt1 update"
+                     *ngIf="source !== 'consumer_dashboard'" (click)="showRefund()">Refund</button> -->
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
        </div>
  </div>

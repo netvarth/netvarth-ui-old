@@ -86,6 +86,7 @@ import { ProviderSystemAlertComponent } from './components/provider-system-alert
 import { ProviderCustomersComponent } from './components/provider-customers/provider-customers.component';
 import { AddProviderCustomerComponent } from './components/add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from './components/search-provider-customer/search-provider-customer.component';
+import { ProviderRefundComponent } from './components/provider-refund/provider-refund.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -205,7 +206,8 @@ import 'mousetrap';
         ProviderSystemAlertComponent,
         ProviderCustomersComponent,
         AddProviderCustomerComponent,
-        SearchProviderCustomerComponent
+        SearchProviderCustomerComponent,
+        ProviderRefundComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -245,7 +247,8 @@ import 'mousetrap';
       ViewProviderWaitlistCheckInBillComponent,
       ProviderWaitlistCheckInPaymentComponent,
       AddProviderCustomerComponent,
-      SearchProviderCustomerComponent
+      SearchProviderCustomerComponent,
+      ProviderRefundComponent
     ],
     providers: [
        AuthGuardProviderHome,

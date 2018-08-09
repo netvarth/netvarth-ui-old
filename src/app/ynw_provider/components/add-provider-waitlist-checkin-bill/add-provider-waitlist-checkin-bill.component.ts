@@ -55,8 +55,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     'items': [],
     'prepayment_amount' : 0,
     'sub_total': 0,
-    'discount': null,
-    'coupon': null,
+    'discount': '',
+    'coupon': '',
     'total': 0
   };
   bill_load_complete = 0;
@@ -359,8 +359,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
                                 'quantity': 1,
                                 'price': item.totalAmount,
                                 'subtotal': item.totalAmount,
-                                'discount': null,
-                                'coupon': null,
+                                'discount': '',
+                                'coupon': '',
                                 'gst_percentage': tax / 2,
                                 'cgst_percentage': tax / 2,
                                 'type' : type,
@@ -374,8 +374,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
                                 'quantity': 1,
                                 'price': item.price,
                                 'subtotal': item.price,
-                                'discount': null,
-                                'coupon': null,
+                                'discount': '',
+                                'coupon': '',
                                 'gst_percentage': tax / 2,
                                 'cgst_percentage': tax / 2,
                                 'type' : type,
@@ -437,7 +437,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   reduceItemDiscount(i) {
 
-    if (this.cart['items'][i].discount !== null && this.discounts[this.cart['items'][i].discount]) {
+    if (this.cart['items'][i].discount !== '' && this.discounts[this.cart['items'][i].discount]) {
       const discount = this.discounts[this.cart['items'][i].discount];
       this.cart['items'][i].subtotal = this.discCalculation(discount, this.cart['items'][i].subtotal);
     }
@@ -446,7 +446,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   reduceItemCoupon(i) {
 
-    if (this.cart['items'][i].coupon !== null &&
+    if (this.cart['items'][i].coupon !== '' &&
     this.coupons[this.cart['items'][i].coupon]) {
       const discount = this.coupons[this.cart['items'][i].coupon];
       discount.discValue = discount.amount;
@@ -490,7 +490,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   reduceDiscount() {
 
-    if (this.cart.discount !== null && this.discounts[this.cart.discount]) {
+    if (this.cart.discount !== '' && this.discounts[this.cart.discount]) {
       const discount = this.discounts[this.cart.discount];
       this.cart.total = this.discCalculation(discount, this.cart.sub_total);
     }
@@ -499,7 +499,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   reduceCoupon() {
 
-    if (this.cart.coupon !== null && this.coupons[this.cart.coupon]) {
+    if (this.cart.coupon !== '' && this.coupons[this.cart.coupon]) {
       const discount = this.coupons[this.cart.coupon];
       discount.discValue = discount.amount;
       // coupon dont have discValue field
@@ -545,11 +545,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         'quantity': item.quantity,
       };
      // console.log(item, ob);
-      if (item.coupon != null && this.coupons[item.coupon]) {
+      if (item.coupon !== '' && this.coupons[item.coupon]) {
         ob['couponId'] = this.coupons[item.coupon]['id'];
       }
 
-      if (item.discount != null && this.discounts[item.discount]) {
+      if (item.discount !== '' && this.discounts[item.discount]) {
         ob['discountId'] = this.discounts[item.discount]['id'];
       }
 
@@ -578,11 +578,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     //   post_data['items'] = item_array;
     // }
 
-    if (this.cart.coupon != null && this.coupons[this.cart.coupon]) {
+    if (this.cart.coupon !== '' && this.coupons[this.cart.coupon]) {
       post_data['couponId'] = this.coupons[this.cart.coupon]['id'];
     }
 
-    if (this.cart.discount != null && this.discounts[this.cart.discount]) {
+    if (this.cart.discount !== '' && this.discounts[this.cart.discount]) {
       post_data['discountId'] = this.discounts[this.cart.discount]['id'];
     }
 
@@ -693,7 +693,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   getIndexFromId(array, id) {
-    let index = null;
+    let index = '';
     array
     .map((ob, i) => {
       if (ob.id === id) {
