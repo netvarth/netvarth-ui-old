@@ -109,6 +109,8 @@ export class ProviderDetailComponent implements OnInit {
   emaillist: any = [];
   phonelist: any = [];
   showEmailPhonediv = false;
+  femaleTooltip = projectConstants.TOOLTIP_FEMALE;
+  maleTooltip = projectConstants.TOOLTIP_MALE;
   virtualsectionHeader = 'Click here to View More Details';
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,

@@ -129,6 +129,7 @@ export const Messages = {
   'PAYSETTING_ONLYNUM': 'Only numbers are allowed in mobile field',
   'PAYSETTING_MOB10': 'Mobile number should have 10 digits',
   'PAYSETTING_PAN': 'Pan number is required',
+  'PAYSETTING_PANPHANUMERIC' : 'Pan number should not contain special characters',
   'PAYSETTING_ACCNO': 'Account number is required',
   'PAYSETTING_ACCNO_NUMONLY': 'Only numbers are allowed for account number',
   'PAYSETTING_BANKNAME': 'Bank name is required',
@@ -142,6 +143,10 @@ export const Messages = {
   'PAYSETTING_TAXPER': 'Please enter a valid tax percentage',
   'PAYSETTING_SAV_TAXPER': 'Tax percentage updated successfully',
   'PAYSETTING_CONTACTADMIN': 'Contact Administrator to verify your payment modes',
+  'PAYSETTING_MAXLEN': 'Only [maxlen] characters are allowed',
+  'PAYSETTING_PANMAXLEN10': 'Pancard should contain only 10 characters',
+  'PAYSETTING_IFSCMAXLEN11': 'IFSC code should contain only 11 characters',
+  'PAYSETTING_IFSCALPHANUMERIC' : 'IFSC code should not contain special characters',
   // Provider Bill
 
   'PROVIDER_BILL_CREATE' : 'Bill created successfully',

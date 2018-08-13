@@ -28,6 +28,7 @@ export class AddProviderItemComponent implements OnInit {
   file_error_msg = '';
   img_exists = false;
   maxChars = projectConstants.VALIDATOR_MAX50;
+  maxCharslong = projectConstants.VALIDATOR_MAX500;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
   @ViewChild('caption') private captionRef: ElementRef;
   constructor(
@@ -50,7 +51,7 @@ export class AddProviderItemComponent implements OnInit {
       this.amForm = this.fb.group({
         displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
         shortDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharslong)])],
         taxable: [false, Validators.compose([Validators.required])],
         price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
         // price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)]), Validators.maxLength(projectConstants.VALIDATOR_MAX10)] // ,
@@ -61,7 +62,7 @@ export class AddProviderItemComponent implements OnInit {
       this.amForm = this.fb.group({
         displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
         shortDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharslong)])],
         taxable: [false, Validators.compose([Validators.required])],
         price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
       });

@@ -1352,7 +1352,6 @@ export class ProviderBprofileSearchComponent implements OnInit {
           fields = (this.bProfile['domainVirtualFields']) ?
           this.bProfile['domainVirtualFields'] : [];
         }
-
         if (fields) {
           for (const i in data) {
             if (data[i]) {
@@ -1435,5 +1434,17 @@ export class ProviderBprofileSearchComponent implements OnInit {
   buyAdwords() {
       this.routerobj.navigate(['provider' , 'settings', 'license']);
   }
-
+  showValueswithComma (fld) {
+    let str = '';
+    if (fld.value !== undefined) {
+      // console.log('fldlen', fld.value.length);
+      for (let i = 0; i < fld.value.length; i++) {
+        if (str !== '') {
+          str += ', ';
+        }
+        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+      }
+      return str;
+    }
+  }
 }

@@ -48,7 +48,7 @@
                                                 <ng-container *ngIf="specializationslist.length <=specMaxcnt">
                                                 <li *ngFor="let special of specializationslist">{{special}}</li>
                                                 </ng-container>
-                                                <ng-container *ngIf="specializationslist.length > 3">
+                                                <ng-container *ngIf="specializationslist.length > specMaxcnt">
                                                     <ng-container *ngFor="let special of specializationslist; let i = index">
                                                     <li *ngIf="i<specMaxcnt">{{special  | titlecase}}</li>
                                                     </ng-container>
@@ -138,8 +138,8 @@
                           <div class="tp-r">
                               <div class="ynw-verified" *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"></div>
                               <div class ="gender" >
-                                  <span class="icon-male" *ngIf="genderType=='male'"></span>
-                                  <span class="icon-female" *ngIf="genderType=='female'"></span>
+                                  <span class="icon-male" *ngIf="genderType=='male'" [matTooltip]="maleTooltip"></span>
+                                  <span class="icon-female" *ngIf="genderType=='female'" [matTooltip]="femaleTooltip"></span>
                               </div>
                               <!-- <div [class.femaleicon]="genderType=='female'" [class.maleicon]="genderType=='male'" *ngIf="genderType"></div> -->
                               <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
@@ -174,8 +174,8 @@
                                                     <ng-container *ngFor="let vfield of virtualfieldsCombinedjson">
                                                         <div class="question-outer">
                                                             <ng-container>
-                                                                <div class="question-header"><strong>{{vfield.displayName  | titlecase}}</strong></div>
-                                                                <div class="question-value1" *ngIf="vfield.type!= 'object'" [innerHTML]="vfield.value | nl2br">
+                                                                <div class="question-header"><strong>{{vfield.displayName}}</strong></div>
+                                                                <div class="question-value1" *ngIf="vfield.type!= 'object'" [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">
                                                                 </div>
                                                                 <div class="question-valuearr" *ngIf="vfield.type== 'object'" >
                                                                     <!-- <table class="table">
@@ -188,7 +188,7 @@
                                                                         <ng-container *ngFor="let vals of vfield.value">
                                                                             <div class="vfield-row">
                                                                                 <span *ngFor="let field of vals" class="morevalspan">
-                                                                                    {{field  | titlecase}}
+                                                                                    {{sharedFunctionobj.firstToUpper(field)  | titlecase}}
                                                                                 </span>
                                                                             </div>
                                                                         </ng-container>

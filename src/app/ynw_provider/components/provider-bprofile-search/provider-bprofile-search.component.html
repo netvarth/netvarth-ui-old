@@ -677,7 +677,8 @@
 
                                                     <ng-container *ngSwitchCase="'EnumList'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <!-- <p> {{fields.value}}</p> -->
+                                                            <p>{{showValueswithComma(fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -760,14 +761,14 @@
                                                 <ng-container [ngSwitch]="fields.dataType">
                                                     <ng-container *ngSwitchCase="'TEXT'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value  | titlecase }}</p>
+                                                            <p> {{ fields.value | capitalizeFirst}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'TEXT_MED'">
                                                             <div class="cont-btn">
-                                                                <p [innerHTML]="fields.value | nl2br | titlecase"> {{fields.value  | nl2br | titlecase }}</p>
+                                                                <p [innerHTML]="fields.value | nl2br | capitalizeFirst"> {{fields.value  | nl2br | capitalizeFirst }}</p>
                                                                 <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                             </div>
                                                     </ng-container>

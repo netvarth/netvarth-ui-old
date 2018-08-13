@@ -48,6 +48,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     emailidVerified = false;
     profileQueryExecuted = false;
     ineditMode = false;
+    maxcnt100 = projectConstants.VALIDATOR_MAX100;
+    maxcnt10 = 10;
+    maxcnt11 = 11;
     breadcrumbs = [
         {
           title: 'Settings',
@@ -167,10 +170,42 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             }
         }
     }
+    panCardBlur() {
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const alphanumericpattern = projectConstants.VALIDATOR_ALPHANUMERIC;
+        if (blankpattern.test(this.pannumber)) {
+            this.errorExist = true;
+            this.showError['pannumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PAN')};
+        } else if (!alphanumericpattern.test(this.pannumber)) {
+            this.errorExist = true;
+            this.showError['pannumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PANPHANUMERIC')};
+        } else if (this.pannumber.length > this.maxcnt10) {
+            this.errorExist = true;
+            this.showError['pannumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PANMAXLEN10')};
+        }
+    }
+    ifscBlur() {
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const charonly = projectConstants.VALIDATOR_CHARONLY;
+        const alphanumericpattern = projectConstants.VALIDATOR_ALPHANUMERIC;
+        if (blankpattern.test(this.bankifsc)) {
+            this.errorExist = true;
+            this.showError['bankifsc'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_IFSC')};
+        } else if (!alphanumericpattern.test(this.bankifsc)) {
+            this.errorExist = true;
+            this.showError['bankifsc'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_IFSCALPHANUMERIC')};
+        } else if (this.bankifsc.length > this.maxcnt11) {
+            this.errorExist = true;
+            this.showError['bankifsc'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_IFSCMAXLEN11')};
+        }
+    }
     panNameBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         const charonly = projectConstants.VALIDATOR_CHARONLY;
-        if (blankpattern.test(this.panname)) {
+        if (this.panname.length > this.maxcnt100) {
+            this.errorExist = true;
+            this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+        } else if (blankpattern.test(this.panname)) {
             this.errorExist = true;
             this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PANNAME')};
         } else  if (!charonly.test(this.panname)) {
@@ -181,7 +216,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     acholderNameBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         const charonly = projectConstants.VALIDATOR_CHARONLY;
-        if (blankpattern.test(this.bankacname)) {
+        if (this.bankacname.length > this.maxcnt100) {
+            this.errorExist = true;
+            this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+        } else if (blankpattern.test(this.bankacname)) {
             this.errorExist = true;
             this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACMNAME')};
         } else  if (!charonly.test(this.bankacname)) {
@@ -206,7 +244,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     bankNameBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         const charonly = projectConstants.VALIDATOR_CHARONLY;
-        if (blankpattern.test(this.bankname)) {
+        if (this.bankname.length > this.maxcnt100) {
+            this.errorExist = true;
+            this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+        } else if (blankpattern.test(this.bankname)) {
             this.errorExist = true;
             this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BANKNAME')};
         } else  if (!charonly.test(this.bankname)) {
@@ -217,7 +258,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     bankBranchBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         const charonly = projectConstants.VALIDATOR_CHARONLY;
-        if (blankpattern.test(this.bankbranch)) {
+        if (this.bankbranch.length > this.maxcnt100) {
+            this.errorExist = true;
+            this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+        } else if (blankpattern.test(this.bankbranch)) {
             this.errorExist = true;
             this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BRANCH')};
         } else  if (!charonly.test(this.bankbranch)) {
@@ -254,11 +298,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
 
         if (this.ccenabled === true) {
             postData.dcOrCcOrNb = true;
-            if (blankpattern.test(this.pannumber)) {
+
+            this.panCardBlur();
+            /*if (blankpattern.test(this.pannumber)) {
                 this.errorExist = true;
                 this.showError['pannumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PAN')};
-            }
-            if (blankpattern.test(this.bankacnumber)) {
+            }*/
+
+            this.bankAcnumberBlur();
+            /*if (blankpattern.test(this.bankacnumber)) {
                 this.errorExist = true;
                 this.showError['bankacnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACCNO')};
             } else {
@@ -266,43 +314,65 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     this.errorExist = true;
                     this.showError['bankacnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACCNO_NUMONLY')};
                 }
-            }
-            if (blankpattern.test(this.bankname)) {
+            }*/
+
+            this.bankNameBlur();
+            /*if (this.bankname.length > this.maxcnt100) {
+                this.errorExist = true;
+                this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+            } else if (blankpattern.test(this.bankname)) {
                 this.errorExist = true;
                 this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BANKNAME')};
             } else if (!charonly.test(this.bankname)) {
                 this.errorExist = true;
                 this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
-            }
-            if (blankpattern.test(this.bankifsc)) {
+            }*/
+
+            this.ifscBlur();
+            /*if (blankpattern.test(this.bankifsc)) {
                 this.errorExist = true;
                 this.showError['bankifsc'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_IFSC')};
-            }
-            if (blankpattern.test(this.panname)) {
+            }*/
+
+            this.panNameBlur();
+
+            /*if (blankpattern.test(this.panname)) {
                 this.errorExist = true;
                 this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PANNAME')};
+            } else if (this.panname.length > this.maxcnt100) {
+                this.errorExist = true;
+                this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
             } else if (!charonly.test(this.panname)) {
                 this.errorExist = true;
                 this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
-            }
-            if (blankpattern.test(this.bankacname)) {
+            }*/
+
+            this.acholderNameBlur();
+            /*if (this.bankacname.length > this.maxcnt100) {
+                this.errorExist = true;
+                this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+            } else if (blankpattern.test(this.bankacname)) {
                 this.errorExist = true;
                 this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACMNAME')};
             } else if (!charonly.test(this.bankacname)) {
                 this.errorExist = true;
                 this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
-            }
-            if (blankpattern.test(this.bankbranch)) {
+            }*/
+
+            this.bankBranchBlur();
+            /*if (blankpattern.test(this.bankbranch)) {
                 this.errorExist = true;
                 this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BRANCH')};
             } else if (!charonly.test(this.bankbranch)) {
                 this.errorExist = true;
                 this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
-            }
+            }*/
+
             if (blankpattern.test(this.bankfiling)) {
                 this.errorExist = true;
                 this.showError['bankfiling'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_FILING')};
             }
+
             if (blankpattern.test(this.bankactype)) {
                 this.errorExist = true;
                 this.showError['bankactype'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACTYPE')};

@@ -28,7 +28,7 @@
 </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button  type="button" mat-button (click)="saveSocial()" [disabled]="!socialkey || !socialurl" class="cs-btn bt1">Save</button>
+    <button  type="button" mat-button (click)="saveSocial()" [disabled]="!socialkey || !socialurl || posted" class="cs-btn bt1">Save</button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 
 </mat-dialog-actions>

@@ -38,6 +38,7 @@ export class KioskHomeComponent implements OnInit {
   blankPattern;
   namePattern;
   phonePattern;
+  numberpattern;
   cMod;
   loadingNow;
   terminologies: any = [];
@@ -70,6 +71,7 @@ export class KioskHomeComponent implements OnInit {
     this.blankPattern = projectConstants.VALIDATOR_BLANK;
     this.phonePattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
     this.namePattern = projectConstants.VALIDATOR_CHARONLY;
+    this.numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
     this.customer_found = false;
     this.customerDet = [];
     this.customerDispDet.id = '';
@@ -250,6 +252,13 @@ export class KioskHomeComponent implements OnInit {
   }
 
   searchCustomer() {
+    if (!this.numberpattern.test(this.srch_mobile)) {
+      this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
+      if (this.srchmob.nativeElement) {
+        this.srchmob.nativeElement.focus();
+      }
+      return false;
+    }
     if (!this.phonePattern.test(this.srch_mobile)) {
       this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
       if (this.srchmob.nativeElement) {

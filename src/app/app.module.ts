@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
-import {Nl2BrPipeModule} from 'nl2br-pipe';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ServiceMeta } from './shared/services/service-meta';

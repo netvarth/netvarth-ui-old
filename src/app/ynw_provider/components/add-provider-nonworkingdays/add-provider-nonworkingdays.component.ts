@@ -25,6 +25,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
   maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
   datepicker_disabled = '';
   meridian = true;
+  maxcharDesc = projectConstants.VALIDATOR_MAX100;
   constructor(
     public dialogRef: MatDialogRef<AddProviderNonworkingdaysComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,7 +43,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
     selectdate: [{value: '', disabled: (this.data.type === 'edit') ? true : false}, Validators.compose([Validators.required])],
-    reason: ['', Validators.compose([Validators.required])],
+    reason: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxcharDesc)])],
     starttime: [{hour: 9, minute: 0}, Validators.compose([Validators.required])],
     endtime: [{hour: 18, minute: 0}, Validators.compose([Validators.required])]
     });

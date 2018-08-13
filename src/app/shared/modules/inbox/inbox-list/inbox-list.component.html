@@ -24,15 +24,15 @@
 
                           <div class="td td3">
                             <div class="label">From</div>
-                            <div class="result">{{(user_id != message.owner.id) ? message.owner.userName : 'Me'}}</div>
+                            <div class="result">{{(user_id != message.owner.id) ? (message.owner.userName | titlecase) : 'Me'  }}</div>
                           </div>
                           <div class="td td3">
                             <div class="label">To</div>
-                            <div class="result">{{(user_id != message.receiver.id) ? message.receiver.userName : 'Me'}}</div>
+                            <div class="result">{{(user_id != message.receiver.id) ? (message.receiver.userName  | titlecase) : 'Me'}}</div>
                           </div>
                           <div class="td td4">
                               <div class="label">Message</div>
-                              <div class="result">{{ (message.msg.length>120)? (message.msg | slice:0:120)+'..':(message.msg) }}
+                              <div class="result">{{ (message.msg.length>120)? (shared_functions.firstToUpper(message.msg) | slice:0:120)+'..':shared_functions.firstToUpper(message.msg) }}
                               </div>
                           </div>
 
@@ -48,7 +48,7 @@
                       </div>
                       <div class="details" [class.show]="selectedMsg==i">
                           <div class="result">
-                              {{message.msg}}
+                              {{shared_functions.firstToUpper(message.msg)}}
                           </div>
                           <div class="action">
                               <span class="icon-reply" (click)="replyMessage(message)" *ngIf="user_id != message.owner.id && !hide_reply_button">

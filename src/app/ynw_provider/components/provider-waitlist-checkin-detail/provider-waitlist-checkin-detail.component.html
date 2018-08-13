@@ -36,7 +36,7 @@
                               </div>
                               <div class="btm" *ngIf="waitlist_data">
                                   <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">Communicate</button>
-                                  <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >Add {{provider_label |titlecase}} note</button>
+                                  <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >Add note</button>
                                   <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()"
                                   *ngIf="!waitlist_data.history &&
                                   ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">Cancel {{checkin_label |titlecase}}</button>
@@ -63,7 +63,8 @@
                             <mat-expansion-panel>
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                  {{provider_label |titlecase}} Notes
+                                  <!-- {{provider_label |titlecase}} Notes -->
+                                 Notes
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
                               <div  class="pnotes" *ngFor="let note of waitlist_notes">

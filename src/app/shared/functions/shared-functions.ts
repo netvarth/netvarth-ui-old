@@ -1047,7 +1047,13 @@ toCamelCase(str) {
 }
 
 firstToUpper(str) {
-  return str.charAt(0).toUpperCase() + str.substr(1);
+  if (str) {
+    if (str.substr(0, 7) === 'http://' || str.substr(0, 8) === 'https://') {
+      return str;
+    } else {
+      return str.charAt(0).toUpperCase() + str.substr(1);
+    }
+  }
 }
 
 findTerminologyTerm(message) {

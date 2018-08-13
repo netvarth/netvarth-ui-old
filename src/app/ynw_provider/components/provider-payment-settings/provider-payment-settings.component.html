@@ -49,7 +49,7 @@
                                             <div class="form-group">
                                                 <label class="caption">Pan Card Number *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="pannumber" (change)="resetApi('pannumber')" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput [(ngModel)]="pannumber" (change)="resetApi('pannumber')" autocomplete="off" [disabled]="!ineditMode" (blur)="panCardBlur()">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['pannumber']['status']" [errorMsg]="showError['pannumber']['msg']"></app-field-error-display>
                                             </div>
@@ -86,7 +86,7 @@
                                             <div class="form-group">
                                                 <label class="caption">IFSC Code *</label>
                                                 <mat-form-field>
-                                                    <input matInput [(ngModel)]="bankifsc" (change)="resetApi('bankifsc')" autocomplete="off" [disabled]="!ineditMode">
+                                                    <input matInput [(ngModel)]="bankifsc" (change)="resetApi('bankifsc')" autocomplete="off" [disabled]="!ineditMode" (blur)="ifscBlur()">
                                                 </mat-form-field>
                                                 <app-field-error-display [displayError]="showError['bankifsc']['status']" [errorMsg]="showError['bankifsc']['msg']"></app-field-error-display>
                                             </div>

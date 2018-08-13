@@ -20,7 +20,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
    <label for="reason" class="col-form-label">Reason</label>
    <input type="text" matInput formControlName="reason" class="form-control" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')"
-    errorMsg="Please enter reason">
+    [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
+    {
+      'required' : 'Please enter reason',
+      'maxlength' : 'Maximum limit is ' + maxcharDesc + ' characters'
+    })">
    </app-field-error-display>
 </div>
   <div class="form-group bold">

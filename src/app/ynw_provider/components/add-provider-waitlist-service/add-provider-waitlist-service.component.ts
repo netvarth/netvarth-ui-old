@@ -95,7 +95,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     description: [''],
     // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
     serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern)])],
-    totalAmount: ['', Validators.compose([Validators.pattern(this.number_decimal_pattern)])],
+    totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
     isPrePayment: [{'value': false , 'disabled': this.base_licence }],
     // taxable: [false],
     notification: [false]
