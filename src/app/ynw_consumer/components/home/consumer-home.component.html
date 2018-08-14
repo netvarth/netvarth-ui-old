@@ -56,7 +56,8 @@
 
                               </ng-container>
 
-                              <ng-container  *ngIf="!waitlist.estimated_time">
+                              <ng-container  *ngIf="!waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
+                              waitlist.waitlistStatus == 'arrived')">
                                   <div class="lt0" *ngIf="waitlist.future">
                                       Check-In Time  <span class="time now">
                                          {{waitlist.date | date: dateFormatSp }}

@@ -488,4 +488,8 @@ export class SharedServices {
       // return this.servicemeta.httpGet('accounts/license/upgradablePackages');
       return this.servicemeta.httpGet('provider/license/upgradablePackages');
     }
+    getPaymentDetail(uuid, mod) {
+      const url = mod + '/payment/' + uuid ;
+      return this.servicemeta.httpGet(url);
+    }
 }

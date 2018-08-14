@@ -682,4 +682,8 @@ export class ProviderServices {
   getgeneralBusinessSchedules() {
     return this.servicemeta.httpGet('provider/ynwConf/bSchedule');
   }
+  refundBill(data) {
+    const url = 'provider/payment/refund';
+    return this.servicemeta.httpPost(url, data);
+  }
 }

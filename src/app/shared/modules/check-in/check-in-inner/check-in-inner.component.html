@@ -16,7 +16,7 @@
                     <mat-form-field *ngIf="servicesjson.length > 0">
                         <mat-select [ngModel]="sel_ser" #servsel (change)="handleServiceSel(servsel.value)">
                         <mat-option *ngFor="let serv of servicesjson" [value]="serv.id" >
-                                {{serv.name}}
+                                {{serv.name | titlecase}}
                         </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -35,7 +35,7 @@
                 <ul class="availer-ul">
                     <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                         <li>
-                            {{waitfor.name}} <span class="cs-btn bt8 changemember" (click)="handleServiceForWhom()" *ngIf="i==0 && queuejson.length > 0">Add / Change Member</span>
+                            {{waitfor.name | titlecase}} <span class="cs-btn bt8 changemember" (click)="handleServiceForWhom()" *ngIf="i==0 && queuejson.length > 0">Add / Change Member</span>
                         </li>
                         
                     </ng-container>

@@ -102,22 +102,36 @@
                 <tr>
                     <th>Date and Time</th>
                     <th>Status</th>
+                    <th>Mode</th>
                     <th>Amount</th>
-                    <th>Refunded Amount</th>
-                    <th></th>
+                    <th>Refunded</th>
+                    <th>Refundable</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let payment of pre_payment_log; let i = index">
-                  <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td>
-                  <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | titlecase}}</span></td>
-                  <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
-                  <td data-title="Refund">-</td>
-                  <td>
-                      <!-- <button  type="button" mat-button class="cs-btn bt1 update"
-                     *ngIf="source !== 'consumer_dashboard'" (click)="showRefund()">Refund</button> -->
+                <ng-container *ngFor="let payment of pre_payment_log; let i = index">
+                    <tr>
+                    <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td>
+                    <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | titlecase}}</span></td>
+                    <td data-title="Mode">{{payment.acceptPaymentBy | titlecase }}</td>
+                    <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
+                    <td data-title="Refunded">-</td>
+                    <td data-title="Refundable">
+                       <span *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount | currency:'INR':'symbol':'.2-2'}}</span> <button  type="button" mat-button class="cs-btn bt1 update" *ngIf="source !== 'consumer_dashboard' && payment.status=='SUCCESS' && payment.refundableAmount > 0" (click)="showRefund(payment)">Refund</button>
                     </td>
-                </tr>
+                    </tr>
+
+                    <tr *ngFor="let refund of payment.refundDetails" class="refundtr">
+                            <td data-title="Date and Time">{{refund.paymentOn | date:Pipe_disp_date}}</td>
+                            <td data-title="Status"><span [class]="refund.status | lowercase">{{refund.status | titlecase}}</span></td>
+                            <td data-title="Mode">{{refund.refundBy | titlecase }}</td>
+                            <td data-title="Amount">-</td>
+                            <td data-title="Refunded">{{refund.amount | currency:'INR':'symbol':'.2-2' }}</td>
+                            <td></td>
+                    </tr>
+
+                </ng-container>
+                
               </tbody>
             </table>
           </div>

@@ -188,7 +188,8 @@
                                                                         <ng-container *ngFor="let vals of vfield.value">
                                                                             <div class="vfield-row">
                                                                                 <span *ngFor="let field of vals" class="morevalspan">
-                                                                                    {{sharedFunctionobj.firstToUpper(field)  | titlecase}}
+                                                                                    <!-- {{sharedFunctionobj.firstToUpper(field)  | titlecase}} -->
+                                                                                    {{field}}
                                                                                 </span>
                                                                             </div>
                                                                         </ng-container>

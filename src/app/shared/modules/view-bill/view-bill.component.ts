@@ -6,6 +6,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { ProviderRefundComponent } from '../../../ynw_provider/components/provider-refund/provider-refund.component';
 
@@ -63,6 +64,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public sharedfunctionObj: SharedFunctions,
+    public shareServicesobj: SharedServices
 
     ) {
 
@@ -136,25 +138,36 @@ export class ViewBillComponent implements OnInit, OnChanges {
     this.emailbill.emit('emailBill');
   }
 
-  showRefund() {
+  showRefund(payment) {
 
    const dialogrefundRef = this.dialog.open(ProviderRefundComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       data: {
-        /*queues: this.queues,
-        queue_id: this.selected_queue.id*/
+        payment_det: payment
       }
     });
 
     dialogrefundRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
+        this.getPrePaymentDetails();
       }
     });
   }
 
+  getPrePaymentDetails() {
+    this.shareServicesobj.getPaymentDetail(this.checkin.ynwUuid, 'provider')
+      .subscribe(
+        data => {
+          this.pre_payment_log = data;
+          console.log('payment log', this.pre_payment_log);
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        }
+      );
 
+  }
 
 }
 

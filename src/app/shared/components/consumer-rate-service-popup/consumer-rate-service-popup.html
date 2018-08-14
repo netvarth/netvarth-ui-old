@@ -24,7 +24,7 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <button  type="button" mat-button class="cs-btn bt1" (click)="setRate()"
-    [disabled]="rate_value==0 || message=='' || message==undefined">
+    [disabled]="checkDisablebutton()">
      Rate
     </button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>

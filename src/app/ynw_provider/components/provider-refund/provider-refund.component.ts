@@ -21,7 +21,27 @@ export class ProviderRefundComponent implements OnInit {
   upgradableaddons: any = [];
   selected_addon = '';
   selected_addondesc = '';
-
+  orgpayMode = '';
+  refpayAmt = 0;
+  refpayMode = '';
+  loading = false;
+  payment_options = [
+    {
+      label: 'Cash',
+      value : 'cash',
+      enabled: false
+    },
+    {
+      label: 'Online',
+      value : 'online',
+      enabled: false
+    },
+    {
+      label: 'Other',
+      value : 'other',
+      enabled: false
+    }
+  ];
   file_error_msg = '';
   constructor(
     public dialogRef: MatDialogRef<ProviderRefundComponent>,
@@ -32,12 +52,64 @@ export class ProviderRefundComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
 
     ) {
-       // console.log(data);
+        console.log('in-data', data);
      }
 
   ngOnInit() {
-
+    this.refpayAmt = parseFloat(this.data.payment_det.refundableAmount);
+    this.orgpayMode = this.data.payment_det.acceptPaymentBy;
+    if (this.orgpayMode === 'online') {
+      this.payment_options[0].enabled = true;
+      this.payment_options[1].enabled = true;
+      this.payment_options[2].enabled = true;
+      this.refpayMode = this.payment_options[0].value;
+    } else if (this.orgpayMode === 'cash' || this.orgpayMode === 'other') {
+      this.refpayMode = this.payment_options[0].value;
+      this.payment_options[0].enabled = true;
+      this.payment_options[1].enabled = false;
+      this.payment_options[2].enabled = true;
+    }
   }
+  confirmRefund() {
+    this.resetApiErrors();
+    const refamt = this.refpayAmt;
+    if (this.refpayAmt.toString().trim() === '0' || this.refpayAmt.toString().trim() === '') {
+      this.api_error = 'Please enter a valid amount';
+    } else if (isNaN(this.refpayAmt)) {
+      this.api_error = 'Please enter a valid amount';
+    } else {
+      if (this.refpayAmt === 0) {
+        this.api_error = 'Please enter the amount to be refunded';
+      } else if (this.refpayAmt > this.data.payment_det.refundableAmount) {
+        this.api_error = 'Sorry! Amount being refunded is greater than the refundable amount';
+      } else {
+        this.loading = true;
+        const post_data = {
+          'refundAmount': this.refpayAmt,
+          'paymentReferenceId': this.data.payment_det.paymentRefId,
+          'refundBy': this.refpayMode
+        };
+        this.provider_services.refundBill(post_data)
+          .subscribe (data => {
+            console.log('refund return', data);
+            if (data && data['response'] === 'Success') {
+              this.api_success = 'Refunded done successfully';
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+            } else {
+              this.loading = false;
+              this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(data['response']);
+            }
+          }, error => {
+              this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+              this.loading = false;
+          });
+      }
+    }
+  }
+
+
   getUpgradableaddonPackages() {
     this.provider_services.getUpgradableAddonPackages()
       .subscribe( (data: any) => {

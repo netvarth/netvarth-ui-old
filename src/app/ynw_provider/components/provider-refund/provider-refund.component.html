@@ -4,8 +4,29 @@
 </button>
 </h1>
 <mat-dialog-content>
-Refund page
+<div class="refundable-div"><span class="ref-caption">Refundable Amount: </span><span class="ref-amount">{{ data.payment_det.refundableAmount | currency:'INR':'symbol':'.2-2'}}</span></div>
+<div class="form-group">
+    <label class="col-form-label" for="displayName">Amount you wanted to Refund (<i class="fa fa-inr"></i>) *</label>
+    <input matInput type="text" class="form-control" [(ngModel)]="refpayAmt" autocomplete="off">
+</div>
+<div class="form-group">
+    <div class="refmod-outer">
+    <div class="col-form-label">Refund Mode *</div>
+    <mat-radio-group class="refpayment-mode" [(ngModel)]="refpayMode">
+        <ng-container *ngFor ="let pmode of payment_options; let i=index;">
+        <mat-radio-button [value]="pmode.value" *ngIf="pmode.enabled">{{pmode.label}}</mat-radio-button>
+        </ng-container>
+    </mat-radio-group>
+    </div>
+</div>
 </mat-dialog-content>
 <mat-dialog-actions>
-
+    <button  type="button" mat-button class="cs-btn bt1" (click)="confirmRefund()" *ngIf="!loading">Refund</button>
+    <button  type="button" mat-button class="cs-btn bt1"  disabled *ngIf="loading">Please wait ...</button>
+    <button  type="button" mat-dialog-close class="cs-btn bt2" *ngIf="!loading">Cancel</button>
 </mat-dialog-actions>
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>

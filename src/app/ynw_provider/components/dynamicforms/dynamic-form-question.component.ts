@@ -87,8 +87,9 @@ onFieldBlur(question) {
   if (question.type !== 'url' &&
   question.type !== 'number' &&
   question.type !== 'email' &&
+  question.type !== 'DataGrid' &&
   question.type !== 'tel' ) {
-    this.form.get(key).setValue(this.toCamelCase(this.form.get(key).value));
+    // this.form.get(key).setValue(this.toCamelCase(this.form.get(key).value));
   }
 }
 
