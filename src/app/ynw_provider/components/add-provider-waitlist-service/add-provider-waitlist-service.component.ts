@@ -97,7 +97,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern)])],
     totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
     isPrePayment: [{'value': false , 'disabled': this.base_licence }],
-    // taxable: [false],
+    taxable: [false],
     notification: [false]
     });
   }
@@ -112,7 +112,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
                               data['minPrePaymentAmount'] !== 0
                               ) ? true : false,
-      // 'taxable': data['taxable'] || this.amForm.get('taxable').value,
+      'taxable': data['taxable'] || this.amForm.get('taxable').value,
       'notification': data['notification'] || this.amForm.get('notification').value,
     });
 

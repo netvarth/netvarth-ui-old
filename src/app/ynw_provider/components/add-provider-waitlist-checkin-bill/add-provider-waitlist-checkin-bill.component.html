@@ -99,6 +99,16 @@
                     <span class="label-valu">{{cart.sub_total | currency:'INR':'symbol':'.2-2'}}</span>
                   </div>
               </div>
+              <div class="form-group bill-total">
+                  <div class="total"><span class="label">Discount</span>
+                    <span class="label-valu">{{totdisc_val | currency:'INR':'symbol':'.2-2'}}</span>
+                  </div>
+              </div>
+              <div class="form-group bill-total">
+                  <div class="total"><span class="label">Coupon</span>
+                    <span class="label-valu">{{totcoup_val | currency:'INR':'symbol':'.2-2'}}</span>
+                  </div>
+              </div>
 
               <div class="form-group bill-total">
 

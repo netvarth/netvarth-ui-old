@@ -119,11 +119,15 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     this.api_success = null;
   }
   checkDisablebutton() {
-    const msg = this.message.trim();
-    if (this.rate_value === 0 || msg === '' || msg === undefined) {
-      return true;
+    if (this.message) {
+      const msg = this.message.trim();
+      if (this.rate_value === 0 || msg === '' || msg === undefined) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      return true;
     }
   }
 

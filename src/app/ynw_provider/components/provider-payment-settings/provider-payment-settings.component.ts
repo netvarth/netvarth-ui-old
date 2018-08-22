@@ -42,6 +42,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     showError: any = [];
     errorExist = false;
     taxpercentage;
+    gstnumber;
     paytmverified = false;
     payuverified = false;
     tabid = 0;
@@ -111,7 +112,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.provider_services.getTaxpercentage()
             .subscribe (data => {
                 this.taxDetails = data;
-                this.taxpercentage = this.taxDetails;
+                this.taxpercentage = this.taxDetails.taxPercentage;
+                this.gstnumber = this.taxDetails.gstNumber || '';
             },
         error => {
 
@@ -408,6 +410,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     saveTaxSettings() {
         const floatpattern = projectConstants.VALIDATOR_FLOAT;
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
         this.errorExist = false;
         if (!floatpattern.test(this.taxpercentage)) {
             this.errorExist = true;
@@ -416,9 +419,18 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.errorExist = true;
             this.showError['taxpercentage'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_TAXPER')};
         }
+        if (blankpattern.test(this.gstnumber)) {
+            this.errorExist = true;
+            this.showError['gstnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_GSTNUM')};
+        }
         if (!this.errorExist) {
             this.savetaxEnabled = false;
-            this.provider_services.setTaxpercentage(this.taxpercentage)
+            const postData = {
+                    'taxPercentage': this.taxpercentage,
+                    'gstNumber': this.gstnumber || ''
+            };
+            // this.provider_services.setTaxpercentage(this.taxpercentage)
+            this.provider_services.setTaxpercentage(postData)
                 .subscribe (data => {
                     this.shared_Functionsobj.openSnackBar (this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_TAXPER'));
                     this.savetaxEnabled = true;
@@ -463,7 +475,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 'bankbranch' : {status: false, msg: ''},
                 'bankfiling' : {status: false, msg: ''},
                 'bankactype' : {status: false, msg: ''},
-                'taxpercentage' : {status: false, msg: ''}
+                'taxpercentage' : {status: false, msg: ''},
+                'gstnumber' : {status: false, msg: ''}
             };
         }
     }

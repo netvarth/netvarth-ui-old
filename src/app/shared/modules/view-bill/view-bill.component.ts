@@ -55,7 +55,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
   };
   bill_load_complete = 0;
   item_service_tax: any = 0;
-  Pipe_disp_date = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  Pipe_disp_date = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
 
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
@@ -167,6 +167,17 @@ export class ViewBillComponent implements OnInit, OnChanges {
         }
       );
 
+  }
+  stringtoDate(dt) {
+    let dtsarr;
+    if (dt) {
+      // const dts = new Date(dt);
+      dtsarr = dt.split(' ');
+      const dtarr = dtsarr[0].split('-');
+      return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+    } else {
+      return;
+    }
   }
 
 }

@@ -40,6 +40,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   coupons: any = [];
   discounts: any = [];
   items: any = [];
+  totdisc_val = 0;
+  totcoup_val = 0;
   ItemServiceGroupOptions: Observable<ItemServiceGroup[]>;
   itemServicesGroup: ItemServiceGroup[] = [{
     'type' : 'Services',
@@ -76,7 +78,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     ) {
         this.checkin = this.data.checkin || null;
         this.bill_data = this.data.bill_data || [];
-        console.log(this.checkin);
+        // console.log(this.checkin);
         if ( !this.checkin) {
           setTimeout(() => {
             this.dialogRef.close('error');
@@ -314,7 +316,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.provider_services.getProviderTax()
       .subscribe(
         data => {
-          this.item_service_tax = data;
+          this.item_service_tax = data['taxPercentage'];
           resolve();
         },
         error => {
@@ -492,7 +494,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     if (this.cart.discount !== '' && this.discounts[this.cart.discount]) {
       const discount = this.discounts[this.cart.discount];
-      this.cart.total = this.discCalculation(discount, this.cart.sub_total);
+      this.cart.total = this.discCalculation(discount, this.cart.sub_total, 'totdiscount');
+    } else {
+      this.totdisc_val = 0;
     }
 
   }
@@ -504,20 +508,35 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       discount.discValue = discount.amount;
       // coupon dont have discValue field
       // but we need it because discount n coupon used same function
-      this.cart.total = this.discCalculation(discount, this.cart.total);
+      this.cart.total = this.discCalculation(discount, this.cart.total, 'totcoupon');
+    } else {
+      this.totcoup_val = 0;
     }
 
   }
 
-  discCalculation(discount, cal_total) {
-
+  discCalculation(discount, cal_total, granddisc?) {
+    // console.log('grand disc', granddisc);
     if (discount.calculationType === 'Fixed') {
       const disc_value = (discount.discValue > 0) ? discount.discValue : 0;
+      if (granddisc === 'totdiscount') {
+        this.totdisc_val = disc_value;
+      }
+      if (granddisc === 'totcoupon') {
+        this.totcoup_val = disc_value;
+      }
       const total = cal_total - disc_value;
       return (total > 0) ? total : 0;
 
     } else if (discount.calculationType === 'Percentage') {
       const disc_value = (discount.discValue > 0) ? discount.discValue : 0;
+      const calcdisc = ( cal_total * disc_value / 100);
+      if (granddisc === 'totdiscount') {
+        this.totdisc_val = calcdisc;
+      }
+      if (granddisc === 'totcoupon') {
+        this.totcoup_val = calcdisc;
+      }
       const total = cal_total - ( cal_total * disc_value / 100);
       return (total > 0) ? total : 0;
     }

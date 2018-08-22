@@ -141,6 +141,7 @@ export const Messages = {
   'PAYSETTING_FILING': 'Filing status in required',
   'PAYSETTING_ACTYPE': 'Account type in required',
   'PAYSETTING_TAXPER': 'Please enter a valid tax percentage',
+  'PAYSETTING_GSTNUM': 'Please enter the GST number',
   'PAYSETTING_SAV_TAXPER': 'Tax percentage updated successfully',
   'PAYSETTING_CONTACTADMIN': 'Contact Administrator to verify your payment modes',
   'PAYSETTING_MAXLEN': 'Only [maxlen] characters are allowed',

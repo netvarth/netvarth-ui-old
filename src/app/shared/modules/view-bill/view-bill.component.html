@@ -111,7 +111,7 @@
               <tbody>
                 <ng-container *ngFor="let payment of pre_payment_log; let i = index">
                     <tr>
-                    <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td>
+                    <td data-title="Date and Time">{{stringtoDate(payment.paymentOn)}}</td>
                     <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | titlecase}}</span></td>
                     <td data-title="Mode">{{payment.acceptPaymentBy | titlecase }}</td>
                     <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
@@ -122,7 +122,7 @@
                     </tr>
 
                     <tr *ngFor="let refund of payment.refundDetails" class="refundtr">
-                            <td data-title="Date and Time">{{refund.paymentOn | date:Pipe_disp_date}}</td>
+                            <td data-title="Date and Time">{{stringtoDate(refund.paymentOn) | date:Pipe_disp_date}}</td>
                             <td data-title="Status"><span [class]="refund.status | lowercase">{{refund.status | titlecase}}</span></td>
                             <td data-title="Mode">{{refund.refundBy | titlecase }}</td>
                             <td data-title="Amount">-</td>
