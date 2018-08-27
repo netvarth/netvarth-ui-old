@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HeaderComponent } from '../../../shared/modules/header/header.component';
+import { Location } from '@angular/common';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -54,6 +55,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         private router: Router,
         private activated_route: ActivatedRoute,
         private sanitizer: DomSanitizer,
+        private locationobj: Location,
         private provider_shared_functions: ProviderSharedFuctions) {
 
             this.activated_route.params.subscribe(params => {
@@ -215,5 +217,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         }
       );
     }
-
+    gotoPrev() {
+      this.locationobj.back();
+    }
 }

@@ -38,7 +38,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 <div class="form-group">
     <label class="col-form-label" for="first_last_name">First Name / Last Name *</label>
     <input matInput type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
-    formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;">
+    formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')"
     errorMsg="Please enter First Name / Last Name.">
    </app-field-error-display>

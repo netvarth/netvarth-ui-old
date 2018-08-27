@@ -25,7 +25,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 <div class="form-group" >
     <label class="col-form-label" for="first_name">First Name *</label>
     <input matInput type="text" class="form-control" id="first_name" placeholder="First Name"
-    formControlName="first_name" autocomplete="off">
+    formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
     {
@@ -39,7 +39,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 <div class="form-group">
     <label class="col-form-label" for="last_name">Last Name *</label>
     <input matInput type="text" class="form-control" id="last_name" placeholder="Last Name"
-    formControlName="last_name" autocomplete="off">
+    formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
     {

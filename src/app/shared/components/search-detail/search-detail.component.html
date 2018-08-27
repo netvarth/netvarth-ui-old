@@ -317,7 +317,7 @@
                                 </div>
                                 <div class="tp2">
                                     <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div>
-                                    <h3 (click)="providerDetClicked(search_result)">{{search_result.fields.title}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
+                                    <h3 (click)="providerDetClicked(search_result)">{{search_result.fields.title | titlecase}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
                                     <span class="address">{{search_result.fields.place1 | titlecase }}</span>
 
                                     <div class="clr">

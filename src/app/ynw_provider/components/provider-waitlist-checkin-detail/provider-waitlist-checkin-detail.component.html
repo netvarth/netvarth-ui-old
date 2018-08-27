@@ -12,6 +12,7 @@
                   <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
                       <div class="card">
                           <div class="c-details">
+                              <!-- <button (click)="gotoPrev()">Back</button> -->
                               <h2>{{checkin_label | titlecase}} Details</h2>
                               <div class="tp" *ngIf="waitlist_data">
                                   <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName | titlecase}} {{waitlist_data.consumer.userProfile.lastName | titlecase}}</span></div>

@@ -17,7 +17,7 @@
                       <div class="header">
                           <div class="lt">
                             <div class="title" (click)="providerDetail(waitlist.provider)">
-                              <h3>{{waitlist.provider.businessName || ''}}</h3>
+                              <h3>{{waitlist.provider.businessName || '' | titlecase}}</h3>
                             </div>
                             <div class="location" *ngIf="waitlist.queue.location">
                                 <a *ngIf="waitlist.queue.location.googleMapUrl"
@@ -34,9 +34,9 @@
                       <div class="details">
                           <div class="lt">
                               <div class="lt0">
-                                  <span class="service"> {{waitlist.service.name}}</span> for
+                                  <span class="service"> {{waitlist.service.name  | titlecase}}</span> for
                                   <span class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
-                                    {{user.firstName}} {{user.lastName}}
+                                    {{user.firstName  | titlecase}} {{user.lastName | titlecase}}
                                   </span>
                               </div>
 
@@ -135,7 +135,7 @@
                         <div class="header">
                             <div class="lt"  (click)="toogleDetail(provider, i)">
                                 <h3 class="pointer-cursor">
-                                  {{provider.businessName}}</h3>
+                                  {{provider.businessName | titlecase}}</h3>
                             </div>
                             <div class="rt">
                                 <ul class="controls">
@@ -162,7 +162,7 @@
                         <div class="detail"  [@hideShowAnimator]="hideShowAnimator" *ngIf="open_fav_div == i">
                           <div class="location" *ngFor="let loc of provider.locations;">
                             <div class="locationname">
-                                <span class="icon-location"></span> {{loc.place}}
+                                <span class="icon-location"></span> {{loc.place | titlecase}}
                             </div>
 
                             <div class="bt-l">

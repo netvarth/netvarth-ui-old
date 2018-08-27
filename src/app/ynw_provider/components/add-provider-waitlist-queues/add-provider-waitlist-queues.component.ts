@@ -71,9 +71,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       qserveonce: [1, Validators.compose([Validators.required])]
     });
 
-    if (this.data.type === 'edit') {
-        this.updateForm();
-    }
+    // if (this.data.type === 'edit') {
+    //     this.updateForm();
+    // }
 
     if (this.data.source === 'location_detail' &&
     this.data.type === 'add' &&
@@ -93,7 +93,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
                       ['h:mm A']).format('HH'),
                       minute: moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
                       ['h:mm A']).format('mm')};
-
+// console.log('dataQ', this.data.queue);
     this.amForm.setValue({
       qname: this.data.queue.name || null,
       qlocation: this.data.queue.location.id || null,
@@ -115,7 +115,11 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // extracting the selected services
     for (let j = 0; j < this.data.queue.services.length; j++) {
       // pushing the service details to the respective array to show it in the page
-      this.selservice_arr.push(this.data.queue.services[j].id);
+      for (let k = 0; k < this.serv_list.length; k++) {
+        if (this.data.queue.services[j].id === this.serv_list[k].id) {
+          this.selservice_arr.push(this.data.queue.services[j].id);
+        }
+      }
     }
     this.dstart_time =  sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
     this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
@@ -135,6 +139,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.provider_services.getServicesList(params)
       .subscribe(data => {
         this.serv_list = data;
+        if (this.data.type === 'edit') {
+          this.updateForm();
+      }
       });
   }
 
