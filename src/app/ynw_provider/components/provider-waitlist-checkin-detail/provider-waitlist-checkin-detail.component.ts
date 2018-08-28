@@ -39,6 +39,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     api_success = null;
     api_error = null;
+    
+    
+    dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
+
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
     today = new Date();
@@ -219,5 +224,33 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     }
     gotoPrev() {
       this.locationobj.back();
+    }
+
+    getAppxTime(waitlist) {
+      // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
+        /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
+          return 'Now';
+        } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
+          return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+        }  else {*/
+          const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
+          return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
+       //  }
+    }
+
+    AMHourto24(date, time12) {
+      const time = time12;
+      let hours = Number(time.match(/^(\d+)/)[1]);
+      const minutes = Number(time.match(/:(\d+)/)[1]);
+      const AMPM = time.match(/\s(.*)$/)[1];
+      if (AMPM === 'PM' && hours < 12) { hours = hours + 12; }
+      if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
+      const sHours = hours;
+      const sMinutes = minutes;
+      // alert(sHours + ':' + sMinutes);
+      const mom_date = moment(date);
+      mom_date.set('hour', sHours);
+      mom_date.set('minute', sMinutes);
+      return mom_date;
     }
 }

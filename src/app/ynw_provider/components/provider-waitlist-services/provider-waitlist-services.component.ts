@@ -109,9 +109,9 @@ export class ProviderWaitlistServicesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
+      // if (result === 'reloadlist') {
         this.getServices();
-      }
+      // }
     });
   }
 

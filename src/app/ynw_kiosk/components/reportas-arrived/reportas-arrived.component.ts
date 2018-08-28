@@ -66,7 +66,8 @@ export class ReportasArrivedComponent implements OnInit {
         retval.class = 'checkedin-class';
         retval.caption = 'Checked In';
         retval.waitingtimecaption = 'Your Approximate Wait Time is ';
-        retval.waitingtimemins = stat.appxWaitingTime + ' Mins';
+       //  retval.waitingtimemins = stat.appxWaitingTime + ' Mins';
+        retval.waitingtimemins = this.sharedfunctionObj.convertMinutesToHourMinute(stat.appxWaitingTime);
       break;
       case 'started':
         retval.class = 'started-class';

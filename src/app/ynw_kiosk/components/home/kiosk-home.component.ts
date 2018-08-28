@@ -85,7 +85,7 @@ export class KioskHomeComponent implements OnInit {
     . subscribe (data => {
       this.terminologies = data;
       this.provider_datastorage.set('terminologies', this.terminologies);
-      console.log(this.terminologies);
+      // console.log(this.terminologies);
     },
     error => {
 

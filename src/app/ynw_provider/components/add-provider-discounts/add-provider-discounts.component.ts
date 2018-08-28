@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -21,6 +21,8 @@ export class AddProviderDiscountsComponent implements OnInit {
   valueCaption = 'Enter value';
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
+  curtype = 'Fixed';
+  @ViewChild('myfield') private inputRef: ElementRef;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderDiscountsComponent>,
@@ -124,11 +126,13 @@ export class AddProviderDiscountsComponent implements OnInit {
   }
   handleTypechange(typ) {
       if (typ === 'Fixed') {
+        this.curtype = typ;
         this.valueCaption = 'Enter value';
       } else {
+        this.curtype = typ;
         this.valueCaption = 'Enter percentage value';
       }
-
+      // this.inputRef.nativeElement.focus();
   }
 
   resetApiErrors () {

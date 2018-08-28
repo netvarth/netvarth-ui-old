@@ -16,7 +16,9 @@
                               <h2>{{checkin_label | titlecase}} Details</h2>
                               <div class="tp" *ngIf="waitlist_data">
                                   <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName | titlecase}} {{waitlist_data.consumer.userProfile.lastName | titlecase}}</span></div>
-                                  <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div>
+                                  <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
+                                  <div class="item"><span class="ttle">Date:</span><span>
+                                        {{waitlist_data.date | date:dateFormatSp}} {{getAppxTime(waitlist_data)| date: timeFormat}}</span></div>
                                   <div class="item"><span class="ttle">Location:</span><span>{{waitlist_data.queue.location.place}}</span></div>
                                   <div class="item"><span class="ttle">Waitlist For:</span>
                                     <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">

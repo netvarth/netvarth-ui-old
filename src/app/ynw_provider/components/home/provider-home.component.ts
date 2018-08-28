@@ -154,6 +154,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
+    if (savedtype !== undefined && savedtype !== null) {
+      // console.log('exists', savedtype);
+      this.time_type = savedtype;
+    } else {
+     // console.log('NOT');
+    }
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '');
     this.getBusinessProfile();
     this.getLocationList();
@@ -570,6 +577,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   setTimeType(time_type) {
     this.check_in_list  = this.check_in_filtered_list = [];
     this.time_type = time_type;
+    this.shared_functions.setitemonLocalStorage('pdtyp', this.time_type);
     this.status_type = 'all';
     this.setFilterDateMaxMin();
     // this.queues = [];
