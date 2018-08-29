@@ -983,7 +983,7 @@ ratingRounding(val) {
     }
   }
   if (val === 0.0) {
-    console.log('retval', retval);
+    // console.log('retval', retval);
     retval = 0;
   }
   /*if (val > 0 && val <= .5) {

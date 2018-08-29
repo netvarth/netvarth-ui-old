@@ -57,6 +57,7 @@ export class AddProviderDiscountsComponent implements OnInit {
       'discValue': this.data.discount.discValue || null,
       'calculationType': this.data.discount.calculationType || null,
     });
+    this.curtype = this.data.discount.calculationType || 'Fixed';
   }
   onSubmit (form_data) {
 

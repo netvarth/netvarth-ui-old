@@ -115,7 +115,7 @@
                                                         <div class="add"><span (click)="logofile.click()">Add <br/> Profile Picture</span></div>
                                                         <div class="change"><span (click)="logofile.click()">Change <br/> Profile Picture</span></div>
                                                     </div>
-                                                    <div class='remove-logo' *ngIf="blogo[0] && blogo[0].url" (click)="confirmLogoremove(blogo.keyName)">Remove Profile Picture</div>
+                                                    <div class='remove-logo' *ngIf="blogo[0] && blogo[0].url" (click)="confirmLogoremove(blogo.keyName)"><span class="icon-delete"></span> Remove Picture</div>
                                                 </div>
                                                 <div class="bi-r">
                                                     <h3>{{bProfile.businessName | titlecase }}</h3>

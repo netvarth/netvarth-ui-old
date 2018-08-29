@@ -2859,6 +2859,13 @@ header {
             padding: 10px;
             height: 40px;
             background: #e6e6e6; }
+          .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
+          .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
+          .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
+          .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
+          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield {
+            width: 100px; }
         .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
         .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
         .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
@@ -5066,6 +5073,55 @@ header {
       .googlemainmappopup .mat-dialog-content .ratingdiv .form-group fieldset label, .outer-card .mat-dialog-content .ratingdiv .form-group fieldset label, .consumerpopupmainclass .mat-dialog-content .ratingdiv .form-group fieldset label {
         margin-bottom: 0;
         cursor: pointer; }
+    .signupmainclass .mat-dialog-content .message-one .p1,
+    .loginmainclass .mat-dialog-content .message-one .p1,
+    .moreoptionsmainclass .mat-dialog-content .message-one .p1,
+    .forgotpasswordmainclass .mat-dialog-content .message-one .p1,
+    .commonpopupmainclass .mat-dialog-content .message-one .p1,
+    .googlemainmappopup .mat-dialog-content .message-one .p1, .outer-card .mat-dialog-content .message-one .p1, .consumerpopupmainclass .mat-dialog-content .message-one .p1 {
+      font-size: 1rem;
+      color: #00cc96;
+      font-weight: 600;
+      margin-bottom: 0px; }
+    .signupmainclass .mat-dialog-content .message-one .p2,
+    .loginmainclass .mat-dialog-content .message-one .p2,
+    .moreoptionsmainclass .mat-dialog-content .message-one .p2,
+    .forgotpasswordmainclass .mat-dialog-content .message-one .p2,
+    .commonpopupmainclass .mat-dialog-content .message-one .p2,
+    .googlemainmappopup .mat-dialog-content .message-one .p2, .outer-card .mat-dialog-content .message-one .p2, .consumerpopupmainclass .mat-dialog-content .message-one .p2 {
+      color: #666; }
+    .signupmainclass .mat-dialog-content .message-two,
+    .loginmainclass .mat-dialog-content .message-two,
+    .moreoptionsmainclass .mat-dialog-content .message-two,
+    .forgotpasswordmainclass .mat-dialog-content .message-two,
+    .commonpopupmainclass .mat-dialog-content .message-two,
+    .googlemainmappopup .mat-dialog-content .message-two, .outer-card .mat-dialog-content .message-two, .consumerpopupmainclass .mat-dialog-content .message-two {
+      height: 30px;
+      background: transparent;
+      border: 1px solid #00aef2;
+      padding: 6px 15px;
+      color: #00aef2;
+      font-size: .75rem;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+      background-clip: padding-box;
+      /* stops bg color from leaking outside the border: */
+      -moz-transition: all 300ms;
+      -o-transition: all 300ms;
+      -webkit-transition: all 300ms;
+      transition: all 300ms;
+      margin-bottom: 0; }
+      .signupmainclass .mat-dialog-content .message-two:hover,
+      .loginmainclass .mat-dialog-content .message-two:hover,
+      .moreoptionsmainclass .mat-dialog-content .message-two:hover,
+      .forgotpasswordmainclass .mat-dialog-content .message-two:hover,
+      .commonpopupmainclass .mat-dialog-content .message-two:hover,
+      .googlemainmappopup .mat-dialog-content .message-two:hover, .outer-card .mat-dialog-content .message-two:hover, .consumerpopupmainclass .mat-dialog-content .message-two:hover {
+        color: #fff;
+        border-color: #00aef2;
+        background: #00aef2; }
   .signupmainclass .mat-dialog-actions,
   .loginmainclass .mat-dialog-actions,
   .moreoptionsmainclass .mat-dialog-actions,
@@ -8511,6 +8567,12 @@ footer.dashb {
             .content .col-a .card.w-dta.active .cd-t .basic-i .bi-l .pro-pic:before {
               width: 140px;
               height: 140px; } }
+      .content .col-a .card.w-dta.active .cd-t .basic-i .bi-l .remove-logo {
+        font-weight: 500;
+        color: #f24949;
+        text-align: center;
+        cursor: pointer;
+        font-size: .75rem; }
     @media only screen and (max-width: 575px) {
       .content .col-a .card.w-dta.active .cd-t .basic-i .bi-r {
         text-align: center;
@@ -13696,20 +13758,18 @@ header.consumer {
                   display: block;
                   font-size: .75rem;
                   font-weight: 600; }
-                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .services ul li:last-child {
-                  border: none; }
-                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .services ul li:last-child span {
-                    color: #00aef2;
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .services ul li:last-child span {
+                  color: #00aef2;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  cursor: pointer; }
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .services ul li:last-child span i {
+                    font-size: 1.2rem;
                     display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer; }
-                    .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .services ul li:last-child span i {
-                      font-size: 1.2rem;
-                      display: flex;
-                      width: 20px;
-                      height: 20px;
-                      align-items: center; }
+                    width: 20px;
+                    height: 20px;
+                    align-items: center; }
               .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-phone-title {
                 color: #00aef2;
                 cursor: pointer; }
@@ -15299,6 +15359,35 @@ header.consumer {
     margin-top: 0; }
 
 /***** Common Pages #### */
+.content .static-outer .static-mainheader {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 10px; }
+.content .static-outer .p-subouter {
+  margin-bottom: 20px; }
+  .content .static-outer .p-subouter h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #545457; }
+  .content .static-outer .p-subouter ul {
+    padding-left: 20px; }
+    .content .static-outer .p-subouter ul li {
+      margin-bottom: 1.125em;
+      list-style: none;
+      position: relative;
+      padding-left: 1.25em;
+      font-size: .875rem; }
+      .content .static-outer .p-subouter ul li:before {
+        font-family: "custom-ynw";
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        content: "\67";
+        position: absolute;
+        left: 3px;
+        font-size: .55rem;
+        top: 4px; }
 .content.see-pages .outer-card {
   display: flex;
   width: 100% !important; }

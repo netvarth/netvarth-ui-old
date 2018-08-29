@@ -32,7 +32,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
    <mat-form-field class="example-full-width">
    <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
    <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
-   <input matInput type="text" class="form-control" #myfield id="discValue" [placeholder]="valueCaption"
+   <input matInput type="text" class="form-control valfield" #myfield id="discValue" [placeholder]="valueCaption"
    formControlName="discValue" autocomplete="off">
   
    </mat-form-field>

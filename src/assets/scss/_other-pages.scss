@@ -1,6 +1,51 @@
 /***** Common Pages #### */
 
 .content {
+    
+    .static-outer {
+        .static-mainheader {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .p-subouter {
+            margin-bottom: 20px;
+            
+            h2 {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: lighten($linkblack, 20%);
+            }
+            
+            ul {           
+                padding-left: 20px;
+
+                li {
+                    margin-bottom: 1.125em;
+                    list-style: none;
+                    position: relative;
+                    padding-left: 1.25em;
+                    font-size: .875rem;
+
+                    &:before {
+                        font-family: "custom-ynw";
+                        font-style: normal;
+                        font-weight: normal;
+                        font-variant: normal;
+                        text-transform: none;
+                        content: "\67";
+                        position: absolute;
+                        left: 3px;
+                        font-size: .55rem;
+                        top: 4px;
+                    }
+
+                }
+
+            }
+        }
+    }
+    
     &.see-pages {
         
         .outer-card {

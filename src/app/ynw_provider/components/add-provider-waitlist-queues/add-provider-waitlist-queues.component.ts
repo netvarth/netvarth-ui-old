@@ -63,12 +63,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   createForm() {
 
     this.amForm = this.fb.group({
-      qname: ['', Validators.compose([Validators.required])],
+      qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
       qlocation: ['', Validators.compose([Validators.required])],
       qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
       qendtime: [this.dend_time, Validators.compose([Validators.required])],
-      qcapacity: [10, Validators.compose([Validators.required])],
-      qserveonce: [1, Validators.compose([Validators.required])]
+      qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
+      qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
     });
 
     // if (this.data.type === 'edit') {

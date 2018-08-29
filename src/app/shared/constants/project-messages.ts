@@ -91,7 +91,8 @@ export const Messages = {
   // WaitlistManager
   'ONLINE_CHECKIN_SAVED' : 'Saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
-  'SERVICE_ADDED' : 'New service added successfully. Please add this service to the relevant queue by editing it.',
+  'SERVICE_ADDED1' : 'New service added successfully',
+  'SERVICE_ADDED2' : 'Please add this service to the relevant queue by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'SERVICE_PRE_PAY_ERROR': 'Payment settings needs to be completed before enabling the Pre-Payment option',

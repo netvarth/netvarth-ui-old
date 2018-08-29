@@ -278,4 +278,8 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
     });
   }
 
+  terms() {
+    this.router.navigate(['terms']);
+    window.scroll(0, 0);
+  }
 }

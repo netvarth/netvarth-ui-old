@@ -1292,6 +1292,13 @@ footer {
                                         }
                                     }
                                 }
+                                .remove-logo {
+                                    font-weight: 500;
+                                    color: $cc-red;
+                                    text-align: center;
+                                    cursor: pointer;
+                                    font-size: .75rem;
+                                }
                             }
                             
                             .bi-r {

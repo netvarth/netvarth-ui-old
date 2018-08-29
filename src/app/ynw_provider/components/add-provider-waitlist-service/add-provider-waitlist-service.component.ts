@@ -45,7 +45,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   payment_settings: any = [];
   tooltip = Messages.NEW_SERVICE_TOOLTIP;
   mode = 'normal';
-  normaladd_msg = this.shared_functions.getProjectMesssages('SERVICE_ADDED');
+  normaladd_msg1 = this.shared_functions.getProjectMesssages('SERVICE_ADDED1');
+  normaladd_msg2 = this.shared_functions.getProjectMesssages('SERVICE_ADDED2');
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
@@ -91,11 +92,11 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
 
   createForm() {
     this.amForm = this.fb.group({
-    name: ['', Validators.compose([Validators.required])],
-    description: [''],
+    name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+    description: ['', Validators.compose([Validators.maxLength(500)])],
     // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
-    serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern)])],
-    totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
+    serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+    totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
     isPrePayment: [{'value': false , 'disabled': this.base_licence }],
     taxable: [false],
     notification: [false]

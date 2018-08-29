@@ -227,6 +227,10 @@
                             height: 40px;
                             background: $cc-formbg;
                         }
+                        
+                        .valfield {
+                            width: 100px;
+                        }
                     }
 
                     .mat-input-underline {
@@ -1164,6 +1168,38 @@
                         cursor: pointer;
                     }
                 }
+            }
+        }
+        
+        // Service Added Success Message
+        .message-one {
+            .p1 {
+                font-size: 1rem;
+                color: $green;
+                font-weight: 600;
+                margin-bottom: 0px;
+            }
+            .p2 {
+                color: $cc-gray;
+            }
+        }
+        .message-two {
+            height: 30px;
+            background: transparent;
+            border: 1px solid $linkblue;
+            padding: 6px 15px;
+            color: $linkblue;
+            font-size: .75rem;
+            font-weight: 600;
+            cursor: pointer;
+            @include border-radius(3px);
+            @include transition(all 300ms);
+            margin-bottom: 0;
+            
+            &:hover {
+                color: $white;
+                border-color: $linkblue;
+                background: $linkblue;
             }
         }
         

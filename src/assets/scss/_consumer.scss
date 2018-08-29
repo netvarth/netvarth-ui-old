@@ -1713,9 +1713,7 @@ header {
                                         
                                         ul {
                                             li {
-                                                &:last-child {
-                                                    border: none;
-                                                    
+                                                &:last-child {                                                    
                                                     span {
                                                         color: $linkblue;
                                                         display: flex;

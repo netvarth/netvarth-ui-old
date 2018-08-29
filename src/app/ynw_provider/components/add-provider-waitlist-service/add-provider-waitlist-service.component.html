@@ -16,7 +16,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <input matInput type="text" class="form-control" id="service_name" placeholder="Service Name"
     formControlName="name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
-    errorMsg="Please enter service name.">
+    [errorMsg]="fed_service.getErrorMessage(amForm,'name',
+    {
+      'required' : 'Please enter the service name.',
+      'maxlength' : 'Name can contain only 100 characters'
+    })">
   </app-field-error-display>
   </div>
 
@@ -28,7 +32,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
     </textarea>
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
-    errorMsg="Please enter service description.">
+    [errorMsg]="fed_service.getErrorMessage(amForm,'description',
+    {
+      'required' : 'Please enter the service description.',
+      'maxlength' : 'Description can contain only 500 characters'
+    })">
   </app-field-error-display>
   </div>
 
@@ -39,7 +47,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
     {'required' : 'Please enter estimated duration.',
-    'pattern' : 'Estimated duration should be an integer value (eg. 1, 10, 15 etc)'})">
+    'pattern' : 'Estimated duration should be an integer value (eg. 1, 10, 15 etc)',
+    'maxlength' : 'Only 10 digits are allowed'
+  })">
   </app-field-error-display>
   </div>
 
@@ -50,7 +60,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
     {'required' : 'Please enter price',
-    'pattern' : 'Enter a valid price'})">
+    'pattern' : 'Enter a valid price',
+    'maxlength' : 'Only 10 digits are allowed'})">
   </app-field-error-display>
   </div>
   <div class="form-group inline">
@@ -166,7 +177,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
   </ng-container>
 
   <ng-container *ngIf="mode=='afteradd'">
-    <div class="message-one">{{normaladd_msg}}</div>
+    <div class="message-one">
+      <p class="p1">{{normaladd_msg1}}</p>
+      <p class="p2">{{normaladd_msg2}}</p>
+    </div>
     <div class="message-two" (click)="gotoManageQueue()">Please click here to go to the Queue List</div>
   </ng-container>
 

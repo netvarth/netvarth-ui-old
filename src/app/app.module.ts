@@ -21,6 +21,7 @@ import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { CheckInModule } from './shared/modules/check-in/check-in.module';
 import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
+import { TermsStaticModule } from './shared/modules/terms-static/terms-static.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
@@ -52,6 +53,7 @@ import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayModule } from './shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
+
 // import { SearchMoreOptionsComponent } from './shared/components/search-moreoptions/search-moreoptions.component';
 
 import { projectConstants } from './shared/constants/project-constants';
@@ -111,7 +113,8 @@ import 'hammerjs';
     CheckInModule,
     ModalGalleryModule.forRoot(),
     ConsumerCheckinHistoryListModule,
-    Nl2BrPipeModule
+    Nl2BrPipeModule,
+    TermsStaticModule
   ],
   providers: [
     AuthGuardConsumer,
