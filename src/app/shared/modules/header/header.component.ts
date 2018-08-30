@@ -44,6 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   bname;
   bsector;
+  bsubsector;
   blogo;
   inboxUnreadCnt;
   inboxCntFetched;
@@ -160,6 +161,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
+      this.bsubsector = bdetails.bss || '';
       this.blogo = bdetails.logo || '';
      // console.log('logo', this.blogo);
     }

@@ -99,6 +99,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.payuverified = this.paySettings.payUVerified	 || false;
             });
             if (showmsg === 1) {
+                this.tabid = 0;
                 let showmsgs = '';
                 if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified)) {
                     showmsgs = this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CONTACTADMIN');
@@ -106,6 +107,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     showmsgs = this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_SUCC');
                 }
                 this.shared_Functionsobj.openSnackBar (showmsgs);
+                this.tabid = 1;
             }
     }
     getTaxpercentage() {
@@ -408,8 +410,33 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             });
         }
     }
-    saveTaxSettings() {
+    taxfieldValidation(setmsgs?) {
         const floatpattern = projectConstants.VALIDATOR_FLOAT;
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        this.errorExist = false;
+        if (!floatpattern.test(this.taxpercentage)) {
+            this.errorExist = true;
+            if (setmsgs) {
+                this.showError['taxpercentage'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_TAXPER')};
+            }
+        } else if (this.taxpercentage < 0 || this.taxpercentage > 100) {
+            this.errorExist = true;
+            if (setmsgs) {
+                this.showError['taxpercentage'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_TAXPER')};
+            }
+        }
+        if (blankpattern.test(this.gstnumber)) {
+            this.errorExist = true;
+            if (setmsgs) {
+                this.showError['gstnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_GSTNUM')};
+            }
+        }
+        if (!setmsgs) {
+            return this.errorExist;
+        }
+    }
+    saveTaxSettings() {
+        /*const floatpattern = projectConstants.VALIDATOR_FLOAT;
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         this.errorExist = false;
         if (!floatpattern.test(this.taxpercentage)) {
@@ -422,7 +449,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (blankpattern.test(this.gstnumber)) {
             this.errorExist = true;
             this.showError['gstnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_GSTNUM')};
-        }
+        }*/
+        this.taxfieldValidation(true);
         if (!this.errorExist) {
             this.savetaxEnabled = false;
             const postData = {
@@ -499,4 +527,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             }, 50);
         }
     }
+    checkTaxbuttonDisabled() {
+        return true;
+    }
+    selectedIndexChange(val: number) {
+        this.tabid = val;
+      }
 }

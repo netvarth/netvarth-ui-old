@@ -1217,78 +1217,84 @@
                         font-weight: 600;
                     }
                     
-                    .table {
-                        border: none;
-                        margin-bottom: 0;
+                    .table-subouter {
+                        height: 50vh;
+                        overflow: auto;
                         
-                        tbody{
-                            tr {
-                                display: flex;
-                                flex-direction: column;
-                                margin-bottom: .75rem;
-                                background: rgba(0, 0, 0, 0.03);
+                        .table {
+                            border: none;
+                            margin-bottom: 0;
 
-                                td {
-                                    font-size: 1rem;
-                                    border: none;
+                            tbody{
+                                tr {
+                                    display: flex;
+                                    flex-direction: column;
+                                    margin-bottom: .75rem;
+                                    background: rgba(0, 0, 0, 0.03);
 
-                                    .kioskservicename {
-                                        font-weight: 600;
-                                        margin-bottom: 10px;
-                                    }
-                                    .kiosknameouter, .kioskstatuouter, .kioskwaiting {
-                                        font-weight: 500;
-                                        display: flex;
-                                        margin-bottom: 5px;
+                                    td {
+                                        font-size: 1rem;
+                                        border: none;
 
-                                        .kiosknamecaption, .kioskstatuscaption {
-                                            margin-right: 10px;
-                                        }
-                                    }
-                                    .kioskstatuouter{
-                                        .arrived-class, .started-class, .checkedin-class, .done-class, .cancelled-class {    
-                                            color: $arrived;
-                                            padding: 0;
+                                        .kioskservicename {
                                             font-weight: 600;
+                                            margin-bottom: 10px;
                                         }
-                                        .started-class {
-                                            color: $start;
+                                        .kiosknameouter, .kioskstatuouter, .kioskwaiting {
+                                            font-weight: 500;
+                                            display: flex;
+                                            margin-bottom: 5px;
+
+                                            .kiosknamecaption, .kioskstatuscaption {
+                                                margin-right: 10px;
+                                            }
                                         }
-                                        .checkedin-class {
-                                            color: $checkedin;
+                                        .kioskstatuouter{
+                                            .arrived-class, .started-class, .checkedin-class, .done-class, .cancelled-class {    
+                                                color: $arrived;
+                                                padding: 0;
+                                                font-weight: 600;
+                                            }
+                                            .started-class {
+                                                color: $start;
+                                            }
+                                            .checkedin-class {
+                                                color: $checkedin;
+                                            }
+                                            .done-class {
+                                                color: $done;
+                                            }
+                                            .cancelled-class {
+                                                color: $cc-red;
+                                            }
                                         }
-                                        .done-class {
-                                            color: $done;
+                                        .kioskwaiting {
+                                            margin-bottom: 0px;
+
+                                            .waitingtime {
+                                                color: $green;
+                                                margin-left: 5px;
+                                                font-weight: 600;
+                                            }
                                         }
-                                        .cancelled-class {
-                                            color: $cc-red;
+                                        &:nth-child(2) {
+                                            padding-bottom: 1.5rem; 
+                                            .bt1 {
+                                                width: 100%;
+                                            }
                                         }
                                     }
-                                    .kioskwaiting {
-                                        margin-bottom: 0px;
-                                        
-                                        .waitingtime {
-                                            color: $green;
-                                            margin-left: 5px;
-                                            font-weight: 600;
-                                        }
+
+                                    &:last-child {
+                                        border: none;
+                                        margin-bottom: 0;
                                     }
-                                    &:nth-child(2) {
-                                        padding-bottom: 1.5rem; 
-                                        .bt1 {
-                                            width: 100%;
-                                        }
-                                    }
-                                }
-                                
-                                &:last-child {
-                                    border: none;
-                                    margin-bottom: 0;
                                 }
                             }
+
                         }
-                        
                     }
+                    
                     
                 }
             }

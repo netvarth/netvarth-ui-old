@@ -49,13 +49,13 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of cart.items; let i = index">
-                      <td data-title="Service/Item">{{item.name}}</td>
+                      <td data-title="Service/Item">{{item.name | titlecase}}</td>
                       <td data-title="Quantity">
                         <input matInput type="number" min="1" [disabled]="cart.items[i].type == 'Services'" [(ngModel)]="cart.items[i].quantity"
                         [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)" autocomplete="off"> </td>
                       <td data-title="StdRate">
                         <input matInput type="number" [(ngModel)]="item.price" min="1"
-                        [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)" autocomplete="off">
+                        [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)" autocomplete="off" disabled>
                       </td>
                       <td data-title="Discount">
                         <div class="form-group" *ngIf="discounts.length >0">
@@ -99,12 +99,12 @@
                     <span class="label-valu">{{cart.sub_total | currency:'INR':'symbol':'.2-2'}}</span>
                   </div>
               </div>
-              <div class="form-group bill-total">
+              <div class="form-group bill-discount">
                   <div class="total"><span class="label">Discount</span>
                     <span class="label-valu">{{totdisc_val | currency:'INR':'symbol':'.2-2'}}</span>
                   </div>
               </div>
-              <div class="form-group bill-total">
+              <div class="form-group bill-coupon">
                   <div class="total"><span class="label">Coupon</span>
                     <span class="label-valu">{{totcoup_val | currency:'INR':'symbol':'.2-2'}}</span>
                   </div>
@@ -179,7 +179,8 @@
                       <tbody>
                         <ng-container *ngFor="let payment of pre_payment_log; let i = index">
                             <tr>
-                            <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td>
+                            <!-- <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td> -->
+                            <td data-title="Date and Time">{{stringtoDate(payment.paymentOn)}}</td>
                             <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | titlecase}}</span></td>
                             <td data-title="Mode">{{payment.acceptPaymentBy | titlecase }}</td>
                             <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>

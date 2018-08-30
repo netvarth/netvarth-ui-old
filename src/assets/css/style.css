@@ -1713,51 +1713,54 @@ select:-webkit-autofill:focus {
           .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .maindate {
             margin-bottom: 20px;
             font-weight: 600; }
-          .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table {
-            border: none;
-            margin-bottom: 0; }
-            .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr {
-              display: flex;
-              flex-direction: column;
-              margin-bottom: .75rem;
-              background: rgba(0, 0, 0, 0.03); }
-              .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td {
-                font-size: 1rem;
-                border: none; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskservicename {
-                  font-weight: 600;
-                  margin-bottom: 10px; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kiosknameouter, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskwaiting {
-                  font-weight: 500;
-                  display: flex;
-                  margin-bottom: 5px; }
-                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kiosknameouter .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kiosknameouter .kioskstatuscaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .kioskstatuscaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskwaiting .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskwaiting .kioskstatuscaption {
-                    margin-right: 10px; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .arrived-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .started-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .checkedin-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .done-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .cancelled-class {
-                  color: #79e688;
-                  padding: 0;
-                  font-weight: 600; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .started-class {
-                  color: #4de2ff; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .checkedin-class {
-                  color: #5568ff; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .done-class {
-                  color: #4bc742; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskstatuouter .cancelled-class {
-                  color: #f24949; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskwaiting {
-                  margin-bottom: 0px; }
-                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td .kioskwaiting .waitingtime {
-                    color: #00cc96;
-                    margin-left: 5px;
+          .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter {
+            height: 50vh;
+            overflow: auto; }
+            .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table {
+              border: none;
+              margin-bottom: 0; }
+              .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: .75rem;
+                background: rgba(0, 0, 0, 0.03); }
+                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td {
+                  font-size: 1rem;
+                  border: none; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskservicename {
+                    font-weight: 600;
+                    margin-bottom: 10px; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting {
+                    font-weight: 500;
+                    display: flex;
+                    margin-bottom: 5px; }
+                    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter .kioskstatuscaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .kioskstatuscaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .kioskstatuscaption {
+                      margin-right: 10px; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .arrived-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .started-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
+                    color: #79e688;
+                    padding: 0;
                     font-weight: 600; }
-                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td:nth-child(2) {
-                  padding-bottom: 1.5rem; }
-                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr td:nth-child(2) .bt1 {
-                    width: 100%; }
-              .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table tbody tr:last-child {
-                border: none;
-                margin-bottom: 0; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .started-class {
+                    color: #4de2ff; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class {
+                    color: #5568ff; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class {
+                    color: #4bc742; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
+                    color: #f24949; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting {
+                    margin-bottom: 0px; }
+                    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .waitingtime {
+                      color: #00cc96;
+                      margin-left: 5px;
+                      font-weight: 600; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td:nth-child(2) {
+                    padding-bottom: 1.5rem; }
+                    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td:nth-child(2) .bt1 {
+                      width: 100%; }
+                .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr:last-child {
+                  border: none;
+                  margin-bottom: 0; }
       .ksk app-kiosk-home .ksk-cpy.navigation {
         position: absolute;
         width: 20%;
@@ -4442,6 +4445,51 @@ header {
       .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"],
       .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"], .outer-card .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"], .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .table tbody tr td:nth-of-type(3) input[type="number"] {
         width: 100px; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount, .signupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .loginmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount,
+      .loginmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .bill-discount,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .bill-coupon, .outer-card .mat-dialog-content .group-outer .bill-tbl .bill-discount, .outer-card .mat-dialog-content .group-outer .bill-tbl .bill-coupon, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon {
+        text-align: right;
+        margin-bottom: 0;
+        margin-top: 5px; }
+        .signupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label, .signupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label-valu, .signupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label, .signupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label-valu,
+        .loginmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label-valu,
+        .loginmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label,
+        .loginmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label-valu,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label-valu,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label-valu,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label-valu,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label-valu,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label-valu,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label,
+        .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label-valu,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label-valu,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label,
+        .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label-valu, .outer-card .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label, .outer-card .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label-valu, .outer-card .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label, .outer-card .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-discount .total .label-valu, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon .total .label-valu {
+          font-size: .75rem;
+          color: #666;
+          font-weight: 600; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .loginmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-tbl .bill-coupon, .outer-card .mat-dialog-content .group-outer .bill-tbl .bill-coupon, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-tbl .bill-coupon {
+        margin-bottom: 15px; }
     .signupmainclass .mat-dialog-content .group-outer .log-tbl,
     .loginmainclass .mat-dialog-content .group-outer .log-tbl,
     .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl,
@@ -4449,7 +4497,7 @@ header {
     .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl,
     .googlemainmappopup .mat-dialog-content .group-outer .log-tbl, .outer-card .mat-dialog-content .group-outer .log-tbl, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl {
       padding: 15px 0 1rem;
-      border-bottom: 1px dashed #dbdbdb; }
+      /*border-bottom: 1px dashed $cc-ash;*/ }
       .signupmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
       .loginmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
       .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
@@ -4471,6 +4519,36 @@ header {
         .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child,
         .googlemainmappopup .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child, .outer-card .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl .table thead tr th:first-child {
           width: 20%; }
+        .signupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr,
+        .loginmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr,
+        .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr,
+        .forgotpasswordmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr,
+        .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr,
+        .googlemainmappopup .mat-dialog-content .group-outer .log-tbl .table tbody tr, .outer-card .mat-dialog-content .group-outer .log-tbl .table tbody tr, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr {
+          background: #fff; }
+          .signupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr td .mat-button.update,
+          .loginmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr td .mat-button.update,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr td .mat-button.update,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr td .mat-button.update,
+          .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr td .mat-button.update,
+          .googlemainmappopup .mat-dialog-content .group-outer .log-tbl .table tbody tr td .mat-button.update, .outer-card .mat-dialog-content .group-outer .log-tbl .table tbody tr td .mat-button.update, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr td .mat-button.update {
+            float: right;
+            margin-right: 0 !important;
+            background: #fff !important;
+            border: 1px solid #00aef2 !important;
+            color: #00aef2 !important;
+            font-size: .75rem !important;
+            font-weight: 600; }
+          .signupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr.refundtr td,
+          .loginmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr.refundtr td,
+          .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr.refundtr td,
+          .forgotpasswordmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr.refundtr td,
+          .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr.refundtr td,
+          .googlemainmappopup .mat-dialog-content .group-outer .log-tbl .table tbody tr.refundtr td, .outer-card .mat-dialog-content .group-outer .log-tbl .table tbody tr.refundtr td, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl .table tbody tr.refundtr td {
+            min-height: 30px;
+            border-top: none;
+            color: #999999;
+            padding: .45em .75em; }
     .signupmainclass .mat-dialog-content .group-outer .bill-total,
     .loginmainclass .mat-dialog-content .group-outer .bill-total,
     .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total,
@@ -4510,7 +4588,7 @@ header {
       .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay, .outer-card .mat-dialog-content .group-outer .bill-total .total, .outer-card .mat-dialog-content .group-outer .bill-total .discount, .outer-card .mat-dialog-content .group-outer .bill-total .coupon, .outer-card .mat-dialog-content .group-outer .bill-total .topay, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay {
         color: #666;
         font-size: .75rem;
-        padding: 10px; }
+        /*padding: 10px;*/ }
         .signupmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .topay .col-form-label,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label,
@@ -4633,6 +4711,18 @@ header {
             .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label,
             .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-form-field-label {
               display: none; }
+            .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label,
+            .googlemainmappopup .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label, .outer-card .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label, .outer-card .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .col-form-label {
+              font-size: .75rem; }
             .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
             .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
             .loginmainclass .mat-dialog-content .group-outer .bill-total .coupon .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select,
@@ -4737,7 +4827,8 @@ header {
         .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .total .label,
         .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label,
         .googlemainmappopup .mat-dialog-content .group-outer .bill-total .total .label, .outer-card .mat-dialog-content .group-outer .bill-total .total .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total .label {
-          display: inline-block; }
+          display: inline-block;
+          font-weight: 600; }
         .signupmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
         .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .total .label-valu,
@@ -4760,7 +4851,8 @@ header {
         .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
         .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label,
         .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay .label, .outer-card .mat-dialog-content .group-outer .bill-total .topay .label, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay .label {
-          font-weight: 600; }
+          font-weight: 600;
+          color: #222223; }
         .signupmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
         .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .topay .label-valu,
@@ -4770,6 +4862,13 @@ header {
           color: #00cc96;
           font-weight: 600;
           font-size: 1.25rem; }
+      .signupmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .loginmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .forgotpasswordmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .commonpopupmainclass .mat-dialog-content .group-outer .bill-total .discount,
+      .googlemainmappopup .mat-dialog-content .group-outer .bill-total .discount, .outer-card .mat-dialog-content .group-outer .bill-total .discount, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount {
+        margin-right: 20px; }
       .signupmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl,
       .loginmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl,
       .moreoptionsmainclass .mat-dialog-content .group-outer .bill-total .pay-tbl,
@@ -7946,6 +8045,13 @@ footer.dashb {
         font-weight: 500;
         display: block;
         padding: 15px; }
+      footer.dashb .stp-box .audit .stp-tbl .alert-view-all, footer.dashb .stp-box .alerts .stp-tbl .alert-view-all, footer.dashb .stp-box .o-checkin .stp-tbl .alert-view-all {
+        font-size: .75rem;
+        font-weight: 600;
+        color: #00aef2;
+        margin-bottom: 10px;
+        display: inline-block;
+        cursor: pointer; }
     footer.dashb .stp-box .audit .table-body .copy, footer.dashb .stp-box .alerts .table-body .copy, footer.dashb .stp-box .o-checkin .table-body .copy {
       font-size: .875rem;
       padding: 0px 0 15px 0;
@@ -10498,6 +10604,7 @@ footer.dashb {
       flex-grow: 1;
       padding: 10px;
       border: 1px solid #b6ffec6e;
+      background: rgba(255, 255, 255, 0.2);
       border-right: none;
       border-top: none;
       margin: 0; }
@@ -10514,7 +10621,7 @@ footer.dashb {
           .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field {
             width: 100%; } }
         .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field .mat-input-wrapper, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-input-wrapper {
-          margin-bottom: 5px;
+          margin-bottom: 0px;
           padding-bottom: 0px; }
           .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field .mat-input-wrapper .mat-input-underline, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field .mat-input-wrapper .mat-input-subscript-wrapper, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-input-wrapper .mat-input-underline, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-input-wrapper .mat-input-subscript-wrapper {
             display: none; }
@@ -10541,6 +10648,12 @@ footer.dashb {
                 box-shadow: 0 0 1px #fff inset;
                 border: 1px solid #fff;
                 background: #fff; }
+        .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field .mat-select, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-select {
+          padding: 7px 10px;
+          height: 30px;
+          background: rgba(255, 255, 255, 0.7); }
+        .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field.mat-focused .mat-select, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field.mat-focused .mat-select {
+          background: white; }
       .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-chip-list .mat-chip-list-wrapper .mat-chip, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-chip-list .mat-chip-list-wrapper .mat-chip {
         cursor: pointer;
         padding: 3px 12px;
@@ -10565,7 +10678,8 @@ footer.dashb {
         opacity: 0; }
       .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-input-wrapper .mat-input-flex {
         align-items: center;
-        height: 28px; }
+        height: 28px;
+        width: 150px; }
         .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-suffix {
           width: 40px;
           height: 40px; }
@@ -11430,8 +11544,15 @@ footer.dashb {
     font-size: .875rem; }
     .content.comn-cls .lbl .card .c-details h2 {
       font-size: 1.125rem;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       font-weight: 500; }
+    .content.comn-cls .lbl .card .c-details .backtodashboard .strong {
+      font-weight: 600;
+      color: #00aef2;
+      margin-bottom: 20px;
+      font-size: .75rem;
+      cursor: pointer;
+      display: inline-block; }
     .content.comn-cls .lbl .card .c-details .tp {
       border-bottom: 1px solid #f2f2f2;
       margin-bottom: 20px;
@@ -11984,12 +12105,14 @@ footer.dashb {
     .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter {
       padding-left: 0px; }
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field {
-        width: 62px; }
+        width: 150px; }
         .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field .mat-form-field-flex {
           display: flex;
           align-items: center; }
           .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field .mat-form-field-flex .mat-input-suffix {
             margin-left: 5px; }
+      .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group:first-child mat-form-field {
+        width: 62px; }
   .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .actiondiv {
     margin-top: 30px;
     padding-left: 20px; }
@@ -14612,7 +14735,7 @@ header.consumer {
               .consumer-dash .card .outer .list .header .lt .location {
                 margin-left: 0; } }
             .consumer-dash .card .outer .list .header .lt .location .icon-location {
-              color: #00aef2;
+              color: #666;
               font-weight: 500;
               padding-left: 16px;
               position: relative;

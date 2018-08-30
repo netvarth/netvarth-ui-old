@@ -22,7 +22,7 @@
                             <div class="location" *ngIf="waitlist.queue.location">
                                 <a *ngIf="waitlist.queue.location.googleMapUrl"
                                 [href]="waitlist.queue.location.googleMapUrl" target="_blank"
-                                class="icon-location" matTooltip="Click to navigate"> {{waitlist.queue.location.place || ''}}</a>
+                                class="icon-location" matTooltip="Click to navigate"> {{waitlist.queue.location.place || '' | titlecase}}</a>
                             </div>
                           </div>
                           <div class="rt">

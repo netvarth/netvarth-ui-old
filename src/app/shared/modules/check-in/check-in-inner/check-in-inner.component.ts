@@ -185,9 +185,11 @@ export class CheckInInnerComponent implements OnInit {
       // if ( this.page_source !== 'provider_checkin') {
       //   this.getPaymentModesofProvider(this.account_id);
       // }
-
+      const date1 = new Date(this.sel_checkindate);
+      const date2 = new Date(this.todaydate);
       // console.log('selcheckindate', this.sel_checkindate);
-      if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      if (date1 !== date2) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
         this.isFuturedate = true;
         // console.log('future', this.isFuturedate);
       }
@@ -845,11 +847,23 @@ export class CheckInInnerComponent implements OnInit {
       this.sel_checkindate =  ndate;
       this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
-    if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+   // console.log('date compare', this.sel_checkindate, this.todaydate);
+    const date1 = new Date(this.sel_checkindate);
+    const date2 = new Date(this.todaydate);
+ // console.log('date compare2', date1, date2);
+    // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
       this.isFuturedate = true;
+    } else {
+      this.isFuturedate = false;
     }
     // console.log('new date', this.hold_sel_checkindate, this.sel_checkindate);
   }
+  /*convertToDate(dt) {
+    const splt = dt.split('-');
+    const ndate = new Date(splt[2] + '/' + splt[1] + '/' + splt[0]);
+    return ndate;
+  }*/
   disableMinus() {
     const seldate = new Date(this.sel_checkindate);
     const strtDt  = new Date(this.hold_sel_checkindate);

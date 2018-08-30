@@ -22,6 +22,12 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   customer_label = '';
   checkin_label = '';
+  default_message;
+  rep_username;
+  rep_service;
+  rep_provname;
+  cur_msg = '';
+  cancel_reason = '';
 
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
@@ -37,6 +43,12 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
      }
 
   ngOnInit() {
+    console.log('passed in', this.data);
+    this.rep_username = this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName);
+    this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
+    this.rep_provname = this.titleCaseWord(this.data.waitlist.provider.businessName);
+    console.log('obtained', this.rep_username, this.rep_service, this.rep_provname);
+    this.getDefaultMessages();
      this.createForm();
   }
   createForm() {
@@ -47,10 +59,11 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     this.amForm.get('send_message').valueChanges
     .subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         if (data) {
           this.amForm.addControl('message',
-          new FormControl('', Validators.compose([Validators.required])));
+          new FormControl(this.replacedMessage(), Validators.compose([Validators.required])));
+          // this.amForm.get('message').setValue(this.replacedMessage());
         } else {
           this.amForm.removeControl('message');
         }
@@ -71,6 +84,10 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   selectReason(cancel_reason) {
     this.amForm.get('reason').setValue(cancel_reason.value);
+    this.cancel_reason = cancel_reason.title;
+    if (this.amForm.get('message')) {
+      this.amForm.get('message').setValue(this.replacedMessage());
+    }
   }
 
   resetApiErrors () {
@@ -78,6 +95,36 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     this.api_success = null;
   }
 
+  getDefaultMessages () {
+    this.provider_services.getProviderMessages()
+    .subscribe(
+      (data: any) => {
+       this.default_message = data.cancel || '';
+       // console.log('defmsg', this.default_message);
+       /*this.cur_msg = this.replacedMessage();
+       console.log('rep-msg', this.cur_msg);
+       if (this.amForm.get('reason')) {
+        this.amForm.get('reason').setValue(this.cur_msg);
+       }*/
+      },
+      error => {
 
+      }
+    );
+  }
+  replacedMessage() {
+    let retmsg = this.default_message;
+    retmsg = retmsg.replace(/\[username\]/g, this.rep_username);
+    retmsg = retmsg.replace(/\[service\]/g, this.rep_service);
+    retmsg = retmsg.replace(/\[provider name\]/g, this.rep_provname);
+    if (this.cancel_reason && this.cancel_reason !== '') {
+      retmsg = retmsg.replace('[reason]', this.cancel_reason);
+     }
+    return retmsg;
+  }
+  titleCaseWord(word: string) {
+    if (!word) { return word; }
+    return word[0].toUpperCase() + word.substr(1);
+  }
 
 }

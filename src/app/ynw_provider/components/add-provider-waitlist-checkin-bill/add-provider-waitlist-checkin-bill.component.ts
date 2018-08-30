@@ -721,7 +721,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     });
     return index;
   }
-
+  stringtoDate(dt) {
+    let dtsarr;
+    if (dt) {
+      // const dts = new Date(dt);
+      dtsarr = dt.split(' ');
+      const dtarr = dtsarr[0].split('-');
+      return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+    } else {
+      return;
+    }
+  }
 
 }
 

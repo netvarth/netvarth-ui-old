@@ -161,7 +161,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     } else {
      // console.log('NOT');
     }
-    this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '');
+    this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
     this.getBusinessProfile();
     this.getLocationList();
     this.getServiceList();
@@ -188,8 +188,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
           // calling function which saves the business related details to show in the header
           this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-           || '', bProfile['serviceSector']['displayName'] || '', '');
-           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '');
+           || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
+           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '');
 
            const pdata = { 'ttype': 'updateuserdetails' };
            this.shared_functions.sendMessage(pdata);
@@ -219,7 +219,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     });
   }
    // get the logo url for the provider
-   getProviderLogo(bname = '', bsector = '') {
+   getProviderLogo(bname = '', bsector = '', bsubsector = '') {
     let blogo;
     this.provider_services.getProviderLogo()
       .subscribe(
@@ -233,7 +233,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           logo = '';
         }
         // calling function which saves the business related details to show in the header
-        this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', logo );
+        this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo );
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
       },

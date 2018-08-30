@@ -7,7 +7,7 @@
     <div class="content comn-cls">
         <div class="container">
             <div class="row">
-                <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid">
+                <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid" (selectedIndexChange)="selectedIndexChange($event)" >
                     <mat-tab label="Online Payment Settings">
                         <div class="outermost">
                             <!-- <div class='pay-outer'>
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                         <div class="actiondiv" *ngIf="savetaxEnabled">
-                            <button type="button" mat-button class="cs-btn bt1" (click)="saveTaxSettings()">Update Tax</button>
+                            <button type="button" mat-button class="cs-btn bt1" (click)="saveTaxSettings()" [disabled]="taxfieldValidation(false)">Update Tax</button>
                         </div>
                     </mat-tab>
                 </mat-tab-group>

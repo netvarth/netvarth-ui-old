@@ -2,6 +2,7 @@
 
 <div class="table-outer q-tbl">
 <div class="maindate" *ngIf="waitlist && waitlist.length > 0">{{curdate | date: dateFormat}}</div>
+<div class="table-subouter">
 <table class="table">
     <tbody>
         <tr *ngFor="let list of waitlist">
@@ -20,5 +21,6 @@
         </tr>
     </tbody>
 </table>
+</div>
 </div>
     

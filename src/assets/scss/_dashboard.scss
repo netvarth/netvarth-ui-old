@@ -443,6 +443,15 @@ footer {
                         display: block;
                         padding: 15px
                     }
+                    
+                    .alert-view-all {
+                        font-size: .75rem;
+                        font-weight: 600;
+                        color: $linkblue;
+                        margin-bottom: 10px;
+                        display: inline-block;
+                        cursor: pointer;
+                    }
                 }
 
                 .table-body {                    
@@ -3999,6 +4008,7 @@ footer {
                                     flex-grow: 1;
                                     padding: 10px;
                                     border: 1px solid #b6ffec6e;
+                                    background: rgba(255,255,255,.2);
                                     border-right: none;
                                     border-top: none;
                                     margin: 0;
@@ -4019,7 +4029,7 @@ footer {
                                         }
 
                                         .mat-input-wrapper {
-                                            margin-bottom: 5px;
+                                            margin-bottom: 0px;
                                             padding-bottom: 0px;
 
                                             .mat-input-underline, .mat-input-subscript-wrapper {
@@ -4051,6 +4061,18 @@ footer {
                                                         }
                                                     }
                                                 }
+                                            }
+                                        }
+                                        
+                                        .mat-select {
+                                            padding: 7px 10px;
+                                            height: 30px;
+                                            background: rgba(255,255,255,0.7);
+                                        }
+                                        
+                                        &.mat-focused {
+                                            .mat-select {
+                                                background: rgba(255,255,255,1);
                                             }
                                         }
                                     }
@@ -4098,6 +4120,7 @@ footer {
                                             .mat-input-flex {
                                                 align-items: center;
                                                 height: 28px;
+                                                width: 150px;
                                                 
                                                 .mat-input-suffix {
                                                     width: 40px;
@@ -5405,8 +5428,19 @@ footer {
 
                     h2 {
                         font-size: 1.125rem;
-                        margin-bottom: 30px;
+                        margin-bottom: 10px;
                         font-weight: 500;
+                    }
+                    
+                    .backtodashboard {
+                        .strong {
+                            font-weight: 600;
+                            color: $linkblue;
+                            margin-bottom: 20px;
+                            font-size: .75rem;
+                            cursor: pointer;
+                            display: inline-block;
+                        }
                     }
 
                     .tp {
@@ -6193,7 +6227,7 @@ footer {
                         
                         .form-group {
                             mat-form-field {
-                                width: 62px;
+                                width: 150px;
 
                                 .mat-form-field-flex {
                                     display: flex;
@@ -6203,6 +6237,9 @@ footer {
                                         margin-left: 5px;
                                     }
                                 }
+                            }
+                            &:first-child {
+                                mat-form-field {width: 62px;}
                             }
                         }
                     }

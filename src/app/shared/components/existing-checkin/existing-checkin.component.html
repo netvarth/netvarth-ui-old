@@ -1,4 +1,4 @@
-    <h1 class="mat-dialog-title">Your {{checkinLabel}} at {{this.data.locdet.place}}
+    <h1 class="mat-dialog-title">Your {{checkinLabel}} at {{this.data.locdet.place | titlecase}}
     <button #queue [mat-dialog-close]="changeOccured" class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -20,8 +20,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let chkin of loc">
-                        <td class="chk-service" data-title="Service">{{chkin.service.name}}</td>
-                        <td class="chk-service" data-title="For">{{getWaitlistingFor(chkin.waitlistingFor)}}</td>
+                        <td class="chk-service" data-title="Service">{{chkin.service.name | titlecase}}</td>
+                        <td class="chk-service" data-title="For">{{getWaitlistingFor(chkin.waitlistingFor) | titlecase}}</td>
                         <td class="chk-service" data-title="Time"><div class="schedulediv"><span class="schedule">{{getDateDisplay(chkin.date)}}</span><ng-container *ngIf="chkin.appxWaitingTime != undefined">, Estimated Waiting Time is <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span></ng-container></div></td>
                         <td class="chk-cancel" (click)="confirmCancelChecin(chkin)"><span class="icon-delete"></span></td>
                     </tr>
@@ -30,7 +30,7 @@
         </div>
     </div> 
     <div class="c-checkin-blank" *ngIf="loc.length==0">
-        No {{checkinLabel}} exists at {{this.data.locdet.place}}
+        No {{checkinLabel}} exists at {{this.data.locdet.place | titlecase}}
     </div>
     </mat-dialog-content>
 

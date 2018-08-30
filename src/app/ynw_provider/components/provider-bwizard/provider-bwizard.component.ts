@@ -130,7 +130,7 @@ export class ProviderbWizardComponent implements OnInit {
               this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
               this.loading_active = false;
               // calling function which saves the business related details to show in the header
-              this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], '');
+              this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], data['serviceSubSector']['displayName'], '');
             },
             error => {
               this.loading_active = false;

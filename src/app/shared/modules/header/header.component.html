@@ -20,7 +20,7 @@
                     </div>
                     <div class="mn-title">
                         <span class="title-bn">{{bname | titlecase}}</span>
-                        <span class="title-ps">{{bsector | titlecase }}</span>
+                        <span class="title-ps">{{bsector | titlecase }} <span *ngIf="bsubsector!=''">({{bsubsector | titlecase}})</span></span>
                     </div>
 
                     <div class="inbx" (click)="inboxiconClick()">
@@ -40,7 +40,7 @@
                         <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="redirectto('profile')">
                                 <i class="icon-profile"></i>
-                                <span>Profile</span>
+                                <span>User Profile</span>
                         </button>
                         <button mat-menu-item (click)="redirectto('change-password')">
                             <i class="icon-password"></i>
@@ -106,7 +106,7 @@
                                     </button>    
                                     <button mat-menu-item (click)="redirectto('profile')">
                                             <i class="icon-profile"></i>
-                                            <span>Profile</span>
+                                            <span>User Profile</span>
                                     </button>
                                     <button mat-menu-item (click)="redirectto('change-password')">
                                         <i class="icon-password"></i>

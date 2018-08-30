@@ -689,12 +689,13 @@ export class SharedFunctions {
     return displaysch;
   }
 
-  setBusinessDetailsforHeaderDisp(bname, sector, logo, forcelogoblank?) {
-    const buss_det = {'bn': '', 'bs': '', 'logo': '' };
+  setBusinessDetailsforHeaderDisp(bname, sector, subsector, logo, forcelogoblank?) {
+    const buss_det = {'bn': '', 'bs': '', 'bss': '', 'logo': '' };
     const exist_det = this.getitemfromLocalStorage('ynwbp');
     if (exist_det) {
       buss_det.bn = bname || '';
       buss_det.bs = sector || '';
+      buss_det.bss = subsector || '';
       if (forcelogoblank !== undefined) {
         buss_det.logo = '';
       } else {
@@ -703,6 +704,7 @@ export class SharedFunctions {
     } else {
       buss_det.bn = bname;
       buss_det.bs = sector;
+      buss_det.bss = subsector;
       buss_det.logo = logo;
     }
     this.setitemonLocalStorage('ynwbp', buss_det);

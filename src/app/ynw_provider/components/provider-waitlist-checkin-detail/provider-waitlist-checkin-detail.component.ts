@@ -39,8 +39,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     api_success = null;
     api_error = null;
-    
-    
+
     dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
 
@@ -227,14 +226,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     }
 
     getAppxTime(waitlist) {
-      // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
+       // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
         /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
           return 'Now';
         } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
           return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
         }  else {*/
-          const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
-          return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
+          if (waitlist.queue.queueStartTime !== undefined) {
+            const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
+            return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
+          } else {
+            return -1;
+          }
        //  }
     }
 

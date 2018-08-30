@@ -22,6 +22,7 @@ import { HeaderModule } from './shared/modules/header/header.module';
 import { CheckInModule } from './shared/modules/check-in/check-in.module';
 import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { TermsStaticModule } from './shared/modules/terms-static/terms-static.module';
+import { PrivacyStaticModule } from './shared/modules/privacy-static/privacy-static.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
@@ -114,7 +115,8 @@ import 'hammerjs';
     ModalGalleryModule.forRoot(),
     ConsumerCheckinHistoryListModule,
     Nl2BrPipeModule,
-    TermsStaticModule
+    TermsStaticModule,
+    PrivacyStaticModule
   ],
   providers: [
     AuthGuardConsumer,
