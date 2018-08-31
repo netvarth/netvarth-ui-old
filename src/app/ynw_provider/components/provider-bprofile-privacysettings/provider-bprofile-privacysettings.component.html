@@ -16,7 +16,7 @@
                 <label class="col-form-label">This phone number is visible to whom?</label>
                 <mat-radio-group [(ngModel)]="phonepermission" [ngModelOptions]="{standalone: true}">
                         <mat-radio-button value="all" >{{privacypermissiontxt['all']}}</mat-radio-button>
-                        <mat-radio-button value="customersOnly">{{privacypermissiontxt['customersOnly']}}</mat-radio-button>
+                        <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button>
                         <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
                 </mat-radio-group>
                 </div>
@@ -64,7 +64,7 @@
                 <label class="col-form-label">This email id is visible to</label>
                 <mat-radio-group [(ngModel)]="emailpermission" [ngModelOptions]="{standalone: true}">
                 <mat-radio-button value="all" >{{privacypermissiontxt['all']}}</mat-radio-button>
-                <mat-radio-button value="customersOnly">{{privacypermissiontxt['customersOnly']}}</mat-radio-button>
+                <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button>
                 <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
                 </mat-radio-group>
                 </div>

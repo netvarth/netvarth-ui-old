@@ -9,6 +9,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { ProviderRefundComponent } from '../../../ynw_provider/components/provider-refund/provider-refund.component';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 
 
@@ -55,12 +56,14 @@ export class ViewBillComponent implements OnInit, OnChanges {
   };
   bill_load_complete = 0;
   item_service_tax: any = 0;
+  item_service_gst = '';
   Pipe_disp_date = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
 
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
     public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
     private dialog: MatDialog,
+    public provider_services: ProviderServices,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public sharedfunctionObj: SharedFunctions,
@@ -73,6 +76,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
      }
 
   ngOnInit() {
+    this.getTaxDetails();
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
     this.pre_payment_log = this.prepaymentlog || null;
@@ -105,7 +109,27 @@ export class ViewBillComponent implements OnInit, OnChanges {
     this.api_success = null;
   }
 
+  getTaxDetails() {
+    return new Promise((resolve, reject) => {
+      this.shareServicesobj.getTaxpercentage()
+      .subscribe(
+        data => {
+          this.item_service_tax = data['taxPercentage'];
+          this.item_service_gst = data['gstNumber'];
+          if (this.item_service_gst !== '' && this.item_service_gst !== undefined && this.item_service_gst !== null) {
+            this.item_service_gst = '(' + this.item_service_gst + ')';
+          }
+          resolve();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
 
+          reject(error);
+        }
+      );
+    });
+
+  }
 
   updateBill() {
     this.updatebill.emit('updateBill');

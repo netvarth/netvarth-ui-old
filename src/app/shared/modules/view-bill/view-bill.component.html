@@ -6,7 +6,7 @@
 <mat-dialog-content>
  <div class="group-outer">
      <div class="form-group bill-basic">
-         <div class="btl"><span class="label">Bill Id / No</span> <span class="label-valu">{{bill_data.id}} </span></div>
+         <div class="btl"><span class="label">Bill Id / No</span> <span class="label-valu">{{bill_data.id}} {{item_service_gst}}</span></div>
          <div class="btl"><span class="label">Customer Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
          <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
          <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div>

@@ -257,7 +257,8 @@
                                                             <div class="otr">
                                                                 <div class="ctd">{{phone.label | titlecase}}</div>
                                                                 <div class="ctd">{{phone.number}}</div>
-                                                                <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[phone.permission]}}</div>
+                                                                <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[phone.permission]}}</div> -->
+                                                                <div class="ctd"><span>Visible to</span> {{show_privacyText(phone.permission)}}</div>
                                                                 <!-- <a href="#" class="mbt"></a> -->
                                                                 <span class="mbt">
                                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -299,7 +300,8 @@
                                                             <div class="otr">
                                                                 <div class="ctd">{{email.label | titlecase}}</div>
                                                                 <div class="ctd">{{email.emailid}}</div>
-                                                                <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[email.permission]}}</div>
+                                                                <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[email.permission]}}</div> -->
+                                                                <div class="ctd"><span>Visible to</span> {{show_privacyText(email.permission)}}</div>
                                                                 <span class="mbt">
                                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                             <mat-icon>more_vert</mat-icon>

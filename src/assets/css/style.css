@@ -7664,6 +7664,18 @@ footer.itl-steps .sect3 {
                 box-shadow: none; }
             .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset:first-child, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset:first-child {
               margin-bottom: 15px; }
+        .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer app-field-error-display .sts-msg.error {
+          padding: 10px 0px 0;
+          color: #f24949;
+          font-size: .75rem;
+          font-weight: 500;
+          text-align: left; }
+        .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer app-field-error-display .sts-msg.success {
+          padding: 10px 0px 0;
+          color: #00cc96;
+          font-size: .75rem;
+          font-weight: 500;
+          text-align: left; }
   .is-bx.step4 .content .flds .mb20 {
     margin-bottom: 20px; }
   .is-bx.step4 .content .flds .rdo {
@@ -9180,7 +9192,8 @@ footer.dashb {
   margin: 0 20px;
   display: flex;
   border: 1px solid #f2f2f2;
-  border-bottom: none; }
+  /*border-bottom: none;*/
+  margin-bottom: 15px; }
   .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion {
     width: 100%;
     border-radius: 0; }
@@ -12105,14 +12118,14 @@ footer.dashb {
     .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter {
       padding-left: 0px; }
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field {
-        width: 150px; }
+        width: 62px; }
         .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field .mat-form-field-flex {
           display: flex;
           align-items: center; }
           .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field .mat-form-field-flex .mat-input-suffix {
             margin-left: 5px; }
-      .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group:first-child mat-form-field {
-        width: 62px; }
+      .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group.gstval mat-form-field {
+        width: 150px; }
   .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .actiondiv {
     margin-top: 30px;
     padding-left: 20px; }

@@ -2014,7 +2014,8 @@ footer {
                         margin: 0 20px;
                         display: flex;
                         border: 1px solid $cc-body;
-                        border-bottom: none;
+                        /*border-bottom: none;*/
+                        margin-bottom: 15px;
 
                         .mat-accordion {                            
                             width: 100%;                            
@@ -6227,7 +6228,7 @@ footer {
                         
                         .form-group {
                             mat-form-field {
-                                width: 150px;
+                                width: 62px;
 
                                 .mat-form-field-flex {
                                     display: flex;
@@ -6238,8 +6239,10 @@ footer {
                                     }
                                 }
                             }
-                            &:first-child {
-                                mat-form-field {width: 62px;}
+                            &.gstval {
+                                mat-form-field {
+                                    width: 150px;
+                                }  
                             }
                         }
                     }

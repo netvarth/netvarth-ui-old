@@ -492,4 +492,8 @@ export class SharedServices {
       const url = mod + '/payment/' + uuid ;
       return this.servicemeta.httpGet(url);
     }
+    getTaxpercentage() {
+      const url = 'provider/payment/tax/';
+      return this.servicemeta.httpGet(url);
+    }
 }

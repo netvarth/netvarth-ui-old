@@ -139,6 +139,15 @@
                     <mat-tab label="Tax Settings">
                         <div class="outermost">
                             <div class="taxouter">
+
+                            <div class="form-group gstval">
+                                    <label class="caption">GST Number *</label>
+                                    <mat-form-field>
+                                        <input matInput [(ngModel)]="gstnumber" (keypress)="resetApi()" autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display [displayError]="showError['gstnumber']['status']" [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display>
+                            </div>
+
                             <div class="form-group">
                                 <label class="caption">Tax Percentage *</label>
                                 <mat-form-field>
@@ -148,13 +157,7 @@
                                 <app-field-error-display [displayError]="showError['taxpercentage']['status']" [errorMsg]="showError['taxpercentage']['msg']"></app-field-error-display>
                             </div>
 
-                            <div class="form-group">
-                                    <label class="caption">GST Number *</label>
-                                    <mat-form-field>
-                                        <input matInput [(ngModel)]="gstnumber" (keypress)="resetApi()" autocomplete="off">
-                                    </mat-form-field>
-                                    <app-field-error-display [displayError]="showError['gstnumber']['status']" [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display>
-                                </div>
+                           
                             </div>
                         </div>
                         <div class="actiondiv" *ngIf="savetaxEnabled">

@@ -107,6 +107,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   normal_specilization_show = 1;
   loadingParams: any = {'diameter' : 40, 'strokewidth': 15};
   showaddsocialmedia = false;
+  customernormal_label = this.sharedfunctionobj.getTerminologyTerm('customer');
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -1446,5 +1447,18 @@ export class ProviderBprofileSearchComponent implements OnInit {
       }
       return str;
     }
+  }
+  show_privacyText(txt) {
+    let rettxt = '';
+    if (txt === 'customersOnly') {
+      if (this.customernormal_label !== '' && this.customernormal_label !== undefined && this.customernormal_label !== null) {
+        rettxt = 'My ' + this.sharedfunctionobj.firstToUpper(this.customernormal_label) + 's Only';
+      } else {
+        rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
+      }
+    } else {
+      rettxt = this.privacypermissiontxt[txt];
+    }
+    return rettxt;
   }
 }
