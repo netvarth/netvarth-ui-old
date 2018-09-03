@@ -25,13 +25,15 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     remaining_adword = 0;
 
     query_executed = false;
+    addwordTooltip = '';
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions) {}
 
     ngOnInit() {
-        this.getTotalAllowedAdwordsCnt();
+      this.addwordTooltip = this.sharedfunctionObj.getProjectMesssages('ADDWORD_TOOLTIP');
+      this.getTotalAllowedAdwordsCnt();
     }
 
     ngOnChanges() {

@@ -66,7 +66,7 @@
                       </ul>
 
                       <span *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id"
-                      class="ml-auto cs-btn bt5" (click)="showAdjustDelay()">
+                      class="ml-auto cs-btn bt5" (click)="showAdjustDelay()" [matTooltipClass] = "tooltipcls" [matTooltip]="delayTooltip">
                           Adjust Delay
                       </span>
                        <!-- <span><i class="icon-question" [matTooltip]="delayTooltip"></i></span> -->
@@ -78,7 +78,7 @@
                   <mat-accordion >
                     <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
                       <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                          <span (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                          <span (click)="toggleFilter()"><i class="icon-filter-one"  [matTooltipClass] = "tooltipcls" [matTooltip]="filtericonTooltip"></i></span>
                       </mat-expansion-panel-header>
 
                       <div class="form-group first_name">

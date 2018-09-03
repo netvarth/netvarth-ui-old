@@ -49,7 +49,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
-
   loadcomplete = {waitlist: false , fav_provider: false, history: false};
 
   pagination: any  = {
@@ -73,6 +72,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   open_fav_div = null;
   hideShowAnimator = false;
+  currentcheckinsTooltip = '';
+  favTooltip = '';
+  historyTooltip = '';
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -81,6 +83,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   private consumer_datastorage: ConsumerDataStorageService) {}
 
   ngOnInit() {
+    this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
+    this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
+    this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
    // this.getHistoryCount();

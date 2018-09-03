@@ -156,6 +156,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   multipeLocationAllowed = false;
 
   customer_label = '';
+  maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,

@@ -47,6 +47,7 @@ export class ProviderLicenseComponent implements OnInit {
     reload_adword_api =  {status : true};
     type = null;
     upgradablepackages = [];
+    addonTooltip = '';
 
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
@@ -64,6 +65,7 @@ export class ProviderLicenseComponent implements OnInit {
       }
 
     ngOnInit() {
+      this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
       this.getLicenseDetails();
       this.getLicenseUsage();
       this.getInvoiceList();

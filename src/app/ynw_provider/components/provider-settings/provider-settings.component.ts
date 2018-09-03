@@ -52,8 +52,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   private routerobj: Router) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
+  bprofileTooltip = '';
+  waitlistTooltip = '';
+  licenseTooltip = '';
+  paymentTooltip = '';
+  billposTooltip = '';
 
   ngOnInit() {
+    this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
+    this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
+    this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
+    this.paymentTooltip = this.shared_functions.getProjectMesssages('PAYMENT_TOOLTIP');
+    this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();

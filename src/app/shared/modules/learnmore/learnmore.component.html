@@ -4,10 +4,12 @@
         </button>
       </h1>
       <mat-dialog-content>
-        <div style="height:130px" id="{{cont.key}}" *ngFor="let cont of topicContentArr">
-            <div><strong>{{cont.key}}</strong></div>
-            {{cont.content}}
-        </div>
+        
+        <!-- Bprofile Start -->Target: {{destination}}
+        <app-bprofile-learnmore [target]="destination" *ngIf="destination=='bprofile'"></app-bprofile-learnmore>
+        <!-- Bprofile End -->
+
+
       </mat-dialog-content>
       <mat-dialog-actions>
         <button  type="button" mat-dialog-close class="cs-btn bt2">Close</button>

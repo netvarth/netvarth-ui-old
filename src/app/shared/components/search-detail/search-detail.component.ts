@@ -113,6 +113,9 @@ export class SearchDetailComponent implements OnInit {
   showmore_defaultcnt = projectConstants.REFINE_ENUMLIST_DEFAULT_SHOW_CNT;
   holdprovidforCommunicate = 0;
   searchButtonClick = false;
+  commTooltip = '';
+  refTooltip = '';
+  bNameTooltip = '';
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
@@ -124,6 +127,9 @@ export class SearchDetailComponent implements OnInit {
                }
 
   ngOnInit() {
+    this.commTooltip = this.shared_functions.getProjectMesssages('COMM_TOOPTIP');
+    this.refTooltip = this.shared_functions.getProjectMesssages('REF_TOOPTIP');
+    this.bNameTooltip = this.shared_functions.getProjectMesssages('BUSSNAME_TOOPTIP');
     // this.activaterouterobj.queryParams
     this.getDomainListMain()
       .then(data => {

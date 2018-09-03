@@ -115,8 +115,8 @@
                           <div class="left">
                               <div class="lc22">
                                   <div class="lc2-1 lcd">
-                                      <div class="ttle">Add-on
-                                        <span class="addbt" (click)="showadd_addons()"></span></div>
+                                      <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addonTooltip">Add-on
+                                        <span class="addbt" (click)="showadd_addons()" ></span></div>
                                   </div>
                                   <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
 

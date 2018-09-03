@@ -7,7 +7,7 @@
               <mat-accordion >
                 <mat-expansion-panel [expanded]= 'true'>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title  [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip">
                       Current Check-Ins
                     </mat-panel-title>
                   </mat-expansion-panel-header>
@@ -126,7 +126,7 @@
               <mat-accordion>
                 <mat-expansion-panel [expanded]= 'true'>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title  [matTooltipClass] = "tooltipcls" [matTooltip]="favTooltip">
                       My Favourites
                     </mat-panel-title>
                   </mat-expansion-panel-header>
@@ -206,7 +206,7 @@
               <mat-accordion>
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title [matTooltipClass] = "tooltipcls" [matTooltip]="historyTooltip">
                       History
                     </mat-panel-title>
                   </mat-expansion-panel-header>

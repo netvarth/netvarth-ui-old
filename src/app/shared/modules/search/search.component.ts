@@ -121,6 +121,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   holdsrchlocname = '';
   @ViewChild('locrefrence') private locRef: ElementRef;
   @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
+  moreoptionsTooltip = '';
 
   constructor (
     private shared_service: SharedServices,
@@ -140,6 +141,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   ngOnInit() {
     // console.log('srch pass kw', this.passedkwdet);
    // console.log('Refined search ', this.passedRefine);
+   this.moreoptionsTooltip = this.shared_functions.getProjectMesssages('MOREOPTIONS_TOOLTIP');
     if (this.passedkwdet.kwtyp === 'label') {
       if (this.passedkwdet.kwdomain !== '' && this.passedkwdet.kwdomain !== undefined) {
         this.curlabel.typ = 'label';

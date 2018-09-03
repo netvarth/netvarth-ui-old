@@ -52,11 +52,11 @@
   </div>
   <!-- <div class="sa-mo flex-shrink-0" *ngIf="chk_moreoptionshow()"> -->
       <div class="sa-mo flex-shrink-0">
-      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'">More Options</span>
-      <span class="icon icon-filter" id="morefiltericon" (click)="showMoreOptions()" *ngIf="includedfrom=='consumer_header'"></span>
+      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'"  [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip">More Options</span>
+      <span class="icon icon-filter" id="morefiltericon" (click)="showMoreOptions()" *ngIf="includedfrom=='consumer_header'" [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip"></span>
   </div>
   <ng-container>
-  <div class="more-opt" [class.show]="showmoreoptionsSec" >
+  <div class="more-opt" [class.show]="showmoreoptionsSec">
     <span class="closebtn" (click)="closeMoreoptions()"></span>
     <div class="mo-content">
         <app-search-moreoptions  (searchmoreclick)="handleSearchmoreSearchClick($event)" [passedRefine]="passedRefine"></app-search-moreoptions>

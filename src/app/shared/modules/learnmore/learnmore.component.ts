@@ -9,9 +9,11 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-learnmore',
-  templateUrl: './learnmore.component.html'
+  templateUrl: './learnmore.component.html',
+  styleUrls: ['./learnmore.component.css']
 })
 export class LearnmoreComponent implements OnInit {
+    destination = '';
     topicmaxCnt = 10;
     topicContentArr = [
       {'key': 'bprofile1', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
@@ -38,6 +40,7 @@ export class LearnmoreComponent implements OnInit {
 
     ngOnInit() {
       console.log('passed in data', this.data, this.data.moreOptions.scrollKey);
+      this.destination = this.data.moreOptions.scrollKey;
       if (this.data.moreOptions.scrollKey !== undefined) {
         setTimeout(() => {
           this.triggerScrollTo(this.data.moreOptions.scrollKey);

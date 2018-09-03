@@ -110,7 +110,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   settings;
-  delayTooltip = Messages.ADJUSTDELAY_TOOPTIP;
+  delayTooltip = this.shared_functions.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
+  filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,

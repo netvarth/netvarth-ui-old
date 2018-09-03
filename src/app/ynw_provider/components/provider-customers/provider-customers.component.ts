@@ -46,7 +46,7 @@ export class ProviderCustomersComponent implements OnInit {
   customer_label = '';
   checkin_label = '';
   checkedin_label = '';
-
+  filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
 
   constructor(private provider_services: ProviderServices,
     private router: Router,

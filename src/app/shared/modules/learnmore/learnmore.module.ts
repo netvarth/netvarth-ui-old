@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../common/material.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LearnmoreComponent } from './learnmore.component';
+import { LearnmoreBprofileComponent } from './learnmore-bprofile/learnmore-bprofile.component';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { LearnmoreComponent } from './learnmore.component';
         ScrollToModule.forRoot()
     ],
     declarations: [
-        LearnmoreComponent
+        LearnmoreComponent,
+        LearnmoreBprofileComponent
     ],
     entryComponents: [
         LearnmoreComponent

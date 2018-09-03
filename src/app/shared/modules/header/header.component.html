@@ -10,8 +10,8 @@
 
             <div class="lgo col-md-3"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
             <div class="tc1 col-md-3 ml-auto" *ngIf="!shared_functions.checkLogin()">
-                <div class="topsignouter"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span></div>
-                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">Are you a Business Owner? <span (click)="doLogin('provider')">Click Here</span></div>
+                <div class="topsignouter" [matTooltipClass] = "tooltipcls" [matTooltip]="custsignTooltip"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span></div>
+                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()" [matTooltipClass] = "tooltipcls" [matTooltip]="provsignTooltip">Are you a Business Owner? <span (click)="doLogin('provider')">Click Here</span></div>
             </div>
             <div class="lg-opt ml-auto" *ngIf="provider_loggedin">
                 <div class="bnps" *ngIf="headercls=='dashb'">
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="inbx" (click)="inboxiconClick()">
-                        <div class="ot-bx">
+                        <div class="ot-bx" [matTooltipClass] = "tooltipcls" [matTooltip]="inboxiconTooltip">
                             <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</div>
                             <i data-icon="H"></i>
                         </div>
@@ -85,7 +85,7 @@
                         <ng-container *ngIf="ctype=='consumer'">
                             <!-- <div class="bnps" *ngIf="headercls=='dashb'"> -->
                             <div class="bnps">
-                                <div class="inbx" (click)="inboxiconClick()">
+                                <div class="inbx" (click)="inboxiconClick()" [matTooltipClass] = "tooltipcls" [matTooltip]="inboxiconTooltip">
                                     <div class="ot-bx">
                                         <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</div>
                                         <i data-icon="H"></i>

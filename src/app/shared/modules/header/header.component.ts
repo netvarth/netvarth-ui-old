@@ -65,6 +65,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   avoidClear = 1;
   upgradablepackages: any = [];
   main_loading = false;
+  inboxiconTooltip = '';
+  custsignTooltip = '';
+  provsignTooltip = '';
 
   constructor(
     private dialog: MatDialog,
@@ -122,6 +125,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
    // console.log('passeddomain', this.passedDomain);
    // console.log('passedkw', this.passedkwdet);
    // console.log('passedRefine', this.passedRefine);
+   this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
+   this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
+   this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
     this.getBusinessdetFromLocalstorage();
     // this.handleHeaderclassbasedonURL();

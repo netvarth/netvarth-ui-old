@@ -7,7 +7,7 @@
             <!-- <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && search_result_count > 0"> -->
             <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">
                 <div class="ct1" >
-                    <span class="mnu" (click)="togger_refinesection()">
+                    <span class="mnu" (click)="togger_refinesection()" [matTooltipClass] = "tooltipcls" [matTooltip]="refTooltip">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -317,7 +317,7 @@
                                 </div>
                                 <div class="tp2">
                                     <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div>
-                                    <h3 (click)="providerDetClicked(search_result)">{{search_result.fields.title | titlecase}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
+                                    <h3 (click)="providerDetClicked(search_result)" [matTooltipClass] = "tooltipcls" [matTooltip]="bNameTooltip">{{search_result.fields.title | titlecase}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
                                     <span class="address">{{search_result.fields.place1 | titlecase }}</span>
 
                                     <div class="clr">
@@ -364,7 +364,7 @@
                                     <!-- <li><span class="icon-ambulance"></span></li>
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
-                                <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1">Communicate</span>
+                                <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1" [matTooltipClass] = "tooltipcls" [matTooltip]="commTooltip">Communicate</span>
                                 <span class="claim-business" (click)="claimBusiness()" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
                             </div>
                         </div>

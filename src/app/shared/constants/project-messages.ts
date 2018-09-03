@@ -74,7 +74,7 @@ export const Messages = {
   'BPROFILE_PRIVACY_EMAIL_INVALID' : 'Please enter a valid email id',
   'BPROFILE_SOCIAL_URL_VALID' : 'Please enter a valid URL',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
-  'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
+  // 'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
   'BPROFILE_LANGUAGE_SAVED': 'Languages Saved succesfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations Saved succesfully',
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
@@ -171,9 +171,26 @@ export const Messages = {
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
   'Manage_Privacy': 'Manage privacy changed successfully',
 
-  // Provider Dashboard
-  'ADJUSTDELAY_TOOPTIP': 'Use this button to adjust the delay.',
+    // Dynamic Field
+  'YEAR_MONTH_VALID' : 'Future date not allowed',
 
-  // Dynamic Field
-  'YEAR_MONTH_VALID' : 'Future date not allowed'
+  // Tooltips given by YNW
+  'ADJUSTDELAY_TOOPTIP' : 'Set delay in working hours anytime',
+  'INBOXICON_TOOPTIP': 'Messages',
+  'FILTERICON_TOOPTIP': 'Use filters to find specific data',
+  'BRPFOLE_SEARCH_TOOLTIP': 'Set up your profile here',
+  'WAITLIST_TOOLTIP': 'Manage working hours and waitlist',
+  'LINCENSE_TOOLTIP' : 'View and change your license package',
+  'PAYMENT_TOOLTIP' : 'View and edit online payment setings and tax settings',
+  'BILLPOS_TOOLTIP' : 'Add items, discounts, coupons',
+  'ADDON_TOOLTIP' : 'Buy available add-ons',
+  'ADDWORD_TOOLTIP' : 'Buy ad-words here',
+  'MOREOPTIONS_TOOLTIP' : 'More Search Options',
+  'CURRENTCHECKINS_TOOLTIP' : 'Your upcoming check-ins',
+  'FAVORITE_TOOLTIP' : 'Your favourite providers',
+  'HISTORY_TOOLTIP' : 'Your past check-ins',
+  'COMM_TOOPTIP' : 'Send messages to your provider here',
+  'REF_TOOPTIP' : 'Show/hide refined search',
+  'CUSTSIGN_TOOPTIP' : 'Consumers click here to Login/Join Jaldee.com',
+  'PROVSIGN_TOOPTIP' : 'Providers please click here to Register/Login to Jaldee.com'
 };
