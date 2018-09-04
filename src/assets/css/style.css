@@ -2164,15 +2164,46 @@ app-footer {
         font-weight: 500;
         padding: 0 20px;
         font-size: 1.25rem;
-        min-height: 60px; }
+        min-height: 60px;
+        /*.mat-expansion-indicator {
+            width: 14px;
+            height: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            &:after {
+                border-width: 0 1.5px 1.5px 0;
+            }
+        }*/ }
         .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
-          width: 14px;
-          height: 14px;
+          -moz-transform: rotate(0deg) !important;
+          -o-transform: rotate(0deg) !important;
+          -ms-transform: rotate(0deg) !important;
+          -webkit-transform: rotate(0deg) !important;
+          transform: rotate(0deg) !important;
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          right: 15px;
           display: flex;
           align-items: center;
-          justify-content: center; }
+          font-weight: 700;
+          font-size: .625rem; }
           .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:after {
-            border-width: 0 1.5px 1.5px 0; }
+            color: #222223;
+            border: none;
+            content: "\72";
+            position: absolute;
+            font-family: "custom-ynw" !important;
+            -moz-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+        .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.mat-expanded .mat-expansion-indicator:after {
+          content: "\66";
+          color: #222223; }
       .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
         padding-left: 0px;
         padding-right: 0px;
@@ -9191,7 +9222,7 @@ footer.dashb {
 .content .col-a .card.spc-extra .mat-accordion .acc-cont, .content .col-a .card.add-extra .mat-accordion .acc-cont {
   margin: 0 20px;
   display: flex;
-  border: 1px solid #f2f2f2;
+  border: 1px solid #dbdbdb;
   /*border-bottom: none;*/
   margin-bottom: 15px; }
   .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion {
@@ -9217,6 +9248,34 @@ footer.dashb {
           .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content mat-panel-description .material-icons, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content mat-panel-description .material-icons {
             font-size: 1.5rem;
             color: #00aef2; }
+        .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
+          -moz-transform: rotate(0deg) !important;
+          -o-transform: rotate(0deg) !important;
+          -ms-transform: rotate(0deg) !important;
+          -webkit-transform: rotate(0deg) !important;
+          transform: rotate(0deg) !important;
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          right: 15px;
+          display: flex;
+          align-items: center;
+          font-weight: 700;
+          font-size: .625rem; }
+          .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:after, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:after {
+            color: #222223;
+            border: none;
+            content: "\72";
+            position: absolute;
+            font-family: "custom-ynw" !important;
+            -moz-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+        .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.mat-expanded .mat-expansion-indicator:after, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.mat-expanded .mat-expansion-indicator:after {
+          content: "\66";
+          color: #00aef2; }
         .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header:hover, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header:hover {
           background: #f2f2f2; }
       .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
@@ -9268,9 +9327,9 @@ footer.dashb {
     .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion:hover .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .cont-btn .editbt, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion:hover .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .cont-btn .editbt {
       opacity: 1; }
   .content .col-a .card.spc-extra .mat-accordion .acc-cont:first-child, .content .col-a .card.add-extra .mat-accordion .acc-cont:first-child {
-    border-top: 1px solid #f2f2f2; }
+    border-top: 1px solid #dbdbdb; }
   .content .col-a .card.spc-extra .mat-accordion .acc-cont:last-child, .content .col-a .card.add-extra .mat-accordion .acc-cont:last-child {
-    border-bottom: 1px solid #f2f2f2; }
+    border-bottom: 1px solid #dbdbdb; }
 .content .col-a .card .special-dta, .content .col-a .card .lang-dta {
   position: relative;
   margin: 0 20px;
@@ -15500,7 +15559,12 @@ header.consumer {
   font-weight: 700;
   margin-bottom: 10px; }
 .content .static-outer .p-subouter {
-  margin-bottom: 20px; }
+  margin-bottom: 1.2rem; }
+  .content .static-outer .p-subouter p {
+    margin-bottom: 1.2rem; }
+  .content .static-outer .p-subouter div, .content .static-outer .p-subouter p, .content .static-outer .p-subouter ul li, .content .static-outer .p-subouter ol li {
+    font-size: 1rem;
+    letter-spacing: .3px; }
   .content .static-outer .p-subouter h2 {
     font-size: 1.2rem;
     font-weight: 600;
@@ -15511,8 +15575,7 @@ header.consumer {
       margin-bottom: 1.125em;
       list-style: none;
       position: relative;
-      padding-left: 1.25em;
-      font-size: .875rem; }
+      padding-left: 1.25em; }
       .content .static-outer .p-subouter ul li:before {
         font-family: "custom-ynw";
         font-style: normal;
@@ -15711,6 +15774,158 @@ header.consumer {
   font-size: .875rem;
   color: #999999;
   text-align: center; }
+
+.lm-outer {
+  margin: 0 auto;
+  padding: 50px;
+  background: #fff; }
+  .lm-outer h3 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 10px; }
+  .lm-outer section {
+    margin-bottom: 2rem; }
+    .lm-outer section p, .lm-outer section div, .lm-outer section ul li, .lm-outer section ol li, .lm-outer section table th, .lm-outer section table td {
+      font-size: 1rem;
+      line-height: 1.75;
+      letter-spacing: .3px; }
+    .lm-outer section p, .lm-outer section ul li, .lm-outer section ol li, .lm-outer section ul, .lm-outer section ol {
+      margin-bottom: 1.2rem; }
+    .lm-outer section h4 {
+      font-size: 1.2rem;
+      color: #545457; }
+    .lm-outer section h5 {
+      font-size: 1rem;
+      color: #545457; }
+    .lm-outer section blockquote {
+      font-family: 'Roboto Slab', sans-serif;
+      color: #545457;
+      letter-spacing: .5px;
+      font-size: 1.1rem;
+      padding: 20px;
+      font-style: italic;
+      border-left: 5px solid #87878a;
+      background: rgba(255, 255, 255, 0.6);
+      margin-bottom: 1.2rem; }
+    .lm-outer section .box-indent {
+      margin-left: 2.2rem; }
+    .lm-outer section .ul-normal {
+      padding-left: 15px; }
+      .lm-outer section .ul-normal li {
+        position: relative;
+        list-style: none;
+        position: relative;
+        padding-left: 1.25em; }
+        .lm-outer section .ul-normal li ul, .lm-outer section .ul-normal li ol, .lm-outer section .ul-normal li table {
+          margin-top: 1.2rem; }
+        .lm-outer section .ul-normal li ol li {
+          list-style: decimal;
+          padding-left: .5em; }
+          .lm-outer section .ul-normal li ol li:before {
+            display: none; }
+        .lm-outer section .ul-normal li:before {
+          font-family: "custom-ynw";
+          font-style: normal;
+          font-weight: normal;
+          font-variant: normal;
+          text-transform: none;
+          content: "\67";
+          position: absolute;
+          left: 3px;
+          font-size: .55rem;
+          top: 6px; }
+        .lm-outer section .ul-normal li:last-child {
+          margin-bottom: 0; }
+    .lm-outer section .table {
+      border: 1px solid #dbdbdb;
+      background: rgba(255, 255, 255, 0.3);
+      margin-bottom: 1.2rem; }
+      .lm-outer section .table thead tr {
+        background: rgba(255, 255, 255, 0.8); }
+        .lm-outer section .table thead tr th {
+          font-size: 1.2rem;
+          color: #545457; }
+      .lm-outer section .table tbody tr td {
+        vertical-align: top; }
+        .lm-outer section .table tbody tr td .ol-normal {
+          margin: 0 0 0 20px;
+          padding: 0; }
+          .lm-outer section .table tbody tr td .ol-normal li:last-child {
+            margin-bottom: 0; }
+        .lm-outer section .table tbody tr td.td1 {
+          font-weight: 600; }
+    .lm-outer section .lm-index .ul-normal li {
+      color: #00aef2;
+      font-weight: 500;
+      cursor: pointer; }
+    .lm-outer section:last-child {
+      margin-bottom: 0; }
+  .lm-outer.w-manager .table.wm-tbl tbody .td1, .lm-outer.w-manager .table.wm-tbl tbody .td2 {
+    font-weight: 600; }
+  .lm-outer.w-manager .table.wm-tbl tbody .td1 {
+    font-weight: 400; }
+  .lm-outer.license .ul-normal li .ul-normal {
+    padding-left: 18px; }
+    .lm-outer.license .ul-normal li .ul-normal li {
+      list-style: circle;
+      padding-left: 0rem; }
+      .lm-outer.license .ul-normal li .ul-normal li:before {
+        display: none; }
+  .lm-outer.license .table.license-tbl {
+    background: transparent; }
+    .lm-outer.license .table.license-tbl thead tr {
+      background: transparent; }
+      .lm-outer.license .table.license-tbl thead tr th {
+        font-size: 1rem;
+        vertical-align: top; }
+        .lm-outer.license .table.license-tbl thead tr th.th1 {
+          background: rgba(0, 0, 0, 0.02); }
+        .lm-outer.license .table.license-tbl thead tr th.th2 {
+          background: rgba(255, 255, 255, 0.3); }
+        .lm-outer.license .table.license-tbl thead tr th.th3 {
+          background: rgba(0, 0, 0, 0.05); }
+        .lm-outer.license .table.license-tbl thead tr th.th4 {
+          background: rgba(255, 179, 73, 0.5); }
+        .lm-outer.license .table.license-tbl thead tr th.th5 {
+          background: rgba(97, 202, 255, 0.5); }
+        .lm-outer.license .table.license-tbl thead tr th.th6 {
+          background: rgba(255, 255, 255, 0.8); }
+      .lm-outer.license .table.license-tbl thead tr:nth-child(1) {
+        background: rgba(0, 0, 0, 0.01); }
+        .lm-outer.license .table.license-tbl thead tr:nth-child(1) th {
+          border-bottom: none; }
+      .lm-outer.license .table.license-tbl thead tr:nth-child(2) th {
+        border-top: none;
+        border-bottom: 3px solid #dbdbdb;
+        font-size: .875rem; }
+    .lm-outer.license .table.license-tbl tbody tr td {
+      font-size: .875rem;
+      font-weight: 500; }
+      .lm-outer.license .table.license-tbl tbody tr td.td1 {
+        background: rgba(0, 0, 0, 0.02);
+        font-weight: 600; }
+      .lm-outer.license .table.license-tbl tbody tr td.td2 {
+        background: rgba(255, 255, 255, 0.3); }
+      .lm-outer.license .table.license-tbl tbody tr td.td3 {
+        background: #eeeeef; }
+      .lm-outer.license .table.license-tbl tbody tr td.td4 {
+        background: rgba(255, 213, 154, 0.5); }
+      .lm-outer.license .table.license-tbl tbody tr td.td5 {
+        background: rgba(154, 221, 255, 0.5); }
+      .lm-outer.license .table.license-tbl tbody tr td.td6 {
+        background: rgba(255, 255, 255, 0.8); }
+    .lm-outer.license .table.license-tbl tbody tr:nth-child(1) td {
+      border-top: none; }
+  .lm-outer.license .table.addword-tbl thead tr th.th1 {
+    width: 20%; }
+  .lm-outer.license .table.addword-tbl tbody tr td.td1 {
+    width: 20%; }
+  .lm-outer.license .table.addword-tbl tbody tr.tr2 {
+    background: rgba(0, 0, 0, 0.05); }
+  .lm-outer.license .table.addword-tbl tbody tr.tr3 {
+    background: rgba(255, 213, 154, 0.5); }
+  .lm-outer.license .table.addword-tbl tbody tr.tr4 {
+    background: rgba(154, 221, 255, 0.5); }
 
 footer {
   color: #fff;

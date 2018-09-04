@@ -2013,7 +2013,7 @@ footer {
                     .acc-cont {
                         margin: 0 20px;
                         display: flex;
-                        border: 1px solid $cc-body;
+                        border: 1px solid $cc-ash;
                         /*border-bottom: none;*/
                         margin-bottom: 15px;
 
@@ -2043,6 +2043,36 @@ footer {
                                             
                                             .material-icons {
                                                 font-size: 1.5rem;
+                                                color: $linkblue;
+                                            }
+                                        }
+                                    }
+                                    
+                                    .mat-expansion-indicator {
+                                        @include transform(rotate(0deg) !important);
+                                        position: absolute;
+                                        width: 20px;
+                                        height: 20px;
+                                        right: 15px;
+                                        display: flex;
+                                        align-items: center;
+                                        font-weight: 700;
+                                        font-size: .625rem;
+
+                                        &:after {
+                                            color: $linkblack;
+                                            border: none;
+                                            content: "\72";
+                                            position: absolute;
+                                            @include font-custom;
+                                            @include transform(rotate(0deg));
+                                        }
+                                    }
+                                    
+                                    &.mat-expanded {
+                                        .mat-expansion-indicator {
+                                            &:after {
+                                                content: "\66";
                                                 color: $linkblue;
                                             }
                                         }
@@ -2143,10 +2173,10 @@ footer {
                             }
                         }
                         &:first-child {
-                            border-top: 1px solid $cc-body;
+                            border-top: 1px solid $cc-ash;
                         }
                         &:last-child {
-                            border-bottom: 1px solid $cc-body;
+                            border-bottom: 1px solid $cc-ash;
                         }
                     }
                 }
@@ -6239,6 +6269,7 @@ footer {
                                     }
                                 }
                             }
+                            
                             &.gstval {
                                 mat-form-field {
                                     width: 150px;

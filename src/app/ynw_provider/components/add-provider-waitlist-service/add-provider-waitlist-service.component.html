@@ -197,7 +197,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     </span>
 </mat-dialog-actions>
 
-<app-field-error-display [displayError]="(error_list.length > 0) ? true : false"  errorMsg="Please upload images with size < 5mb">
+<app-field-error-display [displayError]="(error_list.length > 0) ? true : false"  [errorMsg]="error_msg">
 </app-field-error-display>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error"

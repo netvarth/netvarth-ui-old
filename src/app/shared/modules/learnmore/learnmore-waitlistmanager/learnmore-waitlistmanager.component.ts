@@ -8,10 +8,10 @@ import { Messages } from '../../../constants/project-messages';
 
 
 @Component({
-  selector: 'app-bprofile-learnmore',
-  templateUrl: './learnmore-bprofile.component.html'
+  selector: 'app-waitlistmanager-learnmore',
+  templateUrl: './learnmore-waitlistmanager.component.html'
 })
-export class LearnmoreBprofileComponent implements OnInit {
+export class LearnmoreWaitlistManagerComponent implements OnInit {
   @Input() target: string;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

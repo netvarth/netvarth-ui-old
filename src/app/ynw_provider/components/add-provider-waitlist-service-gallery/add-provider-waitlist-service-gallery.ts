@@ -97,7 +97,12 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
         } else {
          // console.log(this.success_error);
           this.error_list.push(this.success_error);
-          this.error_msg = 'Please upload images with size < 5mb';
+          console.log('myerr', this.error_list[0].type, this.error_list[0].size);
+          if (this.error_list[0].type) {
+            this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size < 5mb';
+          }
         }
 
 
@@ -117,6 +122,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
   saveImages() {
     // console.log(this.item_pic);
     this.error_msg = '';
+    this.error_list = [];
     this.savedisabled = true;
     this.img_save_caption = 'Uploading .. ';
     const submit_data: FormData = new FormData();

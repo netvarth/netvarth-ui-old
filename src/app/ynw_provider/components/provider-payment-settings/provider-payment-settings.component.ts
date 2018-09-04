@@ -165,7 +165,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         const numbercntpattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
-            if (!numberpattern.test(this.paytmmobile)) {
+            if (blankpattern.test(this.paytmmobile)) {
+                this.showError['paytmmobile'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BLANKNUM')};
+            } else if (!numberpattern.test(this.paytmmobile)) {
                 this.showError['paytmmobile'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ONLYNUM')};
             } else {
                 if (!numbercntpattern.test(this.paytmmobile)) {

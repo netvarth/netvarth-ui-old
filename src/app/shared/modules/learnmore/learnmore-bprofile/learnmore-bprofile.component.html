@@ -1,8 +1,20 @@
 <div id="bprofile">
-        <div class="learn-mainhead">PROFILE AND SEARCH</div>
+        <div class="learn-mainhead" id="main-top">PROFILE AND SEARCH</div>
+        <div class="learn-index">
+          <ul>
+              <li (click)="handleScroll('public-search')">Public Search</li>
+              <li (click)="handleScroll('basic-information')">Basic Information</li>
+              <li (click)="handleScroll('privacy-settings')">Privacy Settings</li>
+              <li (click)="handleScroll('specialization')">Specialization</li>
+              <li (click)="handleScroll('languages-known')">Languages Known</li>
+              <li (click)="handleScroll('additional-info')">Additional Info</li>
+              <li (click)="handleScroll('photo-gallery')">Photo Gallery</li>
+              <li (click)="handleScroll('your-social-media')">Your Social Media</li>
+          </ul>
+        </div>
         <p>Your user profile contains basic information about you, which helps your consumers to search you from their dashboard. In your own profile you can access different features and also update information about yourself and the services provided by you.</p>
         
-        <div class="learn-subhead">PUBLIC SEARCH</div>
+        <div class="learn-subhead" id ="public-search">PUBLIC SEARCH</div>
         <p>Once consumer run a search from their dashboard, the search results appears in their dashboard.</p>
         <ul class="learnul">
           <li>If you want to display your profile in consumer search results,you have to click “TURN ON” button to make public search on.</li>
@@ -203,7 +215,7 @@
           <p>Beneath the Adwords label the adwords currently available for your business and used so far with respect to the license package is shown.</p>
           <p>When you click “ADD ADWORDS” button a window appears where you need to input the keywords you wish to buy for your business and choose “Save”. You can view the adwords you have already added in the “License & Invoice” page.</p>
 
-          <div class="learn-subhead">BASIC INFORMATION</div>
+          <div class="learn-subhead" id ="basic-information">BASIC INFORMATION</div>
           <p>General and basic information about your business you have given at the time of profile activation process is displayed here.You have the permission to edit each section under Basic Information.</p>
           <p>Explore your profile and fill it out to increase customer acquisition.</p>
           <ol class="learn-innerol">
@@ -421,7 +433,7 @@
           <div class="learn-subhead">WORKING HOURS</div>
           <p>Working hours of base location is shown here.You can click the link from here to redirect to the page Queues to add or edit queues.</p>
 
-          <div class="learn-subhead">PRIVACY SETTINGS</div>
+          <div class="learn-subhead" id="privacy-settings">PRIVACY SETTINGS</div>
           <p>Getting to know and controlling your privacy settings(Phone number & Email address) is an important part of helping protect your information.Here the system allows you to add, edit or delete both phone number and email address.</p>
           
           <div class="learn-subhead-inner">Phone</div>
@@ -456,7 +468,7 @@
             <li>If you want to delete an  email id click “Delete” from 3 dots menu on the right corner.</li>
           </ol>
 
-          <div class="learn-subhead">SPECIALIZATION</div>
+          <div class="learn-subhead" id ="specialization">SPECIALIZATION</div>
           <p>Specialties can benefit both consumers and business owners.Here you can select any specialization listed in the window.Here is the specializations list.</p>
           <table class="learn-table">
             <tr>
@@ -890,7 +902,7 @@
               </tr>
           </table>
 
-          <div class="learn-subhead">LANGUAGES KNOWN</div>
+          <div class="learn-subhead" id ="languages-known">LANGUAGES KNOWN</div>
           <p>Adding different languages widens the door to attract more consumers.You can add the languages you wish to communicate with the consumers from here.</p>
           <ol class="learn-ol">
             <li>The languages you have added is displayed here.</li>
@@ -900,7 +912,7 @@
             <li>Newly added languages are displayed here.</li>
           </ol>
 
-          <div class="learn-subhead">ADDITIONAL INFO</div>
+          <div class="learn-subhead" id ="additional-info">ADDITIONAL INFO</div>
           <p>Here is the list of additional information for each subsectors.You can fill in the details for each section to let your consumers know more about you.</p>
           <table class="learn-table">
             <tr>
@@ -1203,7 +1215,7 @@
                         </tr>
           </table>
 
-          <div class="learn-subhead">Photo Gallery</div>
+          <div class="learn-subhead" id ="photo-gallery">Photo Gallery</div>
           <p>Images and photos grab attention and make your profile more engaging. Using images in your profile will result in increased consumer attention and can give a boost on consumer check-ins.Photo Gallery provides view options and add multiple images option.Added images are shown here.</p>
           <div class="learn-subhead-inner">How to add a new image?</div>
           <ol class="learn-ol">
@@ -1211,7 +1223,7 @@
             <li>If you have added images and you want to add more click (+) symbol and add more images to your profile.</li>
           </ol>
 
-          <div class="learn-subhead">Your Social Media</div>
+          <div class="learn-subhead" id = "your-social-media">Your Social Media</div>
           <P>Social media icons can be displayed on your profile. These small social media link to services like Twitter and Facebook, allows visitors to access your social media profiles.</P>
           <ol class="learn-ol">
             <li>If your profile already has social media links, you can click “(+)” to begin adding more links or editing existing links.</li>

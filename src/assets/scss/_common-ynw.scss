@@ -307,7 +307,7 @@ app-footer {
                     font-size: 1.25rem;
                     min-height: 60px;
                     
-                    .mat-expansion-indicator {
+                    /*.mat-expansion-indicator {
                         width: 14px;
                         height: 14px;
                         display: flex;
@@ -316,6 +316,36 @@ app-footer {
                         
                         &:after {
                             border-width: 0 1.5px 1.5px 0;
+                        }
+                    }*/
+                    
+                    .mat-expansion-indicator {
+                        @include transform(rotate(0deg) !important);
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        right: 15px;
+                        display: flex;
+                        align-items: center;
+                        font-weight: 700;
+                        font-size: .625rem;
+
+                        &:after {
+                            color: $linkblack;
+                            border: none;
+                            content: "\72";
+                            position: absolute;
+                            @include font-custom;
+                            @include transform(rotate(0deg));
+                        }
+                    }
+
+                    &.mat-expanded {
+                        .mat-expansion-indicator {
+                            &:after {
+                                content: "\66";
+                                color: $linkblack;
+                            }
                         }
                     }
                 }

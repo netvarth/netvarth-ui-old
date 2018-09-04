@@ -1,16 +1,30 @@
-<h1 class="mat-dialog-title">Learn More Contents
+      <h1 class="mat-dialog-title">Learn More
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
       </h1>
       <mat-dialog-content>
         
-        <!-- Bprofile Start -->Target: {{destination}}
+        <!-- Bprofile -->
         <app-bprofile-learnmore [target]="destination" *ngIf="destination=='bprofile'"></app-bprofile-learnmore>
-        <!-- Bprofile End -->
+        
+        <!-- Waitlist Manager -->
+        <app-waitlistmanager-learnmore [target]="destination" *ngIf="destination=='waitlistmanager'"></app-waitlistmanager-learnmore>
 
+        <!-- Checkins -->
+        <app-checkin-learnmore [target]="destination" *ngIf="destination=='checkin'"></app-checkin-learnmore>
+
+        <!-- Customer -->
+        <app-customer-learnmore [target]="destination" *ngIf="destination=='customer'"></app-customer-learnmore>
+
+        <!-- Kiosk -->
+        <app-kiosk-learnmore [target]="destination" *ngIf="destination=='kiosk'"></app-kiosk-learnmore>
+
+        <!-- License -->
+        <app-license-learnmore [target]="destination" *ngIf="destination=='license'"></app-license-learnmore>
 
       </mat-dialog-content>
+
       <mat-dialog-actions>
         <button  type="button" mat-dialog-close class="cs-btn bt2">Close</button>
       </mat-dialog-actions>

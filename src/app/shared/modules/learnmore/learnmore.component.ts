@@ -14,7 +14,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class LearnmoreComponent implements OnInit {
     destination = '';
-    topicmaxCnt = 10;
+    /*topicmaxCnt = 10;
     topicContentArr = [
       {'key': 'bprofile1', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
       {'key': 'bprofile2', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
@@ -32,7 +32,7 @@ export class LearnmoreComponent implements OnInit {
       {'key': 'bprofile14', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
       {'key': 'bprofile15', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'}
 
-    ];
+    ];*/
     constructor(
       @Inject(MAT_DIALOG_DATA) public data: any,
       private _scrollToService: ScrollToService
@@ -41,19 +41,19 @@ export class LearnmoreComponent implements OnInit {
     ngOnInit() {
       console.log('passed in data', this.data, this.data.moreOptions.scrollKey);
       this.destination = this.data.moreOptions.scrollKey;
-      if (this.data.moreOptions.scrollKey !== undefined) {
+      /*if (this.data.moreOptions.scrollKey !== undefined) {
         setTimeout(() => {
           this.triggerScrollTo(this.data.moreOptions.scrollKey);
           }, 200);
-      }
+      }*/
     }
 
-    public triggerScrollTo(destination) {
+    /*public triggerScrollTo(destination) {
       const config: ScrollToConfigOptions = {
         target: destination
       };
       // console.log('destination', destination, 'config', config);
       this._scrollToService.scrollTo(config);
-    }
+    }*/
 
 }

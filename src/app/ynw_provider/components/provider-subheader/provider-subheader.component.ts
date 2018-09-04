@@ -9,6 +9,7 @@ import { AddProviderCustomerComponent } from '../add-provider-customer/add-provi
 import { SearchProviderCustomerComponent } from '../search-provider-customer/search-provider-customer.component';
 import { ProviderServices } from '../../services/provider-services.service';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
+import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.component';
 
 @Component({
     selector: 'app-provider-subheader',
@@ -28,6 +29,7 @@ export class ProviderSubeaderComponent implements OnInit {
   bprofile: any = [];
   customer_label = '';
   checkin_label = '';
+  moreOptions: any = [];
 
   constructor(public dialog: MatDialog,
   public provider_services: ProviderServices,
@@ -226,6 +228,33 @@ export class ProviderSubeaderComponent implements OnInit {
 
     return (selected_location !== null) ? selected_location : this.locations[0];
 
+  }
+
+  learnmore_clicked(mod) {
+    const dialogRef = this.dialog.open(LearnmoreComponent, {
+          width: '50%',
+          panelClass: 'commonpopupmainclass',
+          autoFocus: true,
+          data: {
+              moreOptions : this.getMode(mod)
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+        });
+  }
+  getMode(mod) {
+    switch (mod) {
+      case 'checkin':
+         this.moreOptions = {'show_learnmore': true , 'scrollKey': 'checkin'};
+      break;
+      case 'customer':
+        this.moreOptions = {'show_learnmore': true , 'scrollKey': 'customer'};
+      break;
+      case 'kiosk':
+         this.moreOptions = {'show_learnmore': true , 'scrollKey': 'kiosk'};
+      break;
+    }
+    return this.moreOptions;
   }
 
 }

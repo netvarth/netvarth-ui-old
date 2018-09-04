@@ -24,6 +24,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
+  error_msg = null;
   number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
   number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
   service;
@@ -220,6 +221,11 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           } else {
             console.log(this.success_error);
             this.error_list.push(this.success_error);
+            if (this.error_list[0].type) {
+              this.error_msg = 'Selected image type not supported';
+            } else if (this.error_list[0].size) {
+              this.error_msg = 'Please upload images with size < 5mb';
+            }
           }
 
         }
@@ -335,6 +341,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;
+    this.error_msg = null;
+    this.error_list = [];
   }
 
   resetVariables() {

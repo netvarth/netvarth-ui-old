@@ -48,6 +48,7 @@ export class ProviderLicenseComponent implements OnInit {
     type = null;
     upgradablepackages = [];
     addonTooltip = '';
+    breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'license'};
 
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,

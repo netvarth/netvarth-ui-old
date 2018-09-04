@@ -964,6 +964,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
        /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
       },
       error => {
+        this.sharedfunctionobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
        // this.api_error = error.error;
       }
       );

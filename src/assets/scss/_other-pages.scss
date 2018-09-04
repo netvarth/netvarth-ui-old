@@ -9,7 +9,16 @@
             margin-bottom: 10px;
         }
         .p-subouter {
-            margin-bottom: 20px;
+            margin-bottom: 1.2rem;
+            
+            p {
+                margin-bottom: 1.2rem;
+            }
+            
+            div, p, ul li, ol li {
+                font-size: 1rem;
+                letter-spacing: .3px;
+            }
             
             h2 {
                 font-size: 1.2rem;
@@ -25,7 +34,6 @@
                     list-style: none;
                     position: relative;
                     padding-left: 1.25em;
-                    font-size: .875rem;
 
                     &:before {
                         font-family: "custom-ynw";
@@ -341,3 +349,299 @@
         }
     }
 }
+
+// Learn More Pages ####
+
+.lm-outer {
+    margin: 0 auto;
+    padding: 50px;
+    background: $white;
+    
+    h3 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    section {
+        margin-bottom: 2rem;
+        
+        p, div, ul li, ol li, table th, table td {
+            font-size: 1rem;
+            line-height: 1.75;
+            letter-spacing: .3px;
+        }
+
+        p, ul li, ol li, ul, ol {
+            margin-bottom: 1.2rem;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            color: lighten($linkblack, 20%);
+        }
+
+        h5 {
+            font-size: 1rem;
+            color: lighten($linkblack, 20%);
+        }
+
+        blockquote {
+            @include font-script;
+            color: lighten($linkblack, 20%);
+            letter-spacing: .5px;
+            font-size: 1.1rem;
+            padding: 20px;
+            font-style: italic;
+            border-left: 5px solid lighten($linkblack, 40%);
+            background: rgba(255,255,255,.6);
+            margin-bottom: 1.2rem;
+        }
+
+        .box-indent {
+            margin-left: 2.2rem;
+        }
+
+        .ul-normal {
+            padding-left: 15px;
+
+            li {
+                position: relative;
+                list-style: none;
+                position: relative;
+                padding-left: 1.25em;
+
+                ul, ol, table {
+                    margin-top: 1.2rem;
+                }
+
+                ol {
+                    li {
+                        list-style: decimal;
+                        padding-left: .5em;
+
+                        &:before {
+                            display: none;
+                        }
+                    }
+                }
+
+                &:before {
+                    font-family: "custom-ynw";
+                    font-style: normal;
+                    font-weight: normal;
+                    font-variant: normal;
+                    text-transform: none;
+                    content: "\67";
+                    position: absolute;
+                    left: 3px;
+                    font-size: .55rem;
+                    top: 6px;
+                }
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .table {
+            border: 1px solid $cc-ash;
+            background: rgba(255,255,255,.3);
+            margin-bottom: 1.2rem;
+
+            thead {         
+                tr {
+                    background: rgba(255,255,255,.8);
+                    th {
+                        font-size: 1.2rem;
+                        color: lighten($linkblack, 20%);
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        vertical-align: top;
+
+                        .ol-normal {
+                            margin: 0 0 0 20px;
+                            padding: 0;
+
+                            li {
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
+                            }
+                        }
+
+                        &.td1 {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .lm-index {
+            .ul-normal {
+                li {
+                    color: $linkblue;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+            }
+        }
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    &.w-manager {
+        .table {
+            &.wm-tbl {                
+                tbody {
+                    .td1, .td2 {
+                        font-weight: 600;
+                    }
+                    .td1 {font-weight: 400;}
+                }
+            }
+        }
+    }
+    
+    &.license {
+        .ul-normal {
+            li {
+                .ul-normal {
+                    padding-left: 18px;
+                    
+                    li {
+                        list-style: circle;
+                        padding-left: 0rem;
+                        
+                        &:before {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .table {            
+            &.license-tbl {
+                background: transparent;
+                
+                thead {
+                    tr {
+                        background: transparent;
+                        
+                        th {
+                            font-size: 1rem;
+                            vertical-align: top;
+                            
+                            &.th1 {
+                                background: rgba(0,0,0,.02);
+                            }
+                            &.th2 {
+                                background: rgba(255,255,255,.3);
+                            }
+                            &.th3 {
+                                background: rgba(0,0,0,.05);
+                            }
+                            &.th4 {
+                                background: rgba(255,179,73,.5);
+                            }
+                            &.th5 {
+                                background: rgba(97,202,255,.5);
+                            }
+                            &.th6 {
+                                background: rgba(255,255,255,.8);
+                            }
+                        }
+                        
+                        &:nth-child(1) {
+                            background: rgba(0,0,0,.01);
+                            th{
+                                border-bottom: none;
+                            }
+                        }
+                        &:nth-child(2) {
+                            th{
+                                border-top: none;
+                                border-bottom: 3px solid $cc-ash;
+                                font-size: .875rem;
+                            }
+                        }
+                    }
+                }
+                tbody {
+                    tr {
+                        td {
+                            font-size: .875rem;
+                            font-weight: 500;
+                            
+                            &.td1 {
+                                background: rgba(0,0,0,.02);
+                                font-weight: 600;
+                            }
+                            &.td2 {
+                                background: rgba(255,255,255,.3);
+                            }
+                            &.td3 {
+                                background: lighten($linkblack, 80%);
+                            }
+                            &.td4 {
+                                background: rgba(255,213,154,.5);
+                            }
+                            &.td5 {
+                                background: rgba(154,221,255,.5);
+                            }
+                            &.td6 {
+                                background: rgba(255,255,255,.8);
+                            }
+                        }
+                        
+                        &:nth-child(1) {
+                            td {
+                                border-top: none;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &.addword-tbl {
+                thead {
+                    tr {
+                        th {
+                            &.th1 {
+                                width: 20%;
+                            }
+                        }
+                    }
+                }
+                tbody {
+                    tr {
+                        td {
+                            &.td1 {
+                                width: 20%;
+                            }
+                        }
+                        &.tr2 {
+                            background: rgba(0,0,0,.05);
+                        }
+                        &.tr3 {
+                            background: rgba(255,213,154,.5);
+                        }
+                        &.tr4 {
+                            background: rgba(154,221,255,.5);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
