@@ -14,7 +14,7 @@ import { Messages } from '../../../constants/project-messages';
 export class LearnmoreCustomerComponent implements OnInit {
   @Input() target: string;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    // @Inject(MAT_DIALOG_DATA) public data: any,
     private _scrollToService: ScrollToService
   ) {}
 
@@ -31,10 +31,10 @@ export class LearnmoreCustomerComponent implements OnInit {
   }
 
   handleScroll(target) {
-    if (this.data.moreOptions.scrollKey !== undefined) {
+   // if (this.data.moreOptions.scrollKey !== undefined) {
       setTimeout(() => {
         this.triggerScrollTo(target);
         }, 200);
-    }
+   // }
   }
 }

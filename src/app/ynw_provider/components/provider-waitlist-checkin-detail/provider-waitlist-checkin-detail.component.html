@@ -32,7 +32,8 @@
                                   </div>
 
                                   <div class="item"><span class="ttle">Service:</span><span> {{waitlist_data.service.name | titlecase}}</span></div>
-                                  <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_data.queue.name | titlecase}}</span></div>
+                                  <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_data.queue.name | titlecase}}</span>
+                                <br/>{{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}</div>
                                   <div class="item"><span class="ttle">Payment Status:</span>
                                     <ng-container *ngIf="waitlist_data && waitlist_data.paymentStatus">
                                         <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span class="text">Not Paid</span></span>

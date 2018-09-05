@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
@@ -14,33 +14,17 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class LearnmoreComponent implements OnInit {
     destination = '';
-    /*topicmaxCnt = 10;
-    topicContentArr = [
-      {'key': 'bprofile1', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile2', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile3', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile4', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile5', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile6', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile7', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'waitlistmanager', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile10', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile11', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile12', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile13', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile14', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'},
-      {'key': 'bprofile15', 'content': 'this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content this is my content'}
-
-    ];*/
+    @Input ()  passedDet;
     constructor(
-      @Inject(MAT_DIALOG_DATA) public data: any,
+      // @Inject(MAT_DIALOG_DATA) public data: any,
       private _scrollToService: ScrollToService
     ) {}
 
     ngOnInit() {
-      console.log('passed in data', this.data, this.data.moreOptions.scrollKey);
-      this.destination = this.data.moreOptions.scrollKey;
+      // console.log('passed in data', this.passedDet, this.data, this.data.moreOptions.scrollKey);
+      // this.destination = this.data.moreOptions.scrollKey;
+      // console.log('passedin', this.passedDet);
+      this.destination = this.passedDet;
       /*if (this.data.moreOptions.scrollKey !== undefined) {
         setTimeout(() => {
           this.triggerScrollTo(this.data.moreOptions.scrollKey);

@@ -101,12 +101,19 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             if (showmsg === 1) {
                 this.tabid = 0;
                 let showmsgs = '';
+                let panelclass = '';
+                let params;
+                const duration = 6000;
                 if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified)) {
                     showmsgs = this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CONTACTADMIN');
+                    panelclass = 'snackbarerror';
+                    params = {'duration': duration, 'panelClass': panelclass};
                 } else {
                     showmsgs = this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_SUCC');
+                    panelclass = 'snackbarnormal';
+                    params = {'duration': duration, 'panelClass': panelclass};
                 }
-                this.shared_Functionsobj.openSnackBar (showmsgs);
+                this.shared_Functionsobj.openSnackBar (showmsgs, params);
                 this.tabid = 1;
             }
     }

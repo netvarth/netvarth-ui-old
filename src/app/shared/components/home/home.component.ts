@@ -181,7 +181,8 @@ export class HomeComponent implements OnInit {
         kwdomain: this.keywordholder.domain || '',
         kwsubdomain: this.keywordholder.subdomain || '',
         kwtyp: this.keywordholder.typ || '',
-        srt: 'title' + ' ' + 'asc',
+        // srt: 'title' + ' ' + 'asc',
+        srt: ' ',
         lq: '',
         cfilter: ''
        };

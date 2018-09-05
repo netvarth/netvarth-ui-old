@@ -43,7 +43,7 @@ export class ProviderLicenseComponent implements OnInit {
     license_message = '';
     unpaid_invoice_show = 0;
     dateFormat =  projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-
+    tooltipcls = projectConstants.TOOLTIP_CLS;
     reload_adword_api =  {status : true};
     type = null;
     upgradablepackages = [];

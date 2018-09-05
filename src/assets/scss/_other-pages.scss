@@ -351,11 +351,11 @@
 }
 
 // Learn More Pages ####
-
 .lm-outer {
     margin: 0 auto;
-    padding: 50px;
+    padding: 20px;
     background: $white;
+
     
     h3 {
         font-size: 1.875rem;
@@ -390,12 +390,17 @@
             @include font-script;
             color: lighten($linkblack, 20%);
             letter-spacing: .5px;
-            font-size: 1.1rem;
+            font-size: .875rem;
             padding: 20px;
             font-style: italic;
             border-left: 5px solid lighten($linkblack, 40%);
-            background: rgba(255,255,255,.6);
+            background: $cc-body;
             margin-bottom: 1.2rem;
+            
+            span {
+                font-weight: 600;
+                font-size: 1rem;
+            }
         }
 
         .box-indent {
@@ -444,6 +449,14 @@
                 }
             }
         }
+        
+        .ol-normal {
+            li {
+                ul, ol, table {
+                    margin-top: 1.2rem;
+                }
+            }
+        }
 
         .table {
             border: 1px solid $cc-ash;
@@ -465,7 +478,7 @@
                         vertical-align: top;
 
                         .ol-normal {
-                            margin: 0 0 0 20px;
+                            margin: 0 0 1.2rem 20px;
                             padding: 0;
 
                             li {
@@ -498,81 +511,13 @@
         }
     }
     
-    &.w-manager {
-        .table {
-            &.wm-tbl {                
-                tbody {
-                    .td1, .td2 {
-                        font-weight: 600;
-                    }
-                    .td1 {font-weight: 400;}
-                }
-            }
-        }
-    }
-    
-    &.license {
-        .ul-normal {
-            li {
-                .ul-normal {
-                    padding-left: 18px;
-                    
-                    li {
-                        list-style: circle;
-                        padding-left: 0rem;
-                        
-                        &:before {
-                            display: none;
-                        }
-                    }
-                }
-            }
-        }
-        
-        .table {            
-            &.license-tbl {
-                background: transparent;
-                
+    &.bprofile {
+        section {
+            .table {
                 thead {
-                    tr {
-                        background: transparent;
-                        
-                        th {
-                            font-size: 1rem;
-                            vertical-align: top;
-                            
-                            &.th1 {
-                                background: rgba(0,0,0,.02);
-                            }
-                            &.th2 {
-                                background: rgba(255,255,255,.3);
-                            }
-                            &.th3 {
-                                background: rgba(0,0,0,.05);
-                            }
-                            &.th4 {
-                                background: rgba(255,179,73,.5);
-                            }
-                            &.th5 {
-                                background: rgba(97,202,255,.5);
-                            }
-                            &.th6 {
-                                background: rgba(255,255,255,.8);
-                            }
-                        }
-                        
-                        &:nth-child(1) {
-                            background: rgba(0,0,0,.01);
-                            th{
-                                border-bottom: none;
-                            }
-                        }
-                        &:nth-child(2) {
-                            th{
-                                border-top: none;
-                                border-bottom: 3px solid $cc-ash;
-                                font-size: .875rem;
-                            }
+                    tr{
+                        th{
+                            font-size: .875rem;
                         }
                     }
                 }
@@ -581,67 +526,493 @@
                         td {
                             font-size: .875rem;
                             font-weight: 500;
-                            
+                            color: lighten($linkblack, 20%);
+
+                            h6 {
+                                font-weight: 600;
+                                font-size: .875rem;
+                            }
+
+                            div, ol li, ul li, p {
+                                font-size: .875rem;
+                                font-weight: 500;
+                            }
+
+                            ol li, ul li, p {
+                                color: lighten($linkblack, 20%);
+                            }
+
+                            .box {
+                                border-bottom: 1px solid $cc-ash;
+                                margin-bottom: 1.2rem;
+                                
+                                ol {
+                                    padding-left: 1rem;
+                                }
+
+                                &:last-child {
+                                    margin-bottom: 0;
+                                    border: none;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.verify-tbl {                    
+                    tr {
+                        td {
                             &.td1 {
-                                background: rgba(0,0,0,.02);
+                                width: 20%;
+                                font-size: 1rem;
                                 font-weight: 600;
                             }
                             &.td2 {
-                                background: rgba(255,255,255,.3);
-                            }
-                            &.td3 {
-                                background: lighten($linkblack, 80%);
-                            }
-                            &.td4 {
-                                background: rgba(255,213,154,.5);
-                            }
-                            &.td5 {
-                                background: rgba(154,221,255,.5);
-                            }
-                            &.td6 {
-                                background: rgba(255,255,255,.8);
+                                border-left: 1px solid $cc-ash;
                             }
                         }
-                        
-                        &:nth-child(1) {
+                    }
+                }
+
+                &.addword-tbl {
+                    thead {
+                        tr {
+                            th {
+                                font-size: 1rem;
+
+                                &.th1 {
+                                    width: 30%;
+                                }
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
                             td {
-                                border-top: none;
+                                &.td1 {
+                                    width: 30%;
+                                    font-weight: 600;
+                                }
+                            }
+                            &.tr2 {
+                                background: $silver;
+                            }
+                            &.tr3 {
+                                background: $gold;
+                            }
+                            &.tr4 {
+                                background: $diamond;
+                            }
+                        }
+                    }
+                }
+
+                &.loc-tbl, &.social-tbl {
+                    width: 260px;
+                    
+                    tbody {
+                        tr {
+                            td {
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+
+                &.locam-tbl {
+                    tbody {
+                        tr {
+                            td {
+                                &.td1 {
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                }
+                                &.td2 {
+                                    border-left: 1px solid $cc-ash;
+                                    padding: 0;
+                                    font-weight: 600;
+
+                                    .table {
+                                        border: none;
+                                        margin-bottom: 0;
+
+                                        tbody {
+                                            tr {
+                                                td {
+                                                    border: none;
+
+                                                    .ul-normal {
+                                                        margin-bottom: 0;
+
+                                                        li {
+                                                            margin-bottom: 10px;
+                                                            
+                                                            &:before {
+                                                                content: "\2d";
+                                                            }
+                                                        }
+                                                    }
+
+                                                    &.td1 {
+                                                        display: none;
+                                                        font-size: .875rem;
+                                                        width: 5%;
+                                                    }
+                                                    &.td2 {
+                                                        width: 50%;
+                                                        padding: .75rem;
+                                                    }
+                                                }
+
+                                                border-bottom: 1px solid $cc-ash;
+
+                                                &:last-child {
+                                                    border: none;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.spec-tbl, &.addinfo-tbl {
+                    tbody {
+                        tr {
+                            td {
+                                &.td1 {
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                }
+                                &.td2 {
+                                    border-left: 1px solid $cc-ash;
+                                    padding: 0;
+
+                                    .table {
+                                        border: none;
+                                        margin-bottom: 0;
+
+                                        tbody {
+                                            tr {
+                                                border-bottom: 1px solid $cc-ash;
+
+                                                td {
+                                                    border: none;
+
+                                                    &.td1 {
+                                                        width: 35%;
+                                                        font-weight: 600;
+                                                        font-size: .875rem;
+                                                    }
+                                                    &.td2 {
+                                                        width: 65%;
+                                                        padding: .75rem;
+
+                                                        .ol-normal {
+                                                            margin-bottom: 0;
+
+                                                            li {
+                                                                margin-bottom: 10px;
+
+                                                                &:last-child {
+                                                                    margin-bottom: 0;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                &:last-child {
+                                                    border: none;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
             
-            &.addword-tbl {
-                thead {
-                    tr {
-                        th {
-                            &.th1 {
-                                width: 20%;
-                            }
+            .important {
+                padding: 20px;
+                border: 1px solid $cc-body;
+                margin-bottom: 1.2rem;
+                font-size: .875rem;
+                
+                h5 {
+                    text-transform: uppercase;
+                }
+                
+                ul, ol {
+                    margin-bottom: 0;
+                    padding-left: 0;
+                    
+                    li {
+                        font-size: .875rem;
+                        font-weight: 500;
+                    }
+                }
+                
+                ul {
+                    li {
+                        padding-left: 1.6em;
+                        
+                        &:before {
+                            content: "\3b";
+                            font-size: .875rem;
+                            top: 1px;
+                            left: 0px;
                         }
                     }
                 }
+            }
+        }   
+    }
+    
+    &.w-manager {
+        section {
+            .table {
                 tbody {
                     tr {
                         td {
-                            &.td1 {
-                                width: 20%;
-                            }
+                            font-size: .875rem;
+                            font-weight: 500;
                         }
-                        &.tr2 {
-                            background: rgba(0,0,0,.05);
-                        }
-                        &.tr3 {
-                            background: rgba(255,213,154,.5);
-                        }
-                        &.tr4 {
-                            background: rgba(154,221,255,.5);
+                    }
+                }
+                &.wm-tbl {                
+                    tbody {
+                        .td1, .td2 {
+                            font-weight: 600;
                         }
                     }
                 }
             }
         }
     }
+    
+    &.license {
+        section {
+            .ul-normal {
+                li {
+                    .ul-normal {
+                        padding-left: 18px;
+
+                        li {
+                            list-style: circle;
+                            padding-left: 0rem;
+
+                            &:before {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .table {
+                thead {
+                    tr {
+                        th {
+                            font-size: 1rem;
+                        }
+                    }
+                }
+                tbody {
+                    tr {
+                        td {
+                            font-size: .875rem;
+                            font-weight: 500;
+                        }
+                    }
+                }
+                &.license-tbl {
+                    background: transparent;
+
+                    thead {
+                        tr {
+                            background: transparent;
+
+                            th {
+                                font-size: 1rem;
+                                vertical-align: top;
+
+                                &.th1 {
+                                    background: $metrics;
+                                    text-transform: uppercase;
+                                }
+                                &.th2 {
+                                    background: $basic;
+                                    text-transform: uppercase;
+                                }
+                                &.th3 {
+                                    background: $silver;
+                                }
+                                &.th4 {
+                                    background: $gold;
+                                }
+                                &.th5 {
+                                    background: $diamond;
+                                }
+                                &.th6 {
+                                    background: $basic;
+                                }
+                            }
+
+                            &:nth-child(1) {
+                                background: rgba(0,0,0,.055);
+                                th{
+                                    border-bottom: none;
+                                }
+                            }
+                            &:nth-child(2) {
+                                th{
+                                    border-top: none;
+                                    border-bottom: 3px solid $cc-ash;
+                                    font-size: .875rem;
+                                }
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
+                            td {
+                                font-size: .875rem;
+                                font-weight: 500;
+                                color: lighten($linkblack, 20%);
+
+                                &.td1 {
+                                    background: $metrics;
+                                    font-weight: 600;
+                                }
+                                &.td2 {
+                                    background: $basic;
+                                }
+                                &.td3 {
+                                    background: $silver;
+                                }
+                                &.td4 {
+                                    background: $gold;
+                                }
+                                &.td5 {
+                                    background: $diamond;
+                                }
+                                &.td6 {
+                                    background: rgba(255,255,255,.8);
+                                }
+                            }
+
+                            &:nth-child(1) {
+                                td {
+                                    border-top: none;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                &.addon-tbl {
+                    tbody {
+                        tr {
+                            td {
+                                &.td1 {
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.addword-tbl {
+                    thead {
+                        tr {
+                            th {
+                                
+                                &.th1 {
+                                    width: 30%;
+                                }
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
+                            td {
+                                &.td1 {
+                                    width: 30%;
+                                    font-weight: 600;
+                                }
+                            }
+                            &.tr2 {
+                                background: $silver;
+                            }
+                            &.tr3 {
+                                background: $gold;
+                            }
+                            &.tr4 {
+                                background: $diamond;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    &.consumer {
+        section {
+            .table {
+                    thead {
+                        tr {
+                            th {
+                                font-size: 1rem;
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
+                            td {
+                                font-size: .875rem;
+                                font-weight: 500;
+                                
+                                ul, ol {
+                                    margin-bottom: 0;
+                                    
+                                    li {
+                                        font-size: .875rem;
+                                        font-weight: 500;
+                                    }
+                                }
+                                
+                                &.td1 {
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+    }
+}
+
+// Learn More Popup
+.lm-popup {
+    background: $white;
+    color: $linkblack;
+    padding: 20px;
+    @include box-shadow(0, -20px, 30px, rgba(0,0,0,.1) !important);
+    @include transition(all 500ms);
+    /*margin-right: -50%;*/
+    /*visibility: hidden;*/
+    opacity: 1;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    z-index: 1001;
 }
 

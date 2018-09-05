@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../common/material.module';
 import { SearchModule } from '../search/search.module';
+import { LearnmoreModule } from '../learnmore/learnmore.module';
 
 // import { MatMenuModule } from '@angular/material/menu';
 // import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +15,8 @@ import { HeaderComponent } from './header.component';
         CommonModule,
         RouterModule,
         MaterialModule,
-        SearchModule
+        SearchModule,
+        LearnmoreModule
        // MatMenuModule,
       //  MatIconModule
     ],

@@ -735,9 +735,13 @@ openSnackBar(message: string, params: any = []) {
   if (params['panelClass'] === 'snackbarerror') {
     message = this.getApiError(message);
   }
+  let duration = projectConstants.TIMEOUT_DELAY_LARGE;
+  if (params['duration']) {
+    duration = params['duration'];
+  }
 
   const replaced_message = this.findTerminologyTerm(message);
-  const snackBarRef = this.snackBar.open(replaced_message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
+  const snackBarRef = this.snackBar.open(replaced_message, '', {duration: duration, panelClass: panelclass });
   // const snackBarRef = this.snackBar.open(message, '', {duration: 100000, panelClass: panelclass });
   return snackBarRef;
 }

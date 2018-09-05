@@ -8,7 +8,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { projectConstants } from '../../../shared/constants/project-constants';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
@@ -44,7 +44,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   service_count: any = 0;
   queues_count: any = 0;
   checkin_label = '';
-
+  tooltipcls = projectConstants.TOOLTIP_CLS;
   subscription: Subscription;
 
   constructor(private provider_services: ProviderServices,

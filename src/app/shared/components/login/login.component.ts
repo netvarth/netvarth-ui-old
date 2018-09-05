@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   moreParams = [];
   api_loading = true;
   show_error = false;
+  test_provider = null;
 
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
         if (this.shared_functions.checkLogin()) {
           this.shared_functions.logout();
         }
-
+        this.test_provider = data.test_account;
         this.is_provider = data.is_provider || 'true';
        // console.log('login data', data);
      }
@@ -88,6 +89,12 @@ export class LoginComponent implements OnInit {
          }
       );
     } else if (this.data.type === 'consumer') {
+      if (post_data.loginId.startsWith('55') &&  this.test_provider === false) {
+        setTimeout(() => {
+          ob.api_error = this.shared_functions.getProjectMesssages('TESTACC_LOGIN_NA');
+          this.api_loading = false;
+          }, projectConstants.TIMEOUT_DELAY_SMALL);
+      } else {
       this.shared_functions.consumerLogin(post_data, this.moreParams)
       .then(
         success =>  { this.dialogRef.close('success'); },
@@ -97,6 +104,7 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+  }
   }
 
   doForgotPassword() {

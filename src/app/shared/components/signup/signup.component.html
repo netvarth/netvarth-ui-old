@@ -94,7 +94,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   </div>
 
   <div class="form-group" >
-      <mat-checkbox class="terms-margin" formControlName="terms_condition">Accept Terms and Conditions</mat-checkbox>
+      <mat-checkbox class="terms-margin" formControlName="terms_condition"></mat-checkbox> <span class="terms-link"><a [routerLink]="['/terms']" target="_blank">Accept Terms and Conditions</a></span>
   </div>
 </div>
 <div class="mat-dialog-actions" *ngIf="step==1">

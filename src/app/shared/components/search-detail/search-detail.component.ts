@@ -23,6 +23,7 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
+import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 
 @Component({
   selector: 'app-search-detail',
@@ -142,7 +143,7 @@ export class SearchDetailComponent implements OnInit {
                 // this.do_search();
         });
     });
-    this.sortfieldsels = 'titleasc';
+    // this.sortfieldsels = 'distanceasc';
     this.nosearch_results = false;
 
   }
@@ -402,7 +403,7 @@ setEnvironment(bypassotherfunction?) {
       this.startpageval = 1;
       /* console.log('domain', this.domain, 'locname', this.locname, 'locautoname',
          this.locautoname, 'lat', this.latitude, 'lon', this.longitude, 'kw', this.kw, 'kwauto', this.kwautoname, 'kwdomain', this.kwdomain, 'kwsubdom', this.kwsubdomain, 'kwtyp', this.kwtyp);*/
-      if (obj.srt) {
+      if (obj.sort && obj.srt !== ' ') {
         const sr = obj.srt.split(' ');
         this.sortfield = sr[0];
         this.sortorder = sr[1];
@@ -736,10 +737,10 @@ setEnvironment(bypassotherfunction?) {
     if (this.refined_options_url_str !== '') {
       urlstr += this.refined_options_url_str;
     }
-    if (this.sortfield === '') {
-      this.sortfield = 'title';
-      this.sortorder = 'asc';
-    }
+    // if (this.sortfield === '') {
+    //   this.sortfield = 'title';
+    //   this.sortorder = 'asc';
+    // }
     if (this.sortfield) {
       if (urlstr !== '') {
         urlstr += ';';
@@ -862,6 +863,34 @@ setEnvironment(bypassotherfunction?) {
     } else {
       this.shared_functions.getCloudUrl()
       .then (url => {
+          const userobj = this.shared_functions.getitemfromLocalStorage('ynw-user');
+          // console.log("Hai:"+ JSON.stringify(userobj));
+          let testUser = false;
+          if (userobj !== null) {
+            const phno = (userobj.primaryPhoneNumber.toString());
+            if (phno.startsWith('55')) {
+              testUser = true;
+            }
+          }
+          const qvar = projectConstants.searchpass_criteria.fq;
+          let qvarlen;
+          if (!testUser) {
+            if (qvar !== '') {
+              qvarlen = qvar.length;
+              projectConstants.searchpass_criteria.fq = qvar.substring(0, (qvarlen - 1)) + ' (not test_account:1) ' + qvar.substring(qvarlen - 1, 1);
+            } else {
+              projectConstants.searchpass_criteria.fq = ' (not test_account:1) ';
+            }
+          } else {
+            if (qvar !== '') {
+              qvarlen = qvar.length;
+              projectConstants.searchpass_criteria.fq = qvar.substring(0, (qvarlen - 1)) + ' test_account:1 ' + qvar.substring(qvarlen - 1, 1);
+            } else {
+              projectConstants.searchpass_criteria.fq = ' (and test_account:1) ';
+            }
+          }
+
+          // console.log(projectConstants.searchpass_criteria);
           this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria)
           .subscribe(res => {
             this.search_data = res;
@@ -983,6 +1012,8 @@ setEnvironment(bypassotherfunction?) {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         const ctoday = cday + '/' + cmon + '/' + yyyy;
         let srchindx;
+        const check_dtoday = new Date(dtoday);
+        let cdate = new Date();
         // console.log('prov id', provids);
         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
           srchindx = provids[i].searchindx;
@@ -993,7 +1024,9 @@ setEnvironment(bypassotherfunction?) {
             this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
             this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 1;
             this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
-            if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+            // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+              if (cdate.getTime() !== check_dtoday.getTime()) {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 1;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
@@ -1009,6 +1042,7 @@ setEnvironment(bypassotherfunction?) {
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               } else {
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             }
@@ -1061,21 +1095,29 @@ setEnvironment(bypassotherfunction?) {
     let selfield = '';
     let selorder = '';
     switch (sel) {
-      case 'titleasc':
-        selfield = 'title';
+      // case 'titleasc':
+      //   selfield = 'title';
+      //   selorder = 'asc';
+      // break;
+      // case 'titledesc':
+      //   selfield = 'title';
+      //   selorder = 'desc';
+      // break;
+      // case 'sectorasc':
+      //  selfield = 'sector';
+      //  selorder = 'asc';
+      // break;
+      // case 'sectordesc':
+      //   selfield = 'sector';
+      //   selorder = 'desc';
+      // break;
+      case 'distanceasc':
+        selfield = 'distance';
         selorder = 'asc';
       break;
-      case 'titledesc':
-        selfield = 'title';
-        selorder = 'desc';
-      break;
-      case 'sectorasc':
-       selfield = 'sector';
+      case 'ynw_verified_levelasc':
+        selfield = 'ynw_verified_level';
        selorder = 'asc';
-      break;
-      case 'sectordesc':
-        selfield = 'sector';
-        selorder = 'desc';
       break;
     }
     this.sortfieldsels = sel;
@@ -1525,7 +1567,7 @@ setEnvironment(bypassotherfunction?) {
     if (usertype === 'consumer') {
       this.showCheckin('consumer');
     } else if (usertype === '') {
-      const passParam = {callback: ''};
+      const passParam = {callback: '', current_provider: obj};
       this.doLogin('consumer', passParam);
     }
   }
@@ -1558,12 +1600,22 @@ setEnvironment(bypassotherfunction?) {
 
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
+    const current_provider = passParam['current_provider'];
+    let is_test_account = null;
+    if (current_provider) {
+      if (current_provider.test_account === '1') {
+        is_test_account = true;
+      } else {
+        is_test_account = false;
+      }
+    }
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',
        panelClass: ['loginmainclass', 'consumerpopupmainclass'],
       data: {
         type : origin,
         is_provider : this.checkProvider(origin),
+        test_account: is_test_account,
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
       }
     });
@@ -1620,7 +1672,7 @@ setEnvironment(bypassotherfunction?) {
          this.showProviderDetails(providforDetails);
         }
       } else { // show consumer login
-        const passParam = {callback: 'providerdetail', providerId: providforDetails };
+        const passParam = {callback: 'providerdetail', providerId: providforDetails, current_provider: obj };
         this.doLogin('consumer', passParam);
       }
     }
@@ -1665,7 +1717,7 @@ setEnvironment(bypassotherfunction?) {
           this.showCommunicate(providforCommunicate, name);
         }
       } else { // show consumer login
-        const passParam = {callback: 'communicate', providerId: providforCommunicate, provider_name: name };
+        const passParam = {callback: 'communicate', providerId: providforCommunicate, provider_name: name, current_provider: obj };
         this.doLogin('consumer', passParam);
       }
     }
@@ -1750,6 +1802,52 @@ setEnvironment(bypassotherfunction?) {
     } else {
         return this.shared_functions.firstToUpper(term);
     }
+  }
+
+  /* Service Clicked
+    * name  Service Name
+    * obj Search Result
+    */
+  serviceClicked(name, obj) {
+    const s3id = obj.fields.unique_id;
+    const busname = obj.fields.title;
+
+    // get services details from s3
+    let selected_service = null;
+    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    this.shared_functions.getS3Url('provider')
+      .then(
+        res => {
+          const s3url = res;
+          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
+            .subscribe (services => {
+              console.log(services);
+              let servicesList: any = [];
+              servicesList = services;
+             for (let i = 0; i < servicesList.length; i++) {
+              if (servicesList[i].name === name) {
+                selected_service = servicesList[i];
+                break;
+              }
+             }
+             if (selected_service !== null) {
+              this.showServiceDetail(selected_service, busname);
+             }
+            });
+        });
+  }
+  showServiceDetail(serv, busname) {
+    const dialogRef = this.dialog.open(ServiceDetailComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+    data: {
+      bname: busname,
+      serdet: serv
+    }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
 }

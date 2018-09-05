@@ -60,12 +60,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   load_locations = 0;
   load_queue = 0;
   load_waitlist = 0 ;
-
+  tooltipcls = projectConstants.TOOLTIP_CLS;
   open_filter = false;
   waitlist_status = [];
 
   filter = {
     first_name: '',
+    last_name: '',
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
@@ -765,6 +766,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
 
+    if (this.filter.last_name !== '') {
+      api_filter['lastName-eq'] = this.filter.last_name;
+    }
+
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;
     }
@@ -808,6 +813,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   resetFilter() {
     this.filter = {
       first_name: '',
+      last_name: '',
       queue: 'all',
       service: 'all',
       waitlist_status: 'all',
@@ -954,4 +960,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     return label_status;
   }
 
+  focusInput(ev, input) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) {
+      input.focus();
+    }
+  }
+  focusInputSp(ev) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) {
+      this.doSearch();
+    }
+  }
 }

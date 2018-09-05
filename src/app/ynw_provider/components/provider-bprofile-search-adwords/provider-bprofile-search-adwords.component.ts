@@ -7,7 +7,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
+import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderBprofileSearchAdwordsComponent } from '../add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import {Messages} from '../../../shared/constants/project-messages';
 
@@ -23,7 +23,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     adword_list: any = [] ;
     adwordsmaxcount: any = 0;
     remaining_adword = 0;
-
+    tooltipcls = projectConstants.TOOLTIP_CLS;
     query_executed = false;
     addwordTooltip = '';
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');

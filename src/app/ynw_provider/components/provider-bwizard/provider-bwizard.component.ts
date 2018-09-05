@@ -37,11 +37,12 @@ export class ProviderbWizardComponent implements OnInit {
   ischange_schedule_clicked = false;
   loading_active = true;
   search_status = 0;
+  search_active = false;
   coord_error = '';
   locname_error = '';
   gurl_error = '';
   error_Exists = false;
-
+  schedule_exists = false;
   customer_label = '';
   checkin_label = '';
 
@@ -479,6 +480,9 @@ export class ProviderbWizardComponent implements OnInit {
             this.wizard_data_holder['searchstatus'] = 2;
             this.search_status = 2;
           }
+      }, error => {
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        this.search_status = 2;
       });
   }
 

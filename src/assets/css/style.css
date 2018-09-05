@@ -15777,7 +15777,7 @@ header.consumer {
 
 .lm-outer {
   margin: 0 auto;
-  padding: 50px;
+  padding: 20px;
   background: #fff; }
   .lm-outer h3 {
     font-size: 1.875rem;
@@ -15801,12 +15801,15 @@ header.consumer {
       font-family: 'Roboto Slab', sans-serif;
       color: #545457;
       letter-spacing: .5px;
-      font-size: 1.1rem;
+      font-size: .875rem;
       padding: 20px;
       font-style: italic;
       border-left: 5px solid #87878a;
-      background: rgba(255, 255, 255, 0.6);
+      background: #f2f2f2;
       margin-bottom: 1.2rem; }
+      .lm-outer section blockquote span {
+        font-weight: 600;
+        font-size: 1rem; }
     .lm-outer section .box-indent {
       margin-left: 2.2rem; }
     .lm-outer section .ul-normal {
@@ -15836,6 +15839,8 @@ header.consumer {
           top: 6px; }
         .lm-outer section .ul-normal li:last-child {
           margin-bottom: 0; }
+    .lm-outer section .ol-normal li ul, .lm-outer section .ol-normal li ol, .lm-outer section .ol-normal li table {
+      margin-top: 1.2rem; }
     .lm-outer section .table {
       border: 1px solid #dbdbdb;
       background: rgba(255, 255, 255, 0.3);
@@ -15848,7 +15853,7 @@ header.consumer {
       .lm-outer section .table tbody tr td {
         vertical-align: top; }
         .lm-outer section .table tbody tr td .ol-normal {
-          margin: 0 0 0 20px;
+          margin: 0 0 1.2rem 20px;
           padding: 0; }
           .lm-outer section .table tbody tr td .ol-normal li:last-child {
             margin-bottom: 0; }
@@ -15860,72 +15865,239 @@ header.consumer {
       cursor: pointer; }
     .lm-outer section:last-child {
       margin-bottom: 0; }
-  .lm-outer.w-manager .table.wm-tbl tbody .td1, .lm-outer.w-manager .table.wm-tbl tbody .td2 {
+  .lm-outer.bprofile section .table thead tr th {
+    font-size: .875rem; }
+  .lm-outer.bprofile section .table tbody tr td {
+    font-size: .875rem;
+    font-weight: 500;
+    color: #545457; }
+    .lm-outer.bprofile section .table tbody tr td h6 {
+      font-weight: 600;
+      font-size: .875rem; }
+    .lm-outer.bprofile section .table tbody tr td div, .lm-outer.bprofile section .table tbody tr td ol li, .lm-outer.bprofile section .table tbody tr td ul li, .lm-outer.bprofile section .table tbody tr td p {
+      font-size: .875rem;
+      font-weight: 500; }
+    .lm-outer.bprofile section .table tbody tr td ol li, .lm-outer.bprofile section .table tbody tr td ul li, .lm-outer.bprofile section .table tbody tr td p {
+      color: #545457; }
+    .lm-outer.bprofile section .table tbody tr td .box {
+      border-bottom: 1px solid #dbdbdb;
+      margin-bottom: 1.2rem; }
+      .lm-outer.bprofile section .table tbody tr td .box ol {
+        padding-left: 1rem; }
+      .lm-outer.bprofile section .table tbody tr td .box:last-child {
+        margin-bottom: 0;
+        border: none; }
+  .lm-outer.bprofile section .table.verify-tbl tr td.td1 {
+    width: 20%;
+    font-size: 1rem;
     font-weight: 600; }
-  .lm-outer.w-manager .table.wm-tbl tbody .td1 {
-    font-weight: 400; }
-  .lm-outer.license .ul-normal li .ul-normal {
+  .lm-outer.bprofile section .table.verify-tbl tr td.td2 {
+    border-left: 1px solid #dbdbdb; }
+  .lm-outer.bprofile section .table.addword-tbl thead tr th {
+    font-size: 1rem; }
+    .lm-outer.bprofile section .table.addword-tbl thead tr th.th1 {
+      width: 30%; }
+  .lm-outer.bprofile section .table.addword-tbl tbody tr td.td1 {
+    width: 30%;
+    font-weight: 600; }
+  .lm-outer.bprofile section .table.addword-tbl tbody tr.tr2 {
+    background: rgba(0, 0, 0, 0.05); }
+  .lm-outer.bprofile section .table.addword-tbl tbody tr.tr3 {
+    background: rgba(255, 213, 154, 0.5); }
+  .lm-outer.bprofile section .table.addword-tbl tbody tr.tr4 {
+    background: rgba(154, 221, 255, 0.5); }
+  .lm-outer.bprofile section .table.loc-tbl, .lm-outer.bprofile section .table.social-tbl {
+    width: 260px; }
+    .lm-outer.bprofile section .table.loc-tbl tbody tr td, .lm-outer.bprofile section .table.social-tbl tbody tr td {
+      font-weight: 600; }
+  .lm-outer.bprofile section .table.locam-tbl tbody tr td.td1 {
+    font-weight: 600;
+    font-size: 1rem; }
+  .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 {
+    border-left: 1px solid #dbdbdb;
+    padding: 0;
+    font-weight: 600; }
+    .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table {
+      border: none;
+      margin-bottom: 0; }
+      .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr {
+        border-bottom: 1px solid #dbdbdb; }
+        .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr td {
+          border: none; }
+          .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr td .ul-normal {
+            margin-bottom: 0; }
+            .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr td .ul-normal li {
+              margin-bottom: 10px; }
+              .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr td .ul-normal li:before {
+                content: "\2d"; }
+          .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr td.td1 {
+            display: none;
+            font-size: .875rem;
+            width: 5%; }
+          .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr td.td2 {
+            width: 50%;
+            padding: .75rem; }
+        .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr:last-child {
+          border: none; }
+  .lm-outer.bprofile section .table.spec-tbl tbody tr td.td1, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td1 {
+    font-weight: 600;
+    font-size: 1rem; }
+  .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 {
+    border-left: 1px solid #dbdbdb;
+    padding: 0; }
+    .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table {
+      border: none;
+      margin-bottom: 0; }
+      .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table tbody tr, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table tbody tr {
+        border-bottom: 1px solid #dbdbdb; }
+        .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table tbody tr td, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table tbody tr td {
+          border: none; }
+          .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table tbody tr td.td1, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table tbody tr td.td1 {
+            width: 35%;
+            font-weight: 600;
+            font-size: .875rem; }
+          .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table tbody tr td.td2, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table tbody tr td.td2 {
+            width: 65%;
+            padding: .75rem; }
+            .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table tbody tr td.td2 .ol-normal, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table tbody tr td.td2 .ol-normal {
+              margin-bottom: 0; }
+              .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table tbody tr td.td2 .ol-normal li, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table tbody tr td.td2 .ol-normal li {
+                margin-bottom: 10px; }
+                .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table tbody tr td.td2 .ol-normal li:last-child, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table tbody tr td.td2 .ol-normal li:last-child {
+                  margin-bottom: 0; }
+        .lm-outer.bprofile section .table.spec-tbl tbody tr td.td2 .table tbody tr:last-child, .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td2 .table tbody tr:last-child {
+          border: none; }
+  .lm-outer.bprofile section .important {
+    padding: 20px;
+    border: 1px solid #f2f2f2;
+    margin-bottom: 1.2rem;
+    font-size: .875rem; }
+    .lm-outer.bprofile section .important h5 {
+      text-transform: uppercase; }
+    .lm-outer.bprofile section .important ul, .lm-outer.bprofile section .important ol {
+      margin-bottom: 0;
+      padding-left: 0; }
+      .lm-outer.bprofile section .important ul li, .lm-outer.bprofile section .important ol li {
+        font-size: .875rem;
+        font-weight: 500; }
+    .lm-outer.bprofile section .important ul li {
+      padding-left: 1.6em; }
+      .lm-outer.bprofile section .important ul li:before {
+        content: "\3b";
+        font-size: .875rem;
+        top: 1px;
+        left: 0px; }
+  .lm-outer.w-manager section .table tbody tr td {
+    font-size: .875rem;
+    font-weight: 500; }
+  .lm-outer.w-manager section .table.wm-tbl tbody .td1, .lm-outer.w-manager section .table.wm-tbl tbody .td2 {
+    font-weight: 600; }
+  .lm-outer.license section .ul-normal li .ul-normal {
     padding-left: 18px; }
-    .lm-outer.license .ul-normal li .ul-normal li {
+    .lm-outer.license section .ul-normal li .ul-normal li {
       list-style: circle;
       padding-left: 0rem; }
-      .lm-outer.license .ul-normal li .ul-normal li:before {
+      .lm-outer.license section .ul-normal li .ul-normal li:before {
         display: none; }
-  .lm-outer.license .table.license-tbl {
+  .lm-outer.license section .table thead tr th {
+    font-size: 1rem; }
+  .lm-outer.license section .table tbody tr td {
+    font-size: .875rem;
+    font-weight: 500; }
+  .lm-outer.license section .table.license-tbl {
     background: transparent; }
-    .lm-outer.license .table.license-tbl thead tr {
+    .lm-outer.license section .table.license-tbl thead tr {
       background: transparent; }
-      .lm-outer.license .table.license-tbl thead tr th {
+      .lm-outer.license section .table.license-tbl thead tr th {
         font-size: 1rem;
         vertical-align: top; }
-        .lm-outer.license .table.license-tbl thead tr th.th1 {
-          background: rgba(0, 0, 0, 0.02); }
-        .lm-outer.license .table.license-tbl thead tr th.th2 {
-          background: rgba(255, 255, 255, 0.3); }
-        .lm-outer.license .table.license-tbl thead tr th.th3 {
+        .lm-outer.license section .table.license-tbl thead tr th.th1 {
+          background: rgba(0, 0, 0, 0.02);
+          text-transform: uppercase; }
+        .lm-outer.license section .table.license-tbl thead tr th.th2 {
+          background: rgba(255, 255, 255, 0.3);
+          text-transform: uppercase; }
+        .lm-outer.license section .table.license-tbl thead tr th.th3 {
           background: rgba(0, 0, 0, 0.05); }
-        .lm-outer.license .table.license-tbl thead tr th.th4 {
-          background: rgba(255, 179, 73, 0.5); }
-        .lm-outer.license .table.license-tbl thead tr th.th5 {
-          background: rgba(97, 202, 255, 0.5); }
-        .lm-outer.license .table.license-tbl thead tr th.th6 {
-          background: rgba(255, 255, 255, 0.8); }
-      .lm-outer.license .table.license-tbl thead tr:nth-child(1) {
-        background: rgba(0, 0, 0, 0.01); }
-        .lm-outer.license .table.license-tbl thead tr:nth-child(1) th {
+        .lm-outer.license section .table.license-tbl thead tr th.th4 {
+          background: rgba(255, 213, 154, 0.5); }
+        .lm-outer.license section .table.license-tbl thead tr th.th5 {
+          background: rgba(154, 221, 255, 0.5); }
+        .lm-outer.license section .table.license-tbl thead tr th.th6 {
+          background: rgba(255, 255, 255, 0.3); }
+      .lm-outer.license section .table.license-tbl thead tr:nth-child(1) {
+        background: rgba(0, 0, 0, 0.055); }
+        .lm-outer.license section .table.license-tbl thead tr:nth-child(1) th {
           border-bottom: none; }
-      .lm-outer.license .table.license-tbl thead tr:nth-child(2) th {
+      .lm-outer.license section .table.license-tbl thead tr:nth-child(2) th {
         border-top: none;
         border-bottom: 3px solid #dbdbdb;
         font-size: .875rem; }
-    .lm-outer.license .table.license-tbl tbody tr td {
+    .lm-outer.license section .table.license-tbl tbody tr td {
       font-size: .875rem;
-      font-weight: 500; }
-      .lm-outer.license .table.license-tbl tbody tr td.td1 {
+      font-weight: 500;
+      color: #545457; }
+      .lm-outer.license section .table.license-tbl tbody tr td.td1 {
         background: rgba(0, 0, 0, 0.02);
         font-weight: 600; }
-      .lm-outer.license .table.license-tbl tbody tr td.td2 {
+      .lm-outer.license section .table.license-tbl tbody tr td.td2 {
         background: rgba(255, 255, 255, 0.3); }
-      .lm-outer.license .table.license-tbl tbody tr td.td3 {
-        background: #eeeeef; }
-      .lm-outer.license .table.license-tbl tbody tr td.td4 {
+      .lm-outer.license section .table.license-tbl tbody tr td.td3 {
+        background: rgba(0, 0, 0, 0.05); }
+      .lm-outer.license section .table.license-tbl tbody tr td.td4 {
         background: rgba(255, 213, 154, 0.5); }
-      .lm-outer.license .table.license-tbl tbody tr td.td5 {
+      .lm-outer.license section .table.license-tbl tbody tr td.td5 {
         background: rgba(154, 221, 255, 0.5); }
-      .lm-outer.license .table.license-tbl tbody tr td.td6 {
+      .lm-outer.license section .table.license-tbl tbody tr td.td6 {
         background: rgba(255, 255, 255, 0.8); }
-    .lm-outer.license .table.license-tbl tbody tr:nth-child(1) td {
+    .lm-outer.license section .table.license-tbl tbody tr:nth-child(1) td {
       border-top: none; }
-  .lm-outer.license .table.addword-tbl thead tr th.th1 {
-    width: 20%; }
-  .lm-outer.license .table.addword-tbl tbody tr td.td1 {
-    width: 20%; }
-  .lm-outer.license .table.addword-tbl tbody tr.tr2 {
+  .lm-outer.license section .table.addon-tbl tbody tr td.td1 {
+    font-weight: 600; }
+  .lm-outer.license section .table.addword-tbl thead tr th.th1 {
+    width: 30%; }
+  .lm-outer.license section .table.addword-tbl tbody tr td.td1 {
+    width: 30%;
+    font-weight: 600; }
+  .lm-outer.license section .table.addword-tbl tbody tr.tr2 {
     background: rgba(0, 0, 0, 0.05); }
-  .lm-outer.license .table.addword-tbl tbody tr.tr3 {
+  .lm-outer.license section .table.addword-tbl tbody tr.tr3 {
     background: rgba(255, 213, 154, 0.5); }
-  .lm-outer.license .table.addword-tbl tbody tr.tr4 {
+  .lm-outer.license section .table.addword-tbl tbody tr.tr4 {
     background: rgba(154, 221, 255, 0.5); }
+  .lm-outer.consumer section .table thead tr th {
+    font-size: 1rem; }
+  .lm-outer.consumer section .table tbody tr td {
+    font-size: .875rem;
+    font-weight: 500; }
+    .lm-outer.consumer section .table tbody tr td ul, .lm-outer.consumer section .table tbody tr td ol {
+      margin-bottom: 0; }
+      .lm-outer.consumer section .table tbody tr td ul li, .lm-outer.consumer section .table tbody tr td ol li {
+        font-size: .875rem;
+        font-weight: 500; }
+    .lm-outer.consumer section .table tbody tr td.td1 {
+      font-weight: 600; }
+
+.lm-popup {
+  background: #fff;
+  color: #222223;
+  padding: 20px;
+  -webkit-box-shadow: 0 -20px 30px rgba(0, 0, 0, 0.1) !important ;
+  -moz-box-shadow: 0 -20px 30px rgba(0, 0, 0, 0.1) !important ;
+  box-shadow: 0 -20px 30px rgba(0, 0, 0, 0.1) !important ;
+  -moz-transition: all 500ms;
+  -o-transition: all 500ms;
+  -webkit-transition: all 500ms;
+  transition: all 500ms;
+  /*margin-right: -50%;*/
+  /*visibility: hidden;*/
+  opacity: 1;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50%;
+  z-index: 1001; }
 
 footer {
   color: #fff;

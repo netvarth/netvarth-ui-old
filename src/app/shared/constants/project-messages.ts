@@ -12,6 +12,7 @@ export const Messages = {
   'LICENSE_UPGRADED': 'License Package upgraded successfully',
   'LICENSE_TOOLTIP' : 'This tooltip can be managed from the messages file',
   'ADDON_ADDED': 'Addon Package added successfully',
+  'TESTACC_LOGIN_NA': 'Test user cannot view/checkin real providers account details',
 
   // Items
   'ITEM_CREATED': 'Item created successfully',
@@ -45,7 +46,7 @@ export const Messages = {
   'HOLIDAY_LISTEMPTY' : 'No Non Working Day available',
 
   // Common
-  'API_ERROR': 'YouNeverWait.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
+  'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
 
   // Business Profile
   'BPROFILE_CREATED' : 'Business Profile created successfully',
@@ -144,7 +145,7 @@ export const Messages = {
   'PAYSETTING_ACTYPE': 'Account type is required',
   'PAYSETTING_TAXPER': 'Please enter a valid tax percentage',
   'PAYSETTING_GSTNUM': 'Please enter the GST number',
-  'PAYSETTING_SAV_TAXPER': 'Tax percentage updated successfully',
+  'PAYSETTING_SAV_TAXPER': 'Tax details updated successfully',
   'PAYSETTING_CONTACTADMIN': 'Contact Administrator to verify your payment modes',
   'PAYSETTING_MAXLEN': 'Only [maxlen] characters are allowed',
   'PAYSETTING_PANMAXLEN10': 'Pancard should contain only 10 characters',

@@ -50,7 +50,7 @@
                                             <span class="off" *ngIf="!normal_search_active">Off</span>
                                         </span>
                                         <ng-container *ngIf="normal_search_active">
-                                        <span class="success">Good! Your {{customer_label}}s can search &amp; find you online at youneverwait.com</span>
+                                        <span class="success">Good! Your {{customer_label}}s can search &amp; find you online at jaldee.com</span>
                                         </ng-container>
                                         <ng-container *ngIf="!normal_search_active">
                                             <span class="error"><i data-icon="m" ></i>Your {{customer_label}}s can’t find you online</span>
@@ -207,7 +207,8 @@
                                                  </li>
                                             </ul>
                                             <ng-container *ngIf="display_schedule.length == 0">
-                                            <div class="no-dta" *ngIf="normal_privacy_settings_show==2">
+                                            <!-- <div class="no-dta" *ngIf="normal_privacy_settings_show==2"> -->
+                                            <div class="no-dta">
                                                 <p>You haven’t added any working hours.</p>
                                                 <span class="cs-btn bt3" (click)="change_schedulepopup()">Add It Now</span>
                                             </div>

@@ -212,7 +212,16 @@
                                 <div class="search_sort_display">
                                     <mat-form-field>
                                         <mat-select name="sortfield" panelClass ="search_domaindropdown_class" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)" [(ngModel)]="sortfieldsels">
-                                          <mat-option value="titleasc">
+                                                <mat-option value="">
+                                                    --
+                                                </mat-option>
+                                                <mat-option value="distanceasc">
+                                                    Distance
+                                                </mat-option>
+                                                <mat-option value="ynw_verified_levelasc">
+                                                    Jaldee Verified
+                                                </mat-option>
+                                          <!-- <mat-option value="titleasc">
                                             Title (Ascending)
                                           </mat-option>
                                           <mat-option value="titledesc">
@@ -223,8 +232,8 @@
                                             </mat-option>
                                             <mat-option value="sectordesc">
                                                 Sector (Descending)
-                                             </mat-option>
-                                        </mat-select>
+                                             </mat-option>-->
+                                        </mat-select> 
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -342,7 +351,7 @@
 
                                         <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
-                                                <li *ngFor="let serv of search_result.fields.services">{{serv | titlecase}}</li>
+                                                <li *ngFor="let serv of search_result.fields.services" (click)="serviceClicked(serv,search_result)">{{serv | titlecase}}</li>
                                             </ul>
                                         </div>
                                     </div>

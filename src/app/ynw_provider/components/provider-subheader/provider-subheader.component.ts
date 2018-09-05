@@ -231,7 +231,7 @@ export class ProviderSubeaderComponent implements OnInit {
   }
 
   learnmore_clicked(mod) {
-    const dialogRef = this.dialog.open(LearnmoreComponent, {
+   /* const dialogRef = this.dialog.open(LearnmoreComponent, {
           width: '50%',
           panelClass: 'commonpopupmainclass',
           autoFocus: true,
@@ -240,7 +240,9 @@ export class ProviderSubeaderComponent implements OnInit {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
-        });
+        });*/
+        const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+        this.shared_functions.sendMessage(pdata);
   }
   getMode(mod) {
     switch (mod) {

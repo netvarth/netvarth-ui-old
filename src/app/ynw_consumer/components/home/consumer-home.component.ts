@@ -50,7 +50,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
   loadcomplete = {waitlist: false , fav_provider: false, history: false};
-
+  tooltipcls = projectConstants.TOOLTIP_CLS;
   pagination: any  = {
     startpageval: 1,
     totalCnt : 0,

@@ -12,6 +12,7 @@ import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
 
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import { projectConstants } from '../../constants/project-constants';
@@ -68,6 +69,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   inboxiconTooltip = '';
   custsignTooltip = '';
   provsignTooltip = '';
+  showLearnMore = false;
+  passedDet: any [];
 
   constructor(
     private dialog: MatDialog,
@@ -111,6 +114,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
             this.inboxCntFetched = true;
           }
         break;
+        case 'learn_more':
+          this.showLearnMore = true;
+          this.passedDet = message.target.scrollKey;
+        break;
       }
       /*if (message.ttype === 'updateuserdetails') {
         this.getUserdetails();
@@ -119,6 +126,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.getBusinessdetFromLocalstorage();
     });
 
+  }
+  hideLearnmore() {
+   // console.log('reached here');
+    this.showLearnMore = false;
   }
 
   ngOnInit() {

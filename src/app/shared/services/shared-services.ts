@@ -120,6 +120,13 @@ export class SharedServices {
     }
 
     DocloudSearch(url, params) {
+      let sort_prefix;
+      // console.log(params.sort);
+      if (params.sort.trim() !== '') {
+        sort_prefix = params.sort;
+      } else  {
+        sort_prefix = 'ynw_verified_level asc, distance asc';
+      }
        url = url + '/search';
        // rebuilding the parameters to accomodate q.parser and q.options
        const pass_params = {
@@ -130,7 +137,7 @@ export class SharedServices {
         'size': params.size ,
         'q.parser': params.parser, // 'q.parser'
         'q.options': params.options, // 'q.options'
-        'sort': 'distance asc,' + params.sort,
+        'sort': sort_prefix,
         // 'q.sort': params.sort,
         'expr.distance': params.distance
       };
