@@ -972,4 +972,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.doSearch();
     }
   }
+
+  learnmore_clicked(mod) {
+    const moreOptions = {'show_learnmore': true , 'scrollKey': 'adjustdelay'};
+    const pdata = { 'ttype': 'learn_more', 'target': moreOptions };
+    this.shared_functions.sendMessage(pdata);
+   }
 }

@@ -1261,9 +1261,11 @@
     
     // Popup footer section
     .mat-dialog-actions {
-        border-top: 1px solid $cc-ash;
+        /*border-top: 1px solid $cc-ash;*/
         display: block;
         margin-bottom: 0;
+        @include box-shadow(0, 0, 30px, rgba(0,0,0,0.1));
+        position: relative;
         
         .bt1 {
             margin-right: 10px;
@@ -2661,4 +2663,9 @@
 .signupmainclass,
 .loginmainclass {
     width: 480px !important;
+    
+    .mat-dialog-actions {
+        border: none !important;
+        box-shadow: none !important
+    }
 }

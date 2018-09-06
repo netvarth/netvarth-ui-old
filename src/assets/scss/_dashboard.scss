@@ -82,10 +82,17 @@ header {
                     }
                 }
                 
-                .mn-title{
+                .mn-title {
                     display: flex;
                     align-items: center;
                     flex-direction: column;
+                    
+                    @include respond-to(ynw-767){
+                        width: 200px;
+                    }
+                    @include respond-to(ynw-768-991){
+                        width: 250px;
+                    }
                     
                     .title-bn, .title-ps {
                         display: block;
@@ -93,6 +100,19 @@ header {
                         font-weight: 500;
                         @include font-medium;
                         width: 100%;
+                        
+                        @include respond-to(ynw-767){
+                            width: 200px;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+                        @include respond-to(ynw-768-991){
+                            width: 250px;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
                     }
                     .title-ps {
                         @include font-regular;
@@ -546,7 +566,10 @@ footer {
 
 // ### Profile & Search -- No-Data Styles
 .tp-pnl {
-    @include linear-gradient(#b5b5b5,#e0e0e0);
+    /*@include linear-gradient(#b5b5b5,#e0e0e0);*/
+    @include linear-gradient(#f0f0f0,#e8e8e8);
+    /*background: rgba(0,0,0,.05);*/
+    @include box-shadow(0, -10px, 30px, rgba(0,0,0,0.1), inset);
     
     .top-mnu {
         display: flex;
@@ -556,7 +579,7 @@ footer {
         
         @include respond-to(ynw-575) {
             justify-content: flex-start;
-            flex-flow: column;
+            overflow: auto;
             
             .bt5 {                
                 &:before {
@@ -566,33 +589,90 @@ footer {
             
         }
         
-        .bt4, .bt5 {
+        .top-help-icon, .top-help-button {
+            display: flex;
             margin-left: 10px;
+            background: $white;
+            /*border: 1px solid rgba(0, 174, 242, .8);*/
+            @include border-radius(30px);
+            @include transition(all 300ms);
+            padding: 5px;
+            @include box-shadow(0px, 0px, 30px, rgba(0,0,0,0.1));
             
             @include respond-to(ynw-575) {
-                margin: 0;
+                &:first-child {
+                    margin: 0;
+                }
+            }
+            
+            .bt4, .bt5 {
                 @include border-radius(0);
-                border-bottom: 1px solid $cc-ash;
+                color: $linkblack;
+                background: transparent;
+                min-width: 0;
+                @include border-radius(30px);
+                
+                &:hover {
+                    background: $linkblue;
+                    color: $white
+                }
+
+                /*@include respond-to(ynw-575) {
+                    margin: 0;
+                    border-bottom: 1px solid $cc-ash;
+                }*/
+                
+                i {
+                    display: none;
+                }
+            }
+            .bt5 {
+                position: relative;
+                /*margin-left: 20px;*/
+
+                @include respond-to(ynw-575) {
+                    margin: 0;
+                    border-bottom: none;
+                }
+
+                &:before {
+                    position: absolute;
+                    content: "";
+                    width: 1px;
+                    height: 20px;
+                    top: 5px;
+                    left: -10px;
+                    background: $cc-gray;
+                    display: none;
+                }
+            }
+            
+            i {
+                padding: 5px 10px 5px 5px;
+                color: $linkblack;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                @include transition(all 300ms);
+                
+                &:hover {
+                    color: $linkblue;
+                }
             }
         }
-        .bt5 {
-            position: relative;
-            /*margin-left: 20px;*/
+        .top-help-button {
+            padding: 0;
+            min-width: 66px;
+            background: transparent;
+            align-items: center;
+            justify-content: center;
+            box-shadow: none;
             
-            @include respond-to(ynw-575) {
-                margin: 0;
-                border-bottom: none;
-            }
-            
-            &:before {
-                position: absolute;
-                content: "";
-                width: 1px;
-                height: 20px;
-                top: 5px;
-                left: -10px;
-                background: $cc-gray;
-                display: none;
+            .bt5 {
+                background: transparent;
+                color: $linkblue;
+                border: 2px solid $linkblue;
             }
         }
     }
@@ -762,6 +842,10 @@ footer {
             margin-right: 0;
             padding-right: 10px;
             display: flex;
+            border: 2px solid $linkblue;
+            color: $linkblue;
+            @include border-radius(30px);
+            background: transparent;
             
             &:after {
                 display: none;
@@ -769,6 +853,7 @@ footer {
             
             &:hover {
                 color: $white;
+                background: $linkblue;
                 
                 &:before {
                     display: none;
@@ -3956,18 +4041,37 @@ footer {
                         }
                     }
                     
-                    .cs-btn {
-                        text-transform: uppercase;
-                        font-size: .75rem;
-                        font-weight: 600;
+                    .adjust-delay-button {
+                        display: flex;
+                        margin-left: auto;
                         
-                        @include respond-to(ynw-767){
-                            margin: 0 auto 20px auto;
+                        .cs-btn {
+                            text-transform: uppercase;
+                            font-size: .75rem;
+                            font-weight: 600;
+                            @include border-right-radius(0);
+
+                            @include respond-to(ynw-767){
+                                margin: 0 auto 20px auto;
+                            }
                         }
                         
                         i {
-                            margin-left: 5px;
-                            font-size: 1rem;
+                            padding: 5px 10px;
+                            color: $linkblack;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            cursor: pointer;
+                            @include transition(all 300ms);
+                            border: 1px solid lighten($cc-darkgray, 30%);
+                            background: $cc-body;
+                            border-left: none;
+                            @include border-right-radius(3px);
+
+                            &:hover {
+                                color: $linkblue;
+                            }
                         }
                     }
                 }
@@ -4043,6 +4147,7 @@ footer {
                                     border-right: none;
                                     border-top: none;
                                     margin: 0;
+                                    min-width: 25%;
                                     
                                     .col-form-label {
                                         @include font-medium;
@@ -6145,7 +6250,7 @@ footer {
                                 }
                                 
                                 .mat-input-wrapper {
-                                    margin-bottom: 5px;
+                                    /*margin-bottom: 5px;*/
                                     padding-bottom: 0px;
 
                                     .mat-input-underline, .mat-input-subscript-wrapper {
@@ -6181,7 +6286,13 @@ footer {
                                                 height: 40px;
                                                 padding: 10px;
                                                 @include font-regular;
-                                                border: 1px solid $cc-formbg;
+                                                background: $cc-formbg;
+                                                
+                                                &.mat-select-disabled {
+                                                    .mat-select-value {
+                                                        color: $cc-darkgray;
+                                                    }
+                                                }
                                             }
                                         }
                                     }

@@ -74,7 +74,7 @@
                               <div class="lt0" *ngIf="waitlist.token">
                                   Token No <span class="token">{{waitlist.token}}</span>
                               </div>
-                              <div class="lt0">
+                              <div class="lt0" *ngIf="showPersonsAhead(waitlist)">
                                   Persons Ahead <span class="persons">{{waitlist.personsAhead}}</span>
                               </div>
                           </div>

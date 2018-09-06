@@ -72,7 +72,11 @@ export class AddProviderDiscountsComponent implements OnInit {
           return;
         } else {
             if (form_data.discValue === 0) {
-              this.api_error = 'Please enter the discount value';
+              if (form_data.calculationType === 'Percentage') {
+                this.api_error = 'Please enter the discount percentage';
+              } else {
+                this.api_error = 'Please enter the discount value';
+              }
               return;
             }
             if (form_data.calculationType === 'Percentage') {

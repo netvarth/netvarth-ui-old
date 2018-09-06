@@ -3,8 +3,9 @@
     <mat-spinner class="outer-load-spinner"></mat-spinner>
 </div>
 <div class="overlay" [class.show]="showLearnMore" (click)="hideLearnmore()"></div>
-<div class="lm-popup" *ngIf="showLearnMore" style="overflow:scroll; scroll-behavior: auto">
-        <span (click)="hideLearnmore()">Close</span>    
+<div class="lm-popup" *ngIf="showLearnMore">
+        <span (click)="hideLearnmore()" class="close"></span>    
+        <!-- <span class="backTotop" (click)="handleScroll('learnmore-begining')">Back To Top</span> -->
         <app-learnmore [passedDet] = "passedDet" *ngIf="showLearnMore"></app-learnmore>
 </div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home'">

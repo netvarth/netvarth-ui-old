@@ -65,11 +65,12 @@
                           </ng-container>
                       </ul>
 
-                      <span *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id"
-                      class="ml-auto cs-btn bt5" (click)="showAdjustDelay()" [matTooltipClass] = "tooltipcls" [matTooltip]="delayTooltip">
+                      <span class="adjust-delay-button" *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+                        <span class="ml-auto cs-btn bt5" (click)="showAdjustDelay()" [matTooltipClass] = "tooltipcls" [matTooltip]="delayTooltip">
                           Adjust Delay
                       </span>
-                       <!-- <span><i class="icon-question" [matTooltip]="delayTooltip"></i></span> -->
+                      <i data-icon="B" (click)="learnmore_clicked('adjustdelay')"></i>
+                      </span>
                   </div>
 
                   <!-- <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
@@ -275,17 +276,24 @@
                                     && ((time_type === 0 && checkin.billStatus) || time_type != 0)"
                                     [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }">
 
-                                     <ng-container *ngIf="!checkin.billStatus">
+                                     <!-- <ng-container *ngIf="!checkin.billStatus">
                                         <i class="icon-play" ></i>New Bill
                                      </ng-container>
                                      <ng-container *ngIf="checkin.billStatus== 'Settled' || checkin.billStatus== 'New'">
                                         <i class="icon-play" ></i>View Bill
+                                     </ng-container> -->
+
+                                     <ng-container *ngIf="!checkin.billStatus">
+                                        <i class="icon-play" ></i>Bill
+                                     </ng-container>
+                                     <ng-container *ngIf="checkin.billStatus== 'Settled' || checkin.billStatus== 'New'">
+                                        <i class="icon-play" ></i>Bill
                                      </ng-container>
 
                                     </span>
 
                                     <span class="acceptbill cs-btn bt7"
-                                    *ngIf="checkin.billStatus== 'New' && checkin.billPaymentStatus!='FullyPaid' " (click)="getWaitlistBill(checkin, 'payment')">
+                                    *ngIf="checkin.billStatus== 'New' && checkin.billPaymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'" (click)="getWaitlistBill(checkin, 'payment')">
                                      <i class="icon-play" ></i>Accept payment
 
                                     </span>

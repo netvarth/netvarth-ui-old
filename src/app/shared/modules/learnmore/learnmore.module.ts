@@ -10,6 +10,7 @@ import { LearnmoreCheckinComponent } from './learnmore-checkin/learnmore-checkin
 import { LearnmoreCustomerComponent } from './learnmore-customer/learnmore-customer.component';
 import { LearnmoreKioskComponent } from './learnmore-kiosk/learnmore-kiosk.component';
 import { LearnmoreLicenseComponent } from './learnmore-license/learnmore-license.component';
+import { LearnmoreAdjustDelayComponent } from './learnmore-adjustdelay/learnmore-adjustdelay.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { LearnmoreLicenseComponent } from './learnmore-license/learnmore-license
         LearnmoreCheckinComponent,
         LearnmoreCustomerComponent,
         LearnmoreKioskComponent,
-        LearnmoreLicenseComponent
+        LearnmoreLicenseComponent,
+        LearnmoreAdjustDelayComponent
     ],
     entryComponents: [
         LearnmoreComponent

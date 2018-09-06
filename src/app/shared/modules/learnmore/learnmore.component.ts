@@ -31,13 +31,4 @@ export class LearnmoreComponent implements OnInit {
           }, 200);
       }*/
     }
-
-    /*public triggerScrollTo(destination) {
-      const config: ScrollToConfigOptions = {
-        target: destination
-      };
-      // console.log('destination', destination, 'config', config);
-      this._scrollToService.scrollTo(config);
-    }*/
-
 }

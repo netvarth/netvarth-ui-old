@@ -191,9 +191,16 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
+        this.getHistroy(this.params);
       }
     });
+  }
+  isRated(wait) {
+    if (wait.hasOwnProperty('rating') ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

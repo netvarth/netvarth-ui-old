@@ -86,9 +86,6 @@
 .icon-edit:before {
   content: "\78";
 }
-.icon-info:before {
-  content: "\42";
-}
 .icon-settings:before {
   content: "\44";
 }
@@ -115,9 +112,6 @@
 }
 .icon-person:before {
   content: "\63";
-}
-.icon-delete:before {
-  content: "\4b";
 }
 .icon-logout:before {
   content: "\4c";
@@ -298,4 +292,10 @@
 }
 .icon-none:before {
   content: "\5b";
+}
+.icon-delete:before {
+  content: "\4b";
+}
+.icon-info:before {
+  content: "\42";
 }

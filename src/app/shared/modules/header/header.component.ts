@@ -6,7 +6,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
+import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
@@ -76,6 +76,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     public router: Router,
+    private _scrollToService: ScrollToService,
     public shared_service: SharedServices
   ) {
      /*router.events.subscribe((val) => {
@@ -382,5 +383,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
       },
     error => {
     });
+  }
+
+  gototop() {
+    console.log('here');
+    window.scrollTo(0, 0);
+  }
+  public triggerScrollTo(destination) {
+    const config: ScrollToConfigOptions = {
+      target: destination
+    };
+    // console.log('destination', destination, 'config', config);
+    this._scrollToService.scrollTo(config);
+  }
+
+  handleScroll(target) {
+   // if (this.data.moreOptions.scrollKey !== undefined) {
+      setTimeout(() => {
+        this.triggerScrollTo(target);
+        }, 200);
+    // }
   }
 }

@@ -87,7 +87,7 @@ footer {
     }
     
     .pt-top {
-        padding: 3.75em;
+        padding: 2.3em;
         position: relative;
         
         h1 {
@@ -98,7 +98,7 @@ footer {
         }
         
         p {
-            font-size: 1.125rem;
+            font-size: 1.1rem;
             font-weight: 300;
             @include font-regular;
             
@@ -116,7 +116,7 @@ footer {
         }
     }
     .pt-btm {
-        padding: 1.75em 3.75em 3.75em 3.75em;
+        padding: 1.75em 2.3em 2.3em 2.3em;
         background: $white;
         position: relative;
         @include border-radius(5px);

@@ -431,6 +431,9 @@ export class SignUpComponent implements OnInit {
         const phonenumber = (data) ? data : 'your mobile number';
         this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
       }
+      setTimeout(() => {
+        this.api_success = '';
+        }, projectConstants.TIMEOUT_DELAY_LARGE6);
 
     }
 

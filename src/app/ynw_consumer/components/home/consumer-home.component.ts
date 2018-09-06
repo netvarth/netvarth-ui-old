@@ -694,6 +694,23 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
   }
+  showPersonsAhead(waitlist) {
+    let retstat = false;
+    if (waitlist.hasOwnProperty('personsAhead')) {
+      switch (waitlist.waitlistStatus) {
+        case 'cancelled':
+        case 'started':
+        case 'done':
+          retstat =  false;
+        break;
+        default:
+          retstat =  true;
+      }
+    } else {
+      retstat = false;
+    }
+    return retstat;
+  }
 
 }
 

@@ -6,7 +6,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
-
+import { KioskServices } from '../../services/kiosk-services.service';
 @Component({
   selector: 'app-reportas-arrived',
   templateUrl: './reportas-arrived.component.html'
@@ -28,17 +28,29 @@ export class ReportasArrivedComponent implements OnInit {
   locid;
   changeOccured = false;
   waitlist: any = [];
+  waitlistmgr: any = [];
+  waitlistmgr_obtained = false;
   curdate;
 
   constructor(
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
+    public kiosk_services: KioskServices,
     private dialog: MatDialog
     ) {
 
      }
 
   ngOnInit() {
+    this.kiosk_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.waitlistmgr = data;
+        // console.log('wailistmgr', this.waitlistmgr);
+        this.waitlistmgr_obtained = true;
+      }, error => {
+
+      });
+
     this.waitlist = this.passedInData.waitlist;
     const cdate = new Date();
     let mon = '';
@@ -105,7 +117,11 @@ export class ReportasArrivedComponent implements OnInit {
     } else if (mod === 'caption') {
         return retval.caption;
     } else if (mod === 'waitingcaption') {
-      return retval.waitingtimecaption;
+      if (this.waitlistmgr.calculationMode === 'NoCalc') {
+        return '';
+      } else {
+        return retval.waitingtimecaption;
+      }
     } else if (mod === 'waitingmins') {
       return retval.waitingtimemins;
     }

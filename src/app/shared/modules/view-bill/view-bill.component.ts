@@ -9,7 +9,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { ProviderRefundComponent } from '../../../ynw_provider/components/provider-refund/provider-refund.component';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+// import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 
 
@@ -63,7 +63,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     public dialogRef: MatDialogRef<ViewBillComponent>,
     public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
     private dialog: MatDialog,
-    public provider_services: ProviderServices,
+    // public provider_services: ProviderServices,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public sharedfunctionObj: SharedFunctions,
@@ -76,7 +76,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
      }
 
   ngOnInit() {
-    this.getTaxDetails();
+    // this.getTaxDetails();
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
     this.pre_payment_log = this.prepaymentlog || null;

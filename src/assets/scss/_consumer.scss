@@ -3511,6 +3511,9 @@ header {
                     thead {
                         tr {
                             th {
+                                &.th1 {
+                                    width: 20%;
+                                }
                                 &.th4 {
                                     /*border-right: 1px solid $cc-body;*/
                                 }
@@ -3520,6 +3523,9 @@ header {
                     tbody {
                         tr {
                             td {
+                                &td1 {
+                                    width: 20%;
+                                }
                                 &.td4 {
                                     border-right: 1px solid $cc-body;
                                     
@@ -3575,11 +3581,11 @@ header {
                                 }
                                 &.td5 {
                                     display: flex;
-                                    justify-content: flex-end;
+                                    justify-content: flex-start;
                                     
                                     .controls {
                                         margin: 0;
-                                        margin-left: auto;
+                                        /*margin-left: auto;*/
                                         padding: 0;
                                         display: flex;
                                         flex-wrap: wrap;
@@ -3645,7 +3651,7 @@ header {
                                                     &:before {
                                                         content: "\3b";
                                                     }
-                                                    &:hover {
+                                                    &.rated {
                                                         &:before {
                                                             content: "\3c";
                                                             color: $cc-warning;

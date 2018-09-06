@@ -26,6 +26,8 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     tooltipcls = projectConstants.TOOLTIP_CLS;
     query_executed = false;
     addwordTooltip = '';
+    adwords_mincnt = 5;
+    adwords_cntr = 0;
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
