@@ -236,9 +236,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
   doSignup(origin?, moreOptions = {}) {
+    // const ctype = this.checkProvider(origin);
+    //   let cClass = 'consumerpopupmainclass';
+    //   if (ctype === 'true') {
+    //     cClass = 'commonpopupmainclass';
+    //   }
+    let cClass = 'consumerpopupmainclass';
+    if (origin === 'provider') {
+      cClass = 'commonpopupmainclass';
+    }
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
-      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['signupmainclass', cClass],
       data: {
         is_provider : this.checkProvider(origin),
         moreOptions: moreOptions
@@ -251,9 +260,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   doLogin(origin?) {
+    let cClass = 'consumerpopupmainclass';
+    if (origin === 'provider') {
+      cClass = 'commonpopupmainclass';
+    }
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',
-       panelClass: ['loginmainclass', 'consumerpopupmainclass'],
+       panelClass: ['loginmainclass', cClass],
       data: {
         type : origin,
         is_provider : this.checkProvider(origin)

@@ -38,6 +38,7 @@ export class SignUpComponent implements OnInit {
   moreParams;
   heading = 'Activation Process';
   resendemailotpsuccess = true;
+  claimmable = false;
 
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
@@ -54,20 +55,27 @@ export class SignUpComponent implements OnInit {
      ngOnInit() {
       this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
       this.moreParams = this.data.moreParams;
-      // console.log('more params begining signup', this.moreParams);
       if (this.data.moreOptions === undefined) {
-        this.data.moreOptions = { isCreateProv: false};
-      }
-      if (this.data.moreOptions && this.data.moreOptions.isCreateProv) {
-        this.heading = 'Create Provider Account';
-        this.createFormSpecial(1);
-      } else {
-          this.createForm(1);
+          this.data.moreOptions = { isCreateProv: false};
+       }
+      if (this.data.claimData === undefined) {
+        if (this.data.moreOptions && this.data.moreOptions.isCreateProv) {
+          this.heading = 'Create Provider Account';
+          this.createFormSpecial(1);
+        } else {
+              this.createForm(1);
+        }
+      } else { // case of claimmable
+        console.log('passedinData', this.data);
+        this.claimmable = true;
+        this.domainIsthere = 1; // this.data.claimData.sector;
+        this.createClaimForm(1);
       }
         this.shared_services.bussinessDomains()
         .subscribe(
           data => {
               this.business_domains = data;
+              this.getPackages();
              // this.setDomain(0);
           },
           error => {
@@ -75,20 +83,59 @@ export class SignUpComponent implements OnInit {
           }
         );
 
-        this.shared_services.getPackages()
-        .subscribe(
-          data => {
-            this.packages = data;
+        // this.shared_services.getPackages()
+        // .subscribe(
+        //   data => {
+        //     this.packages = data;
 
-            if (this.packages[0] && this.signupForm.get('package_id')) {
-              this.signupForm.get('package_id').setValue(this.packages[0].pkgId);
-            }
-          },
-          error => {
+        //     if (this.packages[0] && this.signupForm.get('package_id')) {
+        //       this.signupForm.get('package_id').setValue(this.packages[0].pkgId);
+        //     }
+        //   },
+        //   error => {
 
-          }
-        );
+        //   }
+        // );
      }
+     getPackages() {
+      this.shared_services.getPackages()
+      .subscribe(
+        data => {
+          this.packages = data;
+          if (this.packages[0] && this.signupForm.get('package_id')) {
+            this.signupForm.get('package_id').setValue(this.packages[0].pkgId);
+          }
+
+          if (this.data.claimData !== undefined) { // case of claimmable
+            const domainid = this.getDomainIndex(this.data.claimData.sector);
+            const subdomainid = this.getSubDomainIndex(domainid, this.data.claimData.subSector);
+            this.domainIsthere = domainid;
+            this.signupForm.get('selectedDomainIndex').setValue(domainid);
+            this.setDomain(domainid);
+            this.signupForm.get('selectedSubDomains').setValue(subdomainid);
+          }
+        },
+        error => {
+
+        }
+      );
+     }
+     getDomainIndex(domainname) {
+       for (let i = 0; i < this.business_domains.length; i++) {
+         if (domainname === this.business_domains[i].domain) {
+           return i;
+         }
+       }
+       return 0;
+     }
+      getSubDomainIndex(domainid, subdomname) {
+        for (let j = 0; j < this.business_domains[domainid].subDomains.length; j++) {
+          if (subdomname === this.business_domains[domainid].subDomains[j].subDomain) {
+            return j;
+          }
+        }
+        return 0;
+      }
 
      createForm(step) {
       this.step = step;
@@ -110,8 +157,6 @@ export class SignUpComponent implements OnInit {
 
                  break;
       }
-
-
      }
 
      createFormSpecial(step) {
@@ -128,10 +173,29 @@ export class SignUpComponent implements OnInit {
                  this.signupForm.get('is_provider').setValue(this.is_provider);
                  this.changeType();
 
+          break;
+      }
+     }
+     createClaimForm(step) {
+      this.step = step;
+      switch (step) {
+        case 1:  this.signupForm = this.fb.group({
+                          is_provider: ['true'],
+                          phonenumber: ['', Validators.compose(
+                                            [Validators.required,  Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)]) ],
+                          first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                          last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                          selectedDomainIndex: [{value: '', disabled: true}, Validators.compose([Validators.required])],
+                          selectedSubDomains: [{value: 0, disabled: true}, Validators.compose([Validators.required])],
+                          package_id : ['', Validators.compose([Validators.required])],
+                          terms_condition: ['true'],
+
+                 });
+                 this.signupForm.get('is_provider').setValue(this.is_provider);
+                 this.changeType();
+
                  break;
       }
-
-
      }
 
      changeType() {
@@ -232,14 +296,25 @@ export class SignUpComponent implements OnInit {
         const sub_Sector = this.subDomainList[this.signupForm.get('selectedSubDomains').value].value;
         // console.log('subsector', sub_Sector);
 
-
-        this.user_details = {
+        if (this.data.claimData !== undefined) { // claimmable
+          this.user_details = {
             userProfile: userProfile,
             sector: sector,
             subSector: sub_Sector,
             isAdmin : isAdmin, // checked this to find provider or customer
-            licPkgId: this.signupForm.get('package_id').value || null
-        };
+            licPkgId: this.signupForm.get('package_id').value || null,
+            accountId: this.data.claimData.accountId
+          };
+        } else {
+          this.user_details = {
+              userProfile: userProfile,
+              sector: sector,
+              subSector: sub_Sector,
+              isAdmin : isAdmin, // checked this to find provider or customer
+              licPkgId: this.signupForm.get('package_id').value || null
+          };
+      }
+
       //  console.log('providerdet', this.user_details);
         this.signUpApiProvider(this.user_details);
 

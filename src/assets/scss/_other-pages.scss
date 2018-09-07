@@ -385,6 +385,7 @@
         justify-content: center;
         @include border-radius(30px);
         @include transition(all 500ms);
+        text-shadow: none;
         
         &:before {
             position: absolute;
@@ -407,12 +408,11 @@
     
     .backTotop {
         position: absolute;
-        left: 50%;
-        bottom: 15px;
-        background: rgba(255,255,255,.7);
+        right: 30px;
+        bottom: 20px;
+        background: rgba(255,255,255,.8);
         font-weight: 600;
         text-align: center;
-        width: 150px;
         @include box-shadow(0px, 0px, 30px, rgba(0,0,0,.3));
         @include border-radius(60px);
         font-size: .875rem;
@@ -421,6 +421,15 @@
         @include transition(all 500ms);
         z-index: 100;
         cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+        
+        .icon-angle-up {
+            height: 1em;
+        }
         
         &:hover {
             color: $linkblue;
@@ -442,10 +451,11 @@
             font-size: 1.575rem;
             font-weight: 700;
             margin-bottom: 10px;
+            color: $black;
         }
 
         section {
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
 
             p, div, ul li, ol li, table th, table td {
                 font-size: 1rem;
@@ -459,11 +469,16 @@
 
             h4 {
                 font-size: 1.2rem;
-                color: lighten($linkblack, 20%);
+                color: $black;
+                padding-top: 15px;
             }
 
             h5 {
                 font-size: 1rem;
+                color: lighten($linkblack, 20%);
+            }
+            
+            h6 {
                 color: lighten($linkblack, 20%);
             }
 

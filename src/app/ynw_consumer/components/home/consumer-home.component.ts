@@ -260,7 +260,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         const ctoday = cday + '/' + cmon + '/' + yyyy;
         let locindx;
-
+        const check_dtoday = new Date(dtoday);
+        let cdate = new Date();
         for (let i = 0; i < waitlisttime_arr.length; i++) {
           locindx = provids_locid[i].locindx;
           // console.log('locindx', locindx);
@@ -271,7 +272,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.fav_providers[index]['locations'][locindx]['opennow'] = waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
             this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
             this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
-            if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+            // if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            if (cdate.getTime() !== check_dtoday.getTime()) {
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 1;
               if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
@@ -287,6 +290,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               } else {
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             }

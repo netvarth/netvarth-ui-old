@@ -569,7 +569,8 @@ footer {
     /*@include linear-gradient(#b5b5b5,#e0e0e0);*/
     @include linear-gradient(#f0f0f0,#e8e8e8);
     /*background: rgba(0,0,0,.05);*/
-    @include box-shadow(0, -10px, 30px, rgba(0,0,0,0.1), inset);
+    /*@include box-shadow(0, -10px, 30px, rgba(0,0,0,0.1), inset);*/
+    background:#9be3ff url(../images/dash-step.svg) no-repeat scroll 0 0/cover;
     
     .top-mnu {
         display: flex;
@@ -671,8 +672,12 @@ footer {
             
             .bt5 {
                 background: transparent;
-                color: $linkblue;
-                border: 2px solid $linkblue;
+                color: $hover-blue;
+                border: 2px solid $hover-blue;
+                
+                &:hover {
+                    background: $hover-blue;
+                }
             }
         }
     }
@@ -842,8 +847,8 @@ footer {
             margin-right: 0;
             padding-right: 10px;
             display: flex;
-            border: 2px solid $linkblue;
-            color: $linkblue;
+            border: 2px solid $hover-blue;
+            color: $hover-blue;
             @include border-radius(30px);
             background: transparent;
             
@@ -853,7 +858,7 @@ footer {
             
             &:hover {
                 color: $white;
-                background: $linkblue;
+                background: $hover-blue;
                 
                 &:before {
                     display: none;
@@ -4283,7 +4288,7 @@ footer {
                         &.mat-expanded {
                             .mat-expansion-panel-content {
                                 padding: 10px;
-                                @include top-to-bottom(#00aef2, #3bcca5);
+                                @include top-to-bottom(#00aef2, #00a1e0);
                             }
                         }
                     }

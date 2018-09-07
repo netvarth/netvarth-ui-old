@@ -79,6 +79,11 @@ export class ViewBillComponent implements OnInit, OnChanges {
     // this.getTaxDetails();
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
+    if (this.bill_data.gstNumber) {
+      this.item_service_gst = this.bill_data.gstNumber;
+    } else {
+      this.item_service_gst = '';
+    }
     this.pre_payment_log = this.prepaymentlog || null;
     this.bill_data.amount_to_pay = this.bill_data.netRate -  this.bill_data.totalAmountPaid;
 
@@ -109,27 +114,27 @@ export class ViewBillComponent implements OnInit, OnChanges {
     this.api_success = null;
   }
 
-  getTaxDetails() {
-    return new Promise((resolve, reject) => {
-      this.shareServicesobj.getTaxpercentage()
-      .subscribe(
-        data => {
-          this.item_service_tax = data['taxPercentage'];
-          this.item_service_gst = data['gstNumber'];
-          if (this.item_service_gst !== '' && this.item_service_gst !== undefined && this.item_service_gst !== null) {
-            this.item_service_gst = '(' + this.item_service_gst + ')';
-          }
-          resolve();
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+  // getTaxDetails() {
+  //   return new Promise((resolve, reject) => {
+  //     this.shareServicesobj.getTaxpercentage()
+  //     .subscribe(
+  //       data => {
+  //         this.item_service_tax = data['taxPercentage'];
+  //         this.item_service_gst = data['gstNumber'];
+  //         if (this.item_service_gst !== '' && this.item_service_gst !== undefined && this.item_service_gst !== null) {
+  //           this.item_service_gst = '(' + this.item_service_gst + ')';
+  //         }
+  //         resolve();
+  //       },
+  //       error => {
+  //         this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
 
-          reject(error);
-        }
-      );
-    });
+  //         reject(error);
+  //       }
+  //     );
+  //   });
 
-  }
+  // }
 
   updateBill() {
     this.updatebill.emit('updateBill');

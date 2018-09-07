@@ -129,7 +129,11 @@ export class LoginComponent implements OnInit {
     this.step = 1;
   }
   doSignup() {
-
+    let cClass = 'consumerpopupmainclass';
+    console.log('prov', this.is_provider);
+    if (this.is_provider === 'true') {
+      cClass = 'commonpopupmainclass';
+    }
     if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin')) {
       this.dialogRef.close('showsignup');
     } else {
@@ -137,7 +141,7 @@ export class LoginComponent implements OnInit {
       this.dialogRef.close(); // closing the signin window
       const dialogRef = this.dialog.open(SignUpComponent, {
         width: '50%',
-        panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+        panelClass: ['signupmainclass', cClass],
         data: { is_provider : this.is_provider}
       });
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
@@ -11,7 +11,7 @@ import { Messages } from '../../../constants/project-messages';
   selector: 'app-bprofile-learnmore',
   templateUrl: './learnmore-bprofile.component.html'
 })
-export class LearnmoreBprofileComponent implements OnInit {
+export class LearnmoreBprofileComponent implements OnInit, OnDestroy {
   @Input() target: string;
   constructor(
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -19,7 +19,16 @@ export class LearnmoreBprofileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-      // console.log('target', this.target);
+    // window.addEventListener('scroll', this.scroll, true); // third parameter
+  }
+  ngOnDestroy() {
+    // window.removeEventListener('scroll', this.scroll, true);
+  }
+
+  scroll(e) {
+    // console.log('inside scroll', e);
+    // const st = window.pageYOffset || document.documentElement.scrollTop;
+    // console.log('st', st);
   }
 
   public triggerScrollTo(destination) {

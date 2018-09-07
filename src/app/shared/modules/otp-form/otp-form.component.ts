@@ -36,7 +36,7 @@ export class OtpFormComponent  implements OnInit, OnChanges {
 
   ngOnInit() {
     this.createForm();
-    console.log('type', this.type);
+    // console.log('type', this.type);
   }
 
   ngOnChanges() {

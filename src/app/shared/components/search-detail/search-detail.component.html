@@ -374,7 +374,7 @@
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
                                 <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1" [matTooltipClass] = "tooltipcls" [matTooltip]="commTooltip">Communicate</span>
-                                <span class="claim-business" (click)="claimBusiness()" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
+                                <span class="claim-business" (click)="claimBusiness(search_result)" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
                             </div>
                         </div>
                         <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']">

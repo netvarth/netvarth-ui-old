@@ -189,9 +189,13 @@ export class HomeComponent implements OnInit {
        this.routerobj.navigate(['/searchdetail', passparam]);
     }
     doSignup(origin?) {
+      let cClass = 'consumerpopupmainclass';
+      if (origin === 'provider') {
+        cClass = 'commonpopupmainclass';
+      }
       const dialogRef = this.dialog.open(SignUpComponent, {
         width: '50%',
-        panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+        panelClass: ['signupmainclass', cClass],
         data: {
           is_provider : this.checkProvider(origin)
         }
@@ -203,9 +207,13 @@ export class HomeComponent implements OnInit {
     }
 
     doLogin(origin?) {
+      let cClass = 'consumerpopupmainclass';
+      if (origin === 'provider') {
+        cClass = 'commonpopupmainclass';
+      }
       const dialogRef = this.dialog.open(LoginComponent, {
         width: '50%',
-        panelClass: ['loginmainclass', 'consumerpopupmainclass'],
+        panelClass: ['loginmainclass', cClass],
         data: {
           type : origin,
           is_provider : this.checkProvider(origin)

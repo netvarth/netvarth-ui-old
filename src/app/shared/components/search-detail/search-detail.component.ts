@@ -1556,9 +1556,42 @@ setEnvironment(bypassotherfunction?) {
   togger_refinesection() {
     this.showrefinedsection = !this.showrefinedsection;
   }
-  claimBusiness() {
-    alert('Claim Business');
+  claimBusiness(obj) {
+    const myidarr = obj.id.split('-');
+    if (myidarr[0]) {
+    this.searchdetailserviceobj.getClaimmable(myidarr[0])
+      .subscribe (data => {
+        const claimdata = data;
+        const pass_data = {
+          accountId: myidarr[0],
+          sector: claimdata['sector'],
+          subsector: claimdata['subSector']
+        };
+        // console.log('Claim Business', obj.id, 'dta', data, 'pass data', pass_data);
+        this.SignupforClaimmable(pass_data);
+      }, error => {
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+      });
+    } else {
+
+    }
   }
+
+  SignupforClaimmable(passData) {
+      const cClass = 'commonpopupmainclass';
+      const dialogRef = this.dialog.open(SignUpComponent, {
+        width: '50%',
+        panelClass: ['signupmainclass', cClass],
+        data: {
+          is_provider : 'true',
+          claimData: passData
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      });
+
+    }
 
   checkinClicked(obj, chdatereq) {
     this.current_provider = obj;

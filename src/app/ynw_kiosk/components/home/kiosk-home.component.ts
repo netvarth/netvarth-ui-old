@@ -182,11 +182,15 @@ export class KioskHomeComponent implements OnInit {
         }
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         const ctoday = cday + '/' + cmon + '/' + yyyy;
+        const check_dtoday = new Date(dtoday);
+        let cdate = new Date();
         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
           if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
             this.next_avail_queue['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
             this.next_avail_queue['queue_available'] = 1;
-            if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+            // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            if (cdate.getTime() !== check_dtoday.getTime()) {
               this.next_avail_queue['caption'] = 'Next Available Time ';
               this.next_avail_queue['isFuture'] = 1;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
@@ -202,6 +206,7 @@ export class KioskHomeComponent implements OnInit {
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.next_avail_queue['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               } else {
+                this.next_avail_queue['caption'] = 'Next Availale Time';
                 this.next_avail_queue['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             }
