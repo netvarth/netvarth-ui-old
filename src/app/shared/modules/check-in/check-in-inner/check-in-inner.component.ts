@@ -22,13 +22,16 @@ export class CheckInInnerComponent implements OnInit {
     provider_id;
     api_success = null;
     api_error = null;
+    partyapi_error = null;
     servicesjson: any = [];
     galleryjson: any = [];
     settingsjson: any = [];
     locationjson: any = [];
     terminologiesjson: any = [];
     queuejson: any = [];
+    businessjson: any = [];
     familymembers: any = [];
+    partysizejson: any = [];
     sel_loc;
     sel_ser;
     sel_ser_det: any = [];
@@ -45,11 +48,17 @@ export class CheckInInnerComponent implements OnInit {
     sel_queue_indx;
     sel_queue_det;
     showfuturediv;
+    multipleMembers_allowed = false;
+    partySize = false;
+    partySizeRequired = null;
+    maxPartySize = 1;
     revealphonenumber;
     today;
     minDate;
     maxDate;
     consumerNote;
+    enterd_partySize;
+    holdenterd_partySize = 0;
     showCreateMember = false;
     sel_checkindate;
     hold_sel_checkindate;
@@ -136,6 +145,8 @@ export class CheckInInnerComponent implements OnInit {
       this.todaydate = dtoday;
 
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+
+
       // console.log('custdata', this.customer_data, 'loggedinuser', this.loggedinuser, 'kiosk', this.fromKiosk);
       if (this.page_source === 'provider_checkin') {
           // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
@@ -279,6 +290,7 @@ export class CheckInInnerComponent implements OnInit {
                   .then(
                     res => {
                       this.s3url = res;
+                      this.getbusinessprofiledetails_json('businessProfile', true);
                       this.getbusinessprofiledetails_json('settings', true);
                       // console.log('terminologies ext', this.terminologiesjson);
                       if (!this.terminologiesjson) {
@@ -311,10 +323,10 @@ export class CheckInInnerComponent implements OnInit {
             case 'settings':
               this.settingsjson = res;
               this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-              this.maxsize = this.settingsjson.maxPartySize;
+              /*this.maxsize = this.settingsjson.maxPartySize;
               if (this.maxsize === undefined) {
                 this.maxsize = 1;
-              }
+              }*/
             break;
             case 'terminologies':
               this.terminologiesjson = res;
@@ -322,6 +334,10 @@ export class CheckInInnerComponent implements OnInit {
               this.provider_datastorage.set('terminologies', this.terminologiesjson);
               this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
               // console.log('term datastorage', this.sharedFunctionobj.getTerminologies());
+            break;
+            case 'businessProfile':
+              this.businessjson = res;
+              this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
             break;
           }
       },
@@ -525,6 +541,10 @@ export class CheckInInnerComponent implements OnInit {
           error = 'Please select the payment mode';
         }
       }
+      if (this.partySizeRequired) {
+        this.clearerrorParty();
+        error = this.validatorPartysize(this.enterd_partySize);
+      }
       if (error === '') {
         this.saveCheckin();
       } else {
@@ -549,6 +569,10 @@ export class CheckInInnerComponent implements OnInit {
         'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))/*,
         'revealPhone': this.revealphonenumber*/
     };
+    if (this.partySizeRequired) {
+      this.holdenterd_partySize = this.enterd_partySize;
+      post_Data['partySize'] = Number(this.holdenterd_partySize);
+    }
 
     if (this.page_source === 'provider_checkin') {
       post_Data['consumer'] =  {id : this.customer_data.id };
@@ -558,7 +582,7 @@ export class CheckInInnerComponent implements OnInit {
       this.addCheckInConsumer(post_Data);
     }
 
-    // console.log('postdata', JSON.stringify(post_Data));
+    console.log('postdata', JSON.stringify(post_Data));
   }
 
   addCheckInConsumer(post_Data) {
@@ -873,5 +897,57 @@ export class CheckInInnerComponent implements OnInit {
     } else {
       return false;
     }
+  }
+  getPartysizeDetails(domain, subdomain) {
+    this.shared_services.getPartysizeDetails(domain, subdomain)
+      .subscribe (data => {
+        this.partysizejson = data;
+        this.partySize = false;
+        console.log('partysize', this.partysizejson);
+        this.maxsize = 1;
+        if (this.partysizejson.partySize) {
+          this.partySize = true;
+          this.maxsize = (this.partysizejson.maxPartySize) ? this.partysizejson.maxPartySize : 1;
+        }
+
+        if (this.partySize && !this.partysizejson.partySizeForCalculation ) { // check whether partysize box is to be displayed to the user
+          console.log('iamhere', this.partySize, this.partysizejson.partySizeForCalculation);
+          this.partySizeRequired = true;
+        }
+
+        if (this.partysizejson.partySizeForCalculation) { // check whether multiple members are allowed to be selected
+          this.multipleMembers_allowed = true;
+        }
+
+      },
+      error => {
+
+      });
+  }
+  checkPartySize(pVal) {
+    this.clearerrorParty();
+    const error = this.validatorPartysize(pVal);
+    if (error !== '') {
+      this.partyapi_error = error;
+    }
+  }
+  validatorPartysize(pVal) {
+    this.resetApi();
+    let errmsg = '';
+    const numbervalidator = projectConstants.VALIDATOR_NUMBERONLY;
+    const blankvalidator = projectConstants.VALIDATOR_BLANK;
+    this.enterd_partySize = pVal;
+    if (!numbervalidator.test(pVal)) {
+      errmsg  = 'Please enter a valid party size';
+    } else {
+      if (pVal > this.maxsize) {
+        errmsg = 'Sorry ... the maximum party size allowed is '  + this.maxsize;
+      }
+    }
+    return errmsg;
+  }
+
+  clearerrorParty() {
+    this.partyapi_error = '';
   }
 }

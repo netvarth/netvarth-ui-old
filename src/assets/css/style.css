@@ -2465,7 +2465,14 @@ header {
         -webkit-border-radius: 30px;
         border-radius: 30px;
         background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */ }
+        /* stops bg color from leaking outside the border: */
+        -moz-transition: all 300ms;
+        -o-transition: all 300ms;
+        -webkit-transition: all 300ms;
+        transition: all 300ms; }
+        header .tc1 .isprovidertop span:hover {
+          background: #00aef2;
+          color: #fff; }
     header .tc1 .smi {
       margin-top: 10px;
       margin: 0; }
@@ -15085,6 +15092,9 @@ header.consumer {
                 .consumer-dash .card .outer .list .details .rt .controls li span.rate-service:before {
                   content: "\3b"; }
                 .consumer-dash .card .outer .list .details .rt .controls li span.rate-service:hover:before {
+                  content: "\3c";
+                  color: #fda60d; }
+                .consumer-dash .card .outer .list .details .rt .controls li span.rate-service.rated:before {
                   content: "\3c";
                   color: #fda60d; }
                 .consumer-dash .card .outer .list .details .rt .controls li span.add-fav:before {

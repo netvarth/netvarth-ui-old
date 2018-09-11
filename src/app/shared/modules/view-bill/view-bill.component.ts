@@ -43,6 +43,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
   discounts: any = [];
   items: any = [];
   pre_payment_log: any = [];
+  payment_options: any = [];
   close_msg = 'close';
 
   selectedItems = [];
@@ -93,7 +94,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
         }, projectConstants.TIMEOUT_DELAY);
     }
 
-
+    this.getPaymentModes();
     this.bill_load_complete = 1;
 
     this.dialogRef.backdropClick().subscribe(result => {
@@ -107,6 +108,17 @@ export class ViewBillComponent implements OnInit, OnChanges {
     this.pre_payment_log = this.prepaymentlog || null;
   }
 
+  getPaymentModes() {
+    this.shareServicesobj.getPaymentModesofProvider(this.checkin.provider.id)
+    .subscribe(
+      data => {
+        this.payment_options = data;
+      },
+      error => {
+        // this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+      }
+    );
+  }
 
 
   resetApiErrors () {

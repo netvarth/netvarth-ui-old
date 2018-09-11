@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, NavigationEnd } from '@angular/router';
 
 
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -35,7 +36,8 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
   public dialog: MatDialog,
-  public shared_functions: SharedFunctions ) {}
+  public shared_functions: SharedFunctions,
+  private router: Router ) {}
   ngOnInit() {
     this.getHistoryCount(this.params);
   }
@@ -201,6 +203,9 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     } else {
       return false;
     }
+  }
+  providerDetail(provider) {
+    this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
 }

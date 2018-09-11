@@ -101,6 +101,14 @@
                     </ng-container>
                     
               </div>
+            <div class="date-outer" *ngIf="step==1 && partySizeRequired">
+                    <div class="form-group">
+                    <label class="col-form-label">Enter Party Size</label>
+                    <input type="text" matInput #partysize [(ngModel)]="enterd_partySize" (focus)="clearerrorParty()" (blur)="checkPartySize(partysize.value)" maxlength="5"/>
+                    <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
+                </div>
+            </div>
+
               <ng-container *ngIf="step==1 && queuejson.length > 0">
               <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
                 <div class="prepay-dur-pr">
@@ -122,12 +130,12 @@
               <ng-container *ngIf="step==3">
                 <div class="member-outer">
                     <div class="member-head">
-                        Select the <ng-container *ngIf="maxsize == 1">member</ng-container><ng-container *ngIf="maxsize > 1">members</ng-container> for whom the check-in is being made
+                        Select the <ng-container *ngIf="!multipleMembers_allowed">member</ng-container><ng-container *ngIf="multipleMembers_allowed">members</ng-container> for whom the check-in is being made
                     </div>
                     <div class="member-list">
                             <div class="cs-btn bt3 member-add" (click)="addMember()" *ngIf="!showCreateMember">Add Member</div>
                         <ul class="member-ul">
-                            <ng-container *ngIf="maxsize > 1">
+                            <ng-container *ngIf="multipleMembers_allowed">
                                 <li *ngFor="let memb of familymembers">
                                     <mat-checkbox (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName,  $event)"
                                     [value]="memb.userProfile.id"  [checked]="isChecked(memb.userProfile.id)"
@@ -137,7 +145,7 @@
                                 </li>
                             </ng-container>
     
-                            <ng-container *ngIf="maxsize ==1">
+                            <ng-container *ngIf="!multipleMembers_allowed">
                                 <mat-radio-group>
                                     <li *ngFor="let memb of familymembers">
                                         <mat-radio-button (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName,  $event)"
@@ -170,17 +178,17 @@
            <div class="waitlist-button-outer">
                 <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
                     <div class="showDetService" *ngIf="sel_ser_det.name">
-                    Check-In for service:  <span class='selsername'>{{ sel_ser_det.name }}</span>
+                    <strong>Check-In for service:</strong>  <span class='selsername'>{{ sel_ser_det.name }}</span>
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">
-                        Today, Estimated Waiting Time: <span class="queue-avail-date">{{sel_queue_waitingmins}}</span></div>
+                        <strong>Today, Estimated Waiting Time:</strong> <span class="queue-avail-date">{{sel_queue_waitingmins}}</span></div>
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">
                         <ng-container *ngIf="isFuturedate">{{sel_day}} {{sel_checkindate | date: dateFormat}}, </ng-container>
                         <ng-container *ngIf="!isFuturedate">Today, </ng-container>
-                        Check In Time: <span class="queue-avail-date">{{sel_queue_servicetime}}</span></div>
+                        <strong>Check In Time:</strong> <span class="queue-avail-date">{{sel_queue_servicetime}}</span></div>
                     </div>
                 </div>
 

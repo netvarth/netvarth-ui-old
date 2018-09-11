@@ -106,7 +106,7 @@
                                   </li>
 
                                   <li *ngIf="waitlist.waitlistStatus == 'done'">
-                                    <span class="rate-service" (click)="rateService(waitlist)">Rate Service</span>
+                                    <span class="rate-service"  [class.rated] = "isRated(waitlist)" (click)="rateService(waitlist)">Rate Service</span>
                                   </li>
                               </ul>
                           </div>

@@ -5,14 +5,15 @@
                 <th class="th1">Service Provider</th>
                 <th class="th6">Service</th>
                 <th class="th2">Location</th>
-                <th class="th3">Date/Time</th>
+                <!-- <th class="th3">Date/Time</th> -->
+                <th class="th3">Date</th>
                 <th class="th4">Status</th>
                 <th class="th5"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let his_wait of history">
-                <td data-title="Service Provider" class="td1">{{his_wait.provider.businessName || '' | titlecase}}</td>
+                <td data-title="Service Provider" class="td1" (click)="providerDetail(his_wait.provider)">{{his_wait.provider.businessName || '' | titlecase}}</td>
                 <td data-title="Service" class="td6">{{his_wait.service.name || '' | titlecase}}</td>
                 <td data-title="Location" class="td2">{{his_wait.queue.location.place || '' | titlecase}}</td>
                 <td data-title="Date/Time" class="td3"> {{his_wait.date | date: dateFormat }}</td>

@@ -29,7 +29,7 @@ export class ChangeEmailComponent implements OnInit {
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
-      title: 'Change Email id',
+      title: 'Add  or Change Email id',
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-email'
     }
   ];

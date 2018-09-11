@@ -67,6 +67,12 @@ header {
                 display: flex;
                 justify-content: center;
                 @include border-radius(30px);
+                @include transition(all 300ms);
+                
+                &:hover {
+                    background: $linkblue;
+                    color: $white;
+                }
             }
         }
         

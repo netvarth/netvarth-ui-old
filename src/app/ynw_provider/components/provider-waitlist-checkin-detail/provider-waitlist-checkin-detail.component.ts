@@ -30,6 +30,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     waitlist_notes: any = [];
     waitlist_history: any = [];
     communication_history: any = [];
+    est_tooltip = Messages.ESTDATE;
     breadcrumbs_init: any = [
         {
           title: 'Dashboard',
@@ -232,12 +233,16 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
           return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
         }  else {*/
+        if (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'cancelled') {
           if (waitlist.queue.queueStartTime !== undefined) {
             const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
             return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
           } else {
             return -1;
           }
+        } else {
+          return -1;
+        }
        //  }
     }
 

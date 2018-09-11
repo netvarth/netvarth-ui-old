@@ -120,6 +120,7 @@ export const Messages = {
   'PROVIDER_NOTE_ADD': 'Note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message send successfully',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message send successfully',
+  'ESTDATE' : 'Estimated Service time',
 
   'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
   'CUSTOMER_SEARCH_EXIST': 'This [customer] already exist',

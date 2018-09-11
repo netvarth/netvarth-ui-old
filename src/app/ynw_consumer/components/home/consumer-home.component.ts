@@ -663,9 +663,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
+        this.getWaitlist();
       }
     });
+  }
+  isRated(wait) {
+    if (wait.hasOwnProperty('rating') ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   toogleDetail(provider, i) {

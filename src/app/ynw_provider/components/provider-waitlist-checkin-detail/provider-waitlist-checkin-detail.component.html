@@ -18,7 +18,7 @@
                               <div class="tp" *ngIf="waitlist_data">
                                   <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName | titlecase}} {{waitlist_data.consumer.userProfile.lastName | titlecase}}</span></div>
                                   <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
-                                  <div class="item"><span class="ttle">Date:</span><span>
+                                  <div class="item"><span class="ttle">Date/Est: <i id="est-date" data-icon="B" [matTooltip]="est_tooltip"></i></span><span>
                                         <!-- {{waitlist_data.date | date:dateFormatSp}} {{getAppxTime(waitlist_data)| date: timeFormat}} -->
                                         {{waitlist_data.date | date:dateFormatSp}}
                                         <!-- {{waitlist_data.date | date:dateFormatSp}}  --></span>
@@ -42,6 +42,7 @@
 
                                     </ng-container>
                                   </div>
+                                  <div class="item"><span class="ttle">Party Size:</span><span> {{waitlist_data.partySize}}</span></div>
                               </div>
                               <div class="btm" *ngIf="waitlist_data">
                                   <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">Communicate</button>

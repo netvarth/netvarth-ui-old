@@ -2984,6 +2984,12 @@ header {
                                                 color: $cc-warning;
                                             }
                                         }
+                                        &.rated {
+                                            &:before {
+                                                content: "\3c";
+                                                color: $cc-warning;
+                                            }
+                                        }
                                     }
                                     &.add-fav {
                                         &:before {

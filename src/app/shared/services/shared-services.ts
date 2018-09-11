@@ -503,4 +503,8 @@ export class SharedServices {
       const url = 'provider/payment/tax/';
       return this.servicemeta.httpGet(url);
     }
+    getPartysizeDetails(domain, subdomain) {
+      const url = 'ynwConf/settings/' + domain + '/' + subdomain;
+      return this.servicemeta.httpGet(url);
+    }
 }
