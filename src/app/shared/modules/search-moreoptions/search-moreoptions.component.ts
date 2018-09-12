@@ -31,6 +31,7 @@ export class SearchMoreOptionsComponent implements OnInit {
   searchrefine_arr: any = [];
   file_error_msg = '';
   rating = 2.8;
+  ratingpassVal = '';
   constructor(
    /// public dialogRef: MatDialogRef<SearchMoreOptionsComponent>,
    /// @Inject(MAT_DIALOG_DATA) public data: any,
@@ -66,6 +67,7 @@ export class SearchMoreOptionsComponent implements OnInit {
   }
   handle_morebuttonclick () {
     this.searchmoreclick.emit(this.searchrefineresult_arr);
+    this.searchrefine_arr = [];
     /// this.dialogRef.close(this.searchrefineresult_arr);
   }
 
@@ -81,17 +83,30 @@ export class SearchMoreOptionsComponent implements OnInit {
         this.searchrefineresult_arr[curi][fieldname][0] = new Array(selval, fieldtype);
       } else {
         if (fieldtype === 'Rating') {  // if current field type is rating, then remove the rating already there
+          console.log('reached inside');
           this.searchrefineresult_arr[sec_indx][fieldname].splice(0, 1);
         }
         const chk_fieldvalexist = this.check_fieldvalexistsinArray(fieldname, selval);
         if (chk_fieldvalexist[0]['indx'] !== -1) {
+          console.log('here 1');
           this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].splice(chk_fieldvalexist[0]['key'], 1);
           if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']].length === 0) {
             this.searchrefineresult_arr.splice(chk_fieldvalexist[0]['indx'], 1);
           }
         } else {
+          console.log('here 2');
           const curindx = this.searchrefineresult_arr[sec_indx][fieldname].length;
-          this.searchrefineresult_arr[sec_indx][fieldname][curindx] = new Array(selval, fieldtype);
+          if (fieldtype === 'Rating') {
+            if (selval !== '') {
+              this.ratingpassVal = selval;
+              this.searchrefineresult_arr[sec_indx][fieldname][curindx] = new Array(selval, fieldtype);
+            } else {
+              this.ratingpassVal = '';
+              this.searchrefineresult_arr.splice(sec_indx, 1); // removing the rating array element if rating is blank
+            }
+          } else {
+            this.searchrefineresult_arr[sec_indx][fieldname][curindx] = new Array(selval, fieldtype);
+          }
         }
       }
     } else {
@@ -100,7 +115,7 @@ export class SearchMoreOptionsComponent implements OnInit {
       this.searchrefineresult_arr[curi][fieldname] = new Array();
       this.searchrefineresult_arr[curi][fieldname][0] = new Array(selval, fieldtype);
     }
-    // console.log('refine', this.searchrefineresult_arr);
+    console.log('refine', this.searchrefineresult_arr);
 
   }
 

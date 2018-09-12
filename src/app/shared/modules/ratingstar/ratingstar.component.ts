@@ -1,5 +1,5 @@
 /* tslint:disable:forin */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { SharedServices } from '../../services/shared-services';
@@ -14,7 +14,7 @@ import { projectConstants } from '../../constants/project-constants';
   templateUrl: './ratingstar.component.html',
   styleUrls: ['./ratingstar.component.css']
 })
-export class RatingStarComponent implements OnInit {
+export class RatingStarComponent implements OnInit, OnChanges {
 
   @Input() cloudindex: string;
   @Input() ratingval: string;
@@ -27,12 +27,23 @@ export class RatingStarComponent implements OnInit {
   curratval: any;
   showDecimalVals = false;
   ngOnInit() {
-    // console.log('includeded from', this.includedFrom);
+    console.log('includeded from', this.includedFrom, 'passed', this.ratingval);
     this.curratval = this.ratingval || '';
     this.curratval = this.curratval.toString();
     if (this.includedFrom === 'refined' || this.includedFrom === 'moreoptions') {
       this.showDecimalVals = true;
     }
+  }
+  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+    /*const log: string[] = [];
+    for (const propName in changes) {
+      if (propName === 'ratingval') {
+        const changedProp = changes[propName];
+        const to = JSON.stringify(changedProp.currentValue) || '';
+        this.curratval = to;
+        console.log('currentval', this.curratval);
+      }
+    }*/
   }
   handle_ratingclick(val) {
     const retobj = {'cloudindex': this.cloudindex, 'selectedrating': val};

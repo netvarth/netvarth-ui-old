@@ -8,7 +8,7 @@
     <ng-container *ngIf="adwordsmaxcount != 0">
 
         <div class="lc3-2 lcd" *ngFor="let adword of adword_list; let i = index">
-            <div class="ttle">{{adword.name}} {{i}}</div>
+            <div class="ttle">{{adword.name}}</div>
             <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
         </div>
         <div class="lc3-2 lcd" *ngIf="adwordsmaxcount > 0 && adword_list.length ==0 && query_executed == true">

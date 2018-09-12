@@ -65,7 +65,8 @@ export class ServiceDetailComponent implements OnInit {
           const imgobj = new Image(
             i,
             { // modal
-              img: this.service.servicegallery[i].url
+              img: this.service.servicegallery[i].url,
+              description: this.service.servicegallery[i].caption || ''
             });
           this.image_list_popup.push(imgobj);
         }

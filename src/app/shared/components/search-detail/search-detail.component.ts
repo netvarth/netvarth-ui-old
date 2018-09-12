@@ -71,7 +71,7 @@ export class SearchDetailComponent implements OnInit {
   public search_result_count;
   public sortfield;
   public sortorder;
-  sortfieldsels;
+  sortfieldsels = '';
   public nosearch_results;
   public startpageval;
   public labelq;
@@ -345,7 +345,7 @@ setEnvironment(bypassotherfunction?) {
   }
 
   setSearchfields(obj, src) {
-    // console.log('src', src, 'details', obj);
+    console.log('src', src, 'details', obj);
     if (src === 1) { // case from ngoninit
       this.searchButtonClick = true;
       this.domain = obj.do;
@@ -400,7 +400,16 @@ setEnvironment(bypassotherfunction?) {
       // calling method to parse refine filters in query string to respective array
       this.parseRefinedfiltersQueryString(obj);
       // console.log('ref_query', this.refined_querystr);
-      this.startpageval = 1;
+      if (obj.cpg) { // check whether paging value is there in the url
+        let cnumb = Number(obj.cpg);
+        if (isNaN(cnumb)) {
+          cnumb = 1;
+        }
+        this.startpageval = cnumb;
+      } else {
+        this.startpageval = 1;
+      }
+      // this.startpageval = 1;
       /* console.log('domain', this.domain, 'locname', this.locname, 'locautoname',
          this.locautoname, 'lat', this.latitude, 'lon', this.longitude, 'kw', this.kw, 'kwauto', this.kwautoname, 'kwdomain', this.kwdomain, 'kwsubdom', this.kwsubdomain, 'kwtyp', this.kwtyp);*/
       if (obj.sort && obj.srt !== ' ') {
@@ -733,6 +742,12 @@ setEnvironment(bypassotherfunction?) {
       }
       urlstr += 'cfilter=' + this.commonfilters;
     }
+    if (this.startpageval !== '') {
+      if (urlstr !== '') {
+        urlstr += ';';
+      }
+      urlstr += 'cpg=' + this.startpageval;
+    }
     // case if refine search checkbox ticked
     if (this.refined_options_url_str !== '') {
       urlstr += this.refined_options_url_str;
@@ -863,7 +878,8 @@ setEnvironment(bypassotherfunction?) {
     } else {
       this.shared_functions.getCloudUrl()
       .then (url => {
-          const userobj = this.shared_functions.getitemfromLocalStorage('ynw-user');
+
+         /* const userobj = this.shared_functions.getitemfromLocalStorage('ynw-user');
           // console.log("Hai:"+ JSON.stringify(userobj));
           let testUser = false;
           if (userobj !== null) {
@@ -872,6 +888,7 @@ setEnvironment(bypassotherfunction?) {
               testUser = true;
             }
           }
+          console.log('testuser', testUser, projectConstants.searchpass_criteria.fq);
           const qvar = projectConstants.searchpass_criteria.fq;
           let qvarlen;
           if (!testUser) {
@@ -889,7 +906,7 @@ setEnvironment(bypassotherfunction?) {
               projectConstants.searchpass_criteria.fq = ' (and test_account:1) ';
             }
           }
-
+          console.log('testuser2', testUser, projectConstants.searchpass_criteria.fq);*/
           // console.log(projectConstants.searchpass_criteria);
           this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria)
           .subscribe(res => {
@@ -1141,6 +1158,7 @@ setEnvironment(bypassotherfunction?) {
   }
   private handle_pageclick(pg) {
     this.startpageval = pg;
+    this.change_url_on_criteria_change();
     this.do_search();
   }
 
@@ -1288,7 +1306,7 @@ setEnvironment(bypassotherfunction?) {
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
     this.searchButtonClick = false;
-    // console.log('click', fieldname, fieldtype, selval);
+    console.log('click', fieldname, fieldtype, selval);
     if (this.searchrefineresult_arr.length) {
       const sec_indx = this.check_fieldexistsinArray(fieldname, fieldtype);
       if (sec_indx === -1) {
@@ -1404,10 +1422,25 @@ setEnvironment(bypassotherfunction?) {
     if (textstr !== '') {
         textstr = ' ' + textstr;
     }
+    const userobj = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    let testUser = false;
+    if (userobj !== null) {
+      const phno = (userobj.primaryPhoneNumber.toString());
+      if (phno.startsWith('55')) {
+        testUser = true;
+      }
+    }
+    let testuserQry = '';
+    if (!testUser) {
+      testuserQry = ' (not test_account:1) ';
+    } else {
+      testuserQry = ' test_account:1 ' ;
+    }
+
     // this.refined_querystr = ' and (' + this.refined_querystr + textstr + ')';
     // this.refined_querystr = this.refined_querystr + textstr;
-    if (this.refined_querystr !== '' || textstr !== '') {
-      this.refined_querystr = '(and ' + this.refined_querystr + textstr + ')';
+    if (this.refined_querystr !== '' || textstr !== '' || testuserQry !== '') {
+      this.refined_querystr = '(and ' + this.refined_querystr + textstr + testuserQry + ')';
     }
     // calling the method to update the url to reflect the changes done to the refine area
     this.change_url_on_criteria_change();

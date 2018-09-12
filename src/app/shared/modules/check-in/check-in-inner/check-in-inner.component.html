@@ -112,7 +112,8 @@
               <ng-container *ngIf="step==1 && queuejson.length > 0">
               <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
                 <div class="prepay-dur-pr">
-                    <div class="prepay-amt">Amount to Pay: <span class="prepaymin-cls">{{sel_ser_det.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span></div>
+                    <div class="prepay-amt">This service needs prepayment for check-in</div>
+                    <div class="prepay-amt">Pre Payment Amount: <span class="prepaymin-cls">{{sel_ser_det.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span></div>
                     <div class="prepay-gateway-outer" *ngIf="paymentModes.length == 0">
                         <div class='prepay-head-sorry'> Sorry not payment modes available </div>
                     </div>
@@ -178,7 +179,7 @@
            <div class="waitlist-button-outer">
                 <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
                     <div class="showDetService" *ngIf="sel_ser_det.name">
-                    <strong>Check-In for service:</strong>  <span class='selsername'>{{ sel_ser_det.name }}</span>
+                    <strong>Check-In for</strong>  <span class='selsername'>{{ sel_ser_det.name }}</span>
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">

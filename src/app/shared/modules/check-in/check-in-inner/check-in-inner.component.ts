@@ -375,7 +375,7 @@ export class CheckInInnerComponent implements OnInit {
        }
      }
       this.sel_ser_det = [];
-      if (serv.serviceDuration) {
+      // if (serv.serviceDuration) {
         this.sel_ser_det = {
             name: serv.name,
             duration: serv.serviceDuration,
@@ -391,7 +391,7 @@ export class CheckInInnerComponent implements OnInit {
               this.getPaymentModesofProvider(this.account_id);
             }
           }
-        }
+       // }
     }
 
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
