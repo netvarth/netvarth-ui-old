@@ -1313,12 +1313,70 @@ export class ProviderBprofileSearchComponent implements OnInit {
       data => {
          // console.log(data);
           this.subdomain_fields = data['fields'];
+          // console.log('subdom fields', data['fields']);
           this.subdomain_questions = data['questions'] || [];
           this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
           // normal_subdomainfield_show = 4 // no data
       }
     );
 
+  }
+  getdispVal(typ, field) {
+    let retfield = '';
+    let passArray = [];
+    if (typ === 'domain') {
+      passArray = this.domain_fields;
+    } else if (typ === 'subdomain') {
+      passArray = this.subdomain_fields;
+    }
+    let str = '';
+    if (field.value !== undefined) {
+      if (field.dataType === 'Enum') {
+        retfield = this.getFieldDetails(passArray , field.value, field.name);
+      } else if (field.dataType === 'EnumList') {
+          for (let i = 0; i < field.value.length; i++) {
+            if (str !== '') {
+              str += ', ';
+            }
+            // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+            str += this.getFieldDetails(passArray , field.value[i], field.name);
+          }
+          retfield = str;
+      } else {
+        retfield = field.value;
+      }
+    }
+    return retfield;
+  }
+
+  getFieldDetails(passedArray, fieldvalue, fieldname) {
+    let retfield;
+    if (fieldvalue !== undefined) {
+        for (let i = 0; i < passedArray.length; i++) {
+          if (fieldname === passedArray[i].name) {
+            for (let j = 0; j < passedArray[i].enumeratedConstants.length; j++) {
+              if (fieldvalue === passedArray[i].enumeratedConstants[j].name) {
+                retfield = passedArray[i].enumeratedConstants[j].displayName;
+              }
+            }
+          }
+        }
+    }
+    return retfield;
+  }
+
+  showValueswithComma (fld) {
+    let str = '';
+    if (fld.value !== undefined) {
+      // console.log('fldlen', fld.value.length);
+      for (let i = 0; i < fld.value.length; i++) {
+        if (str !== '') {
+          str += ', ';
+        }
+        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+      }
+      return str;
+    }
   }
 
   getVirtualFields(domain, subdomin = null) {
@@ -1436,19 +1494,6 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
   buyAdwords() {
       this.routerobj.navigate(['provider' , 'settings', 'license']);
-  }
-  showValueswithComma (fld) {
-    let str = '';
-    if (fld.value !== undefined) {
-      // console.log('fldlen', fld.value.length);
-      for (let i = 0; i < fld.value.length; i++) {
-        if (str !== '') {
-          str += ', ';
-        }
-        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
-      }
-      return str;
-    }
   }
   show_privacyText(txt) {
     let rettxt = '';

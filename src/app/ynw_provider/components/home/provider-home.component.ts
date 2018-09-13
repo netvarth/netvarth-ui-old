@@ -70,6 +70,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
+    payment_status: 'all',
     check_in_start_date: null,
     check_in_end_date: null,
     location_id: 'all',
@@ -153,7 +154,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         {name : this.done_upper, value: 'done'}];
 
     }
-
+    payStatusList = [
+          { pk: 'NotPaid', value: 'Not Paid'},
+          { pk: 'PartiallyPaid', value: 'Partially Paid'},
+          { pk: 'FullyPaid', value: 'Fully Paid'}
+    ];
 
   ngOnInit() {
     const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
@@ -792,6 +797,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
 
     }
+    if (this.time_type === 0 ) {
+      if (this.filter.payment_status !== 'all') {
+        api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
+      }
+    }
 
     api_filter['location-eq'] = this.selected_location.id;
 
@@ -817,6 +827,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       queue: 'all',
       service: 'all',
       waitlist_status: 'all',
+      payment_status: 'all',
       check_in_start_date: null,
       check_in_end_date: null,
       location_id: 'all',

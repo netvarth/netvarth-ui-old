@@ -57,7 +57,7 @@ export class CheckInInnerComponent implements OnInit {
     minDate;
     maxDate;
     consumerNote;
-    enterd_partySize;
+    enterd_partySize = 1;
     holdenterd_partySize = 0;
     showCreateMember = false;
     sel_checkindate;
@@ -776,12 +776,13 @@ export class CheckInInnerComponent implements OnInit {
     const namepattern =   new RegExp(projectConstants.VALIDATOR_CHARONLY);
     const phonepattern =   new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
     const phonecntpattern =   new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+    const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
 
-    if (!namepattern.test(this.addmemberobj.fname)) {
+    if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
       derror = 'Please enter a valid first name';
     }
 
-    if (derror === '' && !namepattern.test(this.addmemberobj.lname)) {
+    if (derror === '' && (!namepattern.test(this.addmemberobj.lname) || blankpattern.test(this.addmemberobj.lname))) {
       derror = 'Please enter a valid last name';
     }
 

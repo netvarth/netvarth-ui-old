@@ -36,7 +36,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('passed in data', this.data);
+    // console.log('passed in data', this.data);
     this.que_type = this.data.type || 'domain_questions';
 
     this.bProfile = this.data['bProfile'];
@@ -51,7 +51,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
       this.title = this.subdomain_questions[0]['label'] || '';
       this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
     }
-    console.log(this.subdomain_questions , this.domain_questions);
+   // console.log(this.subdomain_questions , this.domain_questions);
     if (this.domain_questions.length === 0 &&
         this.subdomain_questions === 0) {
       this.dialogRef.close('error');
@@ -86,7 +86,8 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
       _this.provider_services.getVirtualFields(domain, subdomin)
       .subscribe(
-        data => {console.log(data);
+        data => {
+          // console.log(data);
            data = _this.setFieldValue(data, subdomin);
            resolve(_this.service.getQuestions(data));
         },

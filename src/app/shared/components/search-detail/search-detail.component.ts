@@ -345,7 +345,7 @@ setEnvironment(bypassotherfunction?) {
   }
 
   setSearchfields(obj, src) {
-    console.log('src', src, 'details', obj);
+    // console.log('src', src, 'details', obj);
     if (src === 1) { // case from ngoninit
       this.searchButtonClick = true;
       this.domain = obj.do;

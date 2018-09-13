@@ -40,6 +40,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     api_success = null;
     api_error = null;
+    userDet;
 
     dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
@@ -77,7 +78,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         }
 
     ngOnInit() {
-
+      this.userDet = this.shared_Functionsobj.getitemfromLocalStorage('ynw-user');
         if (this.waitlist_id) {
           this.getWaitlistDetail();
 

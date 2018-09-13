@@ -1106,7 +1106,7 @@
         }
         
         .jn1-1 {
-            @include font-regular;
+            @include font-medium;
             span {
                 color: $linkblack;
                 font-weight: 600;

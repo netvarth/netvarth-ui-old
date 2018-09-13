@@ -136,6 +136,8 @@ header {
                             font-weight: 500;
                             
                             .lgin {
+                                color: $linkblack;
+                                
                                 button {
                                     width: 24px;
                                     height: 24px;
@@ -757,18 +759,40 @@ header {
                                     }
                                     
                                     app-rating-star {
-                                        .ynwstar-rating {
-                                            float: none;
-                                            width: 135px;
-                                        }
-                                        span {
-                                            text-transform: uppercase;
-                                            font-weight: 600;
-                                            font-size: 0.625rem;
-                                            color: $linkblue;
-                                            display: inline;
-                                            cursor: pointer;
-                                            position: relative;
+                                        .rating-outer {
+                                            display: flex;
+                                            align-items: center;
+                                            
+                                            .ynwstar-rating {
+                                                float: none;
+                                                width: 135px;
+                                                
+                                                label {
+                                                    margin-bottom: 0;
+                                                    cursor: pointer;
+                                                }
+                                            }
+                                            .moreopt-clear {
+                                                margin-left: 15px;
+                                                cursor: pointer;
+                                                position: relative;
+                                                width: 20px;
+                                                height: 20px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                font-size: .65rem;
+                                                background: lighten($cc-red, 20%);
+                                                color: $cc-red;
+                                                @include border-radius(50px);
+                                                
+                                                &:before {
+                                                    @include font-custom;
+                                                    content: "";
+                                                    position: absolute;
+                                                    content: "\69";
+                                                }
+                                            }
                                         }
                                     }
                                     
@@ -960,6 +984,7 @@ header {
                 font-weight: 500;
                 @include box-shadow(0, 20px, 30px, rgba(0,0,0,.03) !important);
                 margin-bottom: 30px;
+                @include transition(all 400ms);
                 
                 .top-sect {
                     display: flex;
@@ -1261,6 +1286,10 @@ header {
                                             @include border-radius(20px);
                                             cursor: default;
                                             margin-bottom: 5px;
+                                            
+                                            &.viewall {
+                                                border: none;
+                                            }
                                         }
                                     }
                                 }
@@ -1923,6 +1952,7 @@ header {
                                     font-weight: 500;
                                     color: $linkblue;
                                     padding: 20px;
+                                    background: lighten($cc-lightblue, 10%);
                                     
                                     .mat-expansion-indicator {
                                         &:after {
@@ -1940,14 +1970,24 @@ header {
                                     color: $cc-gray;
                                     
                                     .mat-expansion-panel-body {
-                                        padding: 0 20px 20px;
+                                        padding: 15px 20px 20px;
                                             
                                         .question-main-outer {
+                                            display: flex;
+                                            flex-wrap: wrap;
+                                            
                                             .question-outer {
-                                                margin-bottom: 15px;
+                                                padding: 10px;
+                                                flex-basis: 25%;
                                                 
-                                                &:last-child {
-                                                    margin: 0;
+                                                @include respond-to(ynw-767) {
+                                                    flex-basis: 50%;
+                                                }
+                                                @include respond-to(ynw-575) {
+                                                    flex-basis: 100%;
+                                                }
+                                                @include respond-to(ynw-768-991) {
+                                                    flex-basis: 33.33%;
                                                 }
                                             }
                                         }
@@ -1958,6 +1998,10 @@ header {
                             }
                         }
                     }
+                }
+                
+                &:hover {
+                    @include box-shadow(0, 20px, 30px, rgba(0,0,0,.1) !important);
                 }
                 
             }
@@ -2005,11 +2049,10 @@ header {
                                 position: relative;
                                 padding-left: 20px;
                                 color: $green;
+                                cursor: pointer;
 
                                 .count {
-                                    font-weight: 700;
-                                    cursor: pointer;
-                                    
+                                    font-weight: 700;      
                                 }
                                 
                                 &:before {
@@ -2642,9 +2685,18 @@ header {
                     
                 }
             }
+            
             &.hideme {
                 @include respond-to(ynw-767) {
                     display: none;
+                }
+            }
+            
+            &.prov-detail-outer {
+                .srlst {
+                    &:hover {
+                        @include box-shadow(0, 20px, 30px, rgba(0,0,0,.03) !important);
+                    }
                 }
             }
         }
@@ -2846,6 +2898,7 @@ header {
                     background: $white;
                     @include border-bottom-radius(5px);
                     @include box-shadow(0px, 10px, 20px, rgba(0,0,0,.03));
+                    @include transition(all 400ms);
                     
                     @include respond-to(ynw-575) {
                         flex-direction: column;
@@ -2893,6 +2946,16 @@ header {
                                     &:after {
                                         display: none;
                                     }
+                                }
+                            }
+                            .token, .persons {
+                                padding-left: 10px;
+                                position: relative;
+                                
+                                &:before {
+                                    position: absolute;
+                                    content: ":";
+                                    left: 0;
                                 }
                             }
                             
@@ -3117,6 +3180,12 @@ header {
                                 }
                             }
                         }
+                    }
+                }
+                
+                &:hover {
+                    .details {
+                        @include box-shadow(0px, 10px, 20px, rgba(0,0,0,.1));
                     }
                 }
             }
@@ -3530,8 +3599,10 @@ header {
                     tbody {
                         tr {
                             td {
-                                &td1 {
+                                &.td1 {
                                     width: 20%;
+                                    color: $linkblue;
+                                    cursor: pointer;
                                 }
                                 &.td4 {
                                     border-right: 1px solid $cc-body;
@@ -3678,6 +3749,13 @@ header {
                                         @include respond-to(ynw-767) {
                                             display: none;
                                         }
+                                    }
+                                }
+                            }
+                            &:hover {
+                                td {
+                                    &.td1 {
+                                        font-weight: 600;
                                     }
                                 }
                             }

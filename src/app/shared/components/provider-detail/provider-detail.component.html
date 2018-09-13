@@ -4,7 +4,7 @@
   <div class="container">
       <div class="row">
           <div class="c-outer">
-              <div class="c-body">
+              <div class="c-body prov-detail-outer">
                   <div class="bk-ctrl">
                       <span class="backtoresults" (click)="backtoSearchResult()"><span class="strong">Go Back</span></span>
                   </div>
@@ -137,7 +137,7 @@
                           </div>
                           <div class="tp-r">
                               <div class="ynw-verified" *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"></div>
-                              <div class ="gender" >
+                              <div class ="gender" *ngIf="genderType=='male' || genderType=='female'">
                                   <span class="icon-male" *ngIf="genderType=='male'" [matTooltip]="maleTooltip"></span>
                                   <span class="icon-female" *ngIf="genderType=='female'" [matTooltip]="femaleTooltip"></span>
                               </div>

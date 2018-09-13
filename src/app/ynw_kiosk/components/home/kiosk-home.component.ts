@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
+import { DOCUMENT } from '@angular/common';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { KioskServices } from '../../services/kiosk-services.service';
@@ -64,7 +65,9 @@ export class KioskHomeComponent implements OnInit {
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public provider_datastorage: CommonDataStorageService,
-    private dialog: MatDialog, private router: Router) {}
+    private dialog: MatDialog, private router: Router,
+    @Inject(DOCUMENT) public document
+    ) {}
 
   ngOnInit() {
     this.getWaitlistManager();
@@ -339,6 +342,11 @@ export class KioskHomeComponent implements OnInit {
     if (this.cMod !== 'main') {
       if (!this.customer_found) {
         this.showsearch_now = true;
+        setTimeout(() => {
+          if (this.document.getElementById('srchmobilebox')) {
+            this.document.getElementById('srchmobilebox').focus();
+          }
+        }, 500);
       } else {
           this.do_operation();
       }

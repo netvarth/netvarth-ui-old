@@ -673,7 +673,8 @@
 
                                                     <ng-container *ngSwitchCase="'Enum'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value   | titlecase}}</p>
+                                                            <!-- <p> {{ getdispVal('subdomain',fields)   | titlecase}}</p> -->
+                                                            <p> {{ getdispVal('subdomain',fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -681,7 +682,8 @@
                                                     <ng-container *ngSwitchCase="'EnumList'">
                                                         <div class="cont-btn">
                                                             <!-- <p> {{fields.value}}</p> -->
-                                                            <p>{{showValueswithComma(fields)}}</p>
+                                                            <!-- <p>{{showValueswithComma(fields)}}</p> -->
+                                                            <p>{{ getdispVal('subdomain', fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -836,14 +838,16 @@
 
                                                     <ng-container *ngSwitchCase="'Enum'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value | titlecase}}</p>
+                                                            <!-- <p> {{fields.value | titlecase}}</p> -->
+                                                            <p>{{ getdispVal('domain', fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'EnumList'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value | titlecase}}</p>
+                                                            <!-- <p> {{fields.value | titlecase}}</p> -->
+                                                            <p>{{ getdispVal('domain', fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>

@@ -1,3 +1,4 @@
+<div class="rating-outer">
 <fieldset class="ynwstar-rating">
     <input type="radio" id="star5" name="rating" [value]="'5'" [(ngModel)]="curratval" /><label class = "full" for="star5" title="5 stars" (click)="handle_ratingclick('5')"></label>
     <input *ngIf="showDecimalVals" type="radio" id="star4half" name="rating" [value]="'4.5'" [(ngModel)]="curratval"/><label *ngIf="showDecimalVals" class="half" for="star4half" title="4.5 stars" (click)="handle_ratingclick('4.5')"></label>
@@ -15,5 +16,6 @@
     <input *ngIf="showDecimalVals" type="radio" id="starhalf" name="rating" [value]="'.5'" [(ngModel)]="curratval"/><label class="half" *ngIf="showDecimalVals" for="starhalf" title="0.5 stars" (click)="handle_ratingclick('.5')"></label>
     
 </fieldset>
-<span *ngIf="includedFrom=='refined' && curratval !=''" (click)="handle_ratingclick('')">Clear</span>
+<span *ngIf="includedFrom=='refined' && curratval !=''" (click)="handle_ratingclick('')" class="moreopt-clear" ></span>
 <span *ngIf="includedFrom=='moreoptions' && curratval !=''" (click)="handle_ratingclick('')" class="moreopt-clear">Clear</span>
+</div>

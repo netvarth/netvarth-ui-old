@@ -190,6 +190,23 @@
 
                       </div>
 
+                      <div class="form-group waitlist_status" *ngIf="time_type == 0">
+                        <label class="col-form-label" for="displayName">Payment Status</label>
+                        <mat-form-field>
+                          <mat-select [(value)]="filter.payment_status">
+                            <mat-option
+                            (click)="setFilterData('payment_status', 'all')" [value]="'all'">
+                            All
+                            </mat-option>
+                            <mat-option  *ngFor="let pstat of payStatusList"
+                            (click)="setFilterData('payment_status', pstat.pk)" [value]="pstat.pk">
+                            {{pstat.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                      </div>
+
                       <div class="check_in_date start_date" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} Start Date</label>
                         <mat-form-field>

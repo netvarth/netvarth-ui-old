@@ -74,6 +74,13 @@
                             <span class="rightarrow" (click)="handleQueueSel('next')" *ngIf="(queuejson.length -1) == sel_queue_indx"> <i class="fa fa-angle-right disable"></i> </span>
 
                         </div>
+                        <div class="date-outer" *ngIf="step==1 && partySizeRequired">
+                                <div class="form-group party-size">
+                                <label class="col-form-label">Enter Party Size</label>
+                                <input class="partysize-input" type="text" matInput #partysize [(ngModel)]="enterd_partySize" (focus)="clearerrorParty()" (blur)="checkPartySize(partysize.value)" maxlength="5"/>
+                                <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
+                            </div>
+                        </div>
                         
                         <div class="consumer-comment"  *ngIf="step==1">
                             <div class="form-group">
@@ -101,13 +108,7 @@
                     </ng-container>
                     
               </div>
-            <div class="date-outer" *ngIf="step==1 && partySizeRequired">
-                    <div class="form-group">
-                    <label class="col-form-label">Enter Party Size</label>
-                    <input type="text" matInput #partysize [(ngModel)]="enterd_partySize" (focus)="clearerrorParty()" (blur)="checkPartySize(partysize.value)" maxlength="5"/>
-                    <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
-                </div>
-            </div>
+            
 
               <ng-container *ngIf="step==1 && queuejson.length > 0">
               <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">

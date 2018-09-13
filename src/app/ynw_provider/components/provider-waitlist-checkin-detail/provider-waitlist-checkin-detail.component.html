@@ -12,13 +12,16 @@
                   <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
                       <div class="card">
                           <div class="c-details">
+                              <div class="bk-ctrl">
+                                  <span class="backtodashboard" (click)="gotoPrev()"><span class="strong">Go Back</span></span>
+                              </div>
                               <!-- <button (click)="gotoPrev()">Back</button> -->
                               <h2>{{checkin_label | titlecase}} Details</h2>
-                              <span class="backtodashboard" (click)="gotoPrev()"><span class="strong">Go Back</span></span>
+                              
                               <div class="tp" *ngIf="waitlist_data">
                                   <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName | titlecase}} {{waitlist_data.consumer.userProfile.lastName | titlecase}}</span></div>
                                   <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
-                                  <div class="item"><span class="ttle">Date/Est: <i id="est-date" data-icon="B" [matTooltip]="est_tooltip"></i></span><span>
+                                  <div class="item"><span class="ttle">Estimated Service Time:</span><span>
                                         <!-- {{waitlist_data.date | date:dateFormatSp}} {{getAppxTime(waitlist_data)| date: timeFormat}} -->
                                         {{waitlist_data.date | date:dateFormatSp}}
                                         <!-- {{waitlist_data.date | date:dateFormatSp}}  --></span>
@@ -42,7 +45,7 @@
 
                                     </ng-container>
                                   </div>
-                                  <div class="item"><span class="ttle">Party Size:</span><span> {{waitlist_data.partySize}}</span></div>
+                                  <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span class="ttle">Party Size:</span><span> {{waitlist_data.partySize}}</span></div>
                               </div>
                               <div class="btm" *ngIf="waitlist_data">
                                   <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">Communicate</button>
