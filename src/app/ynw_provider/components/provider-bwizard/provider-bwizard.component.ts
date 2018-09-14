@@ -481,7 +481,9 @@ export class ProviderbWizardComponent implements OnInit {
             this.search_status = 2;
           }
       }, error => {
-        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        if (status === 'ENABLE') {
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        }
         this.search_status = 2;
       });
   }

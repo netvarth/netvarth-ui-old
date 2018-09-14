@@ -132,7 +132,19 @@ export class ProviderLicenseComponent implements OnInit {
           if (result === 'reloadlist') {
             this.getLicenseDetails('update');
           }
+          this.goBacktoPrev();
         });
+    }
+
+    goBacktoPrev() {
+      const retcheck = this.sharedfunctionObj.getitemfromLocalStorage('lic_ret');
+      if (retcheck !== undefined && retcheck !== null) {
+        setTimeout(() => {
+          this.sharedfunctionObj.removeitemfromLocalStorage('lic_ret');
+            const retcheckarr = retcheck.split('/');
+            this.router.navigate(retcheckarr);
+          }, 100);
+      }
     }
 
     showadd_addons() {

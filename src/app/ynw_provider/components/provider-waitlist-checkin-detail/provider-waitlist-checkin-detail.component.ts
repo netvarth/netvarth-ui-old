@@ -234,7 +234,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
           return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
         }  else {*/
-        if (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'cancelled') {
+        // if (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') {
+        if (this.checkTimedisplayAllowed(waitlist)) {
           if (waitlist.queue.queueStartTime !== undefined) {
             const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
             return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
@@ -245,6 +246,14 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
           return -1;
         }
        //  }
+    }
+    checkTimedisplayAllowed(waitlist) {
+      if (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') {
+        if (waitlist.queue.queueStartTime !== undefined) {
+          return true;
+        }
+      }
+      return false;
     }
 
     AMHourto24(date, time12) {

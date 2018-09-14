@@ -12,8 +12,10 @@
 
           <div class="form-group bill-basic">
               <div class="btl"><span class="label">{{customer_label  | titlecase}} Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
-              <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
-              <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div>
+              <!-- <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
+              <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div> -->
+              <div class="btl"><span class="label">Date</span> <span class="label-valu">{{billdate}}</span></div>
+              <div class="btl"><span class="label">Time</span> <span class="label-valu">{{billtime}}</span></div>
           </div>
 
           <div class="form-group search">

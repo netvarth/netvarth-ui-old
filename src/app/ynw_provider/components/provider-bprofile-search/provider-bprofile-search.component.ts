@@ -217,6 +217,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe (data => {
           this.getPublicSearch();
+      }, error => {
+        this.sharedfunctionobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       });
   }
 

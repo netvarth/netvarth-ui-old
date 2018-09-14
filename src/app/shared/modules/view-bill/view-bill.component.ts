@@ -59,7 +59,8 @@ export class ViewBillComponent implements OnInit, OnChanges {
   item_service_tax: any = 0;
   item_service_gst = '';
   Pipe_disp_date = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
-
+  billdate = '';
+  billtime = '';
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
     public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
@@ -80,11 +81,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     // this.getTaxDetails();
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
-    if (this.bill_data.gstNumber) {
-      this.item_service_gst = this.bill_data.gstNumber;
-    } else {
-      this.item_service_gst = '';
-    }
+    this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
     this.bill_data.amount_to_pay = this.bill_data.netRate -  this.bill_data.totalAmountPaid;
 
@@ -101,10 +98,23 @@ export class ViewBillComponent implements OnInit, OnChanges {
       this.dialogRef.close(this.close_msg);
     });
   }
-
+  getGstandDate() {
+    if (this.bill_data.gstNumber) {
+      this.item_service_gst = this.bill_data.gstNumber;
+    } else {
+      this.item_service_gst = '';
+    }
+    if (this.bill_data.createdDate) {
+      const datearr = this.bill_data.createdDate.split(' ');
+      const billdatearr = datearr[0].split('-');
+      this.billdate =  billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      this.billtime = datearr[1] + ' ' + datearr[2];
+    }
+  }
   ngOnChanges() {
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
+    this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
   }
 

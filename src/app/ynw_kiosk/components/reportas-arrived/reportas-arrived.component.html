@@ -11,7 +11,7 @@
                 <div class="kioskstatuouter" *ngIf="waitlistmgr_obtained && waitlistmgr['showTokenId']"><span class="kioskstatuscaption">Token: </span>
                     <span class="checkedin-class">{{list.token}}</span>
                 </div>
-                <div class="kioskstatuouter" *ngIf="waitlistmgr_obtained && list.waitlistStatus==='checkedIn'"><span class="kioskstatuscaption">Persons Ahead: </span>
+                <div class="kioskstatuouter" *ngIf="waitlistmgr_obtained && (list.waitlistStatus==='checkedIn' || list.waitlistStatus==='arrived')"><span class="kioskstatuscaption">Persons Ahead: </span>
                     <span class="checkedin-class">{{list.personsAhead}}</span>
                 </div>
                 <div class="kiosknameouter"><span class="kiosknamecaption">Name:</span><span class="kioskname"><ng-container><span class="service-availer" *ngFor="let waitfor of list.waitlistingFor; let i=index"><ng-container *ngIf="i>0">, </ng-container>{{waitfor.firstName | titlecase}} {{waitfor.lastName | titlecase}}</span></ng-container></span></div>

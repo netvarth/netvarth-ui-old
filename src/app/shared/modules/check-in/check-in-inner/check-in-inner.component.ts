@@ -200,7 +200,7 @@ export class CheckInInnerComponent implements OnInit {
       const date2 = new Date(this.todaydate);
       // console.log('selcheckindate', this.sel_checkindate);
       // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-      if (date1 !== date2) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
         this.isFuturedate = true;
         // console.log('future', this.isFuturedate);
       }
@@ -904,7 +904,7 @@ export class CheckInInnerComponent implements OnInit {
       .subscribe (data => {
         this.partysizejson = data;
         this.partySize = false;
-        console.log('partysize', this.partysizejson);
+        // console.log('partysize', this.partysizejson);
         this.maxsize = 1;
         if (this.partysizejson.partySize) {
           this.partySize = true;
@@ -912,7 +912,7 @@ export class CheckInInnerComponent implements OnInit {
         }
 
         if (this.partySize && !this.partysizejson.partySizeForCalculation ) { // check whether partysize box is to be displayed to the user
-          console.log('iamhere', this.partySize, this.partysizejson.partySizeForCalculation);
+          // console.log('iamhere', this.partySize, this.partysizejson.partySizeForCalculation);
           this.partySizeRequired = true;
         }
 

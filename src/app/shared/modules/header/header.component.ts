@@ -288,6 +288,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['logout']);
   }
   upgradeMembership() {
+    console.log(this.router.url);
+    this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
     this.router.navigate(['provider', 'settings', 'license', 'upgrade']);
   }
   inboxiconClick() {

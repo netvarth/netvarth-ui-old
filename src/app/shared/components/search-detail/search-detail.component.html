@@ -396,7 +396,7 @@
                                 <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==2">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
                                 <span class="cs-btn chk-btn disabled" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
                                 <!-- <span class="future-text" (click)="checkinClicked(search_result)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">Do you want to Check in for this date ?</span>   -->
-                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">Do you want to <span>{{getTerminologyTerm('waitlist', search_result.fields)}}</span> for <span>different Date/Time?</span></span>
+                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">Do you want to <span>{{getTerminologyTerm('waitlist', search_result.fields)}}</span> for <span>different Date?</span></span>
                             </div>
 
 

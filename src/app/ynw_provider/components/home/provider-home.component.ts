@@ -867,7 +867,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        console.log(error);
+        // console.log(error);
         if (error.status === 422 && this.time_type === 1) {
           this.addEditBill(checkin , null);
         } else {

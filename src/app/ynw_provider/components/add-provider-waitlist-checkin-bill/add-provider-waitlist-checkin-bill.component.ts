@@ -66,6 +66,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   pre_payment_log: any = [];
 
   customer_label = '';
+  billdate = '';
+  billtime = '';
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
@@ -84,6 +86,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.dialogRef.close('error');
             }, projectConstants.TIMEOUT_DELAY);
         }
+        this.getBillDateandTime();
 
         // this.getWaitlistBill();
 
@@ -147,6 +150,20 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
      );
 
   }
+  getBillDateandTime() {
+    if (this.bill_data.hasOwnProperty('createdDate')) {
+      const datearr = this.bill_data.createdDate.split(' ');
+      const billdatearr = datearr[0].split('-');
+      this.billdate =  billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      this.billtime = datearr[1] + ' ' + datearr[2];
+    } else {
+      this.billdate =  this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
+      // this.billtime = this.sharedfunctionObj.addZero(this.today.getHours()) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes());
+      const amOrPm = (this.today.getHours() < 12) ? 'AM' : 'PM';
+      const hour = (this.today.getHours() < 12) ? this.today.getHours() : this.today.getHours() - 12;
+      this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
+    }
+  }
 
   filterGroup(val: string): ItemServiceGroup[] {
     if (val) {
@@ -177,7 +194,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         this.bill_data = data;
       },
       error => {
-        if (error.status === 422) { this.bill_data = []; }
+        if (error.status === 422) { this.bill_data = [];
+        console.log('reached here'); }
         this.bill_load_complete = 1;
       },
       () => {
