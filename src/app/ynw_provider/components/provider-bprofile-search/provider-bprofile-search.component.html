@@ -177,7 +177,7 @@
                                             <div class="copy">
                                                 <ul class="amt-list">
                                                     <li [matTooltip]="'Parking Type: ' + bProfile.baseLocation.parkingType" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType"></li>
-                                                    <li [matTooltip]="'24 hours'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
+                                                    <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
                                                     <ng-container *ngIf="bProfile.baseLocation.locationVirtualFields">
                                                         <ng-container *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
                                                             <li [matTooltip]="badge_map_arr[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['none']['class']"></li>

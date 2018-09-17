@@ -310,10 +310,16 @@
                                     </span>
 
                                     <span class="acceptbill cs-btn bt7"
-                                    *ngIf="checkin.billStatus== 'New' && checkin.billPaymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'" (click)="getWaitlistBill(checkin, 'payment')">
+                                    *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'" (click)="getWaitlistBill(checkin, 'payment')">
                                      <i class="icon-play" ></i>Accept payment
 
                                     </span>
+
+                                    <!-- <span class="acceptbill cs-btn bt7"
+                                    *ngIf="checkin.billStatus== 'New' && checkin.billPaymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'" (click)="getWaitlistBill(checkin, 'payment')">
+                                     <i class="icon-play" ></i>Accept payment
+
+                                    </span> -->
 
                                     </td>
                                   <td data-title="Payment Status" class="payment">

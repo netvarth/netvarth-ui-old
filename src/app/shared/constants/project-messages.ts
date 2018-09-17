@@ -189,7 +189,7 @@ export const Messages = {
   'ADDON_TOOLTIP' : 'Buy available add-ons',
   'ADDWORD_TOOLTIP' : 'Buy ad-words here',
   'MOREOPTIONS_TOOLTIP' : 'More Search Options',
-  'CURRENTCHECKINS_TOOLTIP' : 'Your upcoming check-ins',
+  'CURRENTCHECKINS_TOOLTIP' : 'Your check-ins',
   'FAVORITE_TOOLTIP' : 'Your favourite providers',
   'HISTORY_TOOLTIP' : 'Your past check-ins',
   'COMM_TOOPTIP' : 'Send messages to your provider here',

@@ -237,8 +237,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         // if (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') {
         if (this.checkTimedisplayAllowed(waitlist)) {
           if (waitlist.queue.queueStartTime !== undefined) {
-            const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
-            return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
+            if (waitlist.hasOwnProperty('serviceTime')) {
+              return waitlist.serviceTime;
+            } else {
+                // const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
+                // return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
+                return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+            }
           } else {
             return -1;
           }
@@ -248,7 +253,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
        //  }
     }
     checkTimedisplayAllowed(waitlist) {
-      if (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') {
+      if ((waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') && !this.checkIsHistory(waitlist)) {
         if (waitlist.queue.queueStartTime !== undefined) {
           return true;
         }
@@ -256,6 +261,32 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
       return false;
     }
 
+    checkIsHistory(waitlist) {
+          const dd = this.today.getDate();
+          const mm = this.today.getMonth() + 1; // January is 0!
+          const yyyy = this.today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+              cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const checkindate = waitlist.date;
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          const date1 = new Date(checkindate);
+          const date2 = new Date(dtoday);
+          if (date2.getTime() > date1.getTime()) {
+            return true;
+          } else {
+            return false;
+          }
+    }
     AMHourto24(date, time12) {
       const time = time12;
       let hours = Number(time.match(/^(\d+)/)[1]);

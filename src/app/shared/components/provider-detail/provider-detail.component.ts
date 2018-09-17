@@ -293,6 +293,7 @@ export class ProviderDetailComponent implements OnInit {
             let schedule_arr: any = [];
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
+                  schedule_arr = [];
                   if (this.locationjson[i].bSchedule) {
                     if (this.locationjson[i].bSchedule.timespec) {
                       if (this.locationjson[i].bSchedule.timespec.length > 0) {

@@ -264,7 +264,7 @@
                     <div class="spt-controls ml-auto" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
                         <ul class="list" *ngIf="show_prov_bottomicons">
                             <li [class.active]="selOpt=='Audit'" (click)="showAuditlog()"><span class="icon-audit" matTooltip="Audit Log"></span></li>
-                            <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="alert-count">{{alert_count}}</span><span class="icon-bell" matTooltip="Alerts"></span></li>
+                            <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="alert-count" *ngIf="alert_count>0">{{alert_count}}</span><span class="icon-bell" matTooltip="Alerts"></span></li>
                             <li [class.active]="selOpt=='Checkin'" (click)="showCheckinED()"><span class="icon-checkin" matTooltip="Enable / Disable Check-in"></span></li>
                             <li [class.active]="selOpt=='License'" (click)="showLicense()"><span class="icon-license" matTooltip="License Details"></span></li>
                         </ul>

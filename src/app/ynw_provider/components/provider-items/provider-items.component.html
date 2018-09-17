@@ -32,8 +32,8 @@
                                               <tr *ngFor="let item of item_list">
                                                       <td data-title="Image" class="pointer-cursor"  class="td1" (click)="showDetails(item.itemId)">
                                                         <div class="itm-prdct">
-                                                        <img [src]="item.picSmall" *ngIf="item.picSmall!=''">
-                                                        <div class="noimage" *ngIf="item.picSmall==''"></div>
+                                                        <img [src]="item.picSmall" *ngIf="item.picSmall !='' && item.picSmall">
+                                                        <div class="noimage" *ngIf="!item.picSmall"></div>
                                                         </div>
                                                         </td>
                                                       <td data-title="Name"  class="td2" class="pointer-cursor" (click)="showDetails(item.itemId)">{{item.displayName}}
