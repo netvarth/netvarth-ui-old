@@ -175,24 +175,16 @@
                                                         <div class="question-outer">
                                                             <ng-container>
                                                                 <div class="question-header"><strong>{{vfield.displayName}}</strong></div>
-                                                                <div class="question-value1" *ngIf="vfield.type!= 'object'" [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">----
+                                                                <div class="question-value1" *ngIf="vfield.type!= 'object'" [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">
                                                                 </div>
                                                                 <div class="question-valuearr" *ngIf="vfield.type== 'object'" >
-                                                                    <!-- <table class="table">
-                                                                        <tr *ngFor="let vals of vfield.value">
-                                                                            <td *ngFor="let field of vals">
+                                                                    <ng-container *ngFor="let vals of vfield.value">
+                                                                        <div class="vfield-row">
+                                                                            <span *ngFor="let field of vals" class="morevalspan">
                                                                                 {{field}}
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table> -->
-                                                                        <ng-container *ngFor="let vals of vfield.value">
-                                                                            <div class="vfield-row">
-                                                                                <span *ngFor="let field of vals" class="morevalspan">
-                                                                                    <!-- {{sharedFunctionobj.firstToUpper(field)  | titlecase}} -->
-                                                                                    {{field}}
-                                                                                </span>
-                                                                            </div>
-                                                                        </ng-container>
+                                                                            </span>
+                                                                        </div>
+                                                                    </ng-container>
                                                                 </div>
                                                             </ng-container>
                                                         </div>

@@ -20,6 +20,27 @@
     &:hover {
         text-decoration: none;
     }
+    
+    &.backbtn {
+        background: $cc-ash !important;
+        color: $cc-gray !important;
+        border: none !important;
+        
+        &:hover {
+            background: darken($cc-ash, 10%) !important;
+        }
+    }
+    
+    @include respond-to(ynw-575) {
+        &.confirmbtn {
+            margin-bottom: 0px;
+        }
+        &.savemember, &.backbtn, &.backtocheckin {
+            padding: 5px 10px !important;
+            height: auto !important;
+            margin-bottom: 0px !important;
+        }
+    }
 }
 
 .anim1 {
@@ -110,6 +131,7 @@
     &:hover {
         background: $hover-blue;
     }
+    
 }
 
 .bt2 {
@@ -132,10 +154,10 @@
 }
 
 .bt3 {
-    height: 30px;
+    height: auto;
     background: transparent;
     border: 1px solid $linkblue;
-    padding: 6px 15px;
+    padding: 5px 15px;
     color: $linkblue;
     font-size: .75rem;
     font-weight: 600;
@@ -410,7 +432,7 @@
         font-weight: 600;
     }
     
-    &.backbtn {
+    /*&.backbtn {
         margin-left: 0px !important;
         margin-right: 10px;
         border: 2px solid $linkblue !important;
@@ -422,7 +444,7 @@
             background: $linkblue !important;
             color: $white !important;
         }
-    }
+    }*/
     &.billcancel {
         background: $cc-ash !important;
         color: $cc-gray !important;

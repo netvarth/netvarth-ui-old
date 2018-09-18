@@ -20,6 +20,19 @@
   /* user-select: none; */ }
   .cs-btn:hover {
     text-decoration: none; }
+  .cs-btn.backbtn {
+    background: #dbdbdb !important;
+    color: #666 !important;
+    border: none !important; }
+    .cs-btn.backbtn:hover {
+      background: #c2c2c2 !important; }
+  @media only screen and (max-width: 575px) {
+    .cs-btn.confirmbtn {
+      margin-bottom: 0px; }
+    .cs-btn.savemember, .cs-btn.backbtn, .cs-btn.backtocheckin {
+      padding: 5px 10px !important;
+      height: auto !important;
+      margin-bottom: 0px !important; } }
 
 .anim1 {
   -moz-transition: all 300ms;
@@ -120,10 +133,10 @@
         margin-bottom: 5px; } }
 
 .bt3 {
-  height: 30px;
+  height: auto;
   background: transparent;
   border: 1px solid #00aef2;
-  padding: 6px 15px;
+  padding: 5px 15px;
   color: #00aef2;
   font-size: .75rem;
   font-weight: 600; }
@@ -391,22 +404,25 @@
   -moz-transition: all 300ms;
   -o-transition: all 300ms;
   -webkit-transition: all 300ms;
-  transition: all 300ms; }
+  transition: all 300ms;
+  /*&.backbtn {
+      margin-left: 0px !important;
+      margin-right: 10px;
+      border: 2px solid $linkblue !important;
+      background: $white !important;
+      color: $linkblue !important;
+      line-height: 16px !important;
+      
+      &:hover {
+          background: $linkblue !important;
+          color: $white !important;
+      }
+  }*/ }
   .mat-button:hover {
     background: #1873f2 !important; }
   .mat-button.confirmbtn {
     background: #00cc96 !important;
     font-weight: 600; }
-  .mat-button.backbtn {
-    margin-left: 0px !important;
-    margin-right: 10px;
-    border: 2px solid #00aef2 !important;
-    background: #fff !important;
-    color: #00aef2 !important;
-    line-height: 16px !important; }
-    .mat-button.backbtn:hover {
-      background: #00aef2 !important;
-      color: #fff !important; }
   .mat-button.billcancel {
     background: #dbdbdb !important;
     color: #666 !important; }
@@ -3473,32 +3489,39 @@ header {
             padding: 10px;
             height: 40px;
             background: #e6e6e6; }
-            .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
-            .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
-            .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
-            .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
-            .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow,
-            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
-              color: #222223;
-              border: none;
-              position: relative;
-              width: 10px;
-              height: 10px;
-              font-size: .65rem;
-              font-weight: 700;
-              display: flex;
-              align-items: center;
-              margin: 0; }
-              .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
-              .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
-              .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
-              .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
-              .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after,
-              .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow:after {
-                font-family: "custom-ynw" !important;
-                content: "\72";
-                position: absolute;
-                right: 0; }
+            .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+            .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+            .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+            .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+            .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
+            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger {
+              margin-top: 2px; }
+              .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+              .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+              .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+              .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+              .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow,
+              .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow {
+                color: #222223;
+                border: none;
+                position: relative;
+                width: 10px;
+                height: 10px;
+                font-size: .65rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                margin: 0; }
+                .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                .forgotpasswordmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after,
+                .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger .mat-select-arrow:after {
+                  font-family: "custom-ynw" !important;
+                  content: "\72";
+                  position: absolute;
+                  right: 0; }
         .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
         .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
         .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-underline,
@@ -4228,7 +4251,9 @@ header {
     .forgotpasswordmainclass .mat-dialog-content .pickerouter,
     .commonpopupmainclass .mat-dialog-content .pickerouter,
     .googlemainmappopup .mat-dialog-content .pickerouter, .outer-card .mat-dialog-content .pickerouter, .consumerpopupmainclass .mat-dialog-content .pickerouter {
-      display: flex; }
+      display: flex;
+      height: 26px;
+      width: 26px; }
       .signupmainclass .mat-dialog-content .pickerouter input[type="text"],
       .loginmainclass .mat-dialog-content .pickerouter input[type="text"],
       .moreoptionsmainclass .mat-dialog-content .pickerouter input[type="text"],
@@ -5283,7 +5308,8 @@ header {
     -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
     -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
-    position: relative; }
+    position: relative;
+    display: flex; }
     .signupmainclass .mat-dialog-actions .bt1,
     .loginmainclass .mat-dialog-actions .bt1,
     .moreoptionsmainclass .mat-dialog-actions .bt1,
@@ -5322,7 +5348,8 @@ header {
     .forgotpasswordmainclass .mat-dialog-actions .waitlist-button-outer,
     .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer,
     .googlemainmappopup .mat-dialog-actions .waitlist-button-outer, .outer-card .mat-dialog-actions .waitlist-button-outer, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer {
-      display: flex; }
+      display: flex;
+      width: 100%; }
       @media only screen and (max-width: 575px) {
         .signupmainclass .mat-dialog-actions .waitlist-button-outer,
         .loginmainclass .mat-dialog-actions .waitlist-button-outer,
@@ -5337,7 +5364,8 @@ header {
       .forgotpasswordmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter,
       .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter,
       .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .showDetOuter, .outer-card .mat-dialog-actions .waitlist-button-outer .showDetOuter, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter {
-        flex-grow: 1; }
+        flex-grow: 1;
+        padding-right: 10px; }
         @media only screen and (max-width: 575px) {
           .signupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter,
           .loginmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter,
@@ -5378,6 +5406,31 @@ header {
           .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date, .outer-card .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date {
             color: #00cc96;
             font-weight: 600; }
+      .signupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+      .loginmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+      .moreoptionsmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+      .forgotpasswordmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+      .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+      .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .waitlist-action, .outer-card .mat-dialog-actions .waitlist-button-outer .waitlist-action, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action {
+        align-self: flex-end; }
+        @media only screen and (max-width: 575px) {
+          .signupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+          .loginmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+          .moreoptionsmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+          .forgotpasswordmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+          .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action,
+          .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .waitlist-action, .outer-card .mat-dialog-actions .waitlist-button-outer .waitlist-action, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action {
+            align-self: flex-start;
+            width: 100%; } }
+        .signupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn,
+        .loginmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn,
+        .moreoptionsmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn,
+        .forgotpasswordmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn,
+        .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn,
+        .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn, .outer-card .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn {
+          margin-right: 0;
+          margin-bottom: 0;
+          width: 100%; }
     .signupmainclass .mat-dialog-actions:last-child,
     .loginmainclass .mat-dialog-actions:last-child,
     .moreoptionsmainclass .mat-dialog-actions:last-child,
@@ -5950,24 +6003,41 @@ header {
       padding-bottom: 15px;
       display: flex;
       align-items: center; }
-      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date {
-        display: inline-block;
-        margin-left: 10px; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-add, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-minus {
-          display: inline-block;
-          vertical-align: bottom;
-          font-size: 1.2rem;
-          color: #00aef2;
-          cursor: pointer; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-add:before, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-minus:before {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-add.disable, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .selected-date .icon-minus.disable {
-            pointer-events: none;
-            color: #999999; }
+      @media only screen and (max-width: 575px) {
+        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer {
+          flex-direction: column;
+          align-items: flex-start; } }
+      @media only screen and (max-width: 575px) {
+        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-head {
+          margin-bottom: 5px; } }
+      .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body {
+        display: flex; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date {
+          display: flex;
+          align-items: center;
+          margin-left: 10px; }
+          @media only screen and (max-width: 575px) {
+            .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date {
+              margin-left: 0; } }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date .icon-add, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date .icon-minus {
+            display: inline-block;
+            vertical-align: bottom;
+            font-size: 1.2rem;
+            color: #00aef2;
+            cursor: pointer; }
+            .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date .icon-add:before, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date .icon-minus:before {
+              width: 20px;
+              height: 20px;
+              display: flex;
+              align-items: center;
+              justify-content: center; }
+            .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date .icon-add.disable, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date .icon-minus.disable {
+              pointer-events: none;
+              color: #999999; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date .icon-add {
+            margin-left: 10px; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .date-body .selected-date .icon-minus {
+            margin-right: 10px; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group {
         margin-bottom: 0; }
         .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt {
@@ -5979,9 +6049,9 @@ header {
           .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle {
             margin-right: 5px; }
             .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button {
-              width: 30px;
-              height: 30px;
-              line-height: 30px; }
+              width: 26px;
+              height: 26px;
+              line-height: 26px; }
               .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button svg {
                 width: 20px; }
         .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer .form-group.party-size {
@@ -6106,37 +6176,47 @@ header {
         padding-bottom: 15px;
         margin-bottom: 15px;
         border-bottom: 1px dashed #dbdbdb; }
+        @media only screen and (max-width: 575px) {
+          .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer {
+            flex-direction: column;
+            align-items: flex-start; } }
         .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-head {
           font-size: .875rem;
           margin-bottom: 0px;
           margin-right: 10px;
           color: #666;
           font-weight: 500; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .sel-queue {
-          color: #222223;
-          font-weight: 600; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .leftarrow i, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .rightarrow i {
+          @media only screen and (max-width: 575px) {
+            .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-head {
+              margin-bottom: 5px; } }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body {
           display: flex;
-          width: 20px;
-          height: 20px;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid #00aef2;
-          -webkit-border-radius: 50px;
-          border-radius: 50px;
-          background-clip: padding-box;
-          /* stops bg color from leaking outside the border: */
-          color: #00aef2;
-          cursor: pointer; }
-          .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .leftarrow i.disable, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .rightarrow i.disable {
-            pointer-events: none;
-            color: #999999;
-            border-color: #999999;
-            cursor: default; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .leftarrow {
-          margin-right: 10px; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .rightarrow {
-          margin-left: 10px; }
+          align-items: center; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body .sel-queue {
+            color: #222223;
+            font-weight: 600; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body .leftarrow i, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body .rightarrow i {
+            display: flex;
+            width: 20px;
+            height: 20px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #00aef2;
+            -webkit-border-radius: 50px;
+            border-radius: 50px;
+            background-clip: padding-box;
+            /* stops bg color from leaking outside the border: */
+            color: #00aef2;
+            cursor: pointer; }
+            .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body .leftarrow i.disable, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body .rightarrow i.disable {
+              pointer-events: none;
+              color: #999999;
+              border-color: #999999;
+              cursor: default; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body .leftarrow {
+            margin-right: 10px; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body .rightarrow {
+            margin-left: 10px; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
         border-color: #f2f2f2;
         background: #f2f2f2; }
@@ -6237,12 +6317,15 @@ header {
             font-weight: 700;
             color: #00cc96;
             font-size: 1rem; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-dur-pr .prepay-gateway-outer .prepay-head {
-          margin-bottom: 5px;
-          color: #222223;
-          font-weight: 600; }
-        .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-dur-pr .prepay-gateway-outer .mat-radio-group .mat-radio-button {
-          color: #222223; }
+        .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-dur-pr .prepay-gateway-outer {
+          padding-top: 15px;
+          border-top: 1px solid #dbdbdb; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-dur-pr .prepay-gateway-outer .prepay-head {
+            margin-bottom: 5px;
+            color: #222223;
+            font-weight: 600; }
+          .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer .prepay-dur-pr .prepay-gateway-outer .mat-radio-group .mat-radio-button {
+            color: #222223; }
     .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-head {
       margin-bottom: 15px; }
     .consumerpopupmainclass .mat-dialog-content .mainouter .member-outer .member-list .member-ul {
@@ -6264,10 +6347,16 @@ header {
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ; }
       .consumerpopupmainclass .mat-dialog-content .mainouter .addmember-outer .outer {
         display: flex; }
+        @media only screen and (max-width: 575px) {
+          .consumerpopupmainclass .mat-dialog-content .mainouter .addmember-outer .outer {
+            flex-direction: column; } }
         .consumerpopupmainclass .mat-dialog-content .mainouter .addmember-outer .outer .form-group {
           flex-grow: 1; }
           .consumerpopupmainclass .mat-dialog-content .mainouter .addmember-outer .outer .form-group:first-child {
             margin-right: 15px; }
+            @media only screen and (max-width: 575px) {
+              .consumerpopupmainclass .mat-dialog-content .mainouter .addmember-outer .outer .form-group:first-child {
+                margin-right: 0; } }
     .consumerpopupmainclass .mat-dialog-content .mainouter .addMemberHeader {
       font-size: 1rem;
       font-weight: 600;
@@ -6277,10 +6366,11 @@ header {
     padding: 20px; }
     @media only screen and (max-width: 767px) {
       .consumerpopupmainclass .mat-dialog-actions .mat-button .backbtn, .consumerpopupmainclass .mat-dialog-actions .bt2 {
-        padding: 10px 15px !important; } }
+        padding: 10px 15px; } }
     @media only screen and (max-width: 575px) {
       .consumerpopupmainclass .mat-dialog-actions button {
-        margin-bottom: 5px; } }
+        margin-bottom: 5px;
+        padding: 5px 10px !important; } }
 
 .adjustdelay .form-group .col-form-label {
   margin-bottom: 5px;
@@ -8362,8 +8452,8 @@ footer.dashb {
     color: #222223; }
     .m-nav a i {
       font-size: 1.5rem;
-      height: 44px;
-      width: 44px;
+      /*height: 44px;
+      width: 44px;*/
       margin-right: 5px;
       -webkit-border-radius: 60px;
       border-radius: 60px;
@@ -10572,7 +10662,7 @@ footer.dashb {
               font-family: 'Montserrat', sans-serif;
               font-weight: normal;
               border: 1px solid #e6e6e6;
-              display: flex;
+              /*display: flex;*/
               align-items: center; }
               .dashboard .card.w-dta .head .locn .mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-select .mat-select-value-text {
                 font-weight: 500; }
@@ -10729,7 +10819,7 @@ footer.dashb {
     .dashboard .card.w-dta .dash-list .ctrls {
       display: flex;
       padding: 0 20px;
-      align-items: center; }
+      align-items: flex-start; }
       @media only screen and (max-width: 767px) {
         .dashboard .card.w-dta .dash-list .ctrls {
           flex-direction: column; } }
@@ -10739,22 +10829,22 @@ footer.dashb {
       .dashboard .card.w-dta .dash-list .ctrls ul {
         display: flex;
         margin: 0;
-        padding: 0; }
+        padding: 0;
+        /*@include respond-to(ynw-575){
+            flex-direction: column;
+            width: 100%;
+        }*/ }
         @media only screen and (max-width: 767px) {
           .dashboard .card.w-dta .dash-list .ctrls ul {
             order: 1;
             flex-wrap: wrap; } }
-        @media only screen and (max-width: 575px) {
-          .dashboard .card.w-dta .dash-list .ctrls ul {
-            flex-direction: column;
-            width: 100%; } }
         .dashboard .card.w-dta .dash-list .ctrls ul li {
           list-style: none;
           margin-right: 10px; }
           @media only screen and (max-width: 575px) {
             .dashboard .card.w-dta .dash-list .ctrls ul li {
               margin-right: 0;
-              border-bottom: 1px solid #fff; } }
+              /*border-bottom: 1px solid $white;*/ } }
           .dashboard .card.w-dta .dash-list .ctrls ul li span {
             height: 40px;
             cursor: pointer;
@@ -10767,7 +10857,7 @@ footer.dashb {
             font-size: .75rem; }
             @media only screen and (max-width: 767px) {
               .dashboard .card.w-dta .dash-list .ctrls ul li span {
-                padding: 0 15px;
+                padding: 0 10px;
                 height: 40px; } }
             @media (min-width: 768px) and (max-width: 991px) {
               .dashboard .card.w-dta .dash-list .ctrls ul li span {
@@ -10972,26 +11062,149 @@ footer.dashb {
         .dashboard .card.w-dta .dash-list .d-tbl .table thead tr th {
           color: #fff;
           padding: 10px 8px; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td {
-        border-top: none;
-        padding: 10px 8px;
-        font-weight: 500; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online {
-          text-align: center; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online span {
-            color: #00cc96; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived {
-          vertical-align: top; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived {
-            color: #79e688;
+      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr {
+        -moz-transition: all 500ms;
+        -o-transition: all 500ms;
+        -webkit-transition: all 500ms;
+        transition: all 500ms; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td {
+          border-top: none;
+          padding: 10px 8px;
+          font-weight: 500;
+          -moz-transition: all 500ms;
+          -o-transition: all 500ms;
+          -webkit-transition: all 500ms;
+          transition: all 500ms; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online {
+            text-align: center; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.online span {
+              color: #00cc96; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived {
+            vertical-align: top; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived {
+              color: #79e688;
+              padding: 2px 5px 2px 14px;
+              font-size: .65rem;
+              font-weight: 600;
+              position: relative; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived:before {
+                position: absolute;
+                content: "";
+                background: #79e688;
+                width: 6px;
+                height: 6px;
+                -webkit-border-radius: 10px;
+                border-radius: 10px;
+                background-clip: padding-box;
+                /* stops bg color from leaking outside the border: */
+                top: 50%;
+                left: 4px;
+                margin-top: -4px; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived:before {
+              display: none; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
+            font-weight: 500; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
+            display: flex;
+            flex-wrap: wrap; }
+            @media only screen and (max-width: 767px) {
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
+                padding-left: 45%; } }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span {
+              -webkit-border-radius: 30px;
+              border-radius: 30px;
+              background-clip: padding-box;
+              /* stops bg color from leaking outside the border: */
+              height: auto;
+              text-transform: none;
+              padding: 3px 10px;
+              display: flex;
+              margin-right: 5px;
+              margin-bottom: 5px;
+              border: none;
+              align-items: center;
+              font-weight: 500; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span i {
+                font-size: .875rem;
+                width: 14px;
+                height: 14px;
+                margin-top: 1px;
+                display: none; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.arrived {
+                background: #79e688;
+                color: #177c25; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.start {
+                background: #4de2ff;
+                color: #006b80; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.newbill {
+                background: #ff8fb8;
+                color: #c20047; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.viewbill {
+                background: #f2cd61;
+                color: #7d600a; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.acceptbill {
+                background: #63f2b2;
+                color: #0b7e4b; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.done {
+                background: #4bc742;
+                color: #102f0e; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions:before {
+              position: absolute; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment {
+            text-align: left; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
+              padding: 2px 0px;
+              /*background: $cc-lightgray;*/
+              color: #222223;
+              position: relative;
+              font-weight: 600;
+              font-size: .75rem; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n .text, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h .text, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f .text {
+                position: relative;
+                z-index: 1; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n {
+              color: #f24949; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n:after {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                content: "";
+                left: 0;
+                top: 0;
+                background: transparent;
+                z-index: 0; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h {
+              color: #e2aa00; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h:after {
+                width: 50%;
+                height: 100%;
+                position: absolute;
+                content: "";
+                left: 0;
+                top: 0;
+                background: transparent;
+                z-index: 0; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
+              color: #00cc96; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f:after {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                content: "";
+                left: 0;
+                top: 0;
+                background: transparent;
+                z-index: 0; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .started, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .checkedIn {
+            color: #4de2ff;
             padding: 2px 5px 2px 14px;
-            font-size: .65rem;
+            font-size: .75rem;
             font-weight: 600;
             position: relative; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived .arrived:before {
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived:before, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .started:before, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done:before, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled:before, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .checkedIn:before {
               position: absolute;
               content: "";
-              background: #79e688;
+              background: #4de2ff;
               width: 6px;
               height: 6px;
               -webkit-border-radius: 10px;
@@ -11001,166 +11214,56 @@ footer.dashb {
               top: 50%;
               left: 4px;
               margin-top: -4px; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name .icon-arrived:before {
-            display: none; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
-          font-weight: 500; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
-          display: flex;
-          flex-wrap: wrap; }
-          @media only screen and (max-width: 767px) {
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
-              padding-left: 45%; } }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span {
-            -webkit-border-radius: 30px;
-            border-radius: 30px;
-            background-clip: padding-box;
-            /* stops bg color from leaking outside the border: */
-            height: auto;
-            text-transform: none;
-            padding: 3px 10px;
-            display: flex;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            border: none;
-            align-items: center;
-            font-weight: 500; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span i {
-              font-size: .875rem;
-              width: 14px;
-              height: 14px;
-              margin-top: 1px;
-              display: none; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.arrived {
-              background: #79e688;
-              color: #177c25; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.start {
-              background: #4de2ff;
-              color: #006b80; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.newbill {
-              background: #ff8fb8;
-              color: #c20047; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.viewbill {
-              background: #f2cd61;
-              color: #7d600a; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.acceptbill {
-              background: #63f2b2;
-              color: #0b7e4b; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.done {
-              background: #4bc742;
-              color: #102f0e; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions:before {
-            position: absolute; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment {
-          text-align: left; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
-            padding: 2px 0px;
-            /*background: $cc-lightgray;*/
-            color: #222223;
-            position: relative;
-            font-weight: 600;
-            font-size: .75rem; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n .text, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h .text, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f .text {
-              position: relative;
-              z-index: 1; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n {
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived {
+            color: #79e688; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived:before {
+              background: #79e688; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done {
+            color: #4bc742; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done:before {
+              background: #4bc742; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled {
             color: #f24949; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n:after {
-              width: 100%;
-              height: 100%;
-              position: absolute;
-              content: "";
-              left: 0;
-              top: 0;
-              background: transparent;
-              z-index: 0; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h {
-            color: #e2aa00; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h:after {
-              width: 50%;
-              height: 100%;
-              position: absolute;
-              content: "";
-              left: 0;
-              top: 0;
-              background: transparent;
-              z-index: 0; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
-            color: #00cc96; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f:after {
-              width: 100%;
-              height: 100%;
-              position: absolute;
-              content: "";
-              left: 0;
-              top: 0;
-              background: transparent;
-              z-index: 0; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .started, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .checkedIn {
-          color: #4de2ff;
-          padding: 2px 5px 2px 14px;
-          font-size: .75rem;
-          font-weight: 600;
-          position: relative; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived:before, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .started:before, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done:before, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled:before, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .checkedIn:before {
-            position: absolute;
-            content: "";
-            background: #4de2ff;
-            width: 6px;
-            height: 6px;
-            -webkit-border-radius: 10px;
-            border-radius: 10px;
-            background-clip: padding-box;
-            /* stops bg color from leaking outside the border: */
-            top: 50%;
-            left: 4px;
-            margin-top: -4px; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived {
-          color: #79e688; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived:before {
-            background: #79e688; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done {
-          color: #4bc742; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done:before {
-            background: #4bc742; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled {
-          color: #f24949; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled:before {
-            background: #f24949; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .checkedIn {
-          color: #5568ff; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .checkedIn:before {
-            background: #5568ff; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message {
-          text-align: left; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message span {
-            cursor: pointer;
-            font-size: 1.3rem;
-            -moz-transition: all 300ms;
-            -o-transition: all 300ms;
-            -webkit-transition: all 300ms;
-            transition: all 300ms; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message span:hover {
-              color: #00aef2; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote {
-          text-align: left; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote span {
-            cursor: pointer;
-            font-size: 1.3rem;
-            -moz-transition: all 300ms;
-            -o-transition: all 300ms;
-            -webkit-transition: all 300ms;
-            transition: all 300ms; }
-            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote span:hover {
-              color: #00aef2; }
-        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.mre .mbt {
-          top: -10px; }
-          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.mre .mbt:before {
-            display: none; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:nth-child(odd) {
-        background: transparent; }
-      .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:nth-child(even) {
-        background: rgba(0, 0, 0, 0.03); }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled:before {
+              background: #f24949; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .checkedIn {
+            color: #5568ff; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .checkedIn:before {
+              background: #5568ff; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message {
+            text-align: left; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message span {
+              cursor: pointer;
+              font-size: 1.3rem;
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.message span:hover {
+                color: #00aef2; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote {
+            text-align: left; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote span {
+              cursor: pointer;
+              font-size: 1.3rem;
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms; }
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.cnote span:hover {
+                color: #00aef2; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.mre .mbt {
+            top: -10px; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.mre .mbt:before {
+              display: none; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:nth-child(odd) {
+          background: transparent; }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:nth-child(even) {
+          background: rgba(0, 0, 0, 0.03); }
+        .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr:hover {
+          -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2) ;
+          -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2) ;
+          box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2) ; }
     .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container {
       padding: 15px; }
       .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container .text-center {
@@ -13088,7 +13191,7 @@ header.consumer {
                   height: 50px;
                   background: none;
                   border-radius: 0px;
-                  display: flex;
+                  /*display: flex;*/
                   align-items: center;
                   font-family: 'Montserrat', sans-serif;
                   font-weight: normal;
@@ -13221,6 +13324,16 @@ header.consumer {
               align-items: center;
               top: 0;
               left: 0; }
+          @media only screen and (max-width: 767px) {
+            header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button:hover {
+              background: #c70e0e; }
+              header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button:hover:before {
+                display: none; } }
+          @media (min-width: 768px) and (max-width: 991px) {
+            header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button:hover {
+              background: #c70e0e; }
+              header.consumer .tp-1 .tp-r .tp-srch .plr0i #search_button:hover:before {
+                display: none; } }
         header.consumer .tp-1 .tp-r .tp-srch .plr0i .cs-btn:before {
           /*background: lighten($cc-red, 10%);*/
           background-image: -moz-radial-gradient(#f9a8a8, rgba(255, 255, 255, 0));

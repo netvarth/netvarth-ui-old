@@ -421,24 +421,28 @@
                         padding: 10px;
                         height: 40px;
                         background: $cc-formbg;
+                        
+                        .mat-select-trigger {
+                            margin-top: 2px;
+                            
+                            .mat-select-arrow {
+                                color: $cc-black;
+                                border: none;
+                                position: relative;
+                                width: 10px;
+                                height: 10px;
+                                font-size: .65rem;
+                                font-weight: 700;
+                                display: flex;
+                                align-items: center;
+                                margin: 0;
 
-                        .mat-select-arrow {
-                            color: $cc-black;
-                            border: none;
-                            position: relative;
-                            width: 10px;
-                            height: 10px;
-                            font-size: .65rem;
-                            font-weight: 700;
-                            display: flex;
-                            align-items: center;
-                            margin: 0;
-
-                            &:after {
-                                @include font-custom;
-                                content: "\72";
-                                position: absolute;
-                                right: 0;
+                                &:after {
+                                    @include font-custom;
+                                    content: "\72";
+                                    position: absolute;
+                                    right: 0;
+                                }
                             }
                         }
                     }
@@ -686,6 +690,8 @@
         // Date Picker
         .pickerouter {
             display: flex;
+            height: 26px;
+            width: 26px;
             
             input[type="text"] {
                 width: 120px;
@@ -1267,6 +1273,7 @@
         margin-bottom: 0;
         @include box-shadow(0, 0, 30px, rgba(0,0,0,0.1));
         position: relative;
+        display: flex;
         
         .bt1 {
             margin-right: 10px;
@@ -1290,6 +1297,7 @@
         
         .waitlist-button-outer {
             display: flex;
+            width: 100%;
             
             @include respond-to(ynw-575) {
                 flex-direction: column;
@@ -1297,6 +1305,7 @@
             
             .showDetOuter {
                 flex-grow: 1;
+                padding-right: 10px;
                 
                 @include respond-to(ynw-575) {
                     margin-bottom: 10px;
@@ -1321,6 +1330,20 @@
                             font-weight: 600;
                         }
                     }
+                }
+            }
+            .waitlist-action {
+                align-self: flex-end;
+                
+                @include respond-to(ynw-575){
+                    align-self: flex-start;
+                    width: 100%;
+                }
+                
+                .confirmbtn {
+                    margin-right: 0;
+                    margin-bottom: 0;
+                    width: 100%;
                 }
             }
         }
@@ -2067,27 +2090,53 @@
                 display: flex;
                 align-items: center;
                 
-                .selected-date {
-                    display: inline-block;
-                    margin-left: 10px;
+                @include respond-to(ynw-575){
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                
+                .date-head {
+                    @include respond-to(ynw-575){
+                        margin-bottom: 5px;
+                    }
+                }
+                
+                .date-body {
+                    display: flex;
                     
-                    .icon-add, .icon-minus {
-                        display: inline-block;
-                        vertical-align: bottom;
-                        font-size: 1.2rem;
-                        color: $linkblue;
-                        cursor: pointer;
+                    .selected-date {
+                        display: flex;
+                        align-items: center;
+                        margin-left: 10px;
                         
-                        &:before {
-                            width: 24px;
-                            height: 24px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
+                        @include respond-to(ynw-575){
+                            margin-left: 0;
                         }
-                        &.disable {
-                            pointer-events: none;
-                            color: $cc-mediumgray;
+
+                        .icon-add, .icon-minus {
+                            display: inline-block;
+                            vertical-align: bottom;
+                            font-size: 1.2rem;
+                            color: $linkblue;
+                            cursor: pointer;
+
+                            &:before {
+                                width: 20px;
+                                height: 20px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                            &.disable {
+                                pointer-events: none;
+                                color: $cc-mediumgray;
+                            }
+                        }
+                        .icon-add {
+                            margin-left: 10px;
+                        }
+                        .icon-minus {
+                            margin-right: 10px;
                         }
                     }
                 }
@@ -2109,9 +2158,9 @@
                                 margin-right: 5px;
 
                                 button {
-                                    width: 30px;
-                                    height: 30px;
-                                    line-height: 30px;
+                                    width: 26px;
+                                    height: 26px;
+                                    line-height: 26px;
 
                                     svg {
                                         width: 20px;
@@ -2322,45 +2371,61 @@
                     margin-bottom: 15px;
                     border-bottom: 1px dashed $cc-ash;
                     
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+                    
                     .queue-head {
                         font-size: .875rem;
                         margin-bottom: 0px;
                         margin-right: 10px;
                         color: $cc-gray;
                         font-weight: 500;
-                    }
-                    
-                    .sel-queue {
-                        color: $linkblack;
-                        font-weight: 600;
-                    }
-                    
-                    .leftarrow, .rightarrow {                        
-                        i {
-                            display: flex;
-                            width: 20px;
-                            height: 20px;
-                            align-items: center;
-                            justify-content: center;
-                            border: 1px solid $linkblue;
-                            @include border-radius(50px);
-                            color: $linkblue;
-                            cursor: pointer;
-                            
-                            &.disable {
-                                pointer-events: none;
-                                color: $cc-mediumgray;
-                                border-color: $cc-mediumgray;
-                                cursor: default;
-                            }
+                        
+                        @include respond-to(ynw-575){
+                            margin-bottom: 5px;
                         }
                     }
-                    .leftarrow {
-                        margin-right: 10px;
+                    
+                    .queue-body {
+                        display: flex;
+                        align-items: center;
+                        
+                        .sel-queue {
+                            color: $linkblack;
+                            font-weight: 600;
+                        }
+
+                        .leftarrow, .rightarrow {                        
+                            i {
+                                display: flex;
+                                width: 20px;
+                                height: 20px;
+                                align-items: center;
+                                justify-content: center;
+                                border: 1px solid $linkblue;
+                                @include border-radius(50px);
+                                color: $linkblue;
+                                cursor: pointer;
+
+                                &.disable {
+                                    pointer-events: none;
+                                    color: $cc-mediumgray;
+                                    border-color: $cc-mediumgray;
+                                    cursor: default;
+                                }
+                            }
+                        }
+                        .leftarrow {
+                            margin-right: 10px;
+                        }
+                        .rightarrow {
+                            margin-left: 10px;
+                        }
                     }
-                    .rightarrow {
-                        margin-left: 10px;
-                    }
+                    
+                    
                 }
                 
                 .mat-chip-list {
@@ -2514,7 +2579,9 @@
                         }
                     }
                     .prepay-gateway-outer {
-
+                        padding-top: 15px;
+                        border-top: 1px solid $cc-ash;
+                        
                         .prepay-head {
                             margin-bottom: 5px;
                             color: $linkblack;
@@ -2561,11 +2628,19 @@
                 .outer {
                     display: flex;
                     
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
+                    }
+                    
                     .form-group {
                         flex-grow: 1;
                         
                         &:first-child {
                             margin-right: 15px;
+                            
+                            @include respond-to(ynw-575) {
+                                margin-right: 0;
+                            }
                         }
                     }
                 }
@@ -2583,12 +2658,13 @@
         padding: 20px;
         @include respond-to(ynw-767) {
             .mat-button .backbtn, .bt2 {
-                padding: 10px 15px !important;
+                padding: 10px 15px;
             }
         }
         @include respond-to(ynw-575) {
             button {
                 margin-bottom: 5px;
+                padding: 5px 10px !important;
             }
         }
     } 

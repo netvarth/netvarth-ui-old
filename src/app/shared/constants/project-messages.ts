@@ -6,7 +6,7 @@ export const Messages = {
   'PASSWORD_MISMATCH': 'Password and Confirm password do not match',
   'PASSWORD_CHANGED': 'Password has been changed successfully',
   'EMAIL_VERIFIED': 'Your email is verified',
-  'PHONE_VERIFIED': 'You phone number is verified',
+  'PHONE_VERIFIED': 'Your phone number is verified',
   'MEMBER_CREATED': 'Member added successfully',
   'MEMBER_UPDATED': 'Member updated successfully',
   'LICENSE_UPGRADED': 'License Package upgraded successfully',

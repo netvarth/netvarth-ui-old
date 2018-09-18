@@ -699,8 +699,8 @@ footer {
         
         i {
             font-size: 1.5rem;
-            height: 44px;
-            width: 44px;
+            /*height: 44px;
+            width: 44px;*/
             margin-right: 5px;
             @include border-radius(60px);
             display: flex;
@@ -3801,7 +3801,7 @@ footer {
                                         padding: 10px;
                                         @include font-regular;
                                         border: 1px solid $cc-formbg;
-                                        display: flex;
+                                        /*display: flex;*/
                                         align-items: center;
                                         
                                         .mat-select-value-text {
@@ -3995,7 +3995,7 @@ footer {
                 .ctrls {
                     display: flex;
                     padding: 0 20px;
-                    align-items: center;
+                    align-items: flex-start;
                     
                     @include respond-to(ynw-767){
                         flex-direction: column;
@@ -4013,10 +4013,10 @@ footer {
                             order: 1;
                             flex-wrap: wrap;
                         }
-                        @include respond-to(ynw-575){
+                        /*@include respond-to(ynw-575){
                             flex-direction: column;
                             width: 100%;
-                        }
+                        }*/
                         
                         li {
                             list-style: none;
@@ -4024,7 +4024,7 @@ footer {
                             
                             @include respond-to(ynw-575){
                                 margin-right: 0;
-                                border-bottom: 1px solid $white;
+                                /*border-bottom: 1px solid $white;*/
                             }
                             
                             span {
@@ -4039,7 +4039,7 @@ footer {
                                 font-size: .75rem;
                                 
                                 @include respond-to(ynw-767){
-                                    padding: 0 15px;
+                                    padding: 0 10px;
                                     height: 40px;
                                 }
                                 @include respond-to(ynw-768-991){
@@ -4325,10 +4325,12 @@ footer {
                         }
                         tbody {
                             tr{
+                                @include transition(all 500ms);
                                 td {
                                     border-top: none;
                                     padding: 10px 8px;
                                     font-weight: 500;
+                                    @include transition(all 500ms);
                                     
                                     &.online {
                                         text-align: center;
@@ -4578,6 +4580,10 @@ footer {
                                 }
                                 &:nth-child(even) {
                                     background: rgba(0, 0, 0, 0.03);
+                                }
+                                
+                                &:hover {
+                                    @include box-shadow(0,3px,15px, rgba(0,0,0,.2));
                                 }
                             }
                         }

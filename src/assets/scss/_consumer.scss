@@ -336,7 +336,7 @@ header {
                                         height: 50px;
                                         background: none;
                                         border-radius: 0px;
-                                        display: flex;
+                                        /*display: flex;*/
                                         align-items: center;
                                         @include font-regular;
                                         font-weight: 500;
@@ -507,6 +507,23 @@ header {
                                     align-items: center;
                                     top: 0;
                                     left: 0;
+                                }
+                            }
+                            
+                            &:hover{                                
+                                @include respond-to(ynw-767) {
+                                    background: darken($cc-red, 20%);
+                                    
+                                    &:before {
+                                        display: none;
+                                    }
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    background: darken($cc-red, 20%);
+                                    
+                                    &:before {
+                                        display: none;
+                                    }
                                 }
                             }
                         }

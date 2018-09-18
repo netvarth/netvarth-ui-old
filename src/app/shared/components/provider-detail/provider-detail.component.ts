@@ -336,6 +336,8 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'virtualFields' : {
             this.virtualfieldsjson = res;
+            // console.log('vir', JSON.stringify(this.virtualfieldsjson));
+            this.virtualfieldsjson = []; // dummy
             this.virtualfieldsCombinedjson = [];
             this.virtualfieldsDomainjson = [];
             this.virtualfieldsSubdomainjson = [];
@@ -371,6 +373,73 @@ export class ProviderDetailComponent implements OnInit {
   );
   }
   sortVfields(dataF) {
+    let temp;
+    const temp1 = new Array();
+    let temp2 = new Array();
+    let temp3 = new Array();
+    for (let i = 0; i < dataF.length; i++) {
+      temp2 = [];
+      let str = '';
+      // console.log(dataF[i].name, typeof dataF[i].value);
+      dataF[i]['type'] = typeof dataF[i].value;
+      switch (dataF[i].dataType) {
+        case 'Gender':
+          this.genderType = dataF[i].value;
+        break;
+        case 'Enum':
+        case 'EnumList':
+          str = '';
+          temp3 = [];
+          for ( let jj = 0; jj < dataF[i].value.length; jj++) {
+            if (str !== '') {
+              str += ', ';
+            }
+            str +=  dataF[i].value[jj].displayName;
+          }
+          temp3.push(str);
+          temp2.push(temp3);
+          dataF[i].value = temp2;
+          temp1.push(dataF[i]);
+        break;
+        case 'DataGrid':
+          for (let ii = 0; ii < dataF[i].value.length; ii++) {
+            temp3 = [];
+            Object.keys(dataF[i].value[ii]).forEach(nkeys => {
+              // console.log('keys', nkeys, dataF[i].value[ii]);
+              temp3.push(dataF[i].value[ii][nkeys]);
+            });
+            temp2.push(temp3);
+          }
+          dataF[i].value = temp2;
+          temp1.push(dataF[i]);
+        break;
+        case 'Boolean':
+          if (dataF[i].value === 'true') {
+            dataF[i].value = 'Yes';
+          } else {
+            dataF[i].value = 'No';
+          }
+          temp1.push(dataF[i]);
+        break;
+        default:
+          temp1.push(dataF[i]);
+        break;
+      }
+    }
+
+    dataF = temp1;
+    for (let i = 0; i < dataF.length; i++) {
+      for (let j = i + 1; j < dataF.length; j++) {
+        if (parseInt(dataF[i].order, 10) > parseInt(dataF[j].order, 10)) {
+          temp = dataF[i];
+          dataF[i] = dataF[j];
+          dataF[j] = temp;
+        }
+      }
+    }
+    return dataF;
+  }
+  ORGsortVfields(dataF) {
     let temp;
     const temp1 = new Array();
     let temp2 = new Array();
