@@ -162,3 +162,54 @@
 	*/
 	.table-outer td:before { content: attr(data-title); }
 }  
+
+@include respond-to(ynw-768-991) {
+    /* Force table to not be like tables anymore */
+	.d-tbl table, 
+	.d-tbl thead, 
+	.d-tbl tbody, 
+	.d-tbl th, 
+	.d-tbl td, 
+	.d-tbl tr { 
+		display: block;
+        font-size: .875rem;
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.d-tbl thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	/*.table-outer tr { border: 1px solid #ccc; }*/
+ 
+	.d-tbl td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		/*padding-left: 50%; */
+		white-space: normal;
+		text-align:left;
+        display: flex;
+	}
+ 
+	.d-tbl td:before { 
+		/* Now like a table header */
+		/*position: absolute;*/
+		/* Top/left values mimic padding */
+		top: 12px;
+		left: 10px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: pre-wrap;
+		text-align:left;
+		font-weight: 600;
+	}
+ 
+	/*
+	Label the data
+	*/
+	.d-tbl td:before { content: attr(data-title); }
+}  

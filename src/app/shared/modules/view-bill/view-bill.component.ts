@@ -174,6 +174,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
       }
@@ -194,6 +195,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
    const dialogrefundRef = this.dialog.open(ProviderRefundComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         payment_det: payment
       }

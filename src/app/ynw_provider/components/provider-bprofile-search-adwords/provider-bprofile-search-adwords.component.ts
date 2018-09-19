@@ -66,7 +66,8 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
           data: {
             type : 'add'
           },
-          panelClass: ['commonpopupmainclass']
+          panelClass: ['commonpopupmainclass'],
+          disableClose: true
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -87,6 +88,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         const dialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
           data: {
             'message' : this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name + '"')
           }

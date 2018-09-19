@@ -193,8 +193,8 @@
                                 height: 90px;
                                 background: none;
                                 border-radius: 0px;
-                                display: flex;
-                                align-items: center;
+                                /*display: flex;
+                                align-items: center;*/
                                 @include font-regular;
                                 font-weight: 500;
                                 font-size: .875rem;
@@ -206,6 +206,12 @@
                                 }
                                 @include respond-to(ynw-768-991) {
                                     height: $input-h;
+                                }
+                                @include respond-to(ynw-992-1199) {
+                                    padding: 38px 15px;
+                                }
+                                @include respond-to(ynw-1200) {
+                                    padding: 38px 15px;
                                 }
 
                                 .mat-select-arrow {
@@ -360,6 +366,22 @@
                             align-items: center;
                             top: 0;
                             left: 0;
+                        }
+                    }
+                    &:hover{                                
+                        @include respond-to(ynw-767) {
+                            background: darken($cc-red, 20%);
+
+                            &:before {
+                                display: none;
+                            }
+                        }
+                        @include respond-to(ynw-768-991) {
+                            background: darken($cc-red, 20%);
+
+                            &:before {
+                                display: none;
+                            }
                         }
                     }
                 }

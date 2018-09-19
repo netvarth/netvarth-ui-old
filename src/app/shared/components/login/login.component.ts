@@ -142,6 +142,7 @@ export class LoginComponent implements OnInit {
       const dialogRef = this.dialog.open(SignUpComponent, {
         width: '50%',
         panelClass: ['signupmainclass', cClass],
+        disableClose: true,
         data: { is_provider : this.is_provider}
       });
 

@@ -53,6 +53,7 @@ export class ProviderCouponsComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderCouponsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
+          disableClose: true,
           data: {
             type : 'add'
           }
@@ -68,6 +69,7 @@ export class ProviderCouponsComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderCouponsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
+          disableClose: true,
           data: {
             coupon : obj,
             type : 'edit'
@@ -88,6 +90,7 @@ export class ProviderCouponsComponent implements OnInit {
       const dialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
         data: {
           'message' : this.sharedfunctionObj.getProjectMesssages('COUPON_DELETE').replace('[name]', coupon.name),
           'heading' : 'Delete Confirmation'

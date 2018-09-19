@@ -54,7 +54,7 @@
                                         <h5>Location Amenities</h5>
                                         <ul class="amt-list">
                                                 <li [matTooltip]="'Parking Type: ' + location_data.parkingType" [class]="badgeIcons['parkingtype']['class']" *ngIf="location_data.parkingType"></li>
-                                                <li [matTooltip]="'24 hours'" [class]="badgeIcons['24hour']['class']" *ngIf="location_data.open24hours"></li>
+                                                <li [matTooltip]="'24 hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="location_data.open24hours"></li>
                                                 <ng-container *ngIf="location_data.locationVirtualFields">
                                                     <ng-container *ngFor="let locvirtual of objectKeys(location_data.locationVirtualFields)">
                                                         <li [matTooltip]="badge_map_arr[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['none']['class']"></li>

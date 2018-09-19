@@ -787,6 +787,10 @@ header {
                                                 label {
                                                     margin-bottom: 0;
                                                     cursor: pointer;
+                                                    
+                                                    &:before {
+                                                        font-size: 1rem;
+                                                    }
                                                 }
                                             }
                                             .moreopt-clear {

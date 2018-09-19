@@ -91,6 +91,7 @@ export class WaitlistComponent implements OnInit {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
       autoFocus: true,
       data: pass_ob
     });

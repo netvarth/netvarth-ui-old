@@ -93,6 +93,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
           const dialogRef = this.dialog.open(AddProviderItemComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
+            disableClose: true,
             data: {
               item : this.item_list,
               type : 'edit'
@@ -122,6 +123,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
           const dialogRef = this.dialog.open(AddProviderItemImageComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
+            disableClose: true,
             autoFocus: false,
             data: {
               item : obj,
@@ -178,6 +180,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
           const dialogRef = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
             data: {
               'message' : 'Do you really want to remove the image?'
             }

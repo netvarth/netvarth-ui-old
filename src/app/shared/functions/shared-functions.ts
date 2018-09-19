@@ -489,6 +489,7 @@ export class SharedFunctions {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to delete this image ?',
         'heading' : 'Delete Confirmation'
@@ -507,6 +508,7 @@ export class SharedFunctions {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to remove your profile picture?',
         'heading' : 'Delete Confirmation'
@@ -888,6 +890,7 @@ doCancelWaitlist(waitlist) {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to cancel this Check-In ?',
         'heading' : 'Confirm'
@@ -941,6 +944,7 @@ doDeleteFavProvider(fav) {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
         'heading' : 'Confirm'

@@ -6,7 +6,7 @@ import { FormControlService } from './form-control.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
+import { Messages } from '../../../shared/constants/project-messages';
 @Component({
   selector: 'app-question',
   templateUrl: './dynamic-form-question.component.html'
@@ -17,6 +17,7 @@ export class DynamicFormQuestionComponent implements OnInit {
   @Input() messages;
   @Input() showlabel = false;
 
+  placeholder = '';
   errors = [];
   constructor(private qcs: FormControlService,
     public fed_service: FormMessageDisplayService,
@@ -24,6 +25,12 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.errors = this.messages[this.question.key] || [];
+    // console.log('key', this.question.key);
+    if (this.question.key !== 'referenceurl') {
+      this.placeholder = this.question.label;
+    } else {
+      this.placeholder = 'Eg:- http://www.jaldee.com';
+    }
     // console.log(this.question);
    // console.log(this.form.controls);
     // if (this.question.controlType === 'datagrid') {

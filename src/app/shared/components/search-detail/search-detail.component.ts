@@ -1615,6 +1615,7 @@ setEnvironment(bypassotherfunction?) {
       const dialogRef = this.dialog.open(SignUpComponent, {
         width: '50%',
         panelClass: ['signupmainclass', cClass],
+        disableClose: true,
         data: {
           is_provider : 'true',
           claimData: passData
@@ -1642,6 +1643,7 @@ setEnvironment(bypassotherfunction?) {
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
       panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
       data: {
         is_provider : 'false',
         moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
@@ -1678,6 +1680,7 @@ setEnvironment(bypassotherfunction?) {
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',
        panelClass: ['loginmainclass', 'consumerpopupmainclass'],
+       disableClose: true,
       data: {
         type : origin,
         is_provider : this.checkProvider(origin),
@@ -1709,6 +1712,7 @@ setEnvironment(bypassotherfunction?) {
     const dialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
        panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+       disableClose: true,
       data: {
         type : origin,
         is_provider : this.checkProvider(origin),
@@ -1792,6 +1796,7 @@ setEnvironment(bypassotherfunction?) {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
+      disableClose: true,
      data: {
        user_id : provid,
        source: 'consumer-common',
@@ -1906,6 +1911,7 @@ setEnvironment(bypassotherfunction?) {
     const dialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
     data: {
       bname: busname,
       serdet: serv

@@ -92,6 +92,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
           source: 'payment-history'
         },
         panelClass: ['commonpopupmainclass', 'width-100'],
+        disableClose: true
       });
 
       dialogRef.afterClosed().subscribe(result => {

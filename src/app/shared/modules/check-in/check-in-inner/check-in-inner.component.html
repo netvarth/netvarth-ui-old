@@ -119,15 +119,18 @@
                 <div class="prepay-dur-pr">
                     <div class="prepay-amt">This service needs prepayment for check-in</div>
                     <div class="prepay-amt">Pre Payment Amount: <span class="prepaymin-cls">{{sel_ser_det.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span></div>
-                    <div class="prepay-gateway-outer" *ngIf="paymentModes.length == 0">
+                    <div class="prepay-gateway-outer" *ngIf="payModesQueried && !payModesExists">
                         <div class='prepay-head-sorry'> Sorry not payment modes available </div>
                     </div>
-                    <div class="prepay-gateway-outer" *ngIf="paymentModes.length > 0">
+                    <!--<div class="prepay-gateway-outer" *ngIf="paymentModes.length == 0">
+                        <div class='prepay-head-sorry'> Sorry not payment modes available </div>
+                    </div>
+                     <div class="prepay-gateway-outer" *ngIf="paymentModes.length > 0">
                         <div class='prepay-head'>Select Payment Mode</div>
                         <mat-radio-group [(ngModel)]="paytype">
                             <mat-radio-button value="paytm" *ngFor="let paym of paymentModes" [value]="paym.name">{{paym.Displayname}}</mat-radio-button>
                         </mat-radio-group>
-                    </div>
+                    </div> -->
                  </div>
               </div>
               </ng-container>

@@ -111,6 +111,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: pass_ob,
     });

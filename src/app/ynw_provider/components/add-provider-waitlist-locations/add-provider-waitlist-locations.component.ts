@@ -490,6 +490,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     const dialogRef = this.dialog.open(GoogleMapComponent, {
       width: '50%',
       panelClass: 'googlemainmappopup',
+      disableClose: true,
       data: {
         type : 'add',
         passloc: {'lat': this.GetControl(this.amForm , 'loclattitude').value, 'lon': this.GetControl(this.amForm , 'loclongitude').value}

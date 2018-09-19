@@ -648,6 +648,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AdjustQueueDelayComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         queues: this.queues,
         queue_id: this.selected_queue.id
@@ -736,6 +737,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         checkin: checkin
       }
@@ -844,6 +846,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         checkin_id: checkin.ynwUuid
       }
@@ -883,6 +886,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
+      disableClose: true,
       data: {
         checkin: checkin,
         bill_data: bill_data

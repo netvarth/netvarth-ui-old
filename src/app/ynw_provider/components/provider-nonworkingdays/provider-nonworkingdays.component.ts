@@ -56,6 +56,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderNonworkingdaysComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
+          disableClose: true,
           data: {
             type : 'add'
           }
@@ -71,6 +72,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderNonworkingdaysComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
+          disableClose: true,
           data: {
             holiday : obj,
             type : 'edit'
@@ -93,6 +95,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
           data: {
             'message' : this.sharedfunctionObj.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format )
           }

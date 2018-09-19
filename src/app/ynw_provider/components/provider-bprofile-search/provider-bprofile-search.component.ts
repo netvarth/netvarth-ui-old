@@ -577,6 +577,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: {
         type : 'edit',
@@ -608,6 +609,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
+          disableClose: true,
           autoFocus: false,
           data: {
             location : this.base_loc,
@@ -670,6 +672,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
+      disableClose: true,
       autoFocus: true,
       data: {
         // location : this.base_loc,
@@ -719,6 +722,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       width: '50%',
       // panelClass: 'privacysettingsmainclass',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
       autoFocus: true,
       data: {
         bprofile : this.bProfile,
@@ -744,6 +748,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       width: '50%',
       // panelClass: 'socialmediamainclass',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: {
         bprofile : this.bProfile,
@@ -807,6 +812,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
       autoFocus: false,
       data: {
         selspecializations : bprof,
@@ -869,6 +875,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
       autoFocus: false,
       data: {
         sellanguages : bprof,
@@ -904,6 +911,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       width: '50%',
       // panelClass: 'gallerymainclass',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: false,
       data: {
         bprofile : this.bProfile,
@@ -1045,6 +1053,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderBprofileSearchSchedulepopupComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: false,
       data: {
         schedule_arr : this.schedule_arr,
@@ -1274,6 +1283,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: {
         type: type,
@@ -1484,7 +1494,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
       data: {
         type : 'add'
       },
-      panelClass: ['commonpopupmainclass']
+      panelClass: ['commonpopupmainclass'],
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {

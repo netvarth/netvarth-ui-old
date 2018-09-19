@@ -114,6 +114,7 @@ export class ExistingCheckinComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to cancel this ' + this.checkinLabel + '?',
         'heading' : 'Confirm'

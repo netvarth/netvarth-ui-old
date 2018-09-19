@@ -337,7 +337,7 @@ export class ProviderDetailComponent implements OnInit {
           case 'virtualFields' : {
             this.virtualfieldsjson = res;
             // console.log('vir', JSON.stringify(this.virtualfieldsjson));
-            this.virtualfieldsjson = []; // dummy
+            // this.virtualfieldsjson = []; // dummy
             this.virtualfieldsCombinedjson = [];
             this.virtualfieldsDomainjson = [];
             this.virtualfieldsSubdomainjson = [];
@@ -637,6 +637,7 @@ export class ProviderDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
+      disableClose: true,
      data: {
        user_id : provid,
        source: 'consumer-common',
@@ -694,6 +695,7 @@ export class ProviderDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to remove this provider from your favourite list?'
       }
@@ -861,6 +863,7 @@ export class ProviderDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(ExistingCheckinComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
     data: {
       locdet: obj,
       terminologies: this.terminologiesjson,
@@ -879,6 +882,7 @@ export class ProviderDetailComponent implements OnInit {
   const dialogRef = this.dialog.open(ServiceDetailComponent, {
     width: '50%',
     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+    disableClose: true,
   data: {
     bname: busname,
     serdet: serv

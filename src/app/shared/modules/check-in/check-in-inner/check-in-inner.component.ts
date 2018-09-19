@@ -70,6 +70,8 @@ export class CheckInInnerComponent implements OnInit {
     waitlist_for: any = [];
     holdwaitlist_for: any = [];
     paymentModes: any = [];
+    payModesExists = false;
+    payModesQueried = false;
     loggedinuser;
     maxsize;
     paytype = '';
@@ -214,9 +216,16 @@ export class CheckInInnerComponent implements OnInit {
         this.shared_services.getPaymentModesofProvider(provid)
           .subscribe (data => {
             this.paymentModes = data;
+            this.payModesQueried = true;
+            if (this.paymentModes.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
+              this.payModesExists = false;
+            } else {
+              this.payModesExists = true;
+            }
             // console.log ('paymodes', this.paymentModes);
           },
         error => {
+          this.payModesQueried = true;
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           // console.log ('error', error);
         });
@@ -536,10 +545,10 @@ export class CheckInInnerComponent implements OnInit {
     // } else
     if (this.step === 1) {
       if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin') {
-        // console.log('serv det', this.sel_ser_det);
-        if (this.paytype === '') {
+        /*if (this.paytype === '') {
           error = 'Please select the payment mode';
-        }
+        }*/
+        this.paytype = 'DC'; // deleberately giving this value as per request from Manikandan.
       }
       if (this.partySizeRequired) {
         this.clearerrorParty();

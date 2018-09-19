@@ -123,6 +123,7 @@ export class ProviderLicenseComponent implements OnInit {
         const dialogRef = this.dialog.open(UpgradeLicenseComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
+          disableClose: true,
           data: {
             type : 'upgrade'
           }
@@ -154,6 +155,7 @@ export class ProviderLicenseComponent implements OnInit {
           type : 'addons'
         },
         panelClass: ['commonpopupmainclass'],
+        disableClose: true
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -198,6 +200,7 @@ export class ProviderLicenseComponent implements OnInit {
       data: {
       },
       panelClass: ['commonpopupmainclass'],
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -224,6 +227,7 @@ export class ProviderLicenseComponent implements OnInit {
         metrics : this.metrics
       },
       panelClass: ['commonpopupmainclass'],
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -338,6 +342,7 @@ export class ProviderLicenseComponent implements OnInit {
         source: 'license-home'
       },
       panelClass: ['commonpopupmainclass'],
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -350,6 +355,7 @@ export class ProviderLicenseComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Are you sure you wanted to change the subscription ?'
       }

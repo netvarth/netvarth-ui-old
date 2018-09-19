@@ -43,11 +43,11 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log('passed in', this.data);
+    // console.log('passed in', this.data);
     this.rep_username = this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName);
     this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
     this.rep_provname = this.titleCaseWord(this.data.waitlist.provider.businessName);
-    console.log('obtained', this.rep_username, this.rep_service, this.rep_provname);
+    // console.log('obtained', this.rep_username, this.rep_service, this.rep_provname);
     this.getDefaultMessages();
      this.createForm();
   }

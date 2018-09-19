@@ -182,6 +182,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
       const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
+        disableClose: true,
         data: {
           checkin_id: checkin.ynwUuid
         }

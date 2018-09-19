@@ -47,6 +47,7 @@ export class ProviderSubeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         source: source
       }
@@ -67,6 +68,7 @@ export class ProviderSubeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         search_data: search_data
       }
@@ -150,6 +152,7 @@ export class ProviderSubeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
      data: {
        type : 'provider',
        is_provider : 'true',

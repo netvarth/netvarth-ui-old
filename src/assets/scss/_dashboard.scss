@@ -3941,10 +3941,6 @@ footer {
                     padding: 0;
                     display: flex;
                     
-                    @include respond-to(ynw-767) {
-                        justify-content: space-around;
-                    }
-                    
                     li {
                         list-style: none;
                         margin-right: 10px;
@@ -3990,7 +3986,7 @@ footer {
             }
             
             .dash-list {
-                margin-top: 20px;
+                margin-top: 15px;
                 
                 .ctrls {
                     display: flex;
@@ -4020,7 +4016,6 @@ footer {
                         
                         li {
                             list-style: none;
-                            margin-right: 10px;
                             
                             @include respond-to(ynw-575){
                                 margin-right: 0;
@@ -4030,13 +4025,15 @@ footer {
                             span {
                                 height: 40px;
                                 cursor: pointer;
-                                background-color: $cc-lightgray;
+                                background-color: $white;
+                                color: $cc-gray;
                                 padding: 0 30px;
                                 display: flex;
                                 align-items: center;
                                 text-transform: uppercase;
                                 font-weight: 600;
                                 font-size: .75rem;
+                                @include transition(all 300ms);
                                 
                                 @include respond-to(ynw-767){
                                     padding: 0 10px;
@@ -4045,6 +4042,10 @@ footer {
                                 @include respond-to(ynw-768-991){
                                     padding: 0 15px;
                                     height: 40px;
+                                }
+                                
+                                &:hover {
+                                    color: $linkblue;
                                 }
                             }
                             
@@ -4065,7 +4066,10 @@ footer {
                         margin-left: auto;
                         
                         @include respond-to(ynw-767){
-                            margin: 0 auto 20px auto;
+                            margin: 0 auto 20px 0;
+                        }
+                        @include respond-to(ynw-575){
+                            margin-left: 15px;
                         }
                         
                         .cs-btn {
@@ -4692,6 +4696,7 @@ footer {
         &.w-dta {
             .head {
                 margin-bottom: 0;
+                margin-top: 15px;
                 border: none;
                 padding: 0 15px;
                 justify-content: flex-start;

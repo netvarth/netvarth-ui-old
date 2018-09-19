@@ -112,6 +112,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: pass_ob
     });
@@ -187,6 +188,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
       autoFocus: true,
       data: waitlist
     });

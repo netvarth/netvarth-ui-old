@@ -3,15 +3,19 @@
     {{question.label}}
   </label>
   <ng-container [ngSwitch]="question.controlType">
-
     <ng-container *ngSwitchCase="'textbox'">
 
-    <mat-form-field class="example-full-width" *ngIf="question.type != 'checkbox'" >
+    <!-- <mat-form-field class="example-full-width" *ngIf="question.type != 'checkbox'" >
         <input matInput [formControlName]="question.key"
         [id]="question.key" [type]="question.type"
         [min]="question.min" [max]="question.max"
-        placeholder="{{question.label}}" autocomplete="off" (blur)="onFieldBlur(question)">
-    </mat-form-field>
+        placeholder="{{placeholder}}" autocomplete="off" (blur)="onFieldBlur(question)">
+    </mat-form-field> -->
+
+      <input *ngIf="question.type != 'checkbox'" class="form-control" [formControlName]="question.key"
+      [id]="question.key" [type]="question.type"
+      [min]="question.min" [max]="question.max"
+      placeholder="{{placeholder}}" autocomplete="off" (blur)="onFieldBlur(question)">
 
     <mat-slide-toggle
     [id]="question.key"

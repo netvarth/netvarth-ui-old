@@ -196,6 +196,7 @@ export class HomeComponent implements OnInit {
       const dialogRef = this.dialog.open(SignUpComponent, {
         width: '50%',
         panelClass: ['signupmainclass', cClass],
+        disableClose: true,
         data: {
           is_provider : this.checkProvider(origin)
         }
@@ -214,6 +215,7 @@ export class HomeComponent implements OnInit {
       const dialogRef = this.dialog.open(LoginComponent, {
         width: '50%',
         panelClass: ['loginmainclass', cClass],
+        disableClose: true,
         data: {
           type : origin,
           is_provider : this.checkProvider(origin)

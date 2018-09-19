@@ -434,6 +434,7 @@ export class ProviderbWizardComponent implements OnInit {
     const dialogRef = this.dialog.open(GoogleMapComponent, {
       width: '50%',
       panelClass: 'googlemainmappopup',
+      disableClose: true,
       data: {
         type : 'add',
         passloc: {'lat': this.wizard_data_holder['lat'], 'lon': this.wizard_data_holder['lon']}

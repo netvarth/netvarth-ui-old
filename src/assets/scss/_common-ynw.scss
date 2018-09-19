@@ -430,6 +430,51 @@ app-footer {
                     font-weight: 600;
                     margin-bottom: 10px;
                 }
+                
+                .refine_fieldlist {
+                    app-rating-star {
+                        .rating-outer {
+                            display: flex;
+                            align-items: center;
+
+                            .ynwstar-rating {
+                                float: none;
+                                width: 135px;
+
+                                label {
+                                    margin-bottom: 0;
+                                    cursor: pointer;
+                                    
+                                    &:before {
+                                        font-size: 1rem;
+                                    }
+                                }
+                            }
+                            .moreopt-clear {
+                                margin-left: 15px;
+                                cursor: pointer;
+                                position: relative;
+                                width: 20px;
+                                height: 20px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: .65rem;
+                                background: lighten($cc-red, 20%);
+                                color: $cc-red;
+                                @include border-radius(50px);
+
+                                &:before {
+                                    @include font-custom;
+                                    content: "";
+                                    position: absolute;
+                                    content: "\69";
+                                }
+                            }
+                        }
+                    }
+                }
+                
                 &:last-child {
                     margin: 0;
                 }
