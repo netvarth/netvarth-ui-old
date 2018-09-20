@@ -12,7 +12,7 @@ header {
                 width: 120px;
                 text-align: center;
                 margin-bottom: 15px;
-                margin-left: auto;
+                margin-left: 0;
                 margin-right: auto;
                 padding: 0;
                 
@@ -3940,6 +3940,7 @@ footer {
                     margin: 0;
                     padding: 0;
                     display: flex;
+                    flex-wrap: wrap;
                     
                     li {
                         list-style: none;
@@ -3955,6 +3956,8 @@ footer {
                             cursor: pointer;
                             font-size: .75rem;
                             padding:10px 15px;
+                            min-width: 150px;
+                            margin-bottom: 5px;
                             
                             .qtitle, .wlst {
                                 display: block;
@@ -4034,6 +4037,7 @@ footer {
                                 font-weight: 600;
                                 font-size: .75rem;
                                 @include transition(all 300ms);
+                                position: relative;
                                 
                                 @include respond-to(ynw-767){
                                     padding: 0 10px;
@@ -4381,6 +4385,9 @@ footer {
                                         flex-wrap: wrap;
                                         
                                         @include respond-to(ynw-767) {
+                                            padding-left: 45%;
+                                        }
+                                        @include respond-to(ynw-768-991) {
                                             padding-left: 45%;
                                         }
                                         
@@ -6312,8 +6319,6 @@ footer {
 
                                             .mat-input-element {
                                                 @include border-radius(0);
-                                                background: $cc-formbg;
-                                                border: 1px solid transparent;
                                                 @include font-regular;
                                                 font-size: 0.875rem;
                                                 color: $cc-darkgray;
@@ -6325,19 +6330,6 @@ footer {
                                                     @include box-shadow(0, 0, 1px, $linkblue, inset);
                                                     border: 1px solid $linkblue;
                                                     background: $white;
-                                                }
-                                            }
-
-                                            .mat-select {
-                                                height: 40px;
-                                                padding: 10px;
-                                                @include font-regular;
-                                                background: $cc-formbg;
-                                                
-                                                &.mat-select-disabled {
-                                                    .mat-select-value {
-                                                        color: $cc-darkgray;
-                                                    }
                                                 }
                                             }
                                         }

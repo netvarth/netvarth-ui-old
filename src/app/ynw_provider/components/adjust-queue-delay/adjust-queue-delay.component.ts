@@ -21,6 +21,7 @@ export class AdjustQueueDelayComponent implements OnInit {
   api_error = null;
   time = {hour: 0, minute: 0};
   default_message = '';
+  placeholder = Messages.ADJUSTDELAY_PLACEHOLDER;
 
   constructor(
     public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
@@ -46,7 +47,8 @@ export class AdjustQueueDelayComponent implements OnInit {
         queue_id: ['', Validators.compose([Validators.required])],
         delay: ['', Validators.compose([Validators.required])],
         send_message: [false],
-        message: ['', Validators.compose([Validators.required])],
+        // message: ['', Validators.compose([Validators.required])],
+        message: [''],
       });
 
       this.amForm.get('queue_id').valueChanges
@@ -72,7 +74,7 @@ export class AdjustQueueDelayComponent implements OnInit {
        this.provider_services.getProviderMessages()
        .subscribe(
          (data: any) => {
-          this.default_message = data.delay || '';
+          // this.default_message = data.delay || '';
          },
          error => {
 
@@ -136,8 +138,10 @@ export class AdjustQueueDelayComponent implements OnInit {
 
      changeCheckbox(data) {
       if (data) {
+        /*this.amForm.addControl('message',
+        new FormControl(this.default_message, Validators.compose([Validators.required])));*/
         this.amForm.addControl('message',
-        new FormControl(this.default_message, Validators.compose([Validators.required])));
+        new FormControl(this.default_message));
       } else {
         this.amForm.removeControl('message');
       }

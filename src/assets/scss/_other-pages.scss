@@ -157,6 +157,7 @@
                             }
                         }
                     }
+                    
                 }
                 
                 .innercard {
@@ -288,6 +289,48 @@
                         }
                     }
                 }
+                
+                .example-container {                    
+                    .mat-dialog-content {
+                        padding: 0;
+                        overflow: visible;
+                        
+                        .mat-input-element {
+                            width: 50%;
+
+                            @include respond-to(ynw-767) {
+                                width: 100%;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                width: 100%;
+                            }
+                        }
+                    }
+                    .mat-dialog-actions {
+                        box-shadow: none;
+                        padding: 0;
+                        margin-top: 20px;
+                        display: flex;
+                        align-items: center;
+                        
+                        button {
+                            margin-right: 15px;
+                        }
+                        
+                        .resendouter {
+                            margin-top: 0;
+                        }
+                    }
+                }
+
+                app-form-success-display {
+                    .sts-msg {
+                        &.success {
+                            margin-top: 15px;
+                        }
+                    }
+                }
+                
                 &.members-card {
                     width: 75%;
                 }

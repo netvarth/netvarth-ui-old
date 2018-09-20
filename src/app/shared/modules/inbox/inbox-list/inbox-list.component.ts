@@ -129,4 +129,20 @@ export class InboxListComponent implements OnInit, OnDestroy {
   closeMsg() {
     this.selectedMsg = -1;
   }
+  formatDateDisplay(dateStr) {
+    let retdate = '';
+    const pubDate = new Date(dateStr);
+    const obtdate = new Date(pubDate.getFullYear() + '-' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '-' + this.shared_functions.addZero(pubDate.getDate()));
+    const obtshowdate = this.shared_functions.addZero(pubDate.getDate()) + '/' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
+    const obtshowtime = this.shared_functions.addZero(pubDate.getHours()) + ':' + this.shared_functions.addZero(pubDate.getMinutes());
+    const today = new Date();
+    const todaydate = new Date(today.getFullYear() + '-' + this.shared_functions.addZero((today.getMonth() + 1)) + '-' + this.shared_functions.addZero(today.getDate()));
+
+    if (obtdate.getTime() === todaydate.getTime()) {
+      retdate = this.shared_functions.convert24HourtoAmPm(obtshowtime);
+    } else {
+      retdate = obtshowdate + ' ' + this.shared_functions.convert24HourtoAmPm(obtshowtime);
+    }
+    return retdate;
+  }
 }

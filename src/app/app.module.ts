@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { ScrollbarModule } from 'ngx-scrollbar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ServiceMeta } from './shared/services/service-meta';
@@ -116,7 +117,8 @@ import 'hammerjs';
     ConsumerCheckinHistoryListModule,
     Nl2BrPipeModule,
     TermsStaticModule,
-    PrivacyStaticModule
+    PrivacyStaticModule,
+    ScrollbarModule
   ],
   providers: [
     AuthGuardConsumer,

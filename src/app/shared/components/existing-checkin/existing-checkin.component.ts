@@ -46,7 +46,7 @@ export class ExistingCheckinComponent implements OnInit {
     this.terminologiesjson = this.data.terminologies;
     this.provider_datastorage.set('terminologies', this.terminologiesjson);
     this.checkinLabel = this.sharedfunctionObj.firstToUpper(this.sharedfunctionObj.getTerminologyTerm('waitlist'));
-    console.log('term', this.checkinLabel);
+    // console.log('term', this.checkinLabel);
     this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close(this.changeOccured);
     });

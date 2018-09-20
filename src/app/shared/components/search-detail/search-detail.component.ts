@@ -623,10 +623,10 @@ setEnvironment(bypassotherfunction?) {
       this.domain = obj.sector || '';
       this.subsector = obj.subsector || '';
       this.specialization = obj.specialization || '';
-      console.log('subsec', this.subsector);
+      // console.log('subsec', this.subsector);
       if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
         const domainobtain = this.getdomainofaSubdomain(this.subsector);
-        console.log(domainobtain);
+        // console.log(domainobtain);
         this.kw = this.subsector;
         this.kwsubdomain = this.kw;
         // console.log('domainobtained', domainobtain);
@@ -1257,7 +1257,7 @@ setEnvironment(bypassotherfunction?) {
       });
   }
   getdomainofaSubdomain(subdomname) {
-    console.log('domain data list', this.domainlist_data);
+    // console.log('domain data list', this.domainlist_data);
     if (this.domainlist_data) {
       for (let i = 0; i < this.domainlist_data.length; i++) {
         for (const subdom of this.domainlist_data[i].subDomains) {
@@ -1306,7 +1306,7 @@ setEnvironment(bypassotherfunction?) {
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
     this.searchButtonClick = false;
-    console.log('click', fieldname, fieldtype, selval);
+    // console.log('click', fieldname, fieldtype, selval);
     if (this.searchrefineresult_arr.length) {
       const sec_indx = this.check_fieldexistsinArray(fieldname, fieldtype);
       if (sec_indx === -1) {
@@ -1892,7 +1892,7 @@ setEnvironment(bypassotherfunction?) {
           const s3url = res;
           this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
             .subscribe (services => {
-              console.log(services);
+             // console.log(services);
               let servicesList: any = [];
               servicesList = services;
              for (let i = 0; i < servicesList.length; i++) {

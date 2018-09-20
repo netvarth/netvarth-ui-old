@@ -225,7 +225,8 @@
                         .mat-select {
                             padding: 10px;
                             height: 40px;
-                            background: $cc-formbg;
+                            background: $cc-inputbg;
+                            border: 1px solid $cc-formborder;
                         }
                         
                         .valfield {
@@ -408,7 +409,8 @@
 
                     .mat-input-element {
                         padding: 10px;
-                        background: $cc-formbg;
+                        background: $cc-inputbg;
+                        border: 1px solid $cc-formborder;
                         height: 40px;
 
                         &:focus {
@@ -1419,6 +1421,7 @@
             font-size: .75rem;
             cursor: pointer;
             font-weight: 500;
+            display: table;
         }
         .newuser {
             color: $cc-black;
@@ -2683,7 +2686,7 @@
             .ngb-tp-hour,
             .ngb-tp-minute {
                 input[type="text"] {
-                    background: $cc-formbg;
+                    background: $cc-inputbg;
 
                     &:focus {
                         @include box-shadow(0, 0, 1px, $linkblue, inset);
@@ -2698,6 +2701,9 @@
                         .chevron {
                             width: 16px;
                             height: 16px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
 
                             &:before {
                                 border: none;
@@ -2706,9 +2712,11 @@
                                 color: $linkblue;
                                 display: flex;
                                 transform: rotate(0);
-                                font-size: 1rem;
+                                font-size: .75rem;
                                 font-weight: 700;
                                 align-items: center;
+                                width: 16px;
+                                height: 16px;
                             }
                         }
                     }
@@ -2716,6 +2724,9 @@
                         .chevron.bottom {
                             width: 16px;
                             height: 16px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
 
                             &:before {
                                 border: none;
@@ -2724,8 +2735,10 @@
                                 color: $linkblue;
                                 display: flex;
                                 transform: rotate(0);
-                                font-size: 1rem;
+                                font-size: .75rem;
                                 font-weight: 700;
+                                width: 16px;
+                                height: 16px;
                             }
                         }
                     }

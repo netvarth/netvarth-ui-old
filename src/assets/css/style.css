@@ -1991,20 +1991,32 @@ app-footer {
     border-radius: 0;
     background-clip: padding-box;
     /* stops bg color from leaking outside the border: */
-    background: #e6e6e6;
-    border: 1px solid transparent;
+    background: white;
+    border: 1px solid #b6cdd8;
     font-family: 'Montserrat', sans-serif;
     font-weight: normal;
     font-size: 0.875rem;
-    color: #4c4c4c;
+    font-weight: 500;
+    color: #222223;
     text-overflow: ellipsis;
     padding: 10px; }
+    .form-group input[type="text"] ::-webkit-input-placeholder, .form-group input[type="email"] ::-webkit-input-placeholder, .form-group input[type="password"] ::-webkit-input-placeholder, .form-group input[type="file"] ::-webkit-input-placeholder, .form-group textarea ::-webkit-input-placeholder, .form-group .form-control ::-webkit-input-placeholder, .form-check input[type="text"] ::-webkit-input-placeholder, .form-check input[type="email"] ::-webkit-input-placeholder, .form-check input[type="password"] ::-webkit-input-placeholder, .form-check input[type="file"] ::-webkit-input-placeholder, .form-check textarea ::-webkit-input-placeholder, .form-check .form-control ::-webkit-input-placeholder {
+      color: #004059; }
+    .form-group input[type="text"] :-moz-placeholder, .form-group input[type="email"] :-moz-placeholder, .form-group input[type="password"] :-moz-placeholder, .form-group input[type="file"] :-moz-placeholder, .form-group textarea :-moz-placeholder, .form-group .form-control :-moz-placeholder, .form-check input[type="text"] :-moz-placeholder, .form-check input[type="email"] :-moz-placeholder, .form-check input[type="password"] :-moz-placeholder, .form-check input[type="file"] :-moz-placeholder, .form-check textarea :-moz-placeholder, .form-check .form-control :-moz-placeholder {
+      color: #004059; }
+    .form-group input[type="text"] ::-moz-placeholder, .form-group input[type="email"] ::-moz-placeholder, .form-group input[type="password"] ::-moz-placeholder, .form-group input[type="file"] ::-moz-placeholder, .form-group textarea ::-moz-placeholder, .form-group .form-control ::-moz-placeholder, .form-check input[type="text"] ::-moz-placeholder, .form-check input[type="email"] ::-moz-placeholder, .form-check input[type="password"] ::-moz-placeholder, .form-check input[type="file"] ::-moz-placeholder, .form-check textarea ::-moz-placeholder, .form-check .form-control ::-moz-placeholder {
+      color: #004059; }
+    .form-group input[type="text"] :-ms-input-placeholder, .form-group input[type="email"] :-ms-input-placeholder, .form-group input[type="password"] :-ms-input-placeholder, .form-group input[type="file"] :-ms-input-placeholder, .form-group textarea :-ms-input-placeholder, .form-group .form-control :-ms-input-placeholder, .form-check input[type="text"] :-ms-input-placeholder, .form-check input[type="email"] :-ms-input-placeholder, .form-check input[type="password"] :-ms-input-placeholder, .form-check input[type="file"] :-ms-input-placeholder, .form-check textarea :-ms-input-placeholder, .form-check .form-control :-ms-input-placeholder {
+      color: #004059; }
     .form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="password"]:focus, .form-group input[type="file"]:focus, .form-group textarea:focus, .form-group .form-control:focus, .form-check input[type="text"]:focus, .form-check input[type="email"]:focus, .form-check input[type="password"]:focus, .form-check input[type="file"]:focus, .form-check textarea:focus, .form-check .form-control:focus {
       -webkit-box-shadow: 0 0 1px #00aef2 inset;
       -moz-box-shadow: 0 0 1px #00aef2 inset;
       box-shadow: 0 0 1px #00aef2 inset;
       border: 1px solid #00aef2;
       background: #fff; }
+    .form-group input[type="text"]:disabled, .form-group input[type="email"]:disabled, .form-group input[type="password"]:disabled, .form-group input[type="file"]:disabled, .form-group textarea:disabled, .form-group .form-control:disabled, .form-check input[type="text"]:disabled, .form-check input[type="email"]:disabled, .form-check input[type="password"]:disabled, .form-check input[type="file"]:disabled, .form-check textarea:disabled, .form-check .form-control:disabled {
+      background: #e6e6e6;
+      border: 1px solid transparent; }
   .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"], .form-check input[type="text"], .form-check input[type="email"], .form-check input[type="password"] {
     height: 40px; }
   .form-group textarea, .form-check textarea {
@@ -2017,6 +2029,41 @@ app-footer {
     color: #f24949 !important;
     font-size: .875rem;
     font-weight: 500; }
+
+.mat-form-field {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500; }
+  .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element {
+    background: white;
+    border: 1px solid #b6cdd8;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #222223;
+    text-overflow: ellipsis;
+    padding: 10px; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element ::-webkit-input-placeholder {
+      color: #004059; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element :-moz-placeholder {
+      color: #004059; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element ::-moz-placeholder {
+      color: #004059; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element :-ms-input-placeholder {
+      color: #004059; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element:disabled {
+      background: #e6e6e6;
+      border: 1px solid transparent; }
+  .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-select {
+    height: 40px;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    background: white;
+    border: 1px solid #b6cdd8; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-select.mat-select-disabled {
+      background: #e6e6e6;
+      border: 1px solid transparent; }
+      .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-select.mat-select-disabled .mat-select-value {
+        color: #4c4c4c; }
 
 #modal-gallery-wrapper header {
   background: transparent; }
@@ -2489,6 +2536,14 @@ header {
     @media only screen and (max-width: 767px) {
       header .tc1 {
         width: auto !important; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      header .tc1 {
+        flex: 0 0 40%;
+        max-width: 40%; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      header .tc1 {
+        flex: 0 0 40%;
+        max-width: 40%; } }
     header .tc1 .topsignouter {
       color: #999999; }
       header .tc1 .topsignouter .sgn, header .tc1 .topsignouter .jn {
@@ -2510,12 +2565,11 @@ header {
       header .tc1 .isprovidertop span {
         cursor: pointer;
         color: #00aef2;
-        margin-left: auto;
+        margin-left: 5px;
         margin-top: 5px;
         border: 1px solid #00aef2;
         width: 90px;
         padding: 2px 10px;
-        display: flex;
         justify-content: center;
         -webkit-border-radius: 30px;
         border-radius: 30px;
@@ -2525,6 +2579,11 @@ header {
         -o-transition: all 300ms;
         -webkit-transition: all 300ms;
         transition: all 300ms; }
+        @media only screen and (max-width: 575px) {
+          header .tc1 .isprovidertop span {
+            display: flex;
+            margin-left: auto;
+            margin-top: 5px; } }
         header .tc1 .isprovidertop span:hover {
           background: #00aef2;
           color: #fff; }
@@ -3011,7 +3070,8 @@ header {
           .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
             padding: 10px;
             height: 40px;
-            background: #e6e6e6; }
+            background: white;
+            border: 1px solid #b6cdd8; }
           .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
           .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
           .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
@@ -3552,7 +3612,8 @@ header {
           .commonpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element,
           .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element {
             padding: 10px;
-            background: #e6e6e6;
+            background: white;
+            border: 1px solid #b6cdd8;
             height: 40px; }
             .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus,
             .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus,
@@ -5593,7 +5654,8 @@ header {
     margin-bottom: 10px;
     font-size: .75rem;
     cursor: pointer;
-    font-weight: 500; }
+    font-weight: 500;
+    display: table; }
   .loginmainclass .mat-dialog-actions .newuser {
     color: #222223;
     margin-bottom: 0;
@@ -6462,7 +6524,7 @@ header {
   padding: 0; }
 .adjustdelay .form-group fieldset .ngb-tp-hour input[type="text"],
 .adjustdelay .form-group fieldset .ngb-tp-minute input[type="text"] {
-  background: #e6e6e6; }
+  background: white; }
   .adjustdelay .form-group fieldset .ngb-tp-hour input[type="text"]:focus,
   .adjustdelay .form-group fieldset .ngb-tp-minute input[type="text"]:focus {
     -webkit-box-shadow: 0 0 1px #00aef2 inset;
@@ -6476,7 +6538,10 @@ header {
   .adjustdelay .form-group fieldset .ngb-tp-hour .btn-link:first-child .chevron,
   .adjustdelay .form-group fieldset .ngb-tp-minute .btn-link:first-child .chevron {
     width: 16px;
-    height: 16px; }
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
     .adjustdelay .form-group fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
     .adjustdelay .form-group fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
       border: none;
@@ -6485,13 +6550,18 @@ header {
       color: #00aef2;
       display: flex;
       transform: rotate(0);
-      font-size: 1rem;
+      font-size: .75rem;
       font-weight: 700;
-      align-items: center; }
+      align-items: center;
+      width: 16px;
+      height: 16px; }
   .adjustdelay .form-group fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
   .adjustdelay .form-group fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
     width: 16px;
-    height: 16px; }
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
     .adjustdelay .form-group fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
     .adjustdelay .form-group fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
       border: none;
@@ -6500,8 +6570,10 @@ header {
       color: #00aef2;
       display: flex;
       transform: rotate(0);
-      font-size: 1rem;
-      font-weight: 700; }
+      font-size: .75rem;
+      font-weight: 700;
+      width: 16px;
+      height: 16px; }
   .adjustdelay .form-group fieldset .ngb-tp-hour .btn-link:hover, .adjustdelay .form-group fieldset .ngb-tp-hour .btn-link:focus, .adjustdelay .form-group fieldset .ngb-tp-hour .btn-link:active,
   .adjustdelay .form-group fieldset .ngb-tp-minute .btn-link:hover,
   .adjustdelay .form-group fieldset .ngb-tp-minute .btn-link:focus,
@@ -6653,7 +6725,9 @@ header {
                 font-family: 'Montserrat', sans-serif;
                 font-weight: normal;
                 font-weight: 500;
-                color: #222223; }
+                color: #222223;
+                background: #e6e6e6;
+                border: 1px solid transparent; }
                 @media only screen and (max-width: 767px) {
                   .srch .sa .sa-fld .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-input-element {
                     height: 50px;
@@ -6678,7 +6752,8 @@ header {
           position: absolute;
           left: 15px;
           top: 50%;
-          margin-top: -12px; }
+          margin-top: -12px;
+          z-index: 97; }
       .srch .sa .sa-fld .sa-dm {
         width: 200px;
         cursor: pointer; }
@@ -6761,7 +6836,9 @@ header {
               font-weight: normal;
               font-weight: 500;
               font-size: 0.875rem;
-              color: #222223; }
+              color: #222223;
+              background: #e6e6e6;
+              border: 1px solid transparent; }
               @media only screen and (max-width: 767px) {
                 .srch .sa .sa-fld .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
                   height: 50px; } }
@@ -7985,7 +8062,7 @@ footer.itl-steps .sect3 {
     width: 120px;
     text-align: center;
     margin-bottom: 15px;
-    margin-left: auto;
+    margin-left: 0;
     margin-right: auto;
     padding: 0; }
     header.dashb .lgo img {
@@ -10879,7 +10956,8 @@ footer.dashb {
     .dashboard .card.w-dta .qlst ul {
       margin: 0;
       padding: 0;
-      display: flex; }
+      display: flex;
+      flex-wrap: wrap; }
       .dashboard .card.w-dta .qlst ul li {
         list-style: none;
         margin-right: 10px; }
@@ -10895,7 +10973,9 @@ footer.dashb {
           font-weight: 500;
           cursor: pointer;
           font-size: .75rem;
-          padding: 10px 15px; }
+          padding: 10px 15px;
+          min-width: 150px;
+          margin-bottom: 5px; }
           .dashboard .card.w-dta .qlst ul li .qname .qtitle, .dashboard .card.w-dta .qlst ul li .qname .wlst {
             display: block;
             line-height: 15px; }
@@ -10956,7 +11036,8 @@ footer.dashb {
             -moz-transition: all 300ms;
             -o-transition: all 300ms;
             -webkit-transition: all 300ms;
-            transition: all 300ms; }
+            transition: all 300ms;
+            position: relative; }
             @media only screen and (max-width: 767px) {
               .dashboard .card.w-dta .dash-list .ctrls ul li span {
                 padding: 0 10px;
@@ -11215,6 +11296,9 @@ footer.dashb {
             display: flex;
             flex-wrap: wrap; }
             @media only screen and (max-width: 767px) {
+              .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
+                padding-left: 45%; } }
+            @media (min-width: 768px) and (max-width: 991px) {
               .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
                 padding-left: 45%; } }
             .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span {
@@ -12517,8 +12601,6 @@ footer.dashb {
                   border-radius: 0;
                   background-clip: padding-box;
                   /* stops bg color from leaking outside the border: */
-                  background: #e6e6e6;
-                  border: 1px solid transparent;
                   font-family: 'Montserrat', sans-serif;
                   font-weight: normal;
                   font-size: 0.875rem;
@@ -12532,14 +12614,6 @@ footer.dashb {
                     box-shadow: 0 0 1px #00aef2 inset;
                     border: 1px solid #00aef2;
                     background: #fff; }
-                .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .paytm-det .form-group mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-select, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .form-group mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-select, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-select {
-                  height: 40px;
-                  padding: 10px;
-                  font-family: 'Montserrat', sans-serif;
-                  font-weight: normal;
-                  background: #e6e6e6; }
-                  .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .paytm-det .form-group mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-select.mat-select-disabled .mat-select-value, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .form-group mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-select.mat-select-disabled .mat-select-value, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field .mat-input-wrapper .mat-input-flex .mat-form-field-infix .mat-select.mat-select-disabled .mat-select-value {
-                    color: #4c4c4c; }
         .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .paytm-det .form-group app-field-error-display .sts-msg, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .form-group app-field-error-display .sts-msg, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group app-field-error-display .sts-msg {
           font-weight: 500;
           font-size: .625rem;
@@ -13057,6 +13131,12 @@ header.consumer {
         @media (min-width: 768px) and (max-width: 991px) {
           header.consumer .tp-1 .tp-l.lgo {
             padding-top: 0; } }
+        @media (min-width: 992px) and (max-width: 1199px) {
+          header.consumer .tp-1 .tp-l.lgo {
+            align-self: flex-end; } }
+        @media only screen and (min-width: 1200px) {
+          header.consumer .tp-1 .tp-l.lgo {
+            align-self: flex-end; } }
     header.consumer .tp-1 .tp-r {
       flex-grow: 1; }
       header.consumer .tp-1 .tp-r .moreOptionsOverlay {
@@ -13079,7 +13159,7 @@ header.consumer {
           header.consumer .tp-1 .tp-r .tc1 {
             height: 70px; } }
         header.consumer .tp-1 .tp-r .tc1 .isprovidertop {
-          margin-top: 5px; }
+          margin-top: 8px; }
         header.consumer .tp-1 .tp-r .tc1 .topsignouter {
           display: flex;
           align-items: center;
@@ -13249,7 +13329,9 @@ header.consumer {
                   font-family: 'Montserrat', sans-serif;
                   font-weight: normal;
                   font-weight: 500;
-                  color: #222223; }
+                  color: #222223;
+                  background: #e6e6e6;
+                  border: 1px solid transparent; }
                   @media only screen and (max-width: 767px) {
                     header.consumer .tp-1 .tp-r .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-input-infix .mat-input-element {
                       height: 50px;
@@ -13274,7 +13356,8 @@ header.consumer {
             position: absolute;
             left: 15px;
             top: 50%;
-            margin-top: -12px; }
+            margin-top: -12px;
+            z-index: 97; }
         header.consumer .tp-1 .tp-r .tp-srch .sa-dm {
           width: 200px;
           cursor: pointer; }
@@ -13351,7 +13434,10 @@ header.consumer {
                 font-weight: normal;
                 font-weight: 500;
                 font-size: 0.875rem;
-                color: #222223; }
+                color: #222223;
+                background: #e6e6e6;
+                border: 1px solid transparent;
+                margin-top: 0px; }
                 @media only screen and (max-width: 767px) {
                   header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
                     height: 50px; } }
@@ -13634,10 +13720,14 @@ header.consumer {
                 display: block;
                 font-family: 'Montserrat', sans-serif;
                 font-weight: normal; }
-                .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .mat-form-field .mat-select {
-                  font-family: 'Montserrat', sans-serif;
-                  font-weight: normal;
-                  font-weight: 500; }
+                .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix {
+                  padding: 0px; }
+                  .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-select {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: normal;
+                    font-weight: 500; }
+                .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .mat-form-field .mat-input-wrapper .mat-input-underline {
+                  display: none; }
               .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body app-rating-star .rating-outer {
                 display: flex;
                 align-items: center; }
@@ -13771,12 +13861,12 @@ header.consumer {
             padding: 0; }
             .content .c-outer .c-body .ct2 .ct-r .fltr .search_sort_display .mat-form-field .mat-form-field-wrapper .mat-input-flex .mat-input-infix {
               padding: 0;
-              border: none;
-              padding: 10px;
               border: 1px solid #999999; }
               .content .c-outer .c-body .ct2 .ct-r .fltr .search_sort_display .mat-form-field .mat-form-field-wrapper .mat-input-flex .mat-input-infix .mat-select {
                 font-family: 'Montserrat', sans-serif;
-                font-weight: 500; }
+                font-weight: 500;
+                border: none;
+                background: transparent; }
                 .content .c-outer .c-body .ct2 .ct-r .fltr .search_sort_display .mat-form-field .mat-form-field-wrapper .mat-input-flex .mat-input-infix .mat-select .mat-select-value {
                   overflow: unset; }
             .content .c-outer .c-body .ct2 .ct-r .fltr .search_sort_display .mat-form-field .mat-form-field-wrapper .mat-input-underline {
@@ -14031,7 +14121,7 @@ header.consumer {
                       border-radius: 20px;
                       background-clip: padding-box;
                       /* stops bg color from leaking outside the border: */
-                      cursor: default;
+                      cursor: pointer;
                       margin-bottom: 5px; }
                       .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .services ul li.viewall {
                         border: none; }
@@ -16245,6 +16335,29 @@ header.consumer {
           @media only screen and (min-width: 1200px) {
             .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show {
               display: none; } }
+    .content.see-pages .outer-card .card .example-container .mat-dialog-content {
+      padding: 0;
+      overflow: visible; }
+      .content.see-pages .outer-card .card .example-container .mat-dialog-content .mat-input-element {
+        width: 50%; }
+        @media only screen and (max-width: 767px) {
+          .content.see-pages .outer-card .card .example-container .mat-dialog-content .mat-input-element {
+            width: 100%; } }
+        @media (min-width: 768px) and (max-width: 991px) {
+          .content.see-pages .outer-card .card .example-container .mat-dialog-content .mat-input-element {
+            width: 100%; } }
+    .content.see-pages .outer-card .card .example-container .mat-dialog-actions {
+      box-shadow: none;
+      padding: 0;
+      margin-top: 20px;
+      display: flex;
+      align-items: center; }
+      .content.see-pages .outer-card .card .example-container .mat-dialog-actions button {
+        margin-right: 15px; }
+      .content.see-pages .outer-card .card .example-container .mat-dialog-actions .resendouter {
+        margin-top: 0; }
+    .content.see-pages .outer-card .card app-form-success-display .sts-msg.success {
+      margin-top: 15px; }
     .content.see-pages .outer-card .card.members-card {
       width: 75%; }
   .content.see-pages .outer-card .right-menu {

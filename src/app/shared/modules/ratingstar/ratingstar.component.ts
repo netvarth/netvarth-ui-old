@@ -27,7 +27,7 @@ export class RatingStarComponent implements OnInit, OnChanges {
   curratval: any;
   showDecimalVals = false;
   ngOnInit() {
-    console.log('includeded from', this.includedFrom, 'passed', this.ratingval);
+    // console.log('includeded from', this.includedFrom, 'passed', this.ratingval);
     this.curratval = this.ratingval || '';
     this.curratval = this.curratval.toString();
     if (this.includedFrom === 'refined' || this.includedFrom === 'moreoptions') {

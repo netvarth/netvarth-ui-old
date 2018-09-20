@@ -34,6 +34,12 @@ header {
                     @include respond-to(ynw-768-991) {
                         padding-top: 0;
                     }
+                    @include respond-to(ynw-992-1199) {
+                        align-self: flex-end;
+                    }
+                    @include respond-to(ynw-1200) {
+                        align-self: flex-end;
+                    }
                 }
             }
 
@@ -62,7 +68,7 @@ header {
                     }
 
                     .isprovidertop {
-                        margin-top: 5px;
+                        margin-top: 8px;
                     }
                     
                     .topsignouter {
@@ -266,6 +272,8 @@ header {
                                         @include font-regular;
                                         font-weight: 500;
                                         color: $cc-black;
+                                        background: $cc-formbg;
+                                        border: 1px solid transparent;
 
                                         @include respond-to(ynw-767) {
                                             height: $input-h;
@@ -304,6 +312,7 @@ header {
                             left: 15px;
                             top: 50%;
                             margin-top: -12px;
+                            z-index: 97;
                         }
                     }
 
@@ -403,6 +412,9 @@ header {
                                     font-weight: 500;
                                     font-size: 0.875rem;
                                     color: $cc-black;
+                                    background: $cc-formbg;
+                                    border: 1px solid transparent;
+                                    margin-top: 0px;
 
                                     @include respond-to(ynw-767) {
                                         height: $input-h;
@@ -769,9 +781,20 @@ header {
                                         display: block;
                                         @include font-regular;
                                         
-                                        .mat-select {
-                                            @include font-regular;
-                                            font-weight: 500;
+                                        .mat-input-wrapper {
+                                            .mat-input-flex {
+                                                .mat-input-infix {
+                                                    padding: 0px;
+                                                    
+                                                    .mat-select {
+                                                        @include font-regular;
+                                                        font-weight: 500;
+                                                    }
+                                                }
+                                            }
+                                            .mat-input-underline {
+                                                display: none;
+                                            }
                                         }
                                     }
                                     
@@ -965,13 +988,13 @@ header {
                                     .mat-input-flex {
                                         .mat-input-infix {
                                             padding: 0;
-                                            border: none;
-                                            padding: 10px;
                                             border: 1px solid $cc-mediumgray;
 
                                             .mat-select {
                                                 @include font-medium;
-
+                                                border: none;
+                                                background: transparent;
+                                                
                                                 .mat-select-value {
                                                     overflow: unset;
                                                 }
@@ -1305,7 +1328,7 @@ header {
                                             font-size: .75rem;
                                             padding: 0 5px;
                                             @include border-radius(20px);
-                                            cursor: default;
+                                            cursor: pointer;
                                             margin-bottom: 5px;
                                             
                                             &.viewall {

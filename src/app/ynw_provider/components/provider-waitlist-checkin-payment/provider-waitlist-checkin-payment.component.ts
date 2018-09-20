@@ -68,9 +68,9 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.dialogRef.backdropClick().subscribe(result => {
+    /*this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close();
-    });
+    });*/
   }
 
   makePayment() {

@@ -43,20 +43,26 @@
                               <ng-container *ngIf="waitlist.calculationMode != 'NoCalc' && waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
                               waitlist.waitlistStatus == 'arrived')">
 
-                                  <div class="lt0" *ngIf="!waitlist.future">
-                                      Estimated Time <span class="time now">
-                                        {{waitlist.estimated_time }}</span>
+                                  <div class="lt0" *ngIf="waitlist.estimated_date==''">
+                                      {{waitlist.estimated_caption}} <span class="time now">
+                                        {{waitlist.estimated_time}}</span>
                                   </div>
-                                  <div class="lt0" *ngIf="waitlist.future">
+                                  <div class="lt0" *ngIf="waitlist.estimated_date!=''">
+                                    {{waitlist.estimated_caption}} <span class="time now">
+                                   <span *ngIf="waitlist.estimated_date_type == 'date'">{{waitlist.estimated_date | date: dateFormatSp }}</span>
+                                   <span *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}}, </span>
+                                    {{waitlist.estimated_time}}</span>
+                                  </div>
+                                  <!-- <div class="lt0" *ngIf="waitlist.future">
                                       Check-In Time  <span class="time now">
                                           {{waitlist.date | date: dateFormatSp }}
                                           {{waitlist.estimated_time | date: timeFormat}}
                                         </span>
-                                  </div>
+                                  </div> -->
 
                               </ng-container>
 
-                              <ng-container  *ngIf="waitlist.calculationMode != 'NoCalc' && !waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
+                              <!-- <ng-container  *ngIf="waitlist.calculationMode != 'NoCalc' && !waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
                               waitlist.waitlistStatus == 'arrived')">
                                   <div class="lt0" *ngIf="waitlist.future">
                                       Check-In Time  <span class="time now">
@@ -69,7 +75,7 @@
                                           Now
                                         </span>
                                   </div>
-                              </ng-container>
+                              </ng-container> -->
 
                               <div class="lt0" *ngIf="waitlist.token">
                                   Token No <span class="token">{{waitlist.token}}</span>

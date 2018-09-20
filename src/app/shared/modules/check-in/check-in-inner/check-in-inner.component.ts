@@ -591,7 +591,7 @@ export class CheckInInnerComponent implements OnInit {
       this.addCheckInConsumer(post_Data);
     }
 
-    console.log('postdata', JSON.stringify(post_Data));
+    // console.log('postdata', JSON.stringify(post_Data));
   }
 
   addCheckInConsumer(post_Data) {

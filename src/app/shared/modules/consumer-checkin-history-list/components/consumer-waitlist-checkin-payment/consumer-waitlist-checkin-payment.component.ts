@@ -63,9 +63,9 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.dialogRef.backdropClick().subscribe(result => {
+    /*this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close();
-    });
+    });*/
   }
 
   getPaymentModes() {

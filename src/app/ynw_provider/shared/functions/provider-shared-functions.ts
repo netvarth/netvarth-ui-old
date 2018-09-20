@@ -46,6 +46,7 @@ export class ProviderSharedFuctions {
         const dialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
+            disableClose: true,
             autoFocus: true,
             data: {
               queue : obj,

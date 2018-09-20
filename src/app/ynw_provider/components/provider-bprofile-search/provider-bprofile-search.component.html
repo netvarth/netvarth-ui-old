@@ -72,7 +72,8 @@
                         <div class="adwds w-dta" *ngIf="normal_adworkds_active && adwordsmaxcount > 0">
                             <h2>Adwords</h2>
                             <div class="ad-tble">
-                                <div class="ad-l">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
+                                <div class="ad-l" *ngIf="adwords_maxremaining>0">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
+                                <div class="ad-l" *ngIf="adwords_maxremaining==0">You have {{adword_list.length}} adword(s)</div>
                                 <div class="ad-r ml-auto">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre" *ngIf="adwords_remaining>0"><a routerLink="/provider/settings/license">+{{adwords_remaining}} more</a></span>
                                     <span  (click)="addAdwords()" class="cs-btn bt8" *ngIf="adwords_maxremaining>0">Add Adwords</span>

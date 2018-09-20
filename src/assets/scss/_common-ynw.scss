@@ -97,18 +97,28 @@ app-footer {
     
     input[type="text"], input[type="email"], input[type="password"], input[type="file"], textarea, .form-control {
         @include border-radius(0);
-        background: $cc-formbg;
-        border: 1px solid transparent;
+        background: $cc-inputbg;
+        border: 1px solid $cc-formborder;
         @include font-regular;
         font-size: 0.875rem;
-        color: $cc-darkgray;
+        font-weight: 500;
+        color: $linkblack;
         text-overflow: ellipsis;
         padding:10px;
+        
+        @include placeholder {
+            color: darken($linkblue, 30%);
+        }
         
         &:focus {
             @include box-shadow(0, 0, 1px, $linkblue, inset);
             border: 1px solid $linkblue;
             background: $white;
+        }
+        
+        &:disabled {
+            background: $cc-formbg;
+            border: 1px solid transparent;
         }
     }
     input[type="text"], input[type="email"], input[type="password"] {
@@ -128,6 +138,53 @@ app-footer {
         color: $cc-red !important;
         font-size: .875rem;
         font-weight: 500;
+    }
+}
+
+// Form BG/Border 
+.mat-form-field {
+    @include font-medium;
+    
+    .mat-input-wrapper {
+        .mat-input-flex {
+            .mat-input-infix {
+                .mat-input-element {
+                    background: $cc-inputbg;
+                    border: 1px solid $cc-formborder;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                    color: $linkblack;
+                    text-overflow: ellipsis;
+                    padding:10px;
+                    
+                    @include placeholder {
+                        color: darken($linkblue, 30%);
+                    }
+                    
+                    &:disabled {
+                        background: $cc-formbg;
+                        border: 1px solid transparent;
+                    }
+                }
+                
+                .mat-select {
+                    height: 40px;
+                    padding: 10px;
+                    @include font-regular;
+                    background: $cc-inputbg;
+                    border: 1px solid $cc-formborder;
+                    
+                    &.mat-select-disabled {
+                        background: $cc-formbg;
+                        border: 1px solid transparent;
+
+                        .mat-select-value {
+                            color: $cc-darkgray;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

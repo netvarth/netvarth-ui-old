@@ -883,6 +883,35 @@ addZero(i) {
   }
   return i;
 }
+convert24HourtoAmPm(time, secreq?) {
+  const timesp = time.split(':');
+  let hr = parseInt(timesp[0], 10);
+  const min = parseInt(timesp[1], 10);
+  const sec = parseInt(timesp[2], 10);
+  let ampm = '';
+  let retstr = '';
+  // console.log('time', hr, min);
+
+  if (hr >= 12) {
+    hr = hr - 12;
+    if (hr === 0) {
+      hr = 12;
+      ampm = 'PM';
+    } else if (hr < 0) {
+      ampm = 'AM';
+    } else {
+      ampm = 'PM';
+    }
+  } else {
+    ampm = 'AM';
+  }
+  retstr = this.addZero(hr) + ':' + this.addZero(min);
+  if (secreq) {
+    retstr += ':' + sec;
+  }
+  retstr += ' ' + ampm;
+  return retstr;
+}
 
 doCancelWaitlist(waitlist) {
   return new Promise((resolve, reject) => {

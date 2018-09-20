@@ -139,10 +139,12 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
   }
 
   viewBill(checkin, bill_data) {
+    console.log('viewbill');
     const dialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
       disableClose: true,
+      autoFocus: true,
       data: {
         checkin: checkin,
         bill_data: bill_data
@@ -161,6 +163,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
+      autoFocus: true,
       data: {
         checkin: checkin,
         bill_data: bill_data

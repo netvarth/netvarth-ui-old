@@ -94,9 +94,9 @@ export class ViewBillComponent implements OnInit, OnChanges {
     this.getPaymentModes();
     this.bill_load_complete = 1;
 
-    this.dialogRef.backdropClick().subscribe(result => {
+    /*this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close(this.close_msg);
-    });
+    });*/
   }
   getGstandDate() {
     if (this.bill_data.gstNumber) {

@@ -129,6 +129,8 @@
                                 @include font-regular;
                                 font-weight: 500;
                                 color: $cc-black;
+                                background: $cc-formbg;
+                                border: 1px solid transparent;
                                 
                                 @include respond-to(ynw-767) {
                                     height: $input-h;
@@ -162,6 +164,7 @@
                     left: 15px;
                     top: 50%;
                     margin-top: -12px;
+                    z-index: 97;
                 }
             }
             .sa-dm {
@@ -263,6 +266,8 @@
                             font-weight: 500;
                             font-size: 0.875rem;
                             color: $cc-black;
+                            background: $cc-formbg;
+                            border: 1px solid transparent;
                             
                             @include respond-to(ynw-767) {
                                 height: $input-h;

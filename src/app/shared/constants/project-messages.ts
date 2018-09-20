@@ -194,5 +194,7 @@ export const Messages = {
   'COMM_TOOPTIP' : 'Send messages to your provider here',
   'REF_TOOPTIP' : 'Show/hide refined search',
   'CUSTSIGN_TOOPTIP' : 'Consumers click here to Login/Join Jaldee.com',
-  'PROVSIGN_TOOPTIP' : 'Providers please click here to Register/Login to Jaldee.com'
+  'PROVSIGN_TOOPTIP' : 'Providers please click here to Register/Login to Jaldee.com',
+
+  'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here'
 };
