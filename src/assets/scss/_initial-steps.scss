@@ -393,7 +393,13 @@ footer {
                             font-size: .875rem;
                             display: flex;
                             align-items: center;
-                            height: 40px;
+                            padding:10px;
+                            
+                            @include respond-to(ynw-767) {
+                                flex-direction: column;
+                                align-items: flex-start;
+                                height: auto;
+                            }
 
                             .day {
                                 @include font-bold;
@@ -430,7 +436,13 @@ footer {
                             display: flex;
                             align-items: center;
                             @include transition(all 300ms);
-                            height: 40px;
+                            padding: 10px;
+                            
+                            @include respond-to(ynw-767) {
+                                position: relative;
+                                align-items: flex-start;
+                                flex-direction: column;
+                            }
                             
                             .day {
                                 @include font-bold;
@@ -440,6 +452,11 @@ footer {
                                 font-size: .875rem;
                                 width: 250px;
                                 margin: 0;
+                                
+                                @include respond-to(ynw-767) {
+                                    flex-grow: 1;
+                                }
+                                
                             }
                             .time {
                                 font-weight: 500;
@@ -452,6 +469,11 @@ footer {
                             .mat-icon-button {
                                 outline: none;
                                 color: $linkblue;
+                                
+                                @include respond-to(ynw-767) {
+                                    position: absolute;
+                                    right: 0;
+                                }
                             }
                             
                             &:hover {
@@ -472,7 +494,7 @@ footer {
                         padding: 20px;
                         
                         .sch_sel_head {
-                            font-size: 1.125rem;
+                            font-size: 1rem;
                             font-weight: 600;
                             margin-bottom: 15px;
                         }
@@ -482,9 +504,17 @@ footer {
                             margin-bottom: 20px;
                             height: auto;
                             
+                            @include respond-to(ynw-767) {
+                                margin-bottom: 5px;
+                            }
+                            
                             .chk-margin {
                                 margin-right: 15px;
                                 margin-left: 0px;
+                                
+                                @include respond-to(ynw-767) {
+                                    margin-bottom: 15px;
+                                }
                                 
                                 &:nth-child(1) {
                                     display: none;
@@ -530,17 +560,24 @@ footer {
                                                 .chevron {
                                                     width: 16px;
                                                     height: 16px;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
 
                                                     &:before {
                                                         border: none;
                                                         content: "\66";
                                                         @include font-custom;
                                                         color: $linkblue;
-                                                        display: flex;
                                                         transform: rotate(0);
-                                                        font-size: 1rem;
+                                                        font-size: .75rem;
                                                         font-weight: 700;
                                                         align-items: center;
+                                                        width: 16px;
+                                                        height: 16px;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
                                                     }
                                                 }
                                             }
@@ -548,16 +585,23 @@ footer {
                                                 .chevron.bottom {
                                                     width: 16px;
                                                     height: 16px;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
 
                                                     &:before {
                                                         border: none;
                                                         content: "\72";
                                                         @include font-custom;
                                                         color: $linkblue;
-                                                        display: flex;
                                                         transform: rotate(0);
-                                                        font-size: 1rem;
+                                                        font-size: .75rem;
                                                         font-weight: 700;
+                                                        width: 16px;
+                                                        height: 16px;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
                                                     }
                                                 }
                                             }

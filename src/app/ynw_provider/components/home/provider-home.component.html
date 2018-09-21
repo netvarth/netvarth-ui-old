@@ -79,7 +79,8 @@
                   <mat-accordion >
                     <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
                       <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                          <span (click)="toggleFilter()"><i class="icon-filter-one"  [matTooltipClass] = "tooltipcls" [matTooltip]="filtericonTooltip"></i></span>
+                          <span *ngIf="open_filter === true" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                          <span *ngIf="open_filter === false" (click)="toggleFilter()"><i class="icon-filter-one"  [matTooltipClass] = "tooltipcls" [matTooltip]="filtericonTooltip"></i></span>
                       </mat-expansion-panel-header>
 
                       <div class="form-group first_name">
@@ -161,7 +162,7 @@
                       </div>
 
                       <div class="form-group waitlist_status" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">Waitlist Status</label>
+                        <label class="col-form-label" for="displayName">Check-In Status</label>
                         <!-- <mat-chip-list>
                           <mat-chip
                           color="{{(filter.waitlist_status === 'all') ? 'primary' : ''}}"
@@ -249,11 +250,11 @@
                           <tbody>
                               <tr  *ngFor="let checkin of check_in_filtered_list">
                                   <td class="online">
-                                    <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'"></span>
+                                    <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'" [matTooltipClass] = "tooltipcls" [matTooltip]="cloudTooltip"></span>
                                   </td>
                                   <td data-title="Seq No" class="seq pointer-cursor"
                                   *ngIf="time_type ==1 && settings.showTokenId" (click)="goCheckinDetail(checkin)">
-                                    <ng-container  *ngIf="checkin.token">#{{checkin.token}}</ng-container>
+                                    <ng-container  *ngIf="checkin.token">{{checkin.token}}</ng-container>
                                   </td>
                                   <td data-title="Date" class="date pointer-cursor"
                                   *ngIf="time_type !=1" (click)="goCheckinDetail(checkin)">

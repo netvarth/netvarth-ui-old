@@ -11,6 +11,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../shared/constants/project-messages';
 
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 
@@ -25,6 +26,9 @@ export class WaitlistComponent implements OnInit {
   provider_id = null;
   waitlist_id = null;
   communication_history: any =  [];
+
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
 
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 

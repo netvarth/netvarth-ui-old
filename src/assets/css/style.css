@@ -2565,11 +2565,11 @@ header {
       header .tc1 .isprovidertop span {
         cursor: pointer;
         color: #00aef2;
-        margin-left: 5px;
+        margin-left: 2px;
         margin-top: 5px;
         border: 1px solid #00aef2;
         width: 90px;
-        padding: 2px 10px;
+        padding: 2px 5px;
         justify-content: center;
         -webkit-border-radius: 30px;
         border-radius: 30px;
@@ -5469,7 +5469,7 @@ header {
     .forgotpasswordmainclass .mat-dialog-actions .resendouter,
     .commonpopupmainclass .mat-dialog-actions .resendouter,
     .googlemainmappopup .mat-dialog-actions .resendouter, .outer-card .mat-dialog-actions .resendouter, .consumerpopupmainclass .mat-dialog-actions .resendouter {
-      margin-top: 15px; }
+      /*margin-top: 15px;*/ }
       .signupmainclass .mat-dialog-actions .resendouter span,
       .loginmainclass .mat-dialog-actions .resendouter span,
       .moreoptionsmainclass .mat-dialog-actions .resendouter span,
@@ -5477,7 +5477,7 @@ header {
       .commonpopupmainclass .mat-dialog-actions .resendouter span,
       .googlemainmappopup .mat-dialog-actions .resendouter span, .outer-card .mat-dialog-actions .resendouter span, .consumerpopupmainclass .mat-dialog-actions .resendouter span {
         display: table;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         color: #00aef2;
         font-size: .75rem;
         cursor: pointer; }
@@ -7859,7 +7859,12 @@ footer.itl-steps .sect3 {
           font-size: .875rem;
           display: flex;
           align-items: center;
-          height: 40px; }
+          padding: 10px; }
+          @media only screen and (max-width: 767px) {
+            .is-bx.step3 .content .flds .form-group .whrs li {
+              flex-direction: column;
+              align-items: flex-start;
+              height: auto; } }
           .is-bx.step3 .content .flds .form-group .whrs li .day {
             font-family: 'Montserrat', sans-serif;
             font-weight: bold;
@@ -7889,7 +7894,12 @@ footer.itl-steps .sect3 {
           -o-transition: all 300ms;
           -webkit-transition: all 300ms;
           transition: all 300ms;
-          height: 40px; }
+          padding: 10px; }
+          @media only screen and (max-width: 767px) {
+            .is-bx.step3 .content .flds .schedule_outer .whrs li {
+              position: relative;
+              align-items: flex-start;
+              flex-direction: column; } }
           .is-bx.step3 .content .flds .schedule_outer .whrs li .day {
             font-family: 'Montserrat', sans-serif;
             font-weight: bold;
@@ -7899,6 +7909,9 @@ footer.itl-steps .sect3 {
             font-size: .875rem;
             width: 250px;
             margin: 0; }
+            @media only screen and (max-width: 767px) {
+              .is-bx.step3 .content .flds .schedule_outer .whrs li .day {
+                flex-grow: 1; } }
           .is-bx.step3 .content .flds .schedule_outer .whrs li .time {
             font-weight: 500;
             font-style: normal;
@@ -7909,6 +7922,10 @@ footer.itl-steps .sect3 {
           .is-bx.step3 .content .flds .schedule_outer .whrs li .mat-icon-button {
             outline: none;
             color: #00aef2; }
+            @media only screen and (max-width: 767px) {
+              .is-bx.step3 .content .flds .schedule_outer .whrs li .mat-icon-button {
+                position: absolute;
+                right: 0; } }
           .is-bx.step3 .content .flds .schedule_outer .whrs li:hover {
             background: #f8f8f8; }
       .is-bx.step3 .content .flds .schedule_outer .bt3 {
@@ -7919,7 +7936,7 @@ footer.itl-steps .sect3 {
         background: #f8f8f8;
         padding: 20px; }
         .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .sch_sel_head {
-          font-size: 1.125rem;
+          font-size: 1rem;
           font-weight: 600;
           margin-bottom: 15px; }
         .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section {
@@ -7927,12 +7944,18 @@ footer.itl-steps .sect3 {
           flex-wrap: wrap;
           margin-bottom: 20px;
           height: auto; }
+          @media only screen and (max-width: 767px) {
+            .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section {
+              margin-bottom: 5px; } }
           .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin {
             margin-right: 15px;
             margin-left: 0px;
             /*&:last-child {
                 margin: 0;
             }*/ }
+            @media only screen and (max-width: 767px) {
+              .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin {
+                margin-bottom: 15px; } }
             .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin:nth-child(1) {
               display: none; }
             .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin .mat-checkbox-layout {
@@ -7968,7 +7991,10 @@ footer.itl-steps .sect3 {
               .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron,
               .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
                 width: 16px;
-                height: 16px; }
+                height: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center; }
                 .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
                 .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before,
                 .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
@@ -7976,16 +8002,23 @@ footer.itl-steps .sect3 {
                   content: "\66";
                   font-family: "custom-ynw" !important;
                   color: #00aef2;
-                  display: flex;
                   transform: rotate(0);
-                  font-size: 1rem;
+                  font-size: .75rem;
                   font-weight: 700;
-                  align-items: center; }
+                  align-items: center;
+                  width: 16px;
+                  height: 16px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center; }
               .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
               .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom,
               .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
                 width: 16px;
-                height: 16px; }
+                height: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center; }
                 .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
                 .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before,
                 .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
@@ -7993,10 +8026,14 @@ footer.itl-steps .sect3 {
                   content: "\72";
                   font-family: "custom-ynw" !important;
                   color: #00aef2;
-                  display: flex;
                   transform: rotate(0);
-                  font-size: 1rem;
-                  font-weight: 700; }
+                  font-size: .75rem;
+                  font-weight: 700;
+                  width: 16px;
+                  height: 16px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center; }
               .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active,
               .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover,
               .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus,
@@ -11527,15 +11564,18 @@ footer.dashb {
 
 .dashboard .customers.w-dta .head {
   margin-bottom: 0;
-  margin-top: 15px;
+  margin-top: 10px;
   border: none;
+  height: auto;
   padding: 0 15px;
   justify-content: flex-start; }
   .dashboard .customers.w-dta .head .cust_count {
     font-weight: 500; }
-.dashboard .customers.w-dta .dash-list .d-tbl .table thead tr th, .dashboard .customers.w-dta .dash-list .d-tbl .table thead tr td, .dashboard .customers.w-dta .dash-list .d-tbl .table tbody tr th, .dashboard .customers.w-dta .dash-list .d-tbl .table tbody tr td {
-  padding: .75rem;
-  font-weight: 500; }
+.dashboard .customers.w-dta .dash-list {
+  margin-top: 10px; }
+  .dashboard .customers.w-dta .dash-list .d-tbl .table thead tr th, .dashboard .customers.w-dta .dash-list .d-tbl .table thead tr td, .dashboard .customers.w-dta .dash-list .d-tbl .table tbody tr th, .dashboard .customers.w-dta .dash-list .d-tbl .table tbody tr td {
+    padding: .75rem;
+    font-weight: 500; }
 
 .content.settings .set-otr {
   display: flex;
@@ -12711,7 +12751,7 @@ footer.dashb {
     .content .card .copy .inbox-table li {
       list-style: none;
       font-size: .875rem;
-      border-bottom: 2px solid #fff; }
+      border-bottom: 1px solid #e6e6e6; }
       .content .card .copy .inbox-table li .outer {
         display: flex; }
         @media only screen and (max-width: 767px) {
@@ -12738,19 +12778,19 @@ footer.dashb {
               }
           }*/ }
           .content .card .copy .inbox-table li .outer .th.th0, .content .card .copy .inbox-table li .outer .th.td0, .content .card .copy .inbox-table li .outer .td.th0, .content .card .copy .inbox-table li .outer .td.td0 {
-            width: 5%;
+            width: 6%;
             flex-grow: 0; }
           .content .card .copy .inbox-table li .outer .th.th1, .content .card .copy .inbox-table li .outer .th.td1, .content .card .copy .inbox-table li .outer .td.th1, .content .card .copy .inbox-table li .outer .td.td1 {
-            width: 10%;
-            flex-grow: 0; }
-          .content .card .copy .inbox-table li .outer .th.th2, .content .card .copy .inbox-table li .outer .th.td2, .content .card .copy .inbox-table li .outer .td.th2, .content .card .copy .inbox-table li .outer .td.td2 {
             width: 20%;
             flex-grow: 0; }
+          .content .card .copy .inbox-table li .outer .th.th2, .content .card .copy .inbox-table li .outer .th.td2, .content .card .copy .inbox-table li .outer .td.th2, .content .card .copy .inbox-table li .outer .td.td2 {
+            width: 25%;
+            flex-grow: 0; }
           .content .card .copy .inbox-table li .outer .th.th3, .content .card .copy .inbox-table li .outer .th.td3, .content .card .copy .inbox-table li .outer .td.th3, .content .card .copy .inbox-table li .outer .td.td3 {
-            width: 15%;
+            width: 24%;
             flex-grow: 0; }
           .content .card .copy .inbox-table li .outer .th.th4, .content .card .copy .inbox-table li .outer .th.td4, .content .card .copy .inbox-table li .outer .td.th4, .content .card .copy .inbox-table li .outer .td.td4 {
-            width: 35%;
+            width: 25%;
             flex-grow: 0; }
         .content .card .copy .inbox-table li .outer .td {
           font-weight: 500;
@@ -12773,10 +12813,23 @@ footer.dashb {
             @media only screen and (max-width: 767px) {
               .content .card .copy .inbox-table li .outer .td.td0 {
                 text-align: left; } }
-            .content .card .copy .inbox-table li .outer .td.td0 .icon-received {
-              color: #00cc96; }
+            .content .card .copy .inbox-table li .outer .td.td0 .icon-received, .content .card .copy .inbox-table li .outer .td.td0 .icon-sent {
+              color: #00cc96;
+              width: 40px;
+              height: 24px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 2px solid #00cc96;
+              -webkit-border-radius: 30px;
+              border-radius: 30px;
+              background-clip: padding-box;
+              /* stops bg color from leaking outside the border: */
+              opacity: .9;
+              font-size: 1.2rem; }
             .content .card .copy .inbox-table li .outer .td.td0 .icon-sent {
-              color: #00aef2; }
+              color: #00aef2;
+              border-color: #00aef2; }
       .content .card .copy .inbox-table li .details, .content .card .copy .inbox-table li .actions {
         padding: 15px; }
         .content .card .copy .inbox-table li .details .action, .content .card .copy .inbox-table li .actions .action {
@@ -12869,9 +12922,14 @@ footer.dashb {
             align-items: center; }
           .content .card .copy .inbox-table li .actions .icon-delete:hover {
             color: #f24949; }
-      @media only screen and (max-width: 767px) {
-        .content .card .copy .inbox-table li.tth {
-          display: none; } }
+      .content .card .copy .inbox-table li.tth {
+        position: relative;
+        -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05) ;
+        -moz-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05) ;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05) ; }
+        @media only screen and (max-width: 767px) {
+          .content .card .copy .inbox-table li.tth {
+            display: none; } }
       .content .card .copy .inbox-table li.ttd {
         -moz-transition: all 300ms;
         -o-transition: all 300ms;
@@ -12919,7 +12977,9 @@ footer.dashb {
         .content .card .copy .inbox-table li.ttd.active:hover {
           background: #fff; }
         .content .card .copy .inbox-table li.ttd.outer-received .outer .td {
-          background: #bbf7e7; }
+          background: #fff; }
+          .content .card .copy .inbox-table li.ttd.outer-received .outer .td.td0 {
+            border-color: #00cc96; }
         .content .card .copy .inbox-table li.ttd.outer-received .details {
           background: #fff; }
         .content .card .copy .inbox-table li.ttd.outer-received:hover .outer .td {
@@ -12927,7 +12987,9 @@ footer.dashb {
         .content .card .copy .inbox-table li.ttd.outer-received.active .outer .td {
           background: #8df2d7; }
         .content .card .copy .inbox-table li.ttd.outer-sent .outer .td {
-          background: #a5e1ff; }
+          background: #fff; }
+          .content .card .copy .inbox-table li.ttd.outer-sent .outer .td.td0 {
+            border-color: #00aef2; }
         .content .card .copy .inbox-table li.ttd.outer-sent .outer:after {
           border-left: 15px solid #72d0ff; }
         .content .card .copy .inbox-table li.ttd.outer-sent .details {

@@ -21,10 +21,10 @@
 </div>
 
 <div class="form-group">
-<mat-form-field class="example-full-width">
+
     <label class="col-form-label">Enter the URL</label>
-    <input placeholder="URL" type="url" [(ngModel)]="socialurl" name="socialurl" matInput autocomplete="off">
-</mat-form-field>
+    <input class="form-control" placeholder="URL" type="url" [(ngModel)]="socialurl" name="socialurl" matInput autocomplete="off" [placeholder]="placeholder">
+
 </div>
 </mat-dialog-content>
 <mat-dialog-actions>

@@ -27,6 +27,7 @@ export class ExistingCheckinComponent implements OnInit {
   terminologiesjson: any = null;
   changeOccured = false;
   checkinLabel;
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
 
   constructor(
     public dialogRef: MatDialogRef<ExistingCheckinComponent>,

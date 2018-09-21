@@ -65,8 +65,8 @@
               </table>
           </div>
       </div>
-
-      <div class="payment-option" *ngIf="payment_status === 'NotPaid' && source != 'payment-history'">
+      <!-- Commented as per request from Manikandan -->
+      <!-- <div class="payment-option" *ngIf="payment_status === 'NotPaid' && source != 'payment-history'"> 
           <h4>Payment Options</h4>
           <div>
             <mat-radio-group [(ngModel)]="pay_data.paymentMode">
@@ -75,7 +75,7 @@
               </mat-radio-button>
             </mat-radio-group>
           </div>
-      </div>
+      </div> -->
   </div>
 
   <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>

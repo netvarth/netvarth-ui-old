@@ -742,8 +742,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.keywordholder.autoname = val;
       this.keywordholder.domain = '';
       this.keywordholder.subdomain = '';
-      this.keywordholder.typ = 'kwtitle';
-
+      // this.keywordholder.typ = 'kwtitle';
+      this.keywordholder.typ = 'kwphrase';
       this.curlabel.typ = '';
       this.curlabel.query = '';
       // console.log('reached here', this.keywordholder);

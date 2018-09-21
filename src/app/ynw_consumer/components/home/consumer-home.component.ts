@@ -75,6 +75,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   currentcheckinsTooltip = '';
   favTooltip = '';
   historyTooltip = '';
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
+  estimatesmallCaption = Messages.ESTIMATED_TIME_SMALL_CAPTION;
+  checkinCaption = Messages.CHECKIN_TIME_CAPTION;
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -157,7 +161,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
     // console.log('inside', waitlist.hasOwnProperty('serviceTime'));
     if (waitlist.hasOwnProperty('serviceTime')) {
-      appx_ret.caption = 'Check-In Time';
+      appx_ret.caption = this.checkinCaption; // 'Check-In Time';
       // appx_ret.date = waitlist.date;
       appx_ret.time = waitlist.serviceTime;
 
@@ -175,10 +179,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
     } else {
       if (waitlist.appxWaitingTime === 0) {
-        appx_ret.caption = 'Estimated Time';
+        appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
         appx_ret.time = 'Now';
       } else if (waitlist.appxWaitingTime !== 0) {
-        appx_ret.caption = 'Estimated Time';
+        appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
         appx_ret.date = '';
         appx_ret.time = this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
       }
@@ -342,7 +346,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
             // if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
             if (cdate.getTime() !== check_dtoday.getTime()) {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 1;
               // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
               //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
@@ -359,7 +363,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               }
             } else {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
               // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
               //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
@@ -368,7 +372,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               // }
               if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
@@ -439,8 +443,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
     );
   }
-
-  
 
   goWaitlistDetail(waitlist) {
     this.router.navigate(['consumer/waitlist', waitlist.provider.id, waitlist.ynwUuid]);

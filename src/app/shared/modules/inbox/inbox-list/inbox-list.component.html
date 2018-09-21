@@ -2,15 +2,13 @@
   <div class="copy">
           <ul class="inbox-table" *ngIf="messages.length>0 && !loading">
                   <li class="tth">
-                      <div class="outer">
+                      <!-- <div class="outer">
                          <div class="th th0"></div>
                           <div class="th th3">Provider / Consumer</div>
-                          <!-- <div class="th th3">From</div>
-                          <div class="th th3">To</div> -->
                           <div class="th th2">Service</div>
                           <div class="th th4">Message</div>
                           <div class="th th1">Date/Time</div>
-                      </div>
+                      </div> -->
                   </li>
 
                   <li class="ttd" [class.active]="selectedMsg==i"
@@ -38,11 +36,11 @@
                           </div>
                           <div class="td td4">
                                 <div class="label">Message</div>
-                                <div class="result">{{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'..':shared_functions.firstToUpper(message.msg) }}
+                                <div class="result">{{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'.....':shared_functions.firstToUpper(message.msg) }}
                                 </div>
                             </div>
                           <div class="td td1">
-                              <div class="label">Date</div>
+                              <div class="label">Date/Time</div>
                               <!-- <div class="result">{{message.timeStamp | date: dateFormat}}</div> -->
                               <div class="result">{{formatDateDisplay(message.timeStamp)}}</div>
                           </div>

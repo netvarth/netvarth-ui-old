@@ -24,6 +24,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   @ViewChild('bnameId') bnameIdref: ElementRef;
   amForm: FormGroup;
+  businessConfig: any = [];
   userdet: any = [];
   active_step: number;
   wizard_data_holder: any = [];
@@ -45,10 +46,12 @@ export class ProviderbWizardComponent implements OnInit {
   schedule_exists = false;
   customer_label = '';
   checkin_label = '';
+  multipeLocationAllowed = false;
 
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
+    public shared_services: SharedServices,
     public provider_services: ProviderServices,
     private dialog: MatDialog,
     private routerobj: Router,
@@ -72,7 +75,8 @@ export class ProviderbWizardComponent implements OnInit {
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     this.getUserdetails();
-    this.getBusinessProfile();
+    // this.getBusinessProfile();
+    this.getBusinessConfiguration();
     this.active_step = 0;
     localStorage.removeItem('new_provider');
   }
@@ -369,6 +373,15 @@ export class ProviderbWizardComponent implements OnInit {
     this.provider_services.getBussinessProfile()
       .subscribe (data => {
         this.setBprofile_to_object(data);
+        const tbprof = data;
+        for (let i = 0; i < this.businessConfig.length ; i++) {
+          if (this.businessConfig[i].id === tbprof['serviceSector']['id']) {
+            if (this.businessConfig[i].multipleLocation) {
+              this.multipeLocationAllowed = true;
+            }
+          }
+        }
+
         this.loading_active = false;
       });
   }
@@ -451,9 +464,25 @@ export class ProviderbWizardComponent implements OnInit {
           this.wizard_data_holder['address'] = result['address'] || null;
          // this.wizard_data_holder['pincode'] = result['pincode'] || null;
           this.wizard_data_holder['mapurl'] = mapurl || null;
+          if (!this.wizard_data_holder['address']) {
+            // console.log('no address');
+            if (this.document.getElementById('locaddress')) {
+              this.document.getElementById('locaddress').focus();
+            }
+          }
         }
       }
     }
+    });
+  }
+  getBusinessConfiguration() {
+    this.shared_services.bussinessDomains()
+      .subscribe (data => {
+        this.businessConfig = data;
+        this.getBusinessProfile();
+      },
+    error => {
+
     });
   }
 

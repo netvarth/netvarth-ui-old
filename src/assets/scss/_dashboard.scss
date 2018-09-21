@@ -4703,8 +4703,9 @@ footer {
         &.w-dta {
             .head {
                 margin-bottom: 0;
-                margin-top: 15px;
+                margin-top: 10px;
                 border: none;
+                height: auto;
                 padding: 0 15px;
                 justify-content: flex-start;
 
@@ -4714,6 +4715,8 @@ footer {
             }
 
             .dash-list {
+                margin-top: 10px;
+                
                 .d-tbl {
                     .table {
                         thead, tbody {
@@ -6496,7 +6499,7 @@ footer {
                 li {
                     list-style: none;
                     font-size: .875rem;
-                    border-bottom: 2px solid $white;
+                    border-bottom: 1px solid $cc-formbg;
                     
                     // inbox row colors
                     .outer {
@@ -6513,23 +6516,23 @@ footer {
                             color: $linkblack;
                             
                             &.th0, &.td0 {
-                                width: 5%;
+                                width: 6%;
                                 flex-grow: 0;
                             }
                             &.th1, &.td1 {
-                                width: 10%;
-                                flex-grow: 0;
-                            }
-                            &.th2, &.td2 {
                                 width: 20%;
                                 flex-grow: 0;
                             }
+                            &.th2, &.td2 {
+                                width: 25%;
+                                flex-grow: 0;
+                            }
                             &.th3, &.td3 {
-                                width: 15%;
+                                width: 24%;
                                 flex-grow: 0;
                             }
                             &.th4, &.td4 {
-                                width: 35%;
+                                width: 25%;
                                 flex-grow: 0;
                             }
                             /*&.th5, &.td5 {
@@ -6581,11 +6584,21 @@ footer {
                                 
                                 @include respond-to(ynw-767) {text-align: left;}
                                 
-                                .icon-received {
+                                .icon-received, .icon-sent {
                                     color: $green;
+                                    width: 40px;
+                                    height: 24px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border: 2px solid $green;
+                                    @include border-radius(30px);
+                                    opacity: .9;
+                                    font-size: 1.2rem;
                                 }
                                 .icon-sent {
                                     color: $linkblue;
+                                    border-color: $linkblue;
                                 }
                             }
                         }
@@ -6698,6 +6711,8 @@ footer {
                     }
                     
                     &.tth {
+                        position: relative;
+                        @include box-shadow(0, 10px, 15px, rgba(0,0,0,.05));
                         
                         @include respond-to(ynw-767) {
                             display: none;
@@ -6774,7 +6789,11 @@ footer {
                         &.outer-received {
                             .outer {
                                 .td {
-                                    background: $received;
+                                    background: $white;
+                                    
+                                    &.td0 {
+                                        border-color: $green;
+                                    }
                                 }
                             }
                             .details {
@@ -6799,7 +6818,11 @@ footer {
                         &.outer-sent {
                             .outer {
                                 .td {
-                                    background: $sent;
+                                    background: $white;
+                                    
+                                    &.td0 {
+                                        border-color: $linkblue;
+                                    }
                                 }
                                 &:after {
                                     border-left: 15px solid darken($sent, 10%);

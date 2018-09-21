@@ -133,6 +133,8 @@ export class ProviderDetailComponent implements OnInit {
 
 // Edited//
   public domain;
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
 // Edited//
 
   constructor(
@@ -337,7 +339,7 @@ export class ProviderDetailComponent implements OnInit {
           case 'virtualFields' : {
             this.virtualfieldsjson = res;
             // console.log('vir', JSON.stringify(this.virtualfieldsjson));
-            // this.virtualfieldsjson = []; // dummy
+            this.virtualfieldsjson = []; // dummy
             this.virtualfieldsCombinedjson = [];
             this.virtualfieldsDomainjson = [];
             this.virtualfieldsSubdomainjson = [];
@@ -819,7 +821,7 @@ export class ProviderDetailComponent implements OnInit {
             cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
             // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
             if (cdate.getTime() !== check_dtoday.getTime()) {
-              this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+              this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
               this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 1;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
@@ -829,12 +831,12 @@ export class ProviderDetailComponent implements OnInit {
                 + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             } else {
-              this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+              this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
               this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 2;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               } else {
-                this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+                this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
                 this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             }

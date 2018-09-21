@@ -121,7 +121,7 @@ export const Messages = {
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message send successfully',
   'ESTDATE' : 'Estimated Service time',
 
-  'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
+  'SEARCH_ESTIMATE_TOOPTIP' : 'Estimated Waiting Time',
   'CUSTOMER_SEARCH_EXIST': 'This [customer] already exist',
   'CUSTOMER_SEARCH_UNAVAILABLE': 'This [customer] doesnt exist',
   'PROVIDER_CUSTOMER_CREATED': 'New [customer] created',
@@ -195,6 +195,16 @@ export const Messages = {
   'REF_TOOPTIP' : 'Show/hide refined search',
   'CUSTSIGN_TOOPTIP' : 'Consumers click here to Login/Join Jaldee.com',
   'PROVSIGN_TOOPTIP' : 'Providers please click here to Register/Login to Jaldee.com',
+  'CLOUDICON_TOOPTIP': 'Online Check-in',
 
-  'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here'
+  'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
+
+
+  'EST_WAIT_TIME_CAPTION' : 'Estimated Waiting Time',
+  'NXT_AVAILABLE_TIME_CAPTION' : 'Next Available Time',
+  'APPX_WAIT_TIME_CAPTION' : 'Appox Waiting Time',
+
+  'ESTIMATED_TIME_SMALL_CAPTION': 'Estimated Time',
+  'CHECKIN_TIME_CAPTION': 'Check-In Time'
+
 };

@@ -31,6 +31,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
   socialkey = '';
   socialurl = '';
   posted = false;
+  placeholder = 'Eg:- http://www.jaldee.com';
 
   constructor(
     public provider_services: ProviderServices,

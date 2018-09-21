@@ -88,6 +88,9 @@ export class CheckInInnerComponent implements OnInit {
     CweekDays = {0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat'};
     queueQryExecuted = false;
     todaydate;
+    estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+    nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
+    checkinCaption = Messages.CHECKIN_TIME_CAPTION;
 
     @Input() data: any =  [];
     @Output() returntoParent = new EventEmitter<any>();

@@ -27,7 +27,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   pay_data = {
     amount: 0,
-    paymentMode: null,
+    paymentMode: 'DC', // 'null', changes as per request from Manikandan
     uuid: null
   };
   payment_popup = null;

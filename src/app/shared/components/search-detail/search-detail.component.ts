@@ -117,6 +117,8 @@ export class SearchDetailComponent implements OnInit {
   commTooltip = '';
   refTooltip = '';
   bNameTooltip = '';
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
@@ -791,13 +793,18 @@ setEnvironment(bypassotherfunction?) {
        locstr = 'location1:' + coordinates;
        q_str = q_str + locstr;
      }
-
+    let phrasestr = '';
      if (this.kwtyp === 'kwtitle') {
        let  ptitle = this.kw.replace('/', '');
        ptitle = ptitle.replace(/'/g, '\\\'');
        q_str = q_str + ' title:\'' + ptitle + '\'';
        // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
-     }
+     } else if (this.kwtyp === 'kwphrase') {
+        let  phrase = this.kw.replace('/', '');
+        phrase = phrase.replace(/'/g, '\\\'');
+        phrasestr = ' (phrase \'' + phrase + '\') ' ;
+      // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
+    }
      if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
        q_str = q_str + 'sector:\'' + this.domain + '\'';
      } else {
@@ -846,10 +853,10 @@ setEnvironment(bypassotherfunction?) {
        // projectConstants.searchpass_criteria.return = labelqarr[2].replace('return=', '');
      } else {
         // if (this.latitude || this.domain || this.labelq || this.refined_querystr) {
-        if (this.latitude || this.domain || this.labelq || time_qstr) {
+        if (this.latitude || this.domain || this.labelq || time_qstr || phrasestr) {
           // if location or domain is selected, then the criteria should include following syntax
           // q_str = '(and ' + time_qstr + q_str + this.refined_querystr + ')';
-          q_str = '(and ' + time_qstr + q_str + ')';
+          q_str = '(and ' + phrasestr + time_qstr + q_str + ')';
         }
     }
     // Creating criteria to be passed via get
@@ -1044,7 +1051,7 @@ setEnvironment(bypassotherfunction?) {
             cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
             // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
               if (cdate.getTime() !== check_dtoday.getTime()) {
-              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 1;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
@@ -1054,12 +1061,12 @@ setEnvironment(bypassotherfunction?) {
                 + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             } else {
-              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 2;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               } else {
-                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = 'Next Available Time ';
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             }

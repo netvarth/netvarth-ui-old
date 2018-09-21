@@ -10,6 +10,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-kiosk-home',
@@ -61,6 +62,9 @@ export class KioskHomeComponent implements OnInit {
   waitlistmngr;
   kiosk_loading = true;
   showregmobile = false;
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
+  apprxwaitingCaption = Messages.APPX_WAIT_TIME_CAPTION;
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -194,7 +198,7 @@ export class KioskHomeComponent implements OnInit {
             cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
             // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
             if (cdate.getTime() !== check_dtoday.getTime()) {
-              this.next_avail_queue['caption'] = 'Next Available Time ';
+              this.next_avail_queue['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
               this.next_avail_queue['isFuture'] = 1;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.next_avail_queue['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
@@ -204,12 +208,12 @@ export class KioskHomeComponent implements OnInit {
                 + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             } else {
-              this.next_avail_queue['caption'] = 'Appox Waiting Time';
+              this.next_avail_queue['caption'] = this.apprxwaitingCaption; // 'Appox Waiting Time';
               this.next_avail_queue['isFuture'] = 2;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.next_avail_queue['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               } else {
-                this.next_avail_queue['caption'] = 'Next Availale Time';
+                this.next_avail_queue['caption'] = this.nextavailableCaption + ' '; // 'Next Availale Time';
                 this.next_avail_queue['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             }
