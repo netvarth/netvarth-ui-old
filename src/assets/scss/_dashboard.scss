@@ -580,7 +580,7 @@ footer {
         
         @include respond-to(ynw-575) {
             justify-content: flex-start;
-            overflow: auto;
+            flex-wrap: wrap;
             
             .bt5 {                
                 &:before {
@@ -601,9 +601,9 @@ footer {
             @include box-shadow(0px, 0px, 30px, rgba(0,0,0,0.1));
             
             @include respond-to(ynw-575) {
-                &:first-child {
-                    margin: 0;
-                }
+                margin-bottom: 5px;
+                margin-left: 0px;
+                margin-right: 10px;
             }
             
             .bt4, .bt5 {

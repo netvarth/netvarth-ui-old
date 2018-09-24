@@ -25,8 +25,8 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.errors = this.messages[this.question.key] || [];
-    // console.log('key', this.question.key);
-    if (this.question.key !== 'referenceurl') {
+    console.log('key', this.question);
+    if (this.question['type'] !== 'url') {
       this.placeholder = this.question.label;
     } else {
       this.placeholder = 'Eg:- http://www.jaldee.com';

@@ -95,7 +95,13 @@
                             <label class="col-form-label">Last name</label>
                             <input matInput [(ngModel)]="filter.last_name"  (blur)="doSearch()" #Flname (keyup)="focusInputSp($event)" autocomplete="off">
                           </mat-form-field>
-                        </div>
+                      </div>
+                      <div class="form-group last_name" *ngIf="time_type == 0">
+                        <mat-form-field class="example-full-width">
+                          <label class="col-form-label">Phone Number</label>
+                          <input matInput [(ngModel)]="filter.phone_number"  (blur)="doSearch()" #Flname (keyup)="focusInputSp($event)" autocomplete="off">
+                        </mat-form-field>
+                    </div>
 
                       <div class="form-group queues" *ngIf="time_type !== 1">
                         <label class="col-form-label" for="displayName">Queues</label>

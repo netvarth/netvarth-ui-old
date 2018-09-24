@@ -24,7 +24,7 @@
                         <td class="chk-service" data-title="For">{{getWaitlistingFor(chkin.waitlistingFor) | titlecase}}</td>
                         <td class="chk-service" data-title="Time"><div class="schedulediv"><span class="schedule">{{getDateDisplay(chkin.date)}}</span><ng-container *ngIf="chkin.serviceTime != undefined">, <span class="est-time">{{chkin.serviceTime}}</span></ng-container><ng-container *ngIf="chkin.serviceTime == undefined && chkin.appxWaitingTime != undefined">, {{estimateCaption}} <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span></ng-container>
                     </div></td>
-                        <td class="chk-cancel" (click)="confirmCancelChecin(chkin)"><span class="icon-delete"></span></td>
+                        <td class="chk-cancel" (click)="confirmCancelChecin(chkin)" [matTooltip] = "'Delete ' + checkinLabel "><span class="icon-delete"></span></td>
                     </tr>
                 </tbody>
             </table>

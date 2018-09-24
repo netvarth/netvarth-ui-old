@@ -339,7 +339,7 @@ export class ProviderDetailComponent implements OnInit {
           case 'virtualFields' : {
             this.virtualfieldsjson = res;
             // console.log('vir', JSON.stringify(this.virtualfieldsjson));
-            this.virtualfieldsjson = []; // dummy
+            // this.virtualfieldsjson = []; // dummy
             this.virtualfieldsCombinedjson = [];
             this.virtualfieldsDomainjson = [];
             this.virtualfieldsSubdomainjson = [];

@@ -203,6 +203,14 @@
                                 font-size: .875rem;
                                 color: $cc-black;
                                 padding: 15px;
+                                
+                                &:focus {
+                                    .mat-select-trigger {
+                                        .mat-select-value, .mat-select-arrow {
+                                            color: $linkblue;
+                                        }
+                                    }
+                                }
 
                                 @include respond-to(ynw-767) {
                                     height: $input-h;

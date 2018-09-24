@@ -2059,6 +2059,12 @@ app-footer {
     font-weight: normal;
     background: white;
     border: 1px solid #b6cdd8; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-select:focus {
+      -webkit-box-shadow: 0 0 1px #00aef2 inset;
+      -moz-box-shadow: 0 0 1px #00aef2 inset;
+      box-shadow: 0 0 1px #00aef2 inset;
+      border: 1px solid #00aef2;
+      background: #fff; }
     .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-select.mat-select-disabled {
       background: #e6e6e6;
       border: 1px solid transparent; }
@@ -3072,6 +3078,17 @@ header {
             height: 40px;
             background: white;
             border: 1px solid #b6cdd8; }
+            .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus,
+            .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus,
+            .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus,
+            .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus,
+            .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus,
+            .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus {
+              -webkit-box-shadow: 0 0 1px #00aef2 inset;
+              -moz-box-shadow: 0 0 1px #00aef2 inset;
+              box-shadow: 0 0 1px #00aef2 inset;
+              border: 1px solid #00aef2;
+              background: #fff; }
           .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
           .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
           .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-infix .valfield,
@@ -6786,6 +6803,8 @@ header {
                 font-size: .875rem;
                 color: #222223;
                 padding: 15px; }
+                .srch .sa .sa-fld .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus .mat-select-trigger .mat-select-value, .srch .sa .sa-fld .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus .mat-select-trigger .mat-select-arrow {
+                  color: #00aef2; }
                 @media only screen and (max-width: 767px) {
                   .srch .sa .sa-fld .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
                     height: 50px; } }
@@ -8561,7 +8580,7 @@ footer.dashb {
     @media only screen and (max-width: 575px) {
       .tp-pnl .top-mnu {
         justify-content: flex-start;
-        overflow: auto; }
+        flex-wrap: wrap; }
         .tp-pnl .top-mnu .bt5:before {
           display: none; } }
     .tp-pnl .top-mnu .top-help-icon, .tp-pnl .top-mnu .top-help-button {
@@ -8582,8 +8601,10 @@ footer.dashb {
       -moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) ;
       box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) ; }
       @media only screen and (max-width: 575px) {
-        .tp-pnl .top-mnu .top-help-icon:first-child, .tp-pnl .top-mnu .top-help-button:first-child {
-          margin: 0; } }
+        .tp-pnl .top-mnu .top-help-icon, .tp-pnl .top-mnu .top-help-button {
+          margin-bottom: 5px;
+          margin-left: 0px;
+          margin-right: 10px; } }
       .tp-pnl .top-mnu .top-help-icon .bt4, .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt4, .tp-pnl .top-mnu .top-help-button .bt5 {
         -webkit-border-radius: 0;
         border-radius: 0;
@@ -13439,8 +13460,8 @@ header.consumer {
                 padding: 0;
                 border-top: none; }
                 header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
-                  box-shadow: none !important;
-                  border: none !important;
+                  box-shadow: none;
+                  border: none;
                   height: 50px;
                   background: none;
                   border-radius: 0px;
@@ -13458,6 +13479,8 @@ header.consumer {
                   @media (min-width: 768px) and (max-width: 991px) {
                     header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
                       height: 50px; } }
+                  header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus .mat-select-trigger .mat-select-value, header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus .mat-select-trigger .mat-select-arrow {
+                    color: #00aef2; }
                   header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
                     color: #222223;
                     border: none;
@@ -14444,7 +14467,8 @@ header.consumer {
                 font-weight: 600;
                 display: table; }
               .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme.notallowed {
-                opacity: .8; }
+                opacity: .6;
+                font-style: italic; }
           .content .c-outer .c-body .srlst .bottom-sect .bt-r {
             padding: 20px;
             width: 35%; }

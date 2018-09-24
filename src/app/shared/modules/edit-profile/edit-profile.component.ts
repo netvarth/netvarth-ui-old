@@ -33,7 +33,7 @@ export class EditProfileComponent implements OnInit {
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
-      title: 'Update Profile',
+      title: 'User Profile',
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
     }
   ];

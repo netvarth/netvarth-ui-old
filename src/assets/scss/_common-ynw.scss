@@ -174,6 +174,12 @@ app-footer {
                     background: $cc-inputbg;
                     border: 1px solid $cc-formborder;
                     
+                    &:focus {
+                        @include box-shadow(0, 0, 1px, $linkblue, inset);
+                        border: 1px solid $linkblue;
+                        background: $white;
+                    }
+                    
                     &.mat-select-disabled {
                         background: $cc-formbg;
                         border: 1px solid transparent;

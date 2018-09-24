@@ -340,8 +340,8 @@ header {
                                     border-top: none;
 
                                     .mat-select {
-                                        box-shadow: none !important;
-                                        border: none !important;
+                                        box-shadow: none;
+                                        border: none;
                                         height: 50px;
                                         background: none;
                                         border-radius: 0px;
@@ -358,6 +358,14 @@ header {
                                         }
                                         @include respond-to(ynw-768-991) {
                                             height: $input-h;
+                                        }
+                                        
+                                        &:focus {
+                                            .mat-select-trigger {
+                                                .mat-select-value, .mat-select-arrow {
+                                                    color: $linkblue;
+                                                }
+                                            }
                                         }
 
                                         .mat-select-arrow {
@@ -1622,7 +1630,8 @@ header {
                                 display: table;
                             }
                             &.notallowed {
-                                opacity: .8;
+                                opacity: .6;
+                                font-style: italic;
                             }
                         }
                     }

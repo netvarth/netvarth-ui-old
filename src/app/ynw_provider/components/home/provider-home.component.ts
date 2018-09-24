@@ -67,6 +67,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   filter = {
     first_name: '',
     last_name: '',
+    phone_number: '',
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
@@ -778,6 +779,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       api_filter['lastName-eq'] = this.filter.last_name;
     }
 
+    if (this.filter.phone_number !== '') {
+      api_filter['primaryMobileNo-eq'] = this.filter.phone_number;
+    }
+
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;
     }
@@ -827,6 +832,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.filter = {
       first_name: '',
       last_name: '',
+      phone_number: '',
       queue: 'all',
       service: 'all',
       waitlist_status: 'all',
