@@ -28,6 +28,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     addwordTooltip = '';
     adwords_mincnt = 5;
     adwords_cntr = 0;
+    adwordshowmore = false;
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
@@ -110,5 +111,12 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
             this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
           }
         );
+      }
+      toggle_adwordshowmore() {
+        if (this.adwordshowmore) {
+          this.adwordshowmore = false;
+        } else {
+          this.adwordshowmore = true;
+        }
       }
 }

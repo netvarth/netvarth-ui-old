@@ -73,13 +73,20 @@ export class ReportasArrivedComponent implements OnInit {
 
   getStatus(stat, mod) {
     const retval = { class: '', caption: '', waitingtimecaption: '', waitingtimemins: ''};
+    console.log('service time', stat.serviceTime);
     switch (stat.waitlistStatus) {
       case 'checkedIn':
         retval.class = 'checkedin-class';
         retval.caption = 'Checked In';
         retval.waitingtimecaption = 'Your Approximate Wait Time is ';
        //  retval.waitingtimemins = stat.appxWaitingTime + ' Mins';
+       if (stat.serviceTime !== undefined) {
+        retval.waitingtimecaption = 'Your Estimated Service Time is ';
+        retval.waitingtimemins = stat.serviceTime;
+       } else {
+        retval.waitingtimecaption = 'Your Approximate Wait Time is ';
         retval.waitingtimemins = this.sharedfunctionObj.convertMinutesToHourMinute(stat.appxWaitingTime);
+       }
       break;
       case 'started':
         retval.class = 'started-class';

@@ -41,7 +41,6 @@
 
                               <ng-container *ngIf="waitlist.calculationMode != 'NoCalc' && waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
                               waitlist.waitlistStatus == 'arrived')">
-
                                   <div class="lt0" *ngIf="waitlist.estimated_date==''">
                                       {{waitlist.estimated_caption}} <span class="time now">
                                         {{waitlist.estimated_time}}</span>

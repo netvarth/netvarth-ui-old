@@ -8,8 +8,18 @@
     <ng-container *ngIf="adwordsmaxcount != 0">
 
         <div class="lc3-2 lcd" *ngFor="let adword of adword_list; let i = index">
-            <div class="ttle">{{adword.name}}</div>
-            <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
+            <ng-container *ngIf="i<5">
+                <div class="ttle">{{adword.name}}</div>
+                <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
+            </ng-container>
+            <ng-container></ng-container>
+            <ng-container *ngIf="i>=5">
+                <div ckass="adwordshowmore" *ngIf="!adwordshowmore && i == 5" (click)="toggle_adwordshowmore()"><strong>Show more</strong></div>
+                <ng-container *ngIf="adwordshowmore">
+                    <div class="ttle">{{adword.name}}</div>
+                    <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
+                </ng-container>
+            </ng-container>
         </div>
         <div class="lc3-2 lcd" *ngIf="adwordsmaxcount > 0 && adword_list.length ==0 && query_executed == true">
             <div class="ttle">{{emptyMsg}}</div>

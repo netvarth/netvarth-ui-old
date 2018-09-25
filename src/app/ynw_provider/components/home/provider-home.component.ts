@@ -323,10 +323,20 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   getQueueList() {
+    // console.log('reached quelist');
     this.provider_services.getProviderLocationQueues(this.selected_location.id)
     .subscribe(
-      data => {
-        this.all_queues = data;
+      (data: any) => {
+        // this.all_queues = data;
+
+        const Cqueues = data;
+        this.all_queues = [];
+
+        for ( const que of Cqueues) {
+          if (que.queueState === 'ENABLED') {
+            this.all_queues.push(que);
+          }
+        }
 
         for (let ii = 0; ii < this.all_queues.length; ii++) {
           let schedule_arr = [];
@@ -348,7 +358,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   getQueueListByDate() {
-
+    // console.log('qby date');
     this.load_queue = 0;
     if (!this.selected_queue) {
 
@@ -356,8 +366,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         this.provider_services.getProviderLocationQueuesByDate(
           this.selected_location.id, this.queue_date)
         .subscribe(
-          data => {
-            this.queues = data;
+          (data: any) => {
+            // this.queues = data;
+            const Cqueues = data;
+            this.queues = [];
+
+            for ( const que of Cqueues) {
+              if (que.queueState === 'ENABLED') {
+                this.queues.push(que);
+              }
+            }
             if (this.queues[0] && this.selected_queue == null) {
               this.selectedQueue(this.queues[0]);
             }

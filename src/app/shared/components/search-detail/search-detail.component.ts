@@ -401,6 +401,7 @@ setEnvironment(bypassotherfunction?) {
        }
       // calling method to parse refine filters in query string to respective array
       this.parseRefinedfiltersQueryString(obj);
+      // console.log('refined', this.querystringrefineretain_arr);
       // console.log('ref_query', this.refined_querystr);
       if (obj.cpg) { // check whether paging value is there in the url
         let cnumb = Number(obj.cpg);

@@ -4,8 +4,8 @@ onSubmit(loginForm.value)" (keyup)="resetApiErrors()" *ngIf="step==1">
 <div class="mat-dialog-title">{{this.data.type | titlecase }} Login <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></div>
 <div class="mat-dialog-content">
 <div class="form-group">
-  <label class="col-form-label" for="phonenumber">Mobile #</label>
-  <input type="text" class="form-control" id="phonenumber" placeholder="Mobile #"
+  <label class="col-form-label" for="phonenumber">Mobile Number</label>
+  <input type="text" class="form-control" id="phonenumber" placeholder="Enter your 10 digit Mobile number"
   formControlName="phonenumber" autocomplete="off">
   <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'phonenumber') && show_error"
   [errorMsgs]="fed_service.getErrorMessage(loginForm,'phonenumber',

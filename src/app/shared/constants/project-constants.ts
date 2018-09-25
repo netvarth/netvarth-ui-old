@@ -1,5 +1,6 @@
 export const projectConstants = {
   PERPAGING_LIMIT: 10,
+  CONSUMER_DASHBOARD_REFRESH_TIME: 120, // seconds
   INBOX_REFRESH_TIME: 30, // seconds
   ALERT_REFRESH_TIME: 30, // seconds
   searchpass_criteria : {

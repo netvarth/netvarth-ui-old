@@ -161,7 +161,7 @@ export const Messages = {
   'PROVIDER_BILL_PAYMENT_SELFPAY': ' An email and push notification will be send to the consumer',
   'PROVIDER_BILL_SETTLE_CONFIRM': 'Do you want to settle this bill?',
   'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull',
-  'CHECKIN_SUCC': '[waitlist] saved successfully',
+  'CHECKIN_SUCC': 'You have [waitlisted] successfully',
   'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
   'CHECKIN_CANCELLED' : '[waitlist] [cancelled] successfully',
@@ -200,11 +200,11 @@ export const Messages = {
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
 
 
-  'EST_WAIT_TIME_CAPTION' : 'Estimated Waiting Time',
+  'EST_WAIT_TIME_CAPTION' : 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION' : 'Next Available Time',
   'APPX_WAIT_TIME_CAPTION' : 'Appox Waiting Time',
 
-  'ESTIMATED_TIME_SMALL_CAPTION': 'Estimated Time',
-  'CHECKIN_TIME_CAPTION': 'Check-In Time'
+  'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
+  'CHECKIN_TIME_CAPTION': 'Est Service Time'
 
 };
