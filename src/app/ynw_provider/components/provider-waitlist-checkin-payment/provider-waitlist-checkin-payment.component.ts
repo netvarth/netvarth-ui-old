@@ -7,6 +7,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
+import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 
 
 @Component({
@@ -38,12 +39,14 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
   amount_to_pay = 0;
 
   customer_label = '';
+  org_amt = 0;
 
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInPaymentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public provider_services: ProviderServices,
+    private dialog: MatDialog,
     public sharedfunctionObj: SharedFunctions,
 
   ) {
@@ -63,7 +66,8 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       this.pay_data.amount  = (this.pay_data.amount > 0) ? this.pay_data.amount : 0;
       this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
       this.getPaymentSettings();
-       console.log(this.pay_data.amount.toFixed(2));
+       // console.log(this.pay_data.amount.toFixed(2));
+       this.org_amt = this.sharedfunctionObj.roundToTwoDecimel(this.pay_data.amount);
       // console.log(Math.round(this.pay_data.amount * 100) / 100);
     }
 
@@ -125,6 +129,42 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       error => {
 
       });
+  }
+  selpay() {
+    // console.log('pay', this.pay_data.acceptPaymentBy);
+    if (this.pay_data.acceptPaymentBy === 'self_pay') {
+      this.pay_data.amount = this.org_amt;
+    }
+  }
+  confirmSettle() {
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message' : this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('call settle');
+         this.settleBill();
+      }
+    });
+  }
+  settleBill() {
+    if (this.pay_data.uuid != null) {
+      this.provider_services.settleWaitlistBill(this.pay_data.uuid)
+      .subscribe(
+        data => {
+          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_SETTLE);
+          this.dialogRef.close('reloadlist');
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        }
+      );
+    }
   }
 
 }

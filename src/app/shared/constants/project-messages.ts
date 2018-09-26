@@ -49,9 +49,9 @@ export const Messages = {
 
   // Business Profile
   'BPROFILE_CREATED' : 'Business Profile created successfully',
-  'BPROFILE_EMAILDET' : 'Please enter the email id and its details',
+  'BPROFILE_EMAILDET' : 'Please enter the email id and email label',
   'BPROFILE_SELECT_SCHEDULE' : 'Please select the schedule',
-  'BPROFILE_PHONEDET' : 'Please enter the phone number and its details',
+  'BPROFILE_PHONEDET' : 'Please enter the phone number and phone label',
   'BPROFILE_PHONENO' : 'Please enter the phone number',
   'BPROFILE_SELECTLOGO' : 'Please select the logo',
   'BPROFILE_ATLEASTONEDAY' : 'Please select atleast one day',

@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   custsignTooltip = '';
   provsignTooltip = '';
   showLearnMore = false;
-  passedDet: any [];
+  passedDet = {};
 
   constructor(
     private dialog: MatDialog,
@@ -117,7 +117,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         break;
         case 'learn_more':
           this.showLearnMore = true;
-          this.passedDet = message.target.scrollKey;
+          this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey};
         break;
       }
       /*if (message.ttype === 'updateuserdetails') {

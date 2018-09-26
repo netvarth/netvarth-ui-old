@@ -102,7 +102,7 @@ export class ProviderSubeaderComponent implements OnInit {
 
   }
   createCheckin(user_data) {
-    console.log(user_data);
+    // console.log(user_data);
     const post_data = {};
     let selected_location = null;
 

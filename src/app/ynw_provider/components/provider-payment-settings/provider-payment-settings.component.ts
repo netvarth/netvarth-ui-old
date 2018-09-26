@@ -103,16 +103,17 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 let showmsgs = '';
                 let panelclass = '';
                 let params;
-                const duration = 6000;
+                const duration = projectConstants.TIMEOUT_DELAY_LARGE10;
                 if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified)) {
                     showmsgs = this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CONTACTADMIN');
-                    panelclass = 'snackbarerror';
+                    panelclass = 'snackbarnormal'; // 'snackbarerror';
                     params = {'duration': duration, 'panelClass': panelclass};
                 } else {
                     showmsgs = this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_SUCC');
                     panelclass = 'snackbarnormal';
                     params = {'duration': duration, 'panelClass': panelclass};
                 }
+                console.log('params', params);
                 this.shared_Functionsobj.openSnackBar (showmsgs, params);
                 this.tabid = 1;
             }
@@ -130,7 +131,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     showhidepaytype() {
         this.saveEnabled = true;
-        console.log('paystatus', this.paystatus);
+        // console.log('paystatus', this.paystatus);
         if (this.paystatus) {
             this.paystatus = false;
         } else {

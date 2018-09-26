@@ -22,7 +22,8 @@
                                   <div class="item"><span class="ttle">Name:</span> <span> {{waitlist_data.consumer.userProfile.firstName | titlecase}} {{waitlist_data.consumer.userProfile.lastName | titlecase}}</span></div>
                                   <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
                                   <div class="item">
-                                      <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">Date/Est Service time:</span>
+                                      <!-- <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">Date/Est Service time:</span> -->
+                                      <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">{{getAppxTime(waitlist_data, true)}}</span>
                                       <span class="ttle" *ngIf="!checkTimedisplayAllowed(waitlist_data)">Date:</span>
                                     <span>
                                         <!-- {{waitlist_data.date | date:dateFormatSp}} {{getAppxTime(waitlist_data)| date: timeFormat}} -->

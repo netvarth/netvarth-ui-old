@@ -1,10 +1,10 @@
 
       <div class="copy">
               <div class="row">
-                  <div class="lbl col-sm-12 col-md-4 col-lg-4">
+                  <div class="lbl col-sm-12 col-md-12 col-lg-12">
                     <label>Waiting Time Calculation</label>
                   </div>
-                  <div class="lbr col-sm-12 col-md-8 col-lg-8">
+                  <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
                     <mat-radio-group
                     [(ngModel)]="form['calculationMode']" ngDefaultControl
                     (change)="onFormChange()">
@@ -28,31 +28,34 @@
                         </div>
                         <div class="rw">
                           <div class="form-group">
-                            <mat-radio-button value="NoCalc"
+                            <mat-radio-button value="NoCalc_WithToken"
                              ></mat-radio-button>
-                            <label for="">Do not show waiting time for {{customer_label}}s</label>
+                            <label for="">Do not show waiting time for {{customer_label}}s (Token Enabled)</label>
+                          </div>
+                        </div>
+                        <div class="rw">
+                          <div class="form-group">
+                            <mat-radio-button value="NoCalc_WithoutToken"
+                             ></mat-radio-button>
+                            <label for="">Do not show waiting time for {{customer_label}}s (Token Disabled)</label>
                           </div>
                         </div>
                     </mat-radio-group>
                   </div>
               </div>
               <div class="row">
-                  <div class="lbl col-sm-12 col-md-4 col-lg-4">
-                    <label>Accept Future {{checkin_label | titlecase}}</label>
-                  </div>
-                  <div class="lbr col-sm-12 col-md-8 col-lg-8">
-                    <div class="ctrl">
-                        <mat-slide-toggle
-                        class="example-margin"
-                        [checked]="waitlist_manager['futureDateWaitlist']"
-                        [labelPosition]="'before'"
-                        [(ngModel)]="form['futureDateWaitlist']"
-                        (change)="onFormChange()">
-                        </mat-slide-toggle>
-                    </div>
+                  <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                    <label>Accept Future {{checkin_label | titlecase}}
+                      <mat-slide-toggle
+                      class="example-margin"
+                      [checked]="waitlist_manager['futureDateWaitlist']"
+                      [labelPosition]="'before'"
+                      [(ngModel)]="form['futureDateWaitlist']"
+                      (change)="onFormChange()">
+                      </mat-slide-toggle></label>
                   </div>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                   <div class="lbl col-sm-12 col-md-4 col-lg-4">
                     <label>Show Token</label>
                   </div>
@@ -67,7 +70,7 @@
                         </mat-slide-toggle>
                     </div>
                   </div>
-              </div>
+              </div> -->
       </div>
       <button  (click)="OnSubmit()" type="button" mat-button
       class="cs-btn bt1"

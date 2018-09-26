@@ -28,7 +28,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <label class="col-form-label" for="description">Description </label>
     <!-- <input matInput type="text" class="form-control" id="description" placeholder="Description"
     formControlName="description" autocomplete="off"> -->
-    <textarea class="form-control" id="description" placeholder="Description" formControlName="description">
+    <textarea class="form-control" id="description" placeholder="Briefly describe service" formControlName="description">
 
     </textarea>
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"

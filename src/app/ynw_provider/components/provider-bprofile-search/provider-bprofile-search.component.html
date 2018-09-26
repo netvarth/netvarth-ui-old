@@ -22,7 +22,7 @@
                     </div>
                     <div class="card" *ngIf="normal_profile_active==2 || normal_locationinfo_show==4">
                         <div class="pubs" >
-                            <h2>Public Search <span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span></h2>
+                            <h2>Public Search <i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search')"></i> <!--<span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span>--></h2>
                             <div class="wbox" >
                                 <div class="bx-ico"><i data-icon="m"></i></div>
                                 <div class="bx-copy">
@@ -43,7 +43,7 @@
 
                             <div class="ctrl">
                                 <div class="ct-l">
-                                        <h2>Public Search <span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span></h2>
+                                        <h2>Public Search <i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search')"></i> <!--<span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span>--></h2>
 
                                         <span class="status">Current Status -
                                             <span class="on" *ngIf="normal_search_active">On</span>
@@ -88,11 +88,11 @@
                         <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Profile Name and Summary
+                            Profile Name and Summary 
                         </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="cd-t">
-
+                            <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('basic-information')"></i></div>
                                     <div class="warning" *ngIf="normal_basicinfo_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
@@ -238,6 +238,7 @@
                                     Privacy Settings
                                 </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('privacy-settings')"></i></div>
                                     <div class="no-dta" *ngIf="normal_privacy_settings_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
@@ -344,6 +345,7 @@
                                 Specialization
                             </mat-panel-title>
                             </mat-expansion-panel-header>
+                            <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('specialization')"></i></div>
                             <div class="no-dta" *ngIf="normal_specilization_show==1">
                                 <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                             </div>
@@ -369,6 +371,7 @@
                                     Languages Known
                                 </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('languages-known')"></i></div>
                                 <div class="no-dta" *ngIf="normal_language_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -573,6 +576,7 @@
                                     Additional Info
                             </mat-panel-title>
                             </mat-expansion-panel-header>
+                            <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('additional-info')"></i></div>
                                 <div class="no-dta" *ngIf="normal_domainfield_show==1 || normal_subdomainfield_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -927,6 +931,7 @@
                                     Photo Gallery
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
+                            <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('photo-gallery')"></i></div>
                                 <div class="no-dta" *ngIf="normal_gallery_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -995,6 +1000,7 @@
                             Your Social Media
                         </mat-panel-title>
                         </mat-expansion-panel-header>
+                        <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('your-social-media')"></i></div>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==1" >
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>

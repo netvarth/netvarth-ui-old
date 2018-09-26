@@ -14,6 +14,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class LearnmoreComponent implements OnInit {
     destination = '';
+    subKey = '';
     @Input ()  passedDet;
     constructor(
       // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -24,7 +25,9 @@ export class LearnmoreComponent implements OnInit {
       // console.log('passed in data', this.passedDet, this.data, this.data.moreOptions.scrollKey);
       // this.destination = this.data.moreOptions.scrollKey;
       // console.log('passedin', this.passedDet);
-      this.destination = this.passedDet;
+      this.destination = this.passedDet.mainKey;
+      this.subKey = this.passedDet.subKey;
+      // console.log('subkey', this.subKey);
       /*if (this.data.moreOptions.scrollKey !== undefined) {
         setTimeout(() => {
           this.triggerScrollTo(this.data.moreOptions.scrollKey);

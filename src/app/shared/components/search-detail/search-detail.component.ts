@@ -91,6 +91,7 @@ export class SearchDetailComponent implements OnInit {
   public arraycreatedfromquerystring = false;
   public commonfilters;
   public passrefinedfilters;
+  public refinedExists = false;
   public showopnow = 0;
   public subdomainleft;
   ratingholder;
@@ -534,6 +535,7 @@ setEnvironment(bypassotherfunction?) {
   // function to parse and fetch the details related to dynamic refine filters fields
   parseRefinedfiltersQueryString(obj) {
     this.arraycreatedfromquerystring = false;
+    this.refinedExists = false;
     this.querystringrefineretain_arr = [];
     for (const ufield in obj) {
       if (ufield) {
@@ -541,6 +543,7 @@ setEnvironment(bypassotherfunction?) {
         if (sufield === 'myref_') {
           const orgfield = ufield.substr(6); // getting the original name by eleminating the prefix
            // console.log('splitfield', orgfield);
+           this.refinedExists = true;
           if (this.check_QuerystrinfieldexistsinArray(sufield) === -1) {
              // console.log('iamhere');
             this.querystringrefineretain_arr[orgfield] = obj[ufield].split('~'); // split values based on delimiter to an array
@@ -548,7 +551,7 @@ setEnvironment(bypassotherfunction?) {
         }
       }
     }
-   // console.log('qrystr', this.querystringrefineretain_arr);
+   console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
     this.arraycreatedfromquerystring = true;
   }
 

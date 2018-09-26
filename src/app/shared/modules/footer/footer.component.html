@@ -77,7 +77,7 @@
                             <div class="right">
                                 <ul class="stp-action">
                                     <li><span class="icon-minimize" (click)="closebottompopup()"></span></li>
-                                    <li><span class="icon-maximize" (click)="handleMaximize()"></span></li>
+                                    <li><span class="icon-maximize" (click)="handleMaximize()" [matTooltipClass] = "tooltipcls" [matTooltip]="maximizeTooltip"></span></li>
                                     <li><span class="icon-close" (click)="closebottompopup()"></span></li>
                                 </ul>
                             </div>

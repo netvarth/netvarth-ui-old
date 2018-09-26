@@ -19,6 +19,9 @@ export class LearnmoreBprofileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    if (this.target) {
+      this.triggerScrollTo(this.target);
+    }
     // window.addEventListener('scroll', this.scroll, true); // third parameter
   }
   ngOnDestroy() {
@@ -33,7 +36,10 @@ export class LearnmoreBprofileComponent implements OnInit, OnDestroy {
 
   public triggerScrollTo(destination) {
     const config: ScrollToConfigOptions = {
-      target: destination
+      target: destination,
+      duration: 150,
+      easing: 'easeOutElastic',
+      offset: 0
     };
     // console.log('destination', destination, 'config', config);
     this._scrollToService.scrollTo(config);

@@ -53,6 +53,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     checkin_label = '';
     checkin_upper = '';
 
+    timeCaption = Messages.CHECKIN_TIME_CAPTION;
+    minCaption = Messages.EST_WAIT_TIME_CAPTION;
+
     constructor(
         private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
@@ -228,7 +231,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
       this.locationobj.back();
     }
 
-    getAppxTime(waitlist) {
+    getAppxTime(waitlist, retcap?) {
+      const retarr = { caption: '', val: ''};
        // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
         /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
           return 'Now';
@@ -239,11 +243,19 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         if (this.checkTimedisplayAllowed(waitlist)) {
           if (waitlist.queue.queueStartTime !== undefined) {
             if (waitlist.hasOwnProperty('serviceTime')) {
-              return waitlist.serviceTime;
+              if (retcap) {
+                return this.timeCaption;
+              } else {
+                return waitlist.serviceTime;
+              }
             } else {
                 // const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
                 // return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
-                return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+                if (retcap) {
+                  return this.minCaption;
+                } else {
+                  return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+                }
             }
           } else {
             return -1;

@@ -1521,4 +1521,24 @@ export class ProviderBprofileSearchComponent implements OnInit {
     }
     return rettxt;
   }
+
+  learnmore_clicked(mod) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+         const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+         this.sharedfunctionobj.sendMessage(pdata);
+   }
+   getMode(mod) {
+     let moreOptions = {};
+     moreOptions = {'show_learnmore': true , 'scrollKey': 'bprofile', 'subKey': mod};
+     return moreOptions;
+   }
 }

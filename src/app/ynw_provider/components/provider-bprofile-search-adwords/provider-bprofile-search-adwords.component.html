@@ -21,6 +21,7 @@
                 </ng-container>
             </ng-container>
         </div>
+        <div ckass="adwordshowless" *ngIf="adwordshowmore" (click)="toggle_adwordshowmore()"><strong>Show less</strong></div>
         <div class="lc3-2 lcd" *ngIf="adwordsmaxcount > 0 && adword_list.length ==0 && query_executed == true">
             <div class="ttle">{{emptyMsg}}</div>
         </div>
