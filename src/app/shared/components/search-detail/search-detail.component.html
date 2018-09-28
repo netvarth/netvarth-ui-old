@@ -325,7 +325,14 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div>
+                                    <!-- <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div> -->
+                                    <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) " class="ynw-verified">
+                                        <mat-chip-list>
+                                            <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==1">Basic</mat-chip>
+                                            <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</mat-chip>
+                                            <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==3">Premium</mat-chip>
+                                        </mat-chip-list>
+                                    </div>
                                     <h3 (click)="providerDetClicked(search_result)" [matTooltipClass] = "tooltipcls" [matTooltip]="bNameTooltip">{{search_result.fields.title | titlecase}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
                                     <span class="address">{{search_result.fields.place1 | titlecase }}</span>
 
@@ -362,7 +369,13 @@
                                 </div>
                             </div>
                             <div class="tp-r">
-                                <div *ngIf="search_result.fields.ynw_verified==1" class="ynw-verified"></div>
+                                <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3)" class="ynw-verified">
+                                    <mat-chip-list>
+                                        <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==1">Basic</mat-chip>
+                                        <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</mat-chip>
+                                        <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==3">Premium</mat-chip>
+                                    </mat-chip-list>
+                                </div>
                                 <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
                                     <li *ngIf="search_result.fields.parking_type_location1" [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span class="icon-parking"></span></li>
                                     <li *ngIf="search_result.fields.always_open_location1==1" [matTooltip]="'24 Hours Open'"><span class="icon-open-time"></span></li>

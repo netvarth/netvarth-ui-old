@@ -48,6 +48,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   mode = 'normal';
   normaladd_msg1 = this.shared_functions.getProjectMesssages('SERVICE_ADDED1');
   normaladd_msg2 = this.shared_functions.getProjectMesssages('SERVICE_ADDED2');
+  disable_price = true;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
@@ -63,10 +64,15 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
 
      const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
      this.type = this.data.type;
-
      const package_id = (user['accountLicenseDetails']['accountLicense']['licPkgOrAddonId']) ?
      user['accountLicenseDetails']['accountLicense']['licPkgOrAddonId'] : null;
      this.base_licence = (package_id === 1) ? true : false;
+     if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
+        this.disable_price = true;
+     } else {
+       this.disable_price = false;
+     }
+
 
      this.createForm();
      if (this.data.type === 'edit') {
@@ -92,32 +98,58 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   createForm() {
-    this.amForm = this.fb.group({
-    name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-    description: ['', Validators.compose([Validators.maxLength(500)])],
-    // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
-    serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
-    totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-    isPrePayment: [{'value': false , 'disabled': this.base_licence }],
-    taxable: [false],
-    notification: [false]
-    });
+    if (this.disable_price) {
+      this.amForm = this.fb.group({
+        name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+        description: ['', Validators.compose([Validators.maxLength(500)])],
+        // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+       // totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+       // isPrePayment: [{'value': false , 'disabled': this.base_licence }],
+       // taxable: [false],
+        notification: [false]
+        });
+    } else {
+      this.amForm = this.fb.group({
+          name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+          description: ['', Validators.compose([Validators.maxLength(500)])],
+          // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
+          serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+          totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+          isPrePayment: [{'value': false , 'disabled': this.base_licence }],
+          taxable: [false],
+          notification: [false]
+          });
+      }
   }
 
   setValue(data) {
     // console.log(data, data['taxable'] );
-    this.amForm.setValue({
-      'name': data['name'] || this.amForm.get('name').value,
-      'description': data['description'] || this.amForm.get('description').value,
-      'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
-      'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
-      'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
-                              data['minPrePaymentAmount'] !== 0
-                              ) ? true : false,
-      'taxable': data['taxable'] || this.amForm.get('taxable').value,
-      'notification': data['notification'] || this.amForm.get('notification').value,
-    });
-
+    if (this.disable_price) {
+      this.amForm.setValue({
+        'name': data['name'] || this.amForm.get('name').value,
+        'description': data['description'] || this.amForm.get('description').value,
+        'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
+        /*'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
+        'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
+                                data['minPrePaymentAmount'] !== 0
+                                ) ? true : false,
+        'taxable': data['taxable'] || this.amForm.get('taxable').value,*/
+        'notification': data['notification'] || this.amForm.get('notification').value,
+      });
+    } else {
+      this.amForm.setValue({
+        'name': data['name'] || this.amForm.get('name').value,
+        'description': data['description'] || this.amForm.get('description').value,
+        'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
+        'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
+        'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
+                                data['minPrePaymentAmount'] !== 0
+                                ) ? true : false,
+        'taxable': data['taxable'] || this.amForm.get('taxable').value,
+        'notification': data['notification'] || this.amForm.get('notification').value,
+      });
+    }
     this.changeNotification();
     this.changePrepayment();
   }
@@ -125,9 +157,15 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   onSubmit (form_data) {
     this.resetApiErrors();
     form_data.bType = 'Waitlist';
-    form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
-                                     0 : form_data.minPrePaymentAmount;
-    form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
+    if (this.disable_price) {
+      form_data['totalAmount'] = 0;
+      form_data['isPrePayment'] = false;
+      form_data['taxable'] = false;
+    } else {
+      form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
+                                      0 : form_data.minPrePaymentAmount;
+      form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
+    }
     if (this.data.type === 'add') {
        this.createService(form_data);
     } else if (this.data.type === 'edit') {
@@ -188,17 +226,19 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   changePrepayment() {
-    if (this.amForm.get('isPrePayment').value === false) {
-      this.amForm.removeControl('minPrePaymentAmount');
-    } else {
-      if (this.amForm.get('isPrePayment').value === true) {
-        this.getPaymentSettings();
-      }
-      const value = (this.data.type === 'edit' && this.service['minPrePaymentAmount']) ?
-      this.service['minPrePaymentAmount'] : '';
+    if (!this.disable_price) {
+      if (this.amForm.get('isPrePayment').value === false) {
+        this.amForm.removeControl('minPrePaymentAmount');
+      } else {
+        if (this.amForm.get('isPrePayment').value === true) {
+          this.getPaymentSettings();
+        }
+        const value = (this.data.type === 'edit' && this.service['minPrePaymentAmount']) ?
+        this.service['minPrePaymentAmount'] : '';
 
-      this.amForm.addControl('minPrePaymentAmount',
-     new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
+        this.amForm.addControl('minPrePaymentAmount',
+      new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
+      }
     }
   }
 
@@ -371,8 +411,10 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         this.payment_loading = false;
         if (!this.payment_settings.onlinePayment) {
           this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
-          this.amForm.get('isPrePayment').setValue(false);
-          this.changePrepayment();
+          if (!this.disable_price) {
+            this.amForm.get('isPrePayment').setValue(false);
+            this.changePrepayment();
+          }
         }
       },
       error => {

@@ -43,7 +43,7 @@
 
                                   <div class="clr">
                                         <div class="services" *ngIf="specializationslist.length > 0">
-                                            <span class="sub-title">Specializations</span>
+                                            <!-- <span class="sub-title">Specializations</span>
                                             <ul>
                                                 <ng-container *ngIf="specializationslist.length <=specMaxcnt">
                                                 <li *ngFor="let special of specializationslist">{{special}}</li>
@@ -60,7 +60,11 @@
                                                     <li class="viewall" *ngIf="viewallSpec"><span (click)="showallSpecial()" ><i class="icon-disable"></i></span></li>
                                                     </ng-container>
                                                 </ng-container>
-                                            </ul>
+                                            </ul> -->
+                                            <div class="otr-elements">
+                                                <span *ngIf="specializationslist.length > 0">
+                                                <span class="categoryspec" *ngFor="let spec of specializationslist; let i = index"><span *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
+                                            </div>
                                         </div>
                                       <!-- <div class="otr-elements">
                                           <span class="exp" *ngIf="businessjson.domainVirtualFields?.experience">{{businessjson.domainVirtualFields.experience}}</span>
@@ -179,7 +183,7 @@
                                                                 </div>
                                                                 <div class="question-valuearr" *ngIf="vfield.type== 'object'" >
                                                                     <ng-container *ngFor="let vals of vfield.value">
-                                                                        <div class="vfield-row">
+                                                                        <div class="vfield-row" *ngIf="vals.length">
                                                                             <span *ngFor="let field of vals" class="morevalspan">
                                                                                 {{field}}
                                                                             </span>

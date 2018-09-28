@@ -672,6 +672,11 @@ export class CheckInInnerComponent implements OnInit {
       case 3:
       this.main_heading = 'Family Members';
       this.showCreateMember = false;
+      this.addmemberobj.fname = '';
+      this.addmemberobj.lname = '';
+      this.addmemberobj.mobile = '';
+      this.addmemberobj.gender = '';
+      this.addmemberobj.dob =  '';
       break;
     }
     this.step = cstep;

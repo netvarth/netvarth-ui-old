@@ -53,7 +53,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
   </app-field-error-display>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" *ngIf="!disable_price">
     <label class="col-form-label" for="price">Price (<i class="fa fa-inr"></i>) *</label>
     <input matInput type="text" class="form-control" id="price" placeholder="Price"
     formControlName="totalAmount" autocomplete="off">
@@ -64,7 +64,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     'maxlength' : 'Only 10 digits are allowed'})">
   </app-field-error-display>
   </div>
-  <div class="form-group inline">
+  <div class="form-group inline" *ngIf="!disable_price">
   <label class="col-form-label">Enable prepayment</label>
   <mat-slide-toggle
   class="example-margin"
@@ -73,18 +73,19 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
   </mat-slide-toggle>
   </div>
-  <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
-    <label class="col-form-label" for="prepayment_amount">Prepayment Amount (<i class="fa fa-inr"></i>) *</label>
-    <input matInput type="text" class="form-control" id="prepayment_amount" placeholder="Prepayment Amount"
-    formControlName="minPrePaymentAmount" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
-    {'required' : 'Please enter prepayment amount',
-    'pattern' : 'Enter a valid amount'})">
-  </app-field-error-display>
-  </div>
-
-  <div class="form-group inline">
+  <ng-container *ngIf="!disable_price">
+    <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
+      <label class="col-form-label" for="prepayment_amount">Prepayment Amount (<i class="fa fa-inr"></i>) *</label>
+      <input matInput type="text" class="form-control" id="prepayment_amount" placeholder="Prepayment Amount"
+      formControlName="minPrePaymentAmount" autocomplete="off">
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
+      [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
+      {'required' : 'Please enter prepayment amount',
+      'pattern' : 'Enter a valid amount'})">
+    </app-field-error-display>
+    </div>
+  </ng-container>
+  <div class="form-group inline" *ngIf="!disable_price">
     <label class="col-form-label">Tax applicable</label>
     <mat-slide-toggle
     class="example-margin"

@@ -120,6 +120,7 @@ export class SearchDetailComponent implements OnInit {
   bNameTooltip = '';
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
+  hideRefineifOneresultchk = false;
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
@@ -131,6 +132,7 @@ export class SearchDetailComponent implements OnInit {
                }
 
   ngOnInit() {
+    this.checkRefineSpecial();
     this.commTooltip = this.shared_functions.getProjectMesssages('COMM_TOOPTIP');
     this.refTooltip = this.shared_functions.getProjectMesssages('REF_TOOPTIP');
     this.bNameTooltip = this.shared_functions.getProjectMesssages('BUSSNAME_TOOPTIP');
@@ -158,6 +160,17 @@ export class SearchDetailComponent implements OnInit {
     }
    // console.log('here', this.screenWidth, this.screenHeight);
 }
+checkRefineSpecial() {
+  const ynwsrchbuttonClicked = this.shared_functions.getitemfromLocalStorage('ynw_srchb');
+  this.shared_functions.removeitemfromLocalStorage('ynw_srchb');
+  if (ynwsrchbuttonClicked === 1) {
+    this.hideRefineifOneresultchk = true;
+  } else {
+    this.hideRefineifOneresultchk = false;
+  }
+  // console.log('ref check', this.hideRefineifOneresultchk);
+}
+
 getDomainListMain() {
   return new Promise( (resolve, reject) => {
     const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
@@ -551,7 +564,7 @@ setEnvironment(bypassotherfunction?) {
         }
       }
     }
-   console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
+   // console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
     this.arraycreatedfromquerystring = true;
   }
 
@@ -670,6 +683,7 @@ setEnvironment(bypassotherfunction?) {
     this.querystringrefineretain_arr = [];
   }
   handlesearchClick(obj) {
+    this.checkRefineSpecial();
    // console.log('from details', obj);
     this.resetRefineVariables(); // calling method to reset the refine variables
 
@@ -1002,6 +1016,13 @@ setEnvironment(bypassotherfunction?) {
             if (this.search_data.hits.found === 0) {
               this.nosearch_results = true;
             }
+            /*if (this.hideRefineifOneresultchk) {
+              if (this.search_result_count === 1) {
+                this.showrefinedsection = false;
+              } else {
+                this.showrefinedsection = true;
+              }
+            }*/
           });
       });
     }

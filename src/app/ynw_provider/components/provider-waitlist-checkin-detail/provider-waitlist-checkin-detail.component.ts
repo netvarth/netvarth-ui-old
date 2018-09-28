@@ -252,7 +252,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
                 // const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
                 // return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
                 if (retcap) {
-                  return this.minCaption;
+                  return 'Date/Est Wait Time'; // this.minCaption;
                 } else {
                   return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
                 }

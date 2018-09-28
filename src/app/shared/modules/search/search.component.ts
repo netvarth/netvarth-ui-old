@@ -286,7 +286,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.moreoptions_arr = result;
     this.showmoreoptionsSec = false;
     // console.log('moreoption returned', this.moreoptions_arr);
-    this.do_search('');
+    this.do_search('', true);
   }
 
   // method with decides whether the more option link is to be display
@@ -753,7 +753,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
  selectedOption(kw) {
    // console.log('selected', kw);
  }
- do_search(labelqpassed?) {
+ do_search(labelqpassed?, buttonclick?) {
+   // console.log('buttonclick', buttonclick);
+   this.shared_functions.setitemonLocalStorage('ynw_srchb', 1);
    this.closeMoreoptions();
    // console.log('search clicked');
 

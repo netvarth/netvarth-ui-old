@@ -294,6 +294,25 @@
 
                                     </ng-container>
 
+                                    <ng-container *ngIf="time_type == 0"> <!-- case of history-->
+                                        <!-- <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
+                                        *ngIf="checkin.waitlistStatus == 'checkedIn'">
+                                          <i class="icon-arrived"></i> {{arrived_upper}}
+                                        </span> -->
+
+                                        <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
+                                        *ngIf="(checkin.waitlistStatus == 'checkedIn'
+                                        || checkin.waitlistStatus == 'arrived')">
+                                          <i class="icon-play"></i>{{start_label |titlecase}}
+                                        </span>
+
+                                        <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
+                                        *ngIf="checkin.waitlistStatus == 'started'">
+                                          <i class="icon-play"></i>Done
+                                        </span>
+
+                                    </ng-container>
+
                                     <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
                                     *ngIf="checkin.waitlistStatus != 'checkedIn' &&
                                     checkin.waitlistStatus != 'cancelled' && time_type !== 2
@@ -362,6 +381,12 @@
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                                           *ngIf="time_type!=0 &&
                                           ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
+                                            Cancel {{checkin_label}}
+                                          </button>
+                                          <button type="button" mat-menu-item
+                                          (click)="changeWaitlistStatus(checkin, 'CANCEL')"
+                                          *ngIf="
+                                          ( checkin.waitlistStatus == 'arrived')">
                                             Cancel {{checkin_label}}
                                           </button>
                                           <!-- <button type="button" mat-menu-item

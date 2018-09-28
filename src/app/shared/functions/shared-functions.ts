@@ -433,7 +433,7 @@ export class SharedFunctions {
   }
 
   imageValidation (file) {
-    console.log('file', file);
+    // console.log('file', file);
     const file_types = projectConstants.IMAGE_FORMATS;
     const image_max_size = projectConstants.IMAGE_MAX_SIZE;
     const error = [];

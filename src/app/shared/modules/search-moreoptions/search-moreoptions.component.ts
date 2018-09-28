@@ -83,18 +83,18 @@ export class SearchMoreOptionsComponent implements OnInit {
         this.searchrefineresult_arr[curi][fieldname][0] = new Array(selval, fieldtype);
       } else {
         if (fieldtype === 'Rating') {  // if current field type is rating, then remove the rating already there
-          console.log('reached inside');
+         // console.log('reached inside');
           this.searchrefineresult_arr[sec_indx][fieldname].splice(0, 1);
         }
         const chk_fieldvalexist = this.check_fieldvalexistsinArray(fieldname, selval);
         if (chk_fieldvalexist[0]['indx'] !== -1) {
-          console.log('here 1');
+         // console.log('here 1');
           this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].splice(chk_fieldvalexist[0]['key'], 1);
           if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']].length === 0) {
             this.searchrefineresult_arr.splice(chk_fieldvalexist[0]['indx'], 1);
           }
         } else {
-          console.log('here 2');
+          // console.log('here 2');
           const curindx = this.searchrefineresult_arr[sec_indx][fieldname].length;
           if (fieldtype === 'Rating') {
             if (selval !== '') {
@@ -115,7 +115,7 @@ export class SearchMoreOptionsComponent implements OnInit {
       this.searchrefineresult_arr[curi][fieldname] = new Array();
       this.searchrefineresult_arr[curi][fieldname][0] = new Array(selval, fieldtype);
     }
-    console.log('refine', this.searchrefineresult_arr);
+    // console.log('refine', this.searchrefineresult_arr);
 
   }
 
