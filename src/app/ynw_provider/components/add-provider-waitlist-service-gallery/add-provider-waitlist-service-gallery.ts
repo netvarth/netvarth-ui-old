@@ -97,7 +97,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
         } else {
          // console.log(this.success_error);
           this.error_list.push(this.success_error);
-          console.log('myerr', this.error_list[0].type, this.error_list[0].size);
+         // console.log('myerr', this.error_list[0].type, this.error_list[0].size);
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
           } else if (this.error_list[0].size) {

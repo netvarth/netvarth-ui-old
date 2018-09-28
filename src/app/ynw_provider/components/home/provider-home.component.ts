@@ -908,6 +908,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   addEditBill(checkin, bill_data) {
+    // console.log('add bill', bill_data);
     const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
@@ -926,6 +927,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   viewBill(checkin, bill_data) {
+    // console.log('billdata', bill_data);
     const dialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],

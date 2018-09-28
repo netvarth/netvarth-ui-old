@@ -24,17 +24,17 @@
                                                         <span class="ttle">Estimated Duration</span>
                                                         <span class="icon-time">  {{service_data.serviceDuration}} min</span>
                                                     </div>
-                                                    <div class="item">
+                                                    <div class="item" *ngIf="!disable_price">
                                                         <span class="ttle">Price</span>
                                                         <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                                                     </div>
-                                                    <div class="item" *ngIf="service_data.isPrePayment">
+                                                    <div class="item" *ngIf="service_data.isPrePayment && !disable_price">
                                                         <span class="ttle">Prepayment Amount</span>
                                                         <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="c-ot m0">
-                                                    <div class="item">
+                                                    <div class="item" *ngIf="!disable_price">
                                                         <span>Tax Applicable:
                                                             <span class="noti-it" [class.yes]="service_data.taxable==true" [class.no]="service_data.taxable==false">{{(service_data.taxable) ? 'Yes' : 'No'}}</span></span>
                                                     </div>

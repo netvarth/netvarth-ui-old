@@ -91,6 +91,7 @@ export class CheckInInnerComponent implements OnInit {
     estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
     nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
     checkinCaption = Messages.CHECKIN_TIME_CAPTION;
+    ddate;
 
     @Input() data: any =  [];
     @Output() returntoParent = new EventEmitter<any>();
@@ -195,7 +196,11 @@ export class CheckInInnerComponent implements OnInit {
         this.sel_checkindate = this.data.moreparams.sel_date;
 
       }
+      const ddd = new Date(this.sel_checkindate);
+      this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+
       this.hold_sel_checkindate = this.sel_checkindate;
+      // console.log('passed seldate', this.hold_sel_checkindate);
       this.getServicebyLocationId (this.sel_loc, this.sel_checkindate);
 
       // if ( this.page_source !== 'provider_checkin') {
@@ -874,18 +879,17 @@ export class CheckInInnerComponent implements OnInit {
     this.resetApi();
     const date = new Date(this.sel_checkindate);
     const newdate = new Date(date);
-
     newdate.setDate(newdate.getDate() + days);
-
     const dd = newdate.getDate();
     const mm = newdate.getMonth() + 1;
     const y = newdate.getFullYear();
 
     const ndate = y + '-' + mm + '-' + dd;
 
-    const strtDt = new Date(this.hold_sel_checkindate);
+    const strtDt = new Date(this.hold_sel_checkindate + ' 00:00:00');
     const nDt = new Date(ndate);
-    if (nDt >= strtDt ) {
+    // console.log('dates', strtDt, nDt, this.hold_sel_checkindate);
+    if (nDt.getTime() >= strtDt.getTime() ) {
       this.sel_checkindate =  ndate;
       this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
@@ -900,6 +904,8 @@ export class CheckInInnerComponent implements OnInit {
       this.isFuturedate = false;
     }
     // console.log('new date', this.hold_sel_checkindate, this.sel_checkindate);
+    const ddd = new Date(this.sel_checkindate);
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
   }
   /*convertToDate(dt) {
     const splt = dt.split('-');
@@ -910,7 +916,7 @@ export class CheckInInnerComponent implements OnInit {
     const seldate = new Date(this.sel_checkindate);
     const strtDt  = new Date(this.hold_sel_checkindate);
     // console.log(strtDt, strtDt);
-    if (strtDt >= seldate ) {
+    if (strtDt.getTime() >= seldate.getTime() ) {
       return true;
     } else {
       return false;
