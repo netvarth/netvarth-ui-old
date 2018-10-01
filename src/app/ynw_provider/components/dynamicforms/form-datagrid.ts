@@ -35,10 +35,12 @@ export class DataGridQuestion extends FormBase<string> {
         const row = columns[i];
         if (data[row.key]) {
           row['value'] = data[row.key];
+         // console.log('row', row);
           columns[i] = row;
         }
       }
     }
+   // console.log('columns', columns);
     return columns;
   }
 

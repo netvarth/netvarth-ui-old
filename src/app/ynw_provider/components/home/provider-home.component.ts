@@ -163,12 +163,18 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     ];
 
   ngOnInit() {
+
     const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
       // console.log('exists', savedtype);
       this.time_type = savedtype;
     } else {
      // console.log('NOT');
+    }
+    const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp');
+    if (stattype !== undefined && stattype !== null) {
+      // console.log('exists', savedtype);
+      this.status_type = stattype;
     }
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
     this.getBusinessProfile();
@@ -370,15 +376,25 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             // this.queues = data;
             const Cqueues = data;
             this.queues = [];
-
+            const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
+            const savedQok = [];
             for ( const que of Cqueues) {
               if (que.queueState === 'ENABLED') {
+                // console.log('que', que);
+                if (que.id === savedQ) {
+                  savedQok.push(que);
+                }
                 this.queues.push(que);
               }
             }
-            if (this.queues[0] && this.selected_queue == null) {
-              this.selectedQueue(this.queues[0]);
-            }
+            // console.log('saved q', savedQok);
+            if (savedQok.length > 0) {
+              this.selectedQueue(savedQok[0]);
+            } else {
+              if (this.queues[0] && this.selected_queue == null) {
+                this.selectedQueue(this.queues[0]);
+              }
+          }
           },
           error => {
             this.queues = [];
@@ -426,7 +442,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     // this.getHistoryCheckinCount();
   }
 
-  selectedQueue(selected_queue) {
+  selectedQueue(selected_queue, qclick?) {
+   // console.log('selected q', selected_queue.id);
+    if (selected_queue.id) {
+      this.shared_functions.setitemonLocalStorage('pdq', selected_queue.id);
+    }
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
     this.today_waitlist_count = 0;
@@ -605,7 +625,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.check_in_list  = this.check_in_filtered_list = [];
     this.time_type = time_type;
     this.shared_functions.setitemonLocalStorage('pdtyp', this.time_type);
-    this.status_type = 'all';
+    const stype = this.shared_functions.getitemfromLocalStorage('pdStyp');
+    if (stype) {
+      this.status_type = stype;
+    } else {
+      this.status_type = 'cancelled';
+    }
     this.setFilterDateMaxMin();
     // this.queues = [];
     this.loadApiSwitch('setTimeType');
@@ -717,6 +742,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
 
     this.status_type = type;
+    this.shared_functions.setitemonLocalStorage('pdStyp', this.status_type);
     let status: any = this.status_type ;
 
     switch (type) {
@@ -896,7 +922,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       },
       error => {
         // console.log(error);
-        if (error.status === 422 && this.time_type === 1) {
+        if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
           this.addEditBill(checkin , null);
         } else {
           this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
@@ -939,7 +965,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      // console.log(result);
       if (result === 'updateBill') {
         this.addEditBill(checkin, bill_data);
       } else if (result === 'reloadlist') {
@@ -974,7 +1000,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    console.log('page', pg);
+    // console.log('page', pg);
     this.doSearch();
   }
 

@@ -313,10 +313,15 @@
 
                                     </ng-container>
 
-                                    <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
+                                    <!-- <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
                                     *ngIf="checkin.waitlistStatus != 'checkedIn' &&
                                     checkin.waitlistStatus != 'cancelled' && time_type !== 2
                                     && ((time_type === 0 && checkin.billStatus) || time_type != 0)"
+                                    [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }"> -->
+
+                                    <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
+                                    *ngIf="checkin.waitlistStatus != 'checkedIn' &&
+                                    checkin.waitlistStatus != 'cancelled' && time_type !== 2"
                                     [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }">
 
                                      <!-- <ng-container *ngIf="!checkin.billStatus">

@@ -71,7 +71,7 @@ export class QuestionService {
   }
 
   createTextField(que, type = 'text') {
-
+   // console.log('que', que);
     const obj = this.defaultObj(que);
     obj['type'] = type;
     if (type === 'text') {
@@ -197,7 +197,14 @@ export class QuestionService {
   }
 
   defaultObj(que) {
-
+   // console.log('optional', que.optional);
+    if (que.optional !== undefined) {
+      if (que.optional) {
+        que.mandatory = 'false';
+      } else {
+        que.mandatory = 'true';
+      }
+    }
     return {
         key: que.name || que.key || que.displayName.toLowerCase().replace(/ /g, ''),
         label:  que.displayName,

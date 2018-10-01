@@ -25,7 +25,7 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.errors = this.messages[this.question.key] || [];
-    console.log('key', this.question);
+   // console.log('key', this.question);
     if (this.question['type'] !== 'url') {
       this.placeholder = this.question.label;
     } else {
@@ -42,7 +42,6 @@ export class DynamicFormQuestionComponent implements OnInit {
   get isValid() { return this.form.controls[this.question.key].valid; }
 
   checkGridValue() {
-    // console.log(this.question['columns']);
     if (this.question['columns'].length === 1) {
        const check_value = this.question['columns'][0].map((e) => {
          if (e.value) {
