@@ -74,12 +74,12 @@
                             <div class="ad-tble">
                                 <div class="ad-l" *ngIf="adwords_maxremaining>0">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
                                 <div class="ad-l" *ngIf="adwords_maxremaining == 0">You have {{adword_list.length}} adword(s).</div>
+                                <div *ngIf="adwords_maxremaining==0">To add more adwords, go to <a routerLink="/provider/settings/license"><strong>License & Invoice</strong></a></div>
                                 <div class="ad-r ml-auto">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre" *ngIf="adwords_remaining>0"><a routerLink="/provider/settings/license">+{{adwords_remaining}} more</a></span>
                                     <span  (click)="addAdwords()" class="cs-btn bt8" *ngIf="adwords_maxremaining>0">Add Adwords</span>
                                 </div>
                             </div>
-                            <div *ngIf="adwords_maxremaining==0">To add more adwords, go to <a routerLink="/provider/settings/license"><strong>License & invoice</strong></a></div>
                         </div>
                     </div>
 
@@ -88,11 +88,11 @@
                         <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Profile Name and Summary 
+                            Profile Name and Summary  <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('basic-information')"></i></div>
                         </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="cd-t">
-                            <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('basic-information')"></i></div>
+                            
                                     <div class="warning" *ngIf="normal_basicinfo_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>

@@ -23,10 +23,12 @@
                 <td data-title="" class="td5">
                     <ul class="controls">
                         <li><span class="message" (click)="addWaitlistMessage(his_wait)">Message</span></li>
-                        <li><span class="view-bill" 
+                        <!-- <li><span class="view-bill" 
                           *ngIf="his_wait.waitlistStatus == 'done'" (click)="getWaitlistBill(his_wait)">Bill</span>
-                          <!-- <span class="view-no-bill" *ngIf="his_wait.waitlistStatus !== 'done'"></span> -->
-                        </li>
+                        </li> -->
+                        <li><span class="view-bill" 
+                            *ngIf="his_wait.billStatus" (click)="getWaitlistBill(his_wait)">Bill</span>
+                          </li>
                         <li><span class="rate-service" [class.rated] = "isRated(his_wait)"
                           *ngIf="his_wait.waitlistStatus == 'done'" (click)="rateService(his_wait)">Rate Your Visit</span>
                           <!-- <span class="rate-no-service" *ngIf="his_wait.waitlistStatus !== 'done'"></span> -->

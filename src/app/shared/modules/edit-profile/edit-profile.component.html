@@ -48,7 +48,7 @@
                             errorMsg="Please select the gender.">
                             </app-field-error-display>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group normalpicker">
                             <label class="col-form-label" for="last_name">Date Of Birth </label>
                             <!-- <mat-datepicker #picker></mat-datepicker>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -93,6 +93,7 @@
             </div>
             <div class="right-menu">
                 <!-- <a [routerLink]="['/provider/bwizard']">Go to wizard</a> -->
+                
                 <div class="right-menu-header">Related Links</div>
                 <ul class="related-link">
                     <li (click)="shared_functions.redirectto('change-password')" class="icon-password">Change Password</li>

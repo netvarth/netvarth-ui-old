@@ -69,10 +69,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     </app-field-error-display>
 </div>
 
-<div class="form-group">
+<div class="form-group normalpicker">
     <label class="col-form-label" for="last_name">Date Of Birth</label>
 
-    <div class="pickerouter1">
+    <div class="pickerouter">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday"
