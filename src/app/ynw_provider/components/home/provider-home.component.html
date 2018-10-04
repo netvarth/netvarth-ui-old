@@ -24,10 +24,11 @@
                   </div>
                   <div class="links"  *ngIf="selected_location">
                       <span class="lnk" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
-                        Today <span class="count">{{today_waitlist_count}}</span>
+                        Today ({{today_waitlist_count}}) <!--<span class="count">{{today_waitlist_count}}</span>-->
                       </span>
                       <span class="lnk" (click)="setTimeType(2)" [ngClass]="{'active': time_type==2}">
-                        Future <span class="count">{{future_waitlist_count}}</span></span>
+                        Future ({{future_waitlist_count}}) <!--<span class="count">{{future_waitlist_count}}</span>-->
+                      </span>
                       <span class="lnk" (click)="setTimeType(0)" [ngClass]="{'active': time_type==0}">
                         History</span>
                   </div>

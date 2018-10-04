@@ -276,6 +276,7 @@
                             color: $cc-black;
                             background: $cc-formbg;
                             border: 1px solid transparent;
+                            margin-top: 0;
                             
                             @include respond-to(ynw-767) {
                                 height: $input-h;

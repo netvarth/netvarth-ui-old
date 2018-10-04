@@ -1331,28 +1331,32 @@ select:-webkit-autofill:focus {
             padding-bottom: 15px;
             display: flex;
             align-items: center; }
-            .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .selected-date {
+            .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body {
               display: flex;
               align-items: center; }
-              .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .selected-date .icon-add, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .selected-date .icon-minus {
-                display: inline-block;
-                vertical-align: bottom;
-                font-size: 1.5rem;
-                color: #00aef2;
-                cursor: pointer; }
-                .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .selected-date .icon-add:before, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .selected-date .icon-minus:before {
-                  width: 50px;
-                  height: 50px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center; }
-                .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .selected-date .icon-add.disable, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .selected-date .icon-minus.disable {
-                  pointer-events: none;
-                  color: #999999; }
+              .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date {
+                display: flex;
+                align-items: center; }
+                .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-add, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-minus {
+                  display: inline-block;
+                  vertical-align: bottom;
+                  font-size: 1.5rem;
+                  color: #00aef2;
+                  cursor: pointer; }
+                  .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-add:before, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-minus:before {
+                    width: 50px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center; }
+                  .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-add.disable, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-minus.disable {
+                    pointer-events: none;
+                    color: #999999; }
             .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group {
               margin-bottom: 0; }
               .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt {
-                width: 30px; }
+                width: 40px;
+                height: 40px; }
                 .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt .pickerouter {
                   display: flex; }
                   .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt .pickerouter input[type="text"] {
@@ -1464,34 +1468,37 @@ select:-webkit-autofill:focus {
               margin-bottom: 0px;
               margin-right: 10px;
               font-weight: 500; }
-            .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .sel-queue {
-              color: #222223;
-              font-weight: 600; }
-            .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .leftarrow, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .rightarrow {
+            .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body {
               display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 50px;
-              height: 50px; }
-              .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .leftarrow i, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .rightarrow i {
+              align-items: center; }
+              .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .sel-queue {
+                color: #222223;
+                font-weight: 600; }
+              .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .leftarrow, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .rightarrow {
                 display: flex;
-                width: 26px;
-                height: 26px;
                 align-items: center;
                 justify-content: center;
-                border: 2px solid #00aef2;
-                -webkit-border-radius: 50px;
-                border-radius: 50px;
-                background-clip: padding-box;
-                /* stops bg color from leaking outside the border: */
-                color: #00aef2;
-                cursor: pointer;
-                font-weight: 600; }
-                .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .leftarrow i.disable, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .rightarrow i.disable {
-                  pointer-events: none;
-                  color: #999999;
-                  border-color: #999999;
-                  cursor: default; }
+                width: 50px;
+                height: 50px; }
+                .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .leftarrow i, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .rightarrow i {
+                  display: flex;
+                  width: 26px;
+                  height: 26px;
+                  align-items: center;
+                  justify-content: center;
+                  border: 2px solid #00aef2;
+                  -webkit-border-radius: 50px;
+                  border-radius: 50px;
+                  background-clip: padding-box;
+                  /* stops bg color from leaking outside the border: */
+                  color: #00aef2;
+                  cursor: pointer;
+                  font-weight: 600; }
+                  .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .leftarrow i.disable, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .rightarrow i.disable {
+                    pointer-events: none;
+                    color: #999999;
+                    border-color: #999999;
+                    cursor: default; }
           .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer {
             margin-bottom: 15px; }
             .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .availer-ul {
@@ -1640,7 +1647,7 @@ select:-webkit-autofill:focus {
                   display: none; }
                 .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element {
                   padding: 10px;
-                  background: #e6e6e6;
+                  background: white;
                   height: 40px; }
                   .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-input-wrapper .mat-input-infix .mat-input-element:focus {
                     -webkit-box-shadow: 0 0 1px #00aef2 inset;
@@ -1651,11 +1658,11 @@ select:-webkit-autofill:focus {
                 .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
                   padding: 15px;
                   height: 50px;
-                  background: #e6e6e6;
+                  background: white;
                   font-family: 'Montserrat', sans-serif;
                   font-weight: 500;
-                  display: flex;
-                  align-items: center; }
+                  /*display: flex;
+                  align-items: center;*/ }
                   .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
                     color: #222223;
                     border: none;
@@ -2000,14 +2007,6 @@ app-footer {
     color: #222223;
     text-overflow: ellipsis;
     padding: 10px; }
-    .form-group input[type="text"] ::-webkit-input-placeholder, .form-group input[type="email"] ::-webkit-input-placeholder, .form-group input[type="password"] ::-webkit-input-placeholder, .form-group input[type="file"] ::-webkit-input-placeholder, .form-group textarea ::-webkit-input-placeholder, .form-group .form-control ::-webkit-input-placeholder, .form-check input[type="text"] ::-webkit-input-placeholder, .form-check input[type="email"] ::-webkit-input-placeholder, .form-check input[type="password"] ::-webkit-input-placeholder, .form-check input[type="file"] ::-webkit-input-placeholder, .form-check textarea ::-webkit-input-placeholder, .form-check .form-control ::-webkit-input-placeholder {
-      color: #004059; }
-    .form-group input[type="text"] :-moz-placeholder, .form-group input[type="email"] :-moz-placeholder, .form-group input[type="password"] :-moz-placeholder, .form-group input[type="file"] :-moz-placeholder, .form-group textarea :-moz-placeholder, .form-group .form-control :-moz-placeholder, .form-check input[type="text"] :-moz-placeholder, .form-check input[type="email"] :-moz-placeholder, .form-check input[type="password"] :-moz-placeholder, .form-check input[type="file"] :-moz-placeholder, .form-check textarea :-moz-placeholder, .form-check .form-control :-moz-placeholder {
-      color: #004059; }
-    .form-group input[type="text"] ::-moz-placeholder, .form-group input[type="email"] ::-moz-placeholder, .form-group input[type="password"] ::-moz-placeholder, .form-group input[type="file"] ::-moz-placeholder, .form-group textarea ::-moz-placeholder, .form-group .form-control ::-moz-placeholder, .form-check input[type="text"] ::-moz-placeholder, .form-check input[type="email"] ::-moz-placeholder, .form-check input[type="password"] ::-moz-placeholder, .form-check input[type="file"] ::-moz-placeholder, .form-check textarea ::-moz-placeholder, .form-check .form-control ::-moz-placeholder {
-      color: #004059; }
-    .form-group input[type="text"] :-ms-input-placeholder, .form-group input[type="email"] :-ms-input-placeholder, .form-group input[type="password"] :-ms-input-placeholder, .form-group input[type="file"] :-ms-input-placeholder, .form-group textarea :-ms-input-placeholder, .form-group .form-control :-ms-input-placeholder, .form-check input[type="text"] :-ms-input-placeholder, .form-check input[type="email"] :-ms-input-placeholder, .form-check input[type="password"] :-ms-input-placeholder, .form-check input[type="file"] :-ms-input-placeholder, .form-check textarea :-ms-input-placeholder, .form-check .form-control :-ms-input-placeholder {
-      color: #004059; }
     .form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="password"]:focus, .form-group input[type="file"]:focus, .form-group textarea:focus, .form-group .form-control:focus, .form-check input[type="text"]:focus, .form-check input[type="email"]:focus, .form-check input[type="password"]:focus, .form-check input[type="file"]:focus, .form-check textarea:focus, .form-check .form-control:focus {
       -webkit-box-shadow: 0 0 1px #00aef2 inset;
       -moz-box-shadow: 0 0 1px #00aef2 inset;
@@ -2017,6 +2016,22 @@ app-footer {
     .form-group input[type="text"]:disabled, .form-group input[type="email"]:disabled, .form-group input[type="password"]:disabled, .form-group input[type="file"]:disabled, .form-group textarea:disabled, .form-group .form-control:disabled, .form-check input[type="text"]:disabled, .form-check input[type="email"]:disabled, .form-check input[type="password"]:disabled, .form-check input[type="file"]:disabled, .form-check textarea:disabled, .form-check .form-control:disabled {
       background: #e6e6e6;
       border: 1px solid transparent; }
+    .form-group input[type="text"]::-moz-placeholder, .form-group input[type="email"]::-moz-placeholder, .form-group input[type="password"]::-moz-placeholder, .form-group input[type="file"]::-moz-placeholder, .form-group textarea::-moz-placeholder, .form-group .form-control::-moz-placeholder, .form-check input[type="text"]::-moz-placeholder, .form-check input[type="email"]::-moz-placeholder, .form-check input[type="password"]::-moz-placeholder, .form-check input[type="file"]::-moz-placeholder, .form-check textarea::-moz-placeholder, .form-check .form-control::-moz-placeholder {
+      color: #999999;
+      font-size: .75rem;
+      font-style: italic; }
+    .form-group input[type="text"]:-ms-input-placeholder, .form-group input[type="email"]:-ms-input-placeholder, .form-group input[type="password"]:-ms-input-placeholder, .form-group input[type="file"]:-ms-input-placeholder, .form-group textarea:-ms-input-placeholder, .form-group .form-control:-ms-input-placeholder, .form-check input[type="text"]:-ms-input-placeholder, .form-check input[type="email"]:-ms-input-placeholder, .form-check input[type="password"]:-ms-input-placeholder, .form-check input[type="file"]:-ms-input-placeholder, .form-check textarea:-ms-input-placeholder, .form-check .form-control:-ms-input-placeholder {
+      color: #999999;
+      font-size: .75rem;
+      font-style: italic; }
+    .form-group input[type="text"]:-moz-placeholder, .form-group input[type="email"]:-moz-placeholder, .form-group input[type="password"]:-moz-placeholder, .form-group input[type="file"]:-moz-placeholder, .form-group textarea:-moz-placeholder, .form-group .form-control:-moz-placeholder, .form-check input[type="text"]:-moz-placeholder, .form-check input[type="email"]:-moz-placeholder, .form-check input[type="password"]:-moz-placeholder, .form-check input[type="file"]:-moz-placeholder, .form-check textarea:-moz-placeholder, .form-check .form-control:-moz-placeholder {
+      color: #999999;
+      font-size: .75rem;
+      font-style: italic; }
+    .form-group input[type="text"]::-webkit-input-placeholder, .form-group input[type="email"]::-webkit-input-placeholder, .form-group input[type="password"]::-webkit-input-placeholder, .form-group input[type="file"]::-webkit-input-placeholder, .form-group textarea::-webkit-input-placeholder, .form-group .form-control::-webkit-input-placeholder, .form-check input[type="text"]::-webkit-input-placeholder, .form-check input[type="email"]::-webkit-input-placeholder, .form-check input[type="password"]::-webkit-input-placeholder, .form-check input[type="file"]::-webkit-input-placeholder, .form-check textarea::-webkit-input-placeholder, .form-check .form-control::-webkit-input-placeholder {
+      color: #999999;
+      font-size: .75rem;
+      font-style: italic; }
   .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"], .form-check input[type="text"], .form-check input[type="email"], .form-check input[type="password"] {
     height: 40px; }
   .form-group textarea, .form-check textarea {
@@ -2041,14 +2056,22 @@ app-footer {
     color: #222223;
     text-overflow: ellipsis;
     padding: 10px; }
-    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element ::-webkit-input-placeholder {
-      color: #004059; }
-    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element :-moz-placeholder {
-      color: #004059; }
-    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element ::-moz-placeholder {
-      color: #004059; }
-    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element :-ms-input-placeholder {
-      color: #004059; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element::-moz-placeholder {
+      color: #999999;
+      font-size: .75rem;
+      font-style: italic; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element:-ms-input-placeholder {
+      color: #999999;
+      font-size: .75rem;
+      font-style: italic; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element:-moz-placeholder {
+      color: #999999;
+      font-size: .75rem;
+      font-style: italic; }
+    .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element::-webkit-input-placeholder {
+      color: #999999;
+      font-size: .75rem;
+      font-style: italic; }
     .mat-form-field .mat-input-wrapper .mat-input-flex .mat-input-infix .mat-input-element:disabled {
       background: #e6e6e6;
       border: 1px solid transparent; }
@@ -2252,6 +2275,24 @@ app-footer {
                 border-width: 0 1.5px 1.5px 0;
             }
         }*/ }
+        .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .helprighticon {
+          padding: 0;
+          width: 30px;
+          height: 30px;
+          margin-left: 5px;
+          cursor: pointer;
+          -moz-transition: all 300ms;
+          -o-transition: all 300ms;
+          -webkit-transition: all 300ms;
+          transition: all 300ms; }
+          .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .helprighticon i {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center; }
+          .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .helprighticon:hover {
+            color: #00aef2; }
         .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
           -moz-transform: rotate(0deg) !important;
           -o-transform: rotate(0deg) !important;
@@ -3577,6 +3618,43 @@ header {
     .commonpopupmainclass .mat-dialog-content .form-group.bold label,
     .googlemainmappopup .mat-dialog-content .form-group.bold label, .outer-card .mat-dialog-content .form-group.bold label, .consumerpopupmainclass .mat-dialog-content .form-group.bold label {
       font-weight: 600; }
+    .signupmainclass .mat-dialog-content .form-group.mobilecont .phoneprefix,
+    .loginmainclass .mat-dialog-content .form-group.mobilecont .phoneprefix,
+    .moreoptionsmainclass .mat-dialog-content .form-group.mobilecont .phoneprefix,
+    .forgotpasswordmainclass .mat-dialog-content .form-group.mobilecont .phoneprefix,
+    .commonpopupmainclass .mat-dialog-content .form-group.mobilecont .phoneprefix,
+    .googlemainmappopup .mat-dialog-content .form-group.mobilecont .phoneprefix, .outer-card .mat-dialog-content .form-group.mobilecont .phoneprefix, .consumerpopupmainclass .mat-dialog-content .form-group.mobilecont .phoneprefix {
+      width: 10%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #b6cdd8;
+      float: left; }
+    .signupmainclass .mat-dialog-content .form-group.mobilecont input[type="text"],
+    .loginmainclass .mat-dialog-content .form-group.mobilecont input[type="text"],
+    .moreoptionsmainclass .mat-dialog-content .form-group.mobilecont input[type="text"],
+    .forgotpasswordmainclass .mat-dialog-content .form-group.mobilecont input[type="text"],
+    .commonpopupmainclass .mat-dialog-content .form-group.mobilecont input[type="text"],
+    .googlemainmappopup .mat-dialog-content .form-group.mobilecont input[type="text"], .outer-card .mat-dialog-content .form-group.mobilecont input[type="text"], .consumerpopupmainclass .mat-dialog-content .form-group.mobilecont input[type="text"] {
+      width: 90%; }
+    .signupmainclass .mat-dialog-content .form-group.agree .mat-checkbox label,
+    .loginmainclass .mat-dialog-content .form-group.agree .mat-checkbox label,
+    .moreoptionsmainclass .mat-dialog-content .form-group.agree .mat-checkbox label,
+    .forgotpasswordmainclass .mat-dialog-content .form-group.agree .mat-checkbox label,
+    .commonpopupmainclass .mat-dialog-content .form-group.agree .mat-checkbox label,
+    .googlemainmappopup .mat-dialog-content .form-group.agree .mat-checkbox label, .outer-card .mat-dialog-content .form-group.agree .mat-checkbox label, .consumerpopupmainclass .mat-dialog-content .form-group.agree .mat-checkbox label {
+      margin-bottom: 0; }
+    .signupmainclass .mat-dialog-content .form-group.agree .terms-link,
+    .loginmainclass .mat-dialog-content .form-group.agree .terms-link,
+    .moreoptionsmainclass .mat-dialog-content .form-group.agree .terms-link,
+    .forgotpasswordmainclass .mat-dialog-content .form-group.agree .terms-link,
+    .commonpopupmainclass .mat-dialog-content .form-group.agree .terms-link,
+    .googlemainmappopup .mat-dialog-content .form-group.agree .terms-link, .outer-card .mat-dialog-content .form-group.agree .terms-link, .consumerpopupmainclass .mat-dialog-content .form-group.agree .terms-link {
+      height: 20px;
+      display: inline-block;
+      margin-left: 5px;
+      font-size: .75rem; }
     .signupmainclass .mat-dialog-content .form-group:last-child,
     .loginmainclass .mat-dialog-content .form-group:last-child,
     .moreoptionsmainclass .mat-dialog-content .form-group:last-child,
@@ -3651,7 +3729,7 @@ header {
           .googlemainmappopup .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .outer-card .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select, .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
             padding: 10px;
             height: 40px;
-            background: #e6e6e6; }
+            background: white; }
             .signupmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
             .loginmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
             .moreoptionsmainclass .mat-dialog-content .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-trigger,
@@ -4415,8 +4493,8 @@ header {
     .commonpopupmainclass .mat-dialog-content .pickerouter,
     .googlemainmappopup .mat-dialog-content .pickerouter, .outer-card .mat-dialog-content .pickerouter, .consumerpopupmainclass .mat-dialog-content .pickerouter {
       display: flex;
-      height: 26px;
-      width: 26px; }
+      /*height: 26px;
+      width: 26px;*/ }
       .signupmainclass .mat-dialog-content .pickerouter input[type="text"],
       .loginmainclass .mat-dialog-content .pickerouter input[type="text"],
       .moreoptionsmainclass .mat-dialog-content .pickerouter input[type="text"],
@@ -5472,14 +5550,19 @@ header {
     -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
     position: relative;
-    display: flex; }
+    display: flex;
+    /*.bt1 {
+        margin-right: 10px;
+    }*/ }
     .signupmainclass .mat-dialog-actions .bt1,
     .loginmainclass .mat-dialog-actions .bt1,
     .moreoptionsmainclass .mat-dialog-actions .bt1,
     .forgotpasswordmainclass .mat-dialog-actions .bt1,
     .commonpopupmainclass .mat-dialog-actions .bt1,
     .googlemainmappopup .mat-dialog-actions .bt1, .outer-card .mat-dialog-actions .bt1, .consumerpopupmainclass .mat-dialog-actions .bt1 {
-      margin-right: 10px; }
+      margin-right: 0;
+      order: 2;
+      margin-left: 10px; }
     .signupmainclass .mat-dialog-actions .resendouter,
     .loginmainclass .mat-dialog-actions .resendouter,
     .moreoptionsmainclass .mat-dialog-actions .resendouter,
@@ -5676,7 +5759,9 @@ header {
   .loginmainclass .mat-dialog-actions .newuser {
     color: #222223;
     margin-bottom: 0;
-    cursor: default; }
+    cursor: default;
+    font-weight: 600;
+    font-size: .875rem; }
     .loginmainclass .mat-dialog-actions .newuser span {
       color: #00aef2;
       cursor: pointer; }
@@ -5975,14 +6060,22 @@ header {
         height: 30px;
         border: none;
         background: #f2f2f2; }
-        .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input ::-webkit-input-placeholder {
-          font-size: .75rem; }
-        .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input :-moz-placeholder {
-          font-size: .75rem; }
-        .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input ::-moz-placeholder {
-          font-size: .75rem; }
-        .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input :-ms-input-placeholder {
-          font-size: .75rem; }
+        .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input::-moz-placeholder {
+          color: #999999;
+          font-size: .75rem;
+          font-style: italic; }
+        .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input:-ms-input-placeholder {
+          color: #999999;
+          font-size: .75rem;
+          font-style: italic; }
+        .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input:-moz-placeholder {
+          color: #999999;
+          font-size: .75rem;
+          font-style: italic; }
+        .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input::-webkit-input-placeholder {
+          color: #999999;
+          font-size: .75rem;
+          font-style: italic; }
         .commonpopupmainclass .mat-dialog-content .galul li .galimg_outer .gal_caption input:focus {
           -webkit-box-shadow: 0 0 1px #00aef2 inset;
           -moz-box-shadow: 0 0 1px #00aef2 inset;
@@ -6857,7 +6950,8 @@ header {
               font-size: 0.875rem;
               color: #222223;
               background: #e6e6e6;
-              border: 1px solid transparent; }
+              border: 1px solid transparent;
+              margin-top: 0; }
               @media only screen and (max-width: 767px) {
                 .srch .sa .sa-fld .sa-src .search_keyword_class .mat-input-infix .mat-input-element {
                   height: 50px; } }
@@ -8971,7 +9065,25 @@ footer.dashb {
       .content .col-a .card .pubs.w-dta .ctrl .ct-l h2 {
         margin-bottom: 5px;
         font-size: 1.125rem;
-        font-weight: 500; }
+        font-weight: 500;
+        display: flex; }
+        .content .col-a .card .pubs.w-dta .ctrl .ct-l h2 .helprighticon {
+          width: 20px;
+          height: 20px;
+          margin-left: 5px;
+          cursor: pointer;
+          -moz-transition: all 300ms;
+          -o-transition: all 300ms;
+          -webkit-transition: all 300ms;
+          transition: all 300ms; }
+          .content .col-a .card .pubs.w-dta .ctrl .ct-l h2 .helprighticon i {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center; }
+          .content .col-a .card .pubs.w-dta .ctrl .ct-l h2 .helprighticon:hover {
+            color: #00aef2; }
       .content .col-a .card .pubs.w-dta .ctrl .ct-l .status {
         font-family: 'Montserrat', sans-serif;
         font-weight: 500;
@@ -9018,12 +9130,37 @@ footer.dashb {
     position: relative;
     margin-bottom: 10px;
     font-size: 1.125rem;
-    font-weight: 500; }
+    font-weight: 500;
+    display: flex; }
+    .content .col-a .card .adwds.w-dta h2 .helprighticon {
+      width: 20px;
+      height: 20px;
+      margin-left: 5px;
+      cursor: pointer;
+      -moz-transition: all 300ms;
+      -o-transition: all 300ms;
+      -webkit-transition: all 300ms;
+      transition: all 300ms; }
+      .content .col-a .card .adwds.w-dta h2 .helprighticon i {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center; }
+      .content .col-a .card .adwds.w-dta h2 .helprighticon:hover {
+        color: #00aef2; }
   .content .col-a .card .adwds.w-dta .ad-tble {
     display: flex; }
     @media only screen and (max-width: 767px) {
       .content .col-a .card .adwds.w-dta .ad-tble {
         flex-direction: column; } }
+    .content .col-a .card .adwds.w-dta .ad-tble .ad-l {
+      align-self: center;
+      flex-basis: 50%; }
+      @media only screen and (max-width: 767px) {
+        .content .col-a .card .adwds.w-dta .ad-tble .ad-l {
+          align-self: flex-start;
+          flex-basis: 100%; } }
     .content .col-a .card .adwds.w-dta .ad-tble .ad-r {
       display: flex;
       flex-wrap: wrap;
@@ -9043,7 +9180,9 @@ footer.dashb {
         border: 1px solid #999999;
         font-size: .75rem;
         margin-left: 10px;
-        margin-bottom: 10px; }
+        margin-bottom: 3px;
+        margin-top: 3px;
+        align-self: flex-start; }
         .content .col-a .card .adwds.w-dta .ad-tble .ad-r span.mre {
           border-color: #00aef2; }
           .content .col-a .card .adwds.w-dta .ad-tble .ad-r span.mre:hover {
@@ -11995,6 +12134,7 @@ footer.dashb {
               position: relative;
               color: #00cc96; }
               .comn-cls .w-dta .card .copy .left .lc11 .lc1-1 .subs .subs-box .pack .icon-tick {
+                display: none;
                 font-size: 1.2rem;
                 width: 20px;
                 height: 20px;
@@ -12471,6 +12611,8 @@ footer.dashb {
               -webkit-transition: all 300ms;
               transition: all 300ms;
               cursor: pointer; }
+              .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd .outer .td.td0 {
+                width: 50px; }
             .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li.ttd.new {
               border-bottom: 2px solid #fff;
               background: #92f6c9; }
@@ -14106,10 +14248,23 @@ header.consumer {
               flex-grow: 1; }
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified {
                 background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
-                width: 65px;
-                height: 20px;
+                width: 90px;
+                height: 30px;
                 display: none;
-                margin-left: -3px; }
+                margin-left: -3px;
+                position: relative; }
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified .level {
+                  position: absolute;
+                  top: 5px;
+                  right: -70px;
+                  font-size: .75rem;
+                  font-weight: 600; }
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified .level.basic {
+                    color: rgba(255, 255, 255, 0.3); }
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified .level.basicplus {
+                    color: #c499ff; }
+                  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified .level.premium {
+                    color: #ffaf51; }
                 @media only screen and (max-width: 767px) {
                   .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .ynw-verified {
                     display: block; } }
@@ -14124,7 +14279,8 @@ header.consumer {
                 -o-transition: all 300ms;
                 -webkit-transition: all 300ms;
                 transition: all 300ms;
-                cursor: pointer; }
+                cursor: pointer;
+                display: table; }
                 .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 h3:hover {
                   color: #00aef2; }
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .address {
@@ -14239,7 +14395,22 @@ header.consumer {
               width: 110px;
               height: 32px;
               margin-left: auto;
-              margin-bottom: 15px; }
+              margin-bottom: 25px;
+              position: relative; }
+              .content .c-outer .c-body .srlst .top-sect .tp-r .ynw-verified .level {
+                position: absolute;
+                width: 100%;
+                left: 0;
+                bottom: -12px;
+                font-size: .75rem;
+                padding-right: 5px;
+                font-weight: 600; }
+                .content .c-outer .c-body .srlst .top-sect .tp-r .ynw-verified .level.basic {
+                  color: rgba(255, 255, 255, 0.3); }
+                .content .c-outer .c-body .srlst .top-sect .tp-r .ynw-verified .level.basicplus {
+                  color: #c499ff; }
+                .content .c-outer .c-body .srlst .top-sect .tp-r .ynw-verified .level.premium {
+                  color: #ffaf51; }
               @media only screen and (max-width: 767px) {
                 .content .c-outer .c-body .srlst .top-sect .tp-r .ynw-verified {
                   display: none; } }

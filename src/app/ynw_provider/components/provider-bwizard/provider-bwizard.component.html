@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label>Address</label>
                                     <span class="expl">Enter the Address/Direction where your {{customer_label}}s can find you.</span>
-                                    <textarea class="form-control" placeholder="This is what your patients see when they search online" id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address" #locaddress></textarea>
+                                    <textarea class="form-control" placeholder="This is what your {{customer_label}}s see when they search online" id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address" #locaddress></textarea>
                                 </div>
                                 <!-- <div class="form-group pcde">
                                     <label>Pincode</label>
@@ -111,7 +111,7 @@
                                 <div class="form-group">
                                     <label>Location Name</label>
                                     <span class="expl">Display name of the location where you render services for your {{customer_label}}s.</span>
-                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="This is what your patients see when they search online" autocomplete="off" maxlength="50">
+                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="This is what your {{customer_label}}s see when they search online" autocomplete="off" maxlength="50">
                                     <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
                                 </div>
                                 <div class="form-group">
@@ -152,7 +152,7 @@
                         <div class="flds">
                             <div class="form-group" >
                                 <label class="title16">Working Hours</label>
-                                <span class="expl">This shows your office/business working hours</span>
+                                <span class="expl">This shows your office/business hours</span>
                                 <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
                                 <li *ngFor="let schedule of display_schedule">
                                     <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
@@ -192,7 +192,7 @@
                     <div class="content">
                         <div class="stik">
                             <ul class="info-lst">
-                                <li>You can turn On or Off anytime in Settings -> Profile & Search -> Profile!</li>
+                                <li>You can turn On or Off anytime in Settings -> Profile & Search -> Profile</li>
                             </ul>
                         </div>
 

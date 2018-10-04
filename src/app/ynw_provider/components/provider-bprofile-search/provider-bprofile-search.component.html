@@ -22,7 +22,7 @@
                     </div>
                     <div class="card" *ngIf="normal_profile_active==2 || normal_locationinfo_show==4">
                         <div class="pubs" >
-                            <h2>Public Search <i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search')"></i> <!--<span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span>--></h2>
+                            <h2>Public Search <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search', $event)"></i></div> <!--<span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span>--></h2>
                             <div class="wbox" >
                                 <div class="bx-ico"><i data-icon="m"></i></div>
                                 <div class="bx-copy">
@@ -43,7 +43,7 @@
 
                             <div class="ctrl">
                                 <div class="ct-l">
-                                        <h2>Public Search <i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search')"></i> <!--<span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span>--></h2>
+                                        <h2>Public Search <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search', $event)"></i></div> <!--<span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span>--></h2>
 
                                         <span class="status">Current Status -
                                             <span class="on" *ngIf="normal_search_active">On</span>
@@ -57,24 +57,23 @@
                                         </ng-container>
                                 </div>
                                 <div class="ct-r ml-auto">
-                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="handle_searchstatus()">Turn Off</button>
+                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="confirm_searchStatus()">Turn Off</button>
                                     <!-- <span *ngIf="normal_search_active"><i data-icon="m" ></i>Your customer can’t find you online</span> -->
-                                    <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="handle_searchstatus()">Turn On</button>
+                                    <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="confirm_searchStatus()">Turn On</button>
                                 </div>
                             </div>
                         </div>
                         <!-- <div class="adwds" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0"> -->
                         <div class="adwds w-dta" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0">
-                                <h2>Adwords</h2>
+                                <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div></h2>
                                 <p><strong>Sorry!</strong> Currently you did not have any adwords. Would you like to buy adwords?</p>
                                 <span (click)="buyAdwords()" class="cs-btn bt3">Buy Adwords</span>
                         </div>
                         <div class="adwds w-dta" *ngIf="normal_adworkds_active && adwordsmaxcount > 0">
-                            <h2>Adwords</h2>
+                            <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div></h2>
                             <div class="ad-tble">
                                 <div class="ad-l" *ngIf="adwords_maxremaining>0">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
-                                <div class="ad-l" *ngIf="adwords_maxremaining == 0">You have {{adword_list.length}} adword(s).</div>
-                                <div *ngIf="adwords_maxremaining==0">To add more adwords, go to <a routerLink="/provider/settings/license"><strong>License & Invoice</strong></a></div>
+                                <div class="ad-l" *ngIf="adwords_maxremaining == 0">You have {{adword_list.length}} adword(s). To add more adwords, go to <a routerLink="/provider/settings/license"><strong>License & Invoice</strong></a></div>
                                 <div class="ad-r ml-auto">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre" *ngIf="adwords_remaining>0"><a routerLink="/provider/settings/license">+{{adwords_remaining}} more</a></span>
                                     <span  (click)="addAdwords()" class="cs-btn bt8" *ngIf="adwords_maxremaining>0">Add Adwords</span>
@@ -88,9 +87,10 @@
                         <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Profile Name and Summary  <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('basic-information')"></i></div>
+                            Profile Name and Summary <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('basic-information', $event)"></i></div>
                         </mat-panel-title>
                         </mat-expansion-panel-header>
+                        
                         <div class="cd-t">
                             
                                     <div class="warning" *ngIf="normal_basicinfo_show==1">
@@ -217,7 +217,7 @@
 
                                             <div class="schedule_msgdiv" *ngIf="display_schedule.length > 0">
                                             <ul class="info-lst">
-                                                <li>You can change the working hours by editing the queues of this location. <span (click)="editQueue()" class="pointer-cursor"><b>Click here</b></span> to go to view the queues.</li>
+                                                <li>You can change the working hours by editing the queues of this location. <span (click)="editQueue()" class="pointer-cursor"><b>Click here</b></span> to view the queues.</li>
                                             </ul>
                                             <!-- <span  class="cs-btn bt3" (click)="change_schedulepopup()">Change</span> -->
                                             </div>
@@ -235,10 +235,10 @@
                                 <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Privacy Settings
+                                    Privacy Settings <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)"></i></div>
                                 </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('privacy-settings')"></i></div>
+                                
                                     <div class="no-dta" *ngIf="normal_privacy_settings_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
@@ -342,10 +342,9 @@
                             <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                             <mat-panel-title>
-                                Specialization
+                                Specialization <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('specialization', $event)"></i></div>
                             </mat-panel-title>
                             </mat-expansion-panel-header>
-                            <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('specialization')"></i></div>
                             <div class="no-dta" *ngIf="normal_specilization_show==1">
                                 <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                             </div>
@@ -368,10 +367,9 @@
                                 <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Languages Known
+                                    Languages Known <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('languages-known', $event)"></i></div>
                                 </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('languages-known')"></i></div>
                                 <div class="no-dta" *ngIf="normal_language_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -573,10 +571,9 @@
                             <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                             <mat-panel-title>
-                                    Additional Info
+                                    Additional Info <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('additional-info', $event)"></i></div>
                             </mat-panel-title>
                             </mat-expansion-panel-header>
-                            <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('additional-info')"></i></div>
                                 <div class="no-dta" *ngIf="normal_domainfield_show==1 || normal_subdomainfield_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -928,10 +925,10 @@
                             <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Photo Gallery
+                                    Gallery <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('photo-gallery', $event)"></i></div>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
-                            <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('photo-gallery')"></i></div>
+                            
                                 <div class="no-dta" *ngIf="normal_gallery_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -997,10 +994,9 @@
                         <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Your Social Media
+                            Your Social Media <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('your-social-media', $event)"></i></div>
                         </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('your-social-media')"></i></div>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==1" >
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>

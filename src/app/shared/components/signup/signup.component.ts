@@ -55,6 +55,11 @@ export class SignUpComponent implements OnInit {
      ngOnInit() {
       this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
       this.moreParams = this.data.moreParams;
+      if (this.data.is_provider === 'true') {
+        this.heading = 'Provider Sign Up';
+      } else if (this.data.is_provider === 'false') {
+        this.heading = 'Consumer Sign Up';
+      }
       if (this.data.moreOptions === undefined) {
           this.data.moreOptions = { isCreateProv: false};
        }
@@ -66,7 +71,7 @@ export class SignUpComponent implements OnInit {
               this.createForm(1);
         }
       } else { // case of claimmable
-        console.log('passedinData', this.data);
+        // console.log('passedinData', this.data);
         this.claimmable = true;
         this.domainIsthere = 1; // this.data.claimData.sector;
         this.createClaimForm(1);
@@ -149,7 +154,7 @@ export class SignUpComponent implements OnInit {
                           selectedDomainIndex: ['', Validators.compose([Validators.required])],
                           selectedSubDomains: [0, Validators.compose([Validators.required])],
                           package_id : ['', Validators.compose([Validators.required])],
-                          terms_condition: ['true'],
+                          terms_condition: [''],
 
                  });
                  this.signupForm.get('is_provider').setValue(this.is_provider);
@@ -167,7 +172,7 @@ export class SignUpComponent implements OnInit {
                           selectedDomainIndex: ['', Validators.compose([Validators.required])],
                           selectedSubDomains: [0, Validators.compose([Validators.required])],
                           package_id : ['', Validators.compose([Validators.required])],
-                          terms_condition: ['true'],
+                          terms_condition: ['false'],
 
                  });
                  this.signupForm.get('is_provider').setValue(this.is_provider);
@@ -188,7 +193,7 @@ export class SignUpComponent implements OnInit {
                           selectedDomainIndex: [{value: '', disabled: true}, Validators.compose([Validators.required])],
                           selectedSubDomains: [{value: 0, disabled: true}, Validators.compose([Validators.required])],
                           package_id : ['', Validators.compose([Validators.required])],
-                          terms_condition: ['true'],
+                          terms_condition: ['false'],
 
                  });
                  this.signupForm.get('is_provider').setValue(this.is_provider);

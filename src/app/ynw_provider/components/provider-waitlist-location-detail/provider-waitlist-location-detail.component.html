@@ -105,7 +105,7 @@
                             <tbody>
                                 <tr *ngFor="let queue of queues">
                                     <td data-title="Queue" class="pointer-cursor"
-                                    (click)="goQueueDetail(queue)" [class.disabled]="queue.queueState=='DISABLED'">
+                                    (click)="goQueueDetail(queue)" [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to edit queue'">
                                     {{queue.name | titlecase}}</td>
                                     <td data-title="Shedule">
                                         <div class="schtd">

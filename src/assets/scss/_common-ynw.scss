@@ -106,10 +106,6 @@ app-footer {
         text-overflow: ellipsis;
         padding:10px;
         
-        @include placeholder {
-            color: darken($linkblue, 30%);
-        }
-        
         &:focus {
             @include box-shadow(0, 0, 1px, $linkblue, inset);
             border: 1px solid $linkblue;
@@ -119,6 +115,27 @@ app-footer {
         &:disabled {
             background: $cc-formbg;
             border: 1px solid transparent;
+        }
+        
+        &::-moz-placeholder {
+            color: $cc-mediumgray;
+            font-size: .75rem;
+            font-style: italic;
+        }
+        &:-ms-input-placeholder{
+            color: $cc-mediumgray;
+            font-size: .75rem;
+            font-style: italic;
+        }
+        &:-moz-placeholder {
+            color: $cc-mediumgray;
+            font-size: .75rem;
+            font-style: italic;
+        }
+        &::-webkit-input-placeholder {
+            color: $cc-mediumgray;
+            font-size: .75rem;
+            font-style: italic;
         }
     }
     input[type="text"], input[type="email"], input[type="password"] {
@@ -157,10 +174,26 @@ app-footer {
                     text-overflow: ellipsis;
                     padding:10px;
                     
-                    @include placeholder {
-                        color: darken($linkblue, 30%);
+                    &::-moz-placeholder {
+                        color: $cc-mediumgray;
+                        font-size: .75rem;
+                        font-style: italic;
                     }
-                    
+                    &:-ms-input-placeholder{
+                        color: $cc-mediumgray;
+                        font-size: .75rem;
+                        font-style: italic;
+                    }
+                    &:-moz-placeholder {
+                        color: $cc-mediumgray;
+                        font-size: .75rem;
+                        font-style: italic;
+                    }
+                    &::-webkit-input-placeholder {
+                        color: $cc-mediumgray;
+                        font-size: .75rem;
+                        font-style: italic;
+                    }
                     &:disabled {
                         background: $cc-formbg;
                         border: 1px solid transparent;
@@ -381,6 +414,27 @@ app-footer {
                             border-width: 0 1.5px 1.5px 0;
                         }
                     }*/
+                    
+                    .helprighticon {
+                        padding: 0;
+                        width: 30px;
+                        height: 30px;
+                        margin-left: 5px;
+                        cursor: pointer;
+                        @include transition(all 300ms);
+                        
+                        i {
+                            width: 30px;
+                            height: 30px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        &:hover {
+                            color: $linkblue;
+                        }
+                    }
                     
                     .mat-expansion-indicator {
                         @include transform(rotate(0deg) !important);

@@ -212,6 +212,13 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
     });
   }
+  confirm_searchStatus() {
+    if (this.normal_search_active) {
+      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
+    } else {
+      this.handle_searchstatus();
+    }
+  }
   handle_searchstatus() {
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
@@ -1522,7 +1529,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     return rettxt;
   }
 
-  learnmore_clicked(mod) {
+  learnmore_clicked(mod, e) {
     /* const dialogRef = this.dialog.open(LearnmoreComponent, {
            width: '50%',
            panelClass: 'commonpopupmainclass',
@@ -1533,6 +1540,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
          });
          dialogRef.afterClosed().subscribe(result => {
          });*/
+         e.stopPropagation();
          const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
          this.sharedfunctionobj.sendMessage(pdata);
    }

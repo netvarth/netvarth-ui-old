@@ -1,10 +1,11 @@
 <form [formGroup]="loginForm"  novalidate
 (ngSubmit)="loginForm.valid &&
 onSubmit(loginForm.value)" (keyup)="resetApiErrors()" *ngIf="step==1">
-<div class="mat-dialog-title">{{this.data.type | titlecase }} Login <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></div>
+<div class="mat-dialog-title">{{heading}} <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></div>
 <div class="mat-dialog-content">
-<div class="form-group">
+<div class="form-group mobilecont">
   <label class="col-form-label" for="phonenumber">Mobile Number</label>
+  <span class="phoneprefix">+91</span>
   <input type="text" class="form-control" id="phonenumber" placeholder="Enter your 10 digit Mobile number"
   formControlName="phonenumber" autocomplete="off">
   <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'phonenumber') && show_error"
@@ -30,7 +31,7 @@ onSubmit(loginForm.value)" (keyup)="resetApiErrors()" *ngIf="step==1">
 <div class="mat-dialog-actions">
 <button  type="submit" mat-button
 [disabled]="api_loading" (click)="showError()">
-    <span *ngIf="!api_loading">Submit</span>
+    <span *ngIf="!api_loading">Login</span>
     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
 </button>
 

@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   api_loading = true;
   show_error = false;
   test_provider = null;
+  heading = '';
 
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
@@ -45,6 +46,11 @@ export class LoginComponent implements OnInit {
     this.moreParams = this.data.moreparams;
     this.createForm();
     this.api_loading = false;
+    if (this.data.type === 'provider') {
+      this.heading = 'Service Provider Login';
+    } else if (this.data.type === 'consumer') {
+      this.heading = 'Consumer Login';
+    }
   }
 
   createForm() {
@@ -129,10 +135,10 @@ export class LoginComponent implements OnInit {
     this.step = 1;
   }
   doSignup() {
-    let cClass = 'consumerpopupmainclass';
+    const cClass = 'consumerpopupmainclass';
     console.log('prov', this.is_provider);
     if (this.is_provider === 'true') {
-      cClass = 'commonpopupmainclass';
+      // cClass = 'commonpopupmainclass';
     }
     if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin')) {
       this.dialogRef.close('showsignup');

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -11,7 +11,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-
+import { DOCUMENT } from '@angular/common';
 import { AddProviderSchedulesComponent } from '../add-provider-schedule/add-provider-schedule.component';
 
 
@@ -40,6 +40,7 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     private provider_datastorageobj: ProviderDataStorageService,
     private dialog: MatDialog,
+    @Inject(DOCUMENT) public document,
     public dialogRef: MatDialogRef<ProviderBprofileSearchPrimaryComponent>
   ) { }
 
@@ -70,6 +71,12 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
   // Method to handle the add / edit for bprofile
   onSubmit(form_data) {
    // console.log('length', form_data.bname.length);
+   const blankpatterm = projectConstants.VALIDATOR_BLANK;
+   if (blankpatterm.test(form_data.bname)) {
+     this.api_error = 'Please enter the business name';
+     this.document.getElementById('bname').focus();
+     return;
+   }
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
       this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
     } else  if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {

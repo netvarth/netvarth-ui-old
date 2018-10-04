@@ -369,11 +369,15 @@
                             </div>
                             <div class="tp-r">
                                 <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3)" class="ynw-verified">
-                                    <mat-chip-list>
+                                    <!-- <mat-chip-list>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==1">Basic</mat-chip>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</mat-chip>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==3">Premium</mat-chip>
-                                    </mat-chip-list>
+                                    </mat-chip-list> -->
+                                    <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
+                                    <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</span>
+                                    <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
+
                                 </div>
                                 <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
                                     <li *ngIf="search_result.fields.parking_type_location1" [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span class="icon-parking"></span></li>

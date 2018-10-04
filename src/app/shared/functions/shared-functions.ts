@@ -504,6 +504,31 @@ export class SharedFunctions {
 
     });
   }
+  confirmSearchChangeStatus(ob, stat) {
+    let msg = '';
+    if (stat) {
+      msg = '"Turn Off" the Public Search?';
+    } else {
+      msg = '"Turn On" the Public Search?';
+    }
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message' : msg,
+        'heading' : 'Public Search'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        ob.handle_searchstatus();
+      }
+
+    });
+  }
   confirmLogoImageDelete(ob, file) {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',

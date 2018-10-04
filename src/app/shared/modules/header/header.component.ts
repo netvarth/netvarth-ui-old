@@ -241,9 +241,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //   if (ctype === 'true') {
     //     cClass = 'commonpopupmainclass';
     //   }
-    let cClass = 'consumerpopupmainclass';
+    const cClass = 'consumerpopupmainclass';
     if (origin === 'provider') {
-      cClass = 'commonpopupmainclass';
+      // cClass = 'commonpopupmainclass';
     }
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
@@ -261,9 +261,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   doLogin(origin?) {
-    let cClass = 'consumerpopupmainclass';
+    const cClass = 'consumerpopupmainclass';
     if (origin === 'provider') {
-      cClass = 'commonpopupmainclass';
+      // cClass = 'commonpopupmainclass';
     }
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',

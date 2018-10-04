@@ -1199,10 +1199,29 @@ header {
                             
                             .ynw-verified {
                                 background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
-                                width: 65px;
-                                height: 20px;
+                                width: 90px;
+                                height: 30px;
                                 display: none;
                                 margin-left: -3px;
+                                position: relative;
+                                
+                                .level {
+                                    position: absolute;
+                                    top: 5px;
+                                    right: -70px;
+                                    font-size: .75rem;
+                                    font-weight: 600;
+                                    
+                                    &.basic {
+                                        color: $basic;
+                                    }
+                                    &.basicplus {
+                                        color: $basicplus;
+                                    }
+                                    &.premium {
+                                        color: $premium;
+                                    }
+                                }
                                 
                                 @include respond-to(ynw-767) {
                                     display: block;
@@ -1218,6 +1237,7 @@ header {
                                 margin-bottom: 5px;
                                 @include transition(all 300ms);
                                 cursor: pointer;
+                                display: table;
                                 
                                 &:hover {
                                     color: $linkblue;
@@ -1364,7 +1384,28 @@ header {
                             width: 110px;
                             height: 32px;
                             margin-left: auto;
-                            margin-bottom: 15px;
+                            margin-bottom: 25px;
+                            position: relative;
+                            
+                            .level {
+                                position: absolute;
+                                width: 100%;
+                                left: 0;
+                                bottom: -12px;
+                                font-size: .75rem;
+                                padding-right: 5px;
+                                font-weight: 600;
+                                
+                                &.basic {
+                                    color: $basic;
+                                }
+                                &.basicplus {
+                                    color: $basicplus;
+                                }
+                                &.premium {
+                                    color: $premium;
+                                }
+                            }
                             
                             @include respond-to(ynw-767) {
                                 display: none;

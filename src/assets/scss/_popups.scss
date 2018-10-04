@@ -388,6 +388,33 @@
                 }
             }
             
+            &.mobilecont {
+                .phoneprefix {
+                    width: 10%;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: $cc-formborder;
+                    float: left;
+                }
+                input[type="text"] {width: 90%;}
+            }
+            
+            &.agree {
+                .mat-checkbox  {
+                    label {
+                        margin-bottom: 0;
+                    }
+                }
+                .terms-link {
+                    height: 20px;
+                    display: inline-block;
+                    margin-left: 5px;
+                    font-size: .75rem;
+                }
+            }
+            
             &:last-child {
                 margin-bottom: 0;
             }
@@ -428,7 +455,7 @@
                     .mat-select {
                         padding: 10px;
                         height: 40px;
-                        background: $cc-formbg;
+                        background: $cc-inputbg;
                         
                         .mat-select-trigger {
                             margin-top: 2px;
@@ -698,8 +725,8 @@
         // Date Picker
         .pickerouter {
             display: flex;
-            height: 26px;
-            width: 26px;
+            /*height: 26px;
+            width: 26px;*/
             
             input[type="text"] {
                 width: 120px;
@@ -1283,8 +1310,14 @@
         position: relative;
         display: flex;
         
-        .bt1 {
+        /*.bt1 {
             margin-right: 10px;
+        }*/
+        
+        .bt1 {
+            margin-right: 0;
+            order: 2;
+            margin-left: 10px;
         }
         
         .resendouter {
@@ -1433,6 +1466,8 @@
             color: $cc-black;
             margin-bottom: 0;
             cursor: default;
+            font-weight: 600;
+            font-size: .875rem;
             
             span {
                 color: $linkblue;
@@ -1841,8 +1876,25 @@
                             border: none;
                             background: $cc-body;
                             
-                            @include placeholder{
+                            &::-moz-placeholder {
+                                color: $cc-mediumgray;
                                 font-size: .75rem;
+                                font-style: italic;
+                            }
+                            &:-ms-input-placeholder{
+                                color: $cc-mediumgray;
+                                font-size: .75rem;
+                                font-style: italic;
+                            }
+                            &:-moz-placeholder {
+                                color: $cc-mediumgray;
+                                font-size: .75rem;
+                                font-style: italic;
+                            }
+                            &::-webkit-input-placeholder {
+                                color: $cc-mediumgray;
+                                font-size: .75rem;
+                                font-style: italic;
                             }
 
                             &:focus {

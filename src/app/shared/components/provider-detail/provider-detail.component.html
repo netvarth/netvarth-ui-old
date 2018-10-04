@@ -151,7 +151,7 @@
                                   <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
                                   <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">Add to Favourites</span></li>
                                   <li><span class ="icon-favourite-filled" *ngIf="isInFav" (click)="doRemoveFav()">Remove from Favourites</span></li>
-                                  <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li>
+                                  <!-- <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li> -->
                                   <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">Communicate</span></li>
                                   <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li>
                               </ul>

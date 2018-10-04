@@ -604,28 +604,33 @@
                             padding-bottom: 15px;
                             display: flex;
                             align-items: center;
-
-                            .selected-date {
+                            
+                            .date-body {
                                 display: flex;
                                 align-items: center;
+                                
+                                .selected-date {
+                                    display: flex;
+                                    align-items: center;
 
-                                .icon-add, .icon-minus {
-                                    display: inline-block;
-                                    vertical-align: bottom;
-                                    font-size: 1.5rem;
-                                    color: $linkblue;
-                                    cursor: pointer;
+                                    .icon-add, .icon-minus {
+                                        display: inline-block;
+                                        vertical-align: bottom;
+                                        font-size: 1.5rem;
+                                        color: $linkblue;
+                                        cursor: pointer;
 
-                                    &:before {
-                                        width: 50px;
-                                        height: 50px;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                    }
-                                    &.disable {
-                                        pointer-events: none;
-                                        color: $cc-mediumgray;
+                                        &:before {
+                                            width: 50px;
+                                            height: 50px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                        }
+                                        &.disable {
+                                            pointer-events: none;
+                                            color: $cc-mediumgray;
+                                        }
                                     }
                                 }
                             }
@@ -634,7 +639,8 @@
                                 margin-bottom: 0;
 
                                 &.dt {
-                                    width: 30px;
+                                    width: 40px;
+                                    height: 40px;
 
                                     .pickerouter {
                                         display: flex;
@@ -824,36 +830,41 @@
                                     margin-right: 10px;
                                     font-weight: 500;
                                 }
-
-                                .sel-queue {
-                                    color: $linkblack;
-                                    font-weight: 600;
-                                }
-
-                                .leftarrow, .rightarrow {
+                                
+                                .queue-body {
                                     display: flex;
                                     align-items: center;
-                                    justify-content: center;
-                                    width: 50px;
-                                    height: 50px;
-                                    
-                                    i {
+
+                                    .sel-queue {
+                                        color: $linkblack;
+                                        font-weight: 600;
+                                    }
+
+                                    .leftarrow, .rightarrow {
                                         display: flex;
-                                        width: 26px;
-                                        height: 26px;
                                         align-items: center;
                                         justify-content: center;
-                                        border: 2px solid $linkblue;
-                                        @include border-radius(50px);
-                                        color: $linkblue;
-                                        cursor: pointer;
-                                        font-weight: 600;
+                                        width: 50px;
+                                        height: 50px;
 
-                                        &.disable {
-                                            pointer-events: none;
-                                            color: $cc-mediumgray;
-                                            border-color: $cc-mediumgray;
-                                            cursor: default;
+                                        i {
+                                            display: flex;
+                                            width: 26px;
+                                            height: 26px;
+                                            align-items: center;
+                                            justify-content: center;
+                                            border: 2px solid $linkblue;
+                                            @include border-radius(50px);
+                                            color: $linkblue;
+                                            cursor: pointer;
+                                            font-weight: 600;
+
+                                            &.disable {
+                                                pointer-events: none;
+                                                color: $cc-mediumgray;
+                                                border-color: $cc-mediumgray;
+                                                cursor: default;
+                                            }
                                         }
                                     }
                                 }
@@ -1064,7 +1075,7 @@
 
                                     .mat-input-element {
                                         padding: 10px;
-                                        background: $cc-formbg;
+                                        background: $cc-inputbg;
                                         height: 40px;
 
                                         &:focus {
@@ -1076,10 +1087,10 @@
                                     .mat-select {
                                         padding: 15px;
                                         height: 50px;
-                                        background: $cc-formbg;
+                                        background: $cc-inputbg;
                                         @include font-medium;
-                                        display: flex;
-                                        align-items: center;
+                                        /*display: flex;
+                                        align-items: center;*/
 
                                         .mat-select-arrow {
                                             color: $cc-black;
