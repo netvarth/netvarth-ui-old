@@ -35,7 +35,7 @@ export class ProviderbWizardComponent implements OnInit {
   general_scheduleholder: any = [];
   general_schedule: any = [];
   schedule_alreadyexists_for_location = false;
-  ischange_schedule_clicked = false;
+  ischange_schedule_clicked = true;
   loading_active = true;
   search_status = 0;
   search_active = false;
@@ -89,7 +89,7 @@ export class ProviderbWizardComponent implements OnInit {
     this.loading_active = true;
     this.resetErrors();
     if (changetostep === 2) {
-      this.ischange_schedule_clicked = false;
+     // this.ischange_schedule_clicked = false;
     } else if (changetostep === 4) {
       this.getSearchstatus();
     }
@@ -436,7 +436,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
   handleCancelschedule(obj) {
     this.handlesSaveschedule(obj);
-    this.ischange_schedule_clicked = false;
+    // this.ischange_schedule_clicked = false;
   }
 
   getDay(num) {

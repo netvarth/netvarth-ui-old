@@ -160,7 +160,7 @@
                                 </ul>
                                 <span class="cs-btn bt3" (click)="changeSchedule_clicked()" *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0) ? 'Change Schedule': 'Add Schedule'}}</span>
                             </div>
-                            <app-provider-schedule *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)"></app-provider-schedule>
+                            <app-provider-schedule [Isource] = "'wizard'" *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)"></app-provider-schedule>
                         </div>
                     </div>
                     <div class="footer">
