@@ -1223,7 +1223,7 @@
                     padding: 0;
                     
                     .maindate {
-                        margin-bottom: 20px;
+                        margin-bottom: 10px;
                         font-weight: 600;
                     }
                     
@@ -1243,12 +1243,12 @@
                                     background: rgba(0, 0, 0, 0.03);
 
                                     td {
-                                        font-size: 1rem;
+                                        font-size: .875rem;
                                         border: none;
 
                                         .kioskservicename {
                                             font-weight: 600;
-                                            margin-bottom: 10px;
+                                            margin-bottom: 5px;
                                         }
                                         .kiosknameouter, .kioskstatuouter, .kioskwaiting {
                                             font-weight: 500;
@@ -1260,6 +1260,7 @@
                                             }
                                         }
                                         .kioskstatuouter{
+                                            margin-bottom: 0;
                                             .arrived-class, .started-class, .checkedin-class, .done-class, .cancelled-class {    
                                                 color: $arrived;
                                                 padding: 0;

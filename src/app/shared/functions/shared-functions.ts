@@ -507,7 +507,7 @@ export class SharedFunctions {
   confirmSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = '"Turn Off" the Public Search?';
+      msg = '"Disable" the Public Search?';
     } else {
       msg = '"Turn On" the Public Search?';
     }

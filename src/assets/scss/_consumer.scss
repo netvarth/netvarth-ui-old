@@ -2788,6 +2788,20 @@ header {
             
             &.prov-detail-outer {
                 .srlst {
+                    
+                    .top-sect {
+                        .tp-l {
+                            .tp2 {
+                                h3 {
+                                    cursor: default;
+                                    
+                                    &:hover {
+                                        color: $linkblack;
+                                    }
+                                }
+                            }
+                        }
+                    }
                     &:hover {
                         @include box-shadow(0, 20px, 30px, rgba(0,0,0,.03) !important);
                     }

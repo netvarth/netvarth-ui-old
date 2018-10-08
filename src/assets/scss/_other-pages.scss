@@ -698,9 +698,42 @@
                         }
                     }
 
-                    &.verify-tbl {                    
+                    &.verify-tbl {
+                        @include respond-to(ynw-767) {
+                            border-top: none;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            border-top: none;
+                        }
+                        @include respond-to(ynw-992-1199) {
+                            border-top: none;
+                        }
                         tr {
+                            @include respond-to(ynw-767) {
+                                display: flex;
+                                flex-direction: column;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                display: flex;
+                                flex-direction: column;
+                            }
+                            @include respond-to(ynw-992-1199) {
+                                display: flex;
+                                flex-direction: column;
+                            }
                             td {
+                                @include respond-to(ynw-767) {
+                                    width: 100% !important;
+                                    border-left: none !important;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    width: 100% !important;
+                                    border-left: none !important;
+                                }
+                                @include respond-to(ynw-992-1199) {
+                                    width: 100% !important;
+                                    border-left: none !important;
+                                }
                                 &.td1 {
                                     width: 20%;
                                     font-size: 1rem;
@@ -759,9 +792,42 @@
                     }
 
                     &.locam-tbl {
+                        @include respond-to(ynw-767) {
+                            border-top: none;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            border-top: none;
+                        }
+                        @include respond-to(ynw-992-1199) {
+                            border-top: none;
+                        }
                         tbody {
                             tr {
+                                @include respond-to(ynw-767) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                                @include respond-to(ynw-992-1199) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
                                 td {
+                                    @include respond-to(ynw-767) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+                                    @include respond-to(ynw-768-991) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+                                    @include respond-to(ynw-992-1199) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
                                     &.td1 {
                                         font-weight: 600;
                                         font-size: 1rem;
@@ -818,9 +884,43 @@
                     }
 
                     &.spec-tbl, &.addinfo-tbl {
+                        @include respond-to(ynw-767) {
+                            border-top: none;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            border-top: none;
+                        }
+                        @include respond-to(ynw-992-1199) {
+                            border-top: none;
+                        }
                         tbody {
                             tr {
+                                @include respond-to(ynw-767) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                                @include respond-to(ynw-992-1199) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                                
                                 td {
+                                    @include respond-to(ynw-767) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+                                    @include respond-to(ynw-768-991) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+                                    @include respond-to(ynw-992-1199) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
                                     &.td1 {
                                         font-weight: 600;
                                         font-size: 1rem;

@@ -380,7 +380,7 @@
 
                                 </div>
                                 <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
-                                    <li *ngIf="search_result.fields.parking_type_location1" [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span class="icon-parking"></span></li>
+                                    <li *ngIf="search_result.fields.parking_type_location1 && search_result.fields.parking_type_location1 !='none'" [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span class="icon-parking"></span></li>
                                     <li *ngIf="search_result.fields.always_open_location1==1" [matTooltip]="'24 Hours Open'"><span class="icon-open-time"></span></li>
                                     <li *ngIf="search_result.fields.traumacentre_location1==1" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
                                     <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1"><span class="icon-emergency"></span></li>

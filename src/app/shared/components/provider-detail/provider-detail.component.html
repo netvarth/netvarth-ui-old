@@ -153,7 +153,7 @@
                                   <li><span class ="icon-favourite-filled" *ngIf="isInFav" (click)="doRemoveFav()">Remove from Favourites</span></li>
                                   <!-- <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li> -->
                                   <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">Communicate</span></li>
-                                  <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li>
+                                  <!-- <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li> -->
                               </ul>
                               <div class="socialmedia" *ngIf="socialMedialist.length>0">
                                     <a [href]="soc.value" target="_blank" *ngFor="let soc of socialMedialist"><i [class]="getSocialdet(soc.resource, 'iconClass')" [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
@@ -231,7 +231,7 @@
                           </div>
                           <div class="tp-r">
                               <ul class="badges">
-                                  <li *ngIf="loc.parkingType!=='' && loc.parkingType != undefined" [matTooltip]="'Parking Type: ' + loc.parkingType"><span class="icon-parking"></span></li>
+                                  <li *ngIf="loc.parkingType!=='' && loc.parkingType != undefined && loc.parkingType != 'none'" [matTooltip]="'Parking Type: ' + loc.parkingType"><span class="icon-parking"></span></li>
                                   <li *ngIf="loc.open24hours==true"><span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span></li>
 
                                   <li *ngIf="loc?.locationVirtualFields?.traumacentre=='true'" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>

@@ -1741,7 +1741,7 @@ select:-webkit-autofill:focus {
         .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl {
           padding: 0; }
           .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .maindate {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-weight: 600; }
           .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter {
             height: 50vh;
@@ -1755,29 +1755,31 @@ select:-webkit-autofill:focus {
                 margin-bottom: .75rem;
                 background: rgba(0, 0, 0, 0.03); }
                 .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td {
-                  font-size: 1rem;
+                  font-size: .875rem;
                   border: none; }
                   .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskservicename {
                     font-weight: 600;
-                    margin-bottom: 10px; }
+                    margin-bottom: 5px; }
                   .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting {
                     font-weight: 500;
                     display: flex;
                     margin-bottom: 5px; }
                     .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter .kioskstatuscaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .kioskstatuscaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .kioskstatuscaption {
                       margin-right: 10px; }
-                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .arrived-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .started-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
-                    color: #79e688;
-                    padding: 0;
-                    font-weight: 600; }
-                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .started-class {
-                    color: #4de2ff; }
-                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class {
-                    color: #5568ff; }
-                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class {
-                    color: #4bc742; }
-                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
-                    color: #f24949; }
+                  .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter {
+                    margin-bottom: 0; }
+                    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .arrived-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .started-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
+                      color: #79e688;
+                      padding: 0;
+                      font-weight: 600; }
+                    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .started-class {
+                      color: #4de2ff; }
+                    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class {
+                      color: #5568ff; }
+                    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class {
+                      color: #4bc742; }
+                    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
+                      color: #f24949; }
                   .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting {
                     margin-bottom: 0px; }
                     .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .waitingtime {
@@ -2039,7 +2041,9 @@ app-footer {
   .form-group .col-form-label, .form-check .col-form-label {
     font-weight: 600;
     font-size: .875rem;
-    display: block; }
+    display: block;
+    margin-bottom: 5px;
+    padding: 0; }
   .form-group .error-msg, .form-check .error-msg {
     color: #f24949 !important;
     font-size: .875rem;
@@ -5550,19 +5554,14 @@ header {
     -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) ;
     position: relative;
-    display: flex;
-    /*.bt1 {
-        margin-right: 10px;
-    }*/ }
+    display: flex; }
     .signupmainclass .mat-dialog-actions .bt1,
     .loginmainclass .mat-dialog-actions .bt1,
     .moreoptionsmainclass .mat-dialog-actions .bt1,
     .forgotpasswordmainclass .mat-dialog-actions .bt1,
     .commonpopupmainclass .mat-dialog-actions .bt1,
     .googlemainmappopup .mat-dialog-actions .bt1, .outer-card .mat-dialog-actions .bt1, .consumerpopupmainclass .mat-dialog-actions .bt1 {
-      margin-right: 0;
-      order: 2;
-      margin-left: 10px; }
+      margin-right: 10px; }
     .signupmainclass .mat-dialog-actions .resendouter,
     .loginmainclass .mat-dialog-actions .resendouter,
     .moreoptionsmainclass .mat-dialog-actions .resendouter,
@@ -5745,7 +5744,8 @@ header {
 
 .loginmainclass .mat-dialog-actions {
   display: block;
-  padding: 20px; }
+  padding: 20px;
+  padding-top: 0px !important; }
   .loginmainclass .mat-dialog-actions .mat-button {
     margin: 0 auto 15px auto; }
   .loginmainclass .mat-dialog-actions .forgotpass,
@@ -5790,6 +5790,8 @@ header {
     .signupmainclass .mat-dialog-content .mat-radio-group .mat-radio-button.activepackcls .mat-radio-label .mat-radio-label-content {
       font-weight: 600;
       color: #222223; }
+.signupmainclass .mat-dialog-actions {
+  padding-top: 0 !important; }
 
 .googlemainmappopup .mat-dialog-title {
   font-family: 'Montserrat', sans-serif;
@@ -7737,19 +7739,22 @@ footer.itl-steps .sect3 {
     z-index: 2;
     cursor: pointer; }
   .is-bx .pt-top {
-    padding: 2.3em;
+    padding: 1.5em;
     position: relative; }
     .is-bx .pt-top h1 {
       font-size: 1.625rem;
-      margin-bottom: 1.125em;
+      margin-bottom: 15px;
       font-family: 'Montserrat', sans-serif;
       font-weight: 500;
       font-weight: 600; }
     .is-bx .pt-top p {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 300;
       font-family: 'Montserrat', sans-serif;
-      font-weight: normal; }
+      font-weight: normal;
+      margin-bottom: 15px; }
+      .is-bx .pt-top p:last-child {
+        margin: 0; }
       .is-bx .pt-top p strong {
         font-family: 'Montserrat', sans-serif;
         font-weight: 500; }
@@ -7762,7 +7767,7 @@ footer.itl-steps .sect3 {
       bottom: -5px;
       left: 0; }
   .is-bx .pt-btm {
-    padding: 1.75em 2.3em 2.3em 2.3em;
+    padding: 1.25em 2.3em 2.3em 2.3em;
     background: #fff;
     position: relative;
     -webkit-border-radius: 5px;
@@ -7774,7 +7779,7 @@ footer.itl-steps .sect3 {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 1.875em;
+      margin-bottom: 1.5em;
       padding: 0; }
       .is-bx .pt-btm .ico li {
         -webkit-border-radius: 50%;
@@ -7785,16 +7790,19 @@ footer.itl-steps .sect3 {
         width: 70px;
         height: 70px;
         padding: 10px;
-        margin: 0 25px; }
+        margin: 0 25px;
+        /*&:nth-child(2) {
+            width: 90px;
+            height: 90px;
+            vertical-align: middle;
+            
+            span {
+                font-size: 3.5rem;
+            }
+        }*/ }
         .is-bx .pt-btm .ico li span {
           color: #00aef2;
           font-size: 2.5rem; }
-        .is-bx .pt-btm .ico li:nth-child(2) {
-          width: 90px;
-          height: 90px;
-          vertical-align: middle; }
-          .is-bx .pt-btm .ico li:nth-child(2) span {
-            font-size: 3.5rem; }
     .is-bx .pt-btm .lg-btn {
       background: #00aef2;
       -webkit-border-radius: 40px;
@@ -7806,7 +7814,7 @@ footer.itl-steps .sect3 {
       color: #fff;
       width: 220px;
       padding: 1.25em;
-      margin-bottom: 2.5em; }
+      margin-bottom: 1.8em; }
       .is-bx .pt-btm .lg-btn i {
         font-size: 0.525rem;
         margin-left: 3px;
@@ -7816,6 +7824,7 @@ footer.itl-steps .sect3 {
     .is-bx .pt-btm .status-pnt {
       padding: 0;
       display: flex;
+      margin: 0;
       justify-content: center; }
       .is-bx .pt-btm .status-pnt li {
         width: 8px;
@@ -15501,6 +15510,10 @@ header.consumer {
       @media only screen and (max-width: 767px) {
         .content .c-outer .c-body.hideme {
           display: none; } }
+      .content .c-outer .c-body.prov-detail-outer .srlst .top-sect .tp-l .tp2 h3 {
+        cursor: default; }
+        .content .c-outer .c-body.prov-detail-outer .srlst .top-sect .tp-l .tp2 h3:hover {
+          color: #222223; }
       .content .c-outer .c-body.prov-detail-outer .srlst:hover {
         -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
         -moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ;
@@ -16858,6 +16871,39 @@ header.consumer {
         .lm-popup .lm-outer.bprofile section .table tbody tr td .box:last-child {
           margin-bottom: 0;
           border: none; }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl {
+        border-top: none; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl {
+        border-top: none; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl {
+        border-top: none; } }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl tr {
+        display: flex;
+        flex-direction: column; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl tr {
+        display: flex;
+        flex-direction: column; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl tr {
+        display: flex;
+        flex-direction: column; } }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl tr td {
+        width: 100% !important;
+        border-left: none !important; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl tr td {
+        width: 100% !important;
+        border-left: none !important; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.verify-tbl tr td {
+        width: 100% !important;
+        border-left: none !important; } }
     .lm-popup .lm-outer.bprofile section .table.verify-tbl tr td.td1 {
       width: 20%;
       font-size: 1rem;
@@ -16881,6 +16927,39 @@ header.consumer {
       width: 260px; }
       .lm-popup .lm-outer.bprofile section .table.loc-tbl tbody tr td, .lm-popup .lm-outer.bprofile section .table.social-tbl tbody tr td {
         font-weight: 600; }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl {
+        border-top: none; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl {
+        border-top: none; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl {
+        border-top: none; } }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl tbody tr {
+        display: flex;
+        flex-direction: column; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl tbody tr {
+        display: flex;
+        flex-direction: column; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl tbody tr {
+        display: flex;
+        flex-direction: column; } }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl tbody tr td {
+        width: 100% !important;
+        border-left: none !important; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl tbody tr td {
+        width: 100% !important;
+        border-left: none !important; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.locam-tbl tbody tr td {
+        width: 100% !important;
+        border-left: none !important; } }
     .lm-popup .lm-outer.bprofile section .table.locam-tbl tbody tr td.td1 {
       font-weight: 600;
       font-size: 1rem; }
@@ -16910,6 +16989,39 @@ header.consumer {
               padding: .75rem; }
           .lm-popup .lm-outer.bprofile section .table.locam-tbl tbody tr td.td2 .table tbody tr:last-child {
             border: none; }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl {
+        border-top: none; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl {
+        border-top: none; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl {
+        border-top: none; } }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl tbody tr, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl tbody tr {
+        display: flex;
+        flex-direction: column; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl tbody tr, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl tbody tr {
+        display: flex;
+        flex-direction: column; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl tbody tr, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl tbody tr {
+        display: flex;
+        flex-direction: column; } }
+    @media only screen and (max-width: 767px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl tbody tr td, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl tbody tr td {
+        width: 100% !important;
+        border-left: none !important; } }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl tbody tr td, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl tbody tr td {
+        width: 100% !important;
+        border-left: none !important; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .lm-popup .lm-outer.bprofile section .table.spec-tbl tbody tr td, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl tbody tr td {
+        width: 100% !important;
+        border-left: none !important; } }
     .lm-popup .lm-outer.bprofile section .table.spec-tbl tbody tr td.td1, .lm-popup .lm-outer.bprofile section .table.addinfo-tbl tbody tr td.td1 {
       font-weight: 600;
       font-size: 1rem; }

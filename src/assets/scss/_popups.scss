@@ -1310,14 +1310,8 @@
         position: relative;
         display: flex;
         
-        /*.bt1 {
-            margin-right: 10px;
-        }*/
-        
         .bt1 {
-            margin-right: 0;
-            order: 2;
-            margin-left: 10px;
+            margin-right: 10px;
         }
         
         .resendouter {
@@ -1448,6 +1442,7 @@
     .mat-dialog-actions {
         display: block;
         padding: 20px;
+        padding-top: 0px !important;
 
         .mat-button {
             margin: 0 auto 15px auto;
@@ -1522,6 +1517,9 @@
             }
 
         }
+    }
+    .mat-dialog-actions {
+        padding-top: 0 !important;
     }
 }
 

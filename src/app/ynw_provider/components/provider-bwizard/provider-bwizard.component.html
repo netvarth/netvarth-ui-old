@@ -204,7 +204,7 @@
                                     <!-- <input type="radio" name='searchstatus' value="ENABLE" [checked]="search_status==1" (change)="handle_searchstatus('ENABLE')"> -->
                                     <label for="" (click)="handle_searchstatus('ENABLE')">
                                         Turn on Public Search
-                                        <span>Your {{customer_label}} can find you online in <strong>jaldee.com</strong> to {{checkin_label |titlecase}} for your service.</span>
+                                        <span>Your profile is visible to {{customer_label}}s online at <strong>jaldee.com</strong></span>
                                     </label>
                                 </div>
                                 <div class="rdo toff" [class.active]="search_status==2" >
@@ -212,7 +212,7 @@
                                     <!-- <input type="radio" name='searchstatus' [checked]="search_status==2" value="DISABLE" (change)="handle_searchstatus('DISABLE')"> -->
                                     <label for="" (click)="handle_searchstatus('DISABLE')">
                                         Turn off Public Search
-                                        <span>Your {{customer_label}} can’t find you online in <strong>jaldee.com</strong>.</span>
+                                        <span>Your profile is not visible to {{customer_label}}s online at <strong>jaldee.com</strong>.</span>
                                     </label>
                                 </div>
                             </div>
