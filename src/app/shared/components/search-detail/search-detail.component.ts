@@ -417,6 +417,7 @@ setEnvironment(bypassotherfunction?) {
       this.parseRefinedfiltersQueryString(obj);
       // console.log('refined', this.querystringrefineretain_arr);
       // console.log('ref_query', this.refined_querystr);
+      // console.log('cpg', obj.cpg);
       if (obj.cpg) { // check whether paging value is there in the url
         let cnumb = Number(obj.cpg);
         if (isNaN(cnumb)) {
@@ -886,7 +887,7 @@ setEnvironment(bypassotherfunction?) {
 
 
     this.nosearch_results = false;
-
+    // console.log('pg', this.startpageval);
     // Finding the start row value for paging
     if (this.startpageval) {
       projectConstants.searchpass_criteria.start = (this.startpageval - 1) * projectConstants.searchpass_criteria.size;
@@ -1337,6 +1338,7 @@ setEnvironment(bypassotherfunction?) {
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
+    this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
     // console.log('click', fieldname, fieldtype, selval);
     if (this.searchrefineresult_arr.length) {
@@ -1444,7 +1446,9 @@ setEnvironment(bypassotherfunction?) {
         if (this.searchrefinetextresult_arr[field] !== '') {
           // textstr += ' ' + field + '_cust:' + '\'' + this.searchrefinetextresult_arr[field] + '\'' + ' ';
           tmpholder = this.searchrefinetextresult_arr[field];
-          tmpholder = tmpholder.replace(/'/g, '\\\'');
+          if (tmpholder) {
+            tmpholder = tmpholder.replace(/'/g, '\\\'');
+          }
           // textstr += ' ' + field + ':' + '\'' + this.searchrefinetextresult_arr[field] + '\'' + ' ';
           textstr += ' ' + field + ':' + '\'' + tmpholder + '\'' + ' ';
           this.refined_options_url_str += ';myref_' + field + '=' + this.searchrefinetextresult_arr[field];
@@ -1554,6 +1558,7 @@ setEnvironment(bypassotherfunction?) {
     if (kCode === 13) {
      // console.log('enter key');
        // replacing unwanted characters
+      this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
       fieldvalue = fieldvalue.replace(/;/g, '');
       fieldvalue = fieldvalue.replace(/\//g, '');
       this.handleTextrefineblur (fieldname, fieldvalue, fieldtype, bypassbuildquery);
@@ -1784,6 +1789,7 @@ setEnvironment(bypassotherfunction?) {
   }
 
   handlerefineddomainchange(val) {
+    this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
    // console.log('refineddomain', val);
     this.refined_domain = val;
@@ -1793,6 +1799,7 @@ setEnvironment(bypassotherfunction?) {
   }
 
   handlerefinedsubdomainchange(val) {
+    this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
    // console.log('refinedSubdomain', val);
     this.refined_subdomain = val;

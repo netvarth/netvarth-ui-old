@@ -246,10 +246,31 @@
                 }
             }
             
+            .expl {
+                color: $cc-mediumgray;
+                font-size: .75rem;
+                margin-top: 5px;
+                display: inline-block;
+            }
+            
             .example-section {
                 mat-checkbox {
                     label {
                         margin-bottom: 0;
+                    }
+                }
+            }
+            
+            .schselectall {
+                i {
+                    padding: 5px 0;
+                    @include font-medium;
+                    margin-bottom: 5px;
+                    color: $linkblue;
+                    cursor: pointer;
+                    
+                    &:before {
+                        font-family: 'fontAwesome';
                     }
                 }
             }
@@ -259,6 +280,8 @@
                 flex-wrap: wrap;
                 
                 .mat-checkbox {
+                    margin: 0 20px 0 0;
+                    
                     .mat-checkbox-inner-container {
                         margin-top: 3px;
                     }
@@ -295,7 +318,9 @@
                         .ngb-tp-hour,
                         .ngb-tp-minute {
                             input[type="text"] {
-                                background: $cc-formbg;
+                                background: $cc-inputbg;
+                                border: 1px solid $cc-formborder;
+                                height: 35px;
                                 
                                 &:focus {
                                     @include box-shadow(0, 0, 1px, $linkblue, inset);
@@ -1670,6 +1695,19 @@
                     font-weight: 600;
                     margin-bottom: 15px;
                 }
+                .schselectall {
+                    i {
+                        padding: 5px 0;
+                        @include font-medium;
+                        margin-bottom: 5px;
+                        color: $linkblue;
+                        cursor: pointer;
+
+                        &:before {
+                            font-family: 'fontAwesome';
+                        }
+                    }
+                }
                 .chk-section {
                     display: flex;
                     flex-wrap: wrap;
@@ -1677,7 +1715,7 @@
                     height: auto;
 
                     .chk-margin {
-                        margin-right: 15px;
+                        margin-right: 20px;
                         margin-left: 0px;
                         margin-bottom: 10px;
 
@@ -1787,6 +1825,12 @@
                     }
                     
                     
+                }
+                .savecancel {
+                    .bt7 {
+                        margin-left: 0;
+                        margin-right: 10px;
+                    }
                 }
                 .sts-msg {
                     margin-top: 15px;

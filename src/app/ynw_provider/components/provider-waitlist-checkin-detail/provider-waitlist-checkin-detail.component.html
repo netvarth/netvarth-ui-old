@@ -35,7 +35,7 @@
                                   <div class="item"><span class="ttle">Location:</span><span>{{waitlist_data.queue.location.place | titlecase}}</span></div>
                                   <div class="item"><span class="ttle">Waitlist For:</span>
                                     <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
-                                        {{user.firstName | titlecase}} {{user.lastName | titlecase}}
+                                        {{user.firstName | titlecase}} {{user.lastName | titlecase}} ({{user.primaryMobileNo}}) 
                                     </span>
                                   </div>
 

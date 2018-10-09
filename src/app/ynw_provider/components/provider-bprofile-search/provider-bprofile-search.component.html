@@ -26,12 +26,15 @@
                             <div class="wbox" >
                                 <div class="bx-ico"><i data-icon="m"></i></div>
                                 <div class="bx-copy">
-                                    <p>Currently your profile is <strong>disabled</strong> for public search online.</p>
+                                    <p>Your profile has been <strong>disabled</strong> for public search online and will not be visible to {{customer_label}}s.</p>
+                                    <p>We recommend you to set up the <strong>'Profile Name and Summary'</strong> section to turn ON the Public Search</p>
+
+                                    <!-- <p>Currently your profile is <strong>disabled</strong> for public search online.</p>
                                     <p>Your {{customer_label}}s cannot see you online, so they cannot do online checkins!</p>
                                     <p>Your Profile is incomplete. Need
                                       <span (click)="showBPrimary()">Name</span> and
                                       <span (click)="editLocation()">Location</span>
-                                      to Turn on the public search!</p>
+                                      to Turn on the public search!</p> -->
                                 </div>
                             </div>
                         </div>
@@ -57,7 +60,7 @@
                                         </ng-container>
                                 </div>
                                 <div class="ct-r ml-auto">
-                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="confirm_searchStatus()">Disable</button>
+                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="confirm_searchStatus()">Turn Off</button>
                                     <!-- <span *ngIf="normal_search_active"><i data-icon="m" ></i>Your customer can’t find you online</span> -->
                                     <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="confirm_searchStatus()">Turn On</button>
                                 </div>

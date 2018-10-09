@@ -504,6 +504,19 @@ footer {
                             font-weight: 600;
                             margin-bottom: 15px;
                         }
+                        .schselectall {
+                            i {
+                                padding: 5px 0;
+                                @include font-medium;
+                                margin-bottom: 5px;
+                                color: $linkblue;
+                                cursor: pointer;
+
+                                &:before {
+                                    font-family: 'fontAwesome';
+                                }
+                            }
+                        }
                         .chk-section{
                             display: flex;
                             flex-wrap: wrap;
@@ -515,7 +528,7 @@ footer {
                             }
                             
                             .chk-margin {
-                                margin-right: 15px;
+                                margin-right: 20px;
                                 margin-left: 0px;
                                 
                                 @include respond-to(ynw-767) {
@@ -640,8 +653,12 @@ footer {
                                     }
                                 }
                             }
-
-
+                        }
+                        .savecancel {
+                            .bt7 {
+                                margin-left: 0;
+                                margin-right: 10px;
+                            }
                         }
                         
                         app-field-error-display {

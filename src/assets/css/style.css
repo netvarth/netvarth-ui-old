@@ -1372,6 +1372,14 @@ select:-webkit-autofill:focus {
                         width: 30px;
                         height: 30px;
                         color: #00aef2; }
+              .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.party-size {
+                width: 100%;
+                display: flex;
+                align-items: center; }
+                .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.party-size .col-form-label {
+                  margin: 0 15px 0 0; }
+                .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.party-size .partysize-input {
+                  width: 50px; }
             .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .future-text {
               display: table;
               cursor: pointer;
@@ -1744,7 +1752,7 @@ select:-webkit-autofill:focus {
             margin-bottom: 10px;
             font-weight: 600; }
           .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter {
-            height: 50vh;
+            /*height: 50vh;*/
             overflow: auto; }
             .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table {
               border: none;
@@ -3148,6 +3156,16 @@ header {
         .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline,
         .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-input-wrapper .mat-input-underline {
           display: none; }
+    .signupmainclass .mat-dialog-content .form-group .expl,
+    .loginmainclass .mat-dialog-content .form-group .expl,
+    .moreoptionsmainclass .mat-dialog-content .form-group .expl,
+    .forgotpasswordmainclass .mat-dialog-content .form-group .expl,
+    .commonpopupmainclass .mat-dialog-content .form-group .expl,
+    .googlemainmappopup .mat-dialog-content .form-group .expl, .outer-card .mat-dialog-content .form-group .expl, .consumerpopupmainclass .mat-dialog-content .form-group .expl {
+      color: #999999;
+      font-size: .75rem;
+      margin-top: 5px;
+      display: inline-block; }
     .signupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .loginmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .moreoptionsmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
@@ -3155,6 +3173,25 @@ header {
     .commonpopupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label,
     .googlemainmappopup .mat-dialog-content .form-group .example-section mat-checkbox label, .outer-card .mat-dialog-content .form-group .example-section mat-checkbox label, .consumerpopupmainclass .mat-dialog-content .form-group .example-section mat-checkbox label {
       margin-bottom: 0; }
+    .signupmainclass .mat-dialog-content .form-group .schselectall i,
+    .loginmainclass .mat-dialog-content .form-group .schselectall i,
+    .moreoptionsmainclass .mat-dialog-content .form-group .schselectall i,
+    .forgotpasswordmainclass .mat-dialog-content .form-group .schselectall i,
+    .commonpopupmainclass .mat-dialog-content .form-group .schselectall i,
+    .googlemainmappopup .mat-dialog-content .form-group .schselectall i, .outer-card .mat-dialog-content .form-group .schselectall i, .consumerpopupmainclass .mat-dialog-content .form-group .schselectall i {
+      padding: 5px 0;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #00aef2;
+      cursor: pointer; }
+      .signupmainclass .mat-dialog-content .form-group .schselectall i:before,
+      .loginmainclass .mat-dialog-content .form-group .schselectall i:before,
+      .moreoptionsmainclass .mat-dialog-content .form-group .schselectall i:before,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .schselectall i:before,
+      .commonpopupmainclass .mat-dialog-content .form-group .schselectall i:before,
+      .googlemainmappopup .mat-dialog-content .form-group .schselectall i:before, .outer-card .mat-dialog-content .form-group .schselectall i:before, .consumerpopupmainclass .mat-dialog-content .form-group .schselectall i:before {
+        font-family: 'fontAwesome'; }
     .signupmainclass .mat-dialog-content .form-group .service-section, .signupmainclass .mat-dialog-content .form-group .schedule-section,
     .loginmainclass .mat-dialog-content .form-group .service-section,
     .loginmainclass .mat-dialog-content .form-group .schedule-section,
@@ -3168,30 +3205,42 @@ header {
     .googlemainmappopup .mat-dialog-content .form-group .schedule-section, .outer-card .mat-dialog-content .form-group .service-section, .outer-card .mat-dialog-content .form-group .schedule-section, .consumerpopupmainclass .mat-dialog-content .form-group .service-section, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section {
       display: flex;
       flex-wrap: wrap; }
-      .signupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .signupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
-      .loginmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
-      .loginmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
-      .moreoptionsmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
-      .moreoptionsmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
-      .forgotpasswordmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
-      .forgotpasswordmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
-      .commonpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
-      .commonpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
-      .googlemainmappopup .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
-      .googlemainmappopup .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container, .outer-card .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .outer-card .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container, .consumerpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container {
-        margin-top: 3px; }
-      .signupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .signupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
-      .loginmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
-      .loginmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
-      .moreoptionsmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
-      .moreoptionsmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
-      .forgotpasswordmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
-      .forgotpasswordmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
-      .commonpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
-      .commonpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
-      .googlemainmappopup .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
-      .googlemainmappopup .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label, .outer-card .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .outer-card .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label, .consumerpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label {
-        white-space: pre-wrap; }
+      .signupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox, .signupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox,
+      .loginmainclass .mat-dialog-content .form-group .service-section .mat-checkbox,
+      .loginmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox,
+      .moreoptionsmainclass .mat-dialog-content .form-group .service-section .mat-checkbox,
+      .moreoptionsmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .service-section .mat-checkbox,
+      .forgotpasswordmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox,
+      .commonpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox,
+      .commonpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox,
+      .googlemainmappopup .mat-dialog-content .form-group .service-section .mat-checkbox,
+      .googlemainmappopup .mat-dialog-content .form-group .schedule-section .mat-checkbox, .outer-card .mat-dialog-content .form-group .service-section .mat-checkbox, .outer-card .mat-dialog-content .form-group .schedule-section .mat-checkbox, .consumerpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox {
+        margin: 0 20px 0 0; }
+        .signupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .signupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+        .loginmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+        .loginmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+        .moreoptionsmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+        .moreoptionsmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+        .commonpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+        .commonpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container,
+        .googlemainmappopup .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container,
+        .googlemainmappopup .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container, .outer-card .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .outer-card .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container, .consumerpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-inner-container, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-inner-container {
+          margin-top: 3px; }
+        .signupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .signupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+        .loginmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+        .loginmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+        .moreoptionsmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+        .moreoptionsmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+        .commonpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+        .commonpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label,
+        .googlemainmappopup .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label,
+        .googlemainmappopup .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label, .outer-card .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .outer-card .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label, .consumerpopupmainclass .mat-dialog-content .form-group .service-section .mat-checkbox .mat-checkbox-label, .consumerpopupmainclass .mat-dialog-content .form-group .schedule-section .mat-checkbox .mat-checkbox-label {
+          white-space: pre-wrap; }
     .signupmainclass .mat-dialog-content .form-group .startendtime,
     .loginmainclass .mat-dialog-content .form-group .startendtime,
     .moreoptionsmainclass .mat-dialog-content .form-group .startendtime,
@@ -3277,7 +3326,9 @@ header {
         .outer-card .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"], .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"],
         .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"], .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"],
         .consumerpopupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"] {
-          background: #e6e6e6; }
+          background: white;
+          border: 1px solid #b6cdd8;
+          height: 35px; }
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-hour input[type="text"]:focus,
           .signupmainclass .mat-dialog-content .form-group .startendtime .starttimediv fieldset .ngb-tp-minute input[type="text"]:focus, .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-hour input[type="text"]:focus,
           .signupmainclass .mat-dialog-content .form-group .startendtime .endtimediv fieldset .ngb-tp-minute input[type="text"]:focus,
@@ -5900,13 +5951,22 @@ header {
       font-size: 1rem;
       font-weight: 600;
       margin-bottom: 15px; }
+    .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .schselectall i {
+      padding: 5px 0;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #00aef2;
+      cursor: pointer; }
+      .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .schselectall i:before {
+        font-family: 'fontAwesome'; }
     .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .chk-section {
       display: flex;
       flex-wrap: wrap;
       margin-bottom: 20px;
       height: auto; }
       .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .chk-section .chk-margin {
-        margin-right: 15px;
+        margin-right: 20px;
         margin-left: 0px;
         margin-bottom: 10px;
         /*&:last-child {
@@ -5997,6 +6057,9 @@ header {
             box-shadow: none; }
         .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset:first-child, .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset:first-child {
           margin-bottom: 15px; }
+    .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .savecancel .bt7 {
+      margin-left: 0;
+      margin-right: 10px; }
     .commonpopupmainclass .mat-dialog-content .schedule_outer .schedulesub_outer .sts-msg {
       margin-top: 15px; }
 .commonpopupmainclass .mat-dialog-content .upload-doc {
@@ -7308,7 +7371,7 @@ header {
                 position: absolute;
             }*/ }
     .itro-bg .itro .wt-vd span {
-      border: 1px solid #999999;
+      border: 2px solid #222223;
       font-size: 1.125rem;
       padding: .625em 1.25em;
       display: inline-block;
@@ -8061,6 +8124,15 @@ footer.itl-steps .sect3 {
           font-size: 1rem;
           font-weight: 600;
           margin-bottom: 15px; }
+        .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .schselectall i {
+          padding: 5px 0;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 500;
+          margin-bottom: 5px;
+          color: #00aef2;
+          cursor: pointer; }
+          .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .schselectall i:before {
+            font-family: 'fontAwesome'; }
         .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section {
           display: flex;
           flex-wrap: wrap;
@@ -8070,7 +8142,7 @@ footer.itl-steps .sect3 {
             .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section {
               margin-bottom: 5px; } }
           .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .chk-section .chk-margin {
-            margin-right: 15px;
+            margin-right: 20px;
             margin-left: 0px;
             /*&:last-child {
                 margin: 0;
@@ -8177,6 +8249,9 @@ footer.itl-steps .sect3 {
                 box-shadow: none; }
             .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset:first-child, .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset:first-child {
               margin-bottom: 15px; }
+        .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer .savecancel .bt7 {
+          margin-left: 0;
+          margin-right: 10px; }
         .is-bx.step3 .content .flds .schedule_outer .schedulesub_outer app-field-error-display .sts-msg.error {
           padding: 10px 0px 0;
           color: #f24949;
@@ -8280,7 +8355,8 @@ header.dashb .lg-opt {
     header.dashb .lg-opt .bnps .mn-title {
       display: flex;
       align-items: center;
-      flex-direction: column; }
+      flex-direction: column;
+      justify-content: center; }
       @media only screen and (max-width: 767px) {
         header.dashb .lg-opt .bnps .mn-title {
           width: 200px; } }
@@ -17400,6 +17476,13 @@ footer {
   100% {
     transform: rotate(0) translateX(0);
     opacity: 1; } }
+@keyframes sidebar-out {
+  0% {
+    transform: rotate(0) translateX(0);
+    opacity: 1; }
+  100% {
+    transform: rotate(0) translateX(-300px);
+    opacity: 0; } }
 @keyframes k1 {
   0% {
     transform: rotate(0) translateX(-50px);

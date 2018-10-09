@@ -86,6 +86,7 @@ header {
                     display: flex;
                     align-items: center;
                     flex-direction: column;
+                    justify-content: center;
                     
                     @include respond-to(ynw-767){
                         width: 200px;

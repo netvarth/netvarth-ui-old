@@ -233,6 +233,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    if (this.headercls === '') {
         this.headercls = 'dashb';
    }
+   // console.log('header class', this.headercls);
 
   }
   doSignup(origin?, moreOptions = {}) {

@@ -366,4 +366,14 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
+
+  handleselectall() {
+    this.selday_arr = [];
+    const wkdaystemp = this.weekdays;
+    this.weekdays = [];
+    for (let ii = 1; ii <= 7; ii++) {
+      this.handleDaychecbox(ii);
+    }
+    this.weekdays = wkdaystemp;
+  }
 }

@@ -48,6 +48,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
     <div class="form-group">
         <label class="col-form-label">Schedule*</label>
+        <div class="schselectall"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div>
         <section class="schedule-section">
             <div *ngFor="let wday of weekdays; index as i">
             <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecbox(i)" [checked]="check_existsinArray(selday_arr,i) >= 0">{{wday}}</mat-checkbox>
