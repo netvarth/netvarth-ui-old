@@ -102,7 +102,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">Sign Up</button>
   </div>
 </form>
-<div class="example-container" *ngIf="step==2">
+<div class="example-container otpouter" *ngIf="step==2">
   <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
   (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess"></app-otp-form>
 </div>

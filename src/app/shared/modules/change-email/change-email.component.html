@@ -27,7 +27,7 @@
 
             </div>
 
-            <div class="example-container" *ngIf="step==2">
+            <div class="example-container otpouter" *ngIf="step==2">
               <app-otp-form [type]="'change_email'" [submitdata]="submit_data"  (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
               (resendOtp)="resendOtp($event)"></app-otp-form>
             </div>

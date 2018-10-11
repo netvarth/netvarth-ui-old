@@ -111,7 +111,7 @@ export class ProviderCouponsComponent implements OnInit {
           this.getCoupons();
         },
         error => {
-
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
 

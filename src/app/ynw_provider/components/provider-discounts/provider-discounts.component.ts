@@ -112,7 +112,7 @@ export class ProviderDiscountsComponent implements OnInit {
           this.getDiscounts();
         },
         error => {
-
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
 

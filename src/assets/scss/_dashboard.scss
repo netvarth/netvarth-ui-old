@@ -1218,14 +1218,15 @@ footer {
                     
                     .ad-tble {
                         display: flex;
+                        flex-direction: column;
                         
                         @include respond-to(ynw-767){
                             flex-direction: column;
                         }
                         
                         .ad-l {
-                            align-self: center;
-                            flex-basis: 50%;
+                            flex-basis: 100%;
+                            order: 2;
                             
                             @include respond-to(ynw-767){
                                 align-self: flex-start;
@@ -1237,10 +1238,12 @@ footer {
                             display: flex;
                             flex-wrap: wrap;
                             justify-content: flex-end;
+                            margin-bottom: 10px;
                             
                             @include respond-to(ynw-767){
                                 margin: 10px 0 0 0 !important;
                                 justify-content: flex-start;
+                                flex-wrap: wrap;
                                 
                                 span {
                                     &:first-child {
@@ -1254,7 +1257,7 @@ footer {
                                 @include border-radius(20px);
                                 border: 1px solid $cc-mediumgray;
                                 font-size: .75rem;
-                                margin-left: 10px;
+                                margin-right: 10px;
                                 margin-bottom: 3px;
                                 margin-top: 3px;
                                 align-self: flex-start;
@@ -1272,8 +1275,7 @@ footer {
                                 }
                             }
                             .bt8 {
-                                margin-left: 10px;
-                                margin-bottom: 0;
+                                margin:0 0 0 auto;
                                 padding: 0;
                                 border: none;
                                 align-self: center;
