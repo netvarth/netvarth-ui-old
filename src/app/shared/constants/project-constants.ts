@@ -3,6 +3,7 @@ export const projectConstants = {
   CONSUMER_DASHBOARD_REFRESH_TIME: 120, // seconds
   INBOX_REFRESH_TIME: 30, // seconds
   ALERT_REFRESH_TIME: 30, // seconds
+  SMALL_DEVICE_BOUNDARY: 991,
   searchpass_criteria : {
     'start': 0,
     'return': 'title,sector,logo,place1,business_phone_no,unique_id',

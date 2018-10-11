@@ -4,9 +4,9 @@
           <!-- <h1>Consumer <span>Dashboard</span></h1> -->
           <div class="card c-chekins">
               <mat-accordion >
-                <mat-expansion-panel [expanded]= 'true'>
+                <mat-expansion-panel [expanded]= 'true' [disabled]="true">
                   <mat-expansion-panel-header>
-                    <mat-panel-title  [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip">
+                    <mat-panel-title  [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip" >
                       Current Check-Ins
                     </mat-panel-title>
                   </mat-expansion-panel-header>
@@ -81,6 +81,9 @@
                               <div class="lt0" *ngIf="showPersonsAhead(waitlist)">
                                   Persons Ahead <span class="persons">{{waitlist.personsAhead}}</span>
                               </div>
+                              <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
+                              Party Size <span class="persons">{{waitlist.partySize}}</span>
+                            </div>
                           </div>
                           <div class="rt">
                               <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">

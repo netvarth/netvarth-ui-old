@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy, HostListener, OnChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
 
@@ -71,6 +71,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   provsignTooltip = '';
   showLearnMore = false;
   passedDet = {};
+  screenHeight;
+  screenWidth;
+  small_device_display = false;
 
   constructor(
     private dialog: MatDialog,
@@ -79,6 +82,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private _scrollToService: ScrollToService,
     public shared_service: SharedServices
   ) {
+    this.onResize();
      /*router.events.subscribe((val) => {
         console.log('routerval', val['url']);
         if (val['url']) {
@@ -161,6 +165,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
 
+
   ngOnDestroy() {
     this.evnt.unsubscribe();
      // unsubscribe to ensure no memory leaks
@@ -174,6 +179,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const dd = new Date();
     this.getInboxUnreadCnt();
   }
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= projectConstants.SMALL_DEVICE_BOUNDARY) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  // console.log('resized', this.screenWidth, this.screenHeight, this.small_device_display);
+}
+
  getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
     if (bdetails) {

@@ -271,7 +271,8 @@ export class ProviderDetailComponent implements OnInit {
                   const imgobj = new Image(
                     i,
                     { // modal
-                      img: this.galleryjson[i].url
+                      img: this.galleryjson[i].url,
+                      description: this.galleryjson[i].caption || ''
                     });
                   this.image_list_popup.push(imgobj);
                 }

@@ -41,14 +41,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
 
-
         let url = '';
         if (req.url.substr(0, 4) === 'http') {
           url =  req.url;
         } else {
 
           url =  base_url + req.url;
-
+          // console.log('req' + url);
           if (!this.checkLoaderHideUrl(url)) {
             // console.log('req' + url);
             this.loaderDisplayed = true;

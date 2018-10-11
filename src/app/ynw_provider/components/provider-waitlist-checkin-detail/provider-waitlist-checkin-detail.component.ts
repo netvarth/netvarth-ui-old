@@ -143,14 +143,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     }
 
     getCommunicationHistory(uuid) {
-
+      // console.log('uuid', uuid);
       this.provider_services.getProviderInbox()
       .subscribe(
           data => {
             const history: any = data;
             this.communication_history = [];
             for (const his of history) {
-              if (his.waitlistId === uuid) {
+              // console.log('compare', his.waitlistId, ' ---- ', uuid);
+              if (his.waitlistId === uuid || his.waitlistId === uuid.replace('h_', '')) {
                 this.communication_history.push(his);
               }
             }

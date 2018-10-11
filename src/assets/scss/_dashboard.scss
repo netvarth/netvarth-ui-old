@@ -5607,6 +5607,13 @@ footer {
                                 padding-bottom: 10px;
                                 @include transition(all 300ms);
                                 
+                                .adwordshowmore {
+                                    font-size: .75rem;
+                                    font-weight: 500;
+                                    color: $linkblue;
+                                    cursor: pointer;
+                                }
+                                
                                 &:last-child {
                                     border: none;
                                 }

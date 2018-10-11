@@ -1167,7 +1167,7 @@ setEnvironment(bypassotherfunction?) {
       break;
       case 'ynw_verified_levelasc':
         selfield = 'ynw_verified_level';
-       selorder = 'asc';
+       selorder = 'desc';
       break;
     }
     this.sortfieldsels = sel;

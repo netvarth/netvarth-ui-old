@@ -374,51 +374,84 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   addCartItem(item, type) {
-    console.log(item);
-    this.pushCartItem(item, type);
-    this.calculateItemTotal(this.cart.items.length - 1);
-    this.calculateTotal();
+   // console.log(item);
+   let recalcreq = true;
+    const retid = this.pushCartItem(item, type);
+    if (type === 'Services') {
+      if (retid !== -1) {
+        this.api_error = Messages.PROVIDER_BILL_SERV_EXISTS;
+        setTimeout(() => {
+          this.api_error = '';
+          }, projectConstants.TIMEOUT_DELAY);
+        recalcreq = false;
+      }
+    }
+    if (recalcreq) {
+      if (retid === -1) {
+        this.calculateItemTotal(this.cart.items.length - 1);
+      } else {
+        this.calculateItemTotal(retid);
+      }
+      this.calculateTotal();
+    }
   }
 
   pushCartItem(item, type) {
 
     let selected_item = {
     };
-    const tax = (item.taxable) ? this.item_service_tax : 0;
-    switch (type) {
-      case 'Services' :  selected_item = {
-                                'name' : item.name,
-                                'itemId': item.id,
-                                'quantity': 1,
-                                'price': item.totalAmount,
-                                'subtotal': item.totalAmount,
-                                'discount': '',
-                                'coupon': '',
-                                'gst_percentage': tax / 2,
-                                'cgst_percentage': tax / 2,
-                                'type' : type,
-                                'taxable':  item.taxable
-                              };
-                              break;
-
-      case 'Items' :  selected_item = {
-                                'name' : item.displayName,
-                                'itemId': item.itemId,
-                                'quantity': 1,
-                                'price': item.price,
-                                'subtotal': item.price,
-                                'discount': '',
-                                'coupon': '',
-                                'gst_percentage': tax / 2,
-                                'cgst_percentage': tax / 2,
-                                'type' : type,
-                                'taxable':  item.taxable
-                              };
-                              break;
+   // console.log('cart', this.cart);
+    // check whether item already exists in the cart
+    let foundid = -1;
+    const itmid = (type === 'Services') ? item.id : item.itemId;
+    for (let i = 0; i < this.cart.items.length; i++) {
+        if (this.cart.items[i].itemId === itmid && this.cart.items[i].type === type) {
+          foundid = i;
+        }
     }
+   // console.log('foundid', foundid);
+    const tax = (item.taxable) ? this.item_service_tax : 0;
+    if (foundid !== -1) { // case if item / service already exists in the array, then just increment the qty
+      if (type !== 'Services') {
+        this.cart.items[foundid].quantity += 1;
+      }
+    } else {
+      switch (type) {
+        case 'Services' :  selected_item = {
+                                  'name' : item.name,
+                                  'itemId': item.id,
+                                  'quantity': 1,
+                                  'price': item.totalAmount,
+                                  'subtotal': item.totalAmount,
+                                  'discount': '',
+                                  'coupon': '',
+                                  'gst_percentage': tax / 2,
+                                  'cgst_percentage': tax / 2,
+                                  'type' : type,
+                                  'taxable':  item.taxable
+                                };
+                                break;
 
-    this.cart.items.push(selected_item);
-    this.selectedItems.push(item);
+        case 'Items' :  selected_item = {
+                                  'name' : item.displayName,
+                                  'itemId': item.itemId,
+                                  'quantity': 1,
+                                  'price': item.price,
+                                  'subtotal': item.price,
+                                  'discount': '',
+                                  'coupon': '',
+                                  'gst_percentage': tax / 2,
+                                  'cgst_percentage': tax / 2,
+                                  'type' : type,
+                                  'taxable':  item.taxable
+                                };
+                                break;
+      }
+
+      this.cart.items.push(selected_item);
+      this.selectedItems.push(item);
+    }
+    return foundid;
 
   }
 
@@ -690,17 +723,25 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .map((ob) => {
         // console.log(ob, service);
         if (ob.id === service.serviceId) {// console.log('here');
-          this.pushCartItem(ob, 'Services');
-          this.cart.items[this.cart.items.length - 1] ['quantity']  = service.quantity || 1;
-          this.cart.items[this.cart.items.length - 1]['price'] = service.price || ob.totalAmount;
-          if (service.discountId !== 0) {
-            this.cart.items[this.cart.items.length - 1] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
-          }
+          let retid = this.pushCartItem(ob, 'Services');
+          console.log('retid', retid);
+          if (retid === -1) {
+            retid = this.cart.items.length - 1;
 
-          if (service.couponId !== 0) {
-            this.cart.items[this.cart.items.length - 1] ['coupon'] = this.getIndexFromId(this.coupons, service.couponId);
+            this.cart.items[retid] ['quantity']  = service.quantity || 1;
+            this.cart.items[retid]['price'] = service.price || ob.totalAmount;
+            if (service.discountId !== 0) {
+              this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
+            }
+            if (service.couponId !== 0) {
+              this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, service.couponId);
+            }
+            this.calculateItemTotal(retid);
+
+
+          } else {
+             this.api_error = 'Service already exists in the bill';
           }
-          this.calculateItemTotal(this.cart.items.length - 1);
         }
 
       });
@@ -719,18 +760,21 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .map((ob) => {
 
         if (ob.itemId === item.itemId) {
-          this.pushCartItem(ob, 'Items');
-          this.cart.items[this.cart.items.length - 1] ['quantity']  = item.quantity;
-          this.cart.items[this.cart.items.length - 1]['price'] = item.price;
+          let retid = this.pushCartItem(ob, 'Items');
+          if (retid === -1) {
+            retid = this.cart.items.length - 1;
+          }
+          this.cart.items[retid] ['quantity']  = item.quantity;
+          this.cart.items[retid]['price'] = item.price;
           if (item.discountId !== 0) {
-            this.cart.items[this.cart.items.length - 1] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
+            this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
           }
 
           if (item.couponId !== 0) {
-            this.cart.items[this.cart.items.length - 1] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
+            this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
           }
 
-          this.calculateItemTotal(this.cart.items.length - 1);
+          this.calculateItemTotal(retid);
         }
 
       });

@@ -156,6 +156,7 @@ export const Messages = {
   'PROVIDER_BILL_CREATE' : 'Bill created successfully',
   'PROVIDER_BILL_UPDATE' : 'Bill updated successfully',
   'PROVIDER_BILL_SETTLE' : 'Bill settled successfully',
+  'PROVIDER_BILL_SERV_EXISTS' : 'Service already exists in the bill',
   'PROVIDER_BILL_EMAIL' : 'Bill emailed successfully',
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
   'PROVIDER_BILL_PAYMENT_SELFPAY': ' An email and push notification will be send to the consumer',
