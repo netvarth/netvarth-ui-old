@@ -10,6 +10,7 @@ import { CommonDataStorageService } from '../../../shared/services/common-datast
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../shared/constants/project-messages';
 
 import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-delay.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
@@ -59,15 +60,18 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   load_locations = 0;
   load_queue = 0;
   load_waitlist = 0 ;
-
+  tooltipcls = projectConstants.TOOLTIP_CLS;
   open_filter = false;
   waitlist_status = [];
 
   filter = {
     first_name: '',
+    last_name: '',
+    phone_number: '',
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
+    payment_status: 'all',
     check_in_start_date: null,
     check_in_end_date: null,
     location_id: 'all',
@@ -109,6 +113,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   settings;
+  delayTooltip = this.shared_functions.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
+  filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
+  cloudTooltip = this.shared_functions.getProjectMesssages('CLOUDICON_TOOPTIP');
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -149,10 +156,27 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         {name : this.done_upper, value: 'done'}];
 
     }
-
+    payStatusList = [
+          { pk: 'NotPaid', value: 'Not Paid'},
+          { pk: 'PartiallyPaid', value: 'Partially Paid'},
+          { pk: 'FullyPaid', value: 'Fully Paid'}
+    ];
 
   ngOnInit() {
-    this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '');
+
+    const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
+    if (savedtype !== undefined && savedtype !== null) {
+      // console.log('exists', savedtype);
+      this.time_type = savedtype;
+    } else {
+     // console.log('NOT');
+    }
+    const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp');
+    if (stattype !== undefined && stattype !== null) {
+      // console.log('exists', savedtype);
+      this.status_type = stattype;
+    }
+    this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
     this.getBusinessProfile();
     this.getLocationList();
     this.getServiceList();
@@ -179,8 +203,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
           // calling function which saves the business related details to show in the header
           this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-           || '', bProfile['serviceSector']['displayName'] || '', '');
-           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '');
+           || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
+           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '');
 
            const pdata = { 'ttype': 'updateuserdetails' };
            this.shared_functions.sendMessage(pdata);
@@ -210,7 +234,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     });
   }
    // get the logo url for the provider
-   getProviderLogo(bname = '', bsector = '') {
+   getProviderLogo(bname = '', bsector = '', bsubsector = '') {
     let blogo;
     this.provider_services.getProviderLogo()
       .subscribe(
@@ -224,7 +248,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           logo = '';
         }
         // calling function which saves the business related details to show in the header
-        this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', logo );
+        this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo );
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
       },
@@ -305,10 +329,20 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   getQueueList() {
+    // console.log('reached quelist');
     this.provider_services.getProviderLocationQueues(this.selected_location.id)
     .subscribe(
-      data => {
-        this.all_queues = data;
+      (data: any) => {
+        // this.all_queues = data;
+
+        const Cqueues = data;
+        this.all_queues = [];
+
+        for ( const que of Cqueues) {
+          if (que.queueState === 'ENABLED') {
+            this.all_queues.push(que);
+          }
+        }
 
         for (let ii = 0; ii < this.all_queues.length; ii++) {
           let schedule_arr = [];
@@ -330,7 +364,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   getQueueListByDate() {
-
+    // console.log('qby date');
     this.load_queue = 0;
     if (!this.selected_queue) {
 
@@ -338,11 +372,29 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         this.provider_services.getProviderLocationQueuesByDate(
           this.selected_location.id, this.queue_date)
         .subscribe(
-          data => {
-            this.queues = data;
-            if (this.queues[0] && this.selected_queue == null) {
-              this.selectedQueue(this.queues[0]);
+          (data: any) => {
+            // this.queues = data;
+            const Cqueues = data;
+            this.queues = [];
+            const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
+            const savedQok = [];
+            for ( const que of Cqueues) {
+              if (que.queueState === 'ENABLED') {
+                // console.log('que', que);
+                if (que.id === savedQ) {
+                  savedQok.push(que);
+                }
+                this.queues.push(que);
+              }
             }
+            // console.log('saved q', savedQok);
+            if (savedQok.length > 0) {
+              this.selectedQueue(savedQok[0]);
+            } else {
+              if (this.queues[0] && this.selected_queue == null) {
+                this.selectedQueue(this.queues[0]);
+              }
+          }
           },
           error => {
             this.queues = [];
@@ -390,7 +442,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     // this.getHistoryCheckinCount();
   }
 
-  selectedQueue(selected_queue) {
+  selectedQueue(selected_queue, qclick?) {
+   // console.log('selected q', selected_queue.id);
+    if (selected_queue.id) {
+      this.shared_functions.setitemonLocalStorage('pdq', selected_queue.id);
+    }
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
     this.today_waitlist_count = 0;
@@ -568,7 +624,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   setTimeType(time_type) {
     this.check_in_list  = this.check_in_filtered_list = [];
     this.time_type = time_type;
-    this.status_type = 'all';
+    this.shared_functions.setitemonLocalStorage('pdtyp', this.time_type);
+    const stype = this.shared_functions.getitemfromLocalStorage('pdStyp');
+    if (stype) {
+      this.status_type = stype;
+    } else {
+      this.status_type = 'cancelled';
+    }
     this.setFilterDateMaxMin();
     // this.queues = [];
     this.loadApiSwitch('setTimeType');
@@ -631,6 +693,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AdjustQueueDelayComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         queues: this.queues,
         queue_id: this.selected_queue.id
@@ -679,6 +742,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
 
     this.status_type = type;
+    this.shared_functions.setitemonLocalStorage('pdStyp', this.status_type);
     let status: any = this.status_type ;
 
     switch (type) {
@@ -719,6 +783,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         checkin: checkin
       }
@@ -754,6 +819,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
 
+    if (this.filter.last_name !== '') {
+      api_filter['lastName-eq'] = this.filter.last_name;
+    }
+
+    if (this.filter.phone_number !== '') {
+      api_filter['primaryMobileNo-eq'] = this.filter.phone_number;
+    }
+
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;
     }
@@ -776,6 +849,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
 
     }
+    if (this.time_type === 0 ) {
+      if (this.filter.payment_status !== 'all') {
+        api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
+      }
+    }
 
     api_filter['location-eq'] = this.selected_location.id;
 
@@ -797,9 +875,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   resetFilter() {
     this.filter = {
       first_name: '',
+      last_name: '',
+      phone_number: '',
       queue: 'all',
       service: 'all',
       waitlist_status: 'all',
+      payment_status: 'all',
       check_in_start_date: null,
       check_in_end_date: null,
       location_id: 'all',
@@ -816,6 +897,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         checkin_id: checkin.ynwUuid
       }
@@ -839,8 +921,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        console.log(error);
-        if (error.status === 422 && this.time_type === 1) {
+        // console.log(error);
+        if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
           this.addEditBill(checkin , null);
         } else {
           this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
@@ -852,9 +934,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   addEditBill(checkin, bill_data) {
+    // console.log('add bill', bill_data);
     const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
+      disableClose: true,
       data: {
         checkin: checkin,
         bill_data: bill_data
@@ -869,6 +953,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   viewBill(checkin, bill_data) {
+    // console.log('billdata', bill_data);
     const dialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
@@ -880,7 +965,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      // console.log(result);
       if (result === 'updateBill') {
         this.addEditBill(checkin, bill_data);
       } else if (result === 'reloadlist') {
@@ -915,7 +1000,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    console.log('page', pg);
+    // console.log('page', pg);
     this.doSearch();
   }
 
@@ -943,4 +1028,22 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     return label_status;
   }
 
+  focusInput(ev, input) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) {
+      input.focus();
+    }
+  }
+  focusInputSp(ev) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) {
+      this.doSearch();
+    }
+  }
+
+  learnmore_clicked(mod) {
+    const moreOptions = {'show_learnmore': true , 'scrollKey': 'adjustdelay'};
+    const pdata = { 'ttype': 'learn_more', 'target': moreOptions };
+    this.shared_functions.sendMessage(pdata);
+   }
 }

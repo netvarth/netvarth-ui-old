@@ -30,10 +30,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
    </app-field-error-display>
 
    <mat-form-field class="example-full-width">
-   <span matPrefix *ngIf="amForm.get('calculationType').value == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
-   <input matInput type="text" class="form-control" id="discValue" [placeholder]="valueCaption"
+   <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
+   <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
+   <input matInput type="text" class="form-control valfield" #myfield id="discValue" [placeholder]="valueCaption"
    formControlName="discValue" autocomplete="off">
-   <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span>
+  
    </mat-form-field>
 
    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'discValue')"

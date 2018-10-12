@@ -47,7 +47,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
-
+  customernormal_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   constructor(
     public dialogRef: MatDialogRef<AddProviderBprofilePrivacysettingsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -270,5 +270,18 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+  }
+  show_privacyText(txt) {
+    let rettxt = '';
+    if (txt === 'customersOnly') {
+      if (this.customernormal_label !== '' && this.customernormal_label !== undefined && this.customernormal_label !== null) {
+        rettxt = 'My ' + this.sharedfunctionObj.firstToUpper(this.customernormal_label) + 's Only';
+      } else {
+        rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
+      }
+    } else {
+      rettxt = this.privacypermissiontxt[txt];
+    }
+    return rettxt;
   }
 }

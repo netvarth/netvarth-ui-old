@@ -59,6 +59,7 @@ export class ProviderItemsComponent implements OnInit {
       const dialogRef = this.dialog.open(AddProviderItemComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
+        disableClose: true,
         data: {
           type : 'add'
         }
@@ -74,6 +75,7 @@ export class ProviderItemsComponent implements OnInit {
       const dialogRef = this.dialog.open(AddProviderItemComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
+        disableClose: true,
         data: {
           item : obj,
           type : 'edit'
@@ -138,6 +140,7 @@ export class ProviderItemsComponent implements OnInit {
       const dialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
         data: {
           'message' : this.sharedfunctionObj.getProjectMesssages('ITEM_DELETE').replace('[name]', item.displayName)
         }

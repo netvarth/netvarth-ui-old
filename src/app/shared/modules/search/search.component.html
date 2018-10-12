@@ -48,18 +48,18 @@
   </div>
 
   <div class="flex-shrink-0 plr0i">
-      <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1" (click)="do_search()" *ngIf="!showmoreoptionsSec"><span class="icon icon-search"></span></div>
+      <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1" (click)="do_search(null, true)" *ngIf="!showmoreoptionsSec"><span class="icon icon-search"></span></div>
   </div>
   <!-- <div class="sa-mo flex-shrink-0" *ngIf="chk_moreoptionshow()"> -->
       <div class="sa-mo flex-shrink-0">
-      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'">More Options</span>
-      <span class="icon icon-filter" id="morefiltericon" (click)="showMoreOptions()" *ngIf="includedfrom=='consumer_header'"></span>
+      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'"  [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip">More Options</span>
+      <span class="icon icon-filter" id="morefiltericon" (click)="showMoreOptions()" *ngIf="includedfrom=='consumer_header'" [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip"></span>
   </div>
   <ng-container>
-  <div class="more-opt" [class.show]="showmoreoptionsSec" >
+  <div class="more-opt" [class.show]="showmoreoptionsSec">
     <span class="closebtn" (click)="closeMoreoptions()"></span>
     <div class="mo-content">
-        <app-search-moreoptions  (searchmoreclick)="handleSearchmoreSearchClick($event)" [passedRefine]="passedRefine"></app-search-moreoptions>
+        <app-search-moreoptions *ngIf="showmoreoptionsSec" (searchmoreclick)="handleSearchmoreSearchClick($event)" [passedRefine]="passedRefine"></app-search-moreoptions>
     </div>
   </div>
 </ng-container>

@@ -30,6 +30,8 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   };
   payment_popup = null;
   gateway_redirection = false;
+  payModesExists = false;
+  payModesQueried = false;
 
   api_success = null;
 
@@ -61,9 +63,9 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.dialogRef.backdropClick().subscribe(result => {
+    /*this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close();
-    });
+    });*/
   }
 
   getPaymentModes() {
@@ -71,13 +73,23 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     .subscribe(
       data => {
         this.payment_options = data;
+        this.payModesQueried = true;
+        /*
         if (this.payment_options.length > 0) {
           // console.log('test', this.payment_options[0].name);
           this.pay_data.paymentMode = this.payment_options[0].name;
+        }*/
+
+        if (this.payment_options.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
+          this.payModesExists = false;
+        } else {
+          this.payModesExists = true;
+          this.pay_data.paymentMode = 'DC'; // deleberately giving this value as per request from Manikandan.
         }
         // console.log(this.payment_options);
       },
       error => {
+        this.payModesQueried = true;
         this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       }
     );

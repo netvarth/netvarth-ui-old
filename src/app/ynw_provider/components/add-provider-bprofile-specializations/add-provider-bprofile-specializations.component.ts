@@ -28,7 +28,7 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions
     ) {
-       console.log(data);
+       // console.log(data);
      }
 
   ngOnInit() {
@@ -49,7 +49,7 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
     } else {
       this.selspecialization_arr.push(sel);
     }
-    console.log(this.selspecialization_arr);
+    // console.log(this.selspecialization_arr);
   }
 
   checkspecializationExists(lang) {

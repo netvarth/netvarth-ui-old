@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -21,6 +21,8 @@ export class AddProviderDiscountsComponent implements OnInit {
   valueCaption = 'Enter value';
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
+  curtype = 'Fixed';
+  @ViewChild('myfield') private inputRef: ElementRef;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderDiscountsComponent>,
@@ -55,6 +57,7 @@ export class AddProviderDiscountsComponent implements OnInit {
       'discValue': this.data.discount.discValue || null,
       'calculationType': this.data.discount.calculationType || null,
     });
+    this.curtype = this.data.discount.calculationType || 'Fixed';
   }
   onSubmit (form_data) {
 
@@ -69,7 +72,11 @@ export class AddProviderDiscountsComponent implements OnInit {
           return;
         } else {
             if (form_data.discValue === 0) {
-              this.api_error = 'Please enter the discount value';
+              if (form_data.calculationType === 'Percentage') {
+                this.api_error = 'Please enter the discount percentage';
+              } else {
+                this.api_error = 'Please enter the discount value';
+              }
               return;
             }
             if (form_data.calculationType === 'Percentage') {
@@ -124,11 +131,13 @@ export class AddProviderDiscountsComponent implements OnInit {
   }
   handleTypechange(typ) {
       if (typ === 'Fixed') {
+        this.curtype = typ;
         this.valueCaption = 'Enter value';
       } else {
+        this.curtype = typ;
         this.valueCaption = 'Enter percentage value';
       }
-
+      // this.inputRef.nativeElement.focus();
   }
 
   resetApiErrors () {

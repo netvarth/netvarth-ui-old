@@ -1,17 +1,17 @@
 export const Messages = {
-
   'OTP_SENT_EMAIL': 'OTP has been sent to  [your_email]. Please enter your OTP.',
   'OTP_SENT_MOBILE': 'OTP has been sent to [your_mobile]. Please enter your OTP.',
   'PROFILE_UPDATE': 'Profile has been updated successfully',
-  'PASSWORD_MISMATCH': 'Password and Confirm password do not match',
+  'PASSWORD_MISMATCH': 'Password and Re-entered Password do not match',
   'PASSWORD_CHANGED': 'Password has been changed successfully',
   'EMAIL_VERIFIED': 'Your email is verified',
-  'PHONE_VERIFIED': 'You phone number is verified',
-  'MEMBER_CREATED': 'Member created successfully',
+  'PHONE_VERIFIED': 'Your phone number is verified',
+  'MEMBER_CREATED': 'Member added successfully',
   'MEMBER_UPDATED': 'Member updated successfully',
   'LICENSE_UPGRADED': 'License Package upgraded successfully',
   'LICENSE_TOOLTIP' : 'This tooltip can be managed from the messages file',
   'ADDON_ADDED': 'Addon Package added successfully',
+  'TESTACC_LOGIN_NA': 'Test user cannot view/checkin real providers account details',
 
   // Items
   'ITEM_CREATED': 'Item created successfully',
@@ -45,13 +45,13 @@ export const Messages = {
   'HOLIDAY_LISTEMPTY' : 'No Non Working Day available',
 
   // Common
-  'API_ERROR': 'YouNeverWait.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
+  'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
 
   // Business Profile
   'BPROFILE_CREATED' : 'Business Profile created successfully',
-  'BPROFILE_EMAILDET' : 'Please enter the email id and its details',
+  'BPROFILE_EMAILDET' : 'Please enter the email id and email label',
   'BPROFILE_SELECT_SCHEDULE' : 'Please select the schedule',
-  'BPROFILE_PHONEDET' : 'Please enter the phone number and its details',
+  'BPROFILE_PHONEDET' : 'Please enter the phone number and phone label',
   'BPROFILE_PHONENO' : 'Please enter the phone number',
   'BPROFILE_SELECTLOGO' : 'Please select the logo',
   'BPROFILE_ATLEASTONEDAY' : 'Please select atleast one day',
@@ -74,7 +74,7 @@ export const Messages = {
   'BPROFILE_PRIVACY_EMAIL_INVALID' : 'Please enter a valid email id',
   'BPROFILE_SOCIAL_URL_VALID' : 'Please enter a valid URL',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
-  'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
+  // 'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
   'BPROFILE_LANGUAGE_SAVED': 'Languages Saved succesfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations Saved succesfully',
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
@@ -91,7 +91,8 @@ export const Messages = {
   // WaitlistManager
   'ONLINE_CHECKIN_SAVED' : 'Saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
-  'SERVICE_ADDED' : 'New service added successfully. Please add this service to the relevant queue by editing it.',
+  'SERVICE_ADDED1' : 'New service added successfully',
+  'SERVICE_ADDED2' : 'Please add this service to the relevant queue by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'SERVICE_PRE_PAY_ERROR': 'Payment settings needs to be completed before enabling the Pre-Payment option',
@@ -118,42 +119,51 @@ export const Messages = {
   'PROVIDER_NOTE_ADD': 'Note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message send successfully',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message send successfully',
+  'ESTDATE' : 'Estimated Service time',
 
-  'SEARCH_ESTIMATE_TOOPTIP' : 'This is the estimated waiting time tooltip',
+  'SEARCH_ESTIMATE_TOOPTIP' : 'Estimated Waiting Time',
   'CUSTOMER_SEARCH_EXIST': 'This [customer] already exist',
   'CUSTOMER_SEARCH_UNAVAILABLE': 'This [customer] doesnt exist',
   'PROVIDER_CUSTOMER_CREATED': 'New [customer] created',
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',
   'PAYSETTING_SAV_PAYSTATUS': 'Payment Status updated successfully',
+  'PAYSETTING_BLANKNUM' : 'Mobile number required',
   'PAYSETTING_ONLYNUM': 'Only numbers are allowed in mobile field',
   'PAYSETTING_MOB10': 'Mobile number should have 10 digits',
   'PAYSETTING_PAN': 'Pan number is required',
+  'PAYSETTING_PANPHANUMERIC' : 'Pan number should not contain special characters',
   'PAYSETTING_ACCNO': 'Account number is required',
   'PAYSETTING_ACCNO_NUMONLY': 'Only numbers are allowed for account number',
   'PAYSETTING_BANKNAME': 'Bank name is required',
   'PAYSETTING_IFSC': 'IFSC code is required',
   'PAYSETTING_PANNAME': 'Name on pancard is required',
   'PAYSETTING_CHARONLY': 'Name can contain only alphabets',
-  'PAYSETTING_ACMNAME': 'Account holder Name in required',
-  'PAYSETTING_BRANCH': 'Branch in required',
-  'PAYSETTING_FILING': 'Filing status in required',
-  'PAYSETTING_ACTYPE': 'Account type in required',
+  'PAYSETTING_ACMNAME': 'Account holder Name is required',
+  'PAYSETTING_BRANCH': 'Branch is required',
+  'PAYSETTING_FILING': 'Filing status is required',
+  'PAYSETTING_ACTYPE': 'Account type is required',
   'PAYSETTING_TAXPER': 'Please enter a valid tax percentage',
-  'PAYSETTING_SAV_TAXPER': 'Tax percentage updated successfully',
+  'PAYSETTING_GSTNUM': 'Please enter the GST number',
+  'PAYSETTING_SAV_TAXPER': 'Tax details updated successfully',
   'PAYSETTING_CONTACTADMIN': 'Contact Administrator to verify your payment modes',
+  'PAYSETTING_MAXLEN': 'Only [maxlen] characters are allowed',
+  'PAYSETTING_PANMAXLEN10': 'Pancard should contain only 10 characters',
+  'PAYSETTING_IFSCMAXLEN11': 'IFSC code should contain only 11 characters',
+  'PAYSETTING_IFSCALPHANUMERIC' : 'IFSC code should not contain special characters',
   // Provider Bill
 
   'PROVIDER_BILL_CREATE' : 'Bill created successfully',
   'PROVIDER_BILL_UPDATE' : 'Bill updated successfully',
   'PROVIDER_BILL_SETTLE' : 'Bill settled successfully',
+  'PROVIDER_BILL_SERV_EXISTS' : 'Service already exists in the bill',
   'PROVIDER_BILL_EMAIL' : 'Bill emailed successfully',
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
   'PROVIDER_BILL_PAYMENT_SELFPAY': ' An email and push notification will be send to the consumer',
-  'PROVIDER_BILL_SETTLE_CONFIRM': 'Settle the Bill?',
+  'PROVIDER_BILL_SETTLE_CONFIRM': 'Do you want to settle this bill?',
   'PROVIDER_ALERT_ACK_SUCC' : 'Acknowledge Successfull',
-  'CHECKIN_SUCC': '[waitlist] saved successfully',
-  'CHECKIN_SUCC_REDIRECT': '[waitlist] saved successfully. Please wait ... You are being redirected to the Payment Gateway ...',
+  'CHECKIN_SUCC': 'You have [waitlisted] successfully',
+  'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
   'CHECKIN_CANCELLED' : '[waitlist] [cancelled] successfully',
   'PAYMENT_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
@@ -164,6 +174,38 @@ export const Messages = {
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
   'Manage_Privacy': 'Manage privacy changed successfully',
 
-  // Dynamic Field
-  'YEAR_MONTH_VALID' : 'Future date not allowed'
+    // Dynamic Field
+  'YEAR_MONTH_VALID' : 'Future date not allowed',
+
+  // Tooltips given by YNW
+  'ADJUSTDELAY_TOOPTIP' : 'Set delay in working hours anytime',
+  'INBOXICON_TOOPTIP': 'Messages',
+  'FILTERICON_TOOPTIP': 'Use filters to find specific data',
+  'BRPFOLE_SEARCH_TOOLTIP': 'Set up your profile here',
+  'WAITLIST_TOOLTIP': 'Manage working hours and waitlist',
+  'LINCENSE_TOOLTIP' : 'View and change your license package',
+  'PAYMENT_TOOLTIP' : 'View and edit online payment setings and tax settings',
+  'BILLPOS_TOOLTIP' : 'Add items, discounts, coupons',
+  'ADDON_TOOLTIP' : 'Buy available add-ons',
+  'ADDWORD_TOOLTIP' : 'Buy adwords here',
+  'MOREOPTIONS_TOOLTIP' : 'More Search Options',
+  'CURRENTCHECKINS_TOOLTIP' : 'Your check-ins',
+  'FAVORITE_TOOLTIP' : 'Your favourite providers',
+  'HISTORY_TOOLTIP' : 'Your past check-ins',
+  'COMM_TOOPTIP' : 'Send messages to your provider here',
+  'REF_TOOPTIP' : 'Show/hide refined search',
+  'CUSTSIGN_TOOPTIP' : 'Consumers click here to Login/Join Jaldee.com',
+  'PROVSIGN_TOOPTIP' : 'Providers please click here to Register/Login to Jaldee.com',
+  'CLOUDICON_TOOPTIP': 'Online Check-in',
+
+  'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
+
+
+  'EST_WAIT_TIME_CAPTION' : 'Est Wait Time',
+  'NXT_AVAILABLE_TIME_CAPTION' : 'Next Available Time',
+  'APPX_WAIT_TIME_CAPTION' : 'Appox Waiting Time',
+
+  'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
+  'CHECKIN_TIME_CAPTION': 'Est Service Time'
+
 };

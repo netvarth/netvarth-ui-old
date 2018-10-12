@@ -90,7 +90,9 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     .subscribe(
       data => {
         this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
-        this.dialogRef.close('reloadlist');
+        setTimeout( () => {
+          this.dialogRef.close('reloadlist');
+        } , projectConstants.TIMEOUT_DELAY);
       },
       error => {
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
@@ -103,7 +105,10 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     .subscribe(
       data => {
         this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
-        this.dialogRef.close('reloadlist');
+        setTimeout( () => {
+          this.dialogRef.close('reloadlist');
+        } , projectConstants.TIMEOUT_DELAY);
+        // this.dialogRef.close('reloadlist');
       },
       error => {
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
@@ -118,7 +123,26 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
+  /*checkDisablebutton() {
+    if (this.message) {
+      const msg = this.message.trim();
+      if (this.rate_value === 0 || msg === '' || msg === undefined) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }*/
 
+  checkDisablebutton() {
+    if (this.rate_value === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 
 }

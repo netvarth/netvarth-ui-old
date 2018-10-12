@@ -20,6 +20,7 @@ export class AddProviderCouponsComponent implements OnInit {
   valueCaption = 'Enter value';
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
+  curtype = 'Fixed';
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderCouponsComponent>,
@@ -54,6 +55,7 @@ export class AddProviderCouponsComponent implements OnInit {
       'discValue': this.data.coupon.amount || null,
       'calculationType': this.data.coupon.calculationType || null,
     });
+    this.curtype = this.data.coupon.calculationType || 'Fixed';
   }
   onSubmit (form_data) {
 
@@ -120,7 +122,9 @@ export class AddProviderCouponsComponent implements OnInit {
   handleTypechange(typ) {
       if (typ === 'Fixed') {
         this.valueCaption = 'Enter value';
+        this.curtype = typ;
       } else {
+        this.curtype = typ;
         this.valueCaption = 'Enter percentage value';
       }
 

@@ -58,6 +58,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
     image_list_popup: Image[];
     image_showlist: any = [];
     image_remaining_cnt = 0;
+    disable_price = true;
 
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
@@ -102,6 +103,12 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
     ngOnInit() {
 
         if (this.service_id) {
+            const user = this.shared_Functionsobj.getitemfromLocalStorage('ynw-user');
+            if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
+                this.disable_price = true;
+            } else {
+                this.disable_price = false;
+            }
             this.getServiceDetail();
 
         } else {
@@ -252,6 +259,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
+            disableClose: true,
             autoFocus: true,
             data: {
             type : 'edit',
@@ -274,6 +282,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderWaitlistServiceGalleryComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
+            disableClose: true,
             data: {
             type : 'edit',
             service_id: this.service_data.id

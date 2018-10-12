@@ -4,7 +4,7 @@
   <div class="container">
       <div class="row">
           <div class="c-outer">
-              <div class="c-body">
+              <div class="c-body prov-detail-outer">
                   <div class="bk-ctrl">
                       <span class="backtoresults" (click)="backtoSearchResult()"><span class="strong">Go Back</span></span>
                   </div>
@@ -43,12 +43,12 @@
 
                                   <div class="clr">
                                         <div class="services" *ngIf="specializationslist.length > 0">
-                                            <span class="sub-title">Specializations</span>
+                                            <!-- <span class="sub-title">Specializations</span>
                                             <ul>
                                                 <ng-container *ngIf="specializationslist.length <=specMaxcnt">
                                                 <li *ngFor="let special of specializationslist">{{special}}</li>
                                                 </ng-container>
-                                                <ng-container *ngIf="specializationslist.length > 3">
+                                                <ng-container *ngIf="specializationslist.length > specMaxcnt">
                                                     <ng-container *ngFor="let special of specializationslist; let i = index">
                                                     <li *ngIf="i<specMaxcnt">{{special  | titlecase}}</li>
                                                     </ng-container>
@@ -60,7 +60,11 @@
                                                     <li class="viewall" *ngIf="viewallSpec"><span (click)="showallSpecial()" ><i class="icon-disable"></i></span></li>
                                                     </ng-container>
                                                 </ng-container>
-                                            </ul>
+                                            </ul> -->
+                                            <div class="otr-elements">
+                                                <span *ngIf="specializationslist.length > 0">
+                                                <span class="categoryspec" *ngFor="let spec of specializationslist; let i = index"><span *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
+                                            </div>
                                         </div>
                                       <!-- <div class="otr-elements">
                                           <span class="exp" *ngIf="businessjson.domainVirtualFields?.experience">{{businessjson.domainVirtualFields.experience}}</span>
@@ -137,9 +141,9 @@
                           </div>
                           <div class="tp-r">
                               <div class="ynw-verified" *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"></div>
-                              <div class ="gender" >
-                                  <span class="icon-male" *ngIf="genderType=='male'"></span>
-                                  <span class="icon-female" *ngIf="genderType=='female'"></span>
+                              <div class ="gender" *ngIf="genderType=='male' || genderType=='female'">
+                                  <span class="icon-male" *ngIf="genderType=='male'" [matTooltip]="maleTooltip"></span>
+                                  <span class="icon-female" *ngIf="genderType=='female'" [matTooltip]="femaleTooltip"></span>
                               </div>
                               <!-- <div [class.femaleicon]="genderType=='female'" [class.maleicon]="genderType=='male'" *ngIf="genderType"></div> -->
                               <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
@@ -147,9 +151,9 @@
                                   <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
                                   <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">Add to Favourites</span></li>
                                   <li><span class ="icon-favourite-filled" *ngIf="isInFav" (click)="doRemoveFav()">Remove from Favourites</span></li>
-                                  <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li>
+                                  <!-- <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li> -->
                                   <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">Communicate</span></li>
-                                  <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li>
+                                  <!-- <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li> -->
                               </ul>
                               <div class="socialmedia" *ngIf="socialMedialist.length>0">
                                     <a [href]="soc.value" target="_blank" *ngFor="let soc of socialMedialist"><i [class]="getSocialdet(soc.resource, 'iconClass')" [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
@@ -174,24 +178,17 @@
                                                     <ng-container *ngFor="let vfield of virtualfieldsCombinedjson">
                                                         <div class="question-outer">
                                                             <ng-container>
-                                                                <div class="question-header"><strong>{{vfield.displayName  | titlecase}}</strong></div>
-                                                                <div class="question-value1" *ngIf="vfield.type!= 'object'" [innerHTML]="vfield.value | nl2br">
+                                                                <div class="question-header"><strong>{{vfield.displayName}}</strong></div>
+                                                                <div class="question-value1" *ngIf="vfield.type!= 'object'" [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">
                                                                 </div>
                                                                 <div class="question-valuearr" *ngIf="vfield.type== 'object'" >
-                                                                    <!-- <table class="table">
-                                                                        <tr *ngFor="let vals of vfield.value">
-                                                                            <td *ngFor="let field of vals">
+                                                                    <ng-container *ngFor="let vals of vfield.value">
+                                                                        <div class="vfield-row" *ngIf="vals.length">
+                                                                            <span *ngFor="let field of vals" class="morevalspan">
                                                                                 {{field}}
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table> -->
-                                                                        <ng-container *ngFor="let vals of vfield.value">
-                                                                            <div class="vfield-row">
-                                                                                <span *ngFor="let field of vals" class="morevalspan">
-                                                                                    {{field  | titlecase}}
-                                                                                </span>
-                                                                            </div>
-                                                                        </ng-container>
+                                                                            </span>
+                                                                        </div>
+                                                                    </ng-container>
                                                                 </div>
                                                             </ng-container>
                                                         </div>
@@ -234,7 +231,7 @@
                           </div>
                           <div class="tp-r">
                               <ul class="badges">
-                                  <li *ngIf="loc.parkingType!=='' && loc.parkingType != undefined" [matTooltip]="'Parking Type: ' + loc.parkingType"><span class="icon-parking"></span></li>
+                                  <li *ngIf="loc.parkingType!=='' && loc.parkingType != undefined && loc.parkingType != 'none'" [matTooltip]="'Parking Type: ' + loc.parkingType"><span class="icon-parking"></span></li>
                                   <li *ngIf="loc.open24hours==true"><span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span></li>
 
                                   <li *ngIf="loc?.locationVirtualFields?.traumacentre=='true'" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
@@ -282,7 +279,7 @@
                               <!-- <span class="cs-btn bt10" *ngIf="showcheckInButton()" (click)="checkinClicked(loc.id, loc.place, true)">Do you want to <span>Check-in</span> for <span>different Date/Time?</span></span> -->
                               <span class="cs-btn chk-btn" (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)" *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(loc.services.length)">{{getTerminologyTerm('waitlist')}}</span>
                               <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(loc.services.length)">{{getTerminologyTerm('waitlist')}}</span>
-                              <span class="cs-btn bt10" *ngIf="showcheckInButton(loc.services.length) && loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']" (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">Do you want to <span>{{getTerminologyTerm('waitlist')}}</span> for <span>different Date/Time?</span></span>
+                              <span class="cs-btn bt10" *ngIf="showcheckInButton(loc.services.length) && loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']" (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">Do you want to <span>{{getTerminologyTerm('waitlist')}}</span> for <span>different Date?</span></span>
                           </div>
                       </div>
                   </div>

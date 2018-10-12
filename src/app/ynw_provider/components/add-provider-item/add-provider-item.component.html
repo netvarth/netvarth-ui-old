@@ -81,7 +81,7 @@
     [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
     {
       'required' : 'Please enter detailed description.',
-      'maxlength' : 'Detailed description can contain only ' + maxChars + ' characters'
+      'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
     })">
    </app-field-error-display>
 </div>
@@ -93,6 +93,7 @@
     [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
     {
       'required' : 'Please enter valid price.',
+      'pattern' : 'Please enter the price',
       'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
     })">
    </app-field-error-display>
@@ -108,7 +109,7 @@
 </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-<button  type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">Submit</button>
+<button  type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">Save</button>
 <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 
 </mat-dialog-actions>

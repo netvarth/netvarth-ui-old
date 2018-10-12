@@ -494,11 +494,11 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getGoogleMapLocationAddress(lat, lon) {
-    const url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false';
+    const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
   getGoogleMapLocationGeometry(address) {
-    const url = 'http://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
+    const url = 'https://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
 
@@ -616,9 +616,13 @@ export class ProviderServices {
     const url = 'provider/payment/tax/';
     return this.servicemeta.httpGet(url);
   }
-  setTaxpercentage(tax) {
+  /*setTaxpercentage(tax) {
     const url = 'provider/payment/tax/' + tax;
     return this.servicemeta.httpPut(url);
+  }*/
+  setTaxpercentage(data) {
+    const url = 'provider/payment/tax';
+    return this.servicemeta.httpPut(url, data);
   }
   settleWaitlistBill(uuid) {
     const url = 'provider/bill/settlebill/' + uuid ;
@@ -681,5 +685,9 @@ export class ProviderServices {
   }
   getgeneralBusinessSchedules() {
     return this.servicemeta.httpGet('provider/ynwConf/bSchedule');
+  }
+  refundBill(data) {
+    const url = 'provider/payment/refund';
+    return this.servicemeta.httpPost(url, data);
   }
 }

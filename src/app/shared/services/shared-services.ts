@@ -120,6 +120,13 @@ export class SharedServices {
     }
 
     DocloudSearch(url, params) {
+      let sort_prefix;
+      // console.log(params.sort);
+      if (params.sort.trim() !== '') {
+        sort_prefix = params.sort;
+      } else  {
+        sort_prefix = 'ynw_verified_level desc, distance asc';
+      }
        url = url + '/search';
        // rebuilding the parameters to accomodate q.parser and q.options
        const pass_params = {
@@ -130,7 +137,7 @@ export class SharedServices {
         'size': params.size ,
         'q.parser': params.parser, // 'q.parser'
         'q.options': params.options, // 'q.options'
-        'sort': 'distance asc,' + params.sort,
+        'sort': sort_prefix,
         // 'q.sort': params.sort,
         'expr.distance': params.distance
       };
@@ -487,5 +494,17 @@ export class SharedServices {
     getUpgradableLicensePackages() {
       // return this.servicemeta.httpGet('accounts/license/upgradablePackages');
       return this.servicemeta.httpGet('provider/license/upgradablePackages');
+    }
+    getPaymentDetail(uuid, mod) {
+      const url = mod + '/payment/' + uuid ;
+      return this.servicemeta.httpGet(url);
+    }
+    getTaxpercentage() {
+      const url = 'provider/payment/tax/';
+      return this.servicemeta.httpGet(url);
+    }
+    getPartysizeDetails(domain, subdomain) {
+      const url = 'ynwConf/settings/' + domain + '/' + subdomain;
+      return this.servicemeta.httpGet(url);
     }
 }

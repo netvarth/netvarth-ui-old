@@ -21,6 +21,7 @@ export class SearchProviderCustomerComponent implements OnInit {
   source  = null;
 
   customer_label = '';
+  checkin_label = '';
   create_new = false;
   form_data = null;
 
@@ -34,9 +35,11 @@ export class SearchProviderCustomerComponent implements OnInit {
     ) {
       this.source = this.data.source;
       this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+      this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
      }
 
   ngOnInit() {
+    // console.log('source', this.source);
      this.createForm();
   }
   createForm() {
@@ -104,5 +107,15 @@ export class SearchProviderCustomerComponent implements OnInit {
     this.create_new = false;
     this.api_error = null;
     this.api_success = null;
+  }
+  onFieldBlur(key) {
+    this.amForm.get(key).setValue(this.toCamelCase(this.amForm.get(key).value));
+  }
+  toCamelCase(word) {
+    if (word) {
+      return this.shared_functions.toCamelCase(word);
+    } else {
+      return word;
+    }
   }
 }

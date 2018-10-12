@@ -7,7 +7,7 @@
             <!-- <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && search_result_count > 0"> -->
             <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">
                 <div class="ct1" >
-                    <span class="mnu" (click)="togger_refinesection()">
+                    <span class="mnu" (click)="togger_refinesection()" [matTooltipClass] = "tooltipcls" [matTooltip]="refTooltip">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -212,7 +212,16 @@
                                 <div class="search_sort_display">
                                     <mat-form-field>
                                         <mat-select name="sortfield" panelClass ="search_domaindropdown_class" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)" [(ngModel)]="sortfieldsels">
-                                          <mat-option value="titleasc">
+                                                <mat-option value="">
+                                                    None
+                                                </mat-option>
+                                                <mat-option value="distanceasc">
+                                                    Distance
+                                                </mat-option>
+                                                <mat-option value="ynw_verified_levelasc">
+                                                    Jaldee Verified
+                                                </mat-option>
+                                          <!-- <mat-option value="titleasc">
                                             Title (Ascending)
                                           </mat-option>
                                           <mat-option value="titledesc">
@@ -223,8 +232,8 @@
                                             </mat-option>
                                             <mat-option value="sectordesc">
                                                 Sector (Descending)
-                                             </mat-option>
-                                        </mat-select>
+                                             </mat-option>-->
+                                        </mat-select> 
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -316,9 +325,15 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div>
-                                    <h3 (click)="providerDetClicked(search_result)">{{search_result.fields.title}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
-                                    <span class="address">{{search_result.fields.place1}}</span>
+                                    <!-- <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div> -->
+                                    <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) " class="ynw-verified">
+                                            <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
+                                            <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</span>
+                                            <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
+                                        
+                                    </div>
+                                    <h3 (click)="providerDetClicked(search_result)" [matTooltipClass] = "tooltipcls" [matTooltip]="bNameTooltip">{{search_result.fields.title | titlecase}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
+                                    <span class="address">{{search_result.fields.place1 | titlecase }}</span>
 
                                     <div class="clr">
                                         <!-- <div class="otr-elements">
@@ -342,7 +357,7 @@
 
                                         <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
-                                                <li *ngFor="let serv of search_result.fields.services">{{serv}}</li>
+                                                <li *ngFor="let serv of search_result.fields.services" (click)="serviceClicked(serv,search_result)">{{serv | titlecase}}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -353,9 +368,19 @@
                                 </div>
                             </div>
                             <div class="tp-r">
-                                <div *ngIf="search_result.fields.ynw_verified==1" class="ynw-verified"></div>
+                                <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3)" class="ynw-verified">
+                                    <!-- <mat-chip-list>
+                                        <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==1">Basic</mat-chip>
+                                        <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</mat-chip>
+                                        <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==3">Premium</mat-chip>
+                                    </mat-chip-list> -->
+                                    <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
+                                    <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</span>
+                                    <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
+
+                                </div>
                                 <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
-                                    <li *ngIf="search_result.fields.parking_type_location1" [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span class="icon-parking"></span></li>
+                                    <li *ngIf="search_result.fields.parking_type_location1 && search_result.fields.parking_type_location1 !='none'" [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span class="icon-parking"></span></li>
                                     <li *ngIf="search_result.fields.always_open_location1==1" [matTooltip]="'24 Hours Open'"><span class="icon-open-time"></span></li>
                                     <li *ngIf="search_result.fields.traumacentre_location1==1" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
                                     <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1"><span class="icon-emergency"></span></li>
@@ -364,8 +389,8 @@
                                     <!-- <li><span class="icon-ambulance"></span></li>
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
-                                <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1">Communicate</span>
-                                <span class="claim-business" (click)="claimBusiness()" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
+                                <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1" [matTooltipClass] = "tooltipcls" [matTooltip]="commTooltip">Communicate</span>
+                                <span class="claim-business" (click)="claimBusiness(search_result)" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
                             </div>
                         </div>
                         <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']">
@@ -387,7 +412,7 @@
                                 <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==2">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
                                 <span class="cs-btn chk-btn disabled" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
                                 <!-- <span class="future-text" (click)="checkinClicked(search_result)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">Do you want to Check in for this date ?</span>   -->
-                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">Do you want to <span>{{getTerminologyTerm('waitlist', search_result.fields)}}</span> for <span>different Date/Time?</span></span>
+                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">Do you want to <span>{{getTerminologyTerm('waitlist', search_result.fields)}}</span> for <span>different Date?</span></span>
                             </div>
 
 

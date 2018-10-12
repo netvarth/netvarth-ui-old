@@ -27,7 +27,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   pay_data = {
     amount: 0,
-    paymentMode: null,
+    paymentMode: 'DC', // 'null', changes as per request from Manikandan
     uuid: null
   };
   payment_popup = null;
@@ -117,11 +117,16 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       this.provider_services.providerPayment(this.pay_data)
       .subscribe(
         data => {
-          this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-          setTimeout(() => {
-            // console.log(this.document.getElementById('payuform'));
-            this.document.getElementById('payuform').submit();
-          }, 2000);
+          if (data['response']) {
+            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+            this.api_success = this.shared_functions.getProjectMesssages('PAYMENT_REDIRECT');
+            setTimeout(() => {
+              // console.log(this.document.getElementById('payuform'));
+              this.document.getElementById('payuform').submit();
+            }, 2000);
+          } else {
+            this.api_error = this.shared_functions.getProjectMesssages('CHECKIN_ERROR');
+          }
         },
         error => {
           this.payment_loading = false;

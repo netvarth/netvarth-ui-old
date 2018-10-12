@@ -2,16 +2,20 @@
 <div class="outer-loader-div" *ngIf="main_loading">
     <mat-spinner class="outer-load-spinner"></mat-spinner>
 </div>
-
-
+<div class="overlay" [class.show]="showLearnMore" (click)="hideLearnmore()"></div>
+<div class="lm-popup" *ngIf="showLearnMore">
+        <span (click)="hideLearnmore()" class="close"></span>    
+        <!-- <span class="backTotop" (click)="handleScroll('learnmore-begining')">Back To Top</span> -->
+        <app-learnmore [passedDet] = "passedDet" *ngIf="showLearnMore"></app-learnmore>
+</div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home'">
     <div class="container">
         <div class="row">
 
             <div class="lgo col-md-3"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
             <div class="tc1 col-md-3 ml-auto" *ngIf="!shared_functions.checkLogin()">
-                <div class="topsignouter"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span></div>
-                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">Are you a Business Owner? <span (click)="doLogin('provider')">Click Here</span></div>
+                <div class="topsignouter" [matTooltipClass] = "tooltipcls" [matTooltip]="custsignTooltip"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span></div>
+                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">Are you a Service Provider? <span [matTooltipClass] = "tooltipcls" [matTooltip]="provsignTooltip" (click)="doLogin('provider')">Click Here</span></div>
             </div>
             <div class="lg-opt ml-auto" *ngIf="provider_loggedin">
                 <div class="bnps" *ngIf="headercls=='dashb'">
@@ -20,11 +24,11 @@
                     </div>
                     <div class="mn-title">
                         <span class="title-bn">{{bname | titlecase}}</span>
-                        <span class="title-ps">{{bsector | titlecase }}</span>
+                        <span class="title-ps">{{bsector | titlecase }} <span *ngIf="bsubsector!=''">({{bsubsector | titlecase}})</span></span>
                     </div>
 
                     <div class="inbx" (click)="inboxiconClick()">
-                        <div class="ot-bx">
+                        <div class="ot-bx" [matTooltipClass] = "tooltipcls" [matTooltip]="inboxiconTooltip">
                             <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</div>
                             <i data-icon="H"></i>
                         </div>
@@ -40,7 +44,7 @@
                         <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="redirectto('profile')">
                                 <i class="icon-profile"></i>
-                                <span>Profile</span>
+                                <span>User Profile</span>
                         </button>
                         <button mat-menu-item (click)="redirectto('change-password')">
                             <i class="icon-password"></i>
@@ -52,7 +56,7 @@
                         </button>
                         <button mat-menu-item (click)="redirectto('change-email')">
                             <i class="icon-inbox"></i>
-                            <span>Change Email</span>
+                            <span>Add or Change Email</span>
                         </button>
                         <button mat-menu-item (click)="switchtoConsumer()" *ngIf="isprovider">
                             <i class="icon-switch"></i>
@@ -85,7 +89,7 @@
                         <ng-container *ngIf="ctype=='consumer'">
                             <!-- <div class="bnps" *ngIf="headercls=='dashb'"> -->
                             <div class="bnps">
-                                <div class="inbx" (click)="inboxiconClick()">
+                                <div class="inbx" (click)="inboxiconClick()" [matTooltipClass] = "tooltipcls" [matTooltip]="inboxiconTooltip">
                                     <div class="ot-bx">
                                         <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</div>
                                         <i data-icon="H"></i>
@@ -106,7 +110,7 @@
                                     </button>    
                                     <button mat-menu-item (click)="redirectto('profile')">
                                             <i class="icon-profile"></i>
-                                            <span>Profile</span>
+                                            <span>User Profile</span>
                                     </button>
                                     <button mat-menu-item (click)="redirectto('change-password')">
                                         <i class="icon-password"></i>
@@ -118,7 +122,7 @@
                                     </button>
                                     <button mat-menu-item (click)="redirectto('change-email')">
                                         <i class="icon-inbox"></i>
-                                        <span>Change Email</span>
+                                        <span>Add or Change Email</span>
                                     </button>
                                     <button mat-menu-item (click)="redirectto('members')">
                                         <i class="icon-members"></i>
@@ -141,7 +145,7 @@
                             </div>
                     </div>
 
-                        <div class="isprovidertop ng-star-inserted" *ngIf="!shared_functions.checkLogin()">Are you a Business Owner? <span (click)="doLogin('provider')">Click Here</span></div>
+                        <div class="isprovidertop ng-star-inserted" *ngIf="!shared_functions.checkLogin()">Are you a Service Provider? <span (click)="doLogin('provider')">Click Here</span></div>
                     </div>
 
                     <app-search [showopennow]="0" [searchfields]="searchfields" [includedfrom]="'consumer_header'" [passedRefine]="passedRefine" (searchclick)="handlesearchClick($event)" [passedDomain]="passedDomain" [passedkwdet]="passedkwdet"></app-search>

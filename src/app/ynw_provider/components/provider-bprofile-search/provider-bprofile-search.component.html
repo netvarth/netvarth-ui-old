@@ -22,16 +22,19 @@
                     </div>
                     <div class="card" *ngIf="normal_profile_active==2 || normal_locationinfo_show==4">
                         <div class="pubs" >
-                            <h2>Public Search <span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span></h2>
+                            <h2>Public Search <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search', $event)"></i></div> <!--<span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span>--></h2>
                             <div class="wbox" >
                                 <div class="bx-ico"><i data-icon="m"></i></div>
                                 <div class="bx-copy">
-                                    <p>Currently your profile is <strong>disabled</strong> for public search online.</p>
+                                    <p>Your profile has been <strong>disabled</strong> for public search online and will not be visible to {{customer_label}}s.</p>
+                                    <p>We recommend you to set up the <strong>'Profile Name and Summary'</strong> section to turn ON the Public Search</p>
+
+                                    <!-- <p>Currently your profile is <strong>disabled</strong> for public search online.</p>
                                     <p>Your {{customer_label}}s cannot see you online, so they cannot do online checkins!</p>
                                     <p>Your Profile is incomplete. Need
                                       <span (click)="showBPrimary()">Name</span> and
                                       <span (click)="editLocation()">Location</span>
-                                      to Turn on the public search!</p>
+                                      to Turn on the public search!</p> -->
                                 </div>
                             </div>
                         </div>
@@ -43,41 +46,41 @@
 
                             <div class="ctrl">
                                 <div class="ct-l">
-                                        <h2>Public Search <span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span></h2>
+                                        <h2>Public Search <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search', $event)"></i></div> <!--<span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span>--></h2>
 
                                         <span class="status">Current Status -
                                             <span class="on" *ngIf="normal_search_active">On</span>
                                             <span class="off" *ngIf="!normal_search_active">Off</span>
                                         </span>
                                         <ng-container *ngIf="normal_search_active">
-                                        <span class="success">Good! Your {{customer_label}}s can search &amp; find you online at youneverwait.com</span>
+                                        <span class="success">Your profile is visible to {{customer_label}}s online at jaldee.com</span>
                                         </ng-container>
                                         <ng-container *ngIf="!normal_search_active">
-                                            <span class="error"><i data-icon="m" ></i>Your {{customer_label}}s can’t find you online</span>
+                                            <span class="error"><i data-icon="m" ></i>You are offline. Turn ON public search to make your profile visible to {{customer_label}}s</span>
                                         </ng-container>
                                 </div>
                                 <div class="ct-r ml-auto">
-                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="handle_searchstatus()">Turn Off</button>
+                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="confirm_searchStatus()">Turn Off</button>
                                     <!-- <span *ngIf="normal_search_active"><i data-icon="m" ></i>Your customer can’t find you online</span> -->
-                                    <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="handle_searchstatus()">Turn On</button>
+                                    <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="confirm_searchStatus()">Turn On</button>
                                 </div>
                             </div>
                         </div>
                         <!-- <div class="adwds" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0"> -->
                         <div class="adwds w-dta" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0">
-                                <h2>Adwords</h2>
+                                <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div></h2>
                                 <p><strong>Sorry!</strong> Currently you did not have any adwords. Would you like to buy adwords?</p>
                                 <span (click)="buyAdwords()" class="cs-btn bt3">Buy Adwords</span>
                         </div>
                         <div class="adwds w-dta" *ngIf="normal_adworkds_active && adwordsmaxcount > 0">
-                            <h2>Adwords</h2>
+                            <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div></h2>
                             <div class="ad-tble">
-                                <div class="ad-l">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
-                                <div class="ad-r ml-auto">
+                                <div class="ad-l" *ngIf="adwords_maxremaining>0">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
+                                <div class="ad-l" *ngIf="adwords_maxremaining == 0">You have {{adword_list.length}} adword(s). To add more adwords, go to <a routerLink="/provider/settings/license"><strong>License & Invoice</strong></a></div>
+                                <div class="ad-r">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre" *ngIf="adwords_remaining>0"><a routerLink="/provider/settings/license">+{{adwords_remaining}} more</a></span>
                                     <span  (click)="addAdwords()" class="cs-btn bt8" *ngIf="adwords_maxremaining>0">Add Adwords</span>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -87,11 +90,12 @@
                         <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Basic Information
+                            Profile Name and Summary <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('basic-information', $event)"></i></div>
                         </mat-panel-title>
                         </mat-expansion-panel-header>
+                        
                         <div class="cd-t">
-
+                            
                                     <div class="warning" *ngIf="normal_basicinfo_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
@@ -99,7 +103,7 @@
                                     <div class="warning" >
 
                                         <i data-icon="m"></i>
-                                        <p><span>You haven’t added any <strong>Basic Information*</strong> such as</span> Name, Profile Summary &amp; Profile Picture.</p>
+                                        <p><span>You haven’t added any <strong>Basic Information*</strong> such as</span> Business Name, Profile Summary &amp; Profile Picture.</p>
                                         <span class="cs-btn bt3" (click)="showBPrimary()">Add It Now</span>
                                         <p class="smlft">* Need Basic Information to turn on Public Search</p>
                                     </div>
@@ -113,13 +117,16 @@
                                                             <div class="pro-pic-img"><img [src]="showimg()" *ngIf="blogo[0] && blogo[0].url"></div>
                                                             <input #logofile type="file" accept=".jpeg,.jpg,.png,.bmp,.gif" style="display:none;" (change)="imageSelect(logofile,$event)">
                                                         <div class="add"><span (click)="logofile.click()">Add <br/> Profile Picture</span></div>
-                                                        <div class="change"><span (click)="logofile.click()">Change <br/> Profile Picture</span></div>
+                                                        <div class="change">
+                                                            <span class="change-pic" (click)="logofile.click()">Change <br/> Picture</span>
+                                                            <span class="del-pic" (click)="confirmLogoremove(blogo.keyName)">Delete Picture</span>
+                                                        </div>
                                                     </div>
-                                                    <div class='remove-logo' *ngIf="blogo[0] && blogo[0].url" (click)="confirmLogoremove(blogo.keyName)">Remove Profile Picture</div>
+                                                    <!-- <div class='remove-logo' *ngIf="blogo[0] && blogo[0].url" (click)="confirmLogoremove(blogo.keyName)"><span class="icon-delete"></span> Remove Picture</div> -->
                                                 </div>
                                                 <div class="bi-r">
                                                     <h3>{{bProfile.businessName | titlecase }}</h3>
-                                                    <p [innerHTML] = "bProfile.businessDesc | nl2br | titlecase">{{bProfile.businessDesc  | titlecase}} <!--...  <a href="#" class="smr">See More</a> --></p>
+                                                    <p [innerHTML] = "bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc  | capitalizeFirst}} <!--...  <a href="#" class="smr">See More</a> --></p>
                                                 </div>
                                             </div>
                                     </div>
@@ -176,8 +183,8 @@
                                             <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
                                             <div class="copy">
                                                 <ul class="amt-list">
-                                                    <li [matTooltip]="'Parking Type: ' + bProfile.baseLocation.parkingType" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType"></li>
-                                                    <li [matTooltip]="'24 hours'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
+                                                    <li [matTooltip]="'Parking Type: ' + bProfile.baseLocation.parkingType" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'"></li>
+                                                    <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
                                                     <ng-container *ngIf="bProfile.baseLocation.locationVirtualFields">
                                                         <ng-container *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
                                                             <li [matTooltip]="badge_map_arr[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['none']['class']"></li>
@@ -207,7 +214,8 @@
                                                  </li>
                                             </ul>
                                             <ng-container *ngIf="display_schedule.length == 0">
-                                            <div class="no-dta" *ngIf="normal_privacy_settings_show==2">
+                                            <!-- <div class="no-dta" *ngIf="normal_privacy_settings_show==2"> -->
+                                            <div class="no-dta">
                                                 <p>You haven’t added any working hours.</p>
                                                 <span class="cs-btn bt3" (click)="change_schedulepopup()">Add It Now</span>
                                             </div>
@@ -215,7 +223,7 @@
 
                                             <div class="schedule_msgdiv" *ngIf="display_schedule.length > 0">
                                             <ul class="info-lst">
-                                                <li>You can change the working hours by editing the queues of this location. <span (click)="editQueue()" class="pointer-cursor"><b>Click here</b></span> to go to view the queues.</li>
+                                                <li>You can change the working hours by editing the queues of this location. <span (click)="editQueue()" class="pointer-cursor"><b>Click here</b></span> to view the queues.</li>
                                             </ul>
                                             <!-- <span  class="cs-btn bt3" (click)="change_schedulepopup()">Change</span> -->
                                             </div>
@@ -233,9 +241,10 @@
                                 <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Privacy Settings
+                                    Privacy Settings <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)"></i></div>
                                 </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                
                                     <div class="no-dta" *ngIf="normal_privacy_settings_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
@@ -257,7 +266,8 @@
                                                             <div class="otr">
                                                                 <div class="ctd">{{phone.label | titlecase}}</div>
                                                                 <div class="ctd">{{phone.number}}</div>
-                                                                <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[phone.permission]}}</div>
+                                                                <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[phone.permission]}}</div> -->
+                                                                <div class="ctd"><span>Visible to</span> {{show_privacyText(phone.permission)}}</div>
                                                                 <!-- <a href="#" class="mbt"></a> -->
                                                                 <span class="mbt">
                                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -299,7 +309,8 @@
                                                             <div class="otr">
                                                                 <div class="ctd">{{email.label | titlecase}}</div>
                                                                 <div class="ctd">{{email.emailid}}</div>
-                                                                <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[email.permission]}}</div>
+                                                                <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[email.permission]}}</div> -->
+                                                                <div class="ctd"><span>Visible to</span> {{show_privacyText(email.permission)}}</div>
                                                                 <span class="mbt">
                                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                             <mat-icon>more_vert</mat-icon>
@@ -337,7 +348,7 @@
                             <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                             <mat-panel-title>
-                                Specialization
+                                Specialization <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('specialization', $event)"></i></div>
                             </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="no-dta" *ngIf="normal_specilization_show==1">
@@ -362,7 +373,7 @@
                                 <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Languages Known
+                                    Languages Known <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('languages-known', $event)"></i></div>
                                 </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <div class="no-dta" *ngIf="normal_language_show==1">
@@ -566,7 +577,7 @@
                             <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                             <mat-panel-title>
-                                    Additional Info
+                                    Additional Info <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('additional-info', $event)"></i></div>
                             </mat-panel-title>
                             </mat-expansion-panel-header>
                                 <div class="no-dta" *ngIf="normal_domainfield_show==1 || normal_subdomainfield_show==1">
@@ -597,14 +608,14 @@
                                                 <ng-container [ngSwitch]="fields.dataType">
                                                     <ng-container *ngSwitchCase="'TEXT'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value   | titlecase}}</p>
+                                                            <p> {{fields.value   | capitalizeFirst}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'TEXT_MED'">
                                                             <div class="cont-btn">
-                                                                <p [innerHTML]="fields.value | nl2br | titlecase"> {{fields.value  | nl2br | titlecase}}</p>
+                                                                <p [innerHTML]="fields.value | nl2br | capitalizeFirst"> {{fields.value  | nl2br | capitalizeFirst}}</p>
                                                                 <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                             </div>
                                                     </ng-container>
@@ -670,14 +681,17 @@
 
                                                     <ng-container *ngSwitchCase="'Enum'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value   | titlecase}}</p>
+                                                            <!-- <p> {{ getdispVal('subdomain',fields)   | titlecase}}</p> -->
+                                                            <p> {{ getdispVal('subdomain',fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'EnumList'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <!-- <p> {{fields.value}}</p> -->
+                                                            <!-- <p>{{showValueswithComma(fields)}}</p> -->
+                                                            <p>{{ getdispVal('subdomain', fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -700,7 +714,7 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr *ngFor="let row of fields.value;let i = index">
-                                                                            <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">{{row[column.key]   | titlecase}}</td>
+                                                                            <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">{{row[column.key]}}</td>
                                                                             <td class="action"><span class="mbt">
                                                                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                                 <mat-icon>more_vert</mat-icon>
@@ -760,14 +774,14 @@
                                                 <ng-container [ngSwitch]="fields.dataType">
                                                     <ng-container *ngSwitchCase="'TEXT'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value  | titlecase }}</p>
+                                                            <p> {{ fields.value | capitalizeFirst}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'TEXT_MED'">
                                                             <div class="cont-btn">
-                                                                <p [innerHTML]="fields.value | nl2br | titlecase"> {{fields.value  | nl2br | titlecase }}</p>
+                                                                <p [innerHTML]="fields.value | nl2br | capitalizeFirst"> {{fields.value  | nl2br | capitalizeFirst }}</p>
                                                                 <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                             </div>
                                                     </ng-container>
@@ -832,14 +846,16 @@
 
                                                     <ng-container *ngSwitchCase="'Enum'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <!-- <p> {{fields.value | titlecase}}</p> -->
+                                                            <p>{{ getdispVal('domain', fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container *ngSwitchCase="'EnumList'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value}}</p>
+                                                            <!-- <p> {{fields.value | titlecase}}</p> -->
+                                                            <p>{{ getdispVal('domain', fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -862,7 +878,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr *ngFor="let row of fields.value;let i = index">
-                                                                        <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">{{row[column.key]   | titlecase}}</td>
+                                                                        <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">{{row[column.key]}}</td>
                                                                         <td class="action">
                                                                             <span class="mbt">
                                                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -915,14 +931,15 @@
                             <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Photo Gallery
+                                    Gallery <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('photo-gallery', $event)"></i></div>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
+                            
                                 <div class="no-dta" *ngIf="normal_gallery_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_gallery_show==2">
-                                    <p>You haven’t added any photos to the Photo Gallery</p>
+                                    <p>You haven’t added any photos to the Gallery</p>
                                     <span class="cs-btn bt3" (click)="handleGalleryImages()">Add It Now</span>
                                 </div>
                                 <div class="ph-gal-bx" *ngIf="normal_gallery_show==3">
@@ -983,7 +1000,7 @@
                         <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Your Social Media
+                            Your Social Media <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('your-social-media', $event)"></i></div>
                         </mat-panel-title>
                         </mat-expansion-panel-header>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==1" >

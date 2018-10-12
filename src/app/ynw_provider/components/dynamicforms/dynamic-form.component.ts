@@ -41,6 +41,7 @@ export class DynamicFormComponent implements OnInit {
   public shared_functions: SharedFunctions) {  }
 
   ngOnInit() {
+   // console.log('question', this.questions);
     const form_ob  = this.qcs.toFormGroup(this.questions); // console.log(form_ob);
     this.form = form_ob.form;
     this.messages = form_ob.messages;

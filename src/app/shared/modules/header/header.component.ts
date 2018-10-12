@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy, HostListener, OnChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
 
@@ -6,11 +6,12 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
+import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
+
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
@@ -44,6 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   bname;
   bsector;
+  bsubsector;
   blogo;
   inboxUnreadCnt;
   inboxCntFetched;
@@ -64,13 +66,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   avoidClear = 1;
   upgradablepackages: any = [];
   main_loading = false;
+  inboxiconTooltip = '';
+  custsignTooltip = '';
+  provsignTooltip = '';
+  showLearnMore = false;
+  passedDet = {};
+  screenHeight;
+  screenWidth;
+  small_device_display = false;
 
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     public router: Router,
+    private _scrollToService: ScrollToService,
     public shared_service: SharedServices
   ) {
+    this.onResize();
      /*router.events.subscribe((val) => {
         console.log('routerval', val['url']);
         if (val['url']) {
@@ -107,6 +119,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
             this.inboxCntFetched = true;
           }
         break;
+        case 'learn_more':
+          this.showLearnMore = true;
+          this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey};
+        break;
       }
       /*if (message.ttype === 'updateuserdetails') {
         this.getUserdetails();
@@ -116,11 +132,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
 
   }
+  hideLearnmore() {
+   // console.log('reached here');
+    this.showLearnMore = false;
+  }
 
   ngOnInit() {
    // console.log('passeddomain', this.passedDomain);
    // console.log('passedkw', this.passedkwdet);
    // console.log('passedRefine', this.passedRefine);
+   this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
+   this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
+   this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
     this.getBusinessdetFromLocalstorage();
     // this.handleHeaderclassbasedonURL();
@@ -142,6 +165,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
 
+
   ngOnDestroy() {
     this.evnt.unsubscribe();
      // unsubscribe to ensure no memory leaks
@@ -155,11 +179,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const dd = new Date();
     this.getInboxUnreadCnt();
   }
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= projectConstants.SMALL_DEVICE_BOUNDARY) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  // console.log('resized', this.screenWidth, this.screenHeight, this.small_device_display);
+}
+
  getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
+      this.bsubsector = bdetails.bss || '';
       this.blogo = bdetails.logo || '';
      // console.log('logo', this.blogo);
     }
@@ -213,12 +250,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
    if (this.headercls === '') {
         this.headercls = 'dashb';
    }
+   // console.log('header class', this.headercls);
 
   }
   doSignup(origin?, moreOptions = {}) {
+    // const ctype = this.checkProvider(origin);
+    //   let cClass = 'consumerpopupmainclass';
+    //   if (ctype === 'true') {
+    //     cClass = 'commonpopupmainclass';
+    //   }
+    const cClass = 'consumerpopupmainclass';
+    if (origin === 'provider') {
+      // cClass = 'commonpopupmainclass';
+    }
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
-      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['signupmainclass', cClass],
+      disableClose: true,
       data: {
         is_provider : this.checkProvider(origin),
         moreOptions: moreOptions
@@ -231,9 +279,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   doLogin(origin?) {
+    const cClass = 'consumerpopupmainclass';
+    if (origin === 'provider') {
+      // cClass = 'commonpopupmainclass';
+    }
     const dialogRef = this.dialog.open(LoginComponent, {
        width: '50%',
-       panelClass: ['loginmainclass', 'consumerpopupmainclass'],
+       panelClass: ['loginmainclass', cClass],
+       disableClose: true,
       data: {
         type : origin,
         is_provider : this.checkProvider(origin)
@@ -255,6 +308,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['logout']);
   }
   upgradeMembership() {
+    console.log(this.router.url);
+    this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
     this.router.navigate(['provider', 'settings', 'license', 'upgrade']);
   }
   inboxiconClick() {
@@ -363,5 +418,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
       },
     error => {
     });
+  }
+
+  gototop() {
+    console.log('here');
+    window.scrollTo(0, 0);
+  }
+  public triggerScrollTo(destination) {
+    const config: ScrollToConfigOptions = {
+      target: destination
+    };
+    // console.log('destination', destination, 'config', config);
+    this._scrollToService.scrollTo(config);
+  }
+
+  handleScroll(target) {
+   // if (this.data.moreOptions.scrollKey !== undefined) {
+      setTimeout(() => {
+        this.triggerScrollTo(target);
+        }, 200);
+    // }
   }
 }

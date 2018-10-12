@@ -5,7 +5,7 @@
 </h1>
 <mat-dialog-content>
   <div class="full-outer">
-      <div class="btl"><span class="label">Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName}}</span></div>
+      <div class="btl"><span class="label">Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName | titlecase}}</span></div>
       <div class="topay">
         <span class="label">Amount to pay</span>
         <span class="label-valu">
@@ -14,13 +14,15 @@
       </div>
 
       <div class="payment-options">
-        <span class="label"> Select Payment Options </span>
+        <!-- <span class="label"> Select Payment Options </span>
         <mat-radio-group [(ngModel)]="pay_data.paymentMode">
           <mat-radio-button [value]="opt.name"
           *ngFor="let opt of payment_options">{{opt.Displayname}}
           </mat-radio-button>
-        </mat-radio-group>
-        <span class="no-data" *ngIf="payment_options.length==0">No payment options available.</span>
+        </mat-radio-group> -->
+        <!-- <span class="no-data" *ngIf="payment_options.length==0">No payment options available.</span> -->
+        <span class="no-data" *ngIf="payModesQueried && !payModesExists">No payment options available.</span>
+        
       </div>
   </div>
   <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>

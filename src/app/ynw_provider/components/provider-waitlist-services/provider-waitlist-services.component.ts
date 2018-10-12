@@ -24,6 +24,7 @@ export class ProviderWaitlistServicesComponent implements OnInit {
   service_list: any = [];
   api_error = null;
   api_success = null;
+  disable_price = true;
 
   breadcrumbs = [
     {
@@ -48,6 +49,13 @@ export class ProviderWaitlistServicesComponent implements OnInit {
 
   ngOnInit() {
     this.getServices();
+
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+     if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
+        this.disable_price = true;
+     } else {
+       this.disable_price = false;
+     }
   }
 
   getServices() {
@@ -103,15 +111,16 @@ export class ProviderWaitlistServicesComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
+      disableClose: true,
       data: {
         type : 'add'
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
+      // if (result === 'reloadlist') {
         this.getServices();
-      }
+      // }
     });
   }
 

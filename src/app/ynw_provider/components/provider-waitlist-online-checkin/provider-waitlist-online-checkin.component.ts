@@ -23,8 +23,8 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   form = {
     'calculationMode': '',
     'trnArndTime': '',
-    'futureDateWaitlist': false,
-    'showTokenId': false
+    'futureDateWaitlist': false/*,
+    'showTokenId': false*/
   };
   waitlist_manager: any  = null;
   reset_waitlist_manager: any  = null;
@@ -49,10 +49,18 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
 
   setValue(value) {
 
-    this.form.calculationMode = value['calculationMode'] || '';
+    let calcMode = value['calculationMode'] || '';
+    const showToken = value['showTokenId'] || false;
+    if (calcMode === 'NoCalc' && showToken) {
+      calcMode = 'NoCalc_WithToken';
+  } else if (calcMode === 'NoCalc' && !showToken) {
+      calcMode = 'NoCalc_WithoutToken';
+  }
+    // this.form.calculationMode = value['calculationMode'] || '';
+    this.form.calculationMode = calcMode || '';
     this.form.trnArndTime = value['trnArndTime'] || null;
     this.form.futureDateWaitlist = value['futureDateWaitlist'] || false;
-    this.form.showTokenId = value['showTokenId'] || false;
+    // this.form.showTokenId = value['showTokenId'] || false;
 
   }
 
@@ -62,8 +70,24 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     if (  this.form.calculationMode === 'Fixed' && this.form.trnArndTime == null) {
       return false;
     }
-
-    this.provider_services.setWaitlistMgr(this.form)
+    let calcMode = this.form.calculationMode;
+    let showToken = false;
+    if (calcMode === 'NoCalc_WithToken') {
+        calcMode = 'NoCalc';
+        showToken = true;
+    } else if (calcMode === 'NoCalc_WithoutToken') {
+        calcMode = 'NoCalc';
+        showToken = false;
+    }
+    const postData = {
+      calculationMode: calcMode,
+      trnArndTime: this.form.trnArndTime || null,
+      futureDateWaitlist: this.form.futureDateWaitlist,
+      showTokenId: showToken
+    };
+    console.log('formdata', postData);
+    // this.provider_services.setWaitlistMgr(this.form)
+    this.provider_services.setWaitlistMgr(postData)
     .subscribe(
       data => {
         this.getWaitlistMgr();

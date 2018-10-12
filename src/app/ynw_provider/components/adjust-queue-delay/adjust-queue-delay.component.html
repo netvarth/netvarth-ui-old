@@ -1,7 +1,7 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)">
-  <h1 class="mat-dialog-title">Adjust queue delay
+  <h1 class="mat-dialog-title">Adjust Delay
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -19,7 +19,7 @@ onSubmit(amForm.value)">
             </mat-form-field>
         </div>
         <div class="form-group">
-            <label class="col-form-label">Delay</label>
+            <label class="col-form-label">Delay (Hour : Minute)</label>
           <ngb-timepicker [(ngModel)]="time" formControlName="delay"></ngb-timepicker>
         </div>
         <div class="form-group inline">
@@ -27,12 +27,12 @@ onSubmit(amForm.value)">
           <mat-checkbox formControlName="send_message"></mat-checkbox>
         </div>
         <div class="form-group">
-          <mat-form-field class="example-full-width"  *ngIf="amForm.get('send_message').value === true">
+          <ng-container class="example-full-width"  *ngIf="amForm.get('send_message').value === true">
             <label class="col-form-label">Message</label>
-            <textarea  matInput placeholder="Message" formControlName="message" autocomplete="off">
+            <textarea  class="form-control" placeholder="Message" formControlName="message" autocomplete="off" [placeholder]="placeholder">
 
             </textarea>
-          </mat-form-field>
+          </ng-container>
         </div>
     </div>
   </mat-dialog-content>

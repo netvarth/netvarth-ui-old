@@ -19,7 +19,6 @@ header {
     background: $white;
     
     
-    
     .lgo {
         @include respond-to(ynw-767) {
             width: auto;
@@ -34,29 +33,59 @@ header {
         @include respond-to(ynw-767) {
             width: auto !important;
         }
+        @include respond-to(ynw-768-991) {
+            flex: 0 0 40%;
+            max-width: 40%;
+        }
+        @include respond-to(ynw-992-1199) {
+            flex: 0 0 40%;
+            max-width: 40%;
+        }
         
-        .sgn, .jn {
-            color: $linkblack ;
-            font-size: 0.875em;
-            font-weight: 500;
-            cursor: pointer;
-            @include transition(all 300ms);
+        .topsignouter{
+            color: $cc-mediumgray;
             
-            &:hover {
-                color: $linkblue;
+            .sgn, .jn {
+                color: $linkblack ;
+                font-size: 0.875em;
+                font-weight: 600;
+                cursor: pointer;
+                @include transition(all 300ms);
+
+                &:hover {
+                    color: $linkblue;
+                }
             }
         }
         
         .isprovidertop {
             font-weight: 500;
-            margin-top: 10px;
+            margin-top: 15px;
             font-size: .75rem;
-            color: $cc-mediumgray;
+            color: $cc-gray;
             
             span {
                 cursor: pointer;
                 color: $linkblue;
-                margin-left: 5px;
+                margin-left: 2px;
+                margin-top: 5px;
+                border: 1px solid $linkblue;
+                width: 90px;
+                padding: 2px 5px;
+                justify-content: center;
+                @include border-radius(30px);
+                @include transition(all 300ms);
+                
+                @include respond-to(ynw-575){
+                    display: flex;
+                    margin-left: auto;
+                    margin-top: 5px;
+                }
+                
+                &:hover {
+                    background: $linkblue;
+                    color: $white;
+                }
             }
         }
         

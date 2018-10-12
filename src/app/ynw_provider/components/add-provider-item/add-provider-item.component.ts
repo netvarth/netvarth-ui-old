@@ -28,6 +28,7 @@ export class AddProviderItemComponent implements OnInit {
   file_error_msg = '';
   img_exists = false;
   maxChars = projectConstants.VALIDATOR_MAX50;
+  maxCharslong = projectConstants.VALIDATOR_MAX500;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
   @ViewChild('caption') private captionRef: ElementRef;
   constructor(
@@ -50,7 +51,7 @@ export class AddProviderItemComponent implements OnInit {
       this.amForm = this.fb.group({
         displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
         shortDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharslong)])],
         taxable: [false, Validators.compose([Validators.required])],
         price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
         // price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)]), Validators.maxLength(projectConstants.VALIDATOR_MAX10)] // ,
@@ -61,7 +62,7 @@ export class AddProviderItemComponent implements OnInit {
       this.amForm = this.fb.group({
         displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
         shortDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        displayDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharslong)])],
         taxable: [false, Validators.compose([Validators.required])],
         price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
       });
@@ -98,17 +99,18 @@ export class AddProviderItemComponent implements OnInit {
     // if (form_data.taxable === '1') {
     taxable = this.holdtaxable;
    // }
+   let imgcaption = '';
     if (this.data.type === 'add') {
-        if (!this.selitem_pic) {
+        /*if (!this.selitem_pic) {
           this.api_error = 'Please select the file';
           return;
+        }*/
+        if (this.selitem_pic) {
+          if (this.captionRef.nativeElement) {
+            imgcaption = this.captionRef.nativeElement.value || '';
+          }
+          imgcaption = (imgcaption === '') ? 'Itempic' : imgcaption;
         }
-        let imgcaption = '';
-        if (this.captionRef.nativeElement) {
-          imgcaption = this.captionRef.nativeElement.value || '';
-        }
-        imgcaption = (imgcaption === '') ? 'Itempic' : imgcaption;
-
 
         const submit_data: FormData = new FormData();
 
@@ -124,12 +126,14 @@ export class AddProviderItemComponent implements OnInit {
 
         submit_data.append('item', blob_itemdata);
 
-        submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-        const propertiesDet = {
-                                'caption' : imgcaption // form_data.caption
-        };
-        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        submit_data.append('properties', blobPropdata);
+        if (this.selitem_pic) {
+          submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+          const propertiesDet = {
+                                  'caption' : imgcaption // form_data.caption
+          };
+          const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+          submit_data.append('properties', blobPropdata);
+        }
 
         this.addItem(submit_data);
 

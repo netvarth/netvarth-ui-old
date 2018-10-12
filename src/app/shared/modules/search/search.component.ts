@@ -121,6 +121,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   holdsrchlocname = '';
   @ViewChild('locrefrence') private locRef: ElementRef;
   @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
+  moreoptionsTooltip = '';
 
   constructor (
     private shared_service: SharedServices,
@@ -140,6 +141,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   ngOnInit() {
     // console.log('srch pass kw', this.passedkwdet);
    // console.log('Refined search ', this.passedRefine);
+   this.moreoptionsTooltip = this.shared_functions.getProjectMesssages('MOREOPTIONS_TOOLTIP');
     if (this.passedkwdet.kwtyp === 'label') {
       if (this.passedkwdet.kwdomain !== '' && this.passedkwdet.kwdomain !== undefined) {
         this.curlabel.typ = 'label';
@@ -284,7 +286,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.moreoptions_arr = result;
     this.showmoreoptionsSec = false;
     // console.log('moreoption returned', this.moreoptions_arr);
-    this.do_search('');
+    this.do_search('', true);
   }
 
   // method with decides whether the more option link is to be display
@@ -740,8 +742,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.keywordholder.autoname = val;
       this.keywordholder.domain = '';
       this.keywordholder.subdomain = '';
-      this.keywordholder.typ = 'kwtitle';
-
+      // this.keywordholder.typ = 'kwtitle';
+      this.keywordholder.typ = 'kwphrase';
       this.curlabel.typ = '';
       this.curlabel.query = '';
       // console.log('reached here', this.keywordholder);
@@ -751,7 +753,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
  selectedOption(kw) {
    // console.log('selected', kw);
  }
- do_search(labelqpassed?) {
+ do_search(labelqpassed?, buttonclick?) {
+   // console.log('buttonclick', buttonclick);
+   this.shared_functions.setitemonLocalStorage('ynw_srchb', 1);
    this.closeMoreoptions();
    // console.log('search clicked');
 

@@ -45,6 +45,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   cronHandle: Subscription;
   show_prov_bottomicons = false;
+  maximizeTooltip = '';
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -121,6 +122,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   showAuditlog() {
+    this.maximizeTooltip = 'Go To System Audit Logs';
     if (this.showAuditDiv === true) {
       this.showbottompopup = false;
       this.clearDivs();
@@ -148,6 +150,8 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   showAlert() {
+    // console.log('bottompopup', this.showbottompopup);
+    this.maximizeTooltip = 'Go To System Alerts';
     if (this.showAlertDiv === true) {
       this.showbottompopup = false;
       this.clearDivs();
@@ -201,6 +205,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   showCheckinED() {
+    this.maximizeTooltip = 'Go To Waitlist Manager';
     if (this.showCheckinDiv === true) {
       this.showbottompopup = false;
       this.clearDivs();
@@ -235,14 +240,17 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
       case 'Audit':
         this.router.navigate(['/provider/auditlog']);
         this.selOpt = '';
+        this.clearDivs();
       break;
       case 'Alert':
         this.router.navigate(['/provider/alerts']);
         this.selOpt = '';
+        this.clearDivs();
       break;
       case 'Checkin':
         this.router.navigate(['/provider/settings/waitlist-manager']);
         this.selOpt = '';
+        this.clearDivs();
       break;
     }
   }
@@ -277,5 +285,25 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
 
     });
   }
+showStatic(mode) {
+  switch (mode) {
+    case 'terms':
+      this.router.navigate(['terms']);
+      window.scroll(0, 0);
+    break;
+    case 'privacy':
+      this.router.navigate(['privacy']);
+      window.scroll(0, 0);
+    break;
+  }
+}
+  /*terms() {
+    this.router.navigate(['terms']);
+    window.scroll(0, 0);
+  }
 
+  dataprivacy() {
+    this.router.navigate(['privacy']);
+    window.scroll(0, 0);
+  }*/
 }

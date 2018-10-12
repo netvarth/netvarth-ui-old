@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, NavigationEnd } from '@angular/router';
 
 
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -35,7 +36,8 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
   public dialog: MatDialog,
-  public shared_functions: SharedFunctions ) {}
+  public shared_functions: SharedFunctions,
+  private router: Router ) {}
   ngOnInit() {
     this.getHistoryCount(this.params);
   }
@@ -110,6 +112,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: pass_ob
     });
@@ -136,10 +139,12 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
   }
 
   viewBill(checkin, bill_data) {
+    console.log('viewbill');
     const dialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
       disableClose: true,
+      autoFocus: true,
       data: {
         checkin: checkin,
         bill_data: bill_data
@@ -158,6 +163,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
+      autoFocus: true,
       data: {
         checkin: checkin,
         bill_data: bill_data
@@ -185,15 +191,26 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
       autoFocus: true,
       data: waitlist
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
+        this.getHistroy(this.params);
       }
     });
+  }
+  isRated(wait) {
+    if (wait.hasOwnProperty('rating') ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  providerDetail(provider) {
+    this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
 }

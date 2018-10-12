@@ -30,6 +30,8 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
   curmod;
   socialkey = '';
   socialurl = '';
+  posted = false;
+  placeholder = 'Eg:- http://www.jaldee.com';
 
   constructor(
     public provider_services: ProviderServices,
@@ -76,6 +78,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
       const submit_data = {
                             'socialMedia': post_data
       };
+      this.posted = true;
       this.provider_services.updateSocialMediaLinks(submit_data)
       .subscribe(
         data => {
@@ -85,7 +88,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
               }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-
+          this.posted = false;
         }
       );
 

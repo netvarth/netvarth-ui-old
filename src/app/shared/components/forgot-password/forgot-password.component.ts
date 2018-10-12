@@ -151,6 +151,9 @@ export class ForgotPasswordComponent  {
           this.createForm(2);
           this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
           this.submit_data = phonenumber;
+          setTimeout(() => {
+            this.api_success = '';
+            }, projectConstants.TIMEOUT_DELAY_LARGE6);
         },
         error => {
           console.log(error);

@@ -12,8 +12,10 @@
 
           <div class="form-group bill-basic">
               <div class="btl"><span class="label">{{customer_label  | titlecase}} Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
-              <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
-              <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div>
+              <!-- <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
+              <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div> -->
+              <div class="btl"><span class="label">Date</span> <span class="label-valu">{{billdate}}</span></div>
+              <div class="btl"><span class="label">Time</span> <span class="label-valu">{{billtime}}</span></div>
           </div>
 
           <div class="form-group search">
@@ -49,20 +51,20 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of cart.items; let i = index">
-                      <td data-title="Service/Item">{{item.name}}</td>
+                      <td data-title="Service/Item">{{item.name | titlecase}}</td>
                       <td data-title="Quantity">
                         <input matInput type="number" min="1" [disabled]="cart.items[i].type == 'Services'" [(ngModel)]="cart.items[i].quantity"
                         [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)" autocomplete="off"> </td>
                       <td data-title="StdRate">
                         <input matInput type="number" [(ngModel)]="item.price" min="1"
-                        [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)" autocomplete="off">
+                        [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)" autocomplete="off" disabled>
                       </td>
                       <td data-title="Discount">
                         <div class="form-group" *ngIf="discounts.length >0">
                         <mat-form-field>
                           <mat-select [(ngModel)]="cart.items[i].discount" [ngModelOptions]="{standalone: true}"
                           (selectionChange)="itemDiscountChange(i)">
-                            <mat-option [value]="null">Select one </mat-option>
+                            <mat-option [value]="''">Select one </mat-option>
                             <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
                               {{ discount.name }}
                             </mat-option>
@@ -76,7 +78,7 @@
                               <mat-form-field>
                                   <mat-select [(ngModel)]="cart.items[i].coupon" [ngModelOptions]="{standalone: true}"
                                   (selectionChange)="itemCouponChange(i)">
-                                    <mat-option [value]="null">Select one </mat-option>
+                                    <mat-option [value]="''">Select one </mat-option>
                                     <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
                                       {{ coupon.name }}
                                     </mat-option>
@@ -99,6 +101,51 @@
                     <span class="label-valu">{{cart.sub_total | currency:'INR':'symbol':'.2-2'}}</span>
                   </div>
               </div>
+              <div class="form-group bill-discount">
+                  <div class="total"><span class="label">Discount</span>
+                    <span class="label-valu">{{totdisc_val | currency:'INR':'symbol':'.2-2'}}</span>
+                  </div>
+              </div>
+              <div class="form-group bill-coupon">
+                  <div class="total"><span class="label">Coupon</span>
+                    <span class="label-valu">{{totcoup_val | currency:'INR':'symbol':'.2-2'}}</span>
+                  </div>
+              </div>
+
+              <div class="form-group bill-total">
+
+                  <div class="discount form-group" *ngIf="discounts.length >0">
+                      <mat-form-field>
+                          <label class="col-form-label" for="displayName">Discounts For Total Amount</label>
+                          <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
+                          (selectionChange)="discountChange()">
+                            <mat-option [value]="''">Select one </mat-option>
+                            <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
+                              {{ discount.name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                  </div>
+
+                  <div class="coupon form-group" *ngIf="coupons.length > 0">
+                      <mat-form-field>
+                          <label class="col-form-label" for="displayName">Coupons For Total Amount</label>
+                          <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
+                          (selectionChange)="couponChange()">
+                            <mat-option [value]="''">Select one </mat-option>
+                            <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
+                              {{ coupon.name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                  </div>
+
+                  <div  class="topay"><span class="label">Amount to pay</span>
+                    <span class="label-valu">{{cart.total | currency:'INR':'symbol':'.2-2'}}</span></div>
+
+              </div>
 
               <div class="table-outer log-tbl">
                   <p class="paymentlogs">Payment Logs</p>
@@ -106,7 +153,7 @@
                     No  payments found
                   </p>
 
-                  <table class="table" *ngIf="pre_payment_log.length > 0">
+                  <!-- <table class="table" *ngIf="pre_payment_log.length > 0">
                     <thead>
                       <tr>
                           <th>Date and Time</th>
@@ -119,42 +166,45 @@
                         <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
                       </tr>
                     </tbody>
-                  </table>
-              </div>
-
-              <div class="form-group bill-total">
-
-                  <div class="discount form-group" *ngIf="discounts.length >0">
-                      <mat-form-field>
-                          <label class="col-form-label" for="displayName">Discounts</label>
-                          <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
-                          (selectionChange)="discountChange()">
-                            <mat-option [value]="null">Select one </mat-option>
-                            <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
-                              {{ discount.name }}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-
-                  </div>
-
-                  <div class="coupon form-group" *ngIf="coupons.length > 0">
-                      <mat-form-field>
-                          <label class="col-form-label" for="displayName">Coupons</label>
-                          <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
-                          (selectionChange)="couponChange()">
-                            <mat-option [value]="null">Select one </mat-option>
-                            <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
-                              {{ coupon.name }}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-
-                  </div>
-
-                  <div  class="topay"><span class="label">Amount to pay</span>
-                    <span class="label-valu">{{cart.total | currency:'INR':'symbol':'.2-2'}}</span></div>
-
+                  </table> -->
+                  <table class="table" *ngIf="pre_payment_log.length > 0">
+                      <thead>
+                        <tr>
+                            <th>Date and Time</th>
+                            <th>Status</th>
+                            <th>Mode</th>
+                            <th>Amount</th>
+                            <th>Refunded</th>
+                            <th>Refundable</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let payment of pre_payment_log; let i = index">
+                            <tr>
+                            <!-- <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td> -->
+                            <td data-title="Date and Time">{{stringtoDate(payment.paymentOn)}}</td>
+                            <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | titlecase}}</span></td>
+                            <td data-title="Mode">{{payment.acceptPaymentBy | titlecase }}</td>
+                            <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
+                            <td data-title="Refunded">-</td>
+                            <td data-title="Refundable">
+                               <span *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                            </td>
+                            </tr>
+        
+                            <tr *ngFor="let refund of payment.refundDetails" class="refundtr">
+                                    <td data-title="Date and Time">{{refund.paymentOn | date:Pipe_disp_date}}</td>
+                                    <td data-title="Status"><span [class]="refund.status | lowercase">{{refund.status | titlecase}}</span></td>
+                                    <td data-title="Mode">{{refund.refundBy | titlecase }}</td>
+                                    <td data-title="Amount">-</td>
+                                    <td data-title="Refunded">{{refund.amount | currency:'INR':'symbol':'.2-2' }}</td>
+                                    <td></td>
+                            </tr>
+        
+                        </ng-container>
+                        
+                      </tbody>
+                    </table>
               </div>
 
 

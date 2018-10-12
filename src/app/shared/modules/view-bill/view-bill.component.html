@@ -6,10 +6,13 @@
 <mat-dialog-content>
  <div class="group-outer">
      <div class="form-group bill-basic">
-         <div class="btl"><span class="label">Bill Id / No</span> <span class="label-valu">{{bill_data.id}} </span></div>
+         <div class="btl"><span class="label">Bill Id / No</span> <span class="label-valu">{{bill_data.id}}</span></div>
+         <div class="btl"><span class="label">Gst number</span> <span class="label-valu">{{item_service_gst}}</span></div>
          <div class="btl"><span class="label">Customer Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
-         <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
-         <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div>
+         <div class="btl"><span class="label">Date</span> <span class="label-valu">{{billdate}}</span></div>
+         <div class="btl"><span class="label">Time</span> <span class="label-valu">{{billtime}}</span></div>
+         <!-- <div class="btl"><span class="label">Date</span> <span class="label-valu">{{bill_data.createdDate  | date: dateFormat}}</span></div>
+         <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div> -->
       </div>
 
 
@@ -60,28 +63,7 @@
              </tbody>
          </table>
 
-         <div class="table-outer log-tbl">
-           <p class="paymentlogs">Payment Logs</p>
-           <p *ngIf="pre_payment_log.length == 0">
-             No  payments found
-           </p>
-
-           <table class="table" *ngIf="pre_payment_log.length > 0">
-             <thead>
-               <tr>
-                   <th>Date and Time</th>
-                   <th>Amount</th>
-               </tr>
-             </thead>
-             <tbody>
-               <tr *ngFor="let payment of pre_payment_log; let i = index">
-                 <td data-title="Date and Time">{{payment.paymentOn}}</td>
-                 <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
-               </tr>
-             </tbody>
-           </table>
-         </div>
-
+       
          <div class="form-group bill-total">
              <div class="table-outer pay-tbl">
                  <table class="table">
@@ -112,6 +94,51 @@
 
          </div>
 
+         <div class="table-outer log-tbl">
+            <p class="paymentlogs">Payment Logs</p>
+            <p *ngIf="pre_payment_log.length == 0">
+              No  payments found
+            </p>
+ 
+            <table class="table" *ngIf="pre_payment_log.length > 0">
+              <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Status</th>
+                    <th>Mode</th>
+                    <th>Amount</th>
+                    <th>Refunded</th>
+                    <th>Refundable</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let payment of pre_payment_log; let i = index">
+                    <tr>
+                    <td data-title="Date and Time">{{stringtoDate(payment.paymentOn)}}</td>
+                    <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | titlecase}}</span></td>
+                    <td data-title="Mode">{{payment.acceptPaymentBy | titlecase }}</td>
+                    <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
+                    <td data-title="Refunded">-</td>
+                    <td data-title="Refundable">
+                       <span *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount | currency:'INR':'symbol':'.2-2'}}</span> <button  type="button" mat-button class="cs-btn bt1 update" *ngIf="source !== 'consumer_dashboard' && payment.status=='SUCCESS' && payment.refundableAmount > 0" (click)="showRefund(payment)">Refund</button>
+                    </td>
+                    </tr>
+
+                    <tr *ngFor="let refund of payment.refundDetails" class="refundtr">
+                            <td data-title="Date and Time">{{stringtoDate(refund.paymentOn) | date:Pipe_disp_date}}</td>
+                            <td data-title="Status"><span [class]="refund.status | lowercase">{{refund.status | titlecase}}</span></td>
+                            <td data-title="Mode">{{refund.refundBy | titlecase }}</td>
+                            <td data-title="Amount">-</td>
+                            <td data-title="Refunded">{{refund.amount | currency:'INR':'symbol':'.2-2' }}</td>
+                            <td></td>
+                    </tr>
+
+                </ng-container>
+                
+              </tbody>
+            </table>
+          </div>
+
        </div>
  </div>
 
@@ -130,11 +157,21 @@
 
    </ng-container>
 
-   <button  type="button" mat-button class="cs-btn bt1 accept"
-   *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
-    && bill_data.billStatus != 'Settled'" (click)="makePayment()">
-    {{ (source !== 'consumer_dashboard') ? 'Accept Payment' : 'Make Payment' }}
-    </button>
+   <ng-container *ngIf="source !== 'consumer_dashboard'">
+    <button  type="button" mat-button class="cs-btn bt1 accept"
+        *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
+        && bill_data.billStatus != 'Settled'" (click)="makePayment()">
+        Accept Payment
+        </button>
+    </ng-container>
+
+    <ng-container *ngIf="source === 'consumer_dashboard'">
+        <button  type="button" mat-button class="cs-btn bt1 accept"
+        *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
+        && bill_data.billStatus != 'Settled' && (payment_options.length>0)" (click)="makePayment()">
+        Make Payment
+        </button>
+    </ng-container>
 
     <button *ngIf="source == 'consumer_dashboard'" type="button"
     mat-button [mat-dialog-close]="close_msg" class="cs-btn bt1 billcancel" >

@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">{{data.bname}}
+<h1 class="mat-dialog-title">{{data.bname| titlecase}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -31,7 +31,7 @@
         <div class="outer">
             <div class="outer1">
                 <div class="name">
-                    <span class="caption">Service:</span><span class="dispvalue">{{data.serdet.name}}</span>
+                    <span class="caption">Service:</span><span class="dispvalue">{{data.serdet.name | titlecase}}</span>
                 </div>
                 <div class="duration">
                     <span class="caption">Duration:</span><span class="dispvalue">{{data.serdet.serviceDuration}} Mins</span>

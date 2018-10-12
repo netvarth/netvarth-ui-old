@@ -24,23 +24,23 @@
                                                         <span class="ttle">Estimated Duration</span>
                                                         <span class="icon-time">  {{service_data.serviceDuration}} min</span>
                                                     </div>
-                                                    <div class="item">
+                                                    <div class="item" *ngIf="!disable_price">
                                                         <span class="ttle">Price</span>
                                                         <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                                                     </div>
-                                                    <div class="item" *ngIf="service_data.isPrePayment">
+                                                    <div class="item" *ngIf="service_data.isPrePayment && !disable_price">
                                                         <span class="ttle">Prepayment Amount</span>
                                                         <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="c-ot m0">
-                                                    <div class="item">
+                                                    <div class="item" *ngIf="!disable_price">
                                                         <span>Tax Applicable:
                                                             <span class="noti-it" [class.yes]="service_data.taxable==true" [class.no]="service_data.taxable==false">{{(service_data.taxable) ? 'Yes' : 'No'}}</span></span>
                                                     </div>
                                                     <div class="item">
-                                                        <span>Notifications:
-                                                            <span class="noti-it">{{((service_data.notificationType) ? service_data.notificationType : 'No') | titlecase}}</span></span>
+                                                        <span>End of Service Notification:
+                                                            <span class="noti-it">{{((service_data.notificationType) ? service_data.notificationType : 'NONE') | titlecase}}</span></span>
                                                     </div>
                                                 </div>
                                                 <div class="btm-ctrl">
@@ -60,7 +60,7 @@
                                     <div class="lbr col-sm-12 col-md-4 col-lg-4">
 
                                         <div class="cr1">
-                                            <h5>Service Photo Gallery</h5>
+                                            <h5>Service Gallery</h5>
 
                                             <div class="no-dta"
                                             *ngIf="!image_list_popup || image_list_popup.length == 0">

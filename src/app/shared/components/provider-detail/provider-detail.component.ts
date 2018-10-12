@@ -109,6 +109,8 @@ export class ProviderDetailComponent implements OnInit {
   emaillist: any = [];
   phonelist: any = [];
   showEmailPhonediv = false;
+  femaleTooltip = projectConstants.TOOLTIP_FEMALE;
+  maleTooltip = projectConstants.TOOLTIP_MALE;
   virtualsectionHeader = 'Click here to View More Details';
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -131,6 +133,8 @@ export class ProviderDetailComponent implements OnInit {
 
 // Edited//
   public domain;
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
 // Edited//
 
   constructor(
@@ -267,7 +271,8 @@ export class ProviderDetailComponent implements OnInit {
                   const imgobj = new Image(
                     i,
                     { // modal
-                      img: this.galleryjson[i].url
+                      img: this.galleryjson[i].url,
+                      description: this.galleryjson[i].caption || ''
                     });
                   this.image_list_popup.push(imgobj);
                 }
@@ -291,6 +296,7 @@ export class ProviderDetailComponent implements OnInit {
             let schedule_arr: any = [];
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
+                  schedule_arr = [];
                   if (this.locationjson[i].bSchedule) {
                     if (this.locationjson[i].bSchedule.timespec) {
                       if (this.locationjson[i].bSchedule.timespec.length > 0) {
@@ -333,6 +339,8 @@ export class ProviderDetailComponent implements OnInit {
           }
           case 'virtualFields' : {
             this.virtualfieldsjson = res;
+            // console.log('vir', JSON.stringify(this.virtualfieldsjson));
+            // this.virtualfieldsjson = []; // dummy
             this.virtualfieldsCombinedjson = [];
             this.virtualfieldsDomainjson = [];
             this.virtualfieldsSubdomainjson = [];
@@ -352,7 +360,7 @@ export class ProviderDetailComponent implements OnInit {
             }
             // console.log('domain', this.virtualfieldsDomainjson, 'subdomain', this.virtualfieldsSubdomainjson);
             // console.log('virtual', this.virtualfieldsjson);
-            console.log('combined', this.virtualfieldsCombinedjson);
+           // console.log('combined', this.virtualfieldsCombinedjson);
             // console.log('dd', this.objectToVal(this.virtualfieldsCombinedjson));
 
             if (this.virtualfieldsCombinedjson.length > 0) {
@@ -368,6 +376,73 @@ export class ProviderDetailComponent implements OnInit {
   );
   }
   sortVfields(dataF) {
+    let temp;
+    const temp1 = new Array();
+    let temp2 = new Array();
+    let temp3 = new Array();
+    for (let i = 0; i < dataF.length; i++) {
+      temp2 = [];
+      let str = '';
+      // console.log(dataF[i].name, typeof dataF[i].value);
+      dataF[i]['type'] = typeof dataF[i].value;
+      switch (dataF[i].dataType) {
+        case 'Gender':
+          this.genderType = dataF[i].value;
+        break;
+        case 'Enum':
+        case 'EnumList':
+          str = '';
+          temp3 = [];
+          for ( let jj = 0; jj < dataF[i].value.length; jj++) {
+            if (str !== '') {
+              str += ', ';
+            }
+            str +=  dataF[i].value[jj].displayName;
+          }
+          temp3.push(str);
+          temp2.push(temp3);
+          dataF[i].value = temp2;
+          temp1.push(dataF[i]);
+        break;
+        case 'DataGrid':
+          for (let ii = 0; ii < dataF[i].value.length; ii++) {
+            temp3 = [];
+            Object.keys(dataF[i].value[ii]).forEach(nkeys => {
+              // console.log('keys', nkeys, dataF[i].value[ii]);
+              temp3.push(dataF[i].value[ii][nkeys]);
+            });
+            temp2.push(temp3);
+          }
+          dataF[i].value = temp2;
+          temp1.push(dataF[i]);
+        break;
+        case 'Boolean':
+          if (dataF[i].value === 'true') {
+            dataF[i].value = 'Yes';
+          } else {
+            dataF[i].value = 'No';
+          }
+          temp1.push(dataF[i]);
+        break;
+        default:
+          temp1.push(dataF[i]);
+        break;
+      }
+    }
+
+    dataF = temp1;
+    for (let i = 0; i < dataF.length; i++) {
+      for (let j = i + 1; j < dataF.length; j++) {
+        if (parseInt(dataF[i].order, 10) > parseInt(dataF[j].order, 10)) {
+          temp = dataF[i];
+          dataF[i] = dataF[j];
+          dataF[j] = temp;
+        }
+      }
+    }
+    return dataF;
+  }
+  ORGsortVfields(dataF) {
     let temp;
     const temp1 = new Array();
     let temp2 = new Array();
@@ -565,6 +640,7 @@ export class ProviderDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
+      disableClose: true,
      data: {
        user_id : provid,
        source: 'consumer-common',
@@ -622,6 +698,7 @@ export class ProviderDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to remove this provider from your favourite list?'
       }
@@ -730,6 +807,8 @@ export class ProviderDetailComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         const ctoday = cday + '/' + cmon + '/' + yyyy;
         let locindx;
+        const check_dtoday = new Date(dtoday);
+        let cdate = new Date();
         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
           locindx = provids_locid[i].locindx;
           // console.log('locindx', locindx);
@@ -740,8 +819,10 @@ export class ProviderDetailComponent implements OnInit {
             this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
             this.locationjson[locindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
             this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 1;
-            if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-              this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+            cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+            // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            if (cdate.getTime() !== check_dtoday.getTime()) {
+              this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
               this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 1;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
@@ -751,11 +832,12 @@ export class ProviderDetailComponent implements OnInit {
                 + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             } else {
-              this.locationjson[locindx]['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+              this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
               this.locationjson[locindx]['estimatedtime_det']['isFuture'] = 2;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               } else {
+                this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
                 this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             }
@@ -784,6 +866,7 @@ export class ProviderDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(ExistingCheckinComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
     data: {
       locdet: obj,
       terminologies: this.terminologiesjson,
@@ -802,6 +885,7 @@ export class ProviderDetailComponent implements OnInit {
   const dialogRef = this.dialog.open(ServiceDetailComponent, {
     width: '50%',
     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+    disableClose: true,
   data: {
     bname: busname,
     serdet: serv

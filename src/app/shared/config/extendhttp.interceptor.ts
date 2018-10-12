@@ -26,26 +26,31 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                       base_url +  'provider/communications/unreadCount',
                       base_url + 'provider/waitlist/history/count/?location-eq=\d{10,12}',
                       base_url + 'provider/waitlist/future/count/?location-eq=\d{10,12}',
+                      base_url + 'provider/waitlist/history/count/',
+                      base_url + 'provider/waitlist/future/count/',
                       base_url + 'provider/waitlist/today',
                       base_url + 'provider/alerts/count',
-                      // base_url + 'provider/alerts/count?ackStatus-eq=false'
+                      base_url + 'provider/today/count',
+                      base_url + 'provider/communications/unreadCount',
+                      base_url + 'provider/alerts/count?ackStatus-eq=false'
                   ];
+    loaderDisplayed = false;
     constructor(private slimLoadingBarService: SlimLoadingBarService,
     private router: Router, private shared_functions: SharedFunctions) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
 
-
         let url = '';
-        // console.log('req' + req.url);
         if (req.url.substr(0, 4) === 'http') {
           url =  req.url;
         } else {
 
           url =  base_url + req.url;
-
+          // console.log('req' + url);
           if (!this.checkLoaderHideUrl(url)) {
+            // console.log('req' + url);
+            this.loaderDisplayed = true;
             this.showLoader();
           }
 
@@ -61,7 +66,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
         return next.handle(req).do((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            this.hideLoader();
+            if (this.loaderDisplayed) {
+              this.hideLoader();
+            }
+            this.loaderDisplayed = false;
             // console.log('---> status:', event.status);
             // console.log('---> filter:', req.params.get('filter'));
           }

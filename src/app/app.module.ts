@@ -3,7 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
-import {Nl2BrPipeModule} from 'nl2br-pipe';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { ScrollbarModule } from 'ngx-scrollbar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ServiceMeta } from './shared/services/service-meta';
@@ -21,6 +22,8 @@ import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { CheckInModule } from './shared/modules/check-in/check-in.module';
 import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
+import { TermsStaticModule } from './shared/modules/terms-static/terms-static.module';
+import { PrivacyStaticModule } from './shared/modules/privacy-static/privacy-static.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
@@ -52,11 +55,13 @@ import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayModule } from './shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
+
 // import { SearchMoreOptionsComponent } from './shared/components/search-moreoptions/search-moreoptions.component';
 
 import { projectConstants } from './shared/constants/project-constants';
 
 import 'hammerjs';
+import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
 
 @NgModule({
   declarations: [
@@ -111,7 +116,10 @@ import 'hammerjs';
     CheckInModule,
     ModalGalleryModule.forRoot(),
     ConsumerCheckinHistoryListModule,
-    Nl2BrPipeModule
+    Nl2BrPipeModule,
+    TermsStaticModule,
+    PrivacyStaticModule,
+    ScrollbarModule
   ],
   providers: [
     AuthGuardConsumer,
@@ -131,7 +139,8 @@ import 'hammerjs';
     ProviderDetailService,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS}
+    {provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS},
+    {provide:LocationStrategy,useClass:HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

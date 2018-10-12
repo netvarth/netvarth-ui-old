@@ -37,4 +37,9 @@ export class SearchDetailServices {
         const path = 'provider/waitlist/queues/waitingTime/' + str;
         return this.servicemetaobj.httpGet(path);
     }
+
+    getClaimmable(id) {
+        const path = 'provider/claim/' + id;
+        return this.servicemetaobj.httpPost(path);
+    }
 }

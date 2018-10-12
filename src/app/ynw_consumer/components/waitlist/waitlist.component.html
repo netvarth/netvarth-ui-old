@@ -29,7 +29,7 @@
                         <div class="tp" *ngIf="waitlist_detail">
                             <div class="item"><span class="ttle">Bussiness Name:</span> <span> {{waitlist_detail.provider.businessName}}</span></div>
                             <div class="item"><span class="ttle">Date:</span><span>{{waitlist_detail.date | date: dateFormat}}</span></div>
-                            <div class="item"><span class="ttle">Estimated Waiting Time:</span><span></span></div>
+                            <div class="item"><span class="ttle">{{estimateCaption}}:</span><span></span></div>
                             <div class="item"><span class="ttle">Location:</span><span>{{waitlist_detail.queue.location.place}}</span></div>
                             <div class="item"><span class="ttle">Waitlist For:</span>
                               <span class="waitlist_for" *ngFor="let user of waitlist_detail.waitlistingFor">

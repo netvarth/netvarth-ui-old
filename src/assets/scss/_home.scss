@@ -129,6 +129,8 @@
                                 @include font-regular;
                                 font-weight: 500;
                                 color: $cc-black;
+                                background: $cc-formbg;
+                                border: 1px solid transparent;
                                 
                                 @include respond-to(ynw-767) {
                                     height: $input-h;
@@ -162,6 +164,7 @@
                     left: 15px;
                     top: 50%;
                     margin-top: -12px;
+                    z-index: 97;
                 }
             }
             .sa-dm {
@@ -193,19 +196,33 @@
                                 height: 90px;
                                 background: none;
                                 border-radius: 0px;
-                                display: flex;
-                                align-items: center;
+                                /*display: flex;
+                                align-items: center;*/
                                 @include font-regular;
                                 font-weight: 500;
                                 font-size: .875rem;
                                 color: $cc-black;
                                 padding: 15px;
+                                
+                                &:focus {
+                                    .mat-select-trigger {
+                                        .mat-select-value, .mat-select-arrow {
+                                            color: $linkblue;
+                                        }
+                                    }
+                                }
 
                                 @include respond-to(ynw-767) {
                                     height: $input-h;
                                 }
                                 @include respond-to(ynw-768-991) {
                                     height: $input-h;
+                                }
+                                @include respond-to(ynw-992-1199) {
+                                    padding: 38px 15px;
+                                }
+                                @include respond-to(ynw-1200) {
+                                    padding: 38px 15px;
                                 }
 
                                 .mat-select-arrow {
@@ -257,6 +274,9 @@
                             font-weight: 500;
                             font-size: 0.875rem;
                             color: $cc-black;
+                            background: $cc-formbg;
+                            border: 1px solid transparent;
+                            margin-top: 0;
                             
                             @include respond-to(ynw-767) {
                                 height: $input-h;
@@ -360,6 +380,22 @@
                             align-items: center;
                             top: 0;
                             left: 0;
+                        }
+                    }
+                    &:hover{                                
+                        @include respond-to(ynw-767) {
+                            background: darken($cc-red, 20%);
+
+                            &:before {
+                                display: none;
+                            }
+                        }
+                        @include respond-to(ynw-768-991) {
+                            background: darken($cc-red, 20%);
+
+                            &:before {
+                                display: none;
+                            }
                         }
                     }
                 }
@@ -683,7 +719,7 @@
         
         .wt-vd {
             span {
-                border: 1px solid $cc-mediumgray;
+                border: 2px solid $linkblack;
                 font-size: 1.125rem;
                 padding: .625em 1.25em;
                 display: inline-block;
@@ -1106,7 +1142,7 @@
         }
         
         .jn1-1 {
-            @include font-regular;
+            @include font-medium;
             span {
                 color: $linkblack;
                 font-weight: 600;

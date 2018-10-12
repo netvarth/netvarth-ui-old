@@ -74,9 +74,9 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.dialogRef.backdropClick().subscribe(result => {
+   /* this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close(this.close_msg);
-    });
+    });*/
   }
 
 

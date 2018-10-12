@@ -2,14 +2,13 @@
   <div class="copy">
           <ul class="inbox-table" *ngIf="messages.length>0 && !loading">
                   <li class="tth">
-                      <div class="outer">
+                      <!-- <div class="outer">
                          <div class="th th0"></div>
-                          <div class="th th3">From</div>
-                          <div class="th th3">To</div>
-                          <div class="th th4">Message</div>
+                          <div class="th th3">Provider / Consumer</div>
                           <div class="th th2">Service</div>
-                          <div class="th th1">Date</div>
-                      </div>
+                          <div class="th th4">Message</div>
+                          <div class="th th1">Date/Time</div>
+                      </div> -->
                   </li>
 
                   <li class="ttd" [class.active]="selectedMsg==i"
@@ -23,32 +22,32 @@
                           </div>
 
                           <div class="td td3">
-                            <div class="label">From</div>
-                            <div class="result">{{(user_id != message.owner.id) ? message.owner.userName : 'Me'}}</div>
+                            <div class="label">Provider / Consumer</div>
+                            <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | titlecase}}</div>
+                            <div class="result" *ngIf="user_id != message.receiver.id">{{message.receiver.userName | titlecase}}</div>
                           </div>
-                          <div class="td td3">
+                          <!-- <div class="td td3">
                             <div class="label">To</div>
-                            <div class="result">{{(user_id != message.receiver.id) ? message.receiver.userName : 'Me'}}</div>
-                          </div>
-                          <div class="td td4">
-                              <div class="label">Message</div>
-                              <div class="result">{{ (message.msg.length>120)? (message.msg | slice:0:120)+'..':(message.msg) }}
-                              </div>
-                          </div>
-
+                            <div class="result">{{(user_id != message.receiver.id) ? (message.receiver.userName  | titlecase) : 'Me'}}</div>
+                          </div> -->
                           <div class="td td2">
                             <div class="label">Service</div>
                             <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
                           </div>
-
+                          <div class="td td4">
+                                <div class="label">Message</div>
+                                <div class="result">{{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'.....':shared_functions.firstToUpper(message.msg) }}
+                                </div>
+                            </div>
                           <div class="td td1">
-                              <div class="label">Date</div>
-                              <div class="result">{{message.timeStamp | date: dateFormat}}</div>
+                              <div class="label">Date/Time</div>
+                              <!-- <div class="result">{{message.timeStamp | date: dateFormat}}</div> -->
+                              <div class="result">{{formatDateDisplay(message.timeStamp)}}</div>
                           </div>
                       </div>
                       <div class="details" [class.show]="selectedMsg==i">
                           <div class="result">
-                              {{message.msg}}
+                              {{shared_functions.firstToUpper(message.msg)}}
                           </div>
                           <div class="action">
                               <span class="icon-reply" (click)="replyMessage(message)" *ngIf="user_id != message.owner.id && !hide_reply_button">

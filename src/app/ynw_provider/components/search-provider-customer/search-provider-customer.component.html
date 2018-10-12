@@ -2,18 +2,24 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Create {{customer_label  | titlecase}}
+<h1 class="mat-dialog-title">
+    <ng-container *ngIf="source=='createCustomer'">Create {{customer_label  | titlecase}}</ng-container>
+    <ng-container *ngIf="source=='providerCheckin'">{{checkin_label | titlecase}}</ng-container>
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
 <mat-dialog-content>
-    <div class="heading-searchcust">
-        <span class="service-tooltip">
+    <!-- <div class="heading-searchcust">
+        <span class="service-tooltip" *ngIf="source=='createCustomer'">
                 <i class="icon-bell"></i>
                 First step for creating a {{customer_label  | titlecase}} is searching.
         </span>
-    </div>
+        <span class="service-tooltip" *ngIf="source=='providerCheckin'">
+                <i class="icon-bell"></i>
+                First step for {{checkin_label}} is searching for {{customer_label  | titlecase}}.
+        </span>
+    </div> -->
 <div class="form-group">
     <label class="col-form-label" for="mobile_number">Mobile Number *</label>
     <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
@@ -32,7 +38,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 <div class="form-group">
     <label class="col-form-label" for="first_last_name">First Name / Last Name *</label>
     <input matInput type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
-    formControlName="first_last_name" autocomplete="off">
+    formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')"
     errorMsg="Please enter First Name / Last Name.">
    </app-field-error-display>
@@ -41,14 +47,17 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 </mat-dialog-content>
 <mat-dialog-actions>
 <button  mat-button
-[disabled]="!amForm.valid" class="cs-btn bt1">Search</button>
+[disabled]="!amForm.valid" class="cs-btn bt1">
+<ng-container *ngIf="source=='createCustomer'">Create</ng-container>
+<ng-container *ngIf="source=='providerCheckin'">{{checkin_label}}</ng-container>
+</button>
 <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 </mat-dialog-actions>
 </form>
 
 <div class="create_new" *ngIf="create_new">
-  <span class="create_new_oops">Ooops!!</span>
-  <span>This is not a Registered {{customer_label}}</span>
+  <span class="create_new_oops">Oops!!</span>
+  <span>This is not a registered {{customer_label}}</span>
   <button class="create_new_button cs-btn bt3" (click)="createNew()" >Create {{customer_label}}</button>
 </div>
 

@@ -14,8 +14,8 @@
         <div class="row ft-cpy">
             <div class="col-5 col-sm-12 col-md-5 col-lg-5" >
                 <h4>About</h4>
-                <p>YouNeverWait is an all-in-one web portal integrated with mobile application. It manages service providers’ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.
-                </p><p>Youneverwait’s cloud-based platform is scalable, secure, and ready for any size deployment. YouNeverWait is owned and operated by Netvarth technologies Pvt Ltd.</p>
+                <p>Jaldee is an all-in-one web portal integrated with mobile application. It manages service providers’ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.
+                </p><p>Jaldee's cloud-based platform is scalable, secure, and ready for any size deployment. Jaldee is owned and operated by Netvarth technologies Pvt Ltd.</p>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <h4>Contact</h4>
@@ -51,13 +51,15 @@
             <div class="row">
             <div class="col-12">
                 <ul class="lnks">
-                    <li><a href="#">Terms &amp; Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a [routerLink]="['/terms']" target="_blank">Terms &amp; Conditions</a></li>
+                    <li><a [routerLink]="['/privacy']" target="_blank">Privacy Policy</a></li>
+                    <!-- <li><a [routerLink]="['/terms']">Terms &amp; Conditions</a></li>
+                    <li><a [routerLink]="['/privacy']">Privacy Policy</a></li> -->
                     <li><a href="#">Pricing</a></li>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Contact Us</a></li>
                 </ul>
-                <p>&copy; {{curyear}} youneverwait</p>
+                <p>&copy; {{curyear}} jaldee</p>
             </div>
         </div>
         </div>
@@ -75,7 +77,7 @@
                             <div class="right">
                                 <ul class="stp-action">
                                     <li><span class="icon-minimize" (click)="closebottompopup()"></span></li>
-                                    <li><span class="icon-maximize" (click)="handleMaximize()"></span></li>
+                                    <li><span class="icon-maximize" (click)="handleMaximize()" [matTooltipClass] = "tooltipcls" [matTooltip]="maximizeTooltip"></span></li>
                                     <li><span class="icon-close" (click)="closebottompopup()"></span></li>
                                 </ul>
                             </div>
@@ -179,8 +181,10 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <span *ngIf="alert_count > alertsCnt" class="alert-view-all"
-                                  (click)="handleMaximize()"> View All</span>
+                                <!-- <span *ngIf="alert_count > alertsCnt" class="alert-view-all"
+                                  (click)="handleMaximize()"> View All</span> -->
+                                  <span *ngIf="alert_count > alertsCnt" class="alert-view-all"
+                                        (click)="handleMaximize()"> View All</span>
                                 <span class="no-info" *ngIf="alertStatus==2">No Alerts so far</span>
                             </div>
                         </div>
@@ -256,11 +260,11 @@
      <section class="sect3" *ngIf="ctype=='provider' && show_prov_bottomicons">
              <div class="container">
                  <div class="row">
-                    <div class="copy-text">&copy; {{curyear}} youneverwait</div>
+                    <div class="copy-text">&copy; {{curyear}} jaldee</div>
                     <div class="spt-controls ml-auto" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
                         <ul class="list" *ngIf="show_prov_bottomicons">
                             <li [class.active]="selOpt=='Audit'" (click)="showAuditlog()"><span class="icon-audit" matTooltip="Audit Log"></span></li>
-                            <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="alert-count">{{alert_count}}</span><span class="icon-bell" matTooltip="Alerts"></span></li>
+                            <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="alert-count" *ngIf="alert_count>0">{{alert_count}}</span><span class="icon-bell" matTooltip="Alerts"></span></li>
                             <li [class.active]="selOpt=='Checkin'" (click)="showCheckinED()"><span class="icon-checkin" matTooltip="Enable / Disable Check-in"></span></li>
                             <li [class.active]="selOpt=='License'" (click)="showLicense()"><span class="icon-license" matTooltip="License Details"></span></li>
                         </ul>

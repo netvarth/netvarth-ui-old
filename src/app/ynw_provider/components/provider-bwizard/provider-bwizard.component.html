@@ -7,9 +7,9 @@
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="pt-top">
                     <h1>Congratulations, {{userdet.userName}}!</h1>
-                    <p>You have made a right choice by signing up for <strong>YouNeverWait!</strong></p>
+                    <p>You have made a right choice by signing up for <strong>Jaldee!</strong></p>
                     <p>We will walk you through to enable Public search!</p>
-                    <p><strong>Remember!</strong> You can always adjust any of the settings by going to business profile under the settings!</p>
+                    <p><strong>Remember!</strong> You can always adjust any of the settings by going to <strong>Business Profile</strong> under the settings!</p>
                 </div>
                 <div class="pt-btm">
                     <ul class="ico">
@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label>Business Name</label>
                             <span class="expl">Your {{customer_label}}s will view this in public profile</span>
-                            <input type="text" class="form-control" id="bnameId" maxlength="50" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="">
+                            <input type="text" class="form-control" id="bnameId" maxlength="50" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label>Profile Summary</label>
@@ -76,9 +76,9 @@
                         </div>
                         <div class="content">
                             <div class="stik">
-                                <ul class="info-lst">
-                                    <li>You can add more locations in the settings.</li>
-                                    <li>How to get GPS coordinates click <a href="#">Learn More</a></li>
+                                <ul class="info-lst" *ngIf="multipeLocationAllowed">
+                                    <li>You can add more locations in the Settings -> Location, after you create your profile.</li>
+                                    <!-- <li>How to get GPS coordinates click <a href="#">Learn More</a></li> -->
                                 </ul>
                             </div>
 
@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label>Address</label>
                                     <span class="expl">Enter the Address/Direction where your {{customer_label}}s can find you.</span>
-                                    <textarea class="form-control" id="" [(ngModel)]="wizard_data_holder['address']" name="address"></textarea>
+                                    <textarea class="form-control" placeholder="This is what your {{customer_label}}s see when they search online" id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address" #locaddress></textarea>
                                 </div>
                                 <!-- <div class="form-group pcde">
                                     <label>Pincode</label>
@@ -110,8 +110,8 @@
                                 </div> -->
                                 <div class="form-group">
                                     <label>Location Name</label>
-                                    <span class="expl">Display name of the location where you render services for your {{customer_label}}s. This is what your {{customer_label}}s see when they search online.</span>
-                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="" autocomplete="off" maxlength="50">
+                                    <span class="expl">Display name of the location where you render services for your {{customer_label}}s.</span>
+                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="This is what your {{customer_label}}s see when they search online" autocomplete="off" maxlength="50">
                                     <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
                                 </div>
                                 <div class="form-group">
@@ -152,7 +152,7 @@
                         <div class="flds">
                             <div class="form-group" >
                                 <label class="title16">Working Hours</label>
-                                <span class="expl">This shows your office/business working hours</span>
+                                <span class="expl">This shows your office/business hours</span>
                                 <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
                                 <li *ngFor="let schedule of display_schedule">
                                     <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
@@ -160,7 +160,7 @@
                                 </ul>
                                 <span class="cs-btn bt3" (click)="changeSchedule_clicked()" *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0) ? 'Change Schedule': 'Add Schedule'}}</span>
                             </div>
-                            <app-provider-schedule *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)"></app-provider-schedule>
+                            <app-provider-schedule [Isource] = "'wizard'" *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)"></app-provider-schedule>
                         </div>
                     </div>
                     <div class="footer">
@@ -192,19 +192,19 @@
                     <div class="content">
                         <div class="stik">
                             <ul class="info-lst">
-                                <li>You can always go to Public Search under settings and Turn it On or Off</li>
+                                <li>You can turn On or Off anytime in Settings -> Profile & Search -> Profile</li>
                             </ul>
                         </div>
 
                         <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                             <div class="form-group">
-                                <label class="mb20">Do you want to make your Profile public searchable and viewable?</label>
+                                <label class="mb20">Do you want to make your Profile searchable and viewable to public?</label>
                                 <div class="rdo ton" [class.active]="search_status==1">
                                     <mat-radio-button name='searchstatus' value="ENABLE" [checked]="search_status==1" (change)="handle_searchstatus('ENABLE')"></mat-radio-button>
                                     <!-- <input type="radio" name='searchstatus' value="ENABLE" [checked]="search_status==1" (change)="handle_searchstatus('ENABLE')"> -->
                                     <label for="" (click)="handle_searchstatus('ENABLE')">
                                         Turn on Public Search
-                                        <span>Your {{customer_label}}s can search your profile online in <strong>youneverwait.com</strong> and they can {{checkin_label |titlecase}} for your services.</span>
+                                        <span>Your profile is visible to {{customer_label}}s online at <strong>jaldee.com</strong></span>
                                     </label>
                                 </div>
                                 <div class="rdo toff" [class.active]="search_status==2" >
@@ -212,7 +212,7 @@
                                     <!-- <input type="radio" name='searchstatus' [checked]="search_status==2" value="DISABLE" (change)="handle_searchstatus('DISABLE')"> -->
                                     <label for="" (click)="handle_searchstatus('DISABLE')">
                                         Turn off Public Search
-                                        <span>Your {{customer_label}}s can’t see your profile online in <strong>youneverwait.com</strong> and they can’t {{checkin_label |titlecase}} for your services.</span>
+                                        <span>Your profile is not visible to {{customer_label}}s online at <strong>jaldee.com</strong>.</span>
                                     </label>
                                 </div>
                             </div>

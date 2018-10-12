@@ -67,6 +67,17 @@
         }
 }
 
+@keyframes sidebar-out{
+    0%{
+        transform: rotate(0) translateX(0);
+        opacity: 1;
+        }
+    100%{
+        transform: rotate(0) translateX(-300px);
+        opacity: 0;
+        }
+}
+
 // Kiosk Keyframes
 
 // kiosk welcome screen

@@ -1,4 +1,5 @@
-// Mixins
+// Mixins ####
+
 // Bootstrap Button Variant
 @mixin button-variant($color, $background, $border) {
   color: $color;
@@ -117,6 +118,24 @@
     &:after {
         clear: both;
     }
+}
+
+//placeholder styling
+@mixin placeholder {
+  :-webkit-input-placeholder {@content}
+  :-moz-placeholder           {@content}
+  :-moz-placeholder          {@content}
+  :-ms-input-placeholder      {@content}  
+}
+
+//radial gradient
+
+@mixin radial-gradient($center, $end) {
+    background-image: -moz-radial-gradient($center, $end); /* FF3.6+ */
+    background-image: -webkit-radial-gradient($center, $end); /* Chrome10+,Safari5.1+ */
+    background-image: -o-radial-gradient($center, $end); /* Opera 11.10+ */
+    background-image: -ms-radial-gradient($center, $end); /* IE10+ */
+    background-image: radial-gradient($center, $end); /* W3C */
 }
 
 //gradient top-to-bottom

@@ -3,12 +3,12 @@
         <div class="text-center">
             <!-- pager -->
             <div class="paginghead-outer" *ngIf="pager.pages && pager.pages.length">
-                <div class="paging"><span class="paging-page">Page</span><span class="paging-curr">{{pager.currentPage}}</span><span class="paging-of">of</span><span class="paging-max">{{pager.totalPages}}</span></div>
+                <!-- <div class="paging"><span class="paging-page">Page</span><span class="paging-curr">{{pager.currentPage}}</span><span class="paging-of">of</span><span class="paging-max">{{pager.totalPages}}</span></div> -->
             </div>
             <ul *ngIf="pager.pages && pager.pages.length && pager.totalPages > 1" class="pagination">
-                <li [class.disabled]="pager.currentPage === 1" (click)="onpagerclick(1)">
+                <!-- <li [class.disabled]="pager.currentPage === 1" (click)="onpagerclick(1)">
                     <span >First</span>
-                </li>
+                </li> -->
                 <li [class.disabled]="pager.currentPage === 1" (click)="onpagerclick(pager.currentPage - 1)">
                     <span>Previous</span>
                 </li>
@@ -18,9 +18,9 @@
                 <li [class.disabled]="pager.currentPage === pager.totalPages" (click)="onpagerclick(pager.currentPage + 1)">
                     <span >Next</span>
                 </li>
-                <li [class.disabled]="pager.currentPage === pager.totalPages" (click)="onpagerclick(pager.totalPages)">
+                <!-- <li [class.disabled]="pager.currentPage === pager.totalPages" (click)="onpagerclick(pager.totalPages)">
                     <span >Last</span>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

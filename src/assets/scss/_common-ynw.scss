@@ -97,11 +97,12 @@ app-footer {
     
     input[type="text"], input[type="email"], input[type="password"], input[type="file"], textarea, .form-control {
         @include border-radius(0);
-        background: $cc-formbg;
-        border: 1px solid transparent;
+        background: $cc-inputbg;
+        border: 1px solid $cc-formborder;
         @include font-regular;
         font-size: 0.875rem;
-        color: $cc-darkgray;
+        font-weight: 500;
+        color: $linkblack;
         text-overflow: ellipsis;
         padding:10px;
         
@@ -109,6 +110,32 @@ app-footer {
             @include box-shadow(0, 0, 1px, $linkblue, inset);
             border: 1px solid $linkblue;
             background: $white;
+        }
+        
+        &:disabled {
+            background: $cc-formbg;
+            border: 1px solid transparent;
+        }
+        
+        &::-moz-placeholder {
+            color: $cc-mediumgray;
+            font-size: .75rem;
+            font-style: italic;
+        }
+        &:-ms-input-placeholder{
+            color: $cc-mediumgray;
+            font-size: .75rem;
+            font-style: italic;
+        }
+        &:-moz-placeholder {
+            color: $cc-mediumgray;
+            font-size: .75rem;
+            font-style: italic;
+        }
+        &::-webkit-input-placeholder {
+            color: $cc-mediumgray;
+            font-size: .75rem;
+            font-style: italic;
         }
     }
     input[type="text"], input[type="email"], input[type="password"] {
@@ -122,12 +149,83 @@ app-footer {
         font-weight: 600;
         font-size: .875rem;
         display: block;
+        margin-bottom: 5px;
+        padding: 0;
     }
     
     .error-msg {
         color: $cc-red !important;
         font-size: .875rem;
         font-weight: 500;
+    }
+}
+
+// Form BG/Border 
+.mat-form-field {
+    @include font-medium;
+    
+    .mat-input-wrapper {
+        .mat-input-flex {
+            .mat-input-infix {
+                .mat-input-element {
+                    background: $cc-inputbg;
+                    border: 1px solid $cc-formborder;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                    color: $linkblack;
+                    text-overflow: ellipsis;
+                    padding:10px;
+                    
+                    &::-moz-placeholder {
+                        color: $cc-mediumgray;
+                        font-size: .75rem;
+                        font-style: italic;
+                    }
+                    &:-ms-input-placeholder{
+                        color: $cc-mediumgray;
+                        font-size: .75rem;
+                        font-style: italic;
+                    }
+                    &:-moz-placeholder {
+                        color: $cc-mediumgray;
+                        font-size: .75rem;
+                        font-style: italic;
+                    }
+                    &::-webkit-input-placeholder {
+                        color: $cc-mediumgray;
+                        font-size: .75rem;
+                        font-style: italic;
+                    }
+                    &:disabled {
+                        background: $cc-formbg;
+                        border: 1px solid transparent;
+                    }
+                }
+                
+                .mat-select {
+                    height: 40px;
+                    padding: 10px;
+                    @include font-regular;
+                    background: $cc-inputbg;
+                    border: 1px solid $cc-formborder;
+                    
+                    &:focus {
+                        @include box-shadow(0, 0, 1px, $linkblue, inset);
+                        border: 1px solid $linkblue;
+                        background: $white;
+                    }
+                    
+                    &.mat-select-disabled {
+                        background: $cc-formbg;
+                        border: 1px solid transparent;
+
+                        .mat-select-value {
+                            color: $cc-darkgray;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -307,7 +405,7 @@ app-footer {
                     font-size: 1.25rem;
                     min-height: 60px;
                     
-                    .mat-expansion-indicator {
+                    /*.mat-expansion-indicator {
                         width: 14px;
                         height: 14px;
                         display: flex;
@@ -316,6 +414,57 @@ app-footer {
                         
                         &:after {
                             border-width: 0 1.5px 1.5px 0;
+                        }
+                    }*/
+                    
+                    .helprighticon {
+                        padding: 0;
+                        width: 30px;
+                        height: 30px;
+                        margin-left: 5px;
+                        cursor: pointer;
+                        @include transition(all 300ms);
+                        
+                        i {
+                            width: 30px;
+                            height: 30px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        &:hover {
+                            color: $linkblue;
+                        }
+                    }
+                    
+                    .mat-expansion-indicator {
+                        @include transform(rotate(0deg) !important);
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        right: 15px;
+                        display: flex;
+                        align-items: center;
+                        font-weight: 700;
+                        font-size: .625rem;
+
+                        &:after {
+                            color: $linkblack;
+                            border: none;
+                            content: "\72";
+                            position: absolute;
+                            @include font-custom;
+                            @include transform(rotate(0deg));
+                        }
+                    }
+
+                    &.mat-expanded {
+                        .mat-expansion-indicator {
+                            &:after {
+                                content: "\66";
+                                color: $linkblack;
+                            }
                         }
                     }
                 }
@@ -400,6 +549,51 @@ app-footer {
                     font-weight: 600;
                     margin-bottom: 10px;
                 }
+                
+                .refine_fieldlist {
+                    app-rating-star {
+                        .rating-outer {
+                            display: flex;
+                            align-items: center;
+
+                            .ynwstar-rating {
+                                float: none;
+                                width: 135px;
+
+                                label {
+                                    margin-bottom: 0;
+                                    cursor: pointer;
+                                    
+                                    &:before {
+                                        font-size: 1rem;
+                                    }
+                                }
+                            }
+                            .moreopt-clear {
+                                margin-left: 15px;
+                                cursor: pointer;
+                                position: relative;
+                                width: 20px;
+                                height: 20px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: .65rem;
+                                background: lighten($cc-red, 20%);
+                                color: $cc-red;
+                                @include border-radius(50px);
+
+                                &:before {
+                                    @include font-custom;
+                                    content: "";
+                                    position: absolute;
+                                    content: "\69";
+                                }
+                            }
+                        }
+                    }
+                }
+                
                 &:last-child {
                     margin: 0;
                 }

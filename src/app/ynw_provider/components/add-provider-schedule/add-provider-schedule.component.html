@@ -20,7 +20,7 @@
     <ul class="whrs">
         <li *ngFor="let schedule of display_schedule; let i = index" [class.beingedited]="isbeingEdited(schedule.indx)">
             <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
-            <button type="button" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="providerStatus==='INACTIVE'" [disabled]="isbeingEdited(schedule.indx)">
+            <button type="button" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="providerStatus==='INACTIVE' && !isbeingEdited(schedule.indx)" [disabled]="isbeingEdited(schedule.indx)">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -41,12 +41,15 @@
     <!-- <div *ngIf="show_savebutton"><button type="button" class="cs-btn bt3" (click)="save_schedule_button_clicked()">Save Schedule Changes</button></div> -->
 
     <div class="schedulesub_outer" *ngIf="show_schedule_selection">
-        <div class="sch_sel_head" *ngIf="edit_mode"> Edit : {{edit_heading}} </div>
+        <div class="sch_sel_head" *ngIf="edit_mode"> Edit : {{edit_heading}}</div>
         <div class="sch_sel_head" *ngIf="!edit_mode"> Add Schedule</div>
+        <!-- <div class="schselectall" *ngIf="Isource=='wizard'"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div> -->
+        <div class="schselectall"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div>
         <section class="chk-section">
             <div *ngFor="let day of weekdays_arr; let i = index" class='chk-margin'>
             <mat-checkbox *ngIf="day" [checked]="check_daychecked(i)" (change)=handlechecbox(i)>{{day}}</mat-checkbox>
             </div>
+            
         </section>
        <div class="startendtime">
         <div class="starttimediv">
@@ -59,9 +62,11 @@
         </div>    
        </div>
        <div class="savecancel">
+           <button type="button" (click)="showScheduleselection()" class="cs-btn bt7">Cancel</button>
+
            <button type="button" (click)="onsaveScheduleClick()" class="cs-btn bt3"><ng-container *ngIf="!edit_mode">Save Schedule</ng-container><ng-container *ngIf="edit_mode">Update</ng-container></button>
            
-           <button type="button" (click)="showScheduleselection()" class="cs-btn bt7">Cancel</button>
+           
        </div>
 
        <app-field-error-display [displayError]="true" *ngIf="api_error"

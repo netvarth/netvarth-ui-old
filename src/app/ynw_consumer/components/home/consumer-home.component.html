@@ -1,13 +1,12 @@
-
 <section class="content consumer-dash">
   <div class="container">
       <div class="row">
           <!-- <h1>Consumer <span>Dashboard</span></h1> -->
           <div class="card c-chekins">
               <mat-accordion >
-                <mat-expansion-panel [expanded]= 'true'>
+                <mat-expansion-panel [expanded]= 'true' [disabled]="true">
                   <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title  [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip" >
                       Current Check-Ins
                     </mat-panel-title>
                   </mat-expansion-panel-header>
@@ -17,12 +16,12 @@
                       <div class="header">
                           <div class="lt">
                             <div class="title" (click)="providerDetail(waitlist.provider)">
-                              <h3>{{waitlist.provider.businessName || ''}}</h3>
+                              <h3>{{waitlist.provider.businessName || '' | titlecase}}</h3>
                             </div>
                             <div class="location" *ngIf="waitlist.queue.location">
                                 <a *ngIf="waitlist.queue.location.googleMapUrl"
                                 [href]="waitlist.queue.location.googleMapUrl" target="_blank"
-                                class="icon-location" matTooltip="Click to navigate"> {{waitlist.queue.location.place || ''}}</a>
+                                class="icon-location" matTooltip="Click to navigate"> {{waitlist.queue.location.place || '' | titlecase}}</a>
                             </div>
                           </div>
                           <div class="rt">
@@ -34,29 +33,35 @@
                       <div class="details">
                           <div class="lt">
                               <div class="lt0">
-                                  <span class="service"> {{waitlist.service.name}}</span> for
+                                  <span class="service"> {{waitlist.service.name  | titlecase}}</span> for
                                   <span class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
-                                    {{user.firstName}} {{user.lastName}}
+                                    {{user.firstName  | titlecase}} {{user.lastName | titlecase}}
                                   </span>
                               </div>
 
-                              <ng-container *ngIf="waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
+                              <ng-container *ngIf="waitlist.calculationMode != 'NoCalc' && waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
                               waitlist.waitlistStatus == 'arrived')">
-
-                                  <div class="lt0" *ngIf="!waitlist.future">
-                                      Estimated Time <span class="time now">
-                                        {{waitlist.estimated_time }}</span>
+                                  <div class="lt0" *ngIf="waitlist.estimated_date==''">
+                                      {{waitlist.estimated_caption}} <span class="time now">
+                                        {{waitlist.estimated_time}}</span>
                                   </div>
-                                  <div class="lt0" *ngIf="waitlist.future">
+                                  <div class="lt0" *ngIf="waitlist.estimated_date!=''">
+                                    {{waitlist.estimated_caption}} <span class="time now">
+                                   <span *ngIf="waitlist.estimated_date_type == 'date'">{{waitlist.estimated_date | date: dateFormatSp }}</span>
+                                   <span *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}}, </span>
+                                    {{waitlist.estimated_time}}</span>
+                                  </div>
+                                  <!-- <div class="lt0" *ngIf="waitlist.future">
                                       Check-In Time  <span class="time now">
                                           {{waitlist.date | date: dateFormatSp }}
                                           {{waitlist.estimated_time | date: timeFormat}}
                                         </span>
-                                  </div>
+                                  </div> -->
 
                               </ng-container>
 
-                              <ng-container  *ngIf="!waitlist.estimated_time">
+                              <!-- <ng-container  *ngIf="waitlist.calculationMode != 'NoCalc' && !waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
+                              waitlist.waitlistStatus == 'arrived')">
                                   <div class="lt0" *ngIf="waitlist.future">
                                       Check-In Time  <span class="time now">
                                          {{waitlist.date | date: dateFormatSp }}
@@ -68,14 +73,17 @@
                                           Now
                                         </span>
                                   </div>
-                              </ng-container>
+                              </ng-container> -->
 
                               <div class="lt0" *ngIf="waitlist.token">
                                   Token No <span class="token">{{waitlist.token}}</span>
                               </div>
-                              <div class="lt0">
+                              <div class="lt0" *ngIf="showPersonsAhead(waitlist)">
                                   Persons Ahead <span class="persons">{{waitlist.personsAhead}}</span>
                               </div>
+                              <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
+                              Party Size <span class="persons">{{waitlist.partySize}}</span>
+                            </div>
                           </div>
                           <div class="rt">
                               <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
@@ -105,7 +113,7 @@
                                   </li>
 
                                   <li *ngIf="waitlist.waitlistStatus == 'done'">
-                                    <span class="rate-service" (click)="rateService(waitlist)">Rate Service</span>
+                                    <span class="rate-service"  [class.rated] = "isRated(waitlist)" (click)="rateService(waitlist)">Rate Your Visit</span>
                                   </li>
                               </ul>
                           </div>
@@ -125,7 +133,7 @@
               <mat-accordion>
                 <mat-expansion-panel [expanded]= 'true'>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title  [matTooltipClass] = "tooltipcls" [matTooltip]="favTooltip">
                       My Favourites
                     </mat-panel-title>
                   </mat-expansion-panel-header>
@@ -134,7 +142,7 @@
                         <div class="header">
                             <div class="lt"  (click)="toogleDetail(provider, i)">
                                 <h3 class="pointer-cursor">
-                                  {{provider.businessName}}</h3>
+                                  {{provider.businessName | titlecase}}</h3>
                             </div>
                             <div class="rt">
                                 <ul class="controls">
@@ -161,7 +169,7 @@
                         <div class="detail"  [@hideShowAnimator]="hideShowAnimator" *ngIf="open_fav_div == i">
                           <div class="location" *ngFor="let loc of provider.locations;">
                             <div class="locationname">
-                                <span class="icon-location"></span> {{loc.place}}
+                                <span class="icon-location"></span> {{loc.place | titlecase}}
                             </div>
 
                             <div class="bt-l">
@@ -185,7 +193,7 @@
                                 <span class="cs-btn chk-btn" (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')" *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(provider)">Check-In</span>
                                 <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(provider)">Check-In</span>
                                 <span class="cs-btn bt10" *ngIf="showcheckInButton(provider) && provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate']" (click)="goCheckin(provider, loc,  loc['estimatedtime_det']['cdate'], true, 'fav_provider')">
-                                  Do you want to <span>Check-in</span> for <span>different Date/Time?</span>
+                                  Do you want to <span>Check-in</span> for <span>different Date?</span>
                                 </span>
                             </div>
 
@@ -205,7 +213,7 @@
               <mat-accordion>
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title [matTooltipClass] = "tooltipcls" [matTooltip]="historyTooltip">
                       History
                     </mat-panel-title>
                   </mat-expansion-panel-header>

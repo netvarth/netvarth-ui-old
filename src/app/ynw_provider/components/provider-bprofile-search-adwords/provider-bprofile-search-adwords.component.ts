@@ -7,7 +7,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
+import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderBprofileSearchAdwordsComponent } from '../add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import {Messages} from '../../../shared/constants/project-messages';
 
@@ -23,15 +23,20 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     adword_list: any = [] ;
     adwordsmaxcount: any = 0;
     remaining_adword = 0;
-
+    tooltipcls = projectConstants.TOOLTIP_CLS;
     query_executed = false;
+    addwordTooltip = '';
+    adwords_mincnt = 5;
+    adwords_cntr = 0;
+    adwordshowmore = false;
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions) {}
 
     ngOnInit() {
-        this.getTotalAllowedAdwordsCnt();
+      this.addwordTooltip = this.sharedfunctionObj.getProjectMesssages('ADDWORD_TOOLTIP');
+      this.getTotalAllowedAdwordsCnt();
     }
 
     ngOnChanges() {
@@ -62,7 +67,8 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
           data: {
             type : 'add'
           },
-          panelClass: ['commonpopupmainclass']
+          panelClass: ['commonpopupmainclass'],
+          disableClose: true
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -83,6 +89,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         const dialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
           data: {
             'message' : this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name + '"')
           }
@@ -104,5 +111,12 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
             this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
           }
         );
+      }
+      toggle_adwordshowmore() {
+        if (this.adwordshowmore) {
+          this.adwordshowmore = false;
+        } else {
+          this.adwordshowmore = true;
+        }
       }
 }

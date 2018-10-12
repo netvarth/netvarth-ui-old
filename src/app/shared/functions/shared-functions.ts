@@ -433,7 +433,7 @@ export class SharedFunctions {
   }
 
   imageValidation (file) {
-
+    // console.log('file', file);
     const file_types = projectConstants.IMAGE_FORMATS;
     const image_max_size = projectConstants.IMAGE_MAX_SIZE;
     const error = [];
@@ -489,6 +489,7 @@ export class SharedFunctions {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to delete this image ?',
         'heading' : 'Delete Confirmation'
@@ -503,10 +504,36 @@ export class SharedFunctions {
 
     });
   }
+  confirmSearchChangeStatus(ob, stat) {
+    let msg = '';
+    if (stat) {
+      msg = '"Disable" the Public Search?';
+    } else {
+      msg = '"Turn On" the Public Search?';
+    }
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message' : msg,
+        'heading' : 'Public Search'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        ob.handle_searchstatus();
+      }
+
+    });
+  }
   confirmLogoImageDelete(ob, file) {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to remove your profile picture?',
         'heading' : 'Delete Confirmation'
@@ -689,12 +716,13 @@ export class SharedFunctions {
     return displaysch;
   }
 
-  setBusinessDetailsforHeaderDisp(bname, sector, logo, forcelogoblank?) {
-    const buss_det = {'bn': '', 'bs': '', 'logo': '' };
+  setBusinessDetailsforHeaderDisp(bname, sector, subsector, logo, forcelogoblank?) {
+    const buss_det = {'bn': '', 'bs': '', 'bss': '', 'logo': '' };
     const exist_det = this.getitemfromLocalStorage('ynwbp');
     if (exist_det) {
       buss_det.bn = bname || '';
       buss_det.bs = sector || '';
+      buss_det.bss = subsector || '';
       if (forcelogoblank !== undefined) {
         buss_det.logo = '';
       } else {
@@ -703,6 +731,7 @@ export class SharedFunctions {
     } else {
       buss_det.bn = bname;
       buss_det.bs = sector;
+      buss_det.bss = subsector;
       buss_det.logo = logo;
     }
     this.setitemonLocalStorage('ynwbp', buss_det);
@@ -733,9 +762,13 @@ openSnackBar(message: string, params: any = []) {
   if (params['panelClass'] === 'snackbarerror') {
     message = this.getApiError(message);
   }
+  let duration = projectConstants.TIMEOUT_DELAY_LARGE;
+  if (params['duration']) {
+    duration = params['duration'];
+  }
 
   const replaced_message = this.findTerminologyTerm(message);
-  const snackBarRef = this.snackBar.open(replaced_message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
+  const snackBarRef = this.snackBar.open(replaced_message, '', {duration: duration, panelClass: panelclass });
   // const snackBarRef = this.snackBar.open(message, '', {duration: 100000, panelClass: panelclass });
   return snackBarRef;
 }
@@ -875,6 +908,35 @@ addZero(i) {
   }
   return i;
 }
+convert24HourtoAmPm(time, secreq?) {
+  const timesp = time.split(':');
+  let hr = parseInt(timesp[0], 10);
+  const min = parseInt(timesp[1], 10);
+  const sec = parseInt(timesp[2], 10);
+  let ampm = '';
+  let retstr = '';
+  // console.log('time', hr, min);
+
+  if (hr >= 12) {
+    hr = hr - 12;
+    if (hr === 0) {
+      hr = 12;
+      ampm = 'PM';
+    } else if (hr < 0) {
+      ampm = 'AM';
+    } else {
+      ampm = 'PM';
+    }
+  } else {
+    ampm = 'AM';
+  }
+  retstr = this.addZero(hr) + ':' + this.addZero(min);
+  if (secreq) {
+    retstr += ':' + sec;
+  }
+  retstr += ' ' + ampm;
+  return retstr;
+}
 
 doCancelWaitlist(waitlist) {
   return new Promise((resolve, reject) => {
@@ -882,6 +944,7 @@ doCancelWaitlist(waitlist) {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to cancel this Check-In ?',
         'heading' : 'Confirm'
@@ -935,6 +998,7 @@ doDeleteFavProvider(fav) {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
         'heading' : 'Confirm'
@@ -983,7 +1047,7 @@ ratingRounding(val) {
     }
   }
   if (val === 0.0) {
-    console.log('retval', retval);
+    // console.log('retval', retval);
     retval = 0;
   }
   /*if (val > 0 && val <= .5) {
@@ -1047,7 +1111,13 @@ toCamelCase(str) {
 }
 
 firstToUpper(str) {
-  return str.charAt(0).toUpperCase() + str.substr(1);
+  if (str) {
+    if (str.substr(0, 7) === 'http://' || str.substr(0, 8) === 'https://') {
+      return str;
+    } else {
+      return str.charAt(0).toUpperCase() + str.substr(1);
+    }
+  }
 }
 
 findTerminologyTerm(message) {

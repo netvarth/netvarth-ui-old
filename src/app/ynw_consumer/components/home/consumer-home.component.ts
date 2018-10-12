@@ -27,6 +27,8 @@ import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
 import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
+import { appendFile } from 'fs';
+import { count } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consumer-home',
@@ -49,9 +51,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
-
   loadcomplete = {waitlist: false , fav_provider: false, history: false};
-
+  tooltipcls = projectConstants.TOOLTIP_CLS;
   pagination: any  = {
     startpageval: 1,
     totalCnt : 0,
@@ -69,10 +70,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   reload_history_api =  {status : true};
 
   cronHandle: Subscription;
+  countercronHandle: Subscription;
   cronStarted;
-  refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
+  counterrefreshTime = 60; // seconds, set to reduce the counter every minute, if required
   open_fav_div = null;
   hideShowAnimator = false;
+  currentcheckinsTooltip = '';
+  favTooltip = '';
+  historyTooltip = '';
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
+  estimatesmallCaption = Messages.ESTIMATED_TIME_SMALL_CAPTION;
+  checkinCaption = Messages.CHECKIN_TIME_CAPTION;
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -81,12 +91,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   private consumer_datastorage: ConsumerDataStorageService) {}
 
   ngOnInit() {
+    this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
+    this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
+    this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
    // this.getHistoryCount();
    // this.getFavouriteProvider();
    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
     this.reloadAPIs();
+   });
+
+   this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
+    this.recheckwaitlistCounters();
    });
 
 
@@ -96,6 +113,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.cronHandle) {
      this.cronHandle.unsubscribe();
     }
+    if (this.countercronHandle) {
+      this.countercronHandle.unsubscribe();
+     }
  }
 
   getWaitlist() {
@@ -113,6 +133,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.waitlists = data;
         const today = new Date();
         let i = 0;
+        let retval;
         for (const waitlist of this.waitlists) {
 
             const waitlist_date = new Date(waitlist.date);
@@ -121,12 +142,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             waitlist_date.setHours(0, 0, 0, 0);
 
             this.waitlists[i].future = false;
-
+            retval = this.getAppxTime(waitlist);
+            // console.log('waitlist', waitlist, 'retval', retval);
             if (today.valueOf() < waitlist_date.valueOf()) {
               this.waitlists[i].future = true;
-              this.waitlists[i].estimated_time = (waitlist.appxWaitingTime || waitlist.appxWaitingTime === 0) ? this.getAppxTime(waitlist) : null;
+              this.waitlists[i].estimated_time = retval.time;
+              this.waitlists[i].estimated_caption = retval.caption;
+              this.waitlists[i].estimated_date = retval.date;
+              this.waitlists[i].estimated_date_type = retval.date_type;
+              this.waitlists[i].estimated_autocounter = retval.autoreq;
             } else {
-              this.waitlists[i].estimated_time = (waitlist.appxWaitingTime) ? this.getAppxTime(waitlist) : null;
+              this.waitlists[i].estimated_time = retval.time;
+              this.waitlists[i].estimated_caption = retval.caption;
+              this.waitlists[i].estimated_date = retval.date;
+              this.waitlists[i].estimated_date_type = retval.date_type;
+              this.waitlists[i].estimated_autocounter = retval.autoreq;
+              this.waitlists[i].estimated_timeinmins = retval.time_inmins;
             }
             i++;
         }
@@ -137,6 +168,69 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.loadcomplete.waitlist = true;
       }
       );
+  }
+
+  getAppxTime(waitlist) {
+    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime};
+    // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
+    // console.log('inside', waitlist.hasOwnProperty('serviceTime'));
+    console.log(JSON.stringify(waitlist));
+    if (waitlist.hasOwnProperty('serviceTime')) {
+      alert("hir")
+      appx_ret.caption = this.checkinCaption; // 'Check-In Time';
+      // appx_ret.date = waitlist.date;
+      appx_ret.time = waitlist.serviceTime;
+
+      const waitlist_date = new Date(waitlist.date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      waitlist_date.setHours(0, 0, 0, 0);
+      if (today.valueOf() < waitlist_date.valueOf()) {
+        appx_ret.date = waitlist.date;
+        appx_ret.date_type = 'date';
+      } else {
+        appx_ret.date = 'Today';
+        appx_ret.date_type = 'string';
+      }
+
+    } else {
+      if (waitlist.appxWaitingTime === 0) {
+        appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
+        appx_ret.time = 'Now';
+      } else if (waitlist.appxWaitingTime !== 0) {
+        appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
+        appx_ret.date = '';
+        console.log("here")
+        appx_ret.time = this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+        appx_ret.autoreq = true;
+      }
+    }
+    return appx_ret;
+    /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
+      return 'Now';
+    } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
+      return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+
+    }  else {
+      const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
+      return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
+    }*/
+  }
+
+  AMHourto24(date, time12) {
+    const time = time12;
+    let hours = Number(time.match(/^(\d+)/)[1]);
+    const minutes = Number(time.match(/:(\d+)/)[1]);
+    const AMPM = time.match(/\s(.*)$/)[1];
+    if (AMPM === 'PM' && hours < 12) { hours = hours + 12; }
+    if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
+    const sHours = hours;
+    const sMinutes = minutes;
+    // alert(sHours + ':' + sMinutes);
+    const mom_date = moment(date);
+    mom_date.set('hour', sHours);
+    mom_date.set('minute', sMinutes);
+    return mom_date;
   }
 
   getHistroy() {
@@ -159,9 +253,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.consumer_services.getHistoryWaitlistCount()
     .subscribe(
     data => {
-      const count: any = data;
+      const counts: any = data;
       this.pagination.totalCnt = data;
-      if (count > 0) {
+      if (counts > 0) {
           this.getHistroy();
       } else {
         this.loadcomplete.waitlist = true;
@@ -255,7 +349,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         const ctoday = cday + '/' + cmon + '/' + yyyy;
         let locindx;
-
+        const check_dtoday = new Date(dtoday);
+        let cdate = new Date();
         for (let i = 0; i < waitlisttime_arr.length; i++) {
           locindx = provids_locid[i].locindx;
           // console.log('locindx', locindx);
@@ -266,23 +361,39 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.fav_providers[index]['locations'][locindx]['opennow'] = waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
             this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
             this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
-            if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+            cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+            // if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            if (cdate.getTime() !== check_dtoday.getTime()) {
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 1;
-              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                  + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-              } else {
+              // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+              //     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              // } else {
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+              //   + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              // }
+              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
                 + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              } else {
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               }
             } else {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Estimated Waiting Time';
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
-              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-              } else {
+              // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              // } else {
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              // }
+              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              } else {
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               }
             }
           } else {
@@ -351,35 +462,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  getAppxTime(waitlist) {
-    // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
-      if (!waitlist.future && waitlist.appxWaitingTime === 0) {
-        return 'Now';
-      } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
-        return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
-
-      }  else {
-        const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
-        return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
-      }
-  }
-
-  AMHourto24(date, time12) {
-    const time = time12;
-    let hours = Number(time.match(/^(\d+)/)[1]);
-    const minutes = Number(time.match(/:(\d+)/)[1]);
-    const AMPM = time.match(/\s(.*)$/)[1];
-    if (AMPM === 'PM' && hours < 12) { hours = hours + 12; }
-    if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
-    const sHours = hours;
-    const sMinutes = minutes;
-    // alert(sHours + ':' + sMinutes);
-    const mom_date = moment(date);
-    mom_date.set('hour', sHours);
-    mom_date.set('minute', sMinutes);
-    return mom_date;
-  }
-
   goWaitlistDetail(waitlist) {
     this.router.navigate(['consumer/waitlist', waitlist.provider.id, waitlist.ynwUuid]);
   }
@@ -391,6 +473,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(NotificationListBoxComponent, {
       width: '50%',
+      disableClose: true,
       data: {
         'messages' : data
       }
@@ -435,6 +518,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
       autoFocus: true,
       data: pass_ob
     });
@@ -484,6 +568,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
        panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+       disableClose: true,
       data: {
         type : origin,
         is_provider : false,
@@ -592,11 +677,30 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   reloadAPIs() {
+   // console.log('reload api' + this.getCurtime());
     this.getWaitlist();
     this.reload_history_api = {status : true};
   }
 
-  getWaitlistBill(waitlist) {
+  recheckwaitlistCounters() {
+   // console.log('reload counter' + this.getCurtime());
+    for (let i = 0; i < this.waitlists.length; i++) {
+      if (this.waitlists[i].estimated_autocounter) {
+       // console.log('time', this.waitlists[i].estimated_time);
+        if (this.waitlists[i].estimated_timeinmins > 0) {
+         // console.log('iamhere');
+          this.waitlists[i].estimated_timeinmins = (this.waitlists[i].estimated_timeinmins - 1);
+          if (this.waitlists[i].estimated_timeinmins === 0) {
+            this.waitlists[i].estimated_time = 'Now';
+          } else {
+            this.waitlists[i].estimated_time = this.shared_functions.convertMinutesToHourMinute(this.waitlists[i].estimated_timeinmins);
+          }
+        }
+      }
+    }
+  }
+
+ getWaitlistBill(waitlist) {
 
     this.consumer_services.getWaitlistBill(waitlist.ynwUuid)
     .subscribe(
@@ -648,15 +752,23 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
       autoFocus: true,
       data: waitlist
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
+        this.getWaitlist();
       }
     });
+  }
+  isRated(wait) {
+    if (wait.hasOwnProperty('rating') ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   toogleDetail(provider, i) {
@@ -679,6 +791,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddManagePrivacyComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
       data: {'provider': provider}
     });
 
@@ -688,6 +801,23 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+  showPersonsAhead(waitlist) {
+    let retstat = false;
+    if (waitlist.hasOwnProperty('personsAhead')) {
+      switch (waitlist.waitlistStatus) {
+        case 'cancelled':
+        case 'started':
+        case 'done':
+          retstat =  false;
+        break;
+        default:
+          retstat =  true;
+      }
+    } else {
+      retstat = false;
+    }
+    return retstat;
   }
 
 }

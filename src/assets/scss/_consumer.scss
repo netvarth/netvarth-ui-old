@@ -34,6 +34,12 @@ header {
                     @include respond-to(ynw-768-991) {
                         padding-top: 0;
                     }
+                    @include respond-to(ynw-992-1199) {
+                        align-self: flex-end;
+                    }
+                    @include respond-to(ynw-1200) {
+                        align-self: flex-end;
+                    }
                 }
             }
 
@@ -62,7 +68,7 @@ header {
                     }
 
                     .isprovidertop {
-                        margin-top: 5px;
+                        margin-top: 8px;
                     }
                     
                     .topsignouter {
@@ -136,6 +142,8 @@ header {
                             font-weight: 500;
                             
                             .lgin {
+                                color: $linkblack;
+                                
                                 button {
                                     width: 24px;
                                     height: 24px;
@@ -264,6 +272,8 @@ header {
                                         @include font-regular;
                                         font-weight: 500;
                                         color: $cc-black;
+                                        background: $cc-formbg;
+                                        border: 1px solid transparent;
 
                                         @include respond-to(ynw-767) {
                                             height: $input-h;
@@ -302,6 +312,7 @@ header {
                             left: 15px;
                             top: 50%;
                             margin-top: -12px;
+                            z-index: 97;
                         }
                     }
 
@@ -329,12 +340,12 @@ header {
                                     border-top: none;
 
                                     .mat-select {
-                                        box-shadow: none !important;
-                                        border: none !important;
+                                        box-shadow: none;
+                                        border: none;
                                         height: 50px;
                                         background: none;
                                         border-radius: 0px;
-                                        display: flex;
+                                        /*display: flex;*/
                                         align-items: center;
                                         @include font-regular;
                                         font-weight: 500;
@@ -347,6 +358,14 @@ header {
                                         }
                                         @include respond-to(ynw-768-991) {
                                             height: $input-h;
+                                        }
+                                        
+                                        &:focus {
+                                            .mat-select-trigger {
+                                                .mat-select-value, .mat-select-arrow {
+                                                    color: $linkblue;
+                                                }
+                                            }
                                         }
 
                                         .mat-select-arrow {
@@ -401,6 +420,9 @@ header {
                                     font-weight: 500;
                                     font-size: 0.875rem;
                                     color: $cc-black;
+                                    background: $cc-formbg;
+                                    border: 1px solid transparent;
+                                    margin-top: 0px;
 
                                     @include respond-to(ynw-767) {
                                         height: $input-h;
@@ -507,11 +529,29 @@ header {
                                     left: 0;
                                 }
                             }
+                            
+                            &:hover{                                
+                                @include respond-to(ynw-767) {
+                                    background: darken($cc-red, 20%);
+                                    
+                                    &:before {
+                                        display: none;
+                                    }
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    background: darken($cc-red, 20%);
+                                    
+                                    &:before {
+                                        display: none;
+                                    }
+                                }
+                            }
                         }
 
                         .cs-btn {
                             &:before {
-                                background: lighten($cc-red, 10%);
+                                /*background: lighten($cc-red, 10%);*/
+                                @include radial-gradient(lighten($cc-red, 20%),rgba(255,255,255,0));
                             }
                         }
 
@@ -749,25 +789,62 @@ header {
                                         display: block;
                                         @include font-regular;
                                         
-                                        .mat-select {
-                                            @include font-regular;
-                                            font-weight: 500;
+                                        .mat-input-wrapper {
+                                            .mat-input-flex {
+                                                .mat-input-infix {
+                                                    padding: 0px;
+                                                    
+                                                    .mat-select {
+                                                        @include font-regular;
+                                                        font-weight: 500;
+                                                    }
+                                                }
+                                            }
+                                            .mat-input-underline {
+                                                display: none;
+                                            }
                                         }
                                     }
                                     
                                     app-rating-star {
-                                        .ynwstar-rating {
-                                            float: none;
-                                            width: 135px;
-                                        }
-                                        span {
-                                            text-transform: uppercase;
-                                            font-weight: 600;
-                                            font-size: 0.625rem;
-                                            color: $linkblue;
-                                            display: inline;
-                                            cursor: pointer;
-                                            position: relative;
+                                        .rating-outer {
+                                            display: flex;
+                                            align-items: center;
+                                            
+                                            .ynwstar-rating {
+                                                float: none;
+                                                width: 135px;
+                                                
+                                                label {
+                                                    margin-bottom: 0;
+                                                    cursor: pointer;
+                                                    
+                                                    &:before {
+                                                        font-size: 1rem;
+                                                    }
+                                                }
+                                            }
+                                            .moreopt-clear {
+                                                margin-left: 15px;
+                                                cursor: pointer;
+                                                position: relative;
+                                                width: 20px;
+                                                height: 20px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                font-size: .65rem;
+                                                background: lighten($cc-red, 20%);
+                                                color: $cc-red;
+                                                @include border-radius(50px);
+                                                
+                                                &:before {
+                                                    @include font-custom;
+                                                    content: "";
+                                                    position: absolute;
+                                                    content: "\69";
+                                                }
+                                            }
                                         }
                                     }
                                     
@@ -919,13 +996,13 @@ header {
                                     .mat-input-flex {
                                         .mat-input-infix {
                                             padding: 0;
-                                            border: none;
-                                            padding: 10px;
                                             border: 1px solid $cc-mediumgray;
 
                                             .mat-select {
                                                 @include font-medium;
-
+                                                border: none;
+                                                background: transparent;
+                                                
                                                 .mat-select-value {
                                                     overflow: unset;
                                                 }
@@ -959,6 +1036,7 @@ header {
                 font-weight: 500;
                 @include box-shadow(0, 20px, 30px, rgba(0,0,0,.03) !important);
                 margin-bottom: 30px;
+                @include transition(all 400ms);
                 
                 .top-sect {
                     display: flex;
@@ -1121,10 +1199,29 @@ header {
                             
                             .ynw-verified {
                                 background: url(../images/ynw-verified.svg) no-repeat scroll 0 0;
-                                width: 65px;
-                                height: 20px;
+                                width: 90px;
+                                height: 30px;
                                 display: none;
                                 margin-left: -3px;
+                                position: relative;
+                                
+                                .level {
+                                    position: absolute;
+                                    top: 5px;
+                                    right: -70px;
+                                    font-size: .75rem;
+                                    font-weight: 600;
+                                    
+                                    &.basic {
+                                        color: $basic;
+                                    }
+                                    &.basicplus {
+                                        color: $basicplus;
+                                    }
+                                    &.premium {
+                                        color: $premium;
+                                    }
+                                }
                                 
                                 @include respond-to(ynw-767) {
                                     display: block;
@@ -1140,6 +1237,7 @@ header {
                                 margin-bottom: 5px;
                                 @include transition(all 300ms);
                                 cursor: pointer;
+                                display: table;
                                 
                                 &:hover {
                                     color: $linkblue;
@@ -1258,8 +1356,12 @@ header {
                                             font-size: .75rem;
                                             padding: 0 5px;
                                             @include border-radius(20px);
-                                            cursor: default;
+                                            cursor: pointer;
                                             margin-bottom: 5px;
+                                            
+                                            &.viewall {
+                                                border: none;
+                                            }
                                         }
                                     }
                                 }
@@ -1282,7 +1384,28 @@ header {
                             width: 110px;
                             height: 32px;
                             margin-left: auto;
-                            margin-bottom: 15px;
+                            margin-bottom: 25px;
+                            position: relative;
+                            
+                            .level {
+                                position: absolute;
+                                width: 100%;
+                                left: 0;
+                                bottom: -12px;
+                                font-size: .75rem;
+                                padding-right: 5px;
+                                font-weight: 600;
+                                
+                                &.basic {
+                                    color: $basic;
+                                }
+                                &.basicplus {
+                                    color: $basicplus;
+                                }
+                                &.premium {
+                                    color: $premium;
+                                }
+                            }
                             
                             @include respond-to(ynw-767) {
                                 display: none;
@@ -1548,7 +1671,8 @@ header {
                                 display: table;
                             }
                             &.notallowed {
-                                opacity: .8;
+                                opacity: .6;
+                                font-style: italic;
                             }
                         }
                     }
@@ -1713,9 +1837,7 @@ header {
                                         
                                         ul {
                                             li {
-                                                &:last-child {
-                                                    border: none;
-                                                    
+                                                &:last-child {                                                    
                                                     span {
                                                         color: $linkblue;
                                                         display: flex;
@@ -1924,6 +2046,7 @@ header {
                                     font-weight: 500;
                                     color: $linkblue;
                                     padding: 20px;
+                                    background: lighten($cc-lightblue, 10%);
                                     
                                     .mat-expansion-indicator {
                                         &:after {
@@ -1941,14 +2064,24 @@ header {
                                     color: $cc-gray;
                                     
                                     .mat-expansion-panel-body {
-                                        padding: 0 20px 20px;
+                                        padding: 15px 20px 20px;
                                             
                                         .question-main-outer {
+                                            display: flex;
+                                            flex-wrap: wrap;
+                                            
                                             .question-outer {
-                                                margin-bottom: 15px;
+                                                padding: 10px;
+                                                flex-basis: 25%;
                                                 
-                                                &:last-child {
-                                                    margin: 0;
+                                                @include respond-to(ynw-767) {
+                                                    flex-basis: 50%;
+                                                }
+                                                @include respond-to(ynw-575) {
+                                                    flex-basis: 100%;
+                                                }
+                                                @include respond-to(ynw-768-991) {
+                                                    flex-basis: 33.33%;
                                                 }
                                             }
                                         }
@@ -1959,6 +2092,10 @@ header {
                             }
                         }
                     }
+                }
+                
+                &:hover {
+                    @include box-shadow(0, 20px, 30px, rgba(0,0,0,.1) !important);
                 }
                 
             }
@@ -2006,11 +2143,10 @@ header {
                                 position: relative;
                                 padding-left: 20px;
                                 color: $green;
+                                cursor: pointer;
 
                                 .count {
-                                    font-weight: 700;
-                                    cursor: pointer;
-                                    
+                                    font-weight: 700;      
                                 }
                                 
                                 &:before {
@@ -2643,9 +2779,32 @@ header {
                     
                 }
             }
+            
             &.hideme {
                 @include respond-to(ynw-767) {
                     display: none;
+                }
+            }
+            
+            &.prov-detail-outer {
+                .srlst {
+                    
+                    .top-sect {
+                        .tp-l {
+                            .tp2 {
+                                h3 {
+                                    cursor: default;
+                                    
+                                    &:hover {
+                                        color: $linkblack;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &:hover {
+                        @include box-shadow(0, 20px, 30px, rgba(0,0,0,.03) !important);
+                    }
                 }
             }
         }
@@ -2812,7 +2971,7 @@ header {
                             }
 
                             .icon-location {
-                                color: $linkblue;
+                                color: $cc-gray;
                                 font-weight: 500;
                                 padding-left: 16px;
                                 @include align-icon;
@@ -2847,6 +3006,7 @@ header {
                     background: $white;
                     @include border-bottom-radius(5px);
                     @include box-shadow(0px, 10px, 20px, rgba(0,0,0,.03));
+                    @include transition(all 400ms);
                     
                     @include respond-to(ynw-575) {
                         flex-direction: column;
@@ -2894,6 +3054,16 @@ header {
                                     &:after {
                                         display: none;
                                     }
+                                }
+                            }
+                            .token, .persons {
+                                padding-left: 10px;
+                                position: relative;
+                                
+                                &:before {
+                                    position: absolute;
+                                    content: ":";
+                                    left: 0;
                                 }
                             }
                             
@@ -2980,6 +3150,12 @@ header {
                                             content: "\3b";
                                         }
                                         &:hover {
+                                            &:before {
+                                                content: "\3c";
+                                                color: $cc-warning;
+                                            }
+                                        }
+                                        &.rated {
                                             &:before {
                                                 content: "\3c";
                                                 color: $cc-warning;
@@ -3112,6 +3288,12 @@ header {
                                 }
                             }
                         }
+                    }
+                }
+                
+                &:hover {
+                    .details {
+                        @include box-shadow(0px, 10px, 20px, rgba(0,0,0,.1));
                     }
                 }
             }
@@ -3513,6 +3695,9 @@ header {
                     thead {
                         tr {
                             th {
+                                &.th1 {
+                                    width: 20%;
+                                }
                                 &.th4 {
                                     /*border-right: 1px solid $cc-body;*/
                                 }
@@ -3522,6 +3707,11 @@ header {
                     tbody {
                         tr {
                             td {
+                                &.td1 {
+                                    width: 20%;
+                                    color: $linkblue;
+                                    cursor: pointer;
+                                }
                                 &.td4 {
                                     border-right: 1px solid $cc-body;
                                     
@@ -3577,11 +3767,11 @@ header {
                                 }
                                 &.td5 {
                                     display: flex;
-                                    justify-content: flex-end;
+                                    justify-content: flex-start;
                                     
                                     .controls {
                                         margin: 0;
-                                        margin-left: auto;
+                                        /*margin-left: auto;*/
                                         padding: 0;
                                         display: flex;
                                         flex-wrap: wrap;
@@ -3647,7 +3837,7 @@ header {
                                                     &:before {
                                                         content: "\3b";
                                                     }
-                                                    &:hover {
+                                                    &.rated {
                                                         &:before {
                                                             content: "\3c";
                                                             color: $cc-warning;
@@ -3667,6 +3857,13 @@ header {
                                         @include respond-to(ynw-767) {
                                             display: none;
                                         }
+                                    }
+                                }
+                            }
+                            &:hover {
+                                td {
+                                    &.td1 {
+                                        font-weight: 600;
                                     }
                                 }
                             }

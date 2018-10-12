@@ -181,16 +181,22 @@ export class HomeComponent implements OnInit {
         kwdomain: this.keywordholder.domain || '',
         kwsubdomain: this.keywordholder.subdomain || '',
         kwtyp: this.keywordholder.typ || '',
-        srt: 'title' + ' ' + 'asc',
+        // srt: 'title' + ' ' + 'asc',
+        srt: ' ',
         lq: '',
         cfilter: ''
        };
        this.routerobj.navigate(['/searchdetail', passparam]);
     }
     doSignup(origin?) {
+      const cClass = 'consumerpopupmainclass';
+      if (origin === 'provider') {
+        // cClass = 'commonpopupmainclass';
+      }
       const dialogRef = this.dialog.open(SignUpComponent, {
         width: '50%',
-        panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+        panelClass: ['signupmainclass', cClass],
+        disableClose: true,
         data: {
           is_provider : this.checkProvider(origin)
         }
@@ -202,9 +208,14 @@ export class HomeComponent implements OnInit {
     }
 
     doLogin(origin?) {
+      const cClass = 'consumerpopupmainclass';
+      if (origin === 'provider') {
+       // cClass = 'commonpopupmainclass';
+      }
       const dialogRef = this.dialog.open(LoginComponent, {
         width: '50%',
-        panelClass: ['loginmainclass', 'consumerpopupmainclass'],
+        panelClass: ['loginmainclass', cClass],
+        disableClose: true,
         data: {
           type : origin,
           is_provider : this.checkProvider(origin)

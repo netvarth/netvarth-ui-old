@@ -22,13 +22,16 @@ export class CheckInInnerComponent implements OnInit {
     provider_id;
     api_success = null;
     api_error = null;
+    partyapi_error = null;
     servicesjson: any = [];
     galleryjson: any = [];
     settingsjson: any = [];
     locationjson: any = [];
     terminologiesjson: any = [];
     queuejson: any = [];
+    businessjson: any = [];
     familymembers: any = [];
+    partysizejson: any = [];
     sel_loc;
     sel_ser;
     sel_ser_det: any = [];
@@ -45,11 +48,17 @@ export class CheckInInnerComponent implements OnInit {
     sel_queue_indx;
     sel_queue_det;
     showfuturediv;
+    multipleMembers_allowed = false;
+    partySize = false;
+    partySizeRequired = null;
+    maxPartySize = 1;
     revealphonenumber;
     today;
     minDate;
     maxDate;
     consumerNote;
+    enterd_partySize = 1;
+    holdenterd_partySize = 0;
     showCreateMember = false;
     sel_checkindate;
     hold_sel_checkindate;
@@ -61,6 +70,8 @@ export class CheckInInnerComponent implements OnInit {
     waitlist_for: any = [];
     holdwaitlist_for: any = [];
     paymentModes: any = [];
+    payModesExists = false;
+    payModesQueried = false;
     loggedinuser;
     maxsize;
     paytype = '';
@@ -77,6 +88,10 @@ export class CheckInInnerComponent implements OnInit {
     CweekDays = {0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat'};
     queueQryExecuted = false;
     todaydate;
+    estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+    nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
+    checkinCaption = Messages.CHECKIN_TIME_CAPTION;
+    ddate;
 
     @Input() data: any =  [];
     @Output() returntoParent = new EventEmitter<any>();
@@ -136,6 +151,8 @@ export class CheckInInnerComponent implements OnInit {
       this.todaydate = dtoday;
 
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+
+
       // console.log('custdata', this.customer_data, 'loggedinuser', this.loggedinuser, 'kiosk', this.fromKiosk);
       if (this.page_source === 'provider_checkin') {
           // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
@@ -179,15 +196,21 @@ export class CheckInInnerComponent implements OnInit {
         this.sel_checkindate = this.data.moreparams.sel_date;
 
       }
+      const ddd = new Date(this.sel_checkindate);
+      this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+
       this.hold_sel_checkindate = this.sel_checkindate;
+      // console.log('passed seldate', this.hold_sel_checkindate);
       this.getServicebyLocationId (this.sel_loc, this.sel_checkindate);
 
       // if ( this.page_source !== 'provider_checkin') {
       //   this.getPaymentModesofProvider(this.account_id);
       // }
-
+      const date1 = new Date(this.sel_checkindate);
+      const date2 = new Date(this.todaydate);
       // console.log('selcheckindate', this.sel_checkindate);
-      if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
         this.isFuturedate = true;
         // console.log('future', this.isFuturedate);
       }
@@ -201,9 +224,16 @@ export class CheckInInnerComponent implements OnInit {
         this.shared_services.getPaymentModesofProvider(provid)
           .subscribe (data => {
             this.paymentModes = data;
+            this.payModesQueried = true;
+            if (this.paymentModes.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
+              this.payModesExists = false;
+            } else {
+              this.payModesExists = true;
+            }
             // console.log ('paymodes', this.paymentModes);
           },
         error => {
+          this.payModesQueried = true;
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           // console.log ('error', error);
         });
@@ -277,6 +307,7 @@ export class CheckInInnerComponent implements OnInit {
                   .then(
                     res => {
                       this.s3url = res;
+                      this.getbusinessprofiledetails_json('businessProfile', true);
                       this.getbusinessprofiledetails_json('settings', true);
                       // console.log('terminologies ext', this.terminologiesjson);
                       if (!this.terminologiesjson) {
@@ -309,10 +340,10 @@ export class CheckInInnerComponent implements OnInit {
             case 'settings':
               this.settingsjson = res;
               this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-              this.maxsize = this.settingsjson.maxPartySize;
+              /*this.maxsize = this.settingsjson.maxPartySize;
               if (this.maxsize === undefined) {
                 this.maxsize = 1;
-              }
+              }*/
             break;
             case 'terminologies':
               this.terminologiesjson = res;
@@ -320,6 +351,10 @@ export class CheckInInnerComponent implements OnInit {
               this.provider_datastorage.set('terminologies', this.terminologiesjson);
               this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
               // console.log('term datastorage', this.sharedFunctionobj.getTerminologies());
+            break;
+            case 'businessProfile':
+              this.businessjson = res;
+              this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
             break;
           }
       },
@@ -357,7 +392,7 @@ export class CheckInInnerComponent implements OnInit {
        }
      }
       this.sel_ser_det = [];
-      if (serv.serviceDuration) {
+      // if (serv.serviceDuration) {
         this.sel_ser_det = {
             name: serv.name,
             duration: serv.serviceDuration,
@@ -373,7 +408,7 @@ export class CheckInInnerComponent implements OnInit {
               this.getPaymentModesofProvider(this.account_id);
             }
           }
-        }
+       // }
     }
 
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
@@ -518,10 +553,14 @@ export class CheckInInnerComponent implements OnInit {
     // } else
     if (this.step === 1) {
       if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin') {
-        // console.log('serv det', this.sel_ser_det);
-        if (this.paytype === '') {
+        /*if (this.paytype === '') {
           error = 'Please select the payment mode';
-        }
+        }*/
+        this.paytype = 'DC'; // deleberately giving this value as per request from Manikandan.
+      }
+      if (this.partySizeRequired) {
+        this.clearerrorParty();
+        error = this.validatorPartysize(this.enterd_partySize);
       }
       if (error === '') {
         this.saveCheckin();
@@ -547,6 +586,10 @@ export class CheckInInnerComponent implements OnInit {
         'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))/*,
         'revealPhone': this.revealphonenumber*/
     };
+    if (this.partySizeRequired) {
+      this.holdenterd_partySize = this.enterd_partySize;
+      post_Data['partySize'] = Number(this.holdenterd_partySize);
+    }
 
     if (this.page_source === 'provider_checkin') {
       post_Data['consumer'] =  {id : this.customer_data.id };
@@ -634,6 +677,11 @@ export class CheckInInnerComponent implements OnInit {
       case 3:
       this.main_heading = 'Family Members';
       this.showCreateMember = false;
+      this.addmemberobj.fname = '';
+      this.addmemberobj.lname = '';
+      this.addmemberobj.mobile = '';
+      this.addmemberobj.gender = '';
+      this.addmemberobj.dob =  '';
       break;
     }
     this.step = cstep;
@@ -750,12 +798,13 @@ export class CheckInInnerComponent implements OnInit {
     const namepattern =   new RegExp(projectConstants.VALIDATOR_CHARONLY);
     const phonepattern =   new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
     const phonecntpattern =   new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+    const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
 
-    if (!namepattern.test(this.addmemberobj.fname)) {
+    if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
       derror = 'Please enter a valid first name';
     }
 
-    if (derror === '' && !namepattern.test(this.addmemberobj.lname)) {
+    if (derror === '' && (!namepattern.test(this.addmemberobj.lname) || blankpattern.test(this.addmemberobj.lname))) {
       derror = 'Please enter a valid last name';
     }
 
@@ -830,34 +879,99 @@ export class CheckInInnerComponent implements OnInit {
     this.resetApi();
     const date = new Date(this.sel_checkindate);
     const newdate = new Date(date);
-
     newdate.setDate(newdate.getDate() + days);
-
     const dd = newdate.getDate();
     const mm = newdate.getMonth() + 1;
     const y = newdate.getFullYear();
 
     const ndate = y + '-' + mm + '-' + dd;
 
-    const strtDt = new Date(this.hold_sel_checkindate);
+    const strtDt = new Date(this.hold_sel_checkindate + ' 00:00:00');
     const nDt = new Date(ndate);
-    if (nDt >= strtDt ) {
+    // console.log('dates', strtDt, nDt, this.hold_sel_checkindate);
+    if (nDt.getTime() >= strtDt.getTime() ) {
       this.sel_checkindate =  ndate;
       this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
-    if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+   // console.log('date compare', this.sel_checkindate, this.todaydate);
+    const date1 = new Date(this.sel_checkindate);
+    const date2 = new Date(this.todaydate);
+ // console.log('date compare2', date1, date2);
+    // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
       this.isFuturedate = true;
+    } else {
+      this.isFuturedate = false;
     }
     // console.log('new date', this.hold_sel_checkindate, this.sel_checkindate);
+    const ddd = new Date(this.sel_checkindate);
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
   }
+  /*convertToDate(dt) {
+    const splt = dt.split('-');
+    const ndate = new Date(splt[2] + '/' + splt[1] + '/' + splt[0]);
+    return ndate;
+  }*/
   disableMinus() {
     const seldate = new Date(this.sel_checkindate);
     const strtDt  = new Date(this.hold_sel_checkindate);
     // console.log(strtDt, strtDt);
-    if (strtDt >= seldate ) {
+    if (strtDt.getTime() >= seldate.getTime() ) {
       return true;
     } else {
       return false;
     }
+  }
+  getPartysizeDetails(domain, subdomain) {
+    this.shared_services.getPartysizeDetails(domain, subdomain)
+      .subscribe (data => {
+        this.partysizejson = data;
+        this.partySize = false;
+        // console.log('partysize', this.partysizejson);
+        this.maxsize = 1;
+        if (this.partysizejson.partySize) {
+          this.partySize = true;
+          this.maxsize = (this.partysizejson.maxPartySize) ? this.partysizejson.maxPartySize : 1;
+        }
+
+        if (this.partySize && !this.partysizejson.partySizeForCalculation ) { // check whether partysize box is to be displayed to the user
+          // console.log('iamhere', this.partySize, this.partysizejson.partySizeForCalculation);
+          this.partySizeRequired = true;
+        }
+
+        if (this.partysizejson.partySizeForCalculation) { // check whether multiple members are allowed to be selected
+          this.multipleMembers_allowed = true;
+        }
+
+      },
+      error => {
+
+      });
+  }
+  checkPartySize(pVal) {
+    this.clearerrorParty();
+    const error = this.validatorPartysize(pVal);
+    if (error !== '') {
+      this.partyapi_error = error;
+    }
+  }
+  validatorPartysize(pVal) {
+    this.resetApi();
+    let errmsg = '';
+    const numbervalidator = projectConstants.VALIDATOR_NUMBERONLY;
+    const blankvalidator = projectConstants.VALIDATOR_BLANK;
+    this.enterd_partySize = pVal;
+    if (!numbervalidator.test(pVal)) {
+      errmsg  = 'Please enter a valid party size';
+    } else {
+      if (pVal > this.maxsize) {
+        errmsg = 'Sorry ... the maximum party size allowed is '  + this.maxsize;
+      }
+    }
+    return errmsg;
+  }
+
+  clearerrorParty() {
+    this.partyapi_error = '';
   }
 }

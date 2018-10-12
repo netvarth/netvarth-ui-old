@@ -472,7 +472,6 @@
 
                         input[type="text"], input[type="email"], input[type="password"], input[type="file"], textarea, .form-control {
                             background: $white;
-                            text-align: center;
                             padding: 15px;
                             height: auto;
                             font-size: 1.125rem;
@@ -605,28 +604,33 @@
                             padding-bottom: 15px;
                             display: flex;
                             align-items: center;
-
-                            .selected-date {
+                            
+                            .date-body {
                                 display: flex;
                                 align-items: center;
+                                
+                                .selected-date {
+                                    display: flex;
+                                    align-items: center;
 
-                                .icon-add, .icon-minus {
-                                    display: inline-block;
-                                    vertical-align: bottom;
-                                    font-size: 1.5rem;
-                                    color: $linkblue;
-                                    cursor: pointer;
+                                    .icon-add, .icon-minus {
+                                        display: inline-block;
+                                        vertical-align: bottom;
+                                        font-size: 1.5rem;
+                                        color: $linkblue;
+                                        cursor: pointer;
 
-                                    &:before {
-                                        width: 50px;
-                                        height: 50px;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                    }
-                                    &.disable {
-                                        pointer-events: none;
-                                        color: $cc-mediumgray;
+                                        &:before {
+                                            width: 50px;
+                                            height: 50px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                        }
+                                        &.disable {
+                                            pointer-events: none;
+                                            color: $cc-mediumgray;
+                                        }
                                     }
                                 }
                             }
@@ -635,7 +639,8 @@
                                 margin-bottom: 0;
 
                                 &.dt {
-                                    width: 30px;
+                                    width: 40px;
+                                    height: 40px;
 
                                     .pickerouter {
                                         display: flex;
@@ -660,6 +665,18 @@
                                                 }
                                             }
                                         }
+                                    }
+                                }
+                                &.party-size {
+                                    width: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    
+                                    .col-form-label {
+                                        margin: 0 15px 0 0;
+                                    }
+                                    .partysize-input {
+                                        width: 50px;
                                     }
                                 }
                             }
@@ -825,36 +842,41 @@
                                     margin-right: 10px;
                                     font-weight: 500;
                                 }
-
-                                .sel-queue {
-                                    color: $linkblack;
-                                    font-weight: 600;
-                                }
-
-                                .leftarrow, .rightarrow {
+                                
+                                .queue-body {
                                     display: flex;
                                     align-items: center;
-                                    justify-content: center;
-                                    width: 50px;
-                                    height: 50px;
-                                    
-                                    i {
+
+                                    .sel-queue {
+                                        color: $linkblack;
+                                        font-weight: 600;
+                                    }
+
+                                    .leftarrow, .rightarrow {
                                         display: flex;
-                                        width: 26px;
-                                        height: 26px;
                                         align-items: center;
                                         justify-content: center;
-                                        border: 2px solid $linkblue;
-                                        @include border-radius(50px);
-                                        color: $linkblue;
-                                        cursor: pointer;
-                                        font-weight: 600;
+                                        width: 50px;
+                                        height: 50px;
 
-                                        &.disable {
-                                            pointer-events: none;
-                                            color: $cc-mediumgray;
-                                            border-color: $cc-mediumgray;
-                                            cursor: default;
+                                        i {
+                                            display: flex;
+                                            width: 26px;
+                                            height: 26px;
+                                            align-items: center;
+                                            justify-content: center;
+                                            border: 2px solid $linkblue;
+                                            @include border-radius(50px);
+                                            color: $linkblue;
+                                            cursor: pointer;
+                                            font-weight: 600;
+
+                                            &.disable {
+                                                pointer-events: none;
+                                                color: $cc-mediumgray;
+                                                border-color: $cc-mediumgray;
+                                                cursor: default;
+                                            }
                                         }
                                     }
                                 }
@@ -1065,7 +1087,7 @@
 
                                     .mat-input-element {
                                         padding: 10px;
-                                        background: $cc-formbg;
+                                        background: $cc-inputbg;
                                         height: 40px;
 
                                         &:focus {
@@ -1077,10 +1099,10 @@
                                     .mat-select {
                                         padding: 15px;
                                         height: 50px;
-                                        background: $cc-formbg;
+                                        background: $cc-inputbg;
                                         @include font-medium;
-                                        display: flex;
-                                        align-items: center;
+                                        /*display: flex;
+                                        align-items: center;*/
 
                                         .mat-select-arrow {
                                             color: $cc-black;
@@ -1213,82 +1235,89 @@
                     padding: 0;
                     
                     .maindate {
-                        margin-bottom: 20px;
+                        margin-bottom: 10px;
                         font-weight: 600;
                     }
                     
-                    .table {
-                        border: none;
-                        margin-bottom: 0;
+                    .table-subouter {
+                        /*height: 50vh;*/
+                        overflow: auto;
                         
-                        tbody{
-                            tr {
-                                display: flex;
-                                flex-direction: column;
-                                margin-bottom: .75rem;
-                                background: rgba(0, 0, 0, 0.03);
+                        .table {
+                            border: none;
+                            margin-bottom: 0;
 
-                                td {
-                                    font-size: 1rem;
-                                    border: none;
+                            tbody{
+                                tr {
+                                    display: flex;
+                                    flex-direction: column;
+                                    margin-bottom: .75rem;
+                                    background: rgba(0, 0, 0, 0.03);
 
-                                    .kioskservicename {
-                                        font-weight: 600;
-                                        margin-bottom: 10px;
-                                    }
-                                    .kiosknameouter, .kioskstatuouter, .kioskwaiting {
-                                        font-weight: 500;
-                                        display: flex;
-                                        margin-bottom: 5px;
+                                    td {
+                                        font-size: .875rem;
+                                        border: none;
 
-                                        .kiosknamecaption, .kioskstatuscaption {
-                                            margin-right: 10px;
-                                        }
-                                    }
-                                    .kioskstatuouter{
-                                        .arrived-class, .started-class, .checkedin-class, .done-class, .cancelled-class {    
-                                            color: $arrived;
-                                            padding: 0;
+                                        .kioskservicename {
                                             font-weight: 600;
+                                            margin-bottom: 5px;
                                         }
-                                        .started-class {
-                                            color: $start;
+                                        .kiosknameouter, .kioskstatuouter, .kioskwaiting {
+                                            font-weight: 500;
+                                            display: flex;
+                                            margin-bottom: 5px;
+
+                                            .kiosknamecaption, .kioskstatuscaption {
+                                                margin-right: 10px;
+                                            }
                                         }
-                                        .checkedin-class {
-                                            color: $checkedin;
+                                        .kioskstatuouter{
+                                            margin-bottom: 0;
+                                            .arrived-class, .started-class, .checkedin-class, .done-class, .cancelled-class {    
+                                                color: $arrived;
+                                                padding: 0;
+                                                font-weight: 600;
+                                            }
+                                            .started-class {
+                                                color: $start;
+                                            }
+                                            .checkedin-class {
+                                                color: $checkedin;
+                                            }
+                                            .done-class {
+                                                color: $done;
+                                            }
+                                            .cancelled-class {
+                                                color: $cc-red;
+                                            }
                                         }
-                                        .done-class {
-                                            color: $done;
+                                        .kioskwaiting {
+                                            margin-bottom: 0px;
+
+                                            .waitingtime {
+                                                color: $green;
+                                                margin-left: 5px;
+                                                font-weight: 600;
+                                            }
                                         }
-                                        .cancelled-class {
-                                            color: $cc-red;
+                                        &:nth-child(2) {
+                                            padding-bottom: 1.5rem; 
+                                            .bt1 {
+                                                width: 100%;
+                                            }
                                         }
                                     }
-                                    .kioskwaiting {
-                                        margin-bottom: 0px;
-                                        
-                                        .waitingtime {
-                                            color: $green;
-                                            margin-left: 5px;
-                                            font-weight: 600;
-                                        }
+
+                                    &:last-child {
+                                        border: none;
+                                        margin-bottom: 0;
                                     }
-                                    &:nth-child(2) {
-                                        padding-bottom: 1.5rem; 
-                                        .bt1 {
-                                            width: 100%;
-                                        }
-                                    }
-                                }
-                                
-                                &:last-child {
-                                    border: none;
-                                    margin-bottom: 0;
                                 }
                             }
+
                         }
-                        
                     }
+                    
                     
                 }
             }

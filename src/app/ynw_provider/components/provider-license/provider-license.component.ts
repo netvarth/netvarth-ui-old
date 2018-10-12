@@ -43,10 +43,12 @@ export class ProviderLicenseComponent implements OnInit {
     license_message = '';
     unpaid_invoice_show = 0;
     dateFormat =  projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-
+    tooltipcls = projectConstants.TOOLTIP_CLS;
     reload_adword_api =  {status : true};
     type = null;
     upgradablepackages = [];
+    addonTooltip = '';
+    breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'license'};
 
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
@@ -64,6 +66,7 @@ export class ProviderLicenseComponent implements OnInit {
       }
 
     ngOnInit() {
+      this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
       this.getLicenseDetails();
       this.getLicenseUsage();
       this.getInvoiceList();
@@ -120,6 +123,7 @@ export class ProviderLicenseComponent implements OnInit {
         const dialogRef = this.dialog.open(UpgradeLicenseComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
+          disableClose: true,
           data: {
             type : 'upgrade'
           }
@@ -129,7 +133,19 @@ export class ProviderLicenseComponent implements OnInit {
           if (result === 'reloadlist') {
             this.getLicenseDetails('update');
           }
+          this.goBacktoPrev();
         });
+    }
+
+    goBacktoPrev() {
+      const retcheck = this.sharedfunctionObj.getitemfromLocalStorage('lic_ret');
+      if (retcheck !== undefined && retcheck !== null) {
+        setTimeout(() => {
+          this.sharedfunctionObj.removeitemfromLocalStorage('lic_ret');
+            const retcheckarr = retcheck.split('/');
+            this.router.navigate(retcheckarr);
+          }, 100);
+      }
     }
 
     showadd_addons() {
@@ -139,6 +155,7 @@ export class ProviderLicenseComponent implements OnInit {
           type : 'addons'
         },
         panelClass: ['commonpopupmainclass'],
+        disableClose: true
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -183,6 +200,7 @@ export class ProviderLicenseComponent implements OnInit {
       data: {
       },
       panelClass: ['commonpopupmainclass'],
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -209,6 +227,7 @@ export class ProviderLicenseComponent implements OnInit {
         metrics : this.metrics
       },
       panelClass: ['commonpopupmainclass'],
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -323,6 +342,7 @@ export class ProviderLicenseComponent implements OnInit {
         source: 'license-home'
       },
       panelClass: ['commonpopupmainclass'],
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -335,6 +355,7 @@ export class ProviderLicenseComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : 'Are you sure you wanted to change the subscription ?'
       }

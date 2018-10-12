@@ -89,6 +89,10 @@ export class AddProviderItemImageComponent implements OnInit {
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
+        }, error => {
+              this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+              this.upload_button_caption = 'Upload';
+              this.uploading = false;
         });
   }
   resetApiErrors () {

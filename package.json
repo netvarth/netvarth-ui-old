@@ -37,6 +37,7 @@
     "ng2-ckeditor": "^1.1.9",
     "ng2-slim-loading-bar": "^4.0.0",
     "ng4-click-outside": "^1.0.1",
+    "ngx-scrollbar": "^2.2.0",
     "nl2br-pipe": "^1.1.0",
     "rxjs": "^5.5.6",
     "underscore": "^1.8.3",
@@ -60,7 +61,7 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^1.0.0",
-    "protractor": "~5.3.0",
+    "protractor": "^5.4.1",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "^2.6.2"

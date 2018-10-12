@@ -88,4 +88,14 @@ export class AddProviderCustomerComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
+  onFieldBlur(key) {
+    this.amForm.get(key).setValue(this.toCamelCase(this.amForm.get(key).value));
+  }
+  toCamelCase(word) {
+    if (word) {
+      return this.shared_functions.toCamelCase(word);
+    } else {
+      return word;
+    }
+  }
 }

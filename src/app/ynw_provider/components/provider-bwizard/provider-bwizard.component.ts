@@ -24,6 +24,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   @ViewChild('bnameId') bnameIdref: ElementRef;
   amForm: FormGroup;
+  businessConfig: any = [];
   userdet: any = [];
   active_step: number;
   wizard_data_holder: any = [];
@@ -34,20 +35,23 @@ export class ProviderbWizardComponent implements OnInit {
   general_scheduleholder: any = [];
   general_schedule: any = [];
   schedule_alreadyexists_for_location = false;
-  ischange_schedule_clicked = false;
+  ischange_schedule_clicked = true;
   loading_active = true;
   search_status = 0;
+  search_active = false;
   coord_error = '';
   locname_error = '';
   gurl_error = '';
   error_Exists = false;
-
+  schedule_exists = false;
   customer_label = '';
   checkin_label = '';
+  multipeLocationAllowed = false;
 
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
+    public shared_services: SharedServices,
     public provider_services: ProviderServices,
     private dialog: MatDialog,
     private routerobj: Router,
@@ -71,7 +75,8 @@ export class ProviderbWizardComponent implements OnInit {
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     this.getUserdetails();
-    this.getBusinessProfile();
+    // this.getBusinessProfile();
+    this.getBusinessConfiguration();
     this.active_step = 0;
     localStorage.removeItem('new_provider');
   }
@@ -84,7 +89,7 @@ export class ProviderbWizardComponent implements OnInit {
     this.loading_active = true;
     this.resetErrors();
     if (changetostep === 2) {
-      this.ischange_schedule_clicked = false;
+     // this.ischange_schedule_clicked = false;
     } else if (changetostep === 4) {
       this.getSearchstatus();
     }
@@ -130,7 +135,7 @@ export class ProviderbWizardComponent implements OnInit {
               this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
               this.loading_active = false;
               // calling function which saves the business related details to show in the header
-              this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], '');
+              this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], data['serviceSubSector']['displayName'], '');
             },
             error => {
               this.loading_active = false;
@@ -368,6 +373,15 @@ export class ProviderbWizardComponent implements OnInit {
     this.provider_services.getBussinessProfile()
       .subscribe (data => {
         this.setBprofile_to_object(data);
+        const tbprof = data;
+        for (let i = 0; i < this.businessConfig.length ; i++) {
+          if (this.businessConfig[i].id === tbprof['serviceSector']['id']) {
+            if (this.businessConfig[i].multipleLocation) {
+              this.multipeLocationAllowed = true;
+            }
+          }
+        }
+
         this.loading_active = false;
       });
   }
@@ -422,7 +436,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
   handleCancelschedule(obj) {
     this.handlesSaveschedule(obj);
-    this.ischange_schedule_clicked = false;
+    // this.ischange_schedule_clicked = false;
   }
 
   getDay(num) {
@@ -433,6 +447,7 @@ export class ProviderbWizardComponent implements OnInit {
     const dialogRef = this.dialog.open(GoogleMapComponent, {
       width: '50%',
       panelClass: 'googlemainmappopup',
+      disableClose: true,
       data: {
         type : 'add',
         passloc: {'lat': this.wizard_data_holder['lat'], 'lon': this.wizard_data_holder['lon']}
@@ -449,9 +464,25 @@ export class ProviderbWizardComponent implements OnInit {
           this.wizard_data_holder['address'] = result['address'] || null;
          // this.wizard_data_holder['pincode'] = result['pincode'] || null;
           this.wizard_data_holder['mapurl'] = mapurl || null;
+          if (!this.wizard_data_holder['address']) {
+            // console.log('no address');
+            if (this.document.getElementById('locaddress')) {
+              this.document.getElementById('locaddress').focus();
+            }
+          }
         }
       }
     }
+    });
+  }
+  getBusinessConfiguration() {
+    this.shared_services.bussinessDomains()
+      .subscribe (data => {
+        this.businessConfig = data;
+        this.getBusinessProfile();
+      },
+    error => {
+
     });
   }
 
@@ -479,6 +510,11 @@ export class ProviderbWizardComponent implements OnInit {
             this.wizard_data_holder['searchstatus'] = 2;
             this.search_status = 2;
           }
+      }, error => {
+        if (status === 'ENABLE') {
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        }
+        this.search_status = 2;
       });
   }
 

@@ -6,7 +6,7 @@ import { FormControlService } from './form-control.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
+import { Messages } from '../../../shared/constants/project-messages';
 @Component({
   selector: 'app-question',
   templateUrl: './dynamic-form-question.component.html'
@@ -17,6 +17,7 @@ export class DynamicFormQuestionComponent implements OnInit {
   @Input() messages;
   @Input() showlabel = false;
 
+  placeholder = '';
   errors = [];
   constructor(private qcs: FormControlService,
     public fed_service: FormMessageDisplayService,
@@ -24,7 +25,13 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.errors = this.messages[this.question.key] || [];
-    console.log(this.question);
+   // console.log('key', this.question);
+    if (this.question['type'] !== 'url') {
+      this.placeholder = this.question.label;
+    } else {
+      this.placeholder = 'Eg:- http://www.jaldee.com';
+    }
+    // console.log(this.question);
    // console.log(this.form.controls);
     // if (this.question.controlType === 'datagrid') {
     //   if (this.checkGridValue()) {
@@ -35,7 +42,6 @@ export class DynamicFormQuestionComponent implements OnInit {
   get isValid() { return this.form.controls[this.question.key].valid; }
 
   checkGridValue() {
-    // console.log(this.question['columns']);
     if (this.question['columns'].length === 1) {
        const check_value = this.question['columns'][0].map((e) => {
          if (e.value) {
@@ -87,8 +93,9 @@ onFieldBlur(question) {
   if (question.type !== 'url' &&
   question.type !== 'number' &&
   question.type !== 'email' &&
+  question.type !== 'DataGrid' &&
   question.type !== 'tel' ) {
-    this.form.get(key).setValue(this.toCamelCase(this.form.get(key).value));
+    // this.form.get(key).setValue(this.toCamelCase(this.form.get(key).value));
   }
 }
 

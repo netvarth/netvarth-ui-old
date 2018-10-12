@@ -7,14 +7,14 @@
       <div class="row">
           <div class="card p0 w-dta customers">
               <div class="head">
-                <span class="cust_count">{{customer_label  | titlecase}}s who have {{checkedin_label}}: {{customer_count}}</span>
+                <span class="cust_count">{{customer_label  | titlecase}}s {{checkedin_label}}: {{customer_count}}</span>
               </div>
               <div class="dash-list">
 
                   <mat-accordion >
                     <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
                       <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                        <span (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                        <span (click)="toggleFilter()"  [matTooltipClass] = "tooltipcls" [matTooltip]="filtericonTooltip"><i class="icon-filter-one"></i></span>
                       </mat-expansion-panel-header>
 
                       <div class="form-group first_name">

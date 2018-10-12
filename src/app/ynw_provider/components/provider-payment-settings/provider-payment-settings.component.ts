@@ -42,12 +42,16 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     showError: any = [];
     errorExist = false;
     taxpercentage;
+    gstnumber;
     paytmverified = false;
     payuverified = false;
     tabid = 0;
     emailidVerified = false;
     profileQueryExecuted = false;
     ineditMode = false;
+    maxcnt100 = projectConstants.VALIDATOR_MAX100;
+    maxcnt10 = 10;
+    maxcnt11 = 11;
     breadcrumbs = [
         {
           title: 'Settings',
@@ -95,20 +99,31 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.payuverified = this.paySettings.payUVerified	 || false;
             });
             if (showmsg === 1) {
+                this.tabid = 0;
                 let showmsgs = '';
+                let panelclass = '';
+                let params;
+                const duration = projectConstants.TIMEOUT_DELAY_LARGE10;
                 if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified)) {
                     showmsgs = this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CONTACTADMIN');
+                    panelclass = 'snackbarnormal'; // 'snackbarerror';
+                    params = {'duration': duration, 'panelClass': panelclass};
                 } else {
                     showmsgs = this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_SUCC');
+                    panelclass = 'snackbarnormal';
+                    params = {'duration': duration, 'panelClass': panelclass};
                 }
-                this.shared_Functionsobj.openSnackBar (showmsgs);
+                console.log('params', params);
+                this.shared_Functionsobj.openSnackBar (showmsgs, params);
+                this.tabid = 1;
             }
     }
     getTaxpercentage() {
         this.provider_services.getTaxpercentage()
             .subscribe (data => {
                 this.taxDetails = data;
-                this.taxpercentage = this.taxDetails;
+                this.taxpercentage = this.taxDetails.taxPercentage;
+                this.gstnumber = this.taxDetails.gstNumber || '';
             },
         error => {
 
@@ -116,7 +131,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     showhidepaytype() {
         this.saveEnabled = true;
-        console.log('paystatus', this.paystatus);
+        // console.log('paystatus', this.paystatus);
         if (this.paystatus) {
             this.paystatus = false;
         } else {
@@ -158,7 +173,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         const numbercntpattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
-            if (!numberpattern.test(this.paytmmobile)) {
+            if (blankpattern.test(this.paytmmobile)) {
+                this.showError['paytmmobile'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BLANKNUM')};
+            } else if (!numberpattern.test(this.paytmmobile)) {
                 this.showError['paytmmobile'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ONLYNUM')};
             } else {
                 if (!numbercntpattern.test(this.paytmmobile)) {
@@ -167,10 +184,42 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             }
         }
     }
+    panCardBlur() {
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const alphanumericpattern = projectConstants.VALIDATOR_ALPHANUMERIC;
+        if (blankpattern.test(this.pannumber)) {
+            this.errorExist = true;
+            this.showError['pannumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PAN')};
+        } else if (!alphanumericpattern.test(this.pannumber)) {
+            this.errorExist = true;
+            this.showError['pannumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PANPHANUMERIC')};
+        } else if (this.pannumber.length > this.maxcnt10) {
+            this.errorExist = true;
+            this.showError['pannumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PANMAXLEN10')};
+        }
+    }
+    ifscBlur() {
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const charonly = projectConstants.VALIDATOR_CHARONLY;
+        const alphanumericpattern = projectConstants.VALIDATOR_ALPHANUMERIC;
+        if (blankpattern.test(this.bankifsc)) {
+            this.errorExist = true;
+            this.showError['bankifsc'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_IFSC')};
+        } else if (!alphanumericpattern.test(this.bankifsc)) {
+            this.errorExist = true;
+            this.showError['bankifsc'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_IFSCALPHANUMERIC')};
+        } else if (this.bankifsc.length > this.maxcnt11) {
+            this.errorExist = true;
+            this.showError['bankifsc'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_IFSCMAXLEN11')};
+        }
+    }
     panNameBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         const charonly = projectConstants.VALIDATOR_CHARONLY;
-        if (blankpattern.test(this.panname)) {
+        if (this.panname.length > this.maxcnt100) {
+            this.errorExist = true;
+            this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+        } else if (blankpattern.test(this.panname)) {
             this.errorExist = true;
             this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PANNAME')};
         } else  if (!charonly.test(this.panname)) {
@@ -181,7 +230,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     acholderNameBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         const charonly = projectConstants.VALIDATOR_CHARONLY;
-        if (blankpattern.test(this.bankacname)) {
+        if (this.bankacname.length > this.maxcnt100) {
+            this.errorExist = true;
+            this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+        } else if (blankpattern.test(this.bankacname)) {
             this.errorExist = true;
             this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACMNAME')};
         } else  if (!charonly.test(this.bankacname)) {
@@ -206,7 +258,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     bankNameBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         const charonly = projectConstants.VALIDATOR_CHARONLY;
-        if (blankpattern.test(this.bankname)) {
+        if (this.bankname.length > this.maxcnt100) {
+            this.errorExist = true;
+            this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+        } else if (blankpattern.test(this.bankname)) {
             this.errorExist = true;
             this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BANKNAME')};
         } else  if (!charonly.test(this.bankname)) {
@@ -217,7 +272,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     bankBranchBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         const charonly = projectConstants.VALIDATOR_CHARONLY;
-        if (blankpattern.test(this.bankbranch)) {
+        if (this.bankbranch.length > this.maxcnt100) {
+            this.errorExist = true;
+            this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+        } else if (blankpattern.test(this.bankbranch)) {
             this.errorExist = true;
             this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BRANCH')};
         } else  if (!charonly.test(this.bankbranch)) {
@@ -254,11 +312,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
 
         if (this.ccenabled === true) {
             postData.dcOrCcOrNb = true;
-            if (blankpattern.test(this.pannumber)) {
+
+            this.panCardBlur();
+            /*if (blankpattern.test(this.pannumber)) {
                 this.errorExist = true;
                 this.showError['pannumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PAN')};
-            }
-            if (blankpattern.test(this.bankacnumber)) {
+            }*/
+
+            this.bankAcnumberBlur();
+            /*if (blankpattern.test(this.bankacnumber)) {
                 this.errorExist = true;
                 this.showError['bankacnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACCNO')};
             } else {
@@ -266,43 +328,65 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     this.errorExist = true;
                     this.showError['bankacnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACCNO_NUMONLY')};
                 }
-            }
-            if (blankpattern.test(this.bankname)) {
+            }*/
+
+            this.bankNameBlur();
+            /*if (this.bankname.length > this.maxcnt100) {
+                this.errorExist = true;
+                this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+            } else if (blankpattern.test(this.bankname)) {
                 this.errorExist = true;
                 this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BANKNAME')};
             } else if (!charonly.test(this.bankname)) {
                 this.errorExist = true;
                 this.showError['bankname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
-            }
-            if (blankpattern.test(this.bankifsc)) {
+            }*/
+
+            this.ifscBlur();
+            /*if (blankpattern.test(this.bankifsc)) {
                 this.errorExist = true;
                 this.showError['bankifsc'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_IFSC')};
-            }
-            if (blankpattern.test(this.panname)) {
+            }*/
+
+            this.panNameBlur();
+
+            /*if (blankpattern.test(this.panname)) {
                 this.errorExist = true;
                 this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_PANNAME')};
+            } else if (this.panname.length > this.maxcnt100) {
+                this.errorExist = true;
+                this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
             } else if (!charonly.test(this.panname)) {
                 this.errorExist = true;
                 this.showError['panname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
-            }
-            if (blankpattern.test(this.bankacname)) {
+            }*/
+
+            this.acholderNameBlur();
+            /*if (this.bankacname.length > this.maxcnt100) {
+                this.errorExist = true;
+                this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100)};
+            } else if (blankpattern.test(this.bankacname)) {
                 this.errorExist = true;
                 this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACMNAME')};
             } else if (!charonly.test(this.bankacname)) {
                 this.errorExist = true;
                 this.showError['bankacname'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
-            }
-            if (blankpattern.test(this.bankbranch)) {
+            }*/
+
+            this.bankBranchBlur();
+            /*if (blankpattern.test(this.bankbranch)) {
                 this.errorExist = true;
                 this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BRANCH')};
             } else if (!charonly.test(this.bankbranch)) {
                 this.errorExist = true;
                 this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
-            }
+            }*/
+
             if (blankpattern.test(this.bankfiling)) {
                 this.errorExist = true;
                 this.showError['bankfiling'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_FILING')};
             }
+
             if (blankpattern.test(this.bankactype)) {
                 this.errorExist = true;
                 this.showError['bankactype'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_ACTYPE')};
@@ -336,8 +420,34 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             });
         }
     }
-    saveTaxSettings() {
+    taxfieldValidation(setmsgs?) {
         const floatpattern = projectConstants.VALIDATOR_FLOAT;
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        this.errorExist = false;
+        if (!floatpattern.test(this.taxpercentage)) {
+            this.errorExist = true;
+            if (setmsgs) {
+                this.showError['taxpercentage'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_TAXPER')};
+            }
+        } else if (this.taxpercentage < 0 || this.taxpercentage > 100) {
+            this.errorExist = true;
+            if (setmsgs) {
+                this.showError['taxpercentage'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_TAXPER')};
+            }
+        }
+        if (blankpattern.test(this.gstnumber)) {
+            this.errorExist = true;
+            if (setmsgs) {
+                this.showError['gstnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_GSTNUM')};
+            }
+        }
+        if (!setmsgs) {
+            return this.errorExist;
+        }
+    }
+    saveTaxSettings() {
+        /*const floatpattern = projectConstants.VALIDATOR_FLOAT;
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
         this.errorExist = false;
         if (!floatpattern.test(this.taxpercentage)) {
             this.errorExist = true;
@@ -346,9 +456,19 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.errorExist = true;
             this.showError['taxpercentage'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_TAXPER')};
         }
+        if (blankpattern.test(this.gstnumber)) {
+            this.errorExist = true;
+            this.showError['gstnumber'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_GSTNUM')};
+        }*/
+        this.taxfieldValidation(true);
         if (!this.errorExist) {
             this.savetaxEnabled = false;
-            this.provider_services.setTaxpercentage(this.taxpercentage)
+            const postData = {
+                    'taxPercentage': this.taxpercentage,
+                    'gstNumber': this.gstnumber || ''
+            };
+            // this.provider_services.setTaxpercentage(this.taxpercentage)
+            this.provider_services.setTaxpercentage(postData)
                 .subscribe (data => {
                     this.shared_Functionsobj.openSnackBar (this.shared_Functionsobj.getProjectMesssages('PAYSETTING_SAV_TAXPER'));
                     this.savetaxEnabled = true;
@@ -393,7 +513,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 'bankbranch' : {status: false, msg: ''},
                 'bankfiling' : {status: false, msg: ''},
                 'bankactype' : {status: false, msg: ''},
-                'taxpercentage' : {status: false, msg: ''}
+                'taxpercentage' : {status: false, msg: ''},
+                'gstnumber' : {status: false, msg: ''}
             };
         }
     }
@@ -416,4 +537,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             }, 50);
         }
     }
+    checkTaxbuttonDisabled() {
+        return true;
+    }
+    selectedIndexChange(val: number) {
+        this.tabid = val;
+      }
 }

@@ -107,6 +107,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   normal_specilization_show = 1;
   loadingParams: any = {'diameter' : 40, 'strokewidth': 15};
   showaddsocialmedia = false;
+  customernormal_label = this.sharedfunctionobj.getTerminologyTerm('customer');
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -155,6 +156,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   multipeLocationAllowed = false;
 
   customer_label = '';
+  maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
@@ -210,11 +212,20 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
     });
   }
+  confirm_searchStatus() {
+    if (this.normal_search_active) {
+      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
+    } else {
+      this.handle_searchstatus();
+    }
+  }
   handle_searchstatus() {
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe (data => {
           this.getPublicSearch();
+      }, error => {
+        this.sharedfunctionobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
       });
   }
 
@@ -294,7 +305,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-           || '', this.bProfile['serviceSector']['displayName'] || '', '');
+           || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '');
 
            const pdata = { 'ttype': 'updateuserdetails' };
            this.sharedfunctionobj.sendMessage(pdata);
@@ -573,6 +584,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: {
         type : 'edit',
@@ -604,6 +616,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
+          disableClose: true,
           autoFocus: false,
           data: {
             location : this.base_loc,
@@ -666,6 +679,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
+      disableClose: true,
       autoFocus: true,
       data: {
         // location : this.base_loc,
@@ -715,6 +729,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       width: '50%',
       // panelClass: 'privacysettingsmainclass',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
       autoFocus: true,
       data: {
         bprofile : this.bProfile,
@@ -740,6 +755,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       width: '50%',
       // panelClass: 'socialmediamainclass',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: {
         bprofile : this.bProfile,
@@ -803,6 +819,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
       autoFocus: false,
       data: {
         selspecializations : bprof,
@@ -865,6 +882,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
       autoFocus: false,
       data: {
         sellanguages : bprof,
@@ -900,6 +918,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       width: '50%',
       // panelClass: 'gallerymainclass',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: false,
       data: {
         bprofile : this.bProfile,
@@ -929,7 +948,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         }
         // calling function which saves the business related details to show in the header
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-         || '', this.bProfile['serviceSector']['displayName'] || '', logo );
+         || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', logo );
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);
@@ -955,13 +974,14 @@ export class ProviderBprofileSearchComponent implements OnInit {
        const blogo = this.blogo[0].url + '?' + tday;
 
        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-        || '', this.bProfile['serviceSector']['displayName'] || '', blogo || '' );
+        || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', blogo || '' );
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);
        /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
       },
       error => {
+        this.sharedfunctionobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
        // this.api_error = error.error;
       }
       );
@@ -977,7 +997,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         this.blogo = [];
         this.profimg_exists = false;
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-         || '', this.bProfile['serviceSector']['displayName'] || '', '', true);
+         || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '', true);
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);
@@ -1040,6 +1060,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderBprofileSearchSchedulepopupComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: false,
       data: {
         schedule_arr : this.schedule_arr,
@@ -1269,6 +1290,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const dialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
+      disableClose: true,
       autoFocus: true,
       data: {
         type: type,
@@ -1310,12 +1332,70 @@ export class ProviderBprofileSearchComponent implements OnInit {
       data => {
          // console.log(data);
           this.subdomain_fields = data['fields'];
+          // console.log('subdom fields', data['fields']);
           this.subdomain_questions = data['questions'] || [];
           this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
           // normal_subdomainfield_show = 4 // no data
       }
     );
 
+  }
+  getdispVal(typ, field) {
+    let retfield = '';
+    let passArray = [];
+    if (typ === 'domain') {
+      passArray = this.domain_fields;
+    } else if (typ === 'subdomain') {
+      passArray = this.subdomain_fields;
+    }
+    let str = '';
+    if (field.value !== undefined) {
+      if (field.dataType === 'Enum') {
+        retfield = this.getFieldDetails(passArray , field.value, field.name);
+      } else if (field.dataType === 'EnumList') {
+          for (let i = 0; i < field.value.length; i++) {
+            if (str !== '') {
+              str += ', ';
+            }
+            // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+            str += this.getFieldDetails(passArray , field.value[i], field.name);
+          }
+          retfield = str;
+      } else {
+        retfield = field.value;
+      }
+    }
+    return retfield;
+  }
+
+  getFieldDetails(passedArray, fieldvalue, fieldname) {
+    let retfield;
+    if (fieldvalue !== undefined) {
+        for (let i = 0; i < passedArray.length; i++) {
+          if (fieldname === passedArray[i].name) {
+            for (let j = 0; j < passedArray[i].enumeratedConstants.length; j++) {
+              if (fieldvalue === passedArray[i].enumeratedConstants[j].name) {
+                retfield = passedArray[i].enumeratedConstants[j].displayName;
+              }
+            }
+          }
+        }
+    }
+    return retfield;
+  }
+
+  showValueswithComma (fld) {
+    let str = '';
+    if (fld.value !== undefined) {
+      // console.log('fldlen', fld.value.length);
+      for (let i = 0; i < fld.value.length; i++) {
+        if (str !== '') {
+          str += ', ';
+        }
+        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+      }
+      return str;
+    }
   }
 
   getVirtualFields(domain, subdomin = null) {
@@ -1352,7 +1432,6 @@ export class ProviderBprofileSearchComponent implements OnInit {
           fields = (this.bProfile['domainVirtualFields']) ?
           this.bProfile['domainVirtualFields'] : [];
         }
-
         if (fields) {
           for (const i in data) {
             if (data[i]) {
@@ -1422,7 +1501,8 @@ export class ProviderBprofileSearchComponent implements OnInit {
       data: {
         type : 'add'
       },
-      panelClass: ['commonpopupmainclass']
+      panelClass: ['commonpopupmainclass'],
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1435,5 +1515,38 @@ export class ProviderBprofileSearchComponent implements OnInit {
   buyAdwords() {
       this.routerobj.navigate(['provider' , 'settings', 'license']);
   }
+  show_privacyText(txt) {
+    let rettxt = '';
+    if (txt === 'customersOnly') {
+      if (this.customernormal_label !== '' && this.customernormal_label !== undefined && this.customernormal_label !== null) {
+        rettxt = 'My ' + this.sharedfunctionobj.firstToUpper(this.customernormal_label) + 's Only';
+      } else {
+        rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
+      }
+    } else {
+      rettxt = this.privacypermissiontxt[txt];
+    }
+    return rettxt;
+  }
 
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+         e.stopPropagation();
+         const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+         this.sharedfunctionobj.sendMessage(pdata);
+   }
+   getMode(mod) {
+     let moreOptions = {};
+     moreOptions = {'show_learnmore': true , 'scrollKey': 'bprofile', 'subKey': mod};
+     return moreOptions;
+   }
 }

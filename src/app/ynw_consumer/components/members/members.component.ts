@@ -66,6 +66,7 @@ export class MembersComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
           data: {
             'message' : 'Do you really want to delete this Member?'
           }
@@ -97,6 +98,7 @@ export class MembersComponent implements OnInit {
     const dialogRef = this.dialog.open(AddMembersHolderComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
+      disableClose: true,
       data: {
         type : 'add',
         moreparams: { source: 'memberadd' }
@@ -114,6 +116,7 @@ export class MembersComponent implements OnInit {
     const dialogRef = this.dialog.open(AddMembersHolderComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
+      disableClose: true,
       data: {
         member : member,
         type : 'edit'

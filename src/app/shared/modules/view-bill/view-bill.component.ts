@@ -6,7 +6,10 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+import { ProviderRefundComponent } from '../../../ynw_provider/components/provider-refund/provider-refund.component';
+// import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 
 
@@ -40,6 +43,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
   discounts: any = [];
   items: any = [];
   pre_payment_log: any = [];
+  payment_options: any = [];
   close_msg = 'close';
 
   selectedItems = [];
@@ -53,13 +57,19 @@ export class ViewBillComponent implements OnInit, OnChanges {
   };
   bill_load_complete = 0;
   item_service_tax: any = 0;
-
+  item_service_gst = '';
+  Pipe_disp_date = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
+  billdate = '';
+  billtime = '';
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
+    public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
     private dialog: MatDialog,
+    // public provider_services: ProviderServices,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public sharedfunctionObj: SharedFunctions,
+    public shareServicesobj: SharedServices
 
     ) {
 
@@ -68,8 +78,10 @@ export class ViewBillComponent implements OnInit, OnChanges {
      }
 
   ngOnInit() {
+    // this.getTaxDetails();
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
+    this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
     this.bill_data.amount_to_pay = this.bill_data.netRate -  this.bill_data.totalAmountPaid;
 
@@ -79,20 +91,44 @@ export class ViewBillComponent implements OnInit, OnChanges {
         }, projectConstants.TIMEOUT_DELAY);
     }
 
-
+    this.getPaymentModes();
     this.bill_load_complete = 1;
 
-    this.dialogRef.backdropClick().subscribe(result => {
+    /*this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close(this.close_msg);
-    });
+    });*/
   }
-
+  getGstandDate() {
+    if (this.bill_data.gstNumber) {
+      this.item_service_gst = this.bill_data.gstNumber;
+    } else {
+      this.item_service_gst = '';
+    }
+    if (this.bill_data.createdDate) {
+      const datearr = this.bill_data.createdDate.split(' ');
+      const billdatearr = datearr[0].split('-');
+      this.billdate =  billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      this.billtime = datearr[1] + ' ' + datearr[2];
+    }
+  }
   ngOnChanges() {
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
+    this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
   }
 
+  getPaymentModes() {
+    this.shareServicesobj.getPaymentModesofProvider(this.checkin.provider.id)
+    .subscribe(
+      data => {
+        this.payment_options = data;
+      },
+      error => {
+        // this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+      }
+    );
+  }
 
 
   resetApiErrors () {
@@ -100,7 +136,27 @@ export class ViewBillComponent implements OnInit, OnChanges {
     this.api_success = null;
   }
 
+  // getTaxDetails() {
+  //   return new Promise((resolve, reject) => {
+  //     this.shareServicesobj.getTaxpercentage()
+  //     .subscribe(
+  //       data => {
+  //         this.item_service_tax = data['taxPercentage'];
+  //         this.item_service_gst = data['gstNumber'];
+  //         if (this.item_service_gst !== '' && this.item_service_gst !== undefined && this.item_service_gst !== null) {
+  //           this.item_service_gst = '(' + this.item_service_gst + ')';
+  //         }
+  //         resolve();
+  //       },
+  //       error => {
+  //         this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
 
+  //         reject(error);
+  //       }
+  //     );
+  //   });
+
+  // }
 
   updateBill() {
     this.updatebill.emit('updateBill');
@@ -118,6 +174,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
       data: {
         'message' : this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
       }
@@ -133,8 +190,48 @@ export class ViewBillComponent implements OnInit, OnChanges {
     this.emailbill.emit('emailBill');
   }
 
+  showRefund(payment) {
 
+   const dialogrefundRef = this.dialog.open(ProviderRefundComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        payment_det: payment
+      }
+    });
 
+    dialogrefundRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.getPrePaymentDetails();
+      }
+    });
+  }
+
+  getPrePaymentDetails() {
+    this.shareServicesobj.getPaymentDetail(this.checkin.ynwUuid, 'provider')
+      .subscribe(
+        data => {
+          this.pre_payment_log = data;
+          console.log('payment log', this.pre_payment_log);
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        }
+      );
+
+  }
+  stringtoDate(dt) {
+    let dtsarr;
+    if (dt) {
+      // const dts = new Date(dt);
+      dtsarr = dt.split(' ');
+      const dtarr = dtsarr[0].split('-');
+      return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+    } else {
+      return;
+    }
+  }
 
 }
 

@@ -13,6 +13,8 @@ import { HeaderModule } from '../shared/modules/header/header.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 
+import { CapitalizeFirstPipe } from '../shared/pipes/capitalize.pipe';
+
 import { ProviderComponent } from './provider.component';
 import { ProviderHomeComponent } from './components/home/provider-home.component';
 import { ProviderProfileComponent } from './components/provider-profile/provider-profile.component';
@@ -86,6 +88,7 @@ import { ProviderSystemAlertComponent } from './components/provider-system-alert
 import { ProviderCustomersComponent } from './components/provider-customers/provider-customers.component';
 import { AddProviderCustomerComponent } from './components/add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from './components/search-provider-customer/search-provider-customer.component';
+import { ProviderRefundComponent } from './components/provider-refund/provider-refund.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -113,6 +116,7 @@ import {Nl2BrPipeModule} from 'nl2br-pipe';
 
 import 'hammerjs';
 import 'mousetrap';
+import { SearchFilterPipe } from '../shared/pipes/searchfilter.pipe';
 
 @NgModule({
     imports: [
@@ -131,6 +135,8 @@ import 'mousetrap';
         Nl2BrPipeModule
     ],
     declarations: [
+        CapitalizeFirstPipe,
+        SearchFilterPipe,
         ProviderComponent,
         ProviderHomeComponent,
         ProviderProfileComponent,
@@ -205,7 +211,8 @@ import 'mousetrap';
         ProviderSystemAlertComponent,
         ProviderCustomersComponent,
         AddProviderCustomerComponent,
-        SearchProviderCustomerComponent
+        SearchProviderCustomerComponent,
+        ProviderRefundComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -245,7 +252,8 @@ import 'mousetrap';
       ViewProviderWaitlistCheckInBillComponent,
       ProviderWaitlistCheckInPaymentComponent,
       AddProviderCustomerComponent,
-      SearchProviderCustomerComponent
+      SearchProviderCustomerComponent,
+      ProviderRefundComponent
     ],
     providers: [
        AuthGuardProviderHome,

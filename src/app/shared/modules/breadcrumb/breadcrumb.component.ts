@@ -22,7 +22,8 @@ export class BreadCrumbComponent implements OnInit {
     @Input () moreOptions: any = [];
     constructor(
         public router: Router,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private sharedfunctionObj: SharedFunctions
     ) {}
 
     ngOnInit() {
@@ -35,7 +36,9 @@ export class BreadCrumbComponent implements OnInit {
         }
     }
     learnmore_clicked() {
-      const dialogRef = this.dialog.open(LearnmoreComponent, {
+        const pdata = { 'ttype': 'learn_more', 'target': this.moreOptions };
+        this.sharedfunctionObj.sendMessage(pdata);
+      /* const dialogRef = this.dialog.open(LearnmoreComponent, {
             width: '50%',
             panelClass: 'commonpopupmainclass',
             autoFocus: true,
@@ -44,7 +47,7 @@ export class BreadCrumbComponent implements OnInit {
             }
           });
           dialogRef.afterClosed().subscribe(result => {
-          });
+          });*/
     }
 
 }

@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HeaderComponent } from '../../../shared/modules/header/header.component';
+import { Location } from '@angular/common';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -29,6 +30,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     waitlist_notes: any = [];
     waitlist_history: any = [];
     communication_history: any = [];
+    est_tooltip = Messages.ESTDATE;
     breadcrumbs_init: any = [
         {
           title: 'Dashboard',
@@ -38,6 +40,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     api_success = null;
     api_error = null;
+    userDet;
+
+    dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
+
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
     today = new Date();
@@ -45,6 +52,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     provider_label = '';
     checkin_label = '';
     checkin_upper = '';
+
+    timeCaption = Messages.CHECKIN_TIME_CAPTION;
+    minCaption = Messages.EST_WAIT_TIME_CAPTION;
 
     constructor(
         private provider_services: ProviderServices,
@@ -54,6 +64,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         private router: Router,
         private activated_route: ActivatedRoute,
         private sanitizer: DomSanitizer,
+        private locationobj: Location,
         private provider_shared_functions: ProviderSharedFuctions) {
 
             this.activated_route.params.subscribe(params => {
@@ -70,7 +81,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         }
 
     ngOnInit() {
-
+      this.userDet = this.shared_Functionsobj.getitemfromLocalStorage('ynw-user');
         if (this.waitlist_id) {
           this.getWaitlistDetail();
 
@@ -132,14 +143,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     }
 
     getCommunicationHistory(uuid) {
-
+      // console.log('uuid', uuid);
       this.provider_services.getProviderInbox()
       .subscribe(
           data => {
             const history: any = data;
             this.communication_history = [];
             for (const his of history) {
-              if (his.waitlistId === uuid) {
+              // console.log('compare', his.waitlistId, ' ---- ', uuid);
+              if (his.waitlistId === uuid || his.waitlistId === uuid.replace('h_', '')) {
                 this.communication_history.push(his);
               }
             }
@@ -174,6 +186,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
       const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
+        disableClose: true,
         data: {
           checkin_id: checkin.ynwUuid
         }
@@ -215,5 +228,92 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         }
       );
     }
+    gotoPrev() {
+      this.locationobj.back();
+    }
 
+    getAppxTime(waitlist, retcap?) {
+      const retarr = { caption: '', val: ''};
+       // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
+        /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
+          return 'Now';
+        } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
+          return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+        }  else {*/
+        // if (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') {
+        if (this.checkTimedisplayAllowed(waitlist)) {
+          if (waitlist.queue.queueStartTime !== undefined) {
+            if (waitlist.hasOwnProperty('serviceTime')) {
+              if (retcap) {
+                return this.timeCaption;
+              } else {
+                return waitlist.serviceTime;
+              }
+            } else {
+                // const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
+                // return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
+                if (retcap) {
+                  return 'Date/Est Wait Time'; // this.minCaption;
+                } else {
+                  return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+                }
+            }
+          } else {
+            return -1;
+          }
+        } else {
+          return -1;
+        }
+       //  }
+    }
+    checkTimedisplayAllowed(waitlist) {
+      if ((waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') && !this.checkIsHistory(waitlist)) {
+        if (waitlist.queue.queueStartTime !== undefined) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    checkIsHistory(waitlist) {
+          const dd = this.today.getDate();
+          const mm = this.today.getMonth() + 1; // January is 0!
+          const yyyy = this.today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+              cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const checkindate = waitlist.date;
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          const date1 = new Date(checkindate);
+          const date2 = new Date(dtoday);
+          if (date2.getTime() > date1.getTime()) {
+            return true;
+          } else {
+            return false;
+          }
+    }
+    AMHourto24(date, time12) {
+      const time = time12;
+      let hours = Number(time.match(/^(\d+)/)[1]);
+      const minutes = Number(time.match(/:(\d+)/)[1]);
+      const AMPM = time.match(/\s(.*)$/)[1];
+      if (AMPM === 'PM' && hours < 12) { hours = hours + 12; }
+      if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
+      const sHours = hours;
+      const sMinutes = minutes;
+      // alert(sHours + ':' + sMinutes);
+      const mom_date = moment(date);
+      mom_date.set('hour', sHours);
+      mom_date.set('minute', sMinutes);
+      return mom_date;
+    }
 }

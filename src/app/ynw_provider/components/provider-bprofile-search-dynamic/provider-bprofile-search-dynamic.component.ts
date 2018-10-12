@@ -36,7 +36,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('passed in data', this.data);
+    // console.log('passed in data', this.data);
     this.que_type = this.data.type || 'domain_questions';
 
     this.bProfile = this.data['bProfile'];
@@ -51,7 +51,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
       this.title = this.subdomain_questions[0]['label'] || '';
       this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
     }
-    console.log(this.subdomain_questions , this.domain_questions);
+   // console.log(this.subdomain_questions , this.domain_questions);
     if (this.domain_questions.length === 0 &&
         this.subdomain_questions === 0) {
       this.dialogRef.close('error');
@@ -86,7 +86,8 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
       _this.provider_services.getVirtualFields(domain, subdomin)
       .subscribe(
-        data => {console.log(data);
+        data => {
+          // console.log(data);
            data = _this.setFieldValue(data, subdomin);
            resolve(_this.service.getQuestions(data));
         },
@@ -135,7 +136,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     submit_data = this.checkEnumList(this.domain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.domain_questions, submit_data);
     const post_data = this.setPostData(submit_data);
-    console.log(post_data, this.bProfile['domainVirtualFields']);
+    // console.log(post_data, this.bProfile['domainVirtualFields']);
     this.provider_services.updateDomainSubDomainFields(post_data, this.bProfile['serviceSector']['domain'])
     .subscribe(
       data => {
@@ -154,7 +155,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     submit_data = this.checkEnumList(this.subdomain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.subdomain_questions, submit_data);
     const post_data = this.setPostData(submit_data);
-    console.log(post_data, this.bProfile['subDomainVirtualFields']);
+   // console.log(post_data, this.bProfile['subDomainVirtualFields']);
     this.provider_services.updateDomainSubDomainFields(post_data, null,
       this.bProfile['serviceSubSector']['subDomain'])
     .subscribe(
@@ -204,7 +205,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
     // JSON.parse(JSON.stringify used to remove reference from parent page
      let pre_value = {};
-     console.log(this.que_type, typeof this.bProfile['domainVirtualFields']);
+     // console.log(this.que_type, typeof this.bProfile['domainVirtualFields']);
     if (this.que_type === 'domain_questions' &&
        typeof this.bProfile['domainVirtualFields'] === 'object') {
         pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
@@ -214,10 +215,12 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     }
 
     if (pre_value[key]) {
+      // console.log('row indx', this.grid_row_index);
       if (pre_value[key][this.grid_row_index]) {
         pre_value[key][this.grid_row_index] = grid_value_list[0];
       } else {
-        pre_value[key].push(grid_value_list[0]);
+        // pre_value[key].push(grid_value_list[0]);
+        pre_value[key].push(grid_value_list[(grid_value_list.length - 1)]);
       }
       return pre_value[key];
 
@@ -228,7 +231,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
   }
 
   setPostData(submit_data) {
-    console.log(this.bProfile['subDomainVirtualFields']);
+    // console.log(this.bProfile['subDomainVirtualFields']);
     const keys = Object.keys(submit_data);
     let pre_value = {};
 

@@ -19,6 +19,7 @@ export class AddProviderSchedulesComponent implements OnInit {
   @Input() providerStatus;
   @Input() showsavebutton;
   @Input() hidecancelbutton;
+  @Input() Isource;
   @Output() saveScheduleClick = new EventEmitter<any>();
   @Output() cancelScheduleClick = new EventEmitter<any>();
 
@@ -46,6 +47,7 @@ export class AddProviderSchedulesComponent implements OnInit {
      }
 
   ngOnInit() {
+    // console.log('source', this.Isource);
     this.dstart_time =  {hour: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')};
     this.dend_time =  {hour: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')};
 
@@ -71,6 +73,15 @@ export class AddProviderSchedulesComponent implements OnInit {
       this.selday_arr.splice(selindx, 1);
     }
     // // console.log('curarr', this.selday_arr);
+  }
+  handleselectall() {
+    this.selday_arr = [];
+    const wkdaystemp = this.weekdays_arr;
+    this.weekdays_arr = [];
+    for (let ii = 1; ii <= 7; ii++) {
+      this.handlechecbox(ii);
+    }
+    this.weekdays_arr = wkdaystemp;
   }
   getDay(num) {
     return projectConstants.myweekdaysSchedule[num];
@@ -268,7 +279,7 @@ export class AddProviderSchedulesComponent implements OnInit {
     }
   }
   check_daychecked(indx) {
-    if (this.edit_mode === true) {
+   // if (this.edit_mode === true) {
       if (this.selday_arr.length > 0) {
         if (this.selday_arr.indexOf(indx) !== -1) {
           return true;
@@ -276,9 +287,9 @@ export class AddProviderSchedulesComponent implements OnInit {
             return false;
         }
       }
-    } else {
-      return false;
-    }
+  //  } else {
+  //    return false;
+  //  }
   }
   isbeingEdited(indx) {
     if (indx === this.edit_index) {

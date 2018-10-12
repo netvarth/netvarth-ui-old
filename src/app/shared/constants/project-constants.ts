@@ -1,7 +1,9 @@
 export const projectConstants = {
   PERPAGING_LIMIT: 10,
+  CONSUMER_DASHBOARD_REFRESH_TIME: 120, // seconds
   INBOX_REFRESH_TIME: 30, // seconds
   ALERT_REFRESH_TIME: 30, // seconds
+  SMALL_DEVICE_BOUNDARY: 991,
   searchpass_criteria : {
     'start': 0,
     'return': 'title,sector,logo,place1,business_phone_no,unique_id',
@@ -44,9 +46,11 @@ export const projectConstants = {
       monthYearA11yLabel: 'MMMM YYYY'
     }
   },
-  TIMEOUT_DELAY : 2000,
-  TIMEOUT_DELAY_SMALL : 200,
-  TIMEOUT_DELAY_LARGE : 4100,
+  TIMEOUT_DELAY : 2000, // msec
+  TIMEOUT_DELAY_SMALL : 200, // msec
+  TIMEOUT_DELAY_LARGE : 4100, // msec
+  TIMEOUT_DELAY_LARGE6 : 6000, // msec
+  TIMEOUT_DELAY_LARGE10 : 10000, // msec
   TOOLBAR_CONFIG : [
                 { name: 'document',
                   groups: [ 'mode', 'document', 'doctools' ],
@@ -170,12 +174,14 @@ SOCIAL_MEDIA : [
 ],
 PRIVACY_PERMISSIONS : {
                           'all': 'Public',
-                          'customersOnly': 'My [customer]s only',
+                          'customersOnly': 'Customer',
                           'self': 'None'
 },
 TOOLTIP_CLS: 'ynwtooltipcls',
 TOOLTIP_PRIVACYPHONE: 'Example : Cell Phone,  Mobile, Emergency, Main Line, others etc',
 TOOLTIP_PRIVACYEMAIL: 'Example : Office Email id, Personal Email id etc',
+TOOLTIP_MALE: 'Male',
+TOOLTIP_FEMALE: 'Female',
 VALIDATOR_BLANK_FALSE: /^((?!\s{2,}).)*$/,
 VALIDATOR_BLANK: /^\s*$/,
 // VALIDATOR_URL: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
@@ -184,6 +190,7 @@ VALIDATOR_NUMBERONLY: /^\d+$/,
 VALIDATOR_FLOAT: /^[+-]?([0-9]*[.])?[0-9]+$/,
 VALIDATOR_PHONENUMBERCOUNT10: /^\d{10}$/,
 VALIDATOR_CHARONLY: /^[a-zA-Z ]+$/,
+VALIDATOR_ALPHANUMERIC: /^[a-zA-Z0-9\s]+$/,
 // VALIDATOR_CHARONLY: /^[a-zA-Z][a-zA-Z ]+$/,
 VALIDATOR_EMAIL: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$/,
 VALIDATOR_MAX9: 9, // max char count

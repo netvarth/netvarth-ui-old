@@ -46,6 +46,7 @@ export class ProviderSharedFuctions {
         const dialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
+            disableClose: true,
             autoFocus: true,
             data: {
               queue : obj,
@@ -126,6 +127,7 @@ export class ProviderSharedFuctions {
       const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
+        disableClose: true,
         data: {
           waitlist: waitlist
         }
@@ -180,6 +182,7 @@ export class ProviderSharedFuctions {
       const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
         width: '50%',
         panelClass: 'commonpopupmainclass',
+        disableClose: true,
         data: {
           uuid : uuid,
           source: 'provider-waitlist',

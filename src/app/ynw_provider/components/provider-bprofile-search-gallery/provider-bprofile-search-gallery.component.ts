@@ -38,7 +38,8 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
   openModalWindow = false;
   imagePointer = 0;
   savedisabled = false;
-  img_save_caption = 'Save';
+  canceldisabled = false;
+  img_save_caption = 'Upload';
   error_msg = '';
 
   constructor(private provider_services: ProviderServices,
@@ -121,7 +122,12 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         } else {
          // console.log(this.success_error);
           this.error_list.push(this.success_error);
-          this.error_msg = 'Please upload images with size < 5mb';
+          if (this.error_list[0].type) {
+            this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size < 5mb';
+          }
+          // this.error_msg = 'Please upload images with size < 5mb';
         }
 
 
@@ -141,6 +147,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
   saveImages() {
     // console.log(this.item_pic);
     this.savedisabled = true;
+    this.canceldisabled = true;
     this.img_save_caption = 'Uploading .. ';
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
@@ -177,12 +184,14 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         this.getGalleryImages();
         this.shared_functions.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_UPLOAD);
         this.savedisabled = false;
-        this.img_save_caption = 'Save';
+        this.canceldisabled = false;
+        this.img_save_caption = 'Upload';
         this.dialogRef.close('reloadlist');
       },
       error => {
         this.error_list.push(this.shared_functions.getProjectErrorMesssages(error));
         this.error_msg = this.shared_functions.getProjectErrorMesssages(error);
+        this.canceldisabled = false;
       }
     );
 

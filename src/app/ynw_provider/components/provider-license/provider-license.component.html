@@ -1,7 +1,7 @@
 
 <section>
   <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
   <div class="content comn-cls">
@@ -39,9 +39,9 @@
                                                   <span class="price">
                                                     {{license_upgarde_sub['price'] | currency:'INR':'symbol':'.2-2'}}</span> / {{license_upgarde_sub['current_sub']}}
                                                     <span class="icon-question" *ngIf="license_upgarde_sub['current_sub'] != 'month'"
-                                                    matTooltip="Please contact youneverwait.com to change subscription type"></span>
+                                                    matTooltip="Please contact jaldee.com to change subscription type"></span>
                                               </div>
-                                              <ng-container *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
+                                              <!-- <ng-container *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
                                                   <span class="change">Change plan to</span>
 
                                                   <div class="pack not-active" *ngFor="let sub of license_upgarde_sub['next_sub']"
@@ -51,8 +51,7 @@
                                                          ( {{sub['discount_per']}}% discount )
                                                       </span>
                                                   </div>
-                                              </ng-container>
-
+                                              </ng-container> -->
                                           </div>
 
                                       </div>
@@ -115,8 +114,8 @@
                           <div class="left">
                               <div class="lc22">
                                   <div class="lc2-1 lcd">
-                                      <div class="ttle">Add-on
-                                        <span class="addbt" (click)="showadd_addons()"></span></div>
+                                      <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addonTooltip">Add-on
+                                        <span class="addbt" (click)="showadd_addons()" ></span></div>
                                   </div>
                                   <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
 

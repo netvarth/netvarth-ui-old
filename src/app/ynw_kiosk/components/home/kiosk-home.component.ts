@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
+import { DOCUMENT } from '@angular/common';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { KioskServices } from '../../services/kiosk-services.service';
@@ -9,6 +10,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-kiosk-home',
@@ -38,6 +40,7 @@ export class KioskHomeComponent implements OnInit {
   blankPattern;
   namePattern;
   phonePattern;
+  numberpattern;
   cMod;
   loadingNow;
   terminologies: any = [];
@@ -59,17 +62,23 @@ export class KioskHomeComponent implements OnInit {
   waitlistmngr;
   kiosk_loading = true;
   showregmobile = false;
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
+  apprxwaitingCaption = Messages.APPX_WAIT_TIME_CAPTION;
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public provider_datastorage: CommonDataStorageService,
-    private dialog: MatDialog, private router: Router) {}
+    private dialog: MatDialog, private router: Router,
+    @Inject(DOCUMENT) public document
+    ) {}
 
   ngOnInit() {
     this.getWaitlistManager();
     this.blankPattern = projectConstants.VALIDATOR_BLANK;
     this.phonePattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
     this.namePattern = projectConstants.VALIDATOR_CHARONLY;
+    this.numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
     this.customer_found = false;
     this.customerDet = [];
     this.customerDispDet.id = '';
@@ -83,7 +92,7 @@ export class KioskHomeComponent implements OnInit {
     . subscribe (data => {
       this.terminologies = data;
       this.provider_datastorage.set('terminologies', this.terminologies);
-      console.log(this.terminologies);
+      // console.log(this.terminologies);
     },
     error => {
 
@@ -180,12 +189,16 @@ export class KioskHomeComponent implements OnInit {
         }
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         const ctoday = cday + '/' + cmon + '/' + yyyy;
+        const check_dtoday = new Date(dtoday);
+        let cdate = new Date();
         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
           if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
             this.next_avail_queue['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
             this.next_avail_queue['queue_available'] = 1;
-            if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-              this.next_avail_queue['caption'] = 'Next Available Time ';
+            cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+            // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            if (cdate.getTime() !== check_dtoday.getTime()) {
+              this.next_avail_queue['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
               this.next_avail_queue['isFuture'] = 1;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.next_avail_queue['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
@@ -195,11 +208,12 @@ export class KioskHomeComponent implements OnInit {
                 + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             } else {
-              this.next_avail_queue['caption'] = 'Appox Waiting Time';
+              this.next_avail_queue['caption'] = this.apprxwaitingCaption; // 'Appox Waiting Time';
               this.next_avail_queue['isFuture'] = 2;
               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                 this.next_avail_queue['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               } else {
+                this.next_avail_queue['caption'] = this.nextavailableCaption + ' '; // 'Next Availale Time';
                 this.next_avail_queue['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               }
             }
@@ -250,6 +264,13 @@ export class KioskHomeComponent implements OnInit {
   }
 
   searchCustomer() {
+    if (!this.numberpattern.test(this.srch_mobile)) {
+      this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
+      if (this.srchmob.nativeElement) {
+        this.srchmob.nativeElement.focus();
+      }
+      return false;
+    }
     if (!this.phonePattern.test(this.srch_mobile)) {
       this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
       if (this.srchmob.nativeElement) {
@@ -325,6 +346,11 @@ export class KioskHomeComponent implements OnInit {
     if (this.cMod !== 'main') {
       if (!this.customer_found) {
         this.showsearch_now = true;
+        setTimeout(() => {
+          if (this.document.getElementById('srchmobilebox')) {
+            this.document.getElementById('srchmobilebox').focus();
+          }
+        }, 500);
       } else {
           this.do_operation();
       }
