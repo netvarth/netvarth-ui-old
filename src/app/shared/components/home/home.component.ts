@@ -128,6 +128,8 @@ export class HomeComponent implements OnInit {
           if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
             run_api = false;
             this.domainlist_data = bdata;
+            // this.domainlist_data = ddata.bdata;
+            // console.log('domainlilst_saved', this.domainlist_data);
             this.domain_obtained = true;
           }
         }
@@ -137,6 +139,7 @@ export class HomeComponent implements OnInit {
         .subscribe (
           res => {
             this.domainlist_data = res;
+            // console.log('domainlilst_fetched', this.domainlist_data);
             this.domain_obtained = true;
             const today = new Date();
             const postdata = {

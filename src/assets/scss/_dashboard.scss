@@ -1,6 +1,8 @@
 // ### Header for Dashboard
 header {
     &.dashb {
+        position: relative;
+        
         @include respond-to(ynw-767) {
             padding: 20px 0;
         }
@@ -11,9 +13,8 @@ header {
             @include respond-to(ynw-575) {
                 width: 120px;
                 text-align: center;
-                margin-bottom: 15px;
                 margin-left: 0;
-                margin-right: auto;
+                margin-right: 0;
                 padding: 0;
                 
                 img {
@@ -33,13 +34,9 @@ header {
             align-items: center;
             
             @include respond-to(ynw-767){
-                flex-flow: column;
                 margin: 0;
-                align-items:flex-end;
             }
             @include respond-to(ynw-575) {
-                width: 100%;
-                margin-left: 0 !important;
                 justify-content: center;
                 align-items: center;
             }
@@ -47,10 +44,6 @@ header {
             .bnps {
                 display: flex;
                 color: $cc-gray;
-                
-                @include respond-to(ynw-767){
-                    margin-bottom: 15px;
-                }
                 
                 .pro-pic {
                     width: 50px;
@@ -63,6 +56,13 @@ header {
                     position: relative;
                     overflow: hidden;
                     margin-right: 10px;
+                    
+                    @include respond-to(ynw-767) {
+                        display: none;
+                    }
+                    @include respond-to(ynw-768-991) {
+                        display: none;
+                    }
                     
                     img {
                         width: 50px;
@@ -87,12 +87,15 @@ header {
                     align-items: center;
                     flex-direction: column;
                     justify-content: center;
+                    margin-right: 20px;
                     
                     @include respond-to(ynw-767){
                         width: 200px;
+                        display: none;
                     }
                     @include respond-to(ynw-768-991){
                         width: 250px;
+                        display: none;
                     }
                     
                     .title-bn, .title-ps {
@@ -123,7 +126,7 @@ header {
                 }
                 
                 .inbx {
-                    padding-left: 30px;
+                    padding-left: 0px;
                     cursor: pointer;
 
                     .ot-bx {
@@ -176,6 +179,16 @@ header {
                 flex-flow: column;
                 align-items: flex-end;
                 
+                @include respond-to(ynw-767) {
+                    display: none;
+                }
+                @include respond-to(ynw-575) {
+                    display: none;
+                }
+                @include respond-to(ynw-768-991) {
+                    display: none;
+                }
+                
                 .lgin {
                     button {
                         width: 24px;
@@ -196,12 +209,6 @@ header {
                             }
                         }
                     }
-                }
-                @include respond-to(ynw-575) {
-                    padding-left: 0;
-                    text-align: center;
-                    display: flex;
-                    flex-flow: column;
                 }
                 
                 a, span {
@@ -244,6 +251,267 @@ header {
                     &:first-child {
                         @include respond-to(ynw-575) {
                             order: 2;
+                        }
+                    }
+                }
+            }
+            
+            .userdt {
+                margin-left: 20px;
+                
+                @include respond-to(ynw-992-1199) {
+                    display: none;
+                }
+                @include respond-to(ynw-1200) {
+                    display: none;
+                }
+                
+                .usrbx {
+                    width: 50px;
+                    height: 50px;
+                    @include border-radius(50px);
+                    background-color: $cc-lightgray;
+                    display: flex;                    
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    
+                    .icon-user {
+                        position: relative;
+                        width: 25px;
+                        height: 25px;
+                        font-size: 1.5rem;
+                        
+                        &:before {
+                            position: absolute;
+                            @include font-custom;
+                            content: "\6c";
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
+        .mobile-menu {
+            position: absolute;
+            width: 100%;
+            top: 110px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1001;
+            visibility: hidden;
+            
+            @include respond-to(ynw-575) {
+                top: 97px;
+            }
+            @include respond-to(ynw-992-1199) {
+                display: none;
+            }
+            @include respond-to(ynw-1200) {
+                display: none;
+            }
+            
+            .row {
+                display: flex;
+                justify-content: flex-end;
+                
+                .menu-outer {
+                    width: 70%;
+                    perspective: 1300px;
+                    
+                    @include respond-to(ynw-767){
+                        width: 100%;
+                    }
+                    
+                    .outer {
+                        background: $white;
+                        padding: 60px 20px 20px 20px;
+                        position: relative;
+                        font-size: .875rem;
+                        font-weight: 500;
+                        @include transform(rotateX(-60deg));
+                        @include transform-origin(50% 0);
+                        @include transform-style(preserve-3d);
+                        @include transition(all 0.3s);
+                        @include box-shadow(0px, 20px, 30px, rgba(0,0,0,.1) !important);
+                        opacity: 0;
+                        
+                        .close {
+                            position: absolute;
+                            left: 20px;
+                            top: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            opacity: 1;
+                            
+                            span {
+                                font-size: .875rem;
+                                font-weight: 500;
+                                margin-left: 5px;
+                            }
+                            
+                            &:before {
+                                @include font-custom;
+                                content: "\69";
+                                font-size: .875rem;
+                            }
+                        }
+                        
+                        .sect1 {
+                            display: flex;
+                            border-bottom: 1px solid $cc-body;
+                            padding-bottom: 15px;
+                            margin-bottom: 15px;
+                            
+                            @include respond-to(ynw-400) {
+                                flex-direction: column;    
+                            }
+                            
+                            .sl1 {
+                                .uname {
+                                    font-weight: 600;
+                                    display: block;
+                                }
+                                .uprofile {
+                                    display: block;
+                                    color: $linkblue;
+                                    cursor: pointer;
+                                    display: table;
+                                }
+                            }
+                            .sl2 {
+                                margin-left: auto;
+                                
+                                @include respond-to(ynw-400) {
+                                    margin-left: 0;
+                                    margin-top: 15px;
+                                }
+                                
+                                .membership {
+                                    display: table;
+                                    color: $linkblue;
+                                    cursor: pointer;
+                                    
+                                    span {
+                                        font-weight: 600;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .sect2 {
+                            display: flex;
+                            border-bottom: 1px solid $cc-body;
+                            padding-bottom: 15px;
+                            margin-bottom: 15px;
+                            
+                            .pro-pic {
+                                width: 50px;
+                                height: 50px;
+                                @include border-radius(50px);
+                                background-color: $cc-lightgray;
+                                display: flex;                    
+                                justify-content: center;
+                                align-items: center;
+                                position: relative;
+                                overflow: hidden;
+                                margin-right: 10px;
+
+                                img {
+                                    width: 50px;
+                                    height: 50px;
+                                    position: relative;
+                                    z-index: 11;
+                                }
+
+                                &:after {
+                                    content: "";
+                                    background: url(../images/img-null.svg) no-repeat scroll 0 0;
+                                    position: absolute;
+                                    width: 60px;
+                                    height: 60px;
+                                    opacity: .3;
+                                    z-index: 10;
+                                }
+                            }
+                            
+                            .mn-title {
+                                display: flex;
+                                align-items: center;
+                                flex-direction: column;
+                                justify-content: center;
+
+                                .title-bn, .title-ps {
+                                    display: block;
+                                    font-size: 1rem;
+                                    font-weight: 500;
+                                    @include font-medium;
+                                    width: 100%;
+
+                                    @include respond-to(ynw-767){
+                                        overflow: hidden;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                    }
+                                    @include respond-to(ynw-768-991){
+                                        overflow: hidden;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                    }
+                                }
+                                .title-ps {
+                                    @include font-regular;
+                                    font-size: .875rem;
+                                    font-weight: 400;
+                                }
+                            }
+                        }
+                        .sect3 {
+                            .menulinks {
+                                margin: 0;
+                                padding: 0;
+                                
+                                li {
+                                    height: 40px;
+                                    list-style: none;
+                                    display: flex;
+                                    align-items: center;
+                                    color: rgba(0,0,0,.7);
+                                    @include transition(300ms all);
+                                    padding: 0 10px;
+                                    cursor: pointer;
+                                    
+                                    i {
+                                        margin-right: 12px;
+                                        font-size: 1rem;
+                                        height: 20px;
+                                        width: 20px;
+                                        display: flex;
+                                        align-items: center;
+                                    }
+                                    
+                                    &:hover {
+                                        color: rgba(0,0,0, 1);
+                                        background: rgba(0,0,0,.04);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &.show {
+                visibility: visible;
+                
+                .row {
+                    .menu-outer {
+                        .outer {
+                            opacity: 1;
+                            @include transform(rotateX(0deg));
                         }
                     }
                 }
@@ -6077,6 +6345,13 @@ footer {
                                                 
                                                 &.td0 {
                                                     width: 50px;
+                                                    
+                                                    @include respond-to(ynw-767) {
+                                                        width: 100%;
+                                                    }
+                                                    @include respond-to(ynw-768-991) {
+                                                        width: 100%;
+                                                    }
                                                 }
                                             }
                                         }

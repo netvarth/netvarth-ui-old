@@ -42,6 +42,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   items: any = [];
   totdisc_val = 0;
   totcoup_val = 0;
+  isServiceBillable = true;
   ItemServiceGroupOptions: Observable<ItemServiceGroup[]>;
   itemServicesGroup: ItemServiceGroup[] = [{
     'type' : 'Services',
@@ -229,8 +230,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         (data: any) => {
           if (data.serviceBillable === false) {
+            this.isServiceBillable = false;
             reject();
           } else {
+            this.isServiceBillable = true;
             resolve();
           }
         },

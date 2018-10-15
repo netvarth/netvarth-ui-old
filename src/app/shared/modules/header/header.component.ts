@@ -51,6 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   inboxCntFetched;
   cronHandle: Subscription;
   cronStarted;
+  showmobileSubmenu = false;
   urls_class = [
     {url: '\/provider\/bwizard' , class: 'itl-steps'},
     {url: '\/provider\/settings\/.+' , class: 'dashb'},
@@ -317,6 +318,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   redirectto (mod) {
+    this.showmobileSubmenu = false;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     switch (mod) {
       case 'profile':
@@ -343,7 +345,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   switchtoConsumer() {
-
+    this.showmobileSubmenu = false;
     const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
     // console.log('credentials', ynw.loginId, ynw.password);
     this.shared_service.ProviderLogout()
@@ -421,7 +423,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   gototop() {
-    console.log('here');
+    // console.log('here');
     window.scrollTo(0, 0);
   }
   public triggerScrollTo(destination) {
@@ -438,5 +440,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.triggerScrollTo(target);
         }, 200);
     // }
+  }
+  showHidemobileSubMenu() {
+    if (this.showmobileSubmenu) {
+      this.showmobileSubmenu = false;
+    } else {
+      this.showmobileSubmenu = true;
+    }
   }
 }

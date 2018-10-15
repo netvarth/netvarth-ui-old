@@ -91,6 +91,8 @@ export class CheckInInnerComponent implements OnInit {
     estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
     nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
     checkinCaption = Messages.CHECKIN_TIME_CAPTION;
+    checkinLabel;
+    CheckedinLabel;
     ddate;
 
     @Input() data: any =  [];
@@ -108,12 +110,13 @@ export class CheckInInnerComponent implements OnInit {
     // @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     }
-
     ngOnInit() {
       // console.log('check-inpassed data', this.data);
       this.customer_data = this.data.customer_data || [];
       if (this.data.moreparams.terminologies) {
         this.terminologiesjson = this.data.moreparams.terminologies;
+        // console.log('reached here', this.terminologiesjson);
+        this.setTerminologyLabels();
       }
       // // console.log('init', this.customer_data);
       if (this.data.fromKiosk !== undefined) {
@@ -122,7 +125,7 @@ export class CheckInInnerComponent implements OnInit {
         }
       }
       this.page_source = this.data.moreparams.source;
-      this.main_heading = 'Check-in';
+      this.main_heading = this.checkinLabel; // 'Check-in';
       this.maxsize = 1;
       this.step = 1;
       this.loggedinuser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
@@ -176,6 +179,7 @@ export class CheckInInnerComponent implements OnInit {
         // this.sel_queue_name = this.search_obj.fields.waitingtime_res.nextAvailableQueue.name || '';
         this.sel_loc = this.search_obj.fields.location_id1;
         this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
+        this.minDate = this.sel_checkindate;
 
       } else if (this.page_source === 'provdet_checkin'
       || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
@@ -194,6 +198,21 @@ export class CheckInInnerComponent implements OnInit {
         // this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
         this.sel_loc = this.data.moreparams.location.id;
         this.sel_checkindate = this.data.moreparams.sel_date;
+        this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+      }
+      if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
+        // console.log('check in source', this.page_source, this.data.datechangereq, this.sel_checkindate);
+        if (this.data.datechangereq) {
+          const seldate_checker = new Date(this.sel_checkindate);
+          const todaydate_checker = new Date(this.todaydate);
+          if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
+            const nextdate = new Date(seldate_checker.setDate(seldate_checker.getDate() + 1));
+            // console.log('same day', nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate());
+            this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
+            this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+            // console.log('reached here');
+          }
+        }
 
       }
       const ddd = new Date(this.sel_checkindate);
@@ -218,6 +237,12 @@ export class CheckInInnerComponent implements OnInit {
      // this.sel_queue_det = retdatedet;
       this.showfuturediv = false;
       this.revealphonenumber = true;
+    }
+    setTerminologyLabels() {
+      this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.terminologiesjson['waitlist']);
+      this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.terminologiesjson['waitlisted']);
+      this.main_heading = this.checkinLabel;
+        // console.log('checkinlabel', this.checkinLabel);
     }
     getPaymentModesofProvider(provid) {
       if (this.paymentModes.length === 0) {
@@ -350,6 +375,7 @@ export class CheckInInnerComponent implements OnInit {
               // console.log('reached here1', this.terminologiesjson);
               this.provider_datastorage.set('terminologies', this.terminologiesjson);
               this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+              this.setTerminologyLabels();
               // console.log('term datastorage', this.sharedFunctionobj.getTerminologies());
             break;
             case 'businessProfile':
@@ -672,7 +698,7 @@ export class CheckInInnerComponent implements OnInit {
     switch (cstep) {
       case 1:
       case 2:
-        this.main_heading = 'Check-in';
+        this.main_heading = this.checkinLabel;
       break;
       case 3:
       this.main_heading = 'Family Members';
@@ -707,7 +733,7 @@ export class CheckInInnerComponent implements OnInit {
     /*if (this.step === 1) {
       caption = 'Proceed to Check-in';
     } else if (this.step === 2) {*/
-      caption = 'Confirm Check-in';
+      caption = 'Confirm ' + this.checkinLabel;
    // }
     return caption;
   }

@@ -51,7 +51,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           if (!this.checkLoaderHideUrl(url)) {
             // console.log('req' + url);
             this.loaderDisplayed = true;
-            this.showLoader();
+            // this.showLoader();
           }
 
           if (!req.headers.has('Content-Type')) {
@@ -67,7 +67,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         return next.handle(req).do((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             if (this.loaderDisplayed) {
-              this.hideLoader();
+              // this.hideLoader();
             }
             this.loaderDisplayed = false;
             // console.log('---> status:', event.status);
@@ -75,7 +75,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           }
         }, (err: any) => {
           if (err instanceof HttpErrorResponse) {
-            this.hideLoader();
+            // this.hideLoader();
             if ((err.status === 401 || err.status === 419) &&
               !this.checkUrl(url)) {
                this.shared_functions.logout();

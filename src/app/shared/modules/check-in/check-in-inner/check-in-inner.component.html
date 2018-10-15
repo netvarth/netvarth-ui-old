@@ -45,7 +45,7 @@
               </div>
     
               <div class="date-outer" *ngIf="step==1 && data.datechangereq">
-                <div class="date-head">Check-in Date:</div> 
+                <div class="date-head">{{checkinLabel}} Date:</div> 
                 <div class="date-body">
                     <span class="selected-date"> <span class="icon-minus" [class.disable]="disableMinus()" (click)="calculateDate(-1)" *ngIf="futuredate_allowed && data.datechangereq"></span>{{sel_day}} {{sel_checkindate | date: dateFormat}} <span class="icon-add" (click)="calculateDate(1)" *ngIf="futuredate_allowed && data.datechangereq"></span></span>
                     <div class="form-group dt" *ngIf="futuredate_allowed && data.datechangereq">
@@ -108,7 +108,7 @@
                         </div> -->
                     </ng-container>
                     <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
-                        <span class='no-queue-available'>Check-ins are not accepted for this date.</span>
+                        <span class='no-queue-available'>{{checkinLabel}}s are not accepted for this date.</span>
                     </ng-container>
                     
               </div>
@@ -117,7 +117,7 @@
               <ng-container *ngIf="step==1 && queuejson.length > 0">
               <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
                 <div class="prepay-dur-pr">
-                    <div class="prepay-amt">This service needs prepayment for check-in</div>
+                    <div class="prepay-amt">This service needs prepayment for {{checkinLabel}}</div>
                     <div class="prepay-amt">Pre Payment Amount: <span class="prepaymin-cls">{{sel_ser_det.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span></div>
                     <div class="prepay-gateway-outer" *ngIf="payModesQueried && !payModesExists">
                         <div class='prepay-head-sorry'> Sorry not payment modes available </div>
@@ -139,7 +139,7 @@
               <ng-container *ngIf="step==3">
                 <div class="member-outer">
                     <div class="member-head">
-                        Select the <ng-container *ngIf="!multipleMembers_allowed">member</ng-container><ng-container *ngIf="multipleMembers_allowed">members</ng-container> for whom the check-in is being made
+                        Select the <ng-container *ngIf="!multipleMembers_allowed">member</ng-container><ng-container *ngIf="multipleMembers_allowed">members</ng-container> for whom the {{checkinLabel}} is being made
                     </div>
                     <div class="member-list">
                             <div class="cs-btn bt3 member-add" (click)="addMember()" *ngIf="!showCreateMember">Add Member</div>
@@ -187,7 +187,7 @@
            <div class="waitlist-button-outer">
                 <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
                     <div class="showDetService" *ngIf="sel_ser_det.name">
-                    <strong>Check-In for</strong>  <span class='selsername'>{{ sel_ser_det.name }}</span>
+                    <strong>{{checkinLabel}} for</strong>  <span class='selsername'>{{ sel_ser_det.name }}</span>
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">
@@ -209,7 +209,7 @@
           </div>
       
           <ng-container *ngIf="step==3 && !showCreateMember">
-              <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">Back to Check-In</button>
+              <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">Back to {{checkinLabel}}</button>
           </ng-container>
       
           <ng-container *ngIf="step==3 && showCreateMember">

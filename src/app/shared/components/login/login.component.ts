@@ -136,7 +136,7 @@ export class LoginComponent implements OnInit {
   }
   doSignup() {
     const cClass = 'consumerpopupmainclass';
-    console.log('prov', this.is_provider);
+    // console.log('prov', this.is_provider);
     if (this.is_provider === 'true') {
       // cClass = 'commonpopupmainclass';
     }

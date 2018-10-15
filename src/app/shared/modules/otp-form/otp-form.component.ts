@@ -1,9 +1,13 @@
-import { Component, Inject, OnInit, OnChanges, EventEmitter, Output, Input } from '@angular/core';
+import { Component, Inject, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 import { SharedServices } from '../../services/shared-services';
 import {NgForm} from '@angular/forms';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
+
 
 import {Messages} from '../../constants/project-messages';
 
@@ -11,7 +15,7 @@ import {Messages} from '../../constants/project-messages';
   selector: 'app-otp-form',
   templateUrl: './otp-form.component.html'
 })
-export class OtpFormComponent  implements OnInit, OnChanges {
+export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
 
   otp_form: FormGroup;
   email_form: FormGroup;
@@ -22,6 +26,9 @@ export class OtpFormComponent  implements OnInit, OnChanges {
   showOTPContainer = true;
   showOTPEmailContainer = false;
   checking_email_otpsuccess = false;
+  resetCounterVal;
+  cronHandle: Subscription;
+  refreshTime = 30;
 
   @Input()  submitdata;
   @Input()  type;
@@ -36,7 +43,19 @@ export class OtpFormComponent  implements OnInit, OnChanges {
 
   ngOnInit() {
     this.createForm();
+    this.resetCounter(this.refreshTime);
+    this.cronHandle = Observable.interval(1000).subscribe(x => {
+      if (this.resetCounterVal > 0) {
+        this.resetCounterVal = this.resetCounterVal - 1;
+      }
+      // this.reloadAPIs();
+    });
     // console.log('type', this.type);
+  }
+  ngOnDestroy() {
+    if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+     }
   }
 
   ngOnChanges() {
@@ -48,6 +67,9 @@ export class OtpFormComponent  implements OnInit, OnChanges {
       this.otp_email = null;
     }
 
+  }
+  resetCounter(val) {
+    this.resetCounterVal = val;
   }
 
   createForm() {
@@ -70,6 +92,7 @@ export class OtpFormComponent  implements OnInit, OnChanges {
   }
 
   resendOTPMobile() {
+    this.resetCounter(this.refreshTime);
     // console.log('test', this.submitdata.userProfile);
     if (this.submitdata.userProfile !== undefined) {
       this.submitdata.userProfile.email = null;
@@ -104,6 +127,7 @@ export class OtpFormComponent  implements OnInit, OnChanges {
     } else if (this.type === 'signup') {
       this.submitdata.userProfile.email = email_form.otp_email;
       this.resendOtp.emit(this.submitdata);
+      this.resetCounter(this.refreshTime);
       this.checking_email_otpsuccess = true;
       // console.log('here',  this.submitdata,  this.submitdata.userProfile.email);
 

@@ -20,7 +20,7 @@
 
     <mat-dialog-actions>
         <button  type="submit" mat-button class="cs-btn bt1" [disabled]="!otp_form.valid">Submit</button>
-        <div class="resendouter">
+        <div class="resendouter" *ngIf="resetCounterVal==0">
           <span (click)="resendOTPMobile()" mat-button> Resend OTP To <ng-container *ngIf="type=='change_email'">Email Id</ng-container><ng-container *ngIf="type!='change_email'">Mobile</ng-container></span>
           <span (click)="setResendViaEmail()" *ngIf="type=='signup'" mat-button> Resend OTP Via Email</span>
         </div>

@@ -336,6 +336,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         // this.all_queues = data;
 
         const Cqueues = data;
+        // console.log('cqueue', Cqueues);
         this.all_queues = [];
 
         for ( const que of Cqueues) {
@@ -354,7 +355,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           display_schedule =  this.shared_functions.arrageScheduleforDisplay(schedule_arr);
           this.all_queues[ii]['displayschedule'] = display_schedule[0];
         }
-        // console.log(this.all_queues);
+        // console.log('all queues', this.all_queues);
       },
       error => {
       },
