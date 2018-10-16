@@ -15,16 +15,16 @@
                                 <div class="cl1">
                                     <!-- <span class="editbt" (click)="addEditProviderQueue('edit')"></span> -->
                                     <div class="ot-it que">
-                                        <h4>{{queue_data.name | titlecase}}</h4>
+                                        <h4>{{queue_data.name | capitalizeFirst}}</h4>
                                         <div class="c-ot">
                                             <div class="item">
                                                 <span class="ttle">Location</span>
-                                                <span class="icon-location">{{queue_data.location.place | titlecase}}</span>
+                                                <span class="icon-location">{{queue_data.location.place | capitalizeFirst}}</span>
                                             </div>
                                             <div class="item">
                                                 <span class="ttle">Service</span>
                                                 <span class="it0" *ngFor="let service of queue_data.services">
-                                                    <span class="itm">{{service.name | titlecase}}</span>
+                                                    <span class="itm">{{service.name | capitalizeFirst}}</span>
                                                 </span>
                                             </div>
                                         </div>

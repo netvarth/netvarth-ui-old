@@ -1,6 +1,6 @@
 <ng-container *ngIf="provider_loggedin">
 <!-- welcome screen -->
-<h2 (click)="showMode('main')" *ngIf="customer_found">Welcome <span>{{customerDispDet.name}}!</span></h2>
+<h2 (click)="showMode('main')" *ngIf="customer_found">Welcome <span>{{customerDispDet.name | capitalizeFirst}}!</span></h2>
 <div class="ksk-cpy welcome" [class.loggedin]="customer_found" *ngIf="kiosk_loading==false && cMod=='main'">
    
     <div class="outer">

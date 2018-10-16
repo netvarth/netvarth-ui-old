@@ -332,8 +332,8 @@
                                             <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
                                         
                                     </div>
-                                    <h3 (click)="providerDetClicked(search_result)" [matTooltipClass] = "tooltipcls" [matTooltip]="bNameTooltip">{{search_result.fields.title | titlecase}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
-                                    <span class="address">{{search_result.fields.place1 | titlecase }}</span>
+                                    <h3 (click)="providerDetClicked(search_result)" [matTooltipClass] = "tooltipcls" [matTooltip]="bNameTooltip">{{search_result.fields.title | capitalizeFirst}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
+                                    <span class="address">{{search_result.fields.place1 | capitalizeFirst }}</span>
 
                                     <div class="clr">
                                         <!-- <div class="otr-elements">
@@ -357,7 +357,7 @@
 
                                         <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
-                                                <li *ngFor="let serv of search_result.fields.services" (click)="serviceClicked(serv,search_result)">{{serv | titlecase}}</li>
+                                                <li *ngFor="let serv of search_result.fields.services" (click)="serviceClicked(serv,search_result)">{{serv | capitalizeFirst}}</li>
                                             </ul>
                                         </div>
                                     </div>

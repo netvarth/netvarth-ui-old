@@ -23,12 +23,12 @@
 
                           <div class="td td3">
                             <div class="label">Provider / Consumer</div>
-                            <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | titlecase}}</div>
-                            <div class="result" *ngIf="user_id != message.receiver.id">{{message.receiver.userName | titlecase}}</div>
+                            <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | capitalizeFirst}}</div>
+                            <div class="result" *ngIf="user_id != message.receiver.id">{{message.receiver.userName | capitalizeFirst}}</div>
                           </div>
                           <!-- <div class="td td3">
                             <div class="label">To</div>
-                            <div class="result">{{(user_id != message.receiver.id) ? (message.receiver.userName  | titlecase) : 'Me'}}</div>
+                            <div class="result">{{(user_id != message.receiver.id) ? (message.receiver.userName  | capitalizeFirst) : 'Me'}}</div>
                           </div> -->
                           <div class="td td2">
                             <div class="label">Service</div>

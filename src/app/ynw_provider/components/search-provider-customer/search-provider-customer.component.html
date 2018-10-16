@@ -3,8 +3,8 @@
 (ngSubmit)="amForm.valid &&
 searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 <h1 class="mat-dialog-title">
-    <ng-container *ngIf="source=='createCustomer'">Create {{customer_label  | titlecase}}</ng-container>
-    <ng-container *ngIf="source=='providerCheckin'">{{checkin_label | titlecase}}</ng-container>
+    <ng-container *ngIf="source=='createCustomer'">Create {{customer_label  | capitalizeFirst}}</ng-container>
+    <ng-container *ngIf="source=='providerCheckin'">{{checkin_label | capitalizeFirst}}</ng-container>
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -13,11 +13,11 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
     <!-- <div class="heading-searchcust">
         <span class="service-tooltip" *ngIf="source=='createCustomer'">
                 <i class="icon-bell"></i>
-                First step for creating a {{customer_label  | titlecase}} is searching.
+                First step for creating a {{customer_label  | capitalizeFirst}} is searching.
         </span>
         <span class="service-tooltip" *ngIf="source=='providerCheckin'">
                 <i class="icon-bell"></i>
-                First step for {{checkin_label}} is searching for {{customer_label  | titlecase}}.
+                First step for {{checkin_label}} is searching for {{customer_label  | capitalizeFirst}}.
         </span>
     </div> -->
 <div class="form-group">

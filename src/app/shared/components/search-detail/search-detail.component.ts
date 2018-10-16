@@ -47,7 +47,7 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
   ]
 })
 
-@HostListener('window:resize', ['$event'])
+
 
 export class SearchDetailComponent implements OnInit {
 
@@ -152,16 +152,18 @@ export class SearchDetailComponent implements OnInit {
     this.nosearch_results = false;
 
   }
+  @HostListener('window:resize', ['$event'])
   onResize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 767) {
       this.showrefinedsection = false;
     }
-   // console.log('here', this.screenWidth, this.screenHeight);
+  // console.log('here', this.screenWidth, this.screenHeight);
 }
 checkRefineSpecial() {
   const ynwsrchbuttonClicked = this.shared_functions.getitemfromLocalStorage('ynw_srchb');
+  // console.log('test', ynwsrchbuttonClicked);
   this.shared_functions.removeitemfromLocalStorage('ynw_srchb');
   if (ynwsrchbuttonClicked === 1) {
     this.hideRefineifOneresultchk = true;
@@ -1017,13 +1019,19 @@ setEnvironment(bypassotherfunction?) {
             if (this.search_data.hits.found === 0) {
               this.nosearch_results = true;
             }
-            /*if (this.hideRefineifOneresultchk) {
+            if (this.hideRefineifOneresultchk) {
               if (this.search_result_count === 1) {
                 this.showrefinedsection = false;
               } else {
-                this.showrefinedsection = true;
+               // console.log('screen width', this.screenWidth);
+                if (this.screenWidth <= 767) {
+                  this.showrefinedsection = false;
+                } else {
+                  this.showrefinedsection = true;
+                }
               }
-            }*/
+              this.hideRefineifOneresultchk = false;
+            }
           });
       });
     }

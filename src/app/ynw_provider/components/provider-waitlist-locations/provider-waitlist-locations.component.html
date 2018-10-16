@@ -22,9 +22,9 @@
                       <span class="bse-lcn-label" *ngIf="loc.baseLocation == true">Base Location</span>
 
                       <h3 class="pointer-cursor" (click)="goLocationDetail(loc)">
-                        {{loc.place | titlecase}}
+                        {{loc.place | capitalizeFirst}}
                       </h3>
-                      <p>{{loc.address | titlecase}}</p>
+                      <p>{{loc.address | capitalizeFirst}}</p>
 
                       <mat-menu #appMenu="matMenu">
                         <button mat-menu-item (click)="changeProviderLocationStatus(loc)">

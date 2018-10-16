@@ -5,7 +5,7 @@
 </h1>
 <mat-dialog-content>
   <div class="full-outer">
-      <div class="btl"><span class="label">{{customer_label  | titlecase}} Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName}}</span></div>
+      <div class="btl"><span class="label">{{customer_label  | capitalizeFirst}} Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName}}</span></div>
       <div class="topay" *ngIf="!pay_data.acceptPaymentBy || pay_data.acceptPaymentBy == 'self_pay'">
         <span class="label">Amount to pay</span>
         <span class="label-valu">

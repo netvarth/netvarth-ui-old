@@ -11,6 +11,7 @@ import { PagerModule } from '../shared/modules/pager/pager.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
 import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
+import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 
 import { KioskComponent } from './kiosk.component';
 import { KioskHomeComponent } from './components/home/kiosk-home.component';
@@ -31,6 +32,7 @@ import 'mousetrap';
 
 @NgModule({
     imports: [
+        CapitalizeFirstPipeModule,
         KioskRouterModule,
         SharedModule,
         AngularMultiSelectModule,

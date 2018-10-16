@@ -16,8 +16,8 @@
                                         <span class="editbt"  (click)="editLocation()" ></span>
                                         <div class="cop-l">
                                             <span class="bse-lcn-label" *ngIf="location_data.baseLocation==true">Base Location</span>
-                                            <h4>{{location_data.place | titlecase}}</h4>
-                                            <span>{{location_data.address | titlecase}}</span>
+                                            <h4>{{location_data.place | capitalizeFirst}}</h4>
+                                            <span>{{location_data.address | capitalizeFirst}}</span>
                                             <!-- <span *ngIf="location_data.pinCode">
                                                 Pin : {{location_data.pinCode}}
                                             </span> -->
@@ -106,7 +106,7 @@
                                 <tr *ngFor="let queue of queues">
                                     <td data-title="Queue" class="pointer-cursor"
                                     (click)="goQueueDetail(queue)" [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to edit queue'">
-                                    {{queue.name | titlecase}}</td>
+                                    {{queue.name | capitalizeFirst}}</td>
                                     <td data-title="Shedule">
                                         <div class="schtd">
                                             <ng-container *ngFor="let schedule of queue.displayschedule">

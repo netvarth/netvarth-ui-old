@@ -23,7 +23,7 @@
                     <span class="lcn-sts-label inactv" *ngIf="!service.status || service.status=='INACTIVE'"></span>
                     <!-- <span class="lcn-sts-label actv" *ngIf="service.status=='ACTIVE'">Active</span> -->
 
-                    <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name | titlecase}}</h3>
+                    <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name | capitalizeFirst}}</h3>
                     <div class="c-ot m0">
                         <div class="item">
                             <span class="ttle">Estimated Duration</span>

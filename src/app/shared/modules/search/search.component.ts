@@ -281,6 +281,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
     });*/
   }
+  handleNormalSearchClick() {
+    this.moreoptions_arr = [];
+    this.showmoreoptionsSec = false;
+    this.do_search(null, true);
+  }
+
   handleSearchmoreSearchClick(result) {
     // console.log('more returned', result);
     this.moreoptions_arr = result;

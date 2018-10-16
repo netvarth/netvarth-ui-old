@@ -23,8 +23,8 @@
                         <img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/>
                     </div>
                     <div class="mn-title">
-                        <span class="title-bn">{{bname | titlecase}}</span>
-                        <span class="title-ps">{{bsector | titlecase }} <span *ngIf="bsubsector!=''">({{bsubsector | titlecase}})</span></span>
+                        <span class="title-bn">{{bname | capitalizeFirst}}</span>
+                        <span class="title-ps">{{bsector | capitalizeFirst }} <span *ngIf="bsubsector!=''">({{bsubsector | capitalizeFirst}})</span></span>
                     </div>
 
                     <div class="inbx" (click)="inboxiconClick()">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="lgmem">
                     <span class="lgin">
-                    {{userdet.userName | titlecase}}
+                    {{userdet.userName | capitalizeFirst}}
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <i class="icon-angle-down"></i>
                     </button>
@@ -89,7 +89,7 @@
                         
                         <div class="sect1">
                             <div class="sl1">
-                                <span class="uname" *ngIf="userdet.userName">{{userdet.userName | titlecase}}</span>
+                                <span class="uname" *ngIf="userdet.userName">{{userdet.userName | capitalizeFirst}}</span>
                             </div>
                             
                         </div>
@@ -98,8 +98,8 @@
                             <img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/>
                             </div>
                             <div class="mn-title">
-                                <span class="title-bn">{{bname | titlecase}}</span>
-                                <span class="title-ps">{{bsector | titlecase }} <span *ngIf="bsubsector!=''">({{bsubsector | titlecase}})</span></span>
+                                <span class="title-bn">{{bname | capitalizeFirst}}</span>
+                                <span class="title-ps">{{bsector | capitalizeFirst }} <span *ngIf="bsubsector!=''">({{bsubsector | capitalizeFirst}})</span></span>
                             </div>
                         </div>
                         <div class="sect3">

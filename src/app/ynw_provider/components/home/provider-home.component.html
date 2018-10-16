@@ -8,13 +8,13 @@
           <div class="card p0 w-dta">
               <div class="head">
                   <div class="locn" *ngIf="selected_location">
-                      <span class="loc-name" *ngIf="!edit_location"><span class="icon-location"></span> {{selected_location.place | titlecase}}</span>
+                      <span class="loc-name" *ngIf="!edit_location"><span class="icon-location"></span> {{selected_location.place | capitalizeFirst}}</span>
                       <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
                         <mat-form-field class="example-full-width" *ngIf="edit_location">
 
                           <mat-select placeholder="Locations" [(value)]="selected_location_index" (change)="onChangeLocationSelect($event)">
                             <mat-option *ngFor="let location of locations;let i = index" [value]="i">
-                              {{ location.place | titlecase }}
+                              {{ location.place | capitalizeFirst }}
                             </mat-option>
                           </mat-select>
 
@@ -54,7 +54,7 @@
                       <ul>
                           <li [ngClass]="{'active': status_type =='all'}"  (click)="changeStatusType('all')"
                           *ngIf="time_type != 1 || (time_type ==1 && selected_queue!=null && selected_queue.id)">
-                          <span>{{checkin_label |titlecase}}s</span>
+                          <span>{{checkin_label |capitalizeFirst}}s</span>
                           </li>
                           <ng-container  *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
                             <li [ngClass]="{'active': status_type =='started'}"  (click)="changeStatusType('started')">
@@ -216,7 +216,7 @@
                       </div>
 
                       <div class="check_in_date start_date" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} Start Date</label>
+                        <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}} Start Date</label>
                         <mat-form-field>
                             <input matInput [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker"
                             (dateChange)="checkFilterDateMaxMin('check_in_start_date')" [min]="filter_date_start_min" [max]="filter_date_start_max" autocomplete="off">
@@ -226,7 +226,7 @@
                       </div>
 
                       <div class="check_in_date end_date" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">{{checkin_label |titlecase}} End Date</label>
+                        <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}} End Date</label>
                         <mat-form-field>
                             <input matInput [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker"
                             (dateChange)="checkFilterDateMaxMin('check_in_end_date')" [min]="filter_date_end_min" [max]="filter_date_end_max" autocomplete="off">
@@ -248,9 +248,9 @@
                                   <th>Service</th>
                                   <th>Actions</th>
                                   <th>Payment Status</th>
-                                  <th *ngIf="time_type != 1">{{checkin_label |titlecase}} Status</th>
+                                  <th *ngIf="time_type != 1">{{checkin_label |capitalizeFirst}} Status</th>
                                   <th>Message</th>
-                                  <th *ngIf="time_type == 1">{{customer_label |titlecase}} Note</th>
+                                  <th *ngIf="time_type == 1">{{customer_label |capitalizeFirst}} Note</th>
                                   <th></th>
                               </tr>
                           </thead>
@@ -285,7 +285,7 @@
                                         <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
                                         *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                         || checkin.waitlistStatus == 'arrived')">
-                                          <i class="icon-play"></i>{{start_label |titlecase}}
+                                          <i class="icon-play"></i>{{start_label |capitalizeFirst}}
                                         </span>
 
                                         <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
@@ -304,7 +304,7 @@
                                         <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
                                         *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                         || checkin.waitlistStatus == 'arrived')">
-                                          <i class="icon-play"></i>{{start_label |titlecase}}
+                                          <i class="icon-play"></i>{{start_label |capitalizeFirst}}
                                         </span>
 
                                         <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
@@ -362,13 +362,13 @@
 
                                     </ng-container>
                                   </td>
-                                  <td data-title="{{checkin_label |titlecase}} Status" class="checkin_status"
+                                  <td data-title="{{checkin_label |capitalizeFirst}} Status" class="checkin_status"
                                   *ngIf="time_type !=1">
                                     <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
                                   </td>
                                   <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td>
-                                  <td data-title="{{customer_label |titlecase}} Note" class="cnote" *ngIf="time_type ==1">
+                                  <td data-title="{{customer_label |capitalizeFirst}} Note" class="cnote" *ngIf="time_type ==1">
                                     <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
@@ -380,7 +380,7 @@
                                       <mat-menu #menu="matMenu">
                                           <button type="button" mat-menu-item
                                           (click)="addProviderNote(checkin)">
-                                            <!-- Add {{provider_label  | titlecase}} Note -->
+                                            <!-- Add {{provider_label  | capitalizeFirst}} Note -->
                                             Add Note
                                           </button>
                                           <button type="button" mat-menu-item
@@ -411,7 +411,7 @@
                                           <button type="button"  mat-menu-item
                                           *ngIf="time_type!=1 && checkin.consumerNote"
                                           (click)="showConsumerNote(checkin)">
-                                           View {{customer_label |titlecase}} Note
+                                           View {{customer_label |capitalizeFirst}} Note
                                           </button>
                                       </mat-menu>
                                   </span>
@@ -428,7 +428,7 @@
                   </div>
                   <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
                     <div class="qlst no-dta" *ngIf="load_waitlist ==1 && check_in_filtered_list.length == 0">
-                      No {{checkin_label |titlecase}}s available
+                      No {{checkin_label |capitalizeFirst}}s available
                     </div>
                   </ng-container>
 

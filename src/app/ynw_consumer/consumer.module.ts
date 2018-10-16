@@ -35,9 +35,11 @@ import { AddMembersHolderComponent } from './components/add-members-holder/add-m
 import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-manage-privacy.component';
 
 import { projectConstants } from '../shared/constants/project-constants';
+import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 
 @NgModule({
     imports: [
+      CapitalizeFirstPipeModule,
         ConsumerRoutingModule,
         CommonModule,
         SearchModule,

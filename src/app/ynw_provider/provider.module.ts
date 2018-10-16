@@ -13,7 +13,8 @@ import { HeaderModule } from '../shared/modules/header/header.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 
-import { CapitalizeFirstPipe } from '../shared/pipes/capitalize.pipe';
+// import { CapitalizeFirstPipe } from '../shared/pipes/capitalize.pipe';
+import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 
 import { ProviderComponent } from './provider.component';
 import { ProviderHomeComponent } from './components/home/provider-home.component';
@@ -119,6 +120,7 @@ import 'mousetrap';
 
 @NgModule({
     imports: [
+        CapitalizeFirstPipeModule,
         ProviderRouterModule,
         SharedModule,
         CKEditorModule,
@@ -134,7 +136,6 @@ import 'mousetrap';
         Nl2BrPipeModule
     ],
     declarations: [
-        CapitalizeFirstPipe,
         ProviderComponent,
         ProviderHomeComponent,
         ProviderProfileComponent,

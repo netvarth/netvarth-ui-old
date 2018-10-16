@@ -125,7 +125,7 @@
                                                     <!-- <div class='remove-logo' *ngIf="blogo[0] && blogo[0].url" (click)="confirmLogoremove(blogo.keyName)"><span class="icon-delete"></span> Remove Picture</div> -->
                                                 </div>
                                                 <div class="bi-r">
-                                                    <h3>{{bProfile.businessName | titlecase }}</h3>
+                                                    <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
                                                     <p [innerHTML] = "bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc  | capitalizeFirst}} <!--...  <a href="#" class="smr">See More</a> --></p>
                                                 </div>
                                             </div>
@@ -156,8 +156,8 @@
                                         </div>
                                         <div class="copy">
                                             <div class="cop-l" *ngIf="loc_list.length>0">
-                                                <h4>{{base_loc.place | titlecase}}</h4>
-                                                <span>{{base_loc.address | titlecase}}</span>
+                                                <h4>{{base_loc.place | capitalizeFirst}}</h4>
+                                                <span>{{base_loc.address | capitalizeFirst}}</span>
                                                 <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
                                                   Pin : {{base_loc.pinCode}}
                                                 </span>
@@ -264,7 +264,7 @@
                                                     <ng-container *ngIf="phonearr.length>0">
                                                         <li class="ttd" *ngFor="let phone of phonearr; let i = index">
                                                             <div class="otr">
-                                                                <div class="ctd">{{phone.label | titlecase}}</div>
+                                                                <div class="ctd">{{phone.label | capitalizeFirst}}</div>
                                                                 <div class="ctd">{{phone.number}}</div>
                                                                 <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[phone.permission]}}</div> -->
                                                                 <div class="ctd"><span>Visible to</span> {{show_privacyText(phone.permission)}}</div>
@@ -307,7 +307,7 @@
                                                     <ng-container *ngIf="emailarr.length>0">
                                                         <li class="ttd" *ngFor="let email of emailarr; let i = index">
                                                             <div class="otr">
-                                                                <div class="ctd">{{email.label | titlecase}}</div>
+                                                                <div class="ctd">{{email.label | capitalizeFirst}}</div>
                                                                 <div class="ctd">{{email.emailid}}</div>
                                                                 <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[email.permission]}}</div> -->
                                                                 <div class="ctd"><span>Visible to</span> {{show_privacyText(email.permission)}}</div>
@@ -681,7 +681,7 @@
 
                                                     <ng-container *ngSwitchCase="'Enum'">
                                                         <div class="cont-btn">
-                                                            <!-- <p> {{ getdispVal('subdomain',fields)   | titlecase}}</p> -->
+                                                            <!-- <p> {{ getdispVal('subdomain',fields)   | capitalizeFirst}}</p> -->
                                                             <p> {{ getdispVal('subdomain',fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
@@ -698,7 +698,7 @@
 
                                                     <ng-container *ngSwitchCase="'Gender'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value | titlecase}}</p>
+                                                            <p> {{fields.value | capitalizeFirst}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                         </div>
                                                     </ng-container>
@@ -846,7 +846,7 @@
 
                                                     <ng-container *ngSwitchCase="'Enum'">
                                                         <div class="cont-btn">
-                                                            <!-- <p> {{fields.value | titlecase}}</p> -->
+                                                            <!-- <p> {{fields.value | capitalizeFirst}}</p> -->
                                                             <p>{{ getdispVal('domain', fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
@@ -854,7 +854,7 @@
 
                                                     <ng-container *ngSwitchCase="'EnumList'">
                                                         <div class="cont-btn">
-                                                            <!-- <p> {{fields.value | titlecase}}</p> -->
+                                                            <!-- <p> {{fields.value | capitalizeFirst}}</p> -->
                                                             <p>{{ getdispVal('domain', fields)}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
@@ -862,7 +862,7 @@
 
                                                     <ng-container *ngSwitchCase="'Gender'">
                                                         <div class="cont-btn">
-                                                            <p> {{fields.value | titlecase}}</p>
+                                                            <p> {{fields.value | capitalizeFirst}}</p>
                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                         </div>
                                                     </ng-container>
