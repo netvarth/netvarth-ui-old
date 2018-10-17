@@ -185,14 +185,7 @@
         padding: 20px;
         overflow: auto;
 
-        .form-group {
-            
-            .doceducationalqualification {
-                background: red;
-                .form-group {
-                    margin-bottom: 1.25rem;
-                }
-            }
+        .form-group {            
             
             // Messages shown under input fields
             .sts-msg {
@@ -452,6 +445,10 @@
             
             &:last-child {
                 margin-bottom: 0;
+            }
+            
+            .form-group {
+                margin-bottom: 1.25rem;
             }
         }
 

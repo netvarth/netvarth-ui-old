@@ -155,9 +155,8 @@
                                 </ul>
                                 <mat-menu #appMenu="matMenu">
                                   <button mat-menu-item (click)="providerDetail(provider)">View</button>
-                                  <button mat-menu-item>
-                                    <span class="add-fav favourited"
-                                    (click)="doDeleteFavProvider(provider)">
+                                  <button mat-menu-item (click)="doDeleteFavProvider(provider)">
+                                    <span class="add-fav favourited">
                                     Remove Favourite</span>
                                   </button>
                                   <button mat-menu-item (click)="providerManagePrivacy(provider,i)">

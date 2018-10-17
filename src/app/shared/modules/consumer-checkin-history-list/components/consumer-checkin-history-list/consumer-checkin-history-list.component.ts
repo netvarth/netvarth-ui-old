@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Inject, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
@@ -19,7 +19,7 @@ import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/m
   templateUrl: './consumer-checkin-history-list.component.html'
 })
 
-export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
+export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() reloadapi;
   @Input()  params;
@@ -33,6 +33,10 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
   };
   history: any = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  notedialogRef;
+  billdialogRef;
+  paydialogRef;
+  ratedialogRef;
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
   public dialog: MatDialog,
@@ -44,6 +48,20 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
    // console.log('reloadapi', this.reloadapi);
+  }
+  ngOnDestroy() {
+    if (this.notedialogRef) {
+      this.notedialogRef.close();
+    }
+    if (this.billdialogRef) {
+      this.billdialogRef.close();
+    }
+    if (this.paydialogRef) {
+      this.paydialogRef.close();
+    }
+    if (this.ratedialogRef) {
+      this.ratedialogRef.close();
+    }
   }
 
   getHistroy(param) {
@@ -109,7 +127,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
   }
 
   addNote(pass_ob) {
-    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+    this.notedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
       disableClose: true,
@@ -117,7 +135,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
       data: pass_ob
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
@@ -139,8 +157,8 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
   }
 
   viewBill(checkin, bill_data) {
-    console.log('viewbill');
-    const dialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
+    // console.log('viewbill');
+    this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
       disableClose: true,
@@ -151,7 +169,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.billdialogRef.afterClosed().subscribe(result => {
       if ( result === 'makePayment') {
         this.makePayment(checkin, bill_data);
       }
@@ -159,7 +177,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
   }
 
   makePayment(checkin, bill_data) {
-    const dialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
+    this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
@@ -170,7 +188,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.paydialogRef.afterClosed().subscribe(result => {
       this.getHistoryCount(this.params);
     });
   }
@@ -188,7 +206,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
   }
 
   rateService(waitlist) {
-    const dialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
+    this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
@@ -196,7 +214,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges {
       data: waitlist
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.ratedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getHistroy(this.params);
       }

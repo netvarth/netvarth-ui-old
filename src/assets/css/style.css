@@ -2393,7 +2393,8 @@ app-footer {
       font-weight: 700;
       line-height: 1rem; }
     .more-opt .mo-content .mat-dialog-content {
-      overflow: inherit; }
+      overflow: inherit;
+      max-height: auto; }
       .more-opt .mo-content .mat-dialog-content:before, .more-opt .mo-content .mat-dialog-content:after {
         content: "";
         display: table; }
@@ -2410,7 +2411,6 @@ app-footer {
             width: 50%; } }
         @media only screen and (max-width: 400px) {
           .more-opt .mo-content .mat-dialog-content .more-box {
-            width: 100%;
             margin-bottom: 15px; } }
         .more-opt .mo-content .mat-dialog-content .more-box .refine_subheader {
           font-weight: 600;
@@ -2420,7 +2420,10 @@ app-footer {
           align-items: center; }
           .more-opt .mo-content .mat-dialog-content .more-box .refine_fieldlist app-rating-star .rating-outer .ynwstar-rating {
             float: none;
-            width: 135px; }
+            width: 127px; }
+            @media only screen and (max-width: 575px) {
+              .more-opt .mo-content .mat-dialog-content .more-box .refine_fieldlist app-rating-star .rating-outer .ynwstar-rating {
+                width: 117px; } }
             .more-opt .mo-content .mat-dialog-content .more-box .refine_fieldlist app-rating-star .rating-outer .ynwstar-rating label {
               margin-bottom: 0;
               cursor: pointer; }
@@ -3061,20 +3064,6 @@ header {
     margin: 0;
     padding: 20px;
     overflow: auto; }
-    .signupmainclass .mat-dialog-content .form-group .doceducationalqualification,
-    .loginmainclass .mat-dialog-content .form-group .doceducationalqualification,
-    .moreoptionsmainclass .mat-dialog-content .form-group .doceducationalqualification,
-    .forgotpasswordmainclass .mat-dialog-content .form-group .doceducationalqualification,
-    .commonpopupmainclass .mat-dialog-content .form-group .doceducationalqualification,
-    .googlemainmappopup .mat-dialog-content .form-group .doceducationalqualification, .outer-card .mat-dialog-content .form-group .doceducationalqualification, .consumerpopupmainclass .mat-dialog-content .form-group .doceducationalqualification {
-      background: red; }
-      .signupmainclass .mat-dialog-content .form-group .doceducationalqualification .form-group,
-      .loginmainclass .mat-dialog-content .form-group .doceducationalqualification .form-group,
-      .moreoptionsmainclass .mat-dialog-content .form-group .doceducationalqualification .form-group,
-      .forgotpasswordmainclass .mat-dialog-content .form-group .doceducationalqualification .form-group,
-      .commonpopupmainclass .mat-dialog-content .form-group .doceducationalqualification .form-group,
-      .googlemainmappopup .mat-dialog-content .form-group .doceducationalqualification .form-group, .outer-card .mat-dialog-content .form-group .doceducationalqualification .form-group, .consumerpopupmainclass .mat-dialog-content .form-group .doceducationalqualification .form-group {
-        margin-bottom: 1.25rem; }
     .signupmainclass .mat-dialog-content .form-group .sts-msg,
     .loginmainclass .mat-dialog-content .form-group .sts-msg,
     .moreoptionsmainclass .mat-dialog-content .form-group .sts-msg,
@@ -3734,6 +3723,13 @@ header {
     .commonpopupmainclass .mat-dialog-content .form-group:last-child,
     .googlemainmappopup .mat-dialog-content .form-group:last-child, .outer-card .mat-dialog-content .form-group:last-child, .consumerpopupmainclass .mat-dialog-content .form-group:last-child {
       margin-bottom: 0; }
+    .signupmainclass .mat-dialog-content .form-group .form-group,
+    .loginmainclass .mat-dialog-content .form-group .form-group,
+    .moreoptionsmainclass .mat-dialog-content .form-group .form-group,
+    .forgotpasswordmainclass .mat-dialog-content .form-group .form-group,
+    .commonpopupmainclass .mat-dialog-content .form-group .form-group,
+    .googlemainmappopup .mat-dialog-content .form-group .form-group, .outer-card .mat-dialog-content .form-group .form-group, .consumerpopupmainclass .mat-dialog-content .form-group .form-group {
+      margin-bottom: 1.25rem; }
     .signupmainclass .mat-dialog-content .mat-form-field,
     .loginmainclass .mat-dialog-content .mat-form-field,
     .moreoptionsmainclass .mat-dialog-content .mat-form-field,
@@ -8459,6 +8455,10 @@ header.dashb {
             width: 25px;
             height: 23px;
             display: flex; }
+            @media only screen and (max-width: 575px) {
+              header.dashb .lg-opt .bnps .inbx .ot-bx i {
+                width: 22px;
+                height: 20px; } }
             header.dashb .lg-opt .bnps .inbx .ot-bx i:before {
               width: 25px;
               height: 23px; }
@@ -8547,6 +8547,10 @@ header.dashb {
           width: 25px;
           height: 25px;
           font-size: 1.5rem; }
+          @media only screen and (max-width: 575px) {
+            header.dashb .lg-opt .userdt .usrbx .icon-user {
+              width: 22px;
+              height: 22px; } }
           header.dashb .lg-opt .userdt .usrbx .icon-user:before {
             position: absolute;
             font-family: "custom-ynw" !important;
@@ -8603,9 +8607,9 @@ header.dashb {
           -o-transition: all 0.3s;
           -webkit-transition: all 0.3s;
           transition: all 0.3s;
-          -webkit-box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.1) !important ;
-          -moz-box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.1) !important ;
-          box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.1) !important ;
+          -webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) !important ;
+          -moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) !important ;
+          box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) !important ;
           opacity: 0; }
           header.dashb .mobile-menu .row .menu-outer .outer .close {
             position: absolute;
@@ -9017,7 +9021,8 @@ footer.dashb {
     @media only screen and (max-width: 575px) {
       .tp-pnl .top-mnu {
         justify-content: flex-start;
-        flex-wrap: wrap; }
+        flex-wrap: wrap;
+        margin: 10px 0; }
         .tp-pnl .top-mnu .bt5:before {
           display: none; } }
     .tp-pnl .top-mnu .top-help-icon, .tp-pnl .top-mnu .top-help-button {
@@ -9039,9 +9044,12 @@ footer.dashb {
       box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) ; }
       @media only screen and (max-width: 575px) {
         .tp-pnl .top-mnu .top-help-icon, .tp-pnl .top-mnu .top-help-button {
-          margin-bottom: 5px;
           margin-left: 0px;
-          margin-right: 10px; } }
+          margin-right: 5px;
+          padding: 0; } }
+      @media only screen and (max-width: 400px) {
+        .tp-pnl .top-mnu .top-help-icon, .tp-pnl .top-mnu .top-help-button {
+          margin-right: 5px; } }
       .tp-pnl .top-mnu .top-help-icon .bt4, .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt4, .tp-pnl .top-mnu .top-help-button .bt5 {
         -webkit-border-radius: 0;
         border-radius: 0;
@@ -9058,6 +9066,12 @@ footer.dashb {
             margin: 0;
             border-bottom: 1px solid $cc-ash;
         }*/ }
+        @media only screen and (max-width: 575px) {
+          .tp-pnl .top-mnu .top-help-icon .bt4, .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt4, .tp-pnl .top-mnu .top-help-button .bt5 {
+            padding: 0 6px; } }
+        @media only screen and (max-width: 400px) {
+          .tp-pnl .top-mnu .top-help-icon .bt4, .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt4, .tp-pnl .top-mnu .top-help-button .bt5 {
+            padding: 0 3px; } }
         .tp-pnl .top-mnu .top-help-icon .bt4:hover, .tp-pnl .top-mnu .top-help-icon .bt5:hover, .tp-pnl .top-mnu .top-help-button .bt4:hover, .tp-pnl .top-mnu .top-help-button .bt5:hover {
           background: #00aef2;
           color: #fff; }
@@ -9090,6 +9104,9 @@ footer.dashb {
         -o-transition: all 300ms;
         -webkit-transition: all 300ms;
         transition: all 300ms; }
+        @media only screen and (max-width: 575px) {
+          .tp-pnl .top-mnu .top-help-icon i, .tp-pnl .top-mnu .top-help-button i {
+            padding: 5px; } }
         .tp-pnl .top-mnu .top-help-icon i:hover, .tp-pnl .top-mnu .top-help-button i:hover {
           color: #00aef2; }
     .tp-pnl .top-mnu .top-help-button {
@@ -9098,7 +9115,11 @@ footer.dashb {
       background: transparent;
       align-items: center;
       justify-content: center;
-      box-shadow: none; }
+      box-shadow: none;
+      margin-right: 0; }
+      @media only screen and (max-width: 575px) {
+        .tp-pnl .top-mnu .top-help-button {
+          min-width: 0; } }
       .tp-pnl .top-mnu .top-help-button .bt5 {
         background: transparent;
         color: #1873f2;
@@ -13724,21 +13745,27 @@ header.consumer {
         z-index: 199; }
       header.consumer .tp-1 .tp-r .tc1 {
         margin-top: 0;
-        margin-bottom: 10px; }
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: flex-end; }
         @media only screen and (max-width: 767px) {
           header.consumer .tp-1 .tp-r .tc1 {
-            height: 70px; } }
-        @media only screen and (max-width: 400px) {
-          header.consumer .tp-1 .tp-r .tc1 {
-            margin-top: 12px;
-            height: auto; } }
+            height: 70px;
+            margin-bottom: 0; } }
         @media only screen and (max-width: 575px) {
           header.consumer .tp-1 .tp-r .tc1 {
             padding-top: 0px;
-            margin-bottom: 20px; } }
+            margin-bottom: 20px;
+            margin-bottom: 0; } }
+        @media only screen and (max-width: 400px) {
+          header.consumer .tp-1 .tp-r .tc1 {
+            margin-top: 12px;
+            height: auto;
+            margin-bottom: 10px; } }
         @media (min-width: 768px) and (max-width: 991px) {
           header.consumer .tp-1 .tp-r .tc1 {
-            height: 70px; } }
+            height: 70px;
+            margin-bottom: 0; } }
         header.consumer .tp-1 .tp-r .tc1 .isprovidertop {
           margin-top: 8px; }
         header.consumer .tp-1 .tp-r .tc1 .topsignouter {

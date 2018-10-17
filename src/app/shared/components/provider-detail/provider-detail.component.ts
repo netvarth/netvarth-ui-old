@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -53,7 +53,7 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 
   ]
 })
-export class ProviderDetailComponent implements OnInit {
+export class ProviderDetailComponent implements OnInit, OnDestroy {
 
 
   s3url;
@@ -135,7 +135,12 @@ export class ProviderDetailComponent implements OnInit {
   public domain;
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
-// Edited//
+  // Edited//
+  commdialogRef;
+  remdialogRef;
+  checkindialogRef;
+  extChecindialogRef;
+  servicedialogRef;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -156,6 +161,23 @@ export class ProviderDetailComponent implements OnInit {
       this.provider_id = params.get('id');
       this.gets3curl();
     });
+  }
+  ngOnDestroy() {
+    if (this.commdialogRef) {
+      this.commdialogRef.close();
+    }
+    if (this.remdialogRef) {
+      this.remdialogRef.close();
+    }
+    if (this.servicedialogRef) {
+      this.servicedialogRef.close();
+    }
+    if (this.checkindialogRef) {
+      this.checkindialogRef.close();
+    }
+    if (this.extChecindialogRef) {
+      this.extChecindialogRef.close();
+    }
   }
   backtoSearchResult() {
     this.locationobj.back();
@@ -637,7 +659,7 @@ export class ProviderDetailComponent implements OnInit {
       }
   }
   showCommunicate(provid) {
-    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+    this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
       disableClose: true,
@@ -650,7 +672,7 @@ export class ProviderDetailComponent implements OnInit {
      }
    });
 
-   dialogRef.afterClosed().subscribe(result => {
+   this.commdialogRef.afterClosed().subscribe(result => {
 
    });
   }
@@ -695,7 +717,7 @@ export class ProviderDetailComponent implements OnInit {
   }
   doRemoveFav() {
 
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+    this.remdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
@@ -704,7 +726,7 @@ export class ProviderDetailComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.remdialogRef.afterClosed().subscribe(result => {
 
       if (result) {
         this.handle_Fav('remove');
@@ -734,7 +756,7 @@ export class ProviderDetailComponent implements OnInit {
       day = '' + dy;
     }
     const curdate = cdate.getFullYear() + '-' + mon + '-' + day;*/
-    const dialogRef = this.dialog.open(CheckInComponent, {
+    this.checkindialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
        panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
        disableClose: true,
@@ -758,7 +780,7 @@ export class ProviderDetailComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.checkindialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getbusinessprofiledetails_json('location', true);
       }
@@ -863,7 +885,7 @@ export class ProviderDetailComponent implements OnInit {
  // Edited//
 
  showExistingCheckin(obj) {
-    const dialogRef = this.dialog.open(ExistingCheckinComponent, {
+    this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
@@ -874,7 +896,7 @@ export class ProviderDetailComponent implements OnInit {
     }
   });
 
-  dialogRef.afterClosed().subscribe(result => {
+  this.extChecindialogRef.afterClosed().subscribe(result => {
     if (result === true) {
         this.getbusinessprofiledetails_json('location', true);
     }
@@ -882,7 +904,7 @@ export class ProviderDetailComponent implements OnInit {
  }
 
  showServiceDetail(serv, busname) {
-  const dialogRef = this.dialog.open(ServiceDetailComponent, {
+  this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
     width: '50%',
     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
     disableClose: true,
@@ -892,7 +914,7 @@ export class ProviderDetailComponent implements OnInit {
   }
   });
 
-  dialogRef.afterClosed().subscribe(result => {
+  this.servicedialogRef.afterClosed().subscribe(result => {
 
   });
 }

@@ -162,6 +162,11 @@ header {
                             height: 23px;
                             display: flex;
                             
+                            @include respond-to(ynw-575) {
+                                width: 22px;
+                                height: 20px;
+                            }
+                            
                             &:before {
                                 width: 25px;
                                 height: 23px;
@@ -282,6 +287,11 @@ header {
                         height: 25px;
                         font-size: 1.5rem;
                         
+                        @include respond-to(ynw-575) {
+                            width: 22px;
+                            height: 22px;
+                        }
+                        
                         &:before {
                             position: absolute;
                             @include font-custom;
@@ -335,7 +345,7 @@ header {
                         @include transform-origin(50% 0);
                         @include transform-style(preserve-3d);
                         @include transition(all 0.3s);
-                        @include box-shadow(0px, 20px, 30px, rgba(0,0,0,.1) !important);
+                        @include box-shadow(0px, 0px, 30px, rgba(0,0,0,.1) !important);
                         opacity: 0;
                         
                         .close {
@@ -850,6 +860,7 @@ footer {
         @include respond-to(ynw-575) {
             justify-content: flex-start;
             flex-wrap: wrap;
+            margin: 10px 0;
             
             .bt5 {                
                 &:before {
@@ -870,9 +881,12 @@ footer {
             @include box-shadow(0px, 0px, 30px, rgba(0,0,0,0.1));
             
             @include respond-to(ynw-575) {
-                margin-bottom: 5px;
                 margin-left: 0px;
-                margin-right: 10px;
+                margin-right: 5px;
+                padding: 0;
+            }
+            @include respond-to(ynw-400) {
+                margin-right: 5px;
             }
             
             .bt4, .bt5 {
@@ -881,6 +895,14 @@ footer {
                 background: transparent;
                 min-width: 0;
                 @include border-radius(30px);
+                
+                @include respond-to(ynw-575) {
+                    padding: 0 6px;
+                }
+                @include respond-to(ynw-400) {
+                    padding: 0 3px;
+                }
+                
                 
                 &:hover {
                     background: $linkblue;
@@ -926,6 +948,10 @@ footer {
                 cursor: pointer;
                 @include transition(all 300ms);
                 
+                @include respond-to(ynw-575) {
+                    padding:5px;
+                }
+                
                 &:hover {
                     color: $linkblue;
                 }
@@ -938,6 +964,11 @@ footer {
             align-items: center;
             justify-content: center;
             box-shadow: none;
+            margin-right: 0;
+            
+            @include respond-to(ynw-575) {
+                min-width: 0;
+            }
             
             .bt5 {
                 background: transparent;

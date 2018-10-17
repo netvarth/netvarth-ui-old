@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -19,7 +19,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
     templateUrl: './provider-waitlist-locations.component.html'
 })
 
-export class ProviderWaitlistLocationsComponent implements OnInit {
+export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
 
   loc_list: any = [];
   bProfile: any = [];
@@ -34,6 +34,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
   show_addlocationButton = false;
   multipeLocationAllowed = false;
   businessConfig: any = [];
+  dialogRef;
 
   breadcrumbs = [
     {
@@ -66,6 +67,11 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
     // this.bProfile = this.provider_datastorage.get('bProfile');
+  }
+  ngOnDestroy() {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
   }
   getBusinessConfiguration() {
     this.shared_services.bussinessDomains()
@@ -198,7 +204,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
   }
 
   addLocation() {
-    const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
+    this.dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
       disableClose: true,
@@ -208,7 +214,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit {
         source: 'waitlist'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getProviderLocations();

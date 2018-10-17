@@ -75,8 +75,8 @@ export const Messages = {
   'BPROFILE_SOCIAL_URL_VALID' : 'Please enter a valid URL',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
   // 'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
-  'BPROFILE_LANGUAGE_SAVED': 'Languages Saved successfully',
-  'BPROFILE_SPECIALIZATION_SAVED': 'Specializations Saved successfully',
+  'BPROFILE_LANGUAGE_SAVED': 'Languages saved successfully',
+  'BPROFILE_SPECIALIZATION_SAVED': 'Specializations saved successfully',
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 400 characters',
 
@@ -96,6 +96,7 @@ export const Messages = {
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'SERVICE_PRE_PAY_ERROR': 'Payment settings needs to be completed before enabling the Pre-Payment option',
+  'SERVICE_TAX_ZERO_ERROR': 'Tax settings need to be completed for tax to be applicable',
   'WAITLIST_LOCATION_CREATED': 'Location created successfully',
   'WAITLIST_LOCATION_UPDATED': 'Location updated successfully',
   'WAITLIST_LOCATION_AMINITIES_SAVED': 'Location amenities saved successfully',

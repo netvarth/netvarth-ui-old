@@ -938,10 +938,10 @@ convert24HourtoAmPm(time, secreq?) {
   return retstr;
 }
 
-doCancelWaitlist(waitlist) {
+doCancelWaitlist(waitlist, cthis?) {
   return new Promise((resolve, reject) => {
 
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+    cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
@@ -951,7 +951,7 @@ doCancelWaitlist(waitlist) {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    cthis.canceldialogRef.afterClosed().subscribe(result => {
 
       if (result) {
         this.cancelWaitlist(waitlist.ynwUuid , waitlist.provider.id)
@@ -993,9 +993,9 @@ cancelWaitlist(id , provider_id) {
   });
 }
 
-doDeleteFavProvider(fav) {
+doDeleteFavProvider(fav, cthis?) {
   return new Promise((resolve, reject) => {
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+    cthis.remfavdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
@@ -1005,7 +1005,7 @@ doDeleteFavProvider(fav) {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    cthis.remfavdialogRef.afterClosed().subscribe(result => {
 
       if (result) {
         this.deleteFavProvider(fav.id)

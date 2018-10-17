@@ -49,6 +49,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   normaladd_msg1 = this.shared_functions.getProjectMesssages('SERVICE_ADDED1');
   normaladd_msg2 = this.shared_functions.getProjectMesssages('SERVICE_ADDED2');
   disable_price = true;
+  taxDetails: any = [];
+  taxpercentage = 0;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
@@ -73,7 +75,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
        this.disable_price = false;
      }
 
-
+     this.getTaxpercentage();
      this.createForm();
      if (this.data.type === 'edit') {
       this.service = this.data.service;
@@ -95,6 +97,31 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
 
       }
     );
+  }
+  getTaxpercentage() {
+    this.provider_services.getTaxpercentage()
+        .subscribe (data => {
+            this.taxDetails = data;
+            this.taxpercentage = this.taxDetails.taxPercentage;
+            console.log('tax percentage', this.taxpercentage);
+        },
+    error => {
+
+    });
+  }
+
+  taxapplicableChange() {
+    // console.log('tax applicable', this.taxpercentage);
+    if (this.taxpercentage <= 0) {
+      // console.log('reached here', this.taxpercentage);
+      this.api_error = this.shared_functions.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
+      setTimeout(() => {
+        this.api_error = null;
+      }, projectConstants.TIMEOUT_DELAY_LARGE);
+      this.amForm.get('taxable').setValue(false);
+    } else {
+      this.api_error = null;
+    }
   }
 
   createForm() {

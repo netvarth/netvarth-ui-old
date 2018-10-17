@@ -83,6 +83,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   estimatesmallCaption = Messages.ESTIMATED_TIME_SMALL_CAPTION;
   checkinCaption = Messages.CHECKIN_TIME_CAPTION;
+  notificationdialogRef;
+  addnotedialogRef;
+  checkindialogRef;
+  billdialogRef;
+  paydialogRef;
+  ratedialogRef;
+  privacydialogRef;
+  canceldialogRef;
+  remfavdialogRef;
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -115,7 +124,34 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
     if (this.countercronHandle) {
       this.countercronHandle.unsubscribe();
-     }
+    }
+    if (this.notificationdialogRef) {
+      this.notificationdialogRef.close();
+    }
+    if (this.addnotedialogRef) {
+      this.addnotedialogRef.close();
+    }
+    if (this.checkindialogRef) {
+      this.checkindialogRef.close();
+    }
+    if (this.billdialogRef) {
+      this.billdialogRef.close();
+    }
+    if (this.paydialogRef) {
+      this.paydialogRef.close();
+    }
+    if (this.ratedialogRef) {
+      this.ratedialogRef.close();
+    }
+    if (this.privacydialogRef) {
+      this.privacydialogRef.close();
+    }
+    if (this.canceldialogRef) {
+      this.canceldialogRef.close();
+    }
+    if (this.remfavdialogRef) {
+      this.remfavdialogRef.close();
+    }
  }
 
   getWaitlist() {
@@ -411,7 +447,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.shared_functions.doCancelWaitlist(waitlist)
+    this.shared_functions.doCancelWaitlist(waitlist, this)
     .then (
       data => {
         if (data === 'reloadlist') {
@@ -426,12 +462,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
 
   doDeleteFavProvider(fav) {
-
     if (!fav.id) {
       return false;
     }
 
-    this.shared_functions.doDeleteFavProvider(fav)
+    this.shared_functions.doDeleteFavProvider(fav, this)
     .then(
       data => {
         if (data === 'reloadlist') {
@@ -468,7 +503,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    const dialogRef = this.dialog.open(NotificationListBoxComponent, {
+    this.notificationdialogRef = this.dialog.open(NotificationListBoxComponent, {
       width: '50%',
       disableClose: true,
       data: {
@@ -476,7 +511,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.notificationdialogRef.afterClosed().subscribe(result => {
 
     });
   }
@@ -512,7 +547,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   addNote(pass_ob) {
 
-    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+    this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
@@ -520,7 +555,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       data: pass_ob
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.addnotedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
@@ -562,7 +597,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const provider_data = data.provider_data;
     const location_data =  data.location_data;
 
-    const dialogRef = this.dialog.open(CheckInComponent, {
+    this.checkindialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
        panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
        disableClose: true,
@@ -579,7 +614,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.checkindialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getWaitlist();
       }
@@ -712,7 +747,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   viewBill(checkin, bill_data) {
-    const dialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
+    this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'width-100'],
       disableClose: true,
@@ -722,7 +757,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.billdialogRef.afterClosed().subscribe(result => {
       if ( result === 'makePayment') {
         this.makePayment(checkin, bill_data);
       }
@@ -730,7 +765,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   makePayment(checkin, bill_data) {
-    const dialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
+    this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
@@ -740,13 +775,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.paydialogRef.afterClosed().subscribe(result => {
       this.reloadAPIs();
     });
   }
 
   rateService(waitlist) {
-    const dialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
+    this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
@@ -754,7 +789,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       data: waitlist
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.ratedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getWaitlist();
       }
@@ -785,14 +820,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   providerManagePrivacy(provider, i) {
 
-    const dialogRef = this.dialog.open(AddManagePrivacyComponent, {
+    this.privacydialogRef = this.dialog.open(AddManagePrivacyComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
       data: {'provider': provider}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.privacydialogRef.afterClosed().subscribe(result => {
       if (result.message === 'reloadlist') {
         this.fav_providers[i]['revealPhoneNumber'] = result.data.revealPhoneNumber;
       }
