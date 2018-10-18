@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -16,7 +16,7 @@ import {Messages} from '../../../shared/constants/project-messages';
   templateUrl: './provider-bprofile-search-adwords.component.html',
   styleUrls: ['./provider-bprofile-search-adwords.component.css']
 })
-export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges {
+export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() reloadadwordapi;
 
@@ -30,6 +30,8 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     adwords_cntr = 0;
     adwordshowmore = false;
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
+    remadwdialogRef;
+    adwdialogRef;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions) {}
@@ -41,6 +43,15 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
 
     ngOnChanges() {
       this.getTotalAllowedAdwordsCnt();
+    }
+
+    ngOnDestroy() {
+      if (this.remadwdialogRef) {
+        this.remadwdialogRef.close();
+      }
+      if (this.adwdialogRef) {
+        this.adwdialogRef.close();
+      }
     }
 
     getTotalAllowedAdwordsCnt() {
@@ -62,7 +73,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     }
     addAdwords() {
       if (this.remaining_adword > 0) {
-        const dialogRef = this.dialog.open(AddProviderBprofileSearchAdwordsComponent, {
+        this.adwdialogRef = this.dialog.open(AddProviderBprofileSearchAdwordsComponent, {
           width: '50%',
           data: {
             type : 'add'
@@ -71,7 +82,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
           disableClose: true
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.adwdialogRef.afterClosed().subscribe(result => {
           if (result === 'reloadlist') {
             this.getAdwords();
           }
@@ -86,7 +97,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         if (!id) {
           return false;
         }
-        const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+        this.remadwdialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
           disableClose: true,
@@ -94,7 +105,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
             'message' : this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name + '"')
           }
         });
-        dialogRef.afterClosed().subscribe(result => {
+        this.remadwdialogRef.afterClosed().subscribe(result => {
           if (result) {
               this.deleteAdwords(id);
           }

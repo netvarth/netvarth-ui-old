@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -45,7 +45,7 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
     styleUrls: ['./provider-bprofile-search.component.scss']
 })
 
-export class ProviderBprofileSearchComponent implements OnInit {
+export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   checked = false;
   bProfile = null;
   serviceSector = null;
@@ -157,6 +157,18 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
   customer_label = '';
   maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
+  primarydialogRef;
+  loceditdialogRef;
+  addlocdialogRef;
+  privacydialogRef;
+  socialdialogRef;
+  specialdialogRef;
+  langdialogRef;
+  gallerydialogRef;
+  scheduledialogRef;
+  dynamicdialogRef;
+  adworddialogRef;
+  delgaldialogRef;
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
@@ -187,6 +199,44 @@ export class ProviderBprofileSearchComponent implements OnInit {
     this.getGalleryImages();
     this.getProviderLocations();
     this.breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'bprofile'};
+  }
+  ngOnDestroy() {
+    if (this.primarydialogRef) {
+      this.primarydialogRef.close();
+    }
+    if (this.loceditdialogRef) {
+      this.loceditdialogRef.close();
+    }
+    if (this.addlocdialogRef) {
+      this.addlocdialogRef.close();
+    }
+    if (this.privacydialogRef) {
+      this.privacydialogRef.close();
+    }
+    if (this.socialdialogRef) {
+      this.socialdialogRef.close();
+    }
+    if (this.specialdialogRef) {
+      this.specialdialogRef.close();
+    }
+    if (this.langdialogRef) {
+      this.langdialogRef.close();
+    }
+    if (this.gallerydialogRef) {
+      this.gallerydialogRef.close();
+    }
+    if (this.scheduledialogRef) {
+      this.scheduledialogRef.close();
+    }
+    if (this.dynamicdialogRef) {
+      this.dynamicdialogRef.close();
+    }
+    if (this.adworddialogRef) {
+      this.adworddialogRef.close();
+    }
+    if (this.delgaldialogRef) {
+      this.delgaldialogRef.close();
+    }
   }
   getPublicSearch() {
     this.provider_services.getPublicSearch()
@@ -581,7 +631,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   }
 
   showBPrimary() {
-    const dialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
+    this.primarydialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
       disableClose: true,
@@ -591,7 +641,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         bprofile: this.bProfile
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.primarydialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getBusinessProfile();
@@ -613,7 +663,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       const locid = this.bProfile.baseLocation.id;
       if (locid) {
         // this.routerobj.navigate(['/provider/settings/waitlist-manager/location-detail/' + locid]);
-        const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
+        this.loceditdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
           disableClose: true,
@@ -627,7 +677,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
             forbadge: (badge) ? true : false
           }
         });
-        dialogRef.afterClosed().subscribe(result => {
+        this.loceditdialogRef.afterClosed().subscribe(result => {
           // console.log('edit location return', result);
           if (result) {
             if (result === 'reloadlist') {
@@ -676,7 +726,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     }
   }
   addLocation() {
-    const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
+    this.addlocdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
       disableClose: true,
@@ -688,7 +738,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         source: 'bprofile'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.addlocdialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getBusinessProfile();
@@ -725,7 +775,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   }
   handlePrivacysettings(typ?, peditindx?) {
     // console.log('indx before', peditindx);
-    const dialogRef = this.dialog.open(AddProviderBprofilePrivacysettingsComponent, {
+    this.privacydialogRef = this.dialog.open(AddProviderBprofilePrivacysettingsComponent, {
       width: '50%',
       // panelClass: 'privacysettingsmainclass',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
@@ -737,7 +787,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         curtype: typ
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.privacydialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result.message === 'reloadlist') {
           this.bProfile = result.data;
@@ -751,7 +801,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     this.handleSocialmedia(key);
   }
   handleSocialmedia(key) {
-    const dialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
+    this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
       width: '50%',
       // panelClass: 'socialmediamainclass',
       panelClass: 'commonpopupmainclass',
@@ -762,7 +812,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         editkey : key || ''
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.socialdialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getBusinessProfile();
@@ -816,7 +866,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const bprof = holdselspec;
     const special = this.specialization_arr;
     // console.log('indx before', peditindx);
-    const dialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
+    this.specialdialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
       disableClose: true,
@@ -826,7 +876,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         specializations: special
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.specialdialogRef.afterClosed().subscribe(result => {
       if (result) {
         // console.log('returned', result);
         if (result['mod'] === 'reloadlist') {
@@ -879,7 +929,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
     const bprof = holdsellang;
     const lang = this.languages_arr;
     // console.log('indx before', peditindx);
-    const dialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
+    this.langdialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'privacyoutermainclass'],
       disableClose: true,
@@ -889,7 +939,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         languagesSpoken: lang
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.langdialogRef.afterClosed().subscribe(result => {
       if (result) {
         // console.log('returned', result);
         if (result['mod'] === 'reloadlist') {
@@ -914,7 +964,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   }
 
   handleGalleryImages() {
-    const dialogRef = this.dialog.open(ProviderBprofileSearchGalleryComponent, {
+    this.gallerydialogRef = this.dialog.open(ProviderBprofileSearchGalleryComponent, {
       width: '50%',
       // panelClass: 'gallerymainclass',
       panelClass: 'commonpopupmainclass',
@@ -925,7 +975,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         type : 'edit'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.gallerydialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getGalleryImages();
@@ -1057,7 +1107,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
 
   change_schedulepopup() {
     // console.log('change schedule');
-    const dialogRef = this.dialog.open(ProviderBprofileSearchSchedulepopupComponent, {
+    this.scheduledialogRef = this.dialog.open(ProviderBprofileSearchSchedulepopupComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
       disableClose: true,
@@ -1068,7 +1118,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         type : 'edit'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.scheduledialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getBusinessProfile();
@@ -1287,7 +1337,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   showDynamicFieldPopup(field, type, grid_row_index= null ) {
 
 
-    const dialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
+    this.dynamicdialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
       disableClose: true,
@@ -1299,7 +1349,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
         grid_row_index: grid_row_index
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.dynamicdialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getBussinessProfileApi()
@@ -1496,7 +1546,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
   }
 
   addAdwords() {
-    const dialogRef = this.dialog.open(AddProviderBprofileSearchAdwordsComponent, {
+    this.adworddialogRef = this.dialog.open(AddProviderBprofileSearchAdwordsComponent, {
       width: '50%',
       data: {
         type : 'add'
@@ -1505,7 +1555,7 @@ export class ProviderBprofileSearchComponent implements OnInit {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.adworddialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getAdwords();
       }

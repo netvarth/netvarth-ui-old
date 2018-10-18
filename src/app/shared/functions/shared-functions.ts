@@ -486,7 +486,7 @@ export class SharedFunctions {
   }
 
   confirmGalleryImageDelete(ob, file) {
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+    ob.delgaldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
@@ -496,7 +496,7 @@ export class SharedFunctions {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    ob.delgaldialogRef.afterClosed().subscribe(result => {
 
       if (result) {
         ob.deleteImage(file);

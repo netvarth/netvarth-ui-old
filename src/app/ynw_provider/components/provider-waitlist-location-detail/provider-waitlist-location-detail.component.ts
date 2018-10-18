@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -20,7 +20,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
     templateUrl: './provider-waitlist-location-detail.component.html'
 })
 
-export class ProviderWaitlistLocationDetailComponent implements OnInit {
+export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestroy {
 
     location_id = null;
     location_data;
@@ -46,6 +46,8 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     api_success = null;
     api_error = null;
+    editlocdialogRef;
+    queuedialogRef;
 
     constructor(
         private provider_services: ProviderServices,
@@ -74,6 +76,15 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
             this.goBack();
         }
 
+    }
+
+    ngOnDestroy() {
+        if (this.editlocdialogRef) {
+            this.editlocdialogRef.close();
+        }
+        if (this.queuedialogRef) {
+            this.queuedialogRef.close();
+        }
     }
 
     getLocationDetail() {
@@ -183,7 +194,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
     }
 
     editLocation(badge?) {
-        const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
+        this.editlocdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass', 'locationoutermainclass'],
           disableClose: true,
@@ -196,7 +207,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit {
             forbadge: (badge) ? true : false
           }
         });
-        dialogRef.afterClosed().subscribe(result => {
+        this.editlocdialogRef.afterClosed().subscribe(result => {
           if (result) {
             if (result === 'reloadlist') {
             this.getLocationDetail();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -15,7 +15,7 @@ import { Messages } from '../../../shared/constants/project-messages';
   templateUrl: './provider-items.component.html',
   styleUrls: ['./provider-items.component.css']
 })
-export class ProviderItemsComponent implements OnInit {
+export class ProviderItemsComponent implements OnInit, OnDestroy {
 
     item_list: any = [] ;
     query_executed = false;
@@ -30,7 +30,12 @@ export class ProviderItemsComponent implements OnInit {
         url: '/provider/settings/items'
       }
     ];
-  breadcrumbs = this.breadcrumbs_init;
+    breadcrumbs = this.breadcrumbs_init;
+    itemnameTooltip = Messages.ITEMNAME_TOOLTIP;
+    additemdialogRef;
+    edititemdialogRef;
+    statuschangedialogRef;
+    removeitemdialogRef;
     constructor( private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions) {
@@ -39,6 +44,20 @@ export class ProviderItemsComponent implements OnInit {
 
     ngOnInit() {
       this.getitems();
+    }
+    ngOnDestroy() {
+      if (this.additemdialogRef) {
+        this.additemdialogRef.close();
+      }
+      if (this.edititemdialogRef) {
+        this.edititemdialogRef.close();
+      }
+      if (this.statuschangedialogRef) {
+        this.statuschangedialogRef.close();
+      }
+      if (this.removeitemdialogRef) {
+        this.removeitemdialogRef.close();
+      }
     }
     getitems() {
       this.provider_servicesobj.getProviderItems()
@@ -56,7 +75,7 @@ export class ProviderItemsComponent implements OnInit {
     }
 
     addItem() {
-      const dialogRef = this.dialog.open(AddProviderItemComponent, {
+      this.additemdialogRef = this.dialog.open(AddProviderItemComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
         disableClose: true,
@@ -65,14 +84,14 @@ export class ProviderItemsComponent implements OnInit {
         }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      this.additemdialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
           this.getitems();
         }
       });
     }
     editItem(obj) {
-      const dialogRef = this.dialog.open(AddProviderItemComponent, {
+      this.edititemdialogRef = this.dialog.open(AddProviderItemComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
         disableClose: true,
@@ -82,7 +101,7 @@ export class ProviderItemsComponent implements OnInit {
         }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      this.edititemdialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
           this.getitems();
         }
@@ -102,13 +121,13 @@ export class ProviderItemsComponent implements OnInit {
           status_condition = 'ACTIVE';
         break;
       }
-      const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      this.statuschangedialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         data: {
           'message' : this.sharedfunctionObj.getProjectMesssages('ITEM_ENABLE').replace('[status]', status_condition)
         }
       });
-      dialogRef.afterClosed().subscribe(result => {
+      this.statuschangedialogRef.afterClosed().subscribe(result => {
         if (result) {
             this.changeStatus(item.itemId, status_condition);
         }
@@ -137,7 +156,7 @@ export class ProviderItemsComponent implements OnInit {
       if (!id) {
         return false;
       }
-      const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
@@ -145,7 +164,7 @@ export class ProviderItemsComponent implements OnInit {
           'message' : this.sharedfunctionObj.getProjectMesssages('ITEM_DELETE').replace('[name]', item.displayName)
         }
       });
-      dialogRef.afterClosed().subscribe(result => {
+      this.removeitemdialogRef.afterClosed().subscribe(result => {
         if (result) {
             this.deleteItem(id);
         }

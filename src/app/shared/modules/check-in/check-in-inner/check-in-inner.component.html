@@ -69,7 +69,7 @@
                         </mat-chip-list> -->
                         
                         <div class='q-list-outer' *ngIf="step==1 && queuejson.length > 1">
-                            <div class="queue-head" *ngIf="step==1 && queuejson.length > 1">Queue </div>
+                            <div class="queue-head" *ngIf="step==1 && queuejson.length > 1">Service Time Window </div>
                             <div class="queue-body">
                                 <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i class="fa fa-angle-left"></i></span>
                                 <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx <= 0"><i class="fa fa-angle-left disable"></i></span>

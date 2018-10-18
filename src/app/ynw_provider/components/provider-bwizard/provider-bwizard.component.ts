@@ -47,6 +47,7 @@ export class ProviderbWizardComponent implements OnInit {
   customer_label = '';
   checkin_label = '';
   multipeLocationAllowed = false;
+  disablebuttonsInSchedule = false;
 
   constructor(
     private fb: FormBuilder,
@@ -432,11 +433,20 @@ export class ProviderbWizardComponent implements OnInit {
     // console.log('returned Schedule', obj);
     this.schedule_arr = obj;
     this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
+    this.disablebuttonsInSchedule = false;
     // this.ischange_schedule_clicked = false;
   }
   handleCancelschedule(obj) {
     this.handlesSaveschedule(obj);
+    this.disablebuttonsInSchedule = false;
+    // console.log('returned cancel', obj,  this.disablebuttonsInSchedule);
     // this.ischange_schedule_clicked = false;
+  }
+  handleaddeditscheduleclicked(obj) {
+    if (obj === 'addeditclicked') {
+      this.disablebuttonsInSchedule = true;
+    }
+    // console.log('returned', obj,  this.disablebuttonsInSchedule);
   }
 
   getDay(num) {

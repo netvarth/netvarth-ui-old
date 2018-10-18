@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import * as moment from 'moment';
@@ -18,7 +18,7 @@ import {projectConstants} from '../../../shared/constants/project-constants';
   templateUrl: './provider-nonworkingdays.component.html',
   styleUrls: ['./provider-nonworkingdays.component.css']
 })
-export class ProviderNonworkingdaysComponent implements OnInit {
+export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
     nonworking_list: any = [] ;
     query_executed = false;
     emptyMsg = '';
@@ -35,6 +35,9 @@ export class ProviderNonworkingdaysComponent implements OnInit {
       }
     ];
     breadcrumbs = this.breadcrumbs_init;
+    addholdialogRef;
+    editholdialogRef;
+    remholdialogRef;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions) {
@@ -45,6 +48,18 @@ export class ProviderNonworkingdaysComponent implements OnInit {
         this.getNonworkingdays();
     }
 
+    ngOnDestroy() {
+      if (this.addholdialogRef) {
+        this.addholdialogRef.close();
+      }
+      if (this.editholdialogRef) {
+        this.editholdialogRef.close();
+      }
+      if (this.remholdialogRef) {
+        this.remholdialogRef.close();
+      }
+    }
+
     getNonworkingdays() {
         this.provider_servicesobj.getProviderNonworkingdays()
         .subscribe(data => {
@@ -53,7 +68,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
         });
     }
     addHolidays() {
-        const dialogRef = this.dialog.open(AddProviderNonworkingdaysComponent, {
+        this.addholdialogRef = this.dialog.open(AddProviderNonworkingdaysComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
           disableClose: true,
@@ -62,14 +77,14 @@ export class ProviderNonworkingdaysComponent implements OnInit {
           }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.addholdialogRef.afterClosed().subscribe(result => {
           if (result === 'reloadlist') {
             this.getNonworkingdays();
           }
         });
     }
     editHolidays(obj) {
-        const dialogRef = this.dialog.open(AddProviderNonworkingdaysComponent, {
+        this.editholdialogRef = this.dialog.open(AddProviderNonworkingdaysComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
           disableClose: true,
@@ -79,7 +94,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
           }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.editholdialogRef.afterClosed().subscribe(result => {
           if (result === 'reloadlist') {
             this.getNonworkingdays();
           }
@@ -92,7 +107,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
         }
         const date =  new Date(holiday.startDay);
         const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
-        const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+        this.remholdialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
           disableClose: true,
@@ -100,7 +115,7 @@ export class ProviderNonworkingdaysComponent implements OnInit {
             'message' : this.sharedfunctionObj.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format )
           }
         });
-        dialogRef.afterClosed().subscribe(result => {
+        this.remholdialogRef.afterClosed().subscribe(result => {
           if (result) {
               this.deleteHolidays(id);
           }

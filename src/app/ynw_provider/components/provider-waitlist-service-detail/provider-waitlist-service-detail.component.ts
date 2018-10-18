@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -28,7 +28,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
     styleUrls: ['./provider-waitlist-service-detail.scss']
 })
 
-export class ProviderWaitlistServiceDetailComponent implements OnInit {
+export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy {
 
     service_id = null;
     service_data;
@@ -59,6 +59,9 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
     image_showlist: any = [];
     image_remaining_cnt = 0;
     disable_price = true;
+    delgaldialogRef;
+    servicedialogRef;
+    editgaldialogRef;
 
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
@@ -113,6 +116,18 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
 
         } else {
             this.goBack();
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.delgaldialogRef) {
+            this.delgaldialogRef.close();
+        }
+        if (this.servicedialogRef) {
+            this.servicedialogRef.close();
+        }
+        if (this.editgaldialogRef) {
+            this.editgaldialogRef.close();
         }
     }
 
@@ -256,7 +271,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
 
         if (!this.service_data.id) { return false; }
 
-        const dialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
+        this.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
             disableClose: true,
@@ -267,7 +282,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
             }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.servicedialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
             this.getServiceDetail();
             }
@@ -279,7 +294,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
 
         if (!this.service_data.id) { return false; }
 
-        const dialogRef = this.dialog.open(AddProviderWaitlistServiceGalleryComponent, {
+        this.editgaldialogRef = this.dialog.open(AddProviderWaitlistServiceGalleryComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
             disableClose: true,
@@ -289,7 +304,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit {
             }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.editgaldialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
             this.getGalleryImages();
             }

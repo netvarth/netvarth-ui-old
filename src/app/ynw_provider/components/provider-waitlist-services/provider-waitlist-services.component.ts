@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -19,7 +19,7 @@ import { AddProviderWaitlistServiceComponent } from '../add-provider-waitlist-se
     templateUrl: './provider-waitlist-services.component.html'
 })
 
-export class ProviderWaitlistServicesComponent implements OnInit {
+export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
 
   service_list: any = [];
   api_error = null;
@@ -39,6 +39,7 @@ export class ProviderWaitlistServicesComponent implements OnInit {
       title: 'Services'
     }
   ];
+  addservicedialogRef;
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
@@ -56,6 +57,12 @@ export class ProviderWaitlistServicesComponent implements OnInit {
      } else {
        this.disable_price = false;
      }
+  }
+
+  ngOnDestroy() {
+    if (this.addservicedialogRef) {
+      this.addservicedialogRef.close();
+    }
   }
 
   getServices() {
@@ -108,7 +115,7 @@ export class ProviderWaitlistServicesComponent implements OnInit {
   }
 
   addService() {
-    const dialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
+    this.addservicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -117,7 +124,7 @@ export class ProviderWaitlistServicesComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.addservicedialogRef.afterClosed().subscribe(result => {
       // if (result === 'reloadlist') {
         this.getServices();
       // }

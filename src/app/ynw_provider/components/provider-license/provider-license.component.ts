@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import * as moment from 'moment';
@@ -22,7 +22,7 @@ import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoi
   templateUrl: './provider-license.component.html',
   styleUrls: ['./provider-license.component.css']
 })
-export class ProviderLicenseComponent implements OnInit {
+export class ProviderLicenseComponent implements OnInit, OnDestroy {
 
     currentlicense_details: any = [] ;
     metrics: any = [];
@@ -49,6 +49,12 @@ export class ProviderLicenseComponent implements OnInit {
     upgradablepackages = [];
     addonTooltip = '';
     breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'license'};
+    upgradedialogRef;
+    addondialogRef;
+    lichistorydialogRef;
+    licenseusedialogRef;
+    invoicedialogRef;
+    upgradesubscriptdialogRef;
 
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
@@ -73,6 +79,27 @@ export class ProviderLicenseComponent implements OnInit {
       this.getSubscriptionDetail();
       this.getUpgradablePackages();
 
+    }
+
+    ngOnDestroy() {
+      if (this.upgradedialogRef) {
+        this.upgradedialogRef.close();
+      }
+      if (this.addondialogRef) {
+        this.addondialogRef.close();
+      }
+      if (this.lichistorydialogRef) {
+        this.lichistorydialogRef.close();
+      }
+      if (this.licenseusedialogRef) {
+        this.licenseusedialogRef.close();
+      }
+      if (this.invoicedialogRef) {
+        this.invoicedialogRef.close();
+      }
+      if (this.upgradesubscriptdialogRef) {
+        this.upgradesubscriptdialogRef.close();
+      }
     }
 
 
@@ -120,7 +147,7 @@ export class ProviderLicenseComponent implements OnInit {
     }
 
     showupgradeLicense() {
-        const dialogRef = this.dialog.open(UpgradeLicenseComponent, {
+        this.upgradedialogRef = this.dialog.open(UpgradeLicenseComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
           disableClose: true,
@@ -129,7 +156,7 @@ export class ProviderLicenseComponent implements OnInit {
           }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.upgradedialogRef.afterClosed().subscribe(result => {
           if (result === 'reloadlist') {
             this.getLicenseDetails('update');
           }
@@ -149,7 +176,7 @@ export class ProviderLicenseComponent implements OnInit {
     }
 
     showadd_addons() {
-      const dialogRef = this.dialog.open(AddproviderAddonComponent, {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
         width: '50%',
         data: {
           type : 'addons'
@@ -158,7 +185,7 @@ export class ProviderLicenseComponent implements OnInit {
         disableClose: true
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      this.addondialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
           this.getLicenseDetails('update');
         }
@@ -195,7 +222,7 @@ export class ProviderLicenseComponent implements OnInit {
   }*/
   showLicenceHistory() {
     // this.router.navigate(['provider', 'settings', 'license', 'auditlog']);
-    const dialogRef = this.dialog.open(ProviderAuditLogComponent, {
+    this.lichistorydialogRef = this.dialog.open(ProviderAuditLogComponent, {
       width: '50%',
       data: {
       },
@@ -203,7 +230,7 @@ export class ProviderLicenseComponent implements OnInit {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.lichistorydialogRef.afterClosed().subscribe(result => {
 
     });
   }
@@ -221,7 +248,7 @@ export class ProviderLicenseComponent implements OnInit {
   }
 
   showLicenseUsage() {
-    const dialogRef = this.dialog.open(ProviderLicenseUsageComponent, {
+    this.licenseusedialogRef = this.dialog.open(ProviderLicenseUsageComponent, {
       width: '50%',
       data: {
         metrics : this.metrics
@@ -230,7 +257,7 @@ export class ProviderLicenseComponent implements OnInit {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.licenseusedialogRef.afterClosed().subscribe(result => {
 
     });
   }
@@ -335,7 +362,7 @@ export class ProviderLicenseComponent implements OnInit {
 
   getInvoice (invoice) {
     // console.log(invoice.ynwUuid);
-    const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
+    this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
       width: '50%',
       data: {
         invoice : invoice,
@@ -345,14 +372,14 @@ export class ProviderLicenseComponent implements OnInit {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.invoicedialogRef.afterClosed().subscribe(result => {
 
     });
 
   }
 
   doUpgradeSubcription(value) {
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+    this.upgradesubscriptdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
@@ -360,7 +387,7 @@ export class ProviderLicenseComponent implements OnInit {
         'message' : 'Are you sure you wanted to change the subscription ?'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.upgradesubscriptdialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.updateSubscription(value);
       }

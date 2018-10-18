@@ -116,6 +116,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   delayTooltip = this.shared_functions.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
   cloudTooltip = this.shared_functions.getProjectMesssages('CLOUDICON_TOOPTIP');
+  adjustdialogRef;
+  notedialogRef;
+  addnotedialogRef;
+  billdialogRef;
+  viewbilldialogRef;
+  makPaydialogRef;
+  sendmsgdialogRef;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -188,9 +195,30 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-     if (this.cronHandle) {
+    if (this.cronHandle) {
       this.cronHandle.unsubscribe();
-     }
+    }
+    if (this.adjustdialogRef) {
+      this.adjustdialogRef.close();
+    }
+    if (this.notedialogRef) {
+      this.notedialogRef.close();
+    }
+    if (this.addnotedialogRef) {
+      this.addnotedialogRef.close();
+    }
+    if (this.billdialogRef) {
+      this.billdialogRef.close();
+    }
+    if (this.viewbilldialogRef) {
+      this.viewbilldialogRef.close();
+    }
+    if (this.makPaydialogRef) {
+      this.makPaydialogRef.close();
+    }
+    if (this.sendmsgdialogRef) {
+      this.sendmsgdialogRef.close();
+    }
   }
 
   getBusinessProfile() {
@@ -691,7 +719,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    const dialogRef = this.dialog.open(AdjustQueueDelayComponent, {
+    this.adjustdialogRef = this.dialog.open(AdjustQueueDelayComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -701,7 +729,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.adjustdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
@@ -781,7 +809,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   showConsumerNote (checkin) {
-    const dialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+    this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -790,7 +818,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
@@ -895,7 +923,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   addProviderNote(checkin) {
-    const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+    this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -904,7 +932,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.addnotedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
@@ -936,7 +964,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   addEditBill(checkin, bill_data) {
     // console.log('add bill', bill_data);
-    const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+    this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
       disableClose: true,
@@ -946,7 +974,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.billdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.reloadAPIs();
       }
@@ -955,7 +983,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   viewBill(checkin, bill_data) {
     // console.log('billdata', bill_data);
-    const dialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
+    this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
       disableClose: true,
@@ -965,7 +993,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.viewbilldialogRef.afterClosed().subscribe(result => {
       // console.log(result);
       if (result === 'updateBill') {
         this.addEditBill(checkin, bill_data);
@@ -978,7 +1006,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   makePayment(checkin, bill_data) {
-    const dialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+    this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -988,7 +1016,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.makPaydialogRef.afterClosed().subscribe(result => {
       this.reloadAPIs();
     });
   }
@@ -1009,7 +1037,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
     const uuid = waitlist.ynwUuid || null;
 
-    this.provider_shared_functions.addConsumerInboxMessage(uuid)
+    this.provider_shared_functions.addConsumerInboxMessage(uuid, this)
     .then(
       result => {
 

@@ -79,8 +79,8 @@
             </div>
         </div>
     </div>
-    <ng-container  *ngIf="ctype=='provider'">
-    <div class="mobile-menu" [class.show]="showmobileSubmenu">
+    <ng-container  *ngIf="ctype=='provider' &&  headercls!='itl-steps'">
+    <div class="mobile-menu" [class.show]="showmobileSubmenu" *ngIf="small_device_display">
         <div class="container">
             <div class="row">
                 <div class="menu-outer">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -18,7 +18,7 @@ import { AddProviderItemImageComponent } from '../add-provider-item-image/add-pr
   templateUrl: './provider-items-details.component.html',
   styleUrls: ['./provider-items-details.component.css']
 })
-export class ProviderItemsDetailsComponent implements OnInit {
+export class ProviderItemsDetailsComponent implements OnInit, OnDestroy {
 
   amForm: FormGroup;
   api_error = null;
@@ -34,6 +34,9 @@ export class ProviderItemsDetailsComponent implements OnInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
+  editdialogRef;
+  editimgdialogRef;
+  remimgdialogRef;
   constructor( private provider_servicesobj: ProviderServices,
         private router: ActivatedRoute, private dialog: MatDialog,
         private fb: FormBuilder,
@@ -53,7 +56,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
       image_exists = false;
       itemimg = '';
 
-        ngOnInit() {
+      ngOnInit() {
           this.router.params
             .subscribe(params => {
               this.itemId = params.id;
@@ -64,6 +67,17 @@ export class ProviderItemsDetailsComponent implements OnInit {
               file: [''],
               caption: 'Itempic'
             });*/
+        }
+        ngOnDestroy() {
+          if (this.editdialogRef) {
+            this.editdialogRef.close();
+          }
+          if (this.editimgdialogRef) {
+            this.editimgdialogRef.close();
+          }
+          if (this.remimgdialogRef) {
+            this.remimgdialogRef.close();
+          }
         }
         getitemDetails() {
             this.provider_servicesobj.getProviderItems(this.itemId)
@@ -90,7 +104,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
               });
         }
         editItem() {
-          const dialogRef = this.dialog.open(AddProviderItemComponent, {
+          this.editdialogRef = this.dialog.open(AddProviderItemComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
             disableClose: true,
@@ -100,7 +114,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
             }
           });
 
-          dialogRef.afterClosed().subscribe(result => {
+          this.editdialogRef.afterClosed().subscribe(result => {
             this.getitemDetails();
           });
         }
@@ -120,7 +134,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
         }
 
         editImage(obj, mod) {
-          const dialogRef = this.dialog.open(AddProviderItemImageComponent, {
+          this.editimgdialogRef = this.dialog.open(AddProviderItemImageComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
             disableClose: true,
@@ -131,7 +145,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
             }
           });
 
-          dialogRef.afterClosed().subscribe(result => {
+          this.editimgdialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
               this.getitemDetails();
             }
@@ -177,7 +191,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
         }
 
         doremoveImage() {
-          const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+          this.remimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
@@ -185,7 +199,7 @@ export class ProviderItemsDetailsComponent implements OnInit {
               'message' : 'Do you really want to remove the image?'
             }
           });
-          dialogRef.afterClosed().subscribe(result => {
+          this.remimgdialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.removeImage();
             }

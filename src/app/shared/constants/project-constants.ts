@@ -218,7 +218,7 @@ AUDITLOG_FILTER_CATEGORIES: [
     displayName: 'Settings',
     subcat: [
                     { name: 'LOCATION', dispName: 'Location'},
-                    { name: 'QUEUE', dispName: 'Queue' },
+                    { name: 'QUEUE', dispName: 'Service Time Window' },
                     { name: 'SERVICE', dispName: 'Service' },
                     { name: 'HOLIDAY', dispName: 'Holiday' },
                     { name: 'WAITLIST', dispName: 'Waitlist' },

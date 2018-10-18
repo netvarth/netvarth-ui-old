@@ -105,7 +105,7 @@
                     </div>
 
                       <div class="form-group queues" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">Queues</label>
+                        <label class="col-form-label" for="displayName">Service Time Windows</label>
                         <!-- <mat-chip-list>
                           <mat-chip
                           color="{{(filter.queue === 'all') ? 'primary' : ''}}"
@@ -249,7 +249,7 @@
                                   <th>Actions</th>
                                   <th>Payment Status</th>
                                   <th *ngIf="time_type != 1">{{checkin_label |capitalizeFirst}} Status</th>
-                                  <th>Message</th>
+                                  <!-- <th>Message</th> -->
                                   <th *ngIf="time_type == 1">{{customer_label |capitalizeFirst}} Note</th>
                                   <th></th>
                               </tr>
@@ -366,8 +366,8 @@
                                   *ngIf="time_type !=1">
                                     <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
                                   </td>
-                                  <td data-title="Message" class="message">
-                                    <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td>
+                                  <!-- <td data-title="Message" class="message">
+                                    <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td> -->
                                   <td data-title="{{customer_label |capitalizeFirst}} Note" class="cnote" *ngIf="time_type ==1">
                                     <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
@@ -378,6 +378,12 @@
                                           <mat-icon>more_vert</mat-icon>
                                       </button>
                                       <mat-menu #menu="matMenu">
+                                          <!-- <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span> -->
+                                          <button type="button" mat-menu-item
+                                          (click)="addConsumerInboxMessage(checkin)">
+                                            <!-- Add {{provider_label  | capitalizeFirst}} Note -->
+                                            Send Message
+                                          </button>
                                           <button type="button" mat-menu-item
                                           (click)="addProviderNote(checkin)">
                                             <!-- Add {{provider_label  | capitalizeFirst}} Note -->
@@ -437,7 +443,7 @@
               <div class="qlst no-dta"
               *ngIf="time_type ==1 && load_queue == 1 &&
               queues.length ==0">
-                <p>No queues available</p>
+                <p>No service time windows available</p>
               </div>
           </div>
       </div>

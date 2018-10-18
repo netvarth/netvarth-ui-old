@@ -92,7 +92,7 @@ export const Messages = {
   'ONLINE_CHECKIN_SAVED' : 'Saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
   'SERVICE_ADDED1' : 'New service added successfully',
-  'SERVICE_ADDED2' : 'Please add this service to the relevant queue by editing it.',
+  'SERVICE_ADDED2' : 'Please add this service to the relevant service time window by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'SERVICE_PRE_PAY_ERROR': 'Payment settings needs to be completed before enabling the Pre-Payment option',
@@ -102,13 +102,13 @@ export const Messages = {
   'WAITLIST_LOCATION_AMINITIES_SAVED': 'Location amenities saved successfully',
   'WAITLIST_LOCATION_CHG_STATLOCATION': '[locname] [status] successfully',
   'WAITLIST_LOCATION_CHG_BASELOCATION': 'Base location changed to [locname]',
-  'WAITLIST_QUEUE_CREATED': 'Queue created successfully',
-  'WAITLIST_QUEUE_UPDATED': 'Queue updated successfully',
+  'WAITLIST_QUEUE_CREATED': 'Service Time Window created successfully',
+  'WAITLIST_QUEUE_UPDATED': 'Service Time Window updated successfully',
   'WAITLIST_QUEUE_SELECTTIME' : 'Please select the start and end time',
   'WAITLIST_QUEUE_STIMEERROR' : 'End time should be greater than start time',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
-  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant queue by editing it',
+  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant service time window by editing it',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
 
@@ -198,6 +198,7 @@ export const Messages = {
   'CUSTSIGN_TOOPTIP' : 'Consumers click here to Login/Join Jaldee.com',
   'PROVSIGN_TOOPTIP' : 'Providers please click here to Register/Login to Jaldee.com',
   'CLOUDICON_TOOPTIP': 'Online Check-in',
+  'ITEMNAME_TOOLTIP': 'Click here to edit item',
 
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
 

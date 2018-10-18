@@ -24,7 +24,7 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-            <button type="button" mat-menu-item *ngIf="providerStatus==='INACTIVE'" (click)="showScheduleselection(schedule.indx, schedule)">
+            <button type="button" mat-menu-item *ngIf="providerStatus==='INACTIVE'" (click)="editwScheduleselection(schedule.indx, schedule)">
                 <i class="icon-edit"></i>
                 <span>Edit</span>
             </button>
@@ -35,7 +35,7 @@
             </mat-menu>
         </li>
     </ul>  
-    <button (click)="showScheduleselection()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE'" class="cs-btn bt3"> Add Schedule</button>
+    <button (click)="addScheduleSelection()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE'" class="cs-btn bt3"> Add Schedule</button>
     <!-- <button (click)="cancel_schedule_button_clicked()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE' && show_cancelbutton" class="cs-btn bt7"> Cancel</button> -->
     
     <!-- <div *ngIf="show_savebutton"><button type="button" class="cs-btn bt3" (click)="save_schedule_button_clicked()">Save Schedule Changes</button></div> -->
@@ -62,7 +62,7 @@
         </div>    
        </div>
        <div class="savecancel">
-           <button type="button" (click)="showScheduleselection()" class="cs-btn bt7">Cancel</button>
+           <button type="button" (click)="cancelscheduleClicked()" class="cs-btn bt7">Cancel</button>
 
            <button type="button" (click)="onsaveScheduleClick()" class="cs-btn bt3"><ng-container *ngIf="!edit_mode">Save Schedule</ng-container><ng-container *ngIf="edit_mode">Update</ng-container></button>
            
