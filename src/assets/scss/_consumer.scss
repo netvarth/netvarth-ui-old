@@ -53,24 +53,27 @@ header {
                     margin-bottom: 10px;
                     display: flex;
                     justify-content: flex-end;
+                    flex-direction: column;
 
                     @include respond-to(ynw-767) {
                         height: 70px;
                         margin-bottom: 0;
+                        justify-content: center;
                     }
                     @include respond-to(ynw-575) {
                         padding-top: 0px;
                         margin-bottom: 20px;
-                        margin-bottom: 0;
+                        margin-bottom: 10px;
                     }
                     @include respond-to(ynw-400) {
-                        margin-top: 12px;
+                        margin-top: 0px;
                         height: auto;
                         margin-bottom: 10px;
                     }
                     @include respond-to(ynw-768-991) {
                         height: 70px;
                         margin-bottom: 0;
+                        justify-content: center;
                     }
 
                     .isprovidertop {
@@ -3862,6 +3865,17 @@ header {
                                     &:before {
                                         @include respond-to(ynw-767) {
                                             display: none;
+                                        }
+                                    }
+                                }
+                                
+                                @include respond-to(ynw-767) {
+                                    &.td1 {
+                                        width: 100%;
+                                        
+                                        &:before {
+                                            color: $linkblack;
+                                            cursor: default;
                                         }
                                     }
                                 }

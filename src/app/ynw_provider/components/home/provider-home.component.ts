@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
 
@@ -63,6 +63,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   tooltipcls = projectConstants.TOOLTIP_CLS;
   open_filter = false;
   waitlist_status = [];
+  sel_queue_indx = 0;
 
   filter = {
     first_name: '',
@@ -123,6 +124,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   viewbilldialogRef;
   makPaydialogRef;
   sendmsgdialogRef;
+  screenWidth;
+  small_device_display = false;
+  show_small_device_queue_display = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -132,6 +136,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices) {
+
+      this.onResize();
 
       this.customer_label = this.shared_functions.getTerminologyTerm('customer');
       this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -220,6 +226,22 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.sendmsgdialogRef.close();
     }
   }
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+      this.show_small_device_queue_display = true;
+      if (this.screenWidth <= projectConstants.SMALL_DEVICE_BOUNDARY) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
+    } else {
+      this.small_device_display = false;
+      this.show_small_device_queue_display = false;
+    }
+  // console.log('resized', this.screenWidth,  this.small_device_display);
+}
 
   getBusinessProfile() {
     let bProfile: any = [];
@@ -366,10 +388,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         const Cqueues = data;
         // console.log('cqueue', Cqueues);
         this.all_queues = [];
+        let indx = 0;
 
         for ( const que of Cqueues) {
           if (que.queueState === 'ENABLED') {
+            que.qindx = indx;
             this.all_queues.push(que);
+            indx += 1;
           }
         }
 
@@ -407,16 +432,19 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             this.queues = [];
             const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
             const savedQok = [];
+            let indx = 0;
             for ( const que of Cqueues) {
               if (que.queueState === 'ENABLED') {
                 // console.log('que', que);
                 if (que.id === savedQ) {
                   savedQok.push(que);
                 }
+                que.qindx = indx;
                 this.queues.push(que);
+                indx += 1;
               }
             }
-            // console.log('saved q', savedQok);
+            // console.log('queues', this.queues);
             if (savedQok.length > 0) {
               this.selectedQueue(savedQok[0]);
             } else {
@@ -474,6 +502,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   selectedQueue(selected_queue, qclick?) {
    // console.log('selected q', selected_queue.id);
     if (selected_queue.id) {
+      this.sel_queue_indx = selected_queue.qindx;
       this.shared_functions.setitemonLocalStorage('pdq', selected_queue.id);
     }
     this.selected_queue = selected_queue;
@@ -485,6 +514,21 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           this.today_waitlist_count = result;
         }
       );
+  }
+  handleQueueSel(mod) {
+   // console.log('mod', mod, this.sel_queue_indx);
+    let selqindx;
+    if (mod === 'next') {
+      if ((this.queues.length - 1) > this.sel_queue_indx) {
+        selqindx = this.sel_queue_indx + 1;
+        this.selectedQueue(this.queues[selqindx]);
+      }
+    } else if (mod === 'prev') {
+      if ((this.queues.length > 0) && (this.sel_queue_indx > 0)) {
+        selqindx = this.sel_queue_indx - 1;
+        this.selectedQueue(this.queues[selqindx]);
+      }
+    }
   }
 
   getFutureCheckinCount(filter = null) {

@@ -31,6 +31,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   api_success = null;
 
   api_load_complete = 0;
+  tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
 
   breadcrumbs = [
     {

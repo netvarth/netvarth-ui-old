@@ -120,7 +120,7 @@
 .moreoptionsmainclass,
 .forgotpasswordmainclass,
 .commonpopupmainclass,
-.googlemainmappopup, .outer-card, .consumerpopupmainclass {
+.googlemainmappopup, .outer-card, .consumerpopupmainclass, .specialclass {
     width: 600px !important;
 
     div,
@@ -1477,7 +1477,6 @@
         width: 100% !important;
     }
 }
-
 // #### Login Popup
 .loginmainclass {    
     .mat-dialog-actions {
@@ -2787,6 +2786,28 @@
             }
         }
     } 
+}
+
+// #### Special Popup for gallerry issue in Chrome.
+.specialclass {
+    .mat-dialog-container {
+        overflow: auto;
+        display: table;
+        
+        .mat-dialog-title {
+            &:after {
+                top: -1px;
+                right: 0px;
+                left: 0px;
+                
+                @include respond-to(ynw-767) {
+                    width: auto;
+                    left: 0px;
+                    right: -3px;
+                }
+            }
+        }
+    }
 }
 
 // #### Adjust Delay Popup

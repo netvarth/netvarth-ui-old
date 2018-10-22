@@ -199,6 +199,7 @@ export const Messages = {
   'PROVSIGN_TOOPTIP' : 'Providers please click here to Register/Login to Jaldee.com',
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
+  'QUEUENAME_TOOLTIP': 'Click here to edit the Service Time Window',
 
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
 

@@ -179,7 +179,7 @@
                                         </div>
                                         <!-- <ng-container *ngIf="bProfile.baseLocation && bProfile.baseLocation.parkingType"> -->
 
-                                            <h5>Location Amenities</h5>
+                                            <h5>Location Amenities <span (click)="editLocation('badge')" class="editbt" *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span></h5>
                                             <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
                                             <div class="copy">
                                                 <ul class="amt-list">
@@ -190,7 +190,7 @@
                                                             <li [matTooltip]="badge_map_arr[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['none']['class']"></li>
                                                         </ng-container>
                                                     </ng-container>
-                                                    <li class="edit-btn"><span (click)="editLocation('badge')" class="editbt"></span></li>
+                                                    <!-- <li class="edit-btn"><span (click)="editLocation('badge')" class="editbt"></span></li> -->
                                                 </ul>
                                             </div>
                                             </ng-container>

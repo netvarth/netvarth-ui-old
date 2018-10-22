@@ -87,6 +87,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   showStep(changetostep) {
+    console.log('change step', changetostep);
     this.loading_active = true;
     this.resetErrors();
     if (changetostep === 2) {
@@ -350,8 +351,8 @@ export class ProviderbWizardComponent implements OnInit {
     } else if (curstep === 5 && changetostep === 4) { // from missing data to search
       this.loading_active = true;
       if (this.wizard_data_holder.name === '') { // if business name is blank, then take user to step 1
-        changerequired = true;
-        changeid = 1;
+       changerequired = true;
+       changeid = 1;
       } else if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon  === '' || this.wizard_data_holder.location === '') {
         // if location basic details are missing, then take user to step 2
         changerequired = true;

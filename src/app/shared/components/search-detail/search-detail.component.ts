@@ -1975,7 +1975,7 @@ setEnvironment(bypassotherfunction?) {
   showServiceDetail(serv, busname) {
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
       disableClose: true,
     data: {
       bname: busname,

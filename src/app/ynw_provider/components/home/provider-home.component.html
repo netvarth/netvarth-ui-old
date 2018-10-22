@@ -35,7 +35,7 @@
               </div>
 
               <div class="qlst" *ngIf="time_type ==1 && queues.length > 1">
-                  <ul>
+                  <ul *ngIf = "!show_small_device_queue_display">
                       <li
                       [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
                       *ngFor="let queue of queues">
@@ -47,6 +47,13 @@
                         </div>
                       </li>
                   </ul>
+                  <div class="queue-body" *ngIf = "show_small_device_queue_display">
+                    <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i class="fa fa-angle-left"></i></span>
+                    <span class="leftarrow" *ngIf="sel_queue_indx <= 0"><i class="fa fa-angle-left disable"></i></span>
+                    <span class="sel-queue" *ngIf="selected_queue">{{selected_queue.name}}</span>
+                    <span class="rightarrow" (click)="handleQueueSel('next')" *ngIf="(queues.length -1) > sel_queue_indx"> <i class="fa fa-angle-right"></i> </span>
+                    <span class="rightarrow"  *ngIf="(queues.length -1) == sel_queue_indx"> <i class="fa fa-angle-right disable"></i> </span>
+                </div>
               </div>
 
               <div class="dash-list">
@@ -256,7 +263,7 @@
                           </thead>
                           <tbody>
                               <tr  *ngFor="let checkin of check_in_filtered_list">
-                                  <td class="online">
+                                  <td class="online" *ngIf="!small_device_display">
                                     <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'" [matTooltipClass] = "tooltipcls" [matTooltip]="cloudTooltip"></span>
                                   </td>
                                   <td data-title="Seq No" class="seq pointer-cursor"
@@ -362,18 +369,19 @@
 
                                     </ng-container>
                                   </td>
-                                  <td data-title="{{checkin_label |capitalizeFirst}} Status" class="checkin_status"
+                                  <td data-title="{{checkin_label | capitalizeFirst}} Status" class="checkin_status"
                                   *ngIf="time_type !=1">
                                     <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
                                   </td>
                                   <!-- <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td> -->
-                                  <td data-title="{{customer_label |capitalizeFirst}} Note" class="cnote" *ngIf="time_type ==1">
+                                  <td data-title="{{customer_label | capitalizeFirst}} Note" class="cnote" *ngIf="time_type ==1 && !small_device_display">
                                     <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
                                   </td>
-                                  <td class="mre"><span class="mbt">
+                                  <td class="mre">
+                                    <span class="mbt">
                                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                           <mat-icon>more_vert</mat-icon>
                                       </button>
@@ -421,6 +429,47 @@
                                           </button>
                                       </mat-menu>
                                   </span>
+                                  
+                                  <span class="mbt-mobile-show">
+                                    <button type="button" class="sendmsg_cls"
+                                          (click)="addConsumerInboxMessage(checkin)">
+                                            <!-- Add {{provider_label  | capitalizeFirst}} Note -->
+                                            Send Message
+                                          </button>
+                                          <button type="button" class="cancel_cls"
+                                          (click)="changeWaitlistStatus(checkin, 'CANCEL')"
+                                          *ngIf="time_type!=0 &&
+                                          ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
+                                            Cancel {{checkin_label}}
+                                          </button>
+                                          <button type="button" class="cancel_cls"
+                                          (click)="changeWaitlistStatus(checkin, 'CANCEL')"
+                                          *ngIf="time_type==0 && 
+                                          ( checkin.waitlistStatus == 'arrived')">
+                                            Cancel {{checkin_label}}
+                                          </button>
+                                          <button type="button" class="provnote_cls"
+                                          (click)="addProviderNote(checkin)">
+                                            <!-- Add {{provider_label  | capitalizeFirst}} Note -->
+                                            Add Note
+                                          </button>
+                                          <button type="button" class="checkin_cls"
+                                          (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                                          *ngIf="time_type!=0 && (checkin.billStatus != 'Settled') && 
+                                          (checkin.waitlistStatus == 'cancelled' || checkin.waitlistStatus == 'arrived' ||
+                                          checkin.waitlistStatus == 'started')">
+                                            Change Status to {{checkin_label}}
+                                          </button>
+                                          <button type="button"  class="viewnote_cls"
+                                          *ngIf="time_type!=1 && checkin.consumerNote"
+                                          (click)="showConsumerNote(checkin)">
+                                           View {{customer_label |capitalizeFirst}} Note
+                                          </button>
+
+                                    
+
+                                  </span>
+
                                 </td>
                               </tr>
                           </tbody>

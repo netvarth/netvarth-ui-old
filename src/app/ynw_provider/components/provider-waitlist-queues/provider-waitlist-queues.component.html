@@ -21,7 +21,7 @@
                             </button>
                         </span>
 
-                        <h3 class="pointer-cursor" (click)="goQueueDetail(queue)">
+                        <h3 class="pointer-cursor" (click)="goQueueDetail(queue)" [matTooltipClass] = "tooltipcls" [matTooltip]="tooltip_queueedit">
                         {{queue.name | capitalizeFirst}}
                         </h3>
 

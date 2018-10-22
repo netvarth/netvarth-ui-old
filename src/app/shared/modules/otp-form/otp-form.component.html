@@ -24,8 +24,8 @@
           <span (click)="resendOTPMobile()" mat-button> Resend OTP To <ng-container *ngIf="type=='change_email'">Email Id</ng-container><ng-container *ngIf="type!='change_email'">Mobile</ng-container></span>
           <span (click)="setResendViaEmail()" *ngIf="type=='signup'" mat-button> Resend OTP Via Email</span>
         </div>
-        <div style = "font-size:14px;" *ngIf="resetCounterVal>0">
-          Resent OTP option will be active in {{resetCounterVal}} seconds.
+        <div class="counter-outer" *ngIf="resetCounterVal>0">
+          Resent OTP option will be active in <span class="counter">{{resetCounterVal}}</span> seconds.
         </div>
     </mat-dialog-actions>
   </form>

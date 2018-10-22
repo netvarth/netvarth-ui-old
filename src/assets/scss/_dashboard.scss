@@ -887,6 +887,10 @@ footer {
             }
             @include respond-to(ynw-400) {
                 margin-right: 5px;
+                
+                &:nth-child(3) {
+                    display: none;
+                }
             }
             
             .bt4, .bt5 {
@@ -2058,7 +2062,7 @@ footer {
                                             width: 24px;
                                             height: 24px;
                                             
-                                            &:last-child {
+                                            /*&:last-child {
                                                 margin-left: 20px;
                                                 
                                                 &:before {
@@ -2076,7 +2080,7 @@ footer {
                                                     top: -4px;
                                                     left: -2px;
                                                 }
-                                            }
+                                            }*/
                                         }
                                     }
                                     &.wrk-hrs {
@@ -2144,6 +2148,20 @@ footer {
                                     border-top: 1px solid $cc-body;
                                     border-bottom: 1px solid $cc-body;
                                     margin:0;
+                                    position: relative;
+                                    
+                                    .editbt {
+                                        margin-left: auto;
+                                        position: absolute;
+                                        right: 2px;
+                                        top: -2px;
+                                        
+                                        &:before {
+                                            text-transform: none;
+                                            font-weight: 500;
+                                        }
+                                        
+                                    }
                                 }
                                 
                                 &:last-child {
@@ -4292,11 +4310,16 @@ footer {
                 padding: 30px 20px 10px 20px;
                 overflow: auto;
                 
+                @include respond-to(ynw-767){
+                    padding: 20px 20px 0px 20px;
+                }
+                
                 ul {
                     margin: 0;
                     padding: 0;
                     display: flex;
                     flex-wrap: wrap;
+                    justify-content: center;
                     
                     li {
                         list-style: none;
@@ -4310,9 +4333,9 @@ footer {
                             text-align: center;
                             font-weight: 500;
                             cursor: pointer;
-                            font-size: .75rem;
+                            font-size: .79rem;
                             padding:10px 15px;
-                            min-width: 150px;
+                            min-width: 120px;
                             margin-bottom: 5px;
                             
                             .qtitle, .wlst {
@@ -4338,6 +4361,66 @@ footer {
                         }
                     }
                 }
+                
+                .queue-body {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .sel-queue {
+                        @include border-radius(100px);
+                        text-align: center;
+                        font-weight: 500;
+                        cursor: pointer;
+                        font-size: .75rem;
+                        padding:10px 15px;
+                        min-width: 150px;
+                        background-color: $green;
+                        color: $white;
+                        font-weight: 600;
+                        border: 1px solid $green;
+                    }
+
+                    .leftarrow, .rightarrow {                        
+                        i {
+                            display: flex;
+                            width: 20px;
+                            height: 20px;
+                            align-items: center;
+                            justify-content: center;
+                            border: 1px solid $linkblue;
+                            @include border-radius(50px);
+                            color: $linkblue;
+                            cursor: pointer;
+
+                            &.disable {
+                                pointer-events: none;
+                                color: $cc-mediumgray;
+                                border-color: $cc-mediumgray;
+                                cursor: default;
+                            }
+                        }
+                    }
+                    .leftarrow {
+                        margin-right: 10px;
+                    }
+                    .rightarrow {
+                        margin-left: 10px;
+                    }
+                    
+                    @include respond-to(ynw-767) {
+                        .sel-queue {
+                            width: 250px;
+                        }
+                        .leftarrow, .rightarrow {
+                            i {
+                                width: 30px;
+                                height: 30px;
+                            }
+                        }
+                    }
+                }
+                
                 &.no-dta {
                     padding: 20px;
                     font-weight: 500;
@@ -4352,11 +4435,10 @@ footer {
                     padding: 0 20px;
                     align-items: flex-start;
                     
-                    @include respond-to(ynw-767){
-                        flex-direction: column;
-                    }
                     @include respond-to(ynw-575){
                         padding: 0;
+                        flex-direction: column;
+                        position: relative;
                     }
                     
                     ul {
@@ -4365,7 +4447,6 @@ footer {
                         padding: 0;
                         
                         @include respond-to(ynw-767){
-                            order: 1;
                             flex-wrap: wrap;
                         }
                         /*@include respond-to(ynw-575){
@@ -4425,35 +4506,45 @@ footer {
                         display: flex;
                         margin-left: auto;
                         
-                        @include respond-to(ynw-767){
-                            margin: 0 auto 20px 0;
-                        }
-                        @include respond-to(ynw-575){
-                            margin-left: 15px;
-                        }
-                        
                         .cs-btn {
-                            text-transform: uppercase;
                             font-size: .75rem;
                             font-weight: 600;
                             @include border-right-radius(0);
+                            background: $white;
+                            color: $linkblue;
+                            border: 1px solid $linkblue;
+                            border-right: none;
+                            min-width: auto;
                         }
                         
                         i {
                             padding: 5px 10px;
-                            color: $linkblack;
+                            color: $linkblue;
                             display: flex;
                             justify-content: center;
                             align-items: center;
                             cursor: pointer;
                             @include transition(all 300ms);
-                            border: 1px solid lighten($cc-darkgray, 30%);
-                            background: $cc-body;
-                            border-left: none;
+                            border: 1px solid $linkblue;
                             @include border-right-radius(3px);
-
-                            &:hover {
-                                color: $linkblue;
+                        }
+                        
+                        @include respond-to(ynw-575){
+                            margin-left: 15px;
+                            position: absolute;
+                            right: 60px;
+                            top: 48px;
+                            
+                            .cs-btn {
+                                background: transparent;
+                                color: $white;
+                                border-color: $white;
+                                height: 24px;
+                            }
+                            
+                            i {
+                                color: $white;
+                                border-color: $white;
                             }
                         }
                     }
@@ -4940,6 +5031,49 @@ footer {
                                                 display: none;
                                             }
                                         }
+                                        .mbt-mobile-show {
+                                            display: none;
+                                            
+                                            .sendmsg_cls, .provnote_cls, .cancel_cls, .checkin_cls, .viewnote_cls {
+                                                border: none;
+                                                color: $linkblue;
+                                                font-weight: 500;
+                                                font-size: .75rem;
+                                                margin-right: 5px;
+                                                margin-bottom: 5px;
+                                                border: 1px solid $linkblue;
+                                                @include border-radius(50px);
+                                                background: $white;
+                                                height: 24px;
+                                                cursor: pointer;
+                                            }
+                                            .cancel_cls {
+                                                border-color: $cc-red;
+                                                color: $cc-red;
+                                            }
+                                        }
+                                        
+                                        @include respond-to(ynw-767){
+                                            .mbt, &:before {
+                                                display: none;
+                                            }
+                                            .mbt-mobile-show {
+                                                display: block;
+                                            }
+                                        }
+                                        @include respond-to(ynw-768-991){
+                                            .mbt, &:before {
+                                                display: none;
+                                            }
+                                            .mbt-mobile-show {
+                                                display: block;
+                                            }
+                                        }
+                                    }
+                                    
+                                    @include respond-to(ynw-767) {
+                                        min-height: auto;
+                                        padding: 8px;
                                     }
                                 }
                                 &:nth-child(odd) {
@@ -4957,7 +5091,8 @@ footer {
                     }
                     .search_paging {
                         .container {
-                            padding: 15px;
+                            /*padding: 15px;*/
+                            padding: 0px;
 
                             .text-center {
                                 display: flex;
@@ -4989,8 +5124,7 @@ footer {
                                 }
 
                                 .pagination {
-                                    margin: 0px;
-                                    margin-left: auto;
+                                    margin: 15px 15px 15px auto;
                                     display: flex;
                                     flex-wrap: wrap;
 
@@ -5008,7 +5142,7 @@ footer {
                                         align-items: center;
                                         justify-content: center;
                                         @include border-radius(30px);
-                                        margin-bottom: 5px;
+                                        margin-bottom: 0px;
 
                                         &.ng-star-inserted {
                                             border-color: $cc-body;

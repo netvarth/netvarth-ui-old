@@ -20,7 +20,7 @@
                                   <table class="table">
                                       <thead>
                                           <tr>
-                                              <th></th>
+                                              <!-- <th></th> -->
                                               <th>Name</th>
                                               <th>Price</th>
                                               <th>Taxable</th>
@@ -30,17 +30,17 @@
                                       </thead>
                                       <tbody>
                                               <tr *ngFor="let item of item_list">
-                                                      <td class="pointer-cursor"  class="td1" (click)="showDetails(item.itemId)">
+                                                      <!-- <td class="pointer-cursor"  class="td1" (click)="showDetails(item.itemId)">
                                                         <div class="itm-prdct">
                                                         <img [src]="item.picSmall" *ngIf="item.picSmall !='' && item.picSmall">
                                                         <div class="noimage" *ngIf="!item.picSmall"></div>
                                                         </div>
-                                                        </td>
+                                                        </td> -->
                                                       <td data-title="Name"  class="td2" class="pointer-cursor" (click)="showDetails(item.itemId)"><span [matTooltipClass] = "tooltipcls" [matTooltip]="itemnameTooltip">{{item.displayName}}</span>
                                                       </td>
                                                       <td data-title="Status" clas="td4">{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
                                                       <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}</td>
-                                                      <!-- <td data-title="Status" clas="td4">{{item.status}}</td> -->
+                                                      
 
                                                       <td class="action">
                                                           <span class="mbt">

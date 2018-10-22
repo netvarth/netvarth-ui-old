@@ -25,7 +25,7 @@
 
                     <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name | capitalizeFirst}}</h3>
                     <div class="c-ot m0">
-                        <div class="item">
+                        <div class="item" *ngIf="!disable_price">
                             <span class="ttle">Estimated Duration</span>
                             <span class="icon-time">{{service.serviceDuration}} min</span>
                         </div>

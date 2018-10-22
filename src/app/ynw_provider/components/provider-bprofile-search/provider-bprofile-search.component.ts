@@ -336,7 +336,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         }
 
         if (this.bProfile.baseLocation) {
-          if (this.bProfile.baseLocation.parkingType || this.bProfile.baseLocation.open24hours
+          if ((this.bProfile.baseLocation.parkingType && this.bProfile.baseLocation.parkingType !== 'none') || this.bProfile.baseLocation.open24hours
              || this.objectKeys(this.bProfile.baseLocation.locationVirtualFields).length > 0) {
             this.normal_locationamenities_show = 3;
           } else {

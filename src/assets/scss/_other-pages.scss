@@ -320,6 +320,14 @@
                         .resendouter {
                             margin-top: 0;
                         }
+                        .counter-outer {
+                            font-size: .875rem;
+                            
+                            .counter {
+                                font-size: 1rem;
+                                font-weight: 600;
+                            }
+                        }
                     }
                     
                     &.otpouter {
