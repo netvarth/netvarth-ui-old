@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="item"><span class="ttle">Service:</span><span> {{waitlist_detail.service.name}}</span></div>
-                            <div class="item"><span class="ttle">Queue:</span><span> {{waitlist_detail.queue.name}}</span></div>
+                            <div class="item"><span class="ttle">Service Time Window:</span><span> {{waitlist_detail.queue.name}}</span></div>
                             <div class="item"><span class="ttle">Payment Status:</span>
                               <ng-container *ngIf="waitlist_detail && waitlist_detail.paymentStatus">
                                   <span class="paid-n" *ngIf="waitlist_detail.paymentStatus == 'NotPaid'"><span class="text">Not Paid</span></span>

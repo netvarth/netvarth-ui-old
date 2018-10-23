@@ -36,6 +36,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
 
   cronHandle: Subscription;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  msgdialogRef;
 
   @Input() messages: any;
   @Input() fromsource: any;
@@ -80,9 +81,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-     if (this.cronHandle) {
-      this.cronHandle.unsubscribe();
-     }
+    if (this.cronHandle) {
+     this.cronHandle.unsubscribe();
+    }
+    if (this.msgdialogRef) {
+      this.msgdialogRef.close();
+    }
   }
 
   replyMessage(message, type) {
@@ -108,7 +112,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     pass_ob['terminologies'] = this.terminologies;
     pass_ob['name'] = name;
 
-    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+    this.msgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'commonpopupmainclass',
       disableClose: true,
@@ -116,7 +120,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       data: pass_ob,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.msgdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.selectedMsg = -1;
         this.reloadApi.emit();

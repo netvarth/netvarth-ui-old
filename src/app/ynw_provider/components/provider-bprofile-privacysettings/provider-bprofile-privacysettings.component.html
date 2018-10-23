@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">Privacy Settings - {{curmod | titlecase}} {{curtype | titlecase}}   <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title">Privacy Settings - {{curmod | capitalizeFirst}} {{curtype | capitalizeFirst}}   <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
     <div class="phoneouter" *ngIf="curtype=='phone'">
         <div class="form-group">

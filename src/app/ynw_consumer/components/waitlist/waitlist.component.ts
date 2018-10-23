@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -20,7 +20,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
   selector: 'app-consumer-waitlist',
   templateUrl: './waitlist.component.html'
 })
-export class WaitlistComponent implements OnInit {
+export class WaitlistComponent implements OnInit, OnDestroy {
 
   waitlist_detail;
   provider_id = null;
@@ -31,6 +31,8 @@ export class WaitlistComponent implements OnInit {
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
 
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  canceldialogRef;
+  remfavdialogRef;
 
   public searchfields: SearchFields = new SearchFields();
 
@@ -53,6 +55,14 @@ export class WaitlistComponent implements OnInit {
       }
     });
 
+  }
+  ngOnDestroy() {
+    if (this.canceldialogRef) {
+      this.canceldialogRef.close();
+    }
+    if (this.remfavdialogRef) {
+      this.remfavdialogRef.close();
+    }
   }
 
   getWaitlist() {
@@ -112,7 +122,7 @@ export class WaitlistComponent implements OnInit {
       return false;
     }
 
-    this.shared_functions.doCancelWaitlist(waitlist)
+    this.shared_functions.doCancelWaitlist(waitlist, this)
     .then (
       data => {
         if (data === 'reloadlist') {
@@ -131,7 +141,7 @@ export class WaitlistComponent implements OnInit {
       return false;
     }
 
-    this.shared_functions.doDeleteFavProvider(fav)
+    this.shared_functions.doDeleteFavProvider(fav, this)
     .then(
       data => {
         if (data === 'reloadlist') {

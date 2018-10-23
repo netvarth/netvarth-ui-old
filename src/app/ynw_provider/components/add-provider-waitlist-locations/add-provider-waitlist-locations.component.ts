@@ -149,7 +149,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   updateForm() {
     if (this.forbadge === true) { // case if coming for add / edit badges
       this.amForm.setValue({
-        locparkingtype: this.data.location.parkingType || 'free',
+        locparkingtype: this.data.location.parkingType || 'none',
         loct24hour: this.data.location.open24hours || null,
       });
     } else {

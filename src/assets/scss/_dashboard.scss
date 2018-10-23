@@ -1,6 +1,8 @@
 // ### Header for Dashboard
 header {
     &.dashb {
+        position: relative;
+        
         @include respond-to(ynw-767) {
             padding: 20px 0;
         }
@@ -11,9 +13,8 @@ header {
             @include respond-to(ynw-575) {
                 width: 120px;
                 text-align: center;
-                margin-bottom: 15px;
                 margin-left: 0;
-                margin-right: auto;
+                margin-right: 0;
                 padding: 0;
                 
                 img {
@@ -33,13 +34,9 @@ header {
             align-items: center;
             
             @include respond-to(ynw-767){
-                flex-flow: column;
                 margin: 0;
-                align-items:flex-end;
             }
             @include respond-to(ynw-575) {
-                width: 100%;
-                margin-left: 0 !important;
                 justify-content: center;
                 align-items: center;
             }
@@ -47,10 +44,6 @@ header {
             .bnps {
                 display: flex;
                 color: $cc-gray;
-                
-                @include respond-to(ynw-767){
-                    margin-bottom: 15px;
-                }
                 
                 .pro-pic {
                     width: 50px;
@@ -63,6 +56,13 @@ header {
                     position: relative;
                     overflow: hidden;
                     margin-right: 10px;
+                    
+                    @include respond-to(ynw-767) {
+                        display: none;
+                    }
+                    @include respond-to(ynw-768-991) {
+                        display: none;
+                    }
                     
                     img {
                         width: 50px;
@@ -87,12 +87,15 @@ header {
                     align-items: center;
                     flex-direction: column;
                     justify-content: center;
+                    margin-right: 20px;
                     
                     @include respond-to(ynw-767){
                         width: 200px;
+                        display: none;
                     }
                     @include respond-to(ynw-768-991){
                         width: 250px;
+                        display: none;
                     }
                     
                     .title-bn, .title-ps {
@@ -123,7 +126,7 @@ header {
                 }
                 
                 .inbx {
-                    padding-left: 30px;
+                    padding-left: 0px;
                     cursor: pointer;
 
                     .ot-bx {
@@ -159,6 +162,11 @@ header {
                             height: 23px;
                             display: flex;
                             
+                            @include respond-to(ynw-575) {
+                                width: 22px;
+                                height: 20px;
+                            }
+                            
                             &:before {
                                 width: 25px;
                                 height: 23px;
@@ -175,6 +183,16 @@ header {
                 display: flex;
                 flex-flow: column;
                 align-items: flex-end;
+                
+                @include respond-to(ynw-767) {
+                    display: none;
+                }
+                @include respond-to(ynw-575) {
+                    display: none;
+                }
+                @include respond-to(ynw-768-991) {
+                    display: none;
+                }
                 
                 .lgin {
                     button {
@@ -196,12 +214,6 @@ header {
                             }
                         }
                     }
-                }
-                @include respond-to(ynw-575) {
-                    padding-left: 0;
-                    text-align: center;
-                    display: flex;
-                    flex-flow: column;
                 }
                 
                 a, span {
@@ -244,6 +256,272 @@ header {
                     &:first-child {
                         @include respond-to(ynw-575) {
                             order: 2;
+                        }
+                    }
+                }
+            }
+            
+            .userdt {
+                margin-left: 20px;
+                
+                @include respond-to(ynw-992-1199) {
+                    display: none;
+                }
+                @include respond-to(ynw-1200) {
+                    display: none;
+                }
+                
+                .usrbx {
+                    width: 50px;
+                    height: 50px;
+                    @include border-radius(50px);
+                    background-color: $cc-lightgray;
+                    display: flex;                    
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    
+                    .icon-user {
+                        position: relative;
+                        width: 25px;
+                        height: 25px;
+                        font-size: 1.5rem;
+                        
+                        @include respond-to(ynw-575) {
+                            width: 22px;
+                            height: 22px;
+                        }
+                        
+                        &:before {
+                            position: absolute;
+                            @include font-custom;
+                            content: "\6c";
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
+        .mobile-menu {
+            position: absolute;
+            width: 100%;
+            top: 110px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1001;
+            visibility: hidden;
+            
+            @include respond-to(ynw-575) {
+                top: 97px;
+            }
+            @include respond-to(ynw-992-1199) {
+                display: none;
+            }
+            @include respond-to(ynw-1200) {
+                display: none;
+            }
+            
+            .row {
+                display: flex;
+                justify-content: flex-end;
+                
+                .menu-outer {
+                    width: 70%;
+                    perspective: 1300px;
+                    
+                    @include respond-to(ynw-767){
+                        width: 100%;
+                    }
+                    
+                    .outer {
+                        background: $white;
+                        padding: 60px 20px 20px 20px;
+                        position: relative;
+                        font-size: .875rem;
+                        font-weight: 500;
+                        @include transform(rotateX(-60deg));
+                        @include transform-origin(50% 0);
+                        @include transform-style(preserve-3d);
+                        @include transition(all 0.3s);
+                        @include box-shadow(0px, 0px, 30px, rgba(0,0,0,.1) !important);
+                        opacity: 0;
+                        
+                        .close {
+                            position: absolute;
+                            left: 20px;
+                            top: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            opacity: 1;
+                            
+                            span {
+                                font-size: .875rem;
+                                font-weight: 500;
+                                margin-left: 5px;
+                            }
+                            
+                            &:before {
+                                @include font-custom;
+                                content: "\69";
+                                font-size: .875rem;
+                            }
+                        }
+                        
+                        .sect1 {
+                            display: flex;
+                            border-bottom: 1px solid $cc-body;
+                            padding-bottom: 15px;
+                            margin-bottom: 15px;
+                            
+                            @include respond-to(ynw-400) {
+                                flex-direction: column;    
+                            }
+                            
+                            .sl1 {
+                                .uname {
+                                    font-weight: 600;
+                                    display: block;
+                                }
+                                .uprofile {
+                                    display: block;
+                                    color: $linkblue;
+                                    cursor: pointer;
+                                    display: table;
+                                }
+                            }
+                            .sl2 {
+                                margin-left: auto;
+                                
+                                @include respond-to(ynw-400) {
+                                    margin-left: 0;
+                                    margin-top: 15px;
+                                }
+                                
+                                .membership {
+                                    display: table;
+                                    color: $linkblue;
+                                    cursor: pointer;
+                                    
+                                    span {
+                                        font-weight: 600;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .sect2 {
+                            display: flex;
+                            border-bottom: 1px solid $cc-body;
+                            padding-bottom: 15px;
+                            margin-bottom: 15px;
+                            
+                            .pro-pic {
+                                width: 50px;
+                                height: 50px;
+                                @include border-radius(50px);
+                                background-color: $cc-lightgray;
+                                display: flex;                    
+                                justify-content: center;
+                                align-items: center;
+                                position: relative;
+                                overflow: hidden;
+                                margin-right: 10px;
+
+                                img {
+                                    width: 50px;
+                                    height: 50px;
+                                    position: relative;
+                                    z-index: 11;
+                                }
+
+                                &:after {
+                                    content: "";
+                                    background: url(../images/img-null.svg) no-repeat scroll 0 0;
+                                    position: absolute;
+                                    width: 60px;
+                                    height: 60px;
+                                    opacity: .3;
+                                    z-index: 10;
+                                }
+                            }
+                            
+                            .mn-title {
+                                display: flex;
+                                align-items: center;
+                                flex-direction: column;
+                                justify-content: center;
+
+                                .title-bn, .title-ps {
+                                    display: block;
+                                    font-size: 1rem;
+                                    font-weight: 500;
+                                    @include font-medium;
+                                    width: 100%;
+
+                                    @include respond-to(ynw-767){
+                                        overflow: hidden;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                    }
+                                    @include respond-to(ynw-768-991){
+                                        overflow: hidden;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                    }
+                                }
+                                .title-ps {
+                                    @include font-regular;
+                                    font-size: .875rem;
+                                    font-weight: 400;
+                                }
+                            }
+                        }
+                        .sect3 {
+                            .menulinks {
+                                margin: 0;
+                                padding: 0;
+                                
+                                li {
+                                    height: 40px;
+                                    list-style: none;
+                                    display: flex;
+                                    align-items: center;
+                                    color: rgba(0,0,0,.7);
+                                    @include transition(300ms all);
+                                    padding: 0 10px;
+                                    cursor: pointer;
+                                    
+                                    i {
+                                        margin-right: 12px;
+                                        font-size: 1rem;
+                                        height: 20px;
+                                        width: 20px;
+                                        display: flex;
+                                        align-items: center;
+                                    }
+                                    
+                                    &:hover {
+                                        color: rgba(0,0,0, 1);
+                                        background: rgba(0,0,0,.04);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            &.show {
+                visibility: visible;
+                
+                .row {
+                    .menu-outer {
+                        .outer {
+                            opacity: 1;
+                            @include transform(rotateX(0deg));
                         }
                     }
                 }
@@ -582,6 +860,7 @@ footer {
         @include respond-to(ynw-575) {
             justify-content: flex-start;
             flex-wrap: wrap;
+            margin: 10px 0;
             
             .bt5 {                
                 &:before {
@@ -602,9 +881,16 @@ footer {
             @include box-shadow(0px, 0px, 30px, rgba(0,0,0,0.1));
             
             @include respond-to(ynw-575) {
-                margin-bottom: 5px;
                 margin-left: 0px;
-                margin-right: 10px;
+                margin-right: 5px;
+                padding: 0;
+            }
+            @include respond-to(ynw-400) {
+                margin-right: 5px;
+                
+                &:nth-child(3) {
+                    display: none;
+                }
             }
             
             .bt4, .bt5 {
@@ -613,6 +899,14 @@ footer {
                 background: transparent;
                 min-width: 0;
                 @include border-radius(30px);
+                
+                @include respond-to(ynw-575) {
+                    padding: 0 6px;
+                }
+                @include respond-to(ynw-400) {
+                    padding: 0 3px;
+                }
+                
                 
                 &:hover {
                     background: $linkblue;
@@ -658,6 +952,10 @@ footer {
                 cursor: pointer;
                 @include transition(all 300ms);
                 
+                @include respond-to(ynw-575) {
+                    padding:5px;
+                }
+                
                 &:hover {
                     color: $linkblue;
                 }
@@ -670,6 +968,11 @@ footer {
             align-items: center;
             justify-content: center;
             box-shadow: none;
+            margin-right: 0;
+            
+            @include respond-to(ynw-575) {
+                min-width: 0;
+            }
             
             .bt5 {
                 background: transparent;
@@ -1759,7 +2062,7 @@ footer {
                                             width: 24px;
                                             height: 24px;
                                             
-                                            &:last-child {
+                                            /*&:last-child {
                                                 margin-left: 20px;
                                                 
                                                 &:before {
@@ -1777,7 +2080,7 @@ footer {
                                                     top: -4px;
                                                     left: -2px;
                                                 }
-                                            }
+                                            }*/
                                         }
                                     }
                                     &.wrk-hrs {
@@ -1845,6 +2148,20 @@ footer {
                                     border-top: 1px solid $cc-body;
                                     border-bottom: 1px solid $cc-body;
                                     margin:0;
+                                    position: relative;
+                                    
+                                    .editbt {
+                                        margin-left: auto;
+                                        position: absolute;
+                                        right: 2px;
+                                        top: -2px;
+                                        
+                                        &:before {
+                                            text-transform: none;
+                                            font-weight: 500;
+                                        }
+                                        
+                                    }
                                 }
                                 
                                 &:last-child {
@@ -3993,11 +4310,16 @@ footer {
                 padding: 30px 20px 10px 20px;
                 overflow: auto;
                 
+                @include respond-to(ynw-767){
+                    padding: 20px 20px 0px 20px;
+                }
+                
                 ul {
                     margin: 0;
                     padding: 0;
                     display: flex;
                     flex-wrap: wrap;
+                    justify-content: center;
                     
                     li {
                         list-style: none;
@@ -4011,9 +4333,9 @@ footer {
                             text-align: center;
                             font-weight: 500;
                             cursor: pointer;
-                            font-size: .75rem;
+                            font-size: .79rem;
                             padding:10px 15px;
-                            min-width: 150px;
+                            min-width: 120px;
                             margin-bottom: 5px;
                             
                             .qtitle, .wlst {
@@ -4039,6 +4361,66 @@ footer {
                         }
                     }
                 }
+                
+                .queue-body {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .sel-queue {
+                        @include border-radius(100px);
+                        text-align: center;
+                        font-weight: 500;
+                        cursor: pointer;
+                        font-size: .75rem;
+                        padding:10px 15px;
+                        min-width: 150px;
+                        background-color: $green;
+                        color: $white;
+                        font-weight: 600;
+                        border: 1px solid $green;
+                    }
+
+                    .leftarrow, .rightarrow {                        
+                        i {
+                            display: flex;
+                            width: 20px;
+                            height: 20px;
+                            align-items: center;
+                            justify-content: center;
+                            border: 1px solid $linkblue;
+                            @include border-radius(50px);
+                            color: $linkblue;
+                            cursor: pointer;
+
+                            &.disable {
+                                pointer-events: none;
+                                color: $cc-mediumgray;
+                                border-color: $cc-mediumgray;
+                                cursor: default;
+                            }
+                        }
+                    }
+                    .leftarrow {
+                        margin-right: 10px;
+                    }
+                    .rightarrow {
+                        margin-left: 10px;
+                    }
+                    
+                    @include respond-to(ynw-767) {
+                        .sel-queue {
+                            width: 250px;
+                        }
+                        .leftarrow, .rightarrow {
+                            i {
+                                width: 30px;
+                                height: 30px;
+                            }
+                        }
+                    }
+                }
+                
                 &.no-dta {
                     padding: 20px;
                     font-weight: 500;
@@ -4053,11 +4435,10 @@ footer {
                     padding: 0 20px;
                     align-items: flex-start;
                     
-                    @include respond-to(ynw-767){
-                        flex-direction: column;
-                    }
                     @include respond-to(ynw-575){
                         padding: 0;
+                        flex-direction: column;
+                        position: relative;
                     }
                     
                     ul {
@@ -4066,7 +4447,6 @@ footer {
                         padding: 0;
                         
                         @include respond-to(ynw-767){
-                            order: 1;
                             flex-wrap: wrap;
                         }
                         /*@include respond-to(ynw-575){
@@ -4126,35 +4506,45 @@ footer {
                         display: flex;
                         margin-left: auto;
                         
-                        @include respond-to(ynw-767){
-                            margin: 0 auto 20px 0;
-                        }
-                        @include respond-to(ynw-575){
-                            margin-left: 15px;
-                        }
-                        
                         .cs-btn {
-                            text-transform: uppercase;
                             font-size: .75rem;
                             font-weight: 600;
                             @include border-right-radius(0);
+                            background: $white;
+                            color: $linkblue;
+                            border: 1px solid $linkblue;
+                            border-right: none;
+                            min-width: auto;
                         }
                         
                         i {
                             padding: 5px 10px;
-                            color: $linkblack;
+                            color: $linkblue;
                             display: flex;
                             justify-content: center;
                             align-items: center;
                             cursor: pointer;
                             @include transition(all 300ms);
-                            border: 1px solid lighten($cc-darkgray, 30%);
-                            background: $cc-body;
-                            border-left: none;
+                            border: 1px solid $linkblue;
                             @include border-right-radius(3px);
-
-                            &:hover {
-                                color: $linkblue;
+                        }
+                        
+                        @include respond-to(ynw-575){
+                            margin-left: 15px;
+                            position: absolute;
+                            right: 60px;
+                            top: 48px;
+                            
+                            .cs-btn {
+                                background: transparent;
+                                color: $white;
+                                border-color: $white;
+                                height: 24px;
+                            }
+                            
+                            i {
+                                color: $white;
+                                border-color: $white;
                             }
                         }
                     }
@@ -4641,6 +5031,49 @@ footer {
                                                 display: none;
                                             }
                                         }
+                                        .mbt-mobile-show {
+                                            display: none;
+                                            
+                                            .sendmsg_cls, .provnote_cls, .cancel_cls, .checkin_cls, .viewnote_cls {
+                                                border: none;
+                                                color: $linkblue;
+                                                font-weight: 500;
+                                                font-size: .75rem;
+                                                margin-right: 5px;
+                                                margin-bottom: 5px;
+                                                border: 1px solid $linkblue;
+                                                @include border-radius(50px);
+                                                background: $white;
+                                                height: 24px;
+                                                cursor: pointer;
+                                            }
+                                            .cancel_cls {
+                                                border-color: $cc-red;
+                                                color: $cc-red;
+                                            }
+                                        }
+                                        
+                                        @include respond-to(ynw-767){
+                                            .mbt, &:before {
+                                                display: none;
+                                            }
+                                            .mbt-mobile-show {
+                                                display: block;
+                                            }
+                                        }
+                                        @include respond-to(ynw-768-991){
+                                            .mbt, &:before {
+                                                display: none;
+                                            }
+                                            .mbt-mobile-show {
+                                                display: block;
+                                            }
+                                        }
+                                    }
+                                    
+                                    @include respond-to(ynw-767) {
+                                        min-height: auto;
+                                        padding: 8px;
                                     }
                                 }
                                 &:nth-child(odd) {
@@ -4658,7 +5091,8 @@ footer {
                     }
                     .search_paging {
                         .container {
-                            padding: 15px;
+                            /*padding: 15px;*/
+                            padding: 0px;
 
                             .text-center {
                                 display: flex;
@@ -4690,8 +5124,7 @@ footer {
                                 }
 
                                 .pagination {
-                                    margin: 0px;
-                                    margin-left: auto;
+                                    margin: 15px 15px 15px auto;
                                     display: flex;
                                     flex-wrap: wrap;
 
@@ -4709,7 +5142,7 @@ footer {
                                         align-items: center;
                                         justify-content: center;
                                         @include border-radius(30px);
-                                        margin-bottom: 5px;
+                                        margin-bottom: 0px;
 
                                         &.ng-star-inserted {
                                             border-color: $cc-body;
@@ -6077,6 +6510,13 @@ footer {
                                                 
                                                 &.td0 {
                                                     width: 50px;
+                                                    
+                                                    @include respond-to(ynw-767) {
+                                                        width: 100%;
+                                                    }
+                                                    @include respond-to(ynw-768-991) {
+                                                        width: 100%;
+                                                    }
                                                 }
                                             }
                                         }

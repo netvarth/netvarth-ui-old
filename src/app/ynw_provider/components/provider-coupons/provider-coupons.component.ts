@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -16,7 +16,7 @@ import { Messages } from '../../../shared/constants/project-messages';
   templateUrl: './provider-coupons.component.html',
   styleUrls: ['./provider-coupons.component.css']
 })
-export class ProviderCouponsComponent implements OnInit {
+export class ProviderCouponsComponent implements OnInit, OnDestroy {
 
     coupon_list: any = [] ;
     query_executed = false;
@@ -32,6 +32,9 @@ export class ProviderCouponsComponent implements OnInit {
       }
     ];
   breadcrumbs = this.breadcrumbs_init;
+  addcoupdialogRef;
+  editcoupdialogRef;
+  confirmremdialogRef;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions) {
@@ -42,6 +45,18 @@ export class ProviderCouponsComponent implements OnInit {
         this.getCoupons(); // Call function to get the list of discount lists
     }
 
+    ngOnDestroy() {
+      if (this.addcoupdialogRef) {
+        this.addcoupdialogRef.close();
+      }
+      if (this.editcoupdialogRef) {
+        this.editcoupdialogRef.close();
+      }
+      if (this.confirmremdialogRef) {
+        this.confirmremdialogRef.close();
+      }
+    }
+
     getCoupons() {
         this.provider_servicesobj.getProviderCoupons()
         .subscribe(data => {
@@ -50,7 +65,7 @@ export class ProviderCouponsComponent implements OnInit {
         });
     }
     addCoupons() {
-        const dialogRef = this.dialog.open(AddProviderCouponsComponent, {
+        this.addcoupdialogRef = this.dialog.open(AddProviderCouponsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
           disableClose: true,
@@ -59,14 +74,14 @@ export class ProviderCouponsComponent implements OnInit {
           }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.addcoupdialogRef.afterClosed().subscribe(result => {
           if (result === 'reloadlist') {
             this.getCoupons();
           }
         });
     }
     editCoupons(obj) {
-        const dialogRef = this.dialog.open(AddProviderCouponsComponent, {
+        this.editcoupdialogRef = this.dialog.open(AddProviderCouponsComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass'],
           disableClose: true,
@@ -76,7 +91,7 @@ export class ProviderCouponsComponent implements OnInit {
           }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.editcoupdialogRef.afterClosed().subscribe(result => {
           if (result === 'reloadlist') {
             this.getCoupons();
           }
@@ -87,7 +102,7 @@ export class ProviderCouponsComponent implements OnInit {
       if (!id) {
         return false;
       }
-      const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      this.confirmremdialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
@@ -96,7 +111,7 @@ export class ProviderCouponsComponent implements OnInit {
           'heading' : 'Delete Confirmation'
         }
       });
-      dialogRef.afterClosed().subscribe(result => {
+      this.confirmremdialogRef.afterClosed().subscribe(result => {
         if (result) {
             this.deleteCoupons(id);
         }

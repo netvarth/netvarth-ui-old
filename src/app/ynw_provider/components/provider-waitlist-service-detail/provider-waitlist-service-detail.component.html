@@ -15,12 +15,12 @@
                                         <div class="cl1">
                                             <span class="editbt" (click)="editService()" *ngIf="service_data.status=='ACTIVE'"></span>
                                             <div class="ot-it">
-                                                <h4>{{service_data.name | titlecase}}</h4>
+                                                <h4>{{service_data.name | capitalizeFirst}}</h4>
                                                 <div class="it-des">
-                                                    {{service_data.description | titlecase}}
+                                                    {{service_data.description | capitalizeFirst}}
                                                 </div>
                                                 <div class="c-ot">
-                                                    <div class="item">
+                                                    <div class="item" *ngIf="!disable_price">
                                                         <span class="ttle">Estimated Duration</span>
                                                         <span class="icon-time">  {{service_data.serviceDuration}} min</span>
                                                     </div>
@@ -40,7 +40,7 @@
                                                     </div>
                                                     <div class="item">
                                                         <span>End of Service Notification:
-                                                            <span class="noti-it">{{((service_data.notificationType) ? service_data.notificationType : 'NONE') | titlecase}}</span></span>
+                                                            <span class="noti-it">{{((service_data.notificationType) ? service_data.notificationType : 'NONE') | capitalizeFirst}}</span></span>
                                                     </div>
                                                 </div>
                                                 <div class="btm-ctrl">

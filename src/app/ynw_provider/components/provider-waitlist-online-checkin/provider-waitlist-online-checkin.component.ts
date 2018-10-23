@@ -85,16 +85,19 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
       futureDateWaitlist: this.form.futureDateWaitlist,
       showTokenId: showToken
     };
-    console.log('formdata', postData);
+    // console.log('formdata', postData);
     // this.provider_services.setWaitlistMgr(this.form)
     this.provider_services.setWaitlistMgr(postData)
     .subscribe(
       data => {
         this.getWaitlistMgr();
-        this.shared_functions.apiSuccessAutoHide(this, Messages.ONLINE_CHECKIN_SAVED);
+       // this.shared_functions.apiSuccessAutoHide(this, Messages.ONLINE_CHECKIN_SAVED);
+       this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
       },
       error => {
-
+        // console.log('error', error);
+        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        // this.shared_functions.apiErrorAutoHide(this, error);
       });
   }
 

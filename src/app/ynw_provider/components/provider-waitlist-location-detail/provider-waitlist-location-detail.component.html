@@ -16,8 +16,8 @@
                                         <span class="editbt"  (click)="editLocation()" ></span>
                                         <div class="cop-l">
                                             <span class="bse-lcn-label" *ngIf="location_data.baseLocation==true">Base Location</span>
-                                            <h4>{{location_data.place | titlecase}}</h4>
-                                            <span>{{location_data.address | titlecase}}</span>
+                                            <h4>{{location_data.place | capitalizeFirst}}</h4>
+                                            <span>{{location_data.address | capitalizeFirst}}</span>
                                             <!-- <span *ngIf="location_data.pinCode">
                                                 Pin : {{location_data.pinCode}}
                                             </span> -->
@@ -86,7 +86,7 @@
                     expanded = "{{(queues.length == 0) ? false : true}}">
                       <mat-expansion-panel-header>
                         <mat-panel-title  class="lc-title">
-                            <h5>Queues <span class="count">{{queues.length}}</span><span class="addbt" (click)="addEditProviderQueue('add')"
+                            <h5>Service Time Windows <span class="count">{{queues.length}}</span><span class="addbt" (click)="addEditProviderQueue('add')"
                             *ngIf="queues.length == 0"></span></h5>
                             
                         </mat-panel-title>
@@ -96,7 +96,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Queue</th>
+                                    <th>Service Time Window</th>
                                     <th>Schedule</th>
                                     <th>Status</th>
                                     <th><span class="addbt" (click)="addEditProviderQueue('add')"></span></th>
@@ -104,9 +104,9 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let queue of queues">
-                                    <td data-title="Queue" class="pointer-cursor"
-                                    (click)="goQueueDetail(queue)" [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to edit queue'">
-                                    {{queue.name | titlecase}}</td>
+                                    <td data-title="Service Time Window" class="pointer-cursor"
+                                    (click)="goQueueDetail(queue)" [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to edit service time window'">
+                                    {{queue.name | capitalizeFirst}}</td>
                                     <td data-title="Shedule">
                                         <div class="schtd">
                                             <ng-container *ngFor="let schedule of queue.displayschedule">

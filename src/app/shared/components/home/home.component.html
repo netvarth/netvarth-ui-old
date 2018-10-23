@@ -89,7 +89,7 @@
                       </div>
                   </div>
                   <ng-container *ngFor="let domains of domainlist_data; first as isFirst">
-                  <div class="item">
+                  <div class="item" *ngIf="sector_info[domains.domain]">
                       <div class="ser-bx">
                           <img *ngIf="sector_info[domains.domain]['simg']" [src]="sector_info[domains.domain]['simg']" alt="" (click)="handle_home_domain_click(domains)">
                           <h4 (click)="handle_home_domain_click(domains)">{{domains.displayName}}</h4>

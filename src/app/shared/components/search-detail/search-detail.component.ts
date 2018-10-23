@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input, Output, EventEmitter, HostListener} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnDestroy} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
@@ -47,9 +47,9 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
   ]
 })
 
-@HostListener('window:resize', ['$event'])
 
-export class SearchDetailComponent implements OnInit {
+
+export class SearchDetailComponent implements OnInit, OnDestroy {
 
   public domainlist_data;
   public domain;
@@ -121,6 +121,10 @@ export class SearchDetailComponent implements OnInit {
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   hideRefineifOneresultchk = false;
+  checkindialogRef;
+  claimdialogRef;
+  servicedialogRef;
+  commdialogRef;
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
@@ -152,16 +156,32 @@ export class SearchDetailComponent implements OnInit {
     this.nosearch_results = false;
 
   }
+  ngOnDestroy() {
+    if (this.checkindialogRef) {
+      this.checkindialogRef.close();
+    }
+    if (this.claimdialogRef) {
+      this.claimdialogRef.close();
+    }
+    if (this.servicedialogRef) {
+      this.servicedialogRef.close();
+    }
+    if (this.commdialogRef) {
+      this.commdialogRef.close();
+    }
+  }
+  @HostListener('window:resize', ['$event'])
   onResize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 767) {
       this.showrefinedsection = false;
     }
-   // console.log('here', this.screenWidth, this.screenHeight);
+  // console.log('here', this.screenWidth, this.screenHeight);
 }
 checkRefineSpecial() {
   const ynwsrchbuttonClicked = this.shared_functions.getitemfromLocalStorage('ynw_srchb');
+  // console.log('test', ynwsrchbuttonClicked);
   this.shared_functions.removeitemfromLocalStorage('ynw_srchb');
   if (ynwsrchbuttonClicked === 1) {
     this.hideRefineifOneresultchk = true;
@@ -1017,13 +1037,19 @@ setEnvironment(bypassotherfunction?) {
             if (this.search_data.hits.found === 0) {
               this.nosearch_results = true;
             }
-            /*if (this.hideRefineifOneresultchk) {
+            if (this.hideRefineifOneresultchk) {
               if (this.search_result_count === 1) {
                 this.showrefinedsection = false;
               } else {
-                this.showrefinedsection = true;
+               // console.log('screen width', this.screenWidth);
+                if (this.screenWidth <= 767) {
+                  this.showrefinedsection = false;
+                } else {
+                  this.showrefinedsection = true;
+                }
               }
-            }*/
+              this.hideRefineifOneresultchk = false;
+            }
           });
       });
     }
@@ -1649,7 +1675,7 @@ setEnvironment(bypassotherfunction?) {
 
   SignupforClaimmable(passData) {
       const cClass = 'commonpopupmainclass';
-      const dialogRef = this.dialog.open(SignUpComponent, {
+      this.claimdialogRef = this.dialog.open(SignUpComponent, {
         width: '50%',
         panelClass: ['signupmainclass', cClass],
         disableClose: true,
@@ -1659,7 +1685,7 @@ setEnvironment(bypassotherfunction?) {
         }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      this.claimdialogRef.afterClosed().subscribe(result => {
       });
 
     }
@@ -1746,7 +1772,7 @@ setEnvironment(bypassotherfunction?) {
 
   }
   showCheckin(origin?) {
-    const dialogRef = this.dialog.open(CheckInComponent, {
+    this.checkindialogRef = this.dialog.open(CheckInComponent, {
        width: '50%',
        panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
        disableClose: true,
@@ -1759,7 +1785,7 @@ setEnvironment(bypassotherfunction?) {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.checkindialogRef.afterClosed().subscribe(result => {
 
     });
   }
@@ -1832,7 +1858,7 @@ setEnvironment(bypassotherfunction?) {
     }
   }
   showCommunicate(provid, provider_name) {
-    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+    this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: 'consumerpopupmainclass',
       disableClose: true,
@@ -1844,7 +1870,7 @@ setEnvironment(bypassotherfunction?) {
      }
    });
 
-   dialogRef.afterClosed().subscribe(result => {
+   this.commdialogRef.afterClosed().subscribe(result => {
 
    });
   }
@@ -1947,9 +1973,9 @@ setEnvironment(bypassotherfunction?) {
         });
   }
   showServiceDetail(serv, busname) {
-    const dialogRef = this.dialog.open(ServiceDetailComponent, {
+    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
       disableClose: true,
     data: {
       bname: busname,
@@ -1957,7 +1983,7 @@ setEnvironment(bypassotherfunction?) {
     }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.servicedialogRef.afterClosed().subscribe(result => {
     });
   }
 

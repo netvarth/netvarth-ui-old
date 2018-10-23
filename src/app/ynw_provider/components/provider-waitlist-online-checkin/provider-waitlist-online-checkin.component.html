@@ -45,7 +45,7 @@
               </div>
               <div class="row">
                   <div class="lbl col-sm-12 col-md-12 col-lg-12">
-                    <label>Accept Future {{checkin_label | titlecase}}
+                    <label>Accept Future {{checkin_label | capitalizeFirst}}
                       <mat-slide-toggle
                       class="example-margin"
                       [checked]="waitlist_manager['futureDateWaitlist']"
@@ -84,3 +84,4 @@
       <app-form-success-display  [displayMsg]="true" *ngIf="api_success"
       successMsg="{{api_success}}">
     </app-form-success-display>
+    

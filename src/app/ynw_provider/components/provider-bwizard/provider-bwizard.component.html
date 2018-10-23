@@ -160,7 +160,7 @@
                                 </ul>
                                 <span class="cs-btn bt3" (click)="changeSchedule_clicked()" *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0) ? 'Change Schedule': 'Add Schedule'}}</span>
                             </div>
-                            <app-provider-schedule [Isource] = "'wizard'" *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)"></app-provider-schedule>
+                            <app-provider-schedule [Isource] = "'wizard'" *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)" (addeditScheduleClick)="handleaddeditscheduleclicked($event)"></app-provider-schedule>
                         </div>
                     </div>
                     <div class="footer">
@@ -174,8 +174,8 @@
                                 </ul>
                             </div>
                             <div class="col-6 control">
-                                <button (click)="showStep(2) " type="button" class="cs-btn bt2" *ngIf="!loading_active">Back</button>
-                                <button (click)="showStep(4) "type="button" class="cs-btn bt1" *ngIf="!loading_active">Next</button>
+                                <button (click)="showStep(2) " type="button" class="cs-btn bt2" *ngIf="!loading_active && !disablebuttonsInSchedule">Back</button>
+                                <button (click)="showStep(4) "type="button" class="cs-btn bt1" *ngIf="!loading_active && !disablebuttonsInSchedule">Next</button>
                                 <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                             </div>
                         </div>
@@ -243,7 +243,7 @@
                 <form action="">
                     <span (click)="redirecttoProfile()" class="close-btn" data-icon="i"></span>
                     <div class="header">
-                        <h1>Public Search</h1>
+                        <h1>Public Search {{this.active_step}}</h1>
                     </div>
                     <div class="content">
                         <div class="flds col-12">

@@ -1,5 +1,5 @@
 <form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Item - {{ data.type | titlecase }}
+<h1 class="mat-dialog-title">Item - {{ data.type | capitalizeFirst }}
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
@@ -16,7 +16,7 @@
     <input type="text" #caption formControlName="caption"/>
 </div>-->
 
-        <div class="itemtopouter">
+        <!-- <div class="itemtopouter">
         <div *ngIf="img_exists && data.type=='add'">
         <ul class="galul">
         <li>
@@ -29,7 +29,6 @@
             </button>
                 <mat-menu #menu="matMenu">
                 <button type="button" mat-menu-item (click)="deleteTempImage()">
-                    <!-- <mat-icon>delete</mat-icon> -->
                     <i class="icon-delete"></i>
                     <span >Delete</span>
                     </button>
@@ -47,7 +46,7 @@
         <input type="file" name="image_src" id="image_src"  accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)">
         </span>
         </div>
-    </div>
+    </div> -->
 
 <div class="form-group">
     <label class="col-form-label" for="displayName">Item Name *</label>

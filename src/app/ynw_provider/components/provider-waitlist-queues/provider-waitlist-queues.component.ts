@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -21,7 +21,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
     styleUrls: ['./provider-waitlist-queues.component.css']
 })
 
-export class ProviderWaitlistQueuesComponent implements OnInit {
+export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
 
 
   queue_list: any = [];
@@ -31,6 +31,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit {
   api_success = null;
 
   api_load_complete = 0;
+  tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
 
   breadcrumbs = [
     {
@@ -42,9 +43,10 @@ export class ProviderWaitlistQueuesComponent implements OnInit {
     url: '/provider/settings/waitlist-manager'
     },
     {
-      title: 'Queues'
+      title: 'Service Time Windows'
     }
   ];
+  queuedialogRef;
 
   constructor(
     private provider_services: ProviderServices,
@@ -57,6 +59,12 @@ export class ProviderWaitlistQueuesComponent implements OnInit {
   ngOnInit() {
     // calling the method to get the list of locations
     this.getProviderQueues();
+  }
+
+  ngOnDestroy() {
+    if (this.queuedialogRef) {
+      this.queuedialogRef.close();
+    }
   }
 
   // get the list of locations added for the current provider

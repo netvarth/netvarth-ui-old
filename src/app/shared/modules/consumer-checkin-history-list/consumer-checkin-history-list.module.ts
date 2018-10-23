@@ -13,9 +13,11 @@ import { ViewConsumerWaitlistCheckInBillComponent } from './components/consumer-
 import { ConsumerWaitlistCheckInPaymentComponent } from './components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 
 import { CheckInHistoryServices } from './consumer-checkin-history-list.service';
+import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 
 @NgModule({
     imports: [
+        CapitalizeFirstPipeModule,
         CommonModule,
         RouterModule,
         MaterialModule,

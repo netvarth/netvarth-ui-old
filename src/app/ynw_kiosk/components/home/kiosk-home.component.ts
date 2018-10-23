@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
 
 import { KioskServices } from '../../services/kiosk-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -16,7 +19,7 @@ import { Messages } from '../../../shared/constants/project-messages';
   selector: 'app-kiosk-home',
   templateUrl: './kiosk-home.component.html'
 })
-export class KioskHomeComponent implements OnInit {
+export class KioskHomeComponent implements OnInit, OnDestroy {
  @ViewChild ('srchmobile') private srchmob: ElementRef;
  @ViewChild ('srchname') private srchname: ElementRef;
 
@@ -65,6 +68,8 @@ export class KioskHomeComponent implements OnInit {
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   apprxwaitingCaption = Messages.APPX_WAIT_TIME_CAPTION;
+  subscription: Subscription;
+
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -86,6 +91,34 @@ export class KioskHomeComponent implements OnInit {
     this.getUserdetails();
     this.loadingNow = false;
     this.cMod = 'main';
+
+    this.ctype = this.shared_functions.isBusinessOwner('returntyp');
+    // this.getInboxUnreadCnt();
+
+    // Section which handles the periodic reload
+    if (this.ctype === 'provider') {
+      this.subscription = Observable.interval(5 * 1000).subscribe(x => {
+        this.checkloggedIn();
+      });
+    } else {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+    }
+
+    // this.shared_functions.checkLogin()
+  }
+  checkloggedIn() {
+    console.log('checkedIn check');
+    if (!this.shared_functions.checkLogin()) {
+      this.router.navigate(['/']);
+    }
+  }
+  ngOnDestroy() {
+     // unsubscribe to ensure no memory leaks
+     if (this.subscription) {
+      this.subscription.unsubscribe();
+     }
   }
   getTerminologies() {
     this.kiosk_services.getTerminoligies(this.userdet.sector, this.userdet.subSector)

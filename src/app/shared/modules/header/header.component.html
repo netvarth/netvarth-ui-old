@@ -23,8 +23,8 @@
                         <img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/>
                     </div>
                     <div class="mn-title">
-                        <span class="title-bn">{{bname | titlecase}}</span>
-                        <span class="title-ps">{{bsector | titlecase }} <span *ngIf="bsubsector!=''">({{bsubsector | titlecase}})</span></span>
+                        <span class="title-bn">{{bname | capitalizeFirst}}</span>
+                        <span class="title-ps">{{bsector | capitalizeFirst }} <span *ngIf="bsubsector!=''">({{bsubsector | capitalizeFirst}})</span></span>
                     </div>
 
                     <div class="inbx" (click)="inboxiconClick()">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="lgmem">
                     <span class="lgin">
-                    {{userdet.userName | titlecase}}
+                    {{userdet.userName | capitalizeFirst}}
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <i class="icon-angle-down"></i>
                     </button>
@@ -71,10 +71,55 @@
                     <span (click)="upgradeMembership()" class="membership"
                     *ngIf="headercls!='itl-steps' && isprovider && upgradablepackages.length > 0"><i class="icon-membership"></i> Upgrade <span>Membership</span></span>
                 </div>
+                <div class="userdt" (click)="showHidemobileSubMenu()">
+                    <div class="usrbx">
+                        <span class="icon-user"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <ng-container  *ngIf="ctype=='provider' &&  headercls!='itl-steps'">
+    <div class="mobile-menu" [class.show]="showmobileSubmenu" *ngIf="small_device_display">
+        <div class="container">
+            <div class="row">
+                <div class="menu-outer">
+                    <div class="outer">
+                        <span class="close" (click)="showHidemobileSubMenu()"><span>Close</span></span>
+                        
+                        <div class="sect1">
+                            <div class="sl1">
+                                <span class="uname" *ngIf="userdet.userName">{{userdet.userName | capitalizeFirst}}</span>
+                            </div>
+                            
+                        </div>
+                        <div class="sect2">
+                            <div class="pro-pic" *ngIf="blogo!=''">
+                            <img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/>
+                            </div>
+                            <div class="mn-title">
+                                <span class="title-bn">{{bname | capitalizeFirst}}</span>
+                                <span class="title-ps">{{bsector | capitalizeFirst }} <span *ngIf="bsubsector!=''">({{bsubsector | capitalizeFirst}})</span></span>
+                            </div>
+                        </div>
+                        <div class="sect3">
+                            <ul class="menulinks">
+                                <li (click)="redirectto('profile')"><i class="icon-profile"></i> User Profile</li>
+                                <li (click)="redirectto('change-password')"><i class="icon-password"></i> Change Password</li>
+                                <li (click)="redirectto('change-mobile')"><i class="icon-mobile"></i> Change Mobile</li>
+                                <li (click)="redirectto('change-email')"><i class="icon-inbox"></i> Add or Change Email</li>
+                                <li (click)="switchtoConsumer()" *ngIf="isprovider"><i class="icon-switch"></i> Switch to Consumer</li>
+                                <li (click)="doLogout()"><i class="icon-logout"></i> Logout</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </ng-container>
 </header>
+
 
 
 <header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home'">
@@ -142,9 +187,8 @@
                                     </button>
                                     </mat-menu>
                                 </span>
-                            </div>
+                        </div>
                     </div>
-
                         <div class="isprovidertop ng-star-inserted" *ngIf="!shared_functions.checkLogin()">Are you a Service Provider? <span (click)="doLogin('provider')">Click Here</span></div>
                     </div>
 

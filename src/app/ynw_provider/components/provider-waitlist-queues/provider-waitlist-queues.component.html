@@ -9,7 +9,7 @@
       <div class="container">
           <div class="row">
               <div class="n-loc">
-                  <span class="add-nloc cs-btn bt3" (click)="addEditProviderQueue('add')">Add New Queue</span>
+                  <span class="add-nloc cs-btn bt3" (click)="addEditProviderQueue('add')">Add New Service Time Window</span>
               </div>
           </div>
           <div class="row" *ngFor="let queue of queue_list">
@@ -21,14 +21,14 @@
                             </button>
                         </span>
 
-                        <h3 class="pointer-cursor" (click)="goQueueDetail(queue)">
-                        {{queue.name | titlecase}}
+                        <h3 class="pointer-cursor" (click)="goQueueDetail(queue)" [matTooltipClass] = "tooltipcls" [matTooltip]="tooltip_queueedit">
+                        {{queue.name | capitalizeFirst}}
                         </h3>
 
                         <div class="c-ot m0">
                             <div class="item" *ngIf="queue.location">
                                 <span class="ttle">Location</span>
-                                <span class="icon-location">{{queue.location.place | titlecase}}</span>
+                                <span class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
                             </div>
                             <div class="item" *ngIf="queue.capacity">
                                 <span class="ttle">Max. Capacity</span>
@@ -65,7 +65,7 @@
                 <div class="card">
                     <div class="copy">
                         <h3 class="pointer-cursor">
-                        No queues available
+                        No service time windows available
                         </h3>
                     </div>
                 </div>

@@ -135,7 +135,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
         this.holdlogSelsubcat = this.logSelsubcat;
         this.holdlogSeldate = this.logSeldate;
         this.holdlogSelaction = this.logSelaction;
-        // this.startpageval = 1;
+        this.startpageval = 1;
       }
       let seldate = '';
       if (this.holdlogSeldate) {

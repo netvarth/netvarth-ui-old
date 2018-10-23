@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -23,7 +23,7 @@ import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-
     templateUrl: './provider-waitlist-checkin-detail.component.html'
 })
 
-export class ProviderWaitlistCheckInDetailComponent implements OnInit {
+export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
 
     waitlist_id = null;
     waitlist_data;
@@ -55,6 +55,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
 
     timeCaption = Messages.CHECKIN_TIME_CAPTION;
     minCaption = Messages.EST_WAIT_TIME_CAPTION;
+    sendmsgdialogRef;
+    notedialogRef;
 
     constructor(
         private provider_services: ProviderServices,
@@ -89,6 +91,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
             this.goBack();
         }
 
+    }
+
+    ngOnDestroy() {
+      if (this.sendmsgdialogRef) {
+        this.sendmsgdialogRef.close();
+      }
+      if (this.notedialogRef) {
+        this.notedialogRef.close();
+      }
     }
 
     getWaitlistDetail() {
@@ -183,7 +194,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
     }
 
     addProviderNote(checkin) {
-      const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+      this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
         disableClose: true,
@@ -192,7 +203,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
         }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      this.notedialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
           this.getWaitlistNotes();
         }
@@ -218,7 +229,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit {
 
       const uuid = this.waitlist_data.ynwUuid || null;
 
-      this.provider_shared_functions.addConsumerInboxMessage(uuid)
+      this.provider_shared_functions.addConsumerInboxMessage(uuid, this)
       .then(
         result => {
           this.getCommunicationHistory(uuid);

@@ -56,12 +56,13 @@ import { FormMessageDisplayModule } from './shared/modules/form-message-display/
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
 
+import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
+
 // import { SearchMoreOptionsComponent } from './shared/components/search-moreoptions/search-moreoptions.component';
 
 import { projectConstants } from './shared/constants/project-constants';
 
 import 'hammerjs';
-import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angu
     /*SearchMoreOptionsComponent*/
   ],
   imports: [
+    CapitalizeFirstPipeModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -139,9 +141,9 @@ import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angu
     ProviderDetailService,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS},
-    {provide:LocationStrategy,useClass:HashLocationStrategy}
+    {provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS}
   ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -19,7 +19,7 @@ import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.
 
 
 
-export class ProviderSubeaderComponent implements OnInit {
+export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
   @Input() activeTab: string;
   @Output() reloadActionSubheader = new EventEmitter<any>();
@@ -30,6 +30,9 @@ export class ProviderSubeaderComponent implements OnInit {
   customer_label = '';
   checkin_label = '';
   moreOptions: any = [];
+  srchcustdialogRef;
+  crtCustdialogRef;
+  ChkindialogRef;
 
   constructor(public dialog: MatDialog,
   public provider_services: ProviderServices,
@@ -41,10 +44,22 @@ export class ProviderSubeaderComponent implements OnInit {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     // this.getWaitlistMgr(); // hide becuause it called on every page change
   }
+  ngOnDestroy() {
+    // console.log('on destroy');
+    if (this.srchcustdialogRef) {
+      this.srchcustdialogRef.close();
+    }
+    if (this.crtCustdialogRef) {
+      this.crtCustdialogRef.close();
+    }
+    if (this.ChkindialogRef) {
+      this.ChkindialogRef.close();
+    }
+  }
 
   searchCustomer(source) {
 
-    const dialogRef = this.dialog.open(SearchProviderCustomerComponent, {
+    this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass'],
       disableClose: true,
@@ -52,12 +67,12 @@ export class ProviderSubeaderComponent implements OnInit {
         source: source
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result.message && result.message === 'noCustomer' && source === 'createCustomer') {
+    this.srchcustdialogRef.afterClosed().subscribe(result => {
+      if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
         this.createCustomer(result.data);
-      } else if (result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
+      } else if (result && result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
         this.beforeCheckIn(result.data);
-      } else if (result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
+      } else if (result && result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
         this.createCustomer(result.data, source);
       }
     });
@@ -65,7 +80,7 @@ export class ProviderSubeaderComponent implements OnInit {
 
   createCustomer(search_data, next_page = null) {
 
-    const dialogRef = this.dialog.open(AddProviderCustomerComponent, {
+    this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
       panelClass : ['commonpopupmainclass'],
       disableClose: true,
@@ -73,7 +88,7 @@ export class ProviderSubeaderComponent implements OnInit {
         search_data: search_data
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.crtCustdialogRef.afterClosed().subscribe(result => {
       if (next_page && result.message === 'reloadlist') {
         this.beforeCheckIn(result.data);
       }
@@ -149,7 +164,7 @@ export class ProviderSubeaderComponent implements OnInit {
     const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
 
 
-    const dialogRef = this.dialog.open(CheckInComponent, {
+    this.ChkindialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
@@ -167,7 +182,7 @@ export class ProviderSubeaderComponent implements OnInit {
      }
    });
 
-   dialogRef.afterClosed().subscribe(result => {
+   this.ChkindialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
           this.reloadActionSubheader.emit(result);
       }

@@ -11,7 +11,7 @@
         <ng-container *ngIf="bill_load_complete">
 
           <div class="form-group bill-basic">
-              <div class="btl"><span class="label">{{customer_label  | titlecase}} Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
+              <div class="btl"><span class="label">{{customer_label  | capitalizeFirst}} Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName | capitalizeFirst}} {{checkin.consumer.userProfile.lastName}}</span></div>
               <!-- <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
               <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div> -->
               <div class="btl"><span class="label">Date</span> <span class="label-valu">{{billdate}}</span></div>
@@ -24,12 +24,14 @@
               <input type="text" #itemservicesearch aria-label="Number" matInput
               [formControl]="itemServiceSearch" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
-                <mat-optgroup *ngFor="let group of ItemServiceGroupOptions | async" [label]="group.type" >
+                <ng-container *ngFor="let group of ItemServiceGroupOptions | async">
+                <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
                   <mat-option *ngFor="let value of group.values; let i = index" [value]="value" (click)="itemServiceSelected(group.type, i)">
                     {{ value }}
                   </mat-option>
                   <mat-option *ngIf="group.values.length==0" [disabled]="true"><span class="no-data"></span>No {{group.type}} Available</mat-option>
                 </mat-optgroup>
+                </ng-container>
               </mat-autocomplete>
             </mat-form-field>
           </div>
@@ -51,7 +53,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of cart.items; let i = index">
-                      <td data-title="Service/Item">{{item.name | titlecase}}</td>
+                      <td data-title="Service/Item">{{item.name | capitalizeFirst}}</td>
                       <td data-title="Quantity">
                         <input matInput type="number" min="1" [disabled]="cart.items[i].type == 'Services'" [(ngModel)]="cart.items[i].quantity"
                         [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)" autocomplete="off"> </td>
@@ -183,8 +185,8 @@
                             <tr>
                             <!-- <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td> -->
                             <td data-title="Date and Time">{{stringtoDate(payment.paymentOn)}}</td>
-                            <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | titlecase}}</span></td>
-                            <td data-title="Mode">{{payment.acceptPaymentBy | titlecase }}</td>
+                            <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | capitalizeFirst}}</span></td>
+                            <td data-title="Mode">{{payment.acceptPaymentBy | capitalizeFirst }}</td>
                             <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
                             <td data-title="Refunded">-</td>
                             <td data-title="Refundable">
@@ -194,8 +196,8 @@
         
                             <tr *ngFor="let refund of payment.refundDetails" class="refundtr">
                                     <td data-title="Date and Time">{{refund.paymentOn | date:Pipe_disp_date}}</td>
-                                    <td data-title="Status"><span [class]="refund.status | lowercase">{{refund.status | titlecase}}</span></td>
-                                    <td data-title="Mode">{{refund.refundBy | titlecase }}</td>
+                                    <td data-title="Status"><span [class]="refund.status | lowercase">{{refund.status | capitalizeFirst}}</span></td>
+                                    <td data-title="Mode">{{refund.refundBy | capitalizeFirst }}</td>
                                     <td data-title="Amount">-</td>
                                     <td data-title="Refunded">{{refund.amount | currency:'INR':'symbol':'.2-2' }}</td>
                                     <td></td>

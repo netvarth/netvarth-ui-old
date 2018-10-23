@@ -4,7 +4,7 @@
     </div>
     <div class="ksk-company-logo">
         <div class="logo"><img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/></div>
-        <span class="title" *ngIf="bname != '' && bname != undefined">{{bname}}</span>
+        <span class="title" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}}</span>
     </div>
     <!-- <div class="ksk-exit">
         <button class="exit">

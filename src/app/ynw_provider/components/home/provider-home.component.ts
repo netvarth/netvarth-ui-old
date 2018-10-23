@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
 
@@ -63,6 +63,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   tooltipcls = projectConstants.TOOLTIP_CLS;
   open_filter = false;
   waitlist_status = [];
+  sel_queue_indx = 0;
 
   filter = {
     first_name: '',
@@ -116,6 +117,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   delayTooltip = this.shared_functions.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
   cloudTooltip = this.shared_functions.getProjectMesssages('CLOUDICON_TOOPTIP');
+  adjustdialogRef;
+  notedialogRef;
+  addnotedialogRef;
+  billdialogRef;
+  viewbilldialogRef;
+  makPaydialogRef;
+  sendmsgdialogRef;
+  screenWidth;
+  small_device_display = false;
+  show_small_device_queue_display = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -125,6 +136,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices) {
+
+      this.onResize();
 
       this.customer_label = this.shared_functions.getTerminologyTerm('customer');
       this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -188,10 +201,47 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-     if (this.cronHandle) {
+    if (this.cronHandle) {
       this.cronHandle.unsubscribe();
-     }
+    }
+    if (this.adjustdialogRef) {
+      this.adjustdialogRef.close();
+    }
+    if (this.notedialogRef) {
+      this.notedialogRef.close();
+    }
+    if (this.addnotedialogRef) {
+      this.addnotedialogRef.close();
+    }
+    if (this.billdialogRef) {
+      this.billdialogRef.close();
+    }
+    if (this.viewbilldialogRef) {
+      this.viewbilldialogRef.close();
+    }
+    if (this.makPaydialogRef) {
+      this.makPaydialogRef.close();
+    }
+    if (this.sendmsgdialogRef) {
+      this.sendmsgdialogRef.close();
+    }
   }
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+      this.show_small_device_queue_display = true;
+      if (this.screenWidth <= projectConstants.SMALL_DEVICE_BOUNDARY) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
+    } else {
+      this.small_device_display = false;
+      this.show_small_device_queue_display = false;
+    }
+  // console.log('resized', this.screenWidth,  this.small_device_display);
+}
 
   getBusinessProfile() {
     let bProfile: any = [];
@@ -336,11 +386,15 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         // this.all_queues = data;
 
         const Cqueues = data;
+        // console.log('cqueue', Cqueues);
         this.all_queues = [];
+        let indx = 0;
 
         for ( const que of Cqueues) {
           if (que.queueState === 'ENABLED') {
+            que.qindx = indx;
             this.all_queues.push(que);
+            indx += 1;
           }
         }
 
@@ -354,7 +408,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           display_schedule =  this.shared_functions.arrageScheduleforDisplay(schedule_arr);
           this.all_queues[ii]['displayschedule'] = display_schedule[0];
         }
-        // console.log(this.all_queues);
+        // console.log('all queues', this.all_queues);
       },
       error => {
       },
@@ -378,16 +432,19 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             this.queues = [];
             const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
             const savedQok = [];
+            let indx = 0;
             for ( const que of Cqueues) {
               if (que.queueState === 'ENABLED') {
                 // console.log('que', que);
                 if (que.id === savedQ) {
                   savedQok.push(que);
                 }
+                que.qindx = indx;
                 this.queues.push(que);
+                indx += 1;
               }
             }
-            // console.log('saved q', savedQok);
+            // console.log('queues', this.queues);
             if (savedQok.length > 0) {
               this.selectedQueue(savedQok[0]);
             } else {
@@ -445,6 +502,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   selectedQueue(selected_queue, qclick?) {
    // console.log('selected q', selected_queue.id);
     if (selected_queue.id) {
+      this.sel_queue_indx = selected_queue.qindx;
       this.shared_functions.setitemonLocalStorage('pdq', selected_queue.id);
     }
     this.selected_queue = selected_queue;
@@ -456,6 +514,21 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           this.today_waitlist_count = result;
         }
       );
+  }
+  handleQueueSel(mod) {
+   // console.log('mod', mod, this.sel_queue_indx);
+    let selqindx;
+    if (mod === 'next') {
+      if ((this.queues.length - 1) > this.sel_queue_indx) {
+        selqindx = this.sel_queue_indx + 1;
+        this.selectedQueue(this.queues[selqindx]);
+      }
+    } else if (mod === 'prev') {
+      if ((this.queues.length > 0) && (this.sel_queue_indx > 0)) {
+        selqindx = this.sel_queue_indx - 1;
+        this.selectedQueue(this.queues[selqindx]);
+      }
+    }
   }
 
   getFutureCheckinCount(filter = null) {
@@ -690,7 +763,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    const dialogRef = this.dialog.open(AdjustQueueDelayComponent, {
+    this.adjustdialogRef = this.dialog.open(AdjustQueueDelayComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -700,7 +773,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.adjustdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
@@ -780,7 +853,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   showConsumerNote (checkin) {
-    const dialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+    this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -789,7 +862,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
@@ -894,7 +967,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   addProviderNote(checkin) {
-    const dialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+    this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -903,7 +976,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.addnotedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
@@ -935,7 +1008,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   addEditBill(checkin, bill_data) {
     // console.log('add bill', bill_data);
-    const dialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+    this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
       disableClose: true,
@@ -945,7 +1018,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.billdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.reloadAPIs();
       }
@@ -954,7 +1027,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   viewBill(checkin, bill_data) {
     // console.log('billdata', bill_data);
-    const dialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
+    this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'width-100'],
       disableClose: true,
@@ -964,7 +1037,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.viewbilldialogRef.afterClosed().subscribe(result => {
       // console.log(result);
       if (result === 'updateBill') {
         this.addEditBill(checkin, bill_data);
@@ -977,7 +1050,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   makePayment(checkin, bill_data) {
-    const dialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+    this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -987,7 +1060,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.makPaydialogRef.afterClosed().subscribe(result => {
       this.reloadAPIs();
     });
   }
@@ -1008,7 +1081,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
     const uuid = waitlist.ynwUuid || null;
 
-    this.provider_shared_functions.addConsumerInboxMessage(uuid)
+    this.provider_shared_functions.addConsumerInboxMessage(uuid, this)
     .then(
       result => {
 

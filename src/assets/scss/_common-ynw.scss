@@ -529,6 +529,7 @@ app-footer {
         .mat-dialog-content {
             overflow: inherit;
             @include clearfix();
+            max-height: auto;
             
             .more-box {
                 float: left;
@@ -541,7 +542,6 @@ app-footer {
                     width: 50%;
                 }
                 @include respond-to(ynw-400){
-                    width: 100%;
                     margin-bottom: 15px
                 }
                 
@@ -558,7 +558,11 @@ app-footer {
 
                             .ynwstar-rating {
                                 float: none;
-                                width: 135px;
+                                width: 127px;
+                                
+                                @include respond-to(ynw-575){
+                                    width: 117px;
+                                }
 
                                 label {
                                     margin-bottom: 0;

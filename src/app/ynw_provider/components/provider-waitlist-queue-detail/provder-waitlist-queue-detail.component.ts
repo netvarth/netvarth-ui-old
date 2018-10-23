@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -19,7 +19,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
     templateUrl: './provider-waitlist-queue-detail.component.html'
 })
 
-export class ProviderWaitlistQueueDetailComponent implements OnInit {
+export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
 
     queue_id = null;
     queue_data;
@@ -38,12 +38,13 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
           url: '/provider/settings/waitlist-manager'
         },
         {
-          title: 'Queues',
+          title: 'Service Time Windows',
           url: '/provider/settings/waitlist-manager/queues'
         }
       ];
     breadcrumbs = this.breadcrumbs_init;
     customer_label = '';
+    queuedialogRef;
 
     constructor(
         private provider_services: ProviderServices,
@@ -68,6 +69,12 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit {
 
         } else {
             this.goBack();
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.queuedialogRef) {
+            this.queuedialogRef.close();
         }
     }
 

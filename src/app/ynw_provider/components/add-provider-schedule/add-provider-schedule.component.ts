@@ -22,6 +22,7 @@ export class AddProviderSchedulesComponent implements OnInit {
   @Input() Isource;
   @Output() saveScheduleClick = new EventEmitter<any>();
   @Output() cancelScheduleClick = new EventEmitter<any>();
+  @Output() addeditScheduleClick = new EventEmitter<any>();
 
     api_error = null;
   api_success = null;
@@ -228,6 +229,18 @@ export class AddProviderSchedulesComponent implements OnInit {
     // console.log('schedul after', this.schedule_arr);
     this.display_schedule =  this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
     this.saveScheduleClick.emit(this.schedule_arr);
+  }
+  addScheduleSelection() {
+    this.addeditScheduleClick.emit('addeditclicked');
+    this.showScheduleselection();
+  }
+  cancelscheduleClicked() {
+    this.showScheduleselection();
+    this.cancelScheduleClick.emit(this.schedule_arr);
+  }
+  editwScheduleselection(indx, schedule) {
+    this.addeditScheduleClick.emit('addeditclicked');
+    this.showScheduleselection(indx, schedule);
   }
 
   showScheduleselection(indx?, obj?) {

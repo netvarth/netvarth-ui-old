@@ -43,7 +43,7 @@ export class ProviderSharedFuctions {
 
     addEditQueuePopup(ob, type, source, obj = null) {
 
-        const dialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
+        ob.queuedialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
             disableClose: true,
@@ -55,7 +55,7 @@ export class ProviderSharedFuctions {
             },
           });
 
-          dialogRef.afterClosed().subscribe(result => {
+          ob.queuedialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
               this.queueReloadApi(ob, source);
             }
@@ -176,10 +176,10 @@ export class ProviderSharedFuctions {
 
   }
 
-  addConsumerInboxMessage(uuid) {
+  addConsumerInboxMessage(uuid, Cthis?) {
     const terminologies = this.common_datastorage.get('terminologies');
     return new Promise((resolve, reject) => {
-      const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+      Cthis.sendmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
         width: '50%',
         panelClass: 'commonpopupmainclass',
         disableClose: true,
@@ -191,7 +191,7 @@ export class ProviderSharedFuctions {
         }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      Cthis.sendmsgdialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
           resolve();
         } else {

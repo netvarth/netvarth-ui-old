@@ -30,6 +30,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   selday_arr: any = [];
   selservice_arr: any = [];
   weekdays = projectConstants.myweekdaysSchedule;
+  Selall = false;
 
   customer_label = '';
 
@@ -368,12 +369,20 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
 
   handleselectall() {
+    this.Selall = true;
     this.selday_arr = [];
     const wkdaystemp = this.weekdays;
     this.weekdays = [];
     for (let ii = 1; ii <= 7; ii++) {
       this.handleDaychecbox(ii);
     }
+    this.weekdays = wkdaystemp;
+  }
+  handleselectnone() {
+    this.Selall = false;
+    this.selday_arr = [];
+    const wkdaystemp = this.weekdays;
+    this.weekdays = [];
     this.weekdays = wkdaystemp;
   }
 }
