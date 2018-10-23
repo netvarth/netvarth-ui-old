@@ -30,6 +30,17 @@ header {
                 }
             }
             
+            .bnps {
+                .mn-title  {
+                    &.wizardmode {
+                        margin-right: 20px;
+                        color: $cc-mediumgray;
+                        font-size: .875rem;
+                        font-weight: 600;
+                    }
+                }
+            }
+            
             .lgmem {
                 color: $linkblack;
                 font-size: .875rem;
@@ -87,7 +98,7 @@ footer {
     }
     
     .pt-top {
-        padding: 1.5em;
+        padding: 1em 1.5em;
         position: relative;
         
         h1 {
@@ -121,7 +132,7 @@ footer {
         }
     }
     .pt-btm {
-        padding: 1.25em 2.3em 2.3em 2.3em;
+        padding: 1em 2.3em 1.5em 2.3em;
         background: $white;
         position: relative;
         @include border-radius(5px);
@@ -166,7 +177,7 @@ footer {
             font-weight: 500;
             color: $white;
             width: 220px;
-            padding: 1.25em;
+            padding: 1em;
             margin-bottom: 1.8em;
             
             i {
@@ -279,7 +290,7 @@ footer {
                         width: 8px;
                         height: 8px;
                         @include border-radius(50%);
-                        background: #e6e6e6;
+                        background: $cc-mediumgray;
                         margin: 0 10px 0 0;
                         
                         &.active {

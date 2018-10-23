@@ -36,7 +36,7 @@ onSubmit(loginForm.value)" (keyup)="resetApiErrors()" *ngIf="step==1">
 </button>
 
 <div class="forgotpass" (click)="doForgotPassword()">Forgot Password?</div>
-<div class="newuser" (click)="doSignup()">New User? <span>Signup here</span></div>
+<div class="newuser" (click)="handleSignup()">New User? <span>Signup here</span></div>
 </div>
 <app-field-error-display [displayError]="true" *ngIf="api_error"
 errorMsg="{{api_error}}"></app-field-error-display>

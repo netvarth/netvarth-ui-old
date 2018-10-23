@@ -117,7 +117,7 @@
                                 <div class="form-group">
                                     <label>Google Map URL</label>
                                     <span class="expl">This can be used to find the exact location</span>
-                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder="" autocomplete="off">
+                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder="" autocomplete="off" readonly>
                                     <div class="sts-msg error" *ngIf="gurl_error!=''">{{gurl_error}}</div>
                                 </div>
                             </div>

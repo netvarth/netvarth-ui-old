@@ -134,7 +134,28 @@ export class LoginComponent implements OnInit {
   cancelForgotPassword() {
     this.step = 1;
   }
+  handleSignup() {
+    if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin')) {
+      this.dialogRef.close('showsignup');
+    } else {
+      this.dialogRef.close('showsignupfromlogin'); // closing the signin window
+      // this.doSignup();
+    }
+  }
   doSignup() {
+      const dialogReflog = this.dialog.open(SignUpComponent, {
+        width: '50%',
+        panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+        disableClose: true,
+        data: { is_provider : this.is_provider}
+      });
+      dialogReflog.afterClosed().subscribe(result => {
+        // console.log('The dialog was closed');
+        // this.animal = result;
+      });
+  }
+
+  /*doSignup() {
     const cClass = 'consumerpopupmainclass';
     // console.log('prov', this.is_provider);
     if (this.is_provider === 'true') {
@@ -143,21 +164,22 @@ export class LoginComponent implements OnInit {
     if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin')) {
       this.dialogRef.close('showsignup');
     } else {
+      console.log('sign here');
       this.api_loading = false;
       this.dialogRef.close(); // closing the signin window
-      const dialogRef = this.dialog.open(SignUpComponent, {
+      const dialogReflog = this.dialog.open(SignUpComponent, {
         width: '50%',
         panelClass: ['signupmainclass', cClass],
         disableClose: true,
         data: { is_provider : this.is_provider}
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      dialogReflog.afterClosed().subscribe(result => {
         // console.log('The dialog was closed');
         // this.animal = result;
       });
     }
-  }
+  }*/
 
   resetApiErrors() {
     this.api_error = null;

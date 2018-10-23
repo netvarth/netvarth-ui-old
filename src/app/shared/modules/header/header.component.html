@@ -18,16 +18,20 @@
                 <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">Are you a Service Provider? <span [matTooltipClass] = "tooltipcls" [matTooltip]="provsignTooltip" (click)="doLogin('provider')">Click Here</span></div>
             </div>
             <div class="lg-opt ml-auto" *ngIf="provider_loggedin">
-                <div class="bnps" *ngIf="headercls=='dashb'">
+                <div class="bnps" *ngIf="headercls=='dashb' || headercls=='itl-steps'">
                     <div class="pro-pic" *ngIf="blogo!=''">
                         <img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/>
                     </div>
-                    <div class="mn-title">
+                    <div class="mn-title" *ngIf="headercls=='dashb'">
                         <span class="title-bn">{{bname | capitalizeFirst}}</span>
                         <span class="title-ps">{{bsector | capitalizeFirst }} <span *ngIf="bsubsector!=''">({{bsubsector | capitalizeFirst}})</span></span>
                     </div>
 
-                    <div class="inbx" (click)="inboxiconClick()">
+                    <div class="mn-title wizardmode" *ngIf="headercls=='itl-steps'">
+                        <span class="title-ps">{{bsector | capitalizeFirst }} </span>
+                    </div>
+
+                    <div class="inbx" (click)="inboxiconClick()" *ngIf="headercls=='dashb'">
                         <div class="ot-bx" [matTooltipClass] = "tooltipcls" [matTooltip]="inboxiconTooltip">
                             <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</div>
                             <i data-icon="H"></i>

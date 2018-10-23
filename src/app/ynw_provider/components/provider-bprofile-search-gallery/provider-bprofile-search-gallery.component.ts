@@ -41,6 +41,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
   canceldisabled = false;
   img_save_caption = 'Upload';
   error_msg = '';
+  uploading = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -176,7 +177,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
   uploadApi(submit_data) {
 
     this.error_list = [];
-
+    this.uploading = true;
     this.provider_services.uploadGalleryImages(submit_data)
     .subscribe(
       data => {
@@ -187,11 +188,13 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         this.canceldisabled = false;
         this.img_save_caption = 'Upload';
         this.dialogRef.close('reloadlist');
+        this.uploading = false;
       },
       error => {
         this.error_list.push(this.shared_functions.getProjectErrorMesssages(error));
         this.error_msg = this.shared_functions.getProjectErrorMesssages(error);
         this.canceldisabled = false;
+        this.uploading = false;
       }
     );
 

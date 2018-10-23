@@ -296,6 +296,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       // this.animal = result;
+     // console.log('returned', result);
+      if (result === 'showsignupfromlogin') {
+        this.doSignup(origin);
+      }
     });
 
   }

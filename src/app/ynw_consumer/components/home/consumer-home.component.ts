@@ -167,6 +167,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
       data => {
         this.waitlists = data;
+        console.log('waitlist', this.waitlists);
         const today = new Date();
         let i = 0;
         let retval;
