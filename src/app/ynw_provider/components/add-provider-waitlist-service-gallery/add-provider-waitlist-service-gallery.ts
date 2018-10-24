@@ -39,6 +39,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
   imagePointer = 0;
   savedisabled = false;
   img_save_caption = 'Save';
+  canceldisabled = false;
 
   service_id = null;
 
@@ -151,6 +152,7 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
 
   uploadApi(submit_data) {
   this.error_msg = '';
+  this.canceldisabled = true;
     this.provider_services.uploadServiceGallery(this.service_id, submit_data)
     .subscribe(
       data => {
@@ -158,12 +160,14 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
         this.shared_functions.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_UPLOAD);
         this.savedisabled = false;
         this.img_save_caption = 'Save';
+        this.canceldisabled = false;
         this.dialogRef.close('reloadlist');
       },
       error => {
         this.error_list.push('error');
         this.img_save_caption = 'Save';
         this.savedisabled = false;
+        this.canceldisabled = false;
         this.error_msg =  this.shared_functions.getProjectErrorMesssages(error);
       }
     );

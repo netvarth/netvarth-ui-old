@@ -581,11 +581,18 @@ setEnvironment(bypassotherfunction?) {
           if (this.check_QuerystrinfieldexistsinArray(sufield) === -1) {
              // console.log('iamhere');
             this.querystringrefineretain_arr[orgfield] = obj[ufield].split('~'); // split values based on delimiter to an array
+            if (orgfield === 'ynw_verified_level') {
+              // console.log('fieldval', this.querystringrefineretain_arr[orgfield]);
+              for (let jjj = 0; jjj < this.querystringrefineretain_arr[orgfield].length; jjj++) {
+                this.querystringrefineretain_arr[orgfield][jjj] = Number(this.querystringrefineretain_arr[orgfield][jjj]);
+              }
+            }
+            // console.log('field', orgfield);
           }
         }
       }
     }
-   // console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
+   console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
     this.arraycreatedfromquerystring = true;
   }
 

@@ -1,0 +1,1081 @@
+// Learn More Popup
+.lm-popup {
+    background: $white;
+    color: $linkblack;
+    padding: 0px;
+    @include box-shadow(0, -20px, 30px, rgba(0, 0, 0, .1) !important);
+    @include transition(all 500ms);
+    /*margin-right: -50%;*/
+    /*visibility: hidden;*/
+    opacity: 1;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 65%;
+    z-index: 1001;
+
+    @include respond-to(ynw-767) {
+        width: 90%;
+    }
+
+    .close {
+        position: absolute;
+        background: $linkblue;
+        color: $white;
+        padding: 3px;
+        width: 30px;
+        height: 30px;
+        opacity: 1;
+        left: -15px;
+        top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include border-radius(30px);
+        @include transition(all 500ms);
+        text-shadow: none;
+
+        &:before {
+            position: absolute;
+            content: "\69";
+            @include font-custom;
+            color: inherit;
+            width: 14px;
+            height: 14px;
+            font-size: .875rem;
+        }
+    }
+
+    .backTotop {
+        position: absolute;
+        right: 30px;
+        bottom: 20px;
+        background: rgba(255, 255, 255, .8);
+        font-weight: 600;
+        text-align: center;
+        @include box-shadow(0px, 0px, 30px, rgba(0, 0, 0, .3));
+        @include border-radius(60px);
+        font-size: .875rem;
+        margin-left: -75px;
+        padding: 15px;
+        @include transition(all 500ms);
+        z-index: 100;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+
+        .icon-angle-up {
+            height: 1em;
+        }
+
+        &:hover {
+            color: $linkblue;
+        }
+
+    }
+
+    // Learn More Pages ####
+    .lm-outer {
+        margin: 0 auto;
+        padding: 20px;
+        background: $white;
+        height: 100vh;
+        overflow: auto;
+        overflow-x: hidden;
+
+
+        h3 {
+            font-size: 1.575rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: $black;
+        }
+
+        section {
+            margin-bottom: 1rem;
+
+            p,
+            div,
+            ul li,
+            ol li,
+            table th,
+            table td {
+                font-size: 1rem;
+                line-height: 1.75;
+                letter-spacing: .3px;
+            }
+
+            p,
+            ul li,
+            ol li,
+            ul,
+            ol {
+                margin-bottom: 1.2rem;
+            }
+
+            h4 {
+                font-size: 1.2rem;
+                color: $black;
+                padding-top: 15px;
+            }
+
+            h5 {
+                font-size: 1rem;
+                color: lighten($linkblack, 20%);
+            }
+
+            h6 {
+                color: lighten($linkblack, 20%);
+            }
+
+            blockquote {
+                @include font-script;
+                color: lighten($linkblack, 20%);
+                letter-spacing: .5px;
+                font-size: .875rem;
+                padding: 20px;
+                font-style: italic;
+                border-left: 5px solid lighten($linkblack, 40%);
+                background: $cc-body;
+                margin-bottom: 1.2rem;
+
+                span {
+                    font-weight: 600;
+                    font-size: 1rem;
+                }
+            }
+
+            .box-indent {
+                margin-left: 2.2rem;
+            }
+
+            .ul-normal {
+                padding-left: 15px;
+
+                li {
+                    position: relative;
+                    list-style: none;
+                    position: relative;
+                    padding-left: 1.25em;
+
+                    ul,
+                    ol,
+                    table {
+                        margin-top: 1.2rem;
+                    }
+
+                    ol {
+                        li {
+                            list-style: decimal;
+                            padding-left: .5em;
+
+                            &:before {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    &:before {
+                        font-family: "custom-ynw";
+                        font-style: normal;
+                        font-weight: normal;
+                        font-variant: normal;
+                        text-transform: none;
+                        content: "\67";
+                        position: absolute;
+                        left: 3px;
+                        font-size: .55rem;
+                        top: 6px;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            .ol-normal {
+                li {
+
+                    ul,
+                    ol,
+                    table {
+                        margin-top: 1.2rem;
+                    }
+                }
+            }
+
+            .table {
+                border: 1px solid $cc-ash;
+                background: rgba(255, 255, 255, .3);
+                margin-bottom: 1.2rem;
+
+                thead {
+                    tr {
+                        background: rgba(255, 255, 255, .8);
+
+                        th {
+                            font-size: 1.2rem;
+                            color: lighten($linkblack, 20%);
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        td {
+                            vertical-align: top;
+
+                            .ol-normal {
+                                margin: 0 0 1.2rem 20px;
+                                padding: 0;
+
+                                li {
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                    }
+                                }
+                            }
+
+                            &.td1 {
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .lm-index {
+                .ul-normal {
+                    li {
+                        color: $linkblue;
+                        font-weight: 500;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        &.bprofile {
+            section {
+                .table {
+                    thead {
+                        tr {
+                            th {
+                                font-size: .875rem;
+                            }
+                        }
+                    }
+
+                    tbody {
+                        tr {
+                            td {
+                                font-size: .875rem;
+                                font-weight: 500;
+                                color: lighten($linkblack, 20%);
+
+                                h6 {
+                                    font-weight: 600;
+                                    font-size: .875rem;
+                                }
+
+                                div,
+                                ol li,
+                                ul li,
+                                p {
+                                    font-size: .875rem;
+                                    font-weight: 500;
+                                }
+
+                                ol li,
+                                ul li,
+                                p {
+                                    color: lighten($linkblack, 20%);
+                                }
+
+                                .box {
+                                    border-bottom: 1px solid $cc-ash;
+                                    margin-bottom: 1.2rem;
+
+                                    ol {
+                                        padding-left: 1rem;
+                                    }
+
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                        border: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.verify-tbl {
+                        @include respond-to(ynw-767) {
+                            border-top: none;
+                        }
+
+                        @include respond-to(ynw-768-991) {
+                            border-top: none;
+                        }
+
+                        @include respond-to(ynw-992-1199) {
+                            border-top: none;
+                        }
+
+                        tr {
+                            @include respond-to(ynw-767) {
+                                display: flex;
+                                flex-direction: column;
+                            }
+
+                            @include respond-to(ynw-768-991) {
+                                display: flex;
+                                flex-direction: column;
+                            }
+
+                            @include respond-to(ynw-992-1199) {
+                                display: flex;
+                                flex-direction: column;
+                            }
+
+                            td {
+                                @include respond-to(ynw-767) {
+                                    width: 100% !important;
+                                    border-left: none !important;
+                                }
+
+                                @include respond-to(ynw-768-991) {
+                                    width: 100% !important;
+                                    border-left: none !important;
+                                }
+
+                                @include respond-to(ynw-992-1199) {
+                                    width: 100% !important;
+                                    border-left: none !important;
+                                }
+
+                                &.td1 {
+                                    width: 20%;
+                                    font-size: 1rem;
+                                    font-weight: 600;
+                                }
+
+                                &.td2 {
+                                    border-left: 1px solid $cc-ash;
+                                }
+                            }
+                        }
+                    }
+
+                    &.addword-tbl {
+                        thead {
+                            tr {
+                                th {
+                                    font-size: 1rem;
+
+                                    &.th1 {
+                                        width: 30%;
+                                    }
+                                }
+                            }
+                        }
+
+                        tbody {
+                            tr {
+                                td {
+                                    &.td1 {
+                                        width: 30%;
+                                        font-weight: 600;
+                                    }
+                                }
+
+                                &.tr2 {
+                                    background: $silver;
+                                }
+
+                                &.tr3 {
+                                    background: $gold;
+                                }
+
+                                &.tr4 {
+                                    background: $diamond;
+                                }
+                            }
+                        }
+                    }
+
+                    &.loc-tbl,
+                    &.social-tbl {
+                        width: 260px;
+
+                        tbody {
+                            tr {
+                                td {
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+                    }
+
+                    &.locam-tbl {
+                        @include respond-to(ynw-767) {
+                            border-top: none;
+                        }
+
+                        @include respond-to(ynw-768-991) {
+                            border-top: none;
+                        }
+
+                        @include respond-to(ynw-992-1199) {
+                            border-top: none;
+                        }
+
+                        tbody {
+                            tr {
+                                @include respond-to(ynw-767) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+
+                                @include respond-to(ynw-768-991) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+
+                                @include respond-to(ynw-992-1199) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+
+                                td {
+                                    @include respond-to(ynw-767) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+
+                                    @include respond-to(ynw-768-991) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+
+                                    @include respond-to(ynw-992-1199) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+
+                                    &.td1 {
+                                        font-weight: 600;
+                                        font-size: 1rem;
+                                    }
+
+                                    &.td2 {
+                                        border-left: 1px solid $cc-ash;
+                                        padding: 0;
+                                        font-weight: 600;
+
+                                        .table {
+                                            border: none;
+                                            margin-bottom: 0;
+
+                                            tbody {
+                                                tr {
+                                                    td {
+                                                        border: none;
+
+                                                        .ul-normal {
+                                                            margin-bottom: 0;
+
+                                                            li {
+                                                                margin-bottom: 10px;
+
+                                                                &:before {
+                                                                    content: "\2d";
+                                                                }
+                                                            }
+                                                        }
+
+                                                        &.td1 {
+                                                            display: none;
+                                                            font-size: .875rem;
+                                                            width: 5%;
+                                                        }
+
+                                                        &.td2 {
+                                                            width: 50%;
+                                                            padding: .75rem;
+                                                        }
+                                                    }
+
+                                                    border-bottom: 1px solid $cc-ash;
+
+                                                    &:last-child {
+                                                        border: none;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.spec-tbl,
+                    &.addinfo-tbl {
+                        @include respond-to(ynw-767) {
+                            border-top: none;
+                        }
+
+                        @include respond-to(ynw-768-991) {
+                            border-top: none;
+                        }
+
+                        @include respond-to(ynw-992-1199) {
+                            border-top: none;
+                        }
+
+                        tbody {
+                            tr {
+                                @include respond-to(ynw-767) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+
+                                @include respond-to(ynw-768-991) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+
+                                @include respond-to(ynw-992-1199) {
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+
+                                td {
+                                    @include respond-to(ynw-767) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+
+                                    @include respond-to(ynw-768-991) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+
+                                    @include respond-to(ynw-992-1199) {
+                                        width: 100% !important;
+                                        border-left: none !important;
+                                    }
+
+                                    &.td1 {
+                                        font-weight: 600;
+                                        font-size: 1rem;
+                                    }
+
+                                    &.td2 {
+                                        border-left: 1px solid $cc-ash;
+                                        padding: 0;
+
+                                        .table {
+                                            border: none;
+                                            margin-bottom: 0;
+
+                                            tbody {
+                                                tr {
+                                                    border-bottom: 1px solid $cc-ash;
+
+                                                    td {
+                                                        border: none;
+
+                                                        &.td1 {
+                                                            width: 35%;
+                                                            font-weight: 600;
+                                                            font-size: .875rem;
+                                                        }
+
+                                                        &.td2 {
+                                                            width: 65%;
+                                                            padding: .75rem;
+
+                                                            .ol-normal {
+                                                                margin-bottom: 0;
+
+                                                                li {
+                                                                    margin-bottom: 10px;
+
+                                                                    &:last-child {
+                                                                        margin-bottom: 0;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    &:last-child {
+                                                        border: none;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .important {
+                    padding: 20px;
+                    border: 1px solid $cc-body;
+                    margin-bottom: 1.2rem;
+                    font-size: .875rem;
+
+                    h5 {
+                        text-transform: uppercase;
+                    }
+
+                    ul,
+                    ol {
+                        margin-bottom: 0;
+                        padding-left: 0;
+
+                        li {
+                            font-size: .875rem;
+                            font-weight: 500;
+                        }
+                    }
+
+                    ul {
+                        li {
+                            padding-left: 1.6em;
+
+                            &:before {
+                                content: "\3b";
+                                font-size: .875rem;
+                                top: 1px;
+                                left: 0px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.w-manager {
+            section {
+                .table {
+                    tbody {
+                        tr {
+                            td {
+                                font-size: .875rem;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+
+                    &.wm-tbl {
+                        tbody {
+                            tr {
+                                @include respond-to(ynw-575) {
+                                    display: flex;
+                                    flex-direction: column;
+
+                                    td {
+                                        border: none;
+                                    }
+
+                                    .td1 {
+                                        position: absolute;
+                                        padding-bottom: 0px;
+                                    }
+
+                                    .td2 {
+                                        padding-bottom: 0;
+                                    }
+
+                                    .td2,
+                                    .td3 {
+                                        padding-left: 30px;
+                                    }
+                                }
+
+                                .td1,
+                                .td2 {
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.license {
+            section {
+                .ul-normal {
+                    li {
+                        .ul-normal {
+                            padding-left: 18px;
+
+                            li {
+                                list-style: circle;
+                                padding-left: 0rem;
+
+                                &:before {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .table {
+                    thead {
+                        tr {
+                            th {
+                                font-size: 1rem;
+                            }
+                        }
+                    }
+
+                    tbody {
+                        tr {
+                            td {
+                                font-size: .875rem;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+
+                    &.license-tbl {
+                        background: transparent;
+
+                        thead {
+                            tr {
+                                background: transparent;
+
+                                th {
+                                    font-size: 1rem;
+                                    vertical-align: top;
+
+                                    &.th1 {
+                                        background: $metrics;
+                                        text-transform: uppercase;
+                                    }
+
+                                    &.th2 {
+                                        background: $basic;
+                                        text-transform: uppercase;
+                                    }
+
+                                    &.th3 {
+                                        background: $silver;
+                                    }
+
+                                    &.th4 {
+                                        background: $gold;
+                                    }
+
+                                    &.th5 {
+                                        background: $diamond;
+                                    }
+
+                                    &.th6 {
+                                        background: $basic;
+                                    }
+                                }
+
+                                &:nth-child(1) {
+                                    background: rgba(0, 0, 0, .055);
+
+                                    th {
+                                        border-bottom: none;
+                                    }
+                                }
+
+                                &:nth-child(2) {
+                                    th {
+                                        border-top: none;
+                                        border-bottom: 3px solid $cc-ash;
+                                        font-size: .875rem;
+                                    }
+                                }
+                            }
+                        }
+
+                        tbody {
+                            tr {
+                                td {
+                                    font-size: .875rem;
+                                    font-weight: 500;
+                                    color: lighten($linkblack, 20%);
+
+                                    &.td1 {
+                                        background: $metrics;
+                                        font-weight: 600;
+                                    }
+
+                                    &.td2 {
+                                        background: $basic;
+                                    }
+
+                                    &.td3 {
+                                        background: $silver;
+                                    }
+
+                                    &.td4 {
+                                        background: $gold;
+                                    }
+
+                                    &.td5 {
+                                        background: $diamond;
+                                    }
+
+                                    &.td6 {
+                                        background: rgba(255, 255, 255, .8);
+                                    }
+                                }
+
+                                &:nth-child(1) {
+                                    td {
+                                        border-top: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.addon-tbl {
+                        tbody {
+                            tr {
+                                @include respond-to(ynw-767){
+                                    display: flex;
+                                    flex-direction: column;
+                                    border-bottom: 1px solid $cc-ash;
+                                    
+                                    td {
+                                        border: none;
+                                    }
+                                }
+                                @include respond-to(ynw-768-991){
+                                    display: flex;
+                                    flex-direction: column;
+                                    border-bottom: 1px solid $cc-ash;
+                                    
+                                    td {
+                                        border: none;
+                                    }
+                                }
+                                td {
+                                    &.td1 {
+                                        font-weight: 600;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.addword-tbl {
+                        thead {
+                            tr {
+                                th {
+
+                                    &.th1 {
+                                        width: 35%;
+                                    }
+                                }
+                            }
+                        }
+
+                        tbody {
+                            tr {
+                                td {
+                                    &.td1 {
+                                        width: 30%;
+                                        font-weight: 600;
+                                    }
+                                }
+
+                                &.tr2 {
+                                    background: $silver;
+                                }
+
+                                &.tr3 {
+                                    background: $gold;
+                                }
+
+                                &.tr4 {
+                                    background: $diamond;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .scroll {
+                    @include respond-to(ynw-767) {
+                        overflow: hidden;
+                        overflow-x: auto;
+                    }
+                    @include respond-to(ynw-768-991) {
+                        overflow: hidden;
+                        overflow-x: auto;
+                    }
+                    @include respond-to(ynw-992-1199) {
+                        overflow: hidden;
+                        overflow-x: auto;
+                    }
+                    
+                    .table {
+                        margin: 0;
+
+                        &.license-tbl {
+                            background: transparent;
+
+                            thead {
+                                tr {
+                                    background: transparent;
+
+                                    th {
+                                        font-size: 1rem;
+                                        vertical-align: top;
+
+                                        &.th1 {
+                                            background: $metrics;
+                                            text-transform: uppercase;
+                                        }
+
+                                        &.th2 {
+                                            background: $basic;
+                                            text-transform: uppercase;
+                                        }
+
+                                        &.th3 {
+                                            background: $silver;
+                                        }
+
+                                        &.th4 {
+                                            background: $gold;
+                                        }
+
+                                        &.th5 {
+                                            background: $diamond;
+                                        }
+
+                                        &.th6 {
+                                            background: $basic;
+                                        }
+                                    }
+
+                                    &:nth-child(1) {
+                                        background: rgba(0, 0, 0, .055);
+
+                                        th {
+                                            border-bottom: none;
+                                        }
+                                    }
+
+                                    &:nth-child(2) {
+                                        th {
+                                            border-top: none;
+                                            border-bottom: 3px solid $cc-ash;
+                                            font-size: .875rem;
+                                        }
+                                    }
+                                }
+                            }
+
+                            tbody {
+                                tr {
+                                    td {
+                                        font-size: .875rem;
+                                        font-weight: 500;
+                                        color: lighten($linkblack, 20%);
+
+                                        &.td1 {
+                                            background: $metrics;
+                                            font-weight: 600;
+                                        }
+
+                                        &.td2 {
+                                            background: $basic;
+                                        }
+
+                                        &.td3 {
+                                            background: $silver;
+                                        }
+
+                                        &.td4 {
+                                            background: $gold;
+                                        }
+
+                                        &.td5 {
+                                            background: $diamond;
+                                        }
+
+                                        &.td6 {
+                                            background: rgba(255, 255, 255, .8);
+                                        }
+                                    }
+
+                                    &:nth-child(1) {
+                                        td {
+                                            border-top: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.consumer {
+            section {
+                .table {
+                    thead {
+                        tr {
+                            th {
+                                font-size: 1rem;
+                            }
+                        }
+                    }
+
+                    tbody {
+                        tr {
+                            td {
+                                font-size: .875rem;
+                                font-weight: 500;
+
+                                ul,
+                                ol {
+                                    margin-bottom: 0;
+
+                                    li {
+                                        font-size: .875rem;
+                                        font-weight: 500;
+                                    }
+                                }
+
+                                &.td1 {
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

@@ -494,11 +494,11 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getGoogleMapLocationAddress(lat, lon) {
-    const url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false';
+    const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
   getGoogleMapLocationGeometry(address) {
-    const url = 'http://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
+    const url = 'https://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
 

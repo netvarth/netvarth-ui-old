@@ -63,6 +63,7 @@ import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { projectConstants } from './shared/constants/project-constants';
 
 import 'hammerjs';
+import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
 
 @NgModule({
   declarations: [
@@ -141,9 +142,9 @@ import 'hammerjs';
     ProviderDetailService,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS}
+    {provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS},
+    {provide:LocationStrategy,useClass:HashLocationStrategy}
   ],
-  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

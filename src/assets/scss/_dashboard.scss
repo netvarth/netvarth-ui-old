@@ -880,14 +880,13 @@ footer {
             padding: 5px;
             @include box-shadow(0px, 0px, 30px, rgba(0,0,0,0.1));
             
-            @include respond-to(ynw-575) {
-                margin-left: 0px;
-                margin-right: 5px;
-                padding: 0;
+            @include respond-to(ynw-767) {
+                flex-grow: 1;
+                margin-left: 0;
+                justify-content: center;
+                @include border-radius(0px);
             }
-            @include respond-to(ynw-400) {
-                margin-right: 5px;
-                
+            @include respond-to(ynw-400) {                
                 &:nth-child(3) {
                     display: none;
                 }
@@ -901,10 +900,7 @@ footer {
                 @include border-radius(30px);
                 
                 @include respond-to(ynw-575) {
-                    padding: 0 6px;
-                }
-                @include respond-to(ynw-400) {
-                    padding: 0 3px;
+                    padding: 0 8px;
                 }
                 
                 
@@ -925,7 +921,12 @@ footer {
             .bt5 {
                 position: relative;
                 /*margin-left: 20px;*/
-
+                
+                @include respond-to(ynw-767){
+                    width: 100%;
+                    height: 40px;
+                    @include border-radius(0px);
+                }
                 @include respond-to(ynw-575) {
                     margin: 0;
                     border-bottom: none;
@@ -1685,6 +1686,13 @@ footer {
                                         align-items: center;
                                         position: absolute;
                                         @include transition(all 300ms);
+                                        
+                                        .change-pic {
+                                            background: rgba(0, 174, 242, .5);
+                                        }
+                                        .del-pic {
+                                            background: rgba(255, 45, 56, .5);
+                                        }
                                     }
                                     
                                     .add, .change {
@@ -4120,11 +4128,16 @@ footer {
                 margin-bottom: 0px;
                 
                 @include respond-to(ynw-767){
+                    /*flex-direction: column;*/
+                    height: auto;
+                    justify-content: flex-start;
+                }
+                @include respond-to(ynw-575){
                     flex-direction: column;
                     height: auto;
                 }
                 @include respond-to(ynw-768-991){
-                    flex-direction: column;
+                    /*flex-direction: column;*/
                     height: auto;
                 }
                 
@@ -4133,7 +4146,7 @@ footer {
                     display: flex;
                     align-items: center;
                     left: 0;
-                    padding: 0px 20px;                    
+                    padding: 0px 10px;                    
                     font-weight: 600;
                     font-size: .875rem;
                     
@@ -4212,27 +4225,30 @@ footer {
                         }
                     }
                     
-                    @include respond-to(ynw-767){
-                        position: relative;
-                        width: 100%;
-                        border-bottom: 1px solid $cc-body;
-                        height: 50px;
-                        justify-content: center;
-                    }
-                    @include respond-to(ynw-768-991){
-                        position: relative;
-                        width: 100%;
-                        border-bottom: 1px solid $cc-body;
-                        height: 50px;
-                        justify-content: center;
-                    }
-                    
                     .icon-edit {
                         margin-left: 10px;
                         color: $linkblue;
                         font-size: 1rem;
                         cursor: pointer;
                         display: flex;
+                    }
+                    
+                    @include respond-to(ynw-767){
+                        position: relative;
+                        height: 50px;
+                        justify-content: flex-start;
+                        flex-basis: 30%;
+                    }
+                    @include respond-to(ynw-575){
+                        width: 100%;
+                        border-bottom: 1px solid $cc-body;
+                        justify-content: center;
+                    }
+                    @include respond-to(ynw-768-991){
+                        position: relative;
+                        height: 50px;
+                        justify-content: flex-start;
+                        flex-basis: 30%;
                     }
                 }
                 .links {
@@ -4249,14 +4265,6 @@ footer {
                         color: $cc-mediumgray;
                         font-weight: 500;
                         @include transition(all 300ms);
-                        
-                        @include respond-to(ynw-767){
-                            padding: 0 15px;
-                            height: 40px;
-                        }
-                        @include respond-to(ynw-575){
-                            padding: 0 10px;
-                        }
 
                         .count {
                             width: auto;
@@ -4301,6 +4309,28 @@ footer {
                                 color: $white;
                             }
                         }
+                        
+                        @include respond-to(ynw-767){
+                            padding: 0 15px;
+                            height: 50px;
+                            font-size: .875rem;
+                            
+                            &:last-child {
+                                border-right: none;
+                            } 
+                        }
+                        @include respond-to(ynw-575){
+                            padding: 0 10px;
+                            
+                            &:last-child {
+                                border-right: 1px solid $cc-body;
+                            }
+                        }
+                    }
+                    
+                    @include respond-to(ynw-767){
+                        flex-basis: 70%;
+                        justify-content: flex-end;
                     }
                 }
                 
@@ -4678,6 +4708,7 @@ footer {
                                             padding: 7px 10px;
                                             height: 30px;
                                             background: rgba(255,255,255,0.7);
+                                            border: none;
                                         }
                                         
                                         &.mat-focused {
@@ -5487,7 +5518,7 @@ footer {
                                 tr {
                                     td {
                                         &:nth-child(1) {
-                                            width: 15%;
+                                            /*width: 15%;*/
                                             cursor: pointer;
                                             
                                             .itm-prdct {

@@ -87,7 +87,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   showStep(changetostep) {
-    console.log('change step', changetostep);
+    // console.log('change step', changetostep);
     this.loading_active = true;
     this.resetErrors();
     if (changetostep === 2) {

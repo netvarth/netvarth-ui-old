@@ -7803,6 +7803,11 @@ header.itl-steps .lg-opt {
     header.itl-steps .lg-opt a i {
       font-size: 0.525rem;
       margin-left: 3px; }
+  header.itl-steps .lg-opt .bnps .mn-title.wizardmode {
+    margin-right: 20px;
+    color: #999999;
+    font-size: .875rem;
+    font-weight: 600; }
   header.itl-steps .lg-opt .lgmem {
     color: #222223;
     font-size: .875rem;
@@ -7865,7 +7870,7 @@ footer.itl-steps .sect3 {
     z-index: 2;
     cursor: pointer; }
   .is-bx .pt-top {
-    padding: 1.5em;
+    padding: 1em 1.5em;
     position: relative; }
     .is-bx .pt-top h1 {
       font-size: 1.625rem;
@@ -7893,7 +7898,7 @@ footer.itl-steps .sect3 {
       bottom: -5px;
       left: 0; }
   .is-bx .pt-btm {
-    padding: 1.25em 2.3em 2.3em 2.3em;
+    padding: 1em 2.3em 1.5em 2.3em;
     background: #fff;
     position: relative;
     -webkit-border-radius: 5px;
@@ -7939,7 +7944,7 @@ footer.itl-steps .sect3 {
       font-weight: 500;
       color: #fff;
       width: 220px;
-      padding: 1.25em;
+      padding: 1em;
       margin-bottom: 1.8em; }
       .is-bx .pt-btm .lg-btn i {
         font-size: 0.525rem;
@@ -8031,7 +8036,7 @@ footer.itl-steps .sect3 {
             border-radius: 50%;
             background-clip: padding-box;
             /* stops bg color from leaking outside the border: */
-            background: #e6e6e6;
+            background: #999999;
             margin: 0 10px 0 0; }
             .is-bx.step1 .footer .status .status-pnt li.active, .is-bx.step2 .footer .status .status-pnt li.active, .is-bx.step3 .footer .status .status-pnt li.active, .is-bx.step4 .footer .status .status-pnt li.active {
               background: #00aef2; }
@@ -9079,16 +9084,18 @@ footer.dashb {
       -webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) ;
       -moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) ;
       box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1) ; }
-      @media only screen and (max-width: 575px) {
+      @media only screen and (max-width: 767px) {
         .tp-pnl .top-mnu .top-help-icon, .tp-pnl .top-mnu .top-help-button {
-          margin-left: 0px;
-          margin-right: 5px;
-          padding: 0; } }
+          flex-grow: 1;
+          margin-left: 0;
+          justify-content: center;
+          -webkit-border-radius: 0px;
+          border-radius: 0px;
+          background-clip: padding-box;
+          /* stops bg color from leaking outside the border: */ } }
       @media only screen and (max-width: 400px) {
-        .tp-pnl .top-mnu .top-help-icon, .tp-pnl .top-mnu .top-help-button {
-          margin-right: 5px; }
-          .tp-pnl .top-mnu .top-help-icon:nth-child(3), .tp-pnl .top-mnu .top-help-button:nth-child(3) {
-            display: none; } }
+        .tp-pnl .top-mnu .top-help-icon:nth-child(3), .tp-pnl .top-mnu .top-help-button:nth-child(3) {
+          display: none; } }
       .tp-pnl .top-mnu .top-help-icon .bt4, .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt4, .tp-pnl .top-mnu .top-help-button .bt5 {
         -webkit-border-radius: 0;
         border-radius: 0;
@@ -9107,10 +9114,7 @@ footer.dashb {
         }*/ }
         @media only screen and (max-width: 575px) {
           .tp-pnl .top-mnu .top-help-icon .bt4, .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt4, .tp-pnl .top-mnu .top-help-button .bt5 {
-            padding: 0 6px; } }
-        @media only screen and (max-width: 400px) {
-          .tp-pnl .top-mnu .top-help-icon .bt4, .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt4, .tp-pnl .top-mnu .top-help-button .bt5 {
-            padding: 0 3px; } }
+            padding: 0 8px; } }
         .tp-pnl .top-mnu .top-help-icon .bt4:hover, .tp-pnl .top-mnu .top-help-icon .bt5:hover, .tp-pnl .top-mnu .top-help-button .bt4:hover, .tp-pnl .top-mnu .top-help-button .bt5:hover {
           background: #00aef2;
           color: #fff; }
@@ -9119,6 +9123,14 @@ footer.dashb {
       .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt5 {
         position: relative;
         /*margin-left: 20px;*/ }
+        @media only screen and (max-width: 767px) {
+          .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt5 {
+            width: 100%;
+            height: 40px;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;
+            background-clip: padding-box;
+            /* stops bg color from leaking outside the border: */ } }
         @media only screen and (max-width: 575px) {
           .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt5 {
             margin: 0;
@@ -9681,6 +9693,10 @@ footer.dashb {
           -o-transition: all 300ms;
           -webkit-transition: all 300ms;
           transition: all 300ms; }
+          .content .col-a .card.w-dta.active .cd-t .basic-i .bi-l .pro-pic .change .change-pic {
+            background: rgba(0, 174, 242, 0.5); }
+          .content .col-a .card.w-dta.active .cd-t .basic-i .bi-l .pro-pic .change .del-pic {
+            background: rgba(255, 45, 56, 0.5); }
         .content .col-a .card.w-dta.active .cd-t .basic-i .bi-l .pro-pic .add, .content .col-a .card.w-dta.active .cd-t .basic-i .bi-l .pro-pic .change {
           text-align: center;
           font-family: 'Montserrat', sans-serif;
@@ -11407,18 +11423,23 @@ footer.dashb {
     margin-bottom: 0px; }
     @media only screen and (max-width: 767px) {
       .dashboard .card.w-dta .head {
+        /*flex-direction: column;*/
+        height: auto;
+        justify-content: flex-start; } }
+    @media only screen and (max-width: 575px) {
+      .dashboard .card.w-dta .head {
         flex-direction: column;
         height: auto; } }
     @media (min-width: 768px) and (max-width: 991px) {
       .dashboard .card.w-dta .head {
-        flex-direction: column;
+        /*flex-direction: column;*/
         height: auto; } }
     .dashboard .card.w-dta .head .locn {
       position: absolute;
       display: flex;
       align-items: center;
       left: 0;
-      padding: 0px 20px;
+      padding: 0px 10px;
       font-weight: 600;
       font-size: .875rem; }
       .dashboard .card.w-dta .head .locn .mat-form-field .mat-input-wrapper {
@@ -11481,26 +11502,29 @@ footer.dashb {
           justify-content: center; }
         .dashboard .card.w-dta .head .locn .icon-close:hover {
           color: #00aef2; }
-      @media only screen and (max-width: 767px) {
-        .dashboard .card.w-dta .head .locn {
-          position: relative;
-          width: 100%;
-          border-bottom: 1px solid #f2f2f2;
-          height: 50px;
-          justify-content: center; } }
-      @media (min-width: 768px) and (max-width: 991px) {
-        .dashboard .card.w-dta .head .locn {
-          position: relative;
-          width: 100%;
-          border-bottom: 1px solid #f2f2f2;
-          height: 50px;
-          justify-content: center; } }
       .dashboard .card.w-dta .head .locn .icon-edit {
         margin-left: 10px;
         color: #00aef2;
         font-size: 1rem;
         cursor: pointer;
         display: flex; }
+      @media only screen and (max-width: 767px) {
+        .dashboard .card.w-dta .head .locn {
+          position: relative;
+          height: 50px;
+          justify-content: flex-start;
+          flex-basis: 30%; } }
+      @media only screen and (max-width: 575px) {
+        .dashboard .card.w-dta .head .locn {
+          width: 100%;
+          border-bottom: 1px solid #f2f2f2;
+          justify-content: center; } }
+      @media (min-width: 768px) and (max-width: 991px) {
+        .dashboard .card.w-dta .head .locn {
+          position: relative;
+          height: 50px;
+          justify-content: flex-start;
+          flex-basis: 30%; } }
     .dashboard .card.w-dta .head .links {
       display: flex; }
       .dashboard .card.w-dta .head .links .lnk {
@@ -11517,13 +11541,6 @@ footer.dashb {
         -o-transition: all 300ms;
         -webkit-transition: all 300ms;
         transition: all 300ms; }
-        @media only screen and (max-width: 767px) {
-          .dashboard .card.w-dta .head .links .lnk {
-            padding: 0 15px;
-            height: 40px; } }
-        @media only screen and (max-width: 575px) {
-          .dashboard .card.w-dta .head .links .lnk {
-            padding: 0 10px; } }
         .dashboard .card.w-dta .head .links .lnk .count {
           width: auto;
           height: auto;
@@ -11566,6 +11583,22 @@ footer.dashb {
           .dashboard .card.w-dta .head .links .lnk:hover .count {
             background: #00aef2;
             color: #fff; }
+        @media only screen and (max-width: 767px) {
+          .dashboard .card.w-dta .head .links .lnk {
+            padding: 0 15px;
+            height: 50px;
+            font-size: .875rem; }
+            .dashboard .card.w-dta .head .links .lnk:last-child {
+              border-right: none; } }
+        @media only screen and (max-width: 575px) {
+          .dashboard .card.w-dta .head .links .lnk {
+            padding: 0 10px; }
+            .dashboard .card.w-dta .head .links .lnk:last-child {
+              border-right: 1px solid #f2f2f2; } }
+      @media only screen and (max-width: 767px) {
+        .dashboard .card.w-dta .head .links {
+          flex-basis: 70%;
+          justify-content: flex-end; } }
   .dashboard .card.w-dta .qlst {
     padding: 30px 20px 10px 20px;
     overflow: auto; }
@@ -11858,7 +11891,8 @@ footer.dashb {
           .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field .mat-select, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field .mat-select {
             padding: 7px 10px;
             height: 30px;
-            background: rgba(255, 255, 255, 0.7); }
+            background: rgba(255, 255, 255, 0.7);
+            border: none; }
           .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-form-field.mat-focused .mat-select, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-form-field.mat-focused .mat-select {
             background: white; }
         .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .form-group mat-chip-list .mat-chip-list-wrapper .mat-chip, .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .check_in_date mat-chip-list .mat-chip-list-wrapper .mat-chip {
@@ -12412,7 +12446,7 @@ footer.dashb {
       .comn-cls .w-dta .card .table-outer.q-itm table thead tr th:last-child {
         font-weight: normal; }
       .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) {
-        width: 15%;
+        /*width: 15%;*/
         cursor: pointer; }
         .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) .itm-prdct img {
           width: 100%; }

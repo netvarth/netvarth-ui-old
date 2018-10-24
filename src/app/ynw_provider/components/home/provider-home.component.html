@@ -253,7 +253,7 @@
                                   <th *ngIf="time_type != 1">Date</th>
                                   <th>Name</th>
                                   <th>Service</th>
-                                  <th>Actions</th>
+                                  <th *ngIf="time_type!=2">Actions</th>
                                   <th>Payment Status</th>
                                   <th *ngIf="time_type != 1">{{checkin_label |capitalizeFirst}} Status</th>
                                   <!-- <th>Message</th> -->
@@ -281,7 +281,7 @@
                                     </span>
                                   </td>
                                   <td data-title="Service" class="service">{{checkin.service.name}}</td>
-                                  <td data-title="Actions" class="actions">
+                                  <td data-title="Actions" class="actions" *ngIf="time_type!=2">
 
                                     <ng-container *ngIf="time_type == 1">
                                         <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
@@ -329,7 +329,7 @@
 
                                     <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
                                     *ngIf="checkin.waitlistStatus != 'checkedIn' &&
-                                    checkin.waitlistStatus != 'cancelled' && time_type !== 2"
+                                    checkin.waitlistStatus != 'cancelled' && time_type !== 2 && checkin.waitlistStatus != 'prepaymentPending'"
                                     [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }">
 
                                      <!-- <ng-container *ngIf="!checkin.billStatus">
