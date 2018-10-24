@@ -44,7 +44,11 @@
         <div class="sch_sel_head" *ngIf="edit_mode"> Edit : {{edit_heading}}</div>
         <div class="sch_sel_head" *ngIf="!edit_mode"> Add Schedule</div>
         <!-- <div class="schselectall" *ngIf="Isource=='wizard'"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div> -->
-        <div class="schselectall"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div>
+        <!-- <div class="schselectall"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div> -->
+        <div class="schselectall">
+            <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()"> Select All Days</i>
+            <i class="fa fa-check-square-o" *ngIf="Selall" (click)="handleselectnone()"> Select All Days</i>
+        </div>
         <section class="chk-section">
             <div *ngFor="let day of weekdays_arr; let i = index" class='chk-margin'>
             <mat-checkbox *ngIf="day" [checked]="check_daychecked(i)" (change)=handlechecbox(i)>{{day}}</mat-checkbox>

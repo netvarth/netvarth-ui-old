@@ -592,7 +592,7 @@ setEnvironment(bypassotherfunction?) {
         }
       }
     }
-   console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
+   // console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
     this.arraycreatedfromquerystring = true;
   }
 

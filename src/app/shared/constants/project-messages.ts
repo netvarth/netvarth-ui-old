@@ -42,7 +42,7 @@ export const Messages = {
   'HOLIDAY_DELETE'  : 'Do you really want to remove the Non Working Day "[date]"?',
   'HOLIDAY_STIME'   : 'Start time should be greater than current time',
   'HOLIDAY_ETIME'   : 'Closing time should be greater than Start time',
-  'HOLIDAY_LISTEMPTY' : 'No Non Working Day available',
+  'HOLIDAY_LISTEMPTY' : 'No non working days scheduled',
 
   // Common
   'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',

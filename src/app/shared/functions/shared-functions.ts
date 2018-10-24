@@ -1105,9 +1105,10 @@ removeTerminologyTerm(term, full_message) {
 }
 
 toCamelCase(str) {
-  return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
+  /*return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
       return match.charAt(match.length - 1).toUpperCase();
-  });
+  });*/
+  return str;
 }
 
 firstToUpper(str) {

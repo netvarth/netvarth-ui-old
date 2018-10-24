@@ -1583,6 +1583,8 @@ footer {
                                 padding: 0;
                                 border: none;
                                 align-self: center;
+                                font-size: 1.5rem;
+                                font-weight: 500;
                             }
                         }
                     }
@@ -4235,7 +4237,7 @@ footer {
                     
                     @include respond-to(ynw-767){
                         position: relative;
-                        height: 50px;
+                        min-height: 50px;
                         justify-content: flex-start;
                         flex-basis: 30%;
                     }

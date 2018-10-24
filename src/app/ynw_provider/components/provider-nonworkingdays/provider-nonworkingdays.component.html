@@ -35,7 +35,7 @@
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #menu="matMenu">
-                                                        <button type="button" (click)="editHolidays(nonworking)" mat-menu-item>
+                                                        <button type="button" (click)="editHolidays(nonworking)" mat-menu-item *ngIf="showEdit(nonworking.startDay)">
                                                             <i class="icon-edit"></i>
                                                             Edit
                                                         </button>

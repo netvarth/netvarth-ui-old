@@ -2333,6 +2333,10 @@ app-footer {
         .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.mat-expanded .mat-expansion-indicator:after {
           content: "\66";
           color: #222223; }
+        @media only screen and (max-width: 400px) {
+          .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+            font-size: 1rem;
+            align-items: center !important; } }
       .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
         padding-left: 0px;
         padding-right: 0px;
@@ -9611,7 +9615,9 @@ footer.dashb {
         margin: 0 0 0 auto;
         padding: 0;
         border: none;
-        align-self: center; }
+        align-self: center;
+        font-size: 1.5rem;
+        font-weight: 500; }
 .content .col-a .card.w-dta.active h2 {
   color: #00aef2;
   position: relative;
@@ -11511,7 +11517,7 @@ footer.dashb {
       @media only screen and (max-width: 767px) {
         .dashboard .card.w-dta .head .locn {
           position: relative;
-          height: 50px;
+          min-height: 50px;
           justify-content: flex-start;
           flex-basis: 30%; } }
       @media only screen and (max-width: 575px) {

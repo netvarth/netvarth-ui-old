@@ -292,7 +292,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // console.log('more returned', result);
     this.moreoptions_arr = result;
     this.showmoreoptionsSec = false;
-    console.log('moreoption returned', this.moreoptions_arr);
+    // console.log('moreoption returned', this.moreoptions_arr);
     this.do_search('', true);
   }
 
