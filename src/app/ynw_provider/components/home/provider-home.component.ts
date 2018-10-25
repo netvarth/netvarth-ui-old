@@ -252,6 +252,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         bProfile = data;
         if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
           // calling function which saves the business related details to show in the header
+          // this.shared_functions.retSubSectorNameifRequired();
+
+          // const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
+          // console.log('returned', subsectorname);
           this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
            || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
            this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '');

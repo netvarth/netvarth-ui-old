@@ -191,7 +191,11 @@
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">
-                        <strong>Today, {{estimateCaption}}:</strong> <span class="queue-avail-date">{{sel_queue_waitingmins}}</span></div>
+                        <strong>Today, {{estimateCaption}}:</strong> <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
+                    </div>
+                    <div class="queue-head">
+                        <strong>Persons Ahead:</strong> <span class="queue-avail-date">{{sel_queue_personaahead}}</span>
+                    </div>
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">

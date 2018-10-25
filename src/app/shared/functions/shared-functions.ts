@@ -13,7 +13,7 @@ import { CommonDataStorageService } from '../services/common-datastorage.service
 @Injectable()
 
 export class SharedFunctions {
-
+  holdbdata: any = [];
     dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov']; // ['isBusinessOwner'];
 
     private subject = new Subject<any>();
@@ -737,6 +737,43 @@ export class SharedFunctions {
     this.setitemonLocalStorage('ynwbp', buss_det);
     // const pdata = { 'test': 'this is a test' };
     // this.sendMessage(pdata);
+  }
+  retSubSectorNameifRequired(domain, subdomainname) {
+    const bprof = this.getitemfromLocalStorage('ynw-bconf1');
+    console.log('bdata', bprof);
+    if (bprof === null || bprof === undefined) {
+      this.shared_service.bussinessDomains()
+        .subscribe (
+          res => {
+            this.holdbdata = res;
+            // console.log('domainlilst_fetched', this.domainlist_data);
+            const today = new Date();
+            const postdata = {
+              cdate: today,
+              bdata: this.holdbdata
+            };
+            this.setitemonLocalStorage('ynw-bconf', postdata);
+            const bprofn = this.getitemfromLocalStorage('ynw-bconf');
+            const getdata = this.compareData(bprofn, domain, subdomainname);
+            return getdata;
+          }
+        );
+    } else {
+      const getdata =  this.compareData(bprof, domain, subdomainname);
+      return getdata;
+    }
+  }
+  compareData(bprof, domain, subdomainname) {
+    let retsubdom = '';
+    for (let i = 0; i < bprof.bdata.length; i++) {
+      console.log('data', bprof.bdata[i].domain, domain);
+      if (bprof.bdata[i]['domain'] === domain) {
+        if (bprof.bdata[i].subDomains.length > 1) {
+          retsubdom =  subdomainname;
+        }
+      }
+    }
+    return retsubdom;
   }
 
   sendMessage(message: any) {

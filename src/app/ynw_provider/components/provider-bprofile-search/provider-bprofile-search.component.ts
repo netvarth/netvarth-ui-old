@@ -352,7 +352,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
               Object.keys(this.bProfile['domainVirtualFields']) .length === 0) {
                 this.normal_domainfield_show = 2;
           }
-
+          // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
            || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '');

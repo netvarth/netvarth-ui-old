@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="mn-title wizardmode" *ngIf="headercls=='itl-steps'">
-                        <span class="title-ps">{{bsector | capitalizeFirst }} </span>
+                        <span class="title-ps">{{bsector | capitalizeFirst }} <span *ngIf="bsubsector!=''">({{bsubsector | capitalizeFirst}})</span></span>
                     </div>
 
                     <div class="inbx" (click)="inboxiconClick()" *ngIf="headercls=='dashb'">
