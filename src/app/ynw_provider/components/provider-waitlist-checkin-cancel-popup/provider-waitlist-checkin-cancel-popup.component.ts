@@ -23,11 +23,14 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   customer_label = '';
   checkin_label = '';
   default_message;
+  default_message_arr: any = [];
   rep_username;
   rep_service;
   rep_provname;
   cur_msg = '';
+  cancel_reasonobj;
   cancel_reason = '';
+  cancel_reason_key = '';
 
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
@@ -54,7 +57,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
       reason : ['', Validators.compose([Validators.required])],
-      send_message: [false]
+      send_message: [{value: false, disabled: true}]
     });
     this.amForm.get('send_message').valueChanges
     .subscribe(
@@ -84,7 +87,10 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   selectReason(cancel_reason) {
     this.amForm.get('reason').setValue(cancel_reason.value);
+    this.cancel_reasonobj = cancel_reason;
     this.cancel_reason = cancel_reason.title;
+    this.cancel_reason_key = cancel_reason.reasonkey;
+    this.amForm.controls['send_message'].enable();
     if (this.amForm.get('message')) {
       this.amForm.get('message').setValue(this.replacedMessage());
     }
@@ -99,8 +105,8 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     this.provider_services.getProviderMessages()
     .subscribe(
       (data: any) => {
-       this.default_message = data.cancel || '';
-       // console.log('defmsg', this.default_message);
+        this.default_message_arr = data;
+        this.default_message = data.cancel || '';
        /*this.cur_msg = this.replacedMessage();
        console.log('rep-msg', this.cur_msg);
        if (this.amForm.get('reason')) {
@@ -113,7 +119,12 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     );
   }
   replacedMessage() {
-    let retmsg = this.default_message;
+    let retmsg = '';
+   if (this.cancel_reason_key) {
+      retmsg = this.default_message_arr[this.cancel_reason_key];
+   }
+   console.log ('retmsg', retmsg);
+    // retmsg = this.default_message;
     retmsg = retmsg.replace(/\[username\]/g, this.rep_username);
     retmsg = retmsg.replace(/\[service\]/g, this.rep_service);
     retmsg = retmsg.replace(/\[provider name\]/g, this.rep_provname);

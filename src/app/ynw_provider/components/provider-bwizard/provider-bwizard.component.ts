@@ -72,6 +72,10 @@ export class ProviderbWizardComponent implements OnInit {
                                 'searchstatus': false,
                                 'accountstatus': ''
                               };
+    this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
+    const pdata = { 'ttype': 'updateuserdetails' };
+    this.shared_functions.sendMessage(pdata);
+
     this.getgeneralBusinessSchedules(); // method to fetch the default schedule from the ynwconf API respose
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
@@ -137,7 +141,11 @@ export class ProviderbWizardComponent implements OnInit {
               this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
               this.loading_active = false;
               // calling function which saves the business related details to show in the header
-              this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], data['serviceSubSector']['displayName'], '');
+              const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
+             // console.log('subsector bprofile', subsectorname);
+              this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], subsectorname, '');
+              const pdata = { 'ttype': 'updateuserdetails' };
+              this.shared_functions.sendMessage(pdata);
             },
             error => {
               this.loading_active = false;
@@ -376,6 +384,11 @@ export class ProviderbWizardComponent implements OnInit {
       .subscribe (data => {
         this.setBprofile_to_object(data);
         const tbprof = data;
+        const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
+       // console.log('subsector bprofile', subsectorname);
+        this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], subsectorname, '');
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.shared_functions.sendMessage(pdata);
         for (let i = 0; i < this.businessConfig.length ; i++) {
           if (this.businessConfig[i].id === tbprof['serviceSector']['id']) {
             if (this.businessConfig[i].multipleLocation) {
@@ -490,6 +503,17 @@ export class ProviderbWizardComponent implements OnInit {
     this.shared_services.bussinessDomains()
       .subscribe (data => {
         this.businessConfig = data;
+       // console.log('business config', this.businessConfig);
+        const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+       // console.log('bdata', bprof);
+        if (bprof === null || bprof === undefined) {
+            const today = new Date();
+            const postdata = {
+              cdate: today,
+              bdata: this.businessConfig
+            };
+            this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+        }
         this.getBusinessProfile();
       },
     error => {

@@ -93,6 +93,7 @@
     .mat-autocomplete-panel {
         box-shadow: none !important;
         border: 1px solid #e6e6e6;
+        max-height: 482px;
 
         .mat-option {
             @include font-regular;
@@ -1383,7 +1384,7 @@
                     
                     .selsername {
                         font-weight: 600;
-                        color: $linkblack;
+                        color: $hover-blue;
                     }
                 }
                 .queue-waitingdiv {
@@ -1392,7 +1393,7 @@
                         font-size: .875rem;
 
                         .queue-avail-date {
-                            color: $green;
+                            color: $hover-blue;
                             font-weight: 600;
                         }
                     }
@@ -1477,6 +1478,7 @@
         width: 100% !important;
     }
 }
+
 // #### Login Popup
 .loginmainclass {    
     .mat-dialog-actions {
@@ -2918,6 +2920,8 @@
         }
     }
 }
+
+// #### Bill Popup
 
 .signupmainclass,
 .loginmainclass {

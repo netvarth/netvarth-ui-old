@@ -7,7 +7,7 @@
                 <mat-expansion-panel [expanded]= 'true' [disabled]="true">
                   <mat-expansion-panel-header>
                     <mat-panel-title  [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip" >
-                      Current Check-Ins
+                      Active Check-Ins
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <div class="outer">
@@ -97,7 +97,7 @@
                               </div>
                               <ul class="controls">
                                   <li (click)="addWaitlistMessage(waitlist)">
-                                    <span class="message">Message</span>
+                                    <span class="message">Send Message</span>
                                   </li>
 
                                   <li *ngIf="!checkIfFav(waitlist.provider.id)">
@@ -146,7 +146,7 @@
                             </div>
                             <div class="rt">
                                 <ul class="controls">
-                                    <li (click)="addCommonMessage(provider)"><span class="message">Message</span></li>
+                                    <li (click)="addCommonMessage(provider)"><span class="message">Send Message</span></li>
                                     <li>
                                     <button mat-icon-button [matMenuTriggerFor]="appMenu">
                                       <mat-icon>more_vert</mat-icon>

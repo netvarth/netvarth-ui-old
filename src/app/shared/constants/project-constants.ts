@@ -201,11 +201,11 @@ VALIDATOR_MAX150: 150, // max char count
 VALIDATOR_MAX200: 200, // max char count
 VALIDATOR_MAX250: 250, // max char count
 VALIDATOR_MAX500: 500, // max char count
-WAITLIST_CANCEL_RESON: [ { title : 'No Show Up', value: 'noshowup'},
-                         {title : 'Self', value: 'self'},
-                         {title : 'Blocked', value: 'blocked'},
-                         {title : 'Closing Soon', value: 'closingSoon'},
-                         {title : 'Too Full', value: 'tooFull'}],
+WAITLIST_CANCEL_RESON: [ { title : 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel'},
+                         {title : 'Self', value: 'self', reasonkey: 'selfCancel'},
+                         {title : 'Blocked', value: 'blocked', reasonkey: 'blockedCancel'},
+                         {title : 'Closing Soon', value: 'closingSoon', reasonkey: 'closingSoonCancel'},
+                         {title : 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel'}],
 DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
 REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 5,
 DISTANCE_STATE: 100, // in Km

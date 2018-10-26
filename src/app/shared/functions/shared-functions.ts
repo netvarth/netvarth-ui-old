@@ -739,8 +739,8 @@ export class SharedFunctions {
     // this.sendMessage(pdata);
   }
   retSubSectorNameifRequired(domain, subdomainname) {
-    const bprof = this.getitemfromLocalStorage('ynw-bconf1');
-    console.log('bdata', bprof);
+    const bprof = this.getitemfromLocalStorage('ynw-bconf');
+    // console.log('bdata', bprof);
     if (bprof === null || bprof === undefined) {
       this.shared_service.bussinessDomains()
         .subscribe (
@@ -752,8 +752,9 @@ export class SharedFunctions {
               cdate: today,
               bdata: this.holdbdata
             };
-            this.setitemonLocalStorage('ynw-bconf', postdata);
-            const bprofn = this.getitemfromLocalStorage('ynw-bconf');
+            // this.setitemonLocalStorage('ynw-bconf', postdata);
+            // const bprofn = this.getitemfromLocalStorage('ynw-bconf');
+            const bprofn = postdata;
             const getdata = this.compareData(bprofn, domain, subdomainname);
             return getdata;
           }
@@ -765,14 +766,17 @@ export class SharedFunctions {
   }
   compareData(bprof, domain, subdomainname) {
     let retsubdom = '';
+    // console.log('inbound', domain, subdomainname);
     for (let i = 0; i < bprof.bdata.length; i++) {
-      console.log('data', bprof.bdata[i].domain, domain);
+     // console.log('data', bprof.bdata[i].domain, domain);
       if (bprof.bdata[i]['domain'] === domain) {
         if (bprof.bdata[i].subDomains.length > 1) {
           retsubdom =  subdomainname;
+          return retsubdom;
         }
       }
     }
+   // console.log('return inside', retsubdom);
     return retsubdom;
   }
 

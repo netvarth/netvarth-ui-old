@@ -339,7 +339,7 @@
                                         <i class="icon-play" ></i>View Bill
                                      </ng-container> -->
 
-                                     <ng-container *ngIf="!checkin.billStatus">
+                                     <ng-container *ngIf="!checkin.billStatus && checkin.waitlistStatus != 'prepaymentPending'">
                                         <i class="icon-play" ></i>Bill
                                      </ng-container>
                                      <ng-container *ngIf="checkin.billStatus== 'Settled' || checkin.billStatus== 'New'">
@@ -395,7 +395,7 @@
                                           <button type="button" mat-menu-item
                                           (click)="addProviderNote(checkin)">
                                             <!-- Add {{provider_label  | capitalizeFirst}} Note -->
-                                            Add Note
+                                            Add Private Note
                                           </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"
