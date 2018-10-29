@@ -64,6 +64,8 @@ import { projectConstants } from './shared/constants/project-constants';
 
 import 'hammerjs';
 import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
+import { ChartsModule } from 'ng2-charts';
+import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angu
     ConsumerWaitlistHistoryComponent,
     ExistingCheckinComponent,
     ServiceDetailComponent,
-    ConsumerRateServicePopupComponent
+    ConsumerRateServicePopupComponent,
+    PieChartComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,
@@ -117,6 +120,7 @@ import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angu
     RatingStarModule,
     HeaderModule,
     CheckInModule,
+    ChartsModule,
     ModalGalleryModule.forRoot(),
     ConsumerCheckinHistoryListModule,
     Nl2BrPipeModule,

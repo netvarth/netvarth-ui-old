@@ -5,10 +5,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 // import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/delay';
+import { Observable ,  Subscription } from 'rxjs';
+
+
 import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig

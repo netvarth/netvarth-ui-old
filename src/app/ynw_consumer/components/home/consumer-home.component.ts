@@ -1,3 +1,5 @@
+
+import {interval as observableInterval, Observable,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
@@ -20,15 +22,9 @@ import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-priv
 
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-
-
-import {Observable} from 'rxjs/Observable';
-import {startWith} from 'rxjs/operators/startWith';
-import {map} from 'rxjs/operators/map';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
+import {startWith, map,  count } from 'rxjs/operators';
 import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
 import { appendFile } from 'fs';
-import { count } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consumer-home',
@@ -107,11 +103,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.getWaitlist();
    // this.getHistoryCount();
    // this.getFavouriteProvider();
-   this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+   this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
     this.reloadAPIs();
    });
 
-   this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
+   this.countercronHandle = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
     this.recheckwaitlistCounters();
    });
 

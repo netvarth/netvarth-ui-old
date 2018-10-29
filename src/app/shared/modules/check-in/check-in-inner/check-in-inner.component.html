@@ -14,7 +14,7 @@
               <div class="service-head" *ngIf="step==1">Select Service</div>
               <ng-container *ngIf="step==1">
                     <mat-form-field *ngIf="servicesjson.length > 0">
-                        <mat-select [ngModel]="sel_ser" #servsel (change)="handleServiceSel(servsel.value)">
+                        <mat-select [ngModel]="sel_ser" #servsel (selectionChange)="handleServiceSel(servsel.value)">
                         <mat-option *ngFor="let serv of servicesjson" [value]="serv.id" >
                                 {{serv.name | capitalizeFirst}}
                         </mat-option>

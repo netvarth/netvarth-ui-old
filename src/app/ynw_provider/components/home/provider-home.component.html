@@ -12,7 +12,7 @@
                       <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
                         <mat-form-field class="example-full-width" *ngIf="edit_location">
 
-                          <mat-select placeholder="Locations" [(value)]="selected_location_index" (change)="onChangeLocationSelect($event)">
+                          <mat-select placeholder="Locations" [(value)]="selected_location_index" (selectionChange)="onChangeLocationSelect($event)">
                             <mat-option *ngFor="let location of locations;let i = index" [value]="i">
                               {{ location.place | capitalizeFirst }}
                             </mat-option>

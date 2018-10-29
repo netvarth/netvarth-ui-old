@@ -12,7 +12,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <label class="col-form-label" for="displayName">Addons *</label>
         <mat-form-field>
           <mat-select name="addons_selpackage" #addons_selpackage formControlName="addons_selpackage" *ngIf="upgradableaddons"
-          (change)="licenseaddon_Select(addons_selpackage.value)">
+          (selectionChange)="licenseaddon_Select(addons_selpackage.value)">
             <mat-option *ngFor="let addons of upgradableaddons"
             [value]="addons.addonId">
             {{addons.addonName}}

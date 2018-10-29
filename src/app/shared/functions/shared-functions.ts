@@ -5,9 +5,8 @@ import { SharedServices } from '../services/shared-services';
 import { projectConstants } from '../constants/project-constants';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
-import {Observable} from 'rxjs/Observable';
+import {Observable,  Subject } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
-import { Subject } from 'rxjs/Subject';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 
 @Injectable()
@@ -1105,9 +1104,10 @@ removeTerminologyTerm(term, full_message) {
 }
 
 toCamelCase(str) {
-  return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
+  /*return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
       return match.charAt(match.length - 1).toUpperCase();
-  });
+  });*/
+  return str;
 }
 
 firstToUpper(str) {

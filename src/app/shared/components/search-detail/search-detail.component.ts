@@ -5,7 +5,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import 'rxjs/add/operator/filter';
+
 
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
@@ -592,7 +592,7 @@ setEnvironment(bypassotherfunction?) {
         }
       }
     }
-   console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
+   // console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
     this.arraycreatedfromquerystring = true;
   }
 

@@ -164,9 +164,9 @@ app-footer {
 .mat-form-field {
     @include font-medium;
     
-    .mat-input-wrapper {
-        .mat-input-flex {
-            .mat-input-infix {
+    .mat-form-field-wrapper {
+        .mat-form-field-flex {
+            .mat-form-field-infix {
                 .mat-input-element {
                     background: $cc-inputbg;
                     border: 1px solid $cc-formborder;
@@ -466,6 +466,11 @@ app-footer {
                                 color: $linkblack;
                             }
                         }
+                    }
+                    
+                    @include respond-to(ynw-400) {
+                        font-size: 1rem;
+                        align-items: center !important;
                     }
                 }
                 

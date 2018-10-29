@@ -40,6 +40,7 @@ export class AddProviderSchedulesComponent implements OnInit {
   display_schedule: any = [];
   show_savebutton = false;
   show_cancelbutton = false;
+  Selall = false;
   constructor(
     public provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions
@@ -76,12 +77,20 @@ export class AddProviderSchedulesComponent implements OnInit {
     // // console.log('curarr', this.selday_arr);
   }
   handleselectall() {
+    this.Selall = true;
     this.selday_arr = [];
     const wkdaystemp = this.weekdays_arr;
     this.weekdays_arr = [];
     for (let ii = 1; ii <= 7; ii++) {
       this.handlechecbox(ii);
     }
+    this.weekdays_arr = wkdaystemp;
+  }
+  handleselectnone() {
+    this.Selall = false;
+    this.selday_arr = [];
+    const wkdaystemp = this.weekdays_arr;
+    this.weekdays_arr = [];
     this.weekdays_arr = wkdaystemp;
   }
   getDay(num) {

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
 
 import { Messages } from '../../../shared/constants/project-messages';

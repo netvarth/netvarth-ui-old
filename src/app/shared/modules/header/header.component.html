@@ -19,7 +19,7 @@
             </div>
             <div class="lg-opt ml-auto" *ngIf="provider_loggedin">
                 <div class="bnps" *ngIf="headercls=='dashb' || headercls=='itl-steps'">
-                    <div class="pro-pic" *ngIf="blogo!=''">
+                    <div class="pro-pic" *ngIf="blogo!='' && headercls!='itl-steps'">
                         <img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/>
                     </div>
                     <div class="mn-title" *ngIf="headercls=='dashb'">

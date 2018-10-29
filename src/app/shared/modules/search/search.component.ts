@@ -16,8 +16,7 @@ import { base_url } from '../../constants/urls';
 
 // Importing the locations json file so that we can make use of it
 import * as locationjson from '../../../../assets/json/locations.json';
-
-
+import 'chart.js';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { projectConstants } from '../../constants/project-constants';
 
@@ -292,7 +291,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // console.log('more returned', result);
     this.moreoptions_arr = result;
     this.showmoreoptionsSec = false;
-    console.log('moreoption returned', this.moreoptions_arr);
+    // console.log('moreoption returned', this.moreoptions_arr);
     this.do_search('', true);
   }
 
@@ -920,7 +919,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         ret_arr['subdom_dispname'] = ret['subdom_dispname'] || ret_arr['subsector'];
         if (ret_arr['sector'] === '') { // sector not mentioned in the search label condition
           if (ret['dom'] === '') {
-            ret['dom'] = 'All';
+            //ret['dom']= 'All';
+            ret.dom='All';
           }
           ret_arr['dom'] = ret['dom'];
           this.searchfields.domain = ret['dom'];

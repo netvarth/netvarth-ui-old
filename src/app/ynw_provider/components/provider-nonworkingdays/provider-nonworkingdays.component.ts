@@ -132,4 +132,18 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
           }
         );
       }
+      showEdit(ddate) {
+        const pdate = new Date(ddate + ' 00:00:00');
+        const today = new Date();
+        const dd = today.getDate();
+        const mm = today.getMonth() + 1; // January is 0!
+        const yyyy = today.getFullYear();
+        const tday = new Date(this.sharedfunctionObj.addZero(yyyy) + '-' + this.sharedfunctionObj.addZero(mm) + '-' + this.sharedfunctionObj.addZero(dd) + ' 00:00:00');
+        // console.log('dates', pdate, tday);
+        if (pdate.getTime() < tday.getTime()) {
+          return false;
+        } else {
+          return true;
+        }
+      }
 }

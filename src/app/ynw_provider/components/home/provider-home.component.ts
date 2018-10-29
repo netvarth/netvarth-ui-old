@@ -1,6 +1,7 @@
+
+import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
 import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
@@ -23,13 +24,10 @@ import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-ch
 import { SharedServices } from '../../../shared/services/shared-services';
 
 import * as moment from 'moment';
-
-import {Observable} from 'rxjs/Observable';
-import {startWith} from 'rxjs/operators/startWith';
-import {map} from 'rxjs/operators/map';
+import {startWith, map} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import 'rxjs/add/observable/interval';
+
 
 @Component({
     selector: 'app-provider-home',
@@ -195,7 +193,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.getServiceList();
     this.getProviderSettings();
 
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
         this.reloadAPIs();
     });
   }
@@ -449,7 +447,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
               this.selectedQueue(savedQok[0]);
             } else {
               if (this.queues[0] && this.selected_queue == null) {
-                this.selectedQueue(this.queues[0]);
+                const selectedQindx = this.findCurrentActiveQueue(this.queues);
+                // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
+
+                this.selectedQueue(this.queues[selectedQindx]);
               }
           }
           },
@@ -466,7 +467,55 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.selectedQueue(this.selected_queue);
     }
   }
-
+  findCurrentActiveQueue(ques) {
+    let selindx = 0;
+    const cday = new Date();
+    const currentday = (cday.getDay() + 1);
+    const curtime = cday.getHours() + ':' + cday.getMinutes() + ':00';
+    // const curtime = '21:00:00';
+    let stime;
+    let etime;
+    const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
+    const curtimeforchk = new Date(tday + ' ' + curtime);
+    // console.log('curtimestr', curtime, curtimeforchk);
+    for (let i = 0; i < ques.length ; i++) {
+      for (let j = 0; j < ques[i].queueSchedule.repeatIntervals.length; j++) {
+        const pday = Number(ques[i].queueSchedule.repeatIntervals[j]);
+        if (currentday === pday) {
+          stime = new Date(tday + ' ' + this.AMHourto24(ques[i].queueSchedule.timeSlots[0].sTime));
+          etime = new Date(tday + ' ' + this.AMHourto24(ques[i].queueSchedule.timeSlots[0].eTime));
+          if ((curtimeforchk.getTime() >= stime.getTime()) && (curtimeforchk.getTime() <= etime.getTime())) {
+            // console.log('time24', ques[i].name, stime, etime);
+            // console.log('days', ques[i].queueSchedule.repeatIntervals[j]);
+            selindx = i;
+          }
+        }
+      }
+    }
+    return selindx;
+  }
+  AMHourto24(time12) {
+    const time = time12;
+    let hours = Number(time.match(/^(\d+)/)[1]);
+    const minutes = Number(time.match(/:(\d+)/)[1]);
+    const AMPM = time.match(/\s(.*)$/)[1];
+    if (AMPM === 'PM' && hours < 12) { hours = hours + 12; }
+    if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
+    let sHours = hours.toString();
+    let sMinutes = minutes.toString();
+    if (hours < 10) {
+      sHours = '0' + sHours;
+    }
+    if (minutes < 10) {
+      sMinutes = '0' + sMinutes;
+    }
+   // alert(sHours + ':::' + sMinutes);
+   const time24 = sHours + ':' + sMinutes + ':00';
+    /*const mom_date = moment(date);
+    mom_date.set('hour', sHours);
+    mom_date.set('minute', sMinutes);*/
+    return time24;
+  }
 
   changeLocation(location) {
 

@@ -34,7 +34,7 @@
                                     </mat-expansion-panel-header>
                                     <mat-form-field>
                                       <div>
-                                        <mat-select placeholder="" [(ngModel)]="refined_domain" #refineddomain (change)="handlerefineddomainchange(refineddomain.value)">
+                                        <mat-select placeholder="" [(ngModel)]="refined_domain" #refineddomain (selectionChange)="handlerefineddomainchange(refineddomain.value)">
                                           <mat-option value="">--  Select --</mat-option>
                                           <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain" >
                                             {{ domain.displayName }}
@@ -57,7 +57,7 @@
                                       </mat-expansion-panel-header>
                                       <mat-form-field>
                                           <div>
-                                            <mat-select placeholder="" [(ngModel)]="refined_subdomain" #refinedsubdomain (change)="handlerefinedsubdomainchange(refinedsubdomain.value)" >
+                                            <mat-select placeholder="" [(ngModel)]="refined_subdomain" #refinedsubdomain (selectionChange)="handlerefinedsubdomainchange(refinedsubdomain.value)" >
                                               <mat-option value="">--  Select --</mat-option>
                                               <mat-option *ngFor="let sdomain of subdomainlist_data" [value]="sdomain.subDomain" >
                                                 {{ sdomain.displayName }}
@@ -211,7 +211,7 @@
                             <div class="fltr">
                                 <div class="search_sort_display">
                                     <mat-form-field>
-                                        <mat-select name="sortfield" panelClass ="search_domaindropdown_class" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)" [(ngModel)]="sortfieldsels">
+                                        <mat-select name="sortfield" panelClass ="search_domaindropdown_class" #sortfieldsel (selectionChange)="selected_sortfield(sortfieldsel.value)" [(ngModel)]="sortfieldsels">
                                                 <mat-option value="">
                                                     None
                                                 </mat-option>

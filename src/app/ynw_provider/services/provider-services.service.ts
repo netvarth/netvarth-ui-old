@@ -2,11 +2,11 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 // Import RxJs required methods
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 
 import { ServiceMeta } from '../../shared/services/service-meta';
 
@@ -310,7 +310,10 @@ export class ProviderServices {
     const url = 'provider/payment/settings/';
     return this.servicemeta.httpPut(url, data);
   }
-
+  setPaymentAccountSettings(status){
+    const url = 'provider/payment/settings/jaldee/'+status;
+    return this.servicemeta.httpPost(url);
+  }
   getProviderLocations() {
     return this.servicemeta.httpGet('provider/locations');
   }
