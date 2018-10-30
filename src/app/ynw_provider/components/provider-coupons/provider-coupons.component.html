@@ -6,10 +6,13 @@
 <section>
     <div class="content comn-cls">
         <div class="container">
-            <div class="no-dta" *ngIf="coupon_list.length ==0 && query_executed == true">
-                    <p>{{emptyMsg}}</p>
-                    <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
-            </div>
+           
+            <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid">
+                    <mat-tab label="My Coupons">
+                            <div class="no-dta" *ngIf="coupon_list.length ==0 && query_executed == true">
+                                    <p>{{emptyMsg}}</p>
+                                    <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
+                            </div>
             <div class="w-dta" *ngIf="coupon_list.length>0">
                     <div class="row">
                         <div class="card">
@@ -58,6 +61,46 @@
                         </div>    
                     </div>
                 </div>
+                </mat-tab>
+
+               
+                <mat-tab label="Jaldee coupons">
+                        <div class="no-dta" *ngIf="jaldeecoupon_list.length == 0 && query_executed == true">
+                                <p>No Jaldee coupons exists</p>
+                                <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
+                        </div>
+                        <div class="w-dta" *ngIf="jaldeecoupon_list.length>0"> 
+                                <div class="row">
+                                    <div class="card">
+                                        <div class="copy">
+                                            <div class="table-outer q-tbl">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Code</th>
+                                                            <th>Valid From</th>
+                                                            <th>Valid To</th>
+                                                            <th>No.of times consumers applied</th>
+                                                            <th>No.of times providers honored</th>
+                                                            <th>Status</th>
+                                                            <th><span class="addbt" (click)="addCoupons()"></span></th>                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            
+                                                    </tbody>
+                                                </table>
+                                                <span class="addbt d-block d-md-none" (click)="addCoupons()"></span>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                </mat-tab>
+
+
+                </mat-tab-group>
             </div>
         </div>  
 </section>

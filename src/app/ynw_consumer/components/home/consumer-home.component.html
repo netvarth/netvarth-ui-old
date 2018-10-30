@@ -144,8 +144,10 @@
                                 <h3 class="pointer-cursor">
                                   {{provider.businessName | capitalizeFirst}}</h3>
                             </div>
+                            
                             <div class="rt">
                                 <ul class="controls">
+                                    <a (click)="openCoupons()"><img src="assets/images/coupon1.svg" height="30" width="60" ></a>
                                     <li (click)="addCommonMessage(provider)"><span class="message">Message</span></li>
                                     <li>
                                     <button mat-icon-button [matMenuTriggerFor]="appMenu">
@@ -169,8 +171,9 @@
                           <div class="location" *ngFor="let loc of provider.locations;">
                             <div class="locationname">
                                 <span class="icon-location"></span> {{loc.place | capitalizeFirst}}
+                               
                             </div>
-
+                                                   
                             <div class="bt-l">
                               <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                   <div class="o-now" *ngIf="loc.opennow">Open Now</div>
@@ -194,9 +197,10 @@
                                 <span class="cs-btn bt10" *ngIf="showcheckInButton(provider) && provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate']" (click)="goCheckin(provider, loc,  loc['estimatedtime_det']['cdate'], true, 'fav_provider')">
                                   Do you want to <span>Check-in</span> for <span>different Date?</span>
                                 </span>
-                            </div>
-
+                            </div>                           
                           </div>
+                         
+                        
                         </div>
 
                       </div>

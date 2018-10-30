@@ -94,7 +94,6 @@
                                 </ng-container>
                             </div>
                         </div>
-
                         <!-- <div class="showDetOuter" *ngIf="queuejson.length > 0">
                             <div class="showDetService">
                                 Check-In for service:  <span class='selsername'>{{ sel_ser_det.name }}</span>
@@ -133,7 +132,24 @@
                     </div> -->
                  </div>
               </div>
-              </ng-container>
+            </ng-container>
+
+
+
+              <ng-container>
+              <div class="coupon-code">
+                <div class="form-group" *ngIf="page_source != 'provider_checkin'">
+                    <label>Coupon Code</label>                       
+                    <input type="text" id="coupon_code" placeholder="Enter your Coupon code" style="height:30px;">
+                    <button mat-button class="cs-btn bt1 makepayment">Apply</button>
+                </div>                            
+            </div>
+            </ng-container>
+
+
+
+              
+             
               </ng-container>
     
               <ng-container *ngIf="step==3">

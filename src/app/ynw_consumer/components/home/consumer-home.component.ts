@@ -25,6 +25,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import {startWith, map,  count } from 'rxjs/operators';
 import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
 import { appendFile } from 'fs';
+import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 
 @Component({
   selector: 'app-consumer-home',
@@ -88,6 +89,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   privacydialogRef;
   canceldialogRef;
   remfavdialogRef;
+  coupondialogRef: MatDialogRef<{}, any>;
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -831,6 +833,31 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
   }
+
+
+  openCoupons() {
+    
+    // alert('Clicked coupon');
+     
+ 
+    this.coupondialogRef = this.dialog.open(CouponsComponent, {
+     width: '50%',
+     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
+     disableClose: true,
+   data: {
+  
+   }
+   });
+ 
+   this.coupondialogRef.afterClosed().subscribe(result => {
+ 
+   });
+   
+   }
+ 
+
+
+
   showPersonsAhead(waitlist) {
     let retstat = false;
     if (waitlist.hasOwnProperty('personsAhead')) {

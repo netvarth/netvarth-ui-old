@@ -6,6 +6,19 @@
 <mat-dialog-content>
   <div class="full-outer">
       <div class="btl"><span class="label">Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName | capitalizeFirst}}</span></div>
+
+   
+
+      <div class="coupon-code">
+        <div class="form-group">
+            <label>Coupon Code</label>                       
+            <input type="text" id="coupon_code" placeholder="Enter your Coupon code" style="height:30px;">
+            <button mat-button class="cs-btn bt1 makepayment">Apply</button>
+        </div>                            
+    </div>
+    
+    
+
       <div class="topay">
         <span class="label">Amount to pay</span>
         <span class="label-valu">

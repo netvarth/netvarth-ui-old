@@ -30,6 +30,11 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
+import { CouponsComponent } from '../coupons/coupons.component';
+import { CouponviewComponent } from '../couponview/couponview.component';
+
+
+
 
 @Component({
   selector: 'app-provider-detail',
@@ -140,6 +145,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
+  couponviewdialogRef: MatDialogRef<CouponviewComponent, any>;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -932,6 +938,28 @@ getTerminologyTerm(term) {
       return term;
   }
 }
+
+
+openCouponview() {
+
+  this.couponviewdialogRef = this.dialog.open(CouponviewComponent, {
+   width: '50%',
+   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
+   disableClose: true,
+ data: {
+
+ }
+ });
+
+ this.couponviewdialogRef.afterClosed().subscribe(result => {
+
+ });
+ 
+ }
+
+
+
+
 handleEmailPhonediv() {
   if (this.showEmailPhonediv) {
     this.showEmailPhonediv = false;

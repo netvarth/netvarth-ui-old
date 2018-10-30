@@ -24,6 +24,7 @@ import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
+import { CouponsComponent } from '../coupons/coupons.component';
 
 @Component({
   selector: 'app-search-detail',
@@ -125,6 +126,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   claimdialogRef;
   servicedialogRef;
   commdialogRef;
+  coupondialogRef;
   constructor(private routerobj: Router,
               private location: Location,
               private activaterouterobj: ActivatedRoute,
@@ -592,7 +594,7 @@ setEnvironment(bypassotherfunction?) {
         }
       }
     }
-   // console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
+   console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
     this.arraycreatedfromquerystring = true;
   }
 
@@ -1993,5 +1995,32 @@ setEnvironment(bypassotherfunction?) {
     this.servicedialogRef.afterClosed().subscribe(result => {
     });
   }
+
+
+
+
+  openCoupons() {
+    
+   // alert('Clicked coupon');
+    
+
+   this.coupondialogRef = this.dialog.open(CouponsComponent, {
+    width: '50%',
+    panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
+    disableClose: true,
+  data: {
+ 
+  }
+  });
+
+  this.coupondialogRef.afterClosed().subscribe(result => {
+
+  });
+  
+  }
+
+
+
+
 
 }

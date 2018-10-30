@@ -66,6 +66,8 @@ import 'hammerjs';
 import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
 import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component';
+import { CouponsComponent } from './shared/components/coupons/coupons.component';
+import { CouponviewComponent } from './shared/components/couponview/couponview.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,9 @@ import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component
     ExistingCheckinComponent,
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
-    PieChartComponent
+    PieChartComponent,
+    CouponsComponent,
+    CouponviewComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,
@@ -101,7 +105,9 @@ import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component
     AddInboxMessagesComponent,
     ExistingCheckinComponent,
     ServiceDetailComponent,
-    ConsumerRateServicePopupComponent
+    ConsumerRateServicePopupComponent,
+    CouponsComponent,
+    CouponviewComponent
     /*SearchMoreOptionsComponent*/
   ],
   imports: [

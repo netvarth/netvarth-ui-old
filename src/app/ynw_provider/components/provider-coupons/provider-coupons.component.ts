@@ -35,6 +35,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   addcoupdialogRef;
   editcoupdialogRef;
   confirmremdialogRef;
+  jaldeecoupon_list = 0;
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions) {
