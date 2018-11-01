@@ -69,6 +69,8 @@ import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { CouponviewComponent } from './shared/components/couponview/couponview.component';
 import { ProviderReimburseReportComponent } from './ynw_provider/components/provider-reimburse-report/provider-reimburse-report.component';
+import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
+import { ViewReportComponent } from './ynw_provider/components/view-report/view-report.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +98,8 @@ import { ProviderReimburseReportComponent } from './ynw_provider/components/prov
     ConsumerRateServicePopupComponent,
     PieChartComponent,
     CouponsComponent,
-    CouponviewComponent
+    CouponviewComponent,
+    RequestForComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,
@@ -108,7 +111,8 @@ import { ProviderReimburseReportComponent } from './ynw_provider/components/prov
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
     CouponsComponent,
-    CouponviewComponent
+    CouponviewComponent,
+    RequestForComponent
     /*SearchMoreOptionsComponent*/
   ],
   imports: [

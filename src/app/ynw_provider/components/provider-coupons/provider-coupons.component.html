@@ -20,59 +20,63 @@
                                     <span class="add-nloc cs-btn bt3" (click)="reports()">Reports</span>
                                 </div>
                                 <div class="table-outer q-tbl">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Code</th>
-                                            <th>Valid From</th>
-                                            <th>Valid To</th>
-                                            <th>consumers# applied</th>
-                                            <th>providers# honored</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td data-title="name"  class="td2" class="pointer-cursor" (click)="" [matTooltipClass] = "tooltipcls" [matTooltip]="tooltip_queueedit"><span >Coupon1</span>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Code</th>
+                                                <th>Valid From</th>
+                                                <th>Valid To</th>
+                                                <th>consumers# applied</th>
+                                                <th>providers# honored</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-title="name" class="td1" class="pointer-cursor">Coupon1</td>
+                                                <td data-title="code" class="pointer-cursor" class="td1">ONAM565</td>
+                                                <td data-title="Valid From" class="pointer-cursor" class="td1">10/10/2018</td>
+                                                <td data-title="Valid To" class="pointer-cursor" class="td1">20/10/2018</td>
+                                                <td data-title="consumers# applied" class="pointer-cursor" class="td1">200</td>
+                                                <td data-title="providers# applied" class="pointer-cursor" class="td1">10</td>
+                                                <td data-title="Status" class="pointer-cursor" class="td1">
+                                                    <mat-slide-toggle [(ngModel)]="couponstatus">
+                                                        <div *ngIf="couponstatus">
+                                                            Enabled
+                                                        </div>
+                                                        <div *ngIf="!couponstatus">
+                                                            Disabled
+                                                        </div>
+                                                    </mat-slide-toggle>
                                                 </td>
-                                            <!-- <td data-title="Name" class="pointer-cursor" class="td1">Coupon1</td> -->
-                                            <td data-title="code" class="pointer-cursor" class="td1">ONAM565</td>
-                                            <td data-title="Valid From" class="pointer-cursor" class="td1">10/10/2018</td>
-                                            <td data-title="Valid To" class="pointer-cursor" class="td1">20/10/2018</td>
-                                            <td data-title="consumers# applied" class="pointer-cursor" class="td1">200</td>
-                                            <td data-title="providers# applied" class="pointer-cursor" class="td1">10</td>
-                                            <td data-title="Status" class="pointer-cursor" class="td1">
-                                                <mat-slide-toggle [(ngModel)]="couponstatus">
-                                                    <div *ngIf="couponstatus">
-                                                        Enabled
-                                                    </div>
-                                                    <div *ngIf="!couponstatus">
-                                                        Disabled
-                                                    </div>
-                                                </mat-slide-toggle>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td data-title="Name" class="pointer-cursor" class="td1">Coupon1</td>
-                                            <td data-title="code" class="pointer-cursor" class="td1">ONAM565</td>
-                                            <td data-title="Valid From" class="pointer-cursor" class="td1">10/10/2018</td>
-                                            <td data-title="Valid To" class="pointer-cursor" class="td1">20/10/2018</td>
-                                            <td data-title="consumers# applied" class="pointer-cursor" class="td1">200</td>
-                                            <td data-title="providers# applied" class="pointer-cursor" class="td1">10</td>
-                                            <td data-title="Status" class="pointer-cursor" class="td1">
-                                                <mat-slide-toggle [(ngModel)]="couponstatus">
-                                                    <div *ngIf="couponstatus">
-                                                        Enabled
-                                                    </div>
-                                                    <div *ngIf="!couponstatus">
-                                                        Disabled
-                                                    </div>
-                                                </mat-slide-toggle>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                            <tr>
+                                                <td data-title="name" class="td1" class="pointer-cursor">Coupon2</td>
+                                                <td data-title="code" class="pointer-cursor" class="td1">ONAM565</td>
+                                                <td data-title="Valid From" class="pointer-cursor" class="td1">10/10/2018</td>
+                                                <td data-title="Valid To" class="pointer-cursor" class="td1">20/10/2018</td>
+                                                <td data-title="consumers# applied" class="pointer-cursor" class="td1">200</td>
+                                                <td data-title="providers# applied" class="pointer-cursor" class="td1">10</td>
+                                                <td data-title="Status" class="pointer-cursor" class="td1">
+                                                    <mat-slide-toggle [(ngModel)]="couponstatus">
+                                                        <!-- <div *ngIf="couponstatus">
+                                                            Enabled
+                                                        </div>
+                                                        <div *ngIf="!couponstatus">
+                                                            Disabled
+                                                        </div> -->
+                                                        <div *ngIf="couponstatus; else nocouponstatus">
+                                                            Enabled
+                                                        </div>
+                                                        <ng-template #nocouponstatus>
+                                                            Disabled
+                                                        </ng-template>
+                                                    </mat-slide-toggle>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
