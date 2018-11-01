@@ -1,8 +1,8 @@
 
-import {Injectable} from '@angular/core';
-import {Http, Headers, Response, RequestOptions} from '@angular/http';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 // Import RxJs required methods
 
@@ -14,7 +14,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 
 export class ProviderServices {
 
-  constructor(private servicemeta: ServiceMeta, private http: HttpClient) {}
+  constructor(private servicemeta: ServiceMeta, private http: HttpClient) { }
 
   getProviderConfig() {
     return this.servicemeta.httpGet('accounts/conf');
@@ -31,17 +31,17 @@ export class ProviderServices {
   }
 
   updatePublicSearch(value) {
-   // const path = 'accounts/search/' + value;
+    // const path = 'accounts/search/' + value;
     const path = 'provider/search/' + value;
     return this.servicemeta.httpPut(path);
   }
 
-  getVirtualFields(domain , subdomain = null) {
+  getVirtualFields(domain, subdomain = null) {
     // const path = (!subdomain) ? 'accounts/conf/dataModel/' + domain :
     // 'accounts/conf/dataModel/' + domain + '/' + subdomain;
 
     const path = (!subdomain) ? 'provider/ynwConf/dataModel/' + domain :
-     'provider/ynwConf/dataModel/' + domain + '/' + subdomain;
+      'provider/ynwConf/dataModel/' + domain + '/' + subdomain;
 
     return this.servicemeta.httpGet(path);
   }
@@ -67,11 +67,11 @@ export class ProviderServices {
 
   getProviderItems(id?) {
     if (id) {
-        // return this.servicemeta.httpGet('accounts/item/' + id);
-        return this.servicemeta.httpGet('provider/items/' + id);
+      // return this.servicemeta.httpGet('accounts/item/' + id);
+      return this.servicemeta.httpGet('provider/items/' + id);
     } else {
-        // return this.servicemeta.httpGet('accounts/item');
-        return this.servicemeta.httpGet('provider/items');
+      // return this.servicemeta.httpGet('accounts/item');
+      return this.servicemeta.httpGet('provider/items');
     }
   }
 
@@ -110,7 +110,7 @@ export class ProviderServices {
   }
   removeItemImage(data) {
     // const path = 'accounts/item/' + data.itemId + '/' + encodeURI(data.displayName);
-    const path = 'provider/items/' + data.itemId + '/image' ;
+    const path = 'provider/items/' + data.itemId + '/image';
     // return this.servicemeta.httpPut(path);
     return this.servicemeta.httpDelete(path);
   }
@@ -157,16 +157,16 @@ export class ProviderServices {
 
   deleteAddonPackage(value) {
     // const path = 'accounts/license/addon/' + value;
-   // const path = 'provider/license/addon/' + value;
-   // return this.servicemeta.httpDelete(path);
+    // const path = 'provider/license/addon/' + value;
+    // return this.servicemeta.httpDelete(path);
   }
 
   // Provider Discounts
   getProviderDiscounts(id?) {
     if (id) {
-        return this.servicemeta.httpGet('provider/bill/discounts/' + id);
+      return this.servicemeta.httpGet('provider/bill/discounts/' + id);
     } else {
-        return this.servicemeta.httpGet('provider/bill/discounts');
+      return this.servicemeta.httpGet('provider/bill/discounts');
     }
   }
 
@@ -185,9 +185,9 @@ export class ProviderServices {
   // Provider Coupons
   getProviderCoupons(id?) {
     if (id) {
-        return this.servicemeta.httpGet('provider/bill/coupons/' + id);
+      return this.servicemeta.httpGet('provider/bill/coupons/' + id);
     } else {
-        return this.servicemeta.httpGet('provider/bill/coupons');
+      return this.servicemeta.httpGet('provider/bill/coupons');
     }
   }
 
@@ -202,13 +202,159 @@ export class ProviderServices {
     const path = 'provider/bill/coupons/' + id;
     return this.servicemeta.httpDelete(path);
   }
-
+  //Jaldee Coupons
+  getJaldeeCoupons() {
+    return [{
+      "jaldeeCouponCode": "CPN01",
+      "couponName": "10% Off",
+      "couponDescription": "Get 10% off for your first 5 check-ins",
+      "couponStatus": "Active",
+      "startDate": "31/10/2018",
+      "endDate": "31/11/2018",
+      "couponRules": {
+        "discountValue": 10,
+        "maxDiscountValue": 100,
+        "maxReimbursePercentage": 100,
+        "maxProviderUseLimit": 5000,
+        "maxConsumerUseLimit": 5000,
+        "usageMaxLimitPerProvider": 5000,
+        "consumerFirstCheckInUsageOnly": false,
+        "providerFirstCheckInUseOnly": true,
+        "selfPaymentRequired": true,
+        "onlineCheckinRequired": true,
+        "combineWithOtherCoupon": false,
+        "defaultEnable": true,
+        "alwaysEnabled": true,
+        "consumerTermsAndcondition": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word",
+        "providerDescription": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying."
+      },
+      "target": null
+    },
+    {
+      "jaldeeCouponCode": "CPN02",
+      "couponName": "20% Off",
+      "couponDescription": "Get 20% off for your first 5 check-ins",
+      "couponStatus": "Active",
+      "startDate": "1/11/2018",
+      "endDate": "31/11/2018",
+      "couponRules": {
+        "discountValue": 20,
+        "maxDiscountValue": 100,
+        "maxReimbursePercentage": 100,
+        "maxProviderUseLimit": 5000,
+        "maxConsumerUseLimit": 5000,
+        "usageMaxLimitPerProvider": 5000,
+        "consumerFirstCheckInUsageOnly": false,
+        "providerFirstCheckInUseOnly": true,
+        "selfPaymentRequired": true,
+        "onlineCheckinRequired": true,
+        "combineWithOtherCoupon": false,
+        "defaultEnable": true,
+        "alwaysEnabled": true,
+        "consumerTermsAndcondition": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word",
+        "providerDescription": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying."
+      },
+      "target": null
+    }];
+    //  return this.servicemeta.httpGet('provider/coupons');
+  }
+  getJaldeeCoupon(jc_code) {
+    const url='provider/coupons/'+jc_code;
+    return {
+      "jaldeeCouponCode": "CPN01",
+      "couponName": "10% Off",
+      "couponDescription": "Get 10% off for your first 5 check-ins",
+      "couponStatus": "Active",
+      "startDate": "31/10/2018",
+      "endDate": "31/11/2018",
+      "couponRules": {
+        "discountValue": 10,
+        "maxDiscountValue": 100,
+        "maxReimbursePercentage": 100,
+        "maxProviderUseLimit": 5000,
+        "maxConsumerUseLimit": 5000,
+        "usageMaxLimitPerProvider": 5000,
+        "consumerFirstCheckInUsageOnly": false,
+        "providerFirstCheckInUseOnly": true,
+        "selfPaymentRequired": true,
+        "onlineCheckinRequired": true,
+        "combineWithOtherCoupon": false,
+        "defaultEnable": true,
+        "alwaysEnabled": true,
+        "consumerTermsAndcondition": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word",
+        "providerDescription": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying."
+      },
+      "target": null
+    };
+    //return this.servicemeta.httpGet(url);
+  }
+  applyJaldeeCoupon(jc_code, checkin_id) {
+    const url='/provider/coupons/'+jc_code+"/"+checkin_id;
+    return true;
+    //return this.servicemeta.httpGet(url);
+  }
+  applyStatusJaldeeCoupon(jc_code, status) {
+    const url='/provider/coupons/'+jc_code+"/"+status;
+    return true;
+    //return this.servicemeta.httpPut(url);
+  }
+  getJaldeeCouponReports(filter = {}) {
+    return [{
+      "invoiceId": "1",
+      "providerId": "1",
+      "jaldeeAccountAmount": "2000",
+      "jaldeeCouponAmount": "1000",
+      "paidate": "30-10-2018",
+      "PaidAmount": "3000",
+      "invoiceStatus": "paid",
+      "paidMode": "cash"
+    },
+    {
+      "invoiceId": "2",
+      "providerId": "1",
+      "jaldeeAccountAmount": "1000",
+      "jaldeeCouponAmount": "500",
+      "paidate": "30-10-2018",
+      "PaidAmount": "1500",
+      "invoiceStatus": "paid",
+      "paidMode": "cash"
+    },
+    {
+      "invoiceId": "3",
+      "providerId": "2",
+      "jaldeeAccountAmount": "2000",
+      "jaldeeCouponAmount": "1000",
+      "PaidAmount": "3000",
+      "invoiceStatus": "notpaid"
+    }
+  ];
+    //return this.servicemeta.httpGet('provider/coupons/jcreports', null, filter);
+  }
+  getJaldeeCouponReportsbyId(id?) {
+    const url= 'provider/coupons/jcreports/' + id;
+    return {
+      "invoiceId": "1",
+      "providerId": "1",
+      "jaldeeAccountAmount": "2000",
+      "jaldeeCouponAmount": "1000",
+      "paidate": "30-10-2018",
+      "PaidAmount": "3000",
+      "invoiceStatus": "paid",
+      "paidMode": "cash"
+    };
+    //return this.servicemeta.httpGet(url);
+  }
+  requestforPaymentJC(id?) {
+    const url= 'provider/coupons/jcreports/' + id + "/requestPayment";
+    return true;
+    //return this.servicemeta.httpGet(url);
+  }
   // Non working days
   getProviderNonworkingdays(id?) {
     if (id) {
-        return this.servicemeta.httpGet('provider/settings/nonBusinessDays/' + id);
+      return this.servicemeta.httpGet('provider/settings/nonBusinessDays/' + id);
     } else {
-        return this.servicemeta.httpGet('provider/settings/nonBusinessDays');
+      return this.servicemeta.httpGet('provider/settings/nonBusinessDays');
     }
   }
   addHoliday(data) {
@@ -221,62 +367,46 @@ export class ProviderServices {
   editHoliday(data) {
     return this.servicemeta.httpPut('provider/settings/nonBusinessDays', data);
   }
-
   // business profile Primary fields
   getParkingtypes() {
     return this.servicemeta.httpGet('ynwConf/parkingTypes');
   }
-
   createPrimaryFields(data) {
     return this.servicemeta.httpPost('provider/bProfile', data);
   }
-
   patchbProfile(data) {
     return this.servicemeta.httpPatch('provider/bProfile', data);
   }
   updatePrimaryFields(data) {
     return this.servicemeta.httpPut('provider/bProfile', data);
   }
-
-  updateDomainSubDomainFields(data, domain , subdomain = null) {
-
+  updateDomainSubDomainFields(data, domain, subdomain = null) {
     const path = (!subdomain) ? 'provider/bProfile/domain' :
-     'provider/bProfile/' + subdomain;
-
+      'provider/bProfile/' + subdomain;
     return this.servicemeta.httpPut(path, data);
   }
-
   updateSocialMediaLinks(data) {
-
-   return this.servicemeta.httpPut('provider/bProfile/socialMedia', data);
+    return this.servicemeta.httpPut('provider/bProfile/socialMedia', data);
   }
-
   getGalleryImages() {
     return this.servicemeta.httpGet('provider/gallery');
   }
-
   uploadGalleryImages(postdata) {
     return this.servicemeta.httpPost('provider/gallery', postdata);
-
   }
-
   deleteProviderGalleryImage(filename) {
     return this.servicemeta.httpDelete('provider/gallery/' + filename);
   }
-
   getProviderLogo() {
     return this.servicemeta.httpGet('provider/logo');
   }
-
   uploadLogo(data) {
     return this.servicemeta.httpPost('provider/logo', data);
   }
-
   deleteLogo(name) {
     const url = 'provider/logo/' + name;
     return this.servicemeta.httpDelete(url);
   }
-
   // Addwords
   getAdwords() {
     return this.servicemeta.httpGet('provider/license/adwords');
@@ -289,16 +419,12 @@ export class ProviderServices {
     const url = 'provider/license/adwords/' + id;
     return this.servicemeta.httpDelete(url);
   }
-
   // Waitlist Manager
   setAcceptOnlineCheckin(status) {
-
     const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;
     return this.servicemeta.httpPut(url);
   }
-
   getWaitlistMgr() {
-
     const url = 'provider/settings/waitlistMgr/';
     return this.servicemeta.httpGet(url);
   }
@@ -310,19 +436,17 @@ export class ProviderServices {
     const url = 'provider/payment/settings/';
     return this.servicemeta.httpPut(url, data);
   }
-  setPaymentAccountSettings(status){
-    const url = 'provider/payment/settings/jaldee/'+status;
+  setPaymentAccountSettings(status) {
+    const url = 'provider/payment/settings/jaldee/' + status;
     return this.servicemeta.httpPost(url);
   }
   getProviderLocations() {
     return this.servicemeta.httpGet('provider/locations');
   }
-
   setWaitlistMgr(data) {
     const url = 'provider/settings/waitlistMgr/';
     return this.servicemeta.httpPut(url, data);
   }
-
   getServicesList(params?) {
     let stat = '';
     if (params !== undefined) {
@@ -333,42 +457,34 @@ export class ProviderServices {
     const url = 'provider/services/' + stat;
     return this.servicemeta.httpGet(url);
   }
-
   createService(data) {
     const url = 'provider/services/';
     return this.servicemeta.httpPost(url, data);
   }
-
   updateService(data) {
     const url = 'provider/services/';
     return this.servicemeta.httpPut(url, data);
   }
-
   getService(service_id) {
     const url = 'provider/services/' + service_id;
     return this.servicemeta.httpGet(url);
   }
-
   enableService(service_id) {
     const url = 'provider/services/' + service_id + '/Enable';
     return this.servicemeta.httpPut(url);
   }
-
   disableService(service_id) {
     const url = 'provider/services/' + service_id + '/Disable';
     return this.servicemeta.httpDelete(url);
   }
-
   getServiceGallery(service_id) {
     const url = 'provider/services/serviceGallery/' + service_id;
     return this.servicemeta.httpGet(url);
   }
-
   uploadServiceGallery(service_id, data) {
     const url = 'provider/services/serviceGallery/' + service_id;
     return this.servicemeta.httpPost(url, data);
   }
-
   deleteServiceGalleryImage(service_id, name) {
     const url = 'provider/services/serviceGallery/' + service_id + '/' + name;
     return this.servicemeta.httpDelete(url);
@@ -377,7 +493,6 @@ export class ProviderServices {
   addProviderLocation(data) {
     return this.servicemeta.httpPost('provider/locations', data);
   }
-
   changeProviderLocationStatus(id, chstatus) {
     const url = 'provider/locations/' + id + '/' + chstatus;
     if (chstatus === 'enable') {
@@ -418,76 +533,61 @@ export class ProviderServices {
     const url = 'provider/waitlist/queues/' + id + '/' + chstatus;
     return this.servicemeta.httpPut(url);
   }
-
   getProviderInbox(filter = {}) {
     return this.servicemeta.httpGet('provider/communications', null, filter);
   }
-
   // postProviderInboxReply(consumerId, data) {
   //   const url = 'provider/communications/' + consumerId;
   //   return this.servicemeta.httpPost(url, data);
   // }
-
   getWaitlistFutureCount(filter = {}) {
     const url = 'provider/waitlist/future/count/';
     return this.servicemeta.httpGet(url, null, filter);
   }
-
   getwaitlistTodayCount(filter = {}) {
     const url = 'provider/waitlist/today/count/';
-    return this.servicemeta.httpGet(url, null , filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-
   getwaitlistHistoryCount(filter = {}) {
     const url = 'provider/waitlist/history/count/';
-    return this.servicemeta.httpGet(url, null , filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-
   getTodayWaitlist(filter) {
     const url = 'provider/waitlist/today/';
-    return this.servicemeta.httpGet(url, null , filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-
   getHistroryWaitlist(filter = {}) {
     const url = 'provider/waitlist/history';
-    return this.servicemeta.httpGet(url, null , filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-
   getFutureWaitlist(filter = {}) {
     const url = 'provider/waitlist/future';
-    return this.servicemeta.httpGet(url, null , filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-
   getQueueDelay(queueId) {
     const url = 'provider/waitlist/queues/' + queueId + '/delay';
     return this.servicemeta.httpGet(url);
   }
-
   addQueueDelay(queueId, data) {
     const url = 'provider/waitlist/queues/' + queueId + '/delay';
     return this.servicemeta.httpPost(url, data);
   }
-
   setWaitlistMgrStatus(status) {
     const url = 'provider/settings/waitlistMgr/' + status;
     return this.servicemeta.httpPut(url);
   }
-
   getProviderMessages() {
     const url = 'provider/ynwConf/messages';
     return this.servicemeta.httpGet(url);
   }
-
   getCustomer(data) {
     const url = 'provider/customers';
     return this.servicemeta.httpGet(url, null, data);
   }
-
   getQueueWaitingTime(queueId, date) {
     const url = 'provider/waitlist/queues/' + queueId + '/' + date + '/waitingTime';
     return this.servicemeta.httpGet(url);
   }
-
   addCustomerWaitlist(data) {
     const url = 'provider/waitlist';
     return this.servicemeta.httpPost(url, data);
@@ -504,7 +604,6 @@ export class ProviderServices {
     const url = 'https://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
-
   getLocationDetail(location_id) {
     const url = 'provider/locations/' + location_id;
     return this.servicemeta.httpGet(url);
@@ -514,105 +613,84 @@ export class ProviderServices {
     const url = 'provider/services/' + service_id;
     return this.servicemeta.httpGet(url);
   }
-
   getQueueDetail(queue_id) {
     const url = 'provider/waitlist/queues/' + queue_id;
     return this.servicemeta.httpGet(url);
   }
-
   getLocationCount() {
     const url = 'provider/locations/count';
     return this.servicemeta.httpGet(url);
   }
-
   getServiceCount() {
     const url = 'provider/services/count';
     return this.servicemeta.httpGet(url);
   }
-
   getQueuesCount() {
     const url = 'provider/waitlist/queues/count';
     return this.servicemeta.httpGet(url);
   }
-
   getSpokenLanguages() {
     const url = 'ynwConf/spokenLangs';
     return this.servicemeta.httpGet(url);
   }
-
   getSpecializations(domain, subdomain) {
     const url = 'ynwConf/specializations/' + domain + '/' + subdomain;
     return this.servicemeta.httpGet(url);
   }
-
-  changeProviderWaitlistStatus(waitlist_id, action , message = {}) {
+  changeProviderWaitlistStatus(waitlist_id, action, message = {}) {
     const url = 'provider/waitlist/' + waitlist_id + '/' + action;
     return this.servicemeta.httpPut(url, message);
   }
-
   getInvoicesWithStatus(status = 'NotPaid', filter = {}) {
     const url = 'provider/license/invoices/' + status + '/status';
-    return this.servicemeta.httpGet(url, null , filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-
   getInvoicesWithStatusCount(status = 'NotPaid', filter = {}) {
     const url = 'provider/license/invoices/' + status + '/count';
-    return this.servicemeta.httpGet(url, null , filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-
   getLicenseSubscription() {
     const url = 'provider/license/getSubscription';
     return this.servicemeta.httpGet(url);
   }
-
   changeLicenseSubscription(type) {
     const url = 'provider/license/changeSubscription/' + type;
     return this.servicemeta.httpPut(url);
   }
-
-
   getInvoice(uuid) {
-    const url = 'provider/license/invoices/' + uuid ;
+    const url = 'provider/license/invoices/' + uuid;
     return this.servicemeta.httpGet(url);
   }
-
   getPaymentModes() {
     const url = 'provider/payment/modes/subscription';
     return this.servicemeta.httpGet(url);
   }
-
   getPaymentDetail(uuid) {
-    const url = 'provider/payment/' + uuid ;
+    const url = 'provider/payment/' + uuid;
     return this.servicemeta.httpGet(url);
   }
-
   getProviderWaitlistDetailById(uuid) {
-    const url = 'provider/waitlist/' + uuid ;
+    const url = 'provider/waitlist/' + uuid;
     return this.servicemeta.httpGet(url);
   }
-
   addProviderWaitlistNote(uuid, message) {
     const url = 'provider/waitlist/notes/' + uuid;
     return this.servicemeta.httpPost(url, message);
   }
-
   getProviderWaitlistNotes(consumer_id) {
     const url = 'provider/waitlist/' + consumer_id + '/notes';
     return this.servicemeta.httpGet(url);
   }
-
   getWaitlistBill(uuid) {
-    const url = 'provider/bill/' + uuid ;
+    const url = 'provider/bill/' + uuid;
     return this.servicemeta.httpGet(url);
   }
-
   createWaitlistBill(data) {
-    const url = 'provider/bill/'  ;
+    const url = 'provider/bill/';
     return this.servicemeta.httpPost(url, data);
   }
-
   updateWaitlistBill(data) {
-    const url = 'provider/bill/'  ;
+    const url = 'provider/bill/';
     return this.servicemeta.httpPut(url, data);
   }
   getTaxpercentage() {
@@ -628,31 +706,25 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
   }
   settleWaitlistBill(uuid) {
-    const url = 'provider/bill/settlebill/' + uuid ;
+    const url = 'provider/bill/settlebill/' + uuid;
     return this.servicemeta.httpPut(url);
   }
-
   emailWaitlistBill(uuid) {
-    const url = 'provider/bill/email/' + uuid ;
+    const url = 'provider/bill/email/' + uuid;
     return this.servicemeta.httpPost(url);
   }
-
-
   getProviderTax() {
-    const url = 'provider/payment/tax' ;
+    const url = 'provider/payment/tax';
     return this.servicemeta.httpGet(url);
   }
-
   getProviderWaitlistHistroy(uuid) {
-    const url = 'provider/waitlist/states/' + uuid ;
+    const url = 'provider/waitlist/states/' + uuid;
     return this.servicemeta.httpGet(url);
   }
-
   acceptPayment(data) {
     const url = 'provider/bill/acceptPayment';
     return this.servicemeta.httpPost(url, data);
   }
-
   providerPayment(data) {
     const url = 'provider/payment';
     return this.servicemeta.httpPost(url, data);
@@ -660,28 +732,22 @@ export class ProviderServices {
   acknowledgeAlert(id) {
     return this.servicemeta.httpPut('provider/alerts/' + id);
   }
-
   getProviderCustomers(filter = {}) {
-    const url = 'provider/waitlist/consumers' ;
+    const url = 'provider/waitlist/consumers';
     return this.servicemeta.httpGet(url, null, filter);
   }
-
   getProviderCustomersCount(filter = {}) {
-    const url = 'provider/waitlist/consumers/count' ;
+    const url = 'provider/waitlist/consumers/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
-
   createProviderCustomer(data) {
     const url = 'provider/customers';
     return this.servicemeta.httpPost(url, data);
   }
-
   getIdTerminologies(domain, subDomain) {
-
     const url = 'ynwConf/terminologies/' + domain + '/' + subDomain;
     return this.servicemeta.httpGet(url);
   }
-
   domainSubdomainSettings(domain, subDomain) {
     const url = 'ynwConf/settings/' + domain + '/' + subDomain;
     return this.servicemeta.httpGet(url);
