@@ -35,6 +35,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
   api_success = null;
   bill_data = null;
   message = '';
+  bname;
   today = new Date();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   timeFormat = 'h:mm a';
@@ -45,7 +46,8 @@ export class ViewBillComponent implements OnInit, OnChanges {
   pre_payment_log: any = [];
   payment_options: any = [];
   close_msg = 'close';
-
+  showPaidlist = false;
+  showHeading = true;
   selectedItems = [];
   cart = {
     'items': [],
@@ -61,6 +63,10 @@ export class ViewBillComponent implements OnInit, OnChanges {
   Pipe_disp_date = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   billdate = '';
   billtime = '';
+  subtotalwithouttax = 0;
+  taxtotal = 0;
+  taxabletotal = 0;
+  taxpercentage = 0;
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
     public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
@@ -81,9 +87,48 @@ export class ViewBillComponent implements OnInit, OnChanges {
     // this.getTaxDetails();
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
+    // console.log('billdata', this.bill_data);
+
+    if (this.bill_data['passedProvname']) {
+      this.bname = this.bill_data['passedProvname'];
+    } else {
+      const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
+      if (bdetails) {
+        this.bname = bdetails.bn || '';
+      }
+    }
+
     this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
     this.bill_data.amount_to_pay = this.bill_data.netRate -  this.bill_data.totalAmountPaid;
+
+    if (this.bill_data.service.length) {
+      for (let i = 0; i < this.bill_data.service.length; i++) {
+        this.bill_data.service[i]['rowtotal'] = (this.bill_data.service[i].price * this.bill_data.service[i].quantity);
+        const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - this.bill_data.service[i].discountValue - this.bill_data.service[i].couponValue;
+        this.subtotalwithouttax += rtotal;
+        if (this.bill_data.service[i].GSTpercentage > 0) {
+          this.taxpercentage = this.bill_data.service[i].GSTpercentage;
+          this.taxtotal += ((this.bill_data.service[i].price * this.bill_data.service[i].quantity) - (this.bill_data.service[i].discountValue + this.bill_data.service[i].couponValue) * this.bill_data.service[i].GSTpercentage / 100);
+          this.taxabletotal += rtotal;
+        }
+      }
+    }
+
+    if (this.bill_data.items.length) {
+      for (let i = 0; i < this.bill_data.items.length; i++) {
+        this.bill_data.items[i]['rowtotal'] = (this.bill_data.items[i].price * this.bill_data.items[i].quantity);
+        const rtotal = (this.bill_data.items[i].price * this.bill_data.items[i].quantity) - this.bill_data.items[i].discountValue - this.bill_data.items[i].couponValue;
+        this.subtotalwithouttax += rtotal;
+        if (this.bill_data.items[i].GSTpercentage > 0) {
+          this.taxpercentage = this.bill_data.items[i].GSTpercentage;
+         // console.log('tax', this.bill_data.items[i].itemId, this.bill_data.items[i].GSTpercentage);
+          this.taxtotal += (((this.bill_data.items[i].price * this.bill_data.items[i].quantity) - ( this.bill_data.items[i].discountValue + this.bill_data.items[i].couponValue)) * this.bill_data.items[i].GSTpercentage / 100);
+          this.taxabletotal += rtotal;
+        }
+      }
+    }
+    // console.log('taxable total', this.taxabletotal);
 
     if ( !this.checkin) {
       setTimeout(() => {
@@ -213,7 +258,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
       .subscribe(
         data => {
           this.pre_payment_log = data;
-          console.log('payment log', this.pre_payment_log);
+          // console.log('payment log', this.pre_payment_log);
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
@@ -221,16 +266,38 @@ export class ViewBillComponent implements OnInit, OnChanges {
       );
 
   }
-  stringtoDate(dt) {
+  stringtoDate(dt, mod) {
     let dtsarr;
     if (dt) {
       // const dts = new Date(dt);
       dtsarr = dt.split(' ');
       const dtarr = dtsarr[0].split('-');
-      return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+      let retval = '';
+      if (mod === 'all') {
+        retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+      } else if (mod === 'date') {
+        retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
+      } else if (mod === 'time') {
+        retval = dtsarr[1] + ' ' + dtsarr[2];
+      }
+
+      return retval;
+      // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
     } else {
       return;
     }
+  }
+  showpaidSection() {
+    if (this.showPaidlist) {
+      this.showPaidlist = false;
+    } else {
+      this.showPaidlist = true;
+    }
+  }
+  printMe() {
+    // this.showHeading = false;
+    window.print();
+    // this.showHeading = true;
   }
 
 }

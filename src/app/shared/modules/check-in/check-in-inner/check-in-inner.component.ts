@@ -366,6 +366,7 @@ export class CheckInInnerComponent implements OnInit {
             case 'settings':
               this.settingsjson = res;
               this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+              // console.log('settings', this.settingsjson);
               /*this.maxsize = this.settingsjson.maxPartySize;
               if (this.maxsize === undefined) {
                 this.maxsize = 1;

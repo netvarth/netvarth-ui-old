@@ -83,7 +83,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // or show a modal
             } else if (err.status === 0) {
               console.log( 'NETWORK ERROR');
-              this.shared_functions.openSnackBar(Messages.API_ERROR, {'panelClass': 'snackbarerror'});
+              this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, {'panelClass': 'snackbarerror'});
             }
           }
         });

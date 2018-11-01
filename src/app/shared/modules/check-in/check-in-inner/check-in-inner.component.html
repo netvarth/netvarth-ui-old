@@ -189,11 +189,11 @@
                     <div class="showDetService" *ngIf="sel_ser_det.name">
                     <strong>{{checkinLabel}} for</strong>  <span class='selsername'>{{ sel_ser_det.name }}</span>
                     </div>
-                    <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                    <div class="queue-head">
+                    <div class="queue-waitingdiv" >
+                    <div class="queue-head" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                         <strong>Today, {{estimateCaption}}:</strong> <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
                     </div>
-                    <div class="queue-head">
+                    <div class="queue-head" *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc'">
                         <strong>Persons Ahead:</strong> <span class="queue-avail-date">{{sel_queue_personaahead}}</span>
                     </div>
                     </div>

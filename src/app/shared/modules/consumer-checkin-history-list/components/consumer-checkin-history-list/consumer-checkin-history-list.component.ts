@@ -158,9 +158,11 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
 
   viewBill(checkin, bill_data) {
     // console.log('viewbill');
+    bill_data['passedProvname'] = checkin['provider']['businessName'];
     this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'width-100'],
+      // panelClass: ['commonpopupmainclass', 'billpopup'],
+      panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'billpopup'],
       disableClose: true,
       autoFocus: true,
       data: {

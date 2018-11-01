@@ -734,7 +734,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
  getWaitlistBill(waitlist) {
-
+  // console.log('waitlist', waitlist);
     this.consumer_services.getWaitlistBill(waitlist.ynwUuid)
     .subscribe(
       data => {
@@ -748,9 +748,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   viewBill(checkin, bill_data) {
+    bill_data['passedProvname'] = checkin['provider']['businessName'];
     this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'width-100'],
+      panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'billpopup'],
       disableClose: true,
       data: {
         checkin: checkin,

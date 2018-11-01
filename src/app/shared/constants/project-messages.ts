@@ -46,6 +46,7 @@ export const Messages = {
 
   // Common
   'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
+  'NETWORK_ERROR': 'Network error. Please check your internet connectivity',
 
   // Business Profile
   'BPROFILE_CREATED' : 'Business Profile created successfully',

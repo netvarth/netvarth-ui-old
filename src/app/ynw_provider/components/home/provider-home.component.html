@@ -375,7 +375,7 @@
                                   </td>
                                   <!-- <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td> -->
-                                  <td data-title="{{customer_label | capitalizeFirst}} Note" class="cnote" *ngIf="time_type ==1 && !small_device_display">
+                                  <td class="cnote" *ngIf="time_type ==1 && !small_device_display">
                                     <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>

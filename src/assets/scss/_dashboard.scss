@@ -1241,7 +1241,7 @@ footer {
             }
 
             .pubs {
-                margin-bottom: 30px;
+                /*margin-bottom: 30px;*/
 
                 .wbox {
                     p {
@@ -1249,6 +1249,33 @@ footer {
 
                         &:last-child {
                             margin-bottom: 0;
+                        }
+                    }
+                }
+                
+                h2 {
+                    margin-bottom: 20px;
+                    font-size: 1.125rem;
+                    font-weight: 500;
+                    display: flex;
+
+                    .helprighticon {
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 5px;
+                        cursor: pointer;
+                        @include transition(all 300ms);
+
+                        i {
+                            width: 20px;
+                            height: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        &:hover {
+                            color: $linkblue;
                         }
                     }
                 }

@@ -42,6 +42,7 @@
 
     <mat-form-field  *ngSwitchCase="'dropdown'" >
       <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"  [formControlName]="question.key" >
+        <mat-option [value]= "''">- Select One-</mat-option>
         <mat-option *ngFor="let opt of question.options;first as isFirst"  [value]="opt.name" >
             {{opt.displayName}}
         </mat-option>
@@ -51,6 +52,7 @@
 
     <mat-form-field  *ngSwitchCase="'month_field'" >
       <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"  [formControlName]="question.key" >
+        <mat-option [value]= "''">- Select One-</mat-option>
         <mat-option *ngFor="let opt of question.options;first as isFirst"  [value]="opt.name" >
             {{opt.displayName}}
         </mat-option>
@@ -60,6 +62,7 @@
 
     <mat-form-field  *ngSwitchCase="'year_field'" >
       <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"  [formControlName]="question.key" >
+        <mat-option [value]= "''">- Select One-</mat-option>
         <mat-option *ngFor="let opt of question.options;first as isFirst"  [value]="opt.name" >
             {{opt.displayName}}
         </mat-option>

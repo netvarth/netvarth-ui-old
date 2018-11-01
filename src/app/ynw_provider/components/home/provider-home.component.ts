@@ -413,7 +413,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         // this.all_queues = data;
 
         const Cqueues = data;
-        // console.log('cqueue', Cqueues);
+        console.log('cqueue', Cqueues);
         this.all_queues = [];
         let indx = 0;
 
@@ -1088,7 +1088,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     // console.log('add bill', bill_data);
     this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'width-100'],
+      panelClass: ['commonpopupmainclass', 'billpopup'],
       disableClose: true,
       data: {
         checkin: checkin,
@@ -1107,7 +1107,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     // console.log('billdata', bill_data);
     this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'width-100'],
+      panelClass: ['commonpopupmainclass', 'billpopup'],
       disableClose: true,
       data: {
         checkin: checkin,

@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -43,6 +44,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   totdisc_val = 0;
   totcoup_val = 0;
   isServiceBillable = true;
+  showAddItemsec = false;
+  showmainDiscSelsec = false;
+  taxabletotal = 0;
+  tottaxvalue = 0;
+  totpaid = 0;
+  curSelItm = { indx: 0, typ: '', qty: 1};
+  bname;
+  showPaidlist = false;
   ItemServiceGroupOptions: Observable<ItemServiceGroup[]>;
   itemServicesGroup: ItemServiceGroup[] = [{
     'type' : 'Services',
@@ -58,9 +67,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     'items': [],
     'prepayment_amount' : 0,
     'sub_total': 0,
+    'sub_totalwithouttax': 0,
     'discount': '',
+    'discountamt': 0,
     'coupon': '',
-    'total': 0
+    'couponamt': 0,
+    'total': 0,
+    'totalwithouttax': 0
   };
   bill_load_complete = 0;
   item_service_tax: any = 0;
@@ -69,6 +82,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   customer_label = '';
   billdate = '';
   billtime = '';
+  gstnumber = '';
+  billnumber = '';
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
@@ -77,11 +92,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+    @Inject(DOCUMENT) public document
 
     ) {
         this.checkin = this.data.checkin || null;
         this.bill_data = this.data.bill_data || [];
-        // console.log(this.checkin);
+        // console.log('data' , this.bill_data);
         if ( !this.checkin) {
           setTimeout(() => {
             this.dialogRef.close('error');
@@ -144,11 +160,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
      }
 
   ngOnInit() {
-     this.ItemServiceGroupOptions = this.itemServiceSearch.valueChanges
-     .pipe(
-       startWith(''),
-       map(val => this.filterGroup(val))
-     );
+    const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
+    if (bdetails) {
+      this.bname = bdetails.bn || '';
+    }
+    //  this.ItemServiceGroupOptions = this.itemServiceSearch.valueChanges
+    //  .pipe(
+    //    startWith(''),
+    //    map(val => this.filterGroup(val))
+    //  );
 
   }
   getBillDateandTime() {
@@ -176,6 +196,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       // const hour = (this.today.getHours() < 12) ? this.today.getHours() : this.today.getHours() - 12;
       // this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
 
+    }
+    if (this.bill_data.hasOwnProperty('gstNumber')) {
+      this.gstnumber = this.bill_data.gstNumber;
+      // console.log('gst', this.gstnumber);
+    }
+    if (this.bill_data.hasOwnProperty('id')) {
+      this.billnumber = this.bill_data.id;
+      // console.log('gst', this.billnumber);
     }
   }
 
@@ -209,7 +237,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       },
       error => {
         if (error.status === 422) { this.bill_data = [];
-        console.log('reached here'); }
+        // console.log('reached here');
+      }
         this.bill_load_complete = 1;
       },
       () => {
@@ -363,16 +392,31 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   }
 
+  keyupitemServiceSelected(ev, type, indx) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) {
+      this.itemServiceSelected(type, indx);
+    }
+  }
+
   itemServiceSelected(type, index) {
 
-    this.itemServiceSearch.reset();
-    this.item_service_search.nativeElement.blur();
-
+    // this.itemServiceSearch.reset();
+    // this.item_service_search.nativeElement.blur();
+    // console.log('typ', type, index);
+    this.curSelItm = { indx: 0, typ: '', qty: 1};
     if (type === 'Services') {
-      this.addCartItem(this.services[index], 'Services');
+      this.curSelItm.indx = this.services[index];
+      this.curSelItm.typ = 'Services';
+      this.curSelItm.qty = 1;
+      // this.addCartItem(this.services[index], 'Services');
     } else if (type === 'Items') {
-      this.addCartItem(this.items[index], 'Items');
+      // this.addCartItem(this.items[index], 'Items');
+      this.curSelItm.indx = this.items[index];
+      this.curSelItm.typ = 'Items';
+      this.curSelItm.qty = 1;
     }
+    // console.log('selected item', this.curSelItm);
 
   }
 
@@ -397,6 +441,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }
       this.calculateTotal();
     }
+    // console.log('cart', this.cart);
   }
 
   pushCartItem(item, type) {
@@ -416,37 +461,49 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const tax = (item.taxable) ? this.item_service_tax : 0;
     if (foundid !== -1) { // case if item / service already exists in the array, then just increment the qty
       if (type !== 'Services') {
-        this.cart.items[foundid].quantity += 1;
+        this.cart.items[foundid].quantity = Number(this.cart.items[foundid].quantity) + Number(this.curSelItm.qty);
       }
     } else {
       switch (type) {
         case 'Services' :  selected_item = {
                                   'name' : item.name,
                                   'itemId': item.id,
-                                  'quantity': 1,
+                                  // 'quantity': 1,
+                                  'quantity': Number(this.curSelItm.qty),
                                   'price': item.totalAmount,
+                                  'rowtotal': item.totalAmount,
                                   'subtotal': item.totalAmount,
+                                  'subtotalwithouttax': item.totalAmount,
                                   'discount': '',
+                                  'discountamt': '',
                                   'coupon': '',
+                                  'couponamt': '',
                                   'gst_percentage': tax / 2,
                                   'cgst_percentage': tax / 2,
                                   'type' : type,
-                                  'taxable':  item.taxable
+                                  'taxable':  item.taxable,
+                                  'showdisccoup': false
                                 };
                                 break;
 
         case 'Items' :  selected_item = {
                                   'name' : item.displayName,
                                   'itemId': item.itemId,
-                                  'quantity': 1,
+                                  // 'quantity': 1,
+                                  'quantity': Number(this.curSelItm.qty),
                                   'price': item.price,
+                                  'rowtotal': item.price,
                                   'subtotal': item.price,
+                                  'subtotalwithouttax': item.price,
                                   'discount': '',
+                                  'discountamt': '',
                                   'coupon': '',
+                                  'couponamt': '',
                                   'gst_percentage': tax / 2,
                                   'cgst_percentage': tax / 2,
                                   'type' : type,
-                                  'taxable':  item.taxable
+                                  'taxable':  item.taxable,
+                                  'showdisccoup': false
                                 };
                                 break;
       }
@@ -459,16 +516,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   deleteCartItem(i) {
+    this.hideAddItem();
     this.cart.items.splice(i, 1);
     this.selectedItems.splice(i, 1);
     this.calculateTotal();
   }
 
   itemDiscountChange(i) {
+    this.cart['items'][i]['discountamt'] = 0;
     this.calculateItemTotal(i);
   }
 
   itemCouponChange(i) {
+    this.cart['items'][i]['couponamt'] = 0;
     this.calculateItemTotal(i);
   }
 
@@ -494,7 +554,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   calculateItemTotal(i) {
+    this.cart['items'][i]['rowtotal'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
     this.cart['items'][i]['subtotal'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
+    this.cart['items'][i]['subtotalwithouttax'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
     this.reduceItemDiscount(i);
     this.reduceItemCoupon(i);
     if (this.cart['items'][i]['taxable']) {
@@ -508,7 +570,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     if (this.cart['items'][i].discount !== '' && this.discounts[this.cart['items'][i].discount]) {
       const discount = this.discounts[this.cart['items'][i].discount];
-      this.cart['items'][i].subtotal = this.discCalculation(discount, this.cart['items'][i].subtotal);
+      this.cart['items'][i].subtotal = this.discCalculation(discount, 'discount', this.cart['items'][i].subtotal, '' , -1);
+      this.cart['items'][i].subtotalwithouttax = this.discCalculation(discount, 'discount', this.cart['items'][i].subtotalwithouttax, '', i);
     }
 
   }
@@ -521,7 +584,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       discount.discValue = discount.amount;
       // coupon dont have discValue field
       // but we need it because discount n coupon used same function
-      this.cart['items'][i].subtotal = this.discCalculation(discount, this.cart['items'][i].subtotal);
+      this.cart['items'][i].subtotal = this.discCalculation(discount, 'coupon', this.cart['items'][i].subtotal, '' , -1);
+      this.cart['items'][i].subtotalwithouttax = this.discCalculation(discount, 'coupon', this.cart['items'][i].subtotalwithouttax, '', i);
     }
 
   }
@@ -539,21 +603,36 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   calculateTotal() {
     let total = 0;
+    let totalwithouttax = 0;
+    this.taxabletotal = 0;
     for ( const item of this.cart.items) {
 
       if (item.subtotal && item.subtotal > 0) {
         total = total + item.subtotal;
+        totalwithouttax = totalwithouttax + item.subtotalwithouttax;
+        if (item.taxable) {
+          // console.log('taxable', item);
+          this.taxabletotal += item.subtotalwithouttax;
+        }
       }
-
+    }
+    // console.log('edit taxable total', this.taxabletotal);
+    if (this.item_service_tax) {
+      this.tottaxvalue = this.taxabletotal * (this.item_service_tax / 100);
+    } else {
+      this.tottaxvalue = 0;
     }
 
     this.cart.sub_total = (total < 0 ) ? 0 : total;
+    this.cart.sub_totalwithouttax = (totalwithouttax < 0 ) ? 0 : totalwithouttax;
     this.cart.total = total;
+    this.cart.totalwithouttax = totalwithouttax;
+
     // console.log(this.cart.total );
     this.reduceDiscount();
     this.reduceCoupon();
     this.reducePrePaidAmount();
-    // console.log(this.cart.total );
+    // console.log('cart', this.cart);
 
   }
 
@@ -561,7 +640,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     if (this.cart.discount !== '' && this.discounts[this.cart.discount]) {
       const discount = this.discounts[this.cart.discount];
-      this.cart.total = this.discCalculation(discount, this.cart.sub_total, 'totdiscount');
+      this.cart.total = this.discCalculation(discount, 'discount', this.cart.sub_total, 'totdiscount', -1);
     } else {
       this.totdisc_val = 0;
     }
@@ -575,17 +654,26 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       discount.discValue = discount.amount;
       // coupon dont have discValue field
       // but we need it because discount n coupon used same function
-      this.cart.total = this.discCalculation(discount, this.cart.total, 'totcoupon');
+      this.cart.total = this.discCalculation(discount, 'coupon', this.cart.total, 'totcoupon', -1);
     } else {
       this.totcoup_val = 0;
     }
 
   }
 
-  discCalculation(discount, cal_total, granddisc?) {
+  discCalculation(discount, curtype, cal_total, granddisc?, indx?) {
     // console.log('grand disc', granddisc);
     if (discount.calculationType === 'Fixed') {
       const disc_value = (discount.discValue > 0) ? discount.discValue : 0;
+      if (indx !== -1) {
+        if (curtype === 'discount') {
+          this.cart['items'][indx]['discountamt'] = (disc_value <= cal_total) ? disc_value : cal_total;
+        } else if (curtype === 'coupon') {
+          this.cart['items'][indx]['couponamt'] = (disc_value <= cal_total) ? disc_value : cal_total;
+        }
+      } else {
+          // this.cart['items'][indx]['discountamt'] = 0;
+      }
       if (granddisc === 'totdiscount') {
         this.totdisc_val = disc_value;
       }
@@ -604,6 +692,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (granddisc === 'totcoupon') {
         this.totcoup_val = calcdisc;
       }
+      if (indx !== -1) {
+        if (curtype === 'discount') {
+          this.cart['items'][indx]['discountamt'] = (cal_total * disc_value / 100);
+        } else if (curtype === 'coupon') {
+          this.cart['items'][indx]['couponamt'] = (cal_total * disc_value / 100);
+        }
+      } else {
+        // this.cart['items'][indx]['discountamt'] = 0;
+      }
       const total = cal_total - ( cal_total * disc_value / 100);
       return (total > 0) ? total : 0;
     }
@@ -612,8 +709,18 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   reducePrePaidAmount() {
     let pre_total = 0;
     for (const pay of this.pre_payment_log) {
-      pre_total = pre_total + pay.amount;
+      if (pay.status === 'SUCCESS') {
+        pre_total = pre_total + pay.amount;
+        if (pay.refundDetails.length > 0) {
+                for (let j = 0; j < pay.refundDetails.length; j++) {
+                  if (pay.refundDetails[j].status === 'SUCCESS') {
+                    pre_total -= pay.refundDetails[j].amount;
+                  }
+                }
+              }
+      }
     } // console.log(pre_total);
+    this.totpaid = pre_total;
     this.cart.total = this.cart.total - pre_total;
     // console.log(this.cart.total);
     this.cart.total = (this.cart.total > 0) ? this.cart.total : 0;
@@ -707,6 +814,20 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.pre_payment_log = data;
+          // console.log('paid', this.pre_payment_log);
+          // for (let i = 0; i < this.pre_payment_log.length; i++) {
+          //   // if (this.pre_payment_log[i].status === 'SUCCESS')  {
+          //     this.totpaid += this.pre_payment_log[i].amount;
+          //     if (this.pre_payment_log[i].refundDetails.length > 0) {
+          //       for (let j = 0; j < this.pre_payment_log[i].refundDetails.length; j++) {
+          //         if (this.pre_payment_log[i].refundDetails[j].status === 'SUCCESS') {
+          //           // this.totpaid -= this.pre_payment_log[i].refundDetails[j].amount;
+          //         }
+          //       }
+          //     }
+          //  // }
+          // }
+          // console.log('tot paid', this.totpaid);
           resolve();
         },
         error => {
@@ -727,7 +848,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         // console.log(ob, service);
         if (ob.id === service.serviceId) {// console.log('here');
           let retid = this.pushCartItem(ob, 'Services');
-          console.log('retid', retid);
+          // console.log('retid', retid);
           if (retid === -1) {
             retid = this.cart.items.length - 1;
 
@@ -799,15 +920,88 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     });
     return index;
   }
-  stringtoDate(dt) {
+  stringtoDate(dt, mod) {
     let dtsarr;
     if (dt) {
       // const dts = new Date(dt);
       dtsarr = dt.split(' ');
       const dtarr = dtsarr[0].split('-');
-      return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+      let retval = '';
+      if (mod === 'all') {
+        retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+      } else if (mod === 'date') {
+        retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
+      } else if (mod === 'time') {
+        retval = dtsarr[1] + ' ' + dtsarr[2];
+      }
+
+      return retval;
     } else {
       return;
+    }
+  }
+
+  showAddItem() {
+    this.showAddItemsec = true;
+    this.ItemServiceGroupOptions = this.itemServiceSearch.valueChanges
+     .pipe(
+       startWith(''),
+       map(val => this.filterGroup(val))
+     );
+     // console.log('reached here');
+     setTimeout(() => {
+      /*if (this.document.getElementById('itemservicesearch')) {
+        console.log('focus here');
+        this.document.getElementById('itemservicesearch').focus();
+      }*/
+      this.item_service_search.nativeElement.focus();
+    }, 500);
+  }
+  hideAddItem() {
+    this.showAddItemsec = false;
+    this.itemServiceSearch.reset();
+    this.curSelItm = { indx: 0, typ: '', qty: 1};
+  }
+  addItem() {
+    // console.log('clicked add item', this.curSelItm);
+    if (isNaN(this.curSelItm.qty)) {
+      this.curSelItm.qty = 1;
+    }
+    this.addCartItem(this.curSelItm.indx, this.curSelItm.typ);
+    this.itemServiceSearch.reset();
+    this.curSelItm = { indx: 0, typ: '', qty: 1};
+    // this.item_service_search.nativeElement.blur();
+  }
+  handleTotalDiscSec() {
+    if (this.showmainDiscSelsec) {
+      this.showmainDiscSelsec = false;
+    } else {
+      this.showmainDiscSelsec = true;
+    }
+  }
+  itemDiscCoupSec(indx) {
+    // console.log('here', this.cart.items);
+    if (this.cart.items[indx]) {
+      if (this.cart.items[indx].showdisccoup) {
+        this.cart.items[indx].showdisccoup = false;
+      } else {
+        this.cart.items[indx].showdisccoup = true;
+      }
+    }
+  }
+  showpaidSection() {
+    if (this.showPaidlist) {
+      this.showPaidlist = false;
+    } else {
+      this.showPaidlist = true;
+    }
+  }
+  blurQty(val, itm) {
+    if (isNaN(val)) {
+      itm.qty = 1;
+    } else {
+      const vv = parseInt(val, 10);
+      itm.qty = vv;
     }
   }
 
