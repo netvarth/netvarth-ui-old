@@ -1,106 +1,142 @@
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
 <section>
     <div class="content comn-cls">
         <div class="container">
-           
             <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid">
-                    <mat-tab label="My Coupons">
-                            <div class="no-dta" *ngIf="coupon_list.length ==0 && query_executed == true">
-                                    <p>{{emptyMsg}}</p>
-                                    <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
-                            </div>
-            <div class="w-dta" *ngIf="coupon_list.length>0">
+                <mat-tab label="Jaldee coupons">
+                    <!-- <div class="no-dta" *ngIf="jaldeecoupon_list.length == 0 && query_executed == true">
+                                        <p>No Jaldee coupons exists</p>
+                                        <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
+                                </div>
+                                <div class="w-dta" *ngIf="jaldeecoupon_list.length>0"> -->
                     <div class="row">
                         <div class="card">
                             <div class="copy">
+                                <div class="n-loc">
+                                    <span class="add-nloc cs-btn bt3" (click)="reports()">Reports</span>
+                                </div>
                                 <div class="table-outer q-tbl">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Value</th>
-                                                <th><span class="addbt" (click)="addCoupons()"></span></th>                            
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr *ngFor="let coupon of coupon_list">
-                                                        <td data-title="Name" class="pointer-cursor" class="td1">{{coupon.name}}</td>
-                                                        <td data-title="Value" class="pointer-cursor" clas="td2">{{(coupon.calculationType=='Percentage')? coupon.amount+'%': formatPrice(coupon.amount)}}</td>        
-                                                        <td class="action">
-                                                            <span class="mbt">
-                                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                                    <mat-icon>more_vert</mat-icon>
-                                                                </button>
-                                                                <mat-menu #menu="matMenu">
-                                                                    <button type="button" (click)="editCoupons(coupon)" mat-menu-item>
-                                                                        <i class="icon-edit"></i> 
-                                                                        Edit
-                                                                    </button>
-                                                                    <button type="button" (click)="doRemoveCoupons(coupon)" mat-menu-item>
-                                                                        <i class="icon-delete"></i> 
-                                                                        Delete
-                                                                    </button>
-                                                                </mat-menu>
-                                                            </span>
-
-                                                            <span class="mbt-mobile-show">
-                                                                    <button class="editcls" type="button" (click)="editCoupons(coupon)">Edit</button>
-                                                                    <button class="deletecls" type="button" (click)="doRemoveCoupons(coupon)">Delete</button>
-                                                            </span>
-                                                        </td>   
-                                                    </tr>
-                                        </tbody>
-                                    </table>
-                                    <span class="addbt d-block d-md-none" (click)="addCoupons()"></span>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Code</th>
+                                            <th>Valid From</th>
+                                            <th>Valid To</th>
+                                            <th>consumers# applied</th>
+                                            <th>providers# honored</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td data-title="name"  class="td2" class="pointer-cursor" (click)="showDetails(item.itemId)"><span >Coupon1</span>
+                                                </td>
+                                            <!-- <td data-title="Name" class="pointer-cursor" class="td1">Coupon1</td> -->
+                                            <td data-title="code" class="pointer-cursor" class="td1">ONAM565</td>
+                                            <td data-title="Valid From" class="pointer-cursor" class="td1">10/10/2018</td>
+                                            <td data-title="Valid To" class="pointer-cursor" class="td1">20/10/2018</td>
+                                            <td data-title="consumers# applied" class="pointer-cursor" class="td1">200</td>
+                                            <td data-title="providers# applied" class="pointer-cursor" class="td1">10</td>
+                                            <td data-title="Status" class="pointer-cursor" class="td1">
+                                                <mat-slide-toggle [(ngModel)]="couponstatus">
+                                                    <div *ngIf="couponstatus">
+                                                        Enabled
+                                                    </div>
+                                                    <div *ngIf="!couponstatus">
+                                                        Disabled
+                                                    </div>
+                                                </mat-slide-toggle>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-title="Name" class="pointer-cursor" class="td1">Coupon1</td>
+                                            <td data-title="code" class="pointer-cursor" class="td1">ONAM565</td>
+                                            <td data-title="Valid From" class="pointer-cursor" class="td1">10/10/2018</td>
+                                            <td data-title="Valid To" class="pointer-cursor" class="td1">20/10/2018</td>
+                                            <td data-title="consumers# applied" class="pointer-cursor" class="td1">200</td>
+                                            <td data-title="providers# applied" class="pointer-cursor" class="td1">10</td>
+                                            <td data-title="Status" class="pointer-cursor" class="td1">
+                                                <mat-slide-toggle [(ngModel)]="couponstatus">
+                                                    <div *ngIf="couponstatus">
+                                                        Enabled
+                                                    </div>
+                                                    <div *ngIf="!couponstatus">
+                                                        Disabled
+                                                    </div>
+                                                </mat-slide-toggle>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                                 </div>
                             </div>
-                        </div>    
-                    </div>
-                </div>
-                </mat-tab>
-
-               
-                <mat-tab label="Jaldee coupons">
-                        <div class="no-dta" *ngIf="jaldeecoupon_list.length == 0 && query_executed == true">
-                                <p>No Jaldee coupons exists</p>
-                                <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
                         </div>
-                        <div class="w-dta" *ngIf="jaldeecoupon_list.length>0"> 
-                                <div class="row">
-                                    <div class="card">
-                                        <div class="copy">
-                                            <div class="table-outer q-tbl">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Code</th>
-                                                            <th>Valid From</th>
-                                                            <th>Valid To</th>
-                                                            <th>No.of times consumers applied</th>
-                                                            <th>No.of times providers honored</th>
-                                                            <th>Status</th>
-                                                            <th><span class="addbt" (click)="addCoupons()"></span></th>                            
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                            
-                                                    </tbody>
-                                                </table>
-                                                <span class="addbt d-block d-md-none" (click)="addCoupons()"></span>
-                                            </div>
-                                        </div>
-                                    </div>    
-                                </div>
-                            </div>
+                    </div>
+                    <!--   </div>-->
                 </mat-tab>
 
-
-                </mat-tab-group>
-            </div>
-        </div>  
+                <mat-tab label="My Coupons">
+                    <div class="no-dta" *ngIf="coupon_list.length ==0 && query_executed == true">
+                        <p>{{emptyMsg}}</p>
+                        <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
+                    </div>
+                    <div class="w-dta" *ngIf="coupon_list.length>0">
+                        <div class="row">
+                            <div class="card">
+                                <div class="copy">
+                                    <div class="table-outer q-tbl">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Value</th>
+                                                    <th><span class="addbt" (click)="addCoupons()"></span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let coupon of coupon_list">
+                                                    <td data-title="Name" class="pointer-cursor" class="td1">{{coupon.name}}</td>
+                                                    <td data-title="Value" class="pointer-cursor" clas="td2">{{(coupon.calculationType=='Percentage')?
+                                                        coupon.amount+'%': formatPrice(coupon.amount)}}</td>
+                                                    <td class="action">
+                                                        <span class="mbt">
+                                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                <mat-icon>more_vert</mat-icon>
+                                                            </button>
+                                                            <mat-menu #menu="matMenu">
+                                                                <button type="button" (click)="editCoupons(coupon)"
+                                                                    mat-menu-item>
+                                                                    <i class="icon-edit"></i>
+                                                                    Edit
+                                                                </button>
+                                                                <button type="button" (click)="doRemoveCoupons(coupon)"
+                                                                    mat-menu-item>
+                                                                    <i class="icon-delete"></i>
+                                                                    Delete
+                                                                </button>
+                                                            </mat-menu>
+                                                        </span>
+                                                        <span class="mbt-mobile-show">
+                                                            <button class="editcls" type="button" (click)="editCoupons(coupon)">Edit</button>
+                                                            <button class="deletecls" type="button" (click)="doRemoveCoupons(coupon)">Delete</button>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <span class="addbt d-block d-md-none" (click)="addCoupons()"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
 </section>

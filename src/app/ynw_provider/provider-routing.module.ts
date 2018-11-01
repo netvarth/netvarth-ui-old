@@ -39,6 +39,7 @@ import { ProviderSystemAuditLogComponent } from './components/provider-system-au
 import { ProviderSystemAlertComponent } from './components/provider-system-alerts/provider-system-alerts.component';
 
 import { ProviderResolver } from './services/provider-resolver.service';
+import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
 
 const routes: Routes = [
     {path: '', component: ProviderComponent,
@@ -71,6 +72,10 @@ const routes: Routes = [
       {
         path: 'coupons',
         component: ProviderCouponsComponent
+      },
+      {
+        path: 'report',
+        component: ProviderReimburseReportComponent
       },
       {
         path: 'holidays',

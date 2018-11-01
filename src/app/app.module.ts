@@ -68,6 +68,7 @@ import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { CouponviewComponent } from './shared/components/couponview/couponview.component';
+import { ProviderReimburseReportComponent } from './ynw_provider/components/provider-reimburse-report/provider-reimburse-report.component';
 
 @NgModule({
   declarations: [

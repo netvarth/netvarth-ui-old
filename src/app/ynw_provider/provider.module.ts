@@ -117,6 +117,7 @@ import {Nl2BrPipeModule} from 'nl2br-pipe';
 
 import 'hammerjs';
 import 'mousetrap';
+import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
 
 @NgModule({
     imports: [
@@ -211,7 +212,8 @@ import 'mousetrap';
         ProviderCustomersComponent,
         AddProviderCustomerComponent,
         SearchProviderCustomerComponent,
-        ProviderRefundComponent
+        ProviderRefundComponent,
+        ProviderReimburseReportComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
