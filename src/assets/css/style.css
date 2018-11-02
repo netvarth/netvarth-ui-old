@@ -14636,7 +14636,8 @@ header.consumer {
                   @media (min-width: 768px) and (max-width: 991px) {
                     header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
                       height: 50px; } }
-                  header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus .mat-select-trigger .mat-select-value, header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus .mat-select-trigger .mat-select-arrow {
+                  header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus .mat-select-trigger .mat-select-value,
+                  header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select:focus .mat-select-trigger .mat-select-arrow {
                     color: #00aef2; }
                   header.consumer .tp-1 .tp-r .tp-srch .sa-dm .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select .mat-select-arrow {
                     color: #222223;
@@ -14912,7 +14913,9 @@ header.consumer {
         box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important ; }
         .content .c-outer .sidebar .rs-box .bx-block {
           border-bottom: 2px solid #f2f2f2; }
-          .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-keyboard-focused, .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-program-focused, .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
+          .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-keyboard-focused,
+          .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-program-focused,
+          .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
             background: #fff; }
           .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel {
             box-shadow: none;
@@ -15330,11 +15333,13 @@ header.consumer {
                       font-weight: 600; }
                   .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table {
                     margin-bottom: 0; }
-                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table th, .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table td {
+                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table th,
+                    .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table td {
                       padding: 5px;
                       font-size: .75rem; }
                       @media only screen and (max-width: 767px) {
-                        .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table th, .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table td {
+                        .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table th,
+                        .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .otr-elements .d-tbl .table td {
                           min-height: auto; } }
                 .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule {
                   margin-bottom: 15px; }
@@ -15798,24 +15803,41 @@ header.consumer {
                   align-items: center;
                   vertical-align: text-top;
                   margin-left: 5px; }
-              .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer {
+              .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer,
+              .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer {
                 margin-top: 10px; }
-                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails {
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones,
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails,
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones,
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails {
                   padding: 5px 0; }
-                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones .caption, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails .caption, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones .caption, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails .caption {
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones .caption,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails .caption,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones .caption,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails .caption {
                     display: block; }
-                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones .cvalue, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails .cvalue, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones .cvalue, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails .cvalue {
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones .cvalue,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails .cvalue,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones .cvalue,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails .cvalue {
                     font-weight: 600; }
-                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails {
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones,
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails,
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones,
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails {
                   position: relative;
                   padding-left: 24px; }
-                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones:before, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails:before, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones:before, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails:before {
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .phones:before,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails:before,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .phones:before,
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails:before {
                     font-family: "custom-ynw" !important;
                     content: "\22";
                     position: absolute;
                     left: 0;
                     top: 6px; }
-                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails:before, .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails:before {
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .phone-outer .emails:before,
+                .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp2 .clr .emails-phones-outer .email-outer .emails:before {
                   content: "\48"; }
             .content .c-outer .c-body .srlst.details .top-sect .tp-r {
               padding: 20px;
@@ -15867,7 +15889,8 @@ header.consumer {
                   list-style: none;
                   text-align: left;
                   margin-bottom: 25px; }
-                  .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"], .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"] {
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"],
+                  .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"] {
                     cursor: pointer;
                     padding-left: 30px;
                     -moz-transition: all 300ms;
@@ -15875,7 +15898,8 @@ header.consumer {
                     -webkit-transition: all 300ms;
                     transition: all 300ms;
                     position: relative; }
-                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"] .count, .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"] .count {
+                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"] .count,
+                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"] .count {
                       background: #00cc96;
                       color: #fff;
                       font-weight: 600;
@@ -15886,7 +15910,8 @@ header.consumer {
                       border-radius: 50px;
                       background-clip: padding-box;
                       /* stops bg color from leaking outside the border: */ }
-                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"]:before, .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"]:before {
+                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"]:before,
+                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"]:before {
                       position: absolute;
                       font-size: 1.125rem;
                       font-weight: 700;
@@ -15895,9 +15920,11 @@ header.consumer {
                       justify-content: center;
                       left: 0;
                       height: 20px; }
-                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"]:hover, .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"]:hover {
+                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"]:hover,
+                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"]:hover {
                       color: #00aef2; }
-                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"].icon-favourite-filled:before, .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"].icon-favourite-filled:before {
+                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"].icon-favourite-filled:before,
+                    .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"].icon-favourite-filled:before {
                       color: #f24949; }
                   .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li:last-child {
                     margin-bottom: 0; }
@@ -16384,7 +16411,8 @@ header.consumer {
                 .content .c-outer .c-body .location .bottom-sect .bt-l .c-checkin .ch-r .check-list li .service-for {
                   font-weight: 600;
                   color: #222223; }
-                .content .c-outer .c-body .location .bottom-sect .bt-l .c-checkin .ch-r .check-list li .schedule, .content .c-outer .c-body .location .bottom-sect .bt-l .c-checkin .ch-r .check-list li .est-time {
+                .content .c-outer .c-body .location .bottom-sect .bt-l .c-checkin .ch-r .check-list li .schedule,
+                .content .c-outer .c-body .location .bottom-sect .bt-l .c-checkin .ch-r .check-list li .est-time {
                   font-weight: 600;
                   color: #00cc96; }
                 .content .c-outer .c-body .location .bottom-sect .bt-l .c-checkin .ch-r .check-list li:before {
@@ -16480,7 +16508,8 @@ header.consumer {
               font-size: .875rem;
               text-align: left;
               font-weight: 500; }
-              .content .c-outer .c-body .search_paging .container .text-center .paginghead-outer .paging .paging-curr, .content .c-outer .c-body .search_paging .container .text-center .paginghead-outer .paging .paging-max {
+              .content .c-outer .c-body .search_paging .container .text-center .paginghead-outer .paging .paging-curr,
+              .content .c-outer .c-body .search_paging .container .text-center .paginghead-outer .paging .paging-max {
                 font-weight: 600;
                 display: inline-block;
                 text-align: center;
@@ -16551,9 +16580,411 @@ header.consumer {
     background-clip: padding-box;
     /* stops bg color from leaking outside the border: */
     padding: 0;
-    box-shadow: none !important;
-    background: transparent; }
-    .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+        /*&.c-checkins {
+            h2 {
+                font-size: 1.2rem;
+                padding: 20px;
+                border-bottom: 1px solid $cc-body;
+                margin-bottom: 0px;
+            }
+
+            .outer {
+                padding: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+
+                .list {
+                    display: flex;
+                    flex-direction: column;
+                    flex-basis: 32%;
+                    font-size: .875rem;
+                    margin-bottom: 20px;
+                    border: 2px solid $linkblue;
+                    @include transition(all 400ms);
+                    @include border-radius(10px);
+
+                    .header {
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        padding: 15px;
+                        background: transparent;
+                        margin-bottom: 0;
+                        border-bottom: 2px solid $linkblue;
+
+                        .lt {
+                            flex-grow: 1;
+
+                            @include respond-to(ynw-400) {
+                                flex-direction: column;
+                            }
+
+                            .title {
+                                margin-bottom: 5px;
+                                
+                                h3 {
+                                    font-size: 1rem;
+                                    font-weight: 600;
+                                    margin-bottom: 0px;
+                                    display: table;
+                                    cursor: pointer;
+                                    color: $linkblue;
+                                }
+                            }
+
+                            .location {
+
+                                @include respond-to(ynw-400) {
+                                    margin-left: 0;
+                                }
+
+                                .icon-location {
+                                    color: $cc-gray;
+                                    font-weight: 500;
+                                    padding-left: 16px;
+                                    @include align-icon;
+                                    cursor: pointer;
+                                    font-size: .875rem;
+                                }
+                            }
+                        }
+
+                        .rt {
+                            display: flex;
+
+                            .favourite {
+                                .icon-favourite-filled {
+                                    &:before {
+                                        color: $cc-red;
+                                        width: 20px;
+                                        height: 20px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        font-size: 1rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .details {
+                        display: flex;
+                        flex-direction: column;
+                        background: transparent;
+                        @include transition(all 400ms);
+
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
+                        }
+
+                        .lt {
+                            font-weight: 500;
+                            display: flex;
+                            flex-wrap: wrap;
+                            border-bottom: none;
+                            border-top: none;
+                            border-right: none;
+
+                            .lt0 {
+                                padding: 15px;
+                                border-top: none;
+                                border-left: none;
+                                flex-grow: 1;
+                                margin: 0;
+
+                                @include respond-to(ynw-575) {
+                                    padding: 10px;
+                                }
+
+                                .service,
+                                .forwhom,
+                                .time,
+                                .token,
+                                .persons {
+                                    font-weight: 600;
+
+                                    &.now {
+                                        color: $green;
+                                    }
+                                }
+
+                                .forwhom {
+                                    position: relative;
+                                    margin-right: 10px;
+
+                                    &:after {
+                                        position: absolute;
+                                        content: ",";
+                                        right: -5px;
+                                    }
+
+                                    &:last-child {
+                                        &:after {
+                                            display: none;
+                                        }
+                                    }
+                                }
+
+                                .token,
+                                .persons {
+                                    padding-left: 10px;
+                                    position: relative;
+
+                                    &:before {
+                                        position: absolute;
+                                        content: ":";
+                                        left: 0;
+                                    }
+                                }
+
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
+                            }
+                        }
+
+                        .rt {
+                            border-top: 2px solid $cc-body;
+                            display: flex;
+
+                            .controls {
+                                margin: 0;
+                                margin-left: auto;
+                                padding: 0 10px;
+                                display: flex;
+                                flex-direction: column;
+                                flex-direction: row;
+                                justify-content: flex-end;
+
+                                @include respond-to(ynw-767) {
+                                    margin-left: 0;
+                                }
+
+                                @include respond-to(ynw-575) {
+                                    justify-content: flex-start;
+                                    flex-wrap: wrap;
+                                    flex-direction: row;
+                                }
+
+                                li {
+                                    list-style: none;
+                                    margin: 0;
+                                    font-weight: 500;
+                                    display: flex;
+                                    align-items: center;
+
+                                    span {
+                                        padding: 10px;
+                                        position: relative;
+                                        padding-left: 25px;
+                                        padding-right: 10px;
+                                        cursor: pointer;
+                                        @include transition(all 300ms);
+                                        color: $linkblack;
+
+                                        @include respond-to(ynw-575) {
+                                            padding: 5px;
+                                            padding-left: 25px;
+                                            padding-right: 10px;
+                                        }
+
+                                        &:before {
+                                            position: absolute;
+                                            content: "";
+                                            left: 5px;
+                                            top: 50%;
+                                            margin-top: -8px;
+                                            @include font-custom;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            width: 16px;
+                                            height: 16px;
+                                        }
+
+                                        &:hover {
+                                            color: $linkblue;
+                                        }
+
+                                        &.message {
+                                            &:before {
+                                                content: "\53";
+                                            }
+                                        }
+
+                                        &.view-bill {
+                                            &:before {
+                                                content: "\4f";
+                                            }
+                                        }
+
+                                        &.rate-service {
+                                            &:before {
+                                                content: "\3b";
+                                            }
+
+                                            &:hover {
+                                                &:before {
+                                                    content: "\3c";
+                                                    color: $cc-warning;
+                                                }
+                                            }
+
+                                            &.rated {
+                                                &:before {
+                                                    content: "\3c";
+                                                    color: $cc-warning;
+                                                }
+                                            }
+                                        }
+
+                                        &.add-fav {
+                                            &:before {
+                                                content: "\26";
+                                            }
+
+                                            &:hover {
+                                                &:before {
+                                                    content: "\27";
+                                                    color: $cc-red;
+                                                }
+                                            }
+                                        }
+
+                                        &.cancel {
+                                            @include align-icon;
+
+                                            &:before {
+                                                content: "\69";
+                                                font-size: .65rem;
+                                                height: 18px;
+                                            }
+                                        }
+                                    }
+
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                    }
+                                }
+                            }
+
+                            .started-label,
+                            .done-label {
+                                color: $cc-red;
+                                padding: 10px 0px 10px 12px;
+                                font-size: .65rem;
+                                line-height: 1.2rem;
+                                font-weight: 600;
+                                margin-left: 15px;
+                                letter-spacing: .5px;
+                                @include border-radius(20px);
+                                position: relative;
+                                align-self: center;
+
+                                @include respond-to(ynw-400) {
+                                    margin-left: 10px;
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    width: 6px;
+                                    height: 6px;
+                                    background: $cc-red;
+                                    content: "";
+                                    left: 0;
+                                    top: 50%;
+                                    margin-top: -4px;
+                                    @include border-radius(20px);
+                                }
+                            }
+
+                            .started-label {
+                                color: $start;
+
+                                &:before {
+                                    background: $start;
+                                }
+                            }
+
+                            .done-label {
+                                color: $done;
+
+                                &:before {
+                                    background: $done;
+                                }
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    &.cancelled {
+                        .details {
+                            .rt {
+                                display: flex;
+
+                                .cancel-label,
+                                .started-label,
+                                .done-label {
+                                    color: $cc-red;
+                                    padding: 10px 0px 10px 12px;
+                                    font-size: .65rem;
+                                    line-height: 1.2rem;
+                                    font-weight: 600;
+                                    margin-left: 15px;
+                                    letter-spacing: .5px;
+                                    @include border-radius(20px);
+                                    position: relative;
+
+                                    @include respond-to(ynw-400) {
+                                        margin-left: 10px;
+                                    }
+
+                                    &:before {
+                                        position: absolute;
+                                        width: 6px;
+                                        height: 6px;
+                                        background: $cc-red;
+                                        content: "";
+                                        left: 0;
+                                        top: 50%;
+                                        margin-top: -4px;
+                                        @include border-radius(20px);
+                                    }
+                                }
+
+                                .started-label {
+                                    color: $start;
+
+                                    &:before {
+                                        background: $start;
+                                    }
+                                }
+
+                                .done-label {
+                                    color: $done;
+
+                                    &:before {
+                                        background: $done;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .1));
+                    }
+                }
+            }
+        }*/ }
+    .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused,
+    .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused,
+    .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
       background: transparent; }
     .consumer-dash .card .mat-accordion .mat-expansion-panel {
       box-shadow: none !important;
@@ -16698,13 +17129,11 @@ header.consumer {
           font-weight: 500;
           display: flex;
           flex-wrap: wrap;
-          /*border: 1px solid $cc-body;*/
           border-bottom: none;
           border-top: none;
           border-right: none; }
           .consumer-dash .card .outer .list .details .lt .lt0 {
             padding: 15px;
-            /*border: 1px solid $cc-body;*/
             border-top: none;
             border-left: none;
             flex-grow: 1;
@@ -16712,9 +17141,17 @@ header.consumer {
             @media only screen and (max-width: 575px) {
               .consumer-dash .card .outer .list .details .lt .lt0 {
                 padding: 10px; } }
-            .consumer-dash .card .outer .list .details .lt .lt0 .service, .consumer-dash .card .outer .list .details .lt .lt0 .forwhom, .consumer-dash .card .outer .list .details .lt .lt0 .time, .consumer-dash .card .outer .list .details .lt .lt0 .token, .consumer-dash .card .outer .list .details .lt .lt0 .persons {
+            .consumer-dash .card .outer .list .details .lt .lt0 .service,
+            .consumer-dash .card .outer .list .details .lt .lt0 .forwhom,
+            .consumer-dash .card .outer .list .details .lt .lt0 .time,
+            .consumer-dash .card .outer .list .details .lt .lt0 .token,
+            .consumer-dash .card .outer .list .details .lt .lt0 .persons {
               font-weight: 600; }
-              .consumer-dash .card .outer .list .details .lt .lt0 .service.now, .consumer-dash .card .outer .list .details .lt .lt0 .forwhom.now, .consumer-dash .card .outer .list .details .lt .lt0 .time.now, .consumer-dash .card .outer .list .details .lt .lt0 .token.now, .consumer-dash .card .outer .list .details .lt .lt0 .persons.now {
+              .consumer-dash .card .outer .list .details .lt .lt0 .service.now,
+              .consumer-dash .card .outer .list .details .lt .lt0 .forwhom.now,
+              .consumer-dash .card .outer .list .details .lt .lt0 .time.now,
+              .consumer-dash .card .outer .list .details .lt .lt0 .token.now,
+              .consumer-dash .card .outer .list .details .lt .lt0 .persons.now {
                 color: #00cc96; }
             .consumer-dash .card .outer .list .details .lt .lt0 .forwhom {
               position: relative;
@@ -16725,10 +17162,12 @@ header.consumer {
                 right: -5px; }
               .consumer-dash .card .outer .list .details .lt .lt0 .forwhom:last-child:after {
                 display: none; }
-            .consumer-dash .card .outer .list .details .lt .lt0 .token, .consumer-dash .card .outer .list .details .lt .lt0 .persons {
+            .consumer-dash .card .outer .list .details .lt .lt0 .token,
+            .consumer-dash .card .outer .list .details .lt .lt0 .persons {
               padding-left: 10px;
               position: relative; }
-              .consumer-dash .card .outer .list .details .lt .lt0 .token:before, .consumer-dash .card .outer .list .details .lt .lt0 .persons:before {
+              .consumer-dash .card .outer .list .details .lt .lt0 .token:before,
+              .consumer-dash .card .outer .list .details .lt .lt0 .persons:before {
                 position: absolute;
                 content: ":";
                 left: 0; }
@@ -16817,9 +17256,15 @@ header.consumer {
                     content: "\69";
                     font-size: .65rem;
                     height: 18px; }
+                .consumer-dash .card .outer .list .details .rt .controls li span.payment {
+                  color: #00aef2;
+                  padding: 2px 3px 2px 25px; }
+                  .consumer-dash .card .outer .list .details .rt .controls li span.payment:before {
+                    content: "\56"; }
               .consumer-dash .card .outer .list .details .rt .controls li:last-child {
                 margin-bottom: 0; }
-          .consumer-dash .card .outer .list .details .rt .started-label, .consumer-dash .card .outer .list .details .rt .done-label {
+          .consumer-dash .card .outer .list .details .rt .started-label,
+          .consumer-dash .card .outer .list .details .rt .done-label {
             color: #f24949;
             padding: 10px 0px 10px 12px;
             font-size: .65rem;
@@ -16834,9 +17279,11 @@ header.consumer {
             position: relative;
             align-self: center; }
             @media only screen and (max-width: 400px) {
-              .consumer-dash .card .outer .list .details .rt .started-label, .consumer-dash .card .outer .list .details .rt .done-label {
+              .consumer-dash .card .outer .list .details .rt .started-label,
+              .consumer-dash .card .outer .list .details .rt .done-label {
                 margin-left: 10px; } }
-            .consumer-dash .card .outer .list .details .rt .started-label:before, .consumer-dash .card .outer .list .details .rt .done-label:before {
+            .consumer-dash .card .outer .list .details .rt .started-label:before,
+            .consumer-dash .card .outer .list .details .rt .done-label:before {
               position: absolute;
               width: 6px;
               height: 6px;
@@ -16861,7 +17308,9 @@ header.consumer {
         margin-bottom: 0; }
       .consumer-dash .card .outer .list.cancelled .details .rt {
         display: flex; }
-        .consumer-dash .card .outer .list.cancelled .details .rt .cancel-label, .consumer-dash .card .outer .list.cancelled .details .rt .started-label, .consumer-dash .card .outer .list.cancelled .details .rt .done-label {
+        .consumer-dash .card .outer .list.cancelled .details .rt .cancel-label,
+        .consumer-dash .card .outer .list.cancelled .details .rt .started-label,
+        .consumer-dash .card .outer .list.cancelled .details .rt .done-label {
           color: #f24949;
           padding: 10px 0px 10px 12px;
           font-size: .65rem;
@@ -16875,9 +17324,13 @@ header.consumer {
           /* stops bg color from leaking outside the border: */
           position: relative; }
           @media only screen and (max-width: 400px) {
-            .consumer-dash .card .outer .list.cancelled .details .rt .cancel-label, .consumer-dash .card .outer .list.cancelled .details .rt .started-label, .consumer-dash .card .outer .list.cancelled .details .rt .done-label {
+            .consumer-dash .card .outer .list.cancelled .details .rt .cancel-label,
+            .consumer-dash .card .outer .list.cancelled .details .rt .started-label,
+            .consumer-dash .card .outer .list.cancelled .details .rt .done-label {
               margin-left: 10px; } }
-          .consumer-dash .card .outer .list.cancelled .details .rt .cancel-label:before, .consumer-dash .card .outer .list.cancelled .details .rt .started-label:before, .consumer-dash .card .outer .list.cancelled .details .rt .done-label:before {
+          .consumer-dash .card .outer .list.cancelled .details .rt .cancel-label:before,
+          .consumer-dash .card .outer .list.cancelled .details .rt .started-label:before,
+          .consumer-dash .card .outer .list.cancelled .details .rt .done-label:before {
             position: absolute;
             width: 6px;
             height: 6px;
@@ -17250,13 +17703,21 @@ header.consumer {
             cursor: pointer; }
           .consumer-dash .card.history .history-tbl .table tbody tr td.td4 {
             border-right: 1px solid #f2f2f2; }
-            .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .arrived, .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .started, .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .done, .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .cancelled, .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .checkedIn {
+            .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .arrived,
+            .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .started,
+            .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .done,
+            .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .cancelled,
+            .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .checkedIn {
               color: #4de2ff;
               padding: 2px 5px 2px 14px;
               font-size: .75rem;
               font-weight: 600;
               position: relative; }
-              .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .arrived:before, .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .started:before, .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .done:before, .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .cancelled:before, .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .checkedIn:before {
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .arrived:before,
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .started:before,
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .done:before,
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .cancelled:before,
+              .consumer-dash .card.history .history-tbl .table tbody tr td.td4 .checkedIn:before {
                 position: absolute;
                 content: "";
                 background: #4de2ff;
@@ -17391,7 +17852,8 @@ header.consumer {
                   font-size: .875rem;
                   text-align: left;
                   font-weight: 500; }
-                  .consumer-dash .card.history .history-tbl .search_paging .container .text-center .paginghead-outer .paging .paging-curr, .consumer-dash .card.history .history-tbl .search_paging .container .text-center .paginghead-outer .paging .paging-max {
+                  .consumer-dash .card.history .history-tbl .search_paging .container .text-center .paginghead-outer .paging .paging-curr,
+                  .consumer-dash .card.history .history-tbl .search_paging .container .text-center .paginghead-outer .paging .paging-max {
                     font-weight: 600;
                     display: inline-block;
                     text-align: center;

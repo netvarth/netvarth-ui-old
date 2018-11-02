@@ -413,7 +413,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         // this.all_queues = data;
 
         const Cqueues = data;
-        console.log('cqueue', Cqueues);
+        // console.log('cqueue', Cqueues);
         this.all_queues = [];
         let indx = 0;
 

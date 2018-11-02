@@ -210,6 +210,8 @@ export const Messages = {
   'APPX_WAIT_TIME_CAPTION' : 'Appox Waiting Time',
 
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
-  'CHECKIN_TIME_CAPTION': 'Est Service Time'
+  'CHECKIN_TIME_CAPTION': 'Est Service Time',
+
+  'PREPAYMENT_ERROR': 'Sorry! an error occured'
 
 };

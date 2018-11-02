@@ -96,6 +96,9 @@
                                   Done
                               </div>
                               <ul class="controls">
+                                  <li (click)="makeFailedPayment(waitlist)" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
+                                      <span class="payment">Make Payment</span>
+                                    </li>
                                   <li (click)="addWaitlistMessage(waitlist)">
                                     <span class="message">Send Message</span>
                                   </li>
@@ -226,3 +229,4 @@
       </div>
   </div>
 </section>
+<div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>

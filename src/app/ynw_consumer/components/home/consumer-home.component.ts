@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DOCUMENT } from '@angular/common';
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { ConsumerDataStorageService } from '../../services/consumer-datastorage.service';
@@ -92,11 +94,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   privacydialogRef;
   canceldialogRef;
   remfavdialogRef;
+  payment_popup = null;
+  servicesjson: any = [];
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog, private router: Router,
+    @Inject(DOCUMENT) public document,
+    public _sanitizer: DomSanitizer,
   private consumer_datastorage: ConsumerDataStorageService) {}
 
   ngOnInit() {
@@ -852,6 +858,47 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       retstat = false;
     }
     return retstat;
+  }
+  makeFailedPayment(waitlist) {
+   // console.log('pay', waitlist.queue.location.id, waitlist.service.id, waitlist.ynwUuid);
+    let prepayamt = 0;
+    this.shared_services.getServicesByLocationId (waitlist.queue.location.id)
+      .subscribe ( data => {
+          this.servicesjson = data;
+          // console.log('service', this.servicesjson);
+          for (let i = 0; i < this.servicesjson.length; i++) {
+            if (this.servicesjson[i].id === waitlist.service.id) {
+              prepayamt = this.servicesjson[i].minPrePaymentAmount || 0;
+              if (prepayamt > 0) {
+                const payData = {
+                  'amount': prepayamt,
+                  'paymentMode': 'DC',
+                  'uuid': waitlist.ynwUuid
+                };
+                this.shared_services.consumerPayment(payData)
+                  .subscribe (pData => {
+                      if (pData['response']) {
+                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                          setTimeout(() => {
+                            this.document.getElementById('payuform').submit();
+                          }, 2000);
+                      } else {
+                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), {'panelClass': 'snackbarerror'});
+                      }
+                  },
+                  error => {
+                    this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+                  });
+              } else {
+                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), {'panelClass': 'snackbarerror'});
+              }
+            }
+          }
+      },
+    error => {
+    });
+
   }
 
 }
