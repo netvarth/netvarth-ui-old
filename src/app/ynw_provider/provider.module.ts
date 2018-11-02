@@ -119,6 +119,7 @@ import 'hammerjs';
 import 'mousetrap';
 import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
 import { ViewReportComponent } from './components/view-report/view-report.component';
+import { ProviderCouponViewComponent } from './components/provider-coupon-view/provider-coupon-view.component';
 
 @NgModule({
     imports: [
@@ -215,7 +216,8 @@ import { ViewReportComponent } from './components/view-report/view-report.compon
         SearchProviderCustomerComponent,
         ProviderRefundComponent,
         ProviderReimburseReportComponent,
-        ViewReportComponent
+        ViewReportComponent,
+        ProviderCouponViewComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [

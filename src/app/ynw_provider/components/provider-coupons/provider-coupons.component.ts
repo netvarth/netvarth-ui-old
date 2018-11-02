@@ -20,7 +20,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
 
   coupon_list: any = [];
   jaldeecoupon_list: any = [];
-  couponstatus: boolean = true;
+  
   query_executed = false;
   emptyMsg = '';
   breadcrumbs = [
@@ -47,6 +47,8 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCoupons(); // Call function to get the list of discount lists
+    this.getProviderJaldeeCoupon();
+   
   }
 
   ngOnDestroy() {
@@ -68,6 +70,18 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
         this.query_executed = true;
       });
   }
+
+  getProviderJaldeeCoupon() {
+    this.jaldeecoupon_list=this.provider_servicesobj.getJaldeeCoupons();
+
+      // .subscribe(data => {
+      //   console.log(data);
+        // this.jaldeecoupon_list = data;
+        // this.query_executed = true;
+      };
+  
+
+
   addCoupons() {
     this.addcoupdialogRef = this.dialog.open(AddProviderCouponsComponent, {
       width: '50%',
@@ -142,6 +156,17 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'settings', 'coupons', 'report']);
   }
 
+couponView(){
+  this.router.navigate(['provider', 'settings', 'coupons', 'coupon']);
+}
+
+
+// couponView(id) {
+//   if (!id) {
+//     return ;
+//   }
+//   this.router.navigate(['provider', 'settings', 'items', id]);
+// }
 
 
   formatPrice(price) {

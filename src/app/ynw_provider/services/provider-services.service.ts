@@ -204,7 +204,8 @@ export class ProviderServices {
   }
   //Jaldee Coupons
   getJaldeeCoupons() {
-    return [{
+    let a ;
+    a=  [{
       "jaldeeCouponCode": "CPN01",
       "couponName": "10% Off",
       "couponDescription": "Get 10% off for your first 5 check-ins",
@@ -256,6 +257,7 @@ export class ProviderServices {
       },
       "target": null
     }];
+    return a;
     //  return this.servicemeta.httpGet('provider/coupons');
   }
   getJaldeeCoupon(jc_code) {
@@ -285,7 +287,8 @@ export class ProviderServices {
         "providerDescription": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying."
       },
       "target": null
-    };
+    }
+    return;
     //return this.servicemeta.httpGet(url);
   }
   applyJaldeeCoupon(jc_code, checkin_id) {

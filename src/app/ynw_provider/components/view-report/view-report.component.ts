@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-report',
@@ -28,9 +29,15 @@ export class ViewReportComponent implements OnInit {
   breadcrumbs = this.breadcrumbs_init;
 
 
-  constructor() { }
+
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
+
+  // goBack() {
+  //   this.router.navigate(['provider', 'settings', 'coupons', 'report']);
+  // }
 
 }

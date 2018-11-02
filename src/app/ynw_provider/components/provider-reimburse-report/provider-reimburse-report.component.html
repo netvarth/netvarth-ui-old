@@ -97,26 +97,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
-                    <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
-                    <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
-                    <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
-                    <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
-                    <td data-title="Status" class="pointer-cursor" class="td1">Not Paid
-                        <span class="add-nloc cs-btn bt3" (click)="openrequest()">Request for payment</span>
+                  <tr *ngFor="let report of couponreport">
+                    <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">{{report.invoiceId}}</td>
+                    <td data-title="Period" class="pointer-cursor" class="td1">{{report.paidate}}</td>
+                    <td data-title="coupons Used" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.jaldeeAccountAmount}}</td>
+                    <td data-title="Amount" class="pointer-cursor" class="td1">{{report.jaldeeCouponAmount}}</td>
+                    <td data-title="Status" class="pointer-cursor" class="td1">{{report.invoiceStatus}}
+                        <!-- <span class="add-nloc cs-btn bt3" (click)="openrequest()">Request for payment</span> -->
                     </td>
                   </tr>
-                  <tr>
-                    <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
-                    <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
-                    <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
-                    <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
-                    <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
-                    <td data-title="Status" class="pointer-cursor" class="td1">Paid
-                       
-                    </td>
-                  </tr>
+                  
                 </tbody>
               </table>
             </div>

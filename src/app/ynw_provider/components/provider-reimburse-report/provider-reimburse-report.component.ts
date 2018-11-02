@@ -3,6 +3,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { RequestForComponent } from '../request-for/request-for.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { ProviderServices } from '../../services/provider-services.service';
 
 
 @Component({
@@ -11,7 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./provider-reimburse-report.component.css']
 })
 export class ProviderReimburseReportComponent implements OnInit {
-  breadcrumbs_init = [
+
+  couponreport :any[];
+    breadcrumbs_init = [
     {
       url: '/provider/settings',
       title: 'Settings'
@@ -29,11 +32,11 @@ export class ProviderReimburseReportComponent implements OnInit {
   open_filter =false;
   requestdialogRef;
   
-  constructor(private dialog: MatDialog, private router: Router) {
+  constructor(private dialog: MatDialog, private router: Router,private provider_servicesobj: ProviderServices) {
   }
 
   ngOnInit() {
-
+    this.getCouponReport();
   }
 
   toggleFilter() {
@@ -53,6 +56,13 @@ export class ProviderReimburseReportComponent implements OnInit {
   
     });
   }
+
+
+  getCouponReport(){
+    this.couponreport=this.provider_servicesobj.getJaldeeCouponReports();
+  }
+
+
 
   reportView(){
     this.router.navigate(['provider', 'settings', 'coupons', 'report', 'report_view']);

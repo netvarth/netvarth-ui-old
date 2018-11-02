@@ -41,6 +41,7 @@ import { ProviderSystemAlertComponent } from './components/provider-system-alert
 import { ProviderResolver } from './services/provider-resolver.service';
 import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
 import { ViewReportComponent } from './components/view-report/view-report.component';
+import { ProviderCouponViewComponent } from './components/provider-coupon-view/provider-coupon-view.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,9 @@ const routes: Routes = [
               {
                 path: 'report',
                 component: ProviderReimburseReportComponent
+              },{
+                path: 'coupon',
+                component: ProviderCouponViewComponent
               },{
                 path: 'report',
                 children: [
