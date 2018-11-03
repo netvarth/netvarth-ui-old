@@ -1,45 +1,60 @@
 <section>
     <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-  </section>
-  
+</section>
+
 <section>
     <div class="content comn-cls">
         <div class="container">
-          
-                    <div class="row">
-                        <div class="card">
-                            <div class="copy">
-                                
-                                
-                <p>Name : {{jaldeecoupon_list.couponName}}</p>
-                <p>Code : {{jaldeecoupon_list.jaldeecouponCode}}</p>
-                <p>Description : {{jaldeecoupon_list.couponDescription}}</p>
-                <p>Percent/Amount : </p>
-                <p>Start Date : {{jaldeecoupon_list.startDate}}</p>
-                <p>Expiry Date : {{jaldeecoupon_list.endDate}}</p>
-                <p><b>Rules</b></p>
-                <p>Discount Value : {{jaldeecoupon_list.discountValue}}</p>
-                <p>Maximum Discount Value : {{jaldeecoupon_list.maxDiscountValue}}</p>
-                <p>Maximum Reimbursement Percentage : {{jaldeecoupon_list.maxReimbursePercentage}}</p>
-                <p>Maximum Provider Use Limit : {{jaldeecoupon_list.maxProviderUseLimit}}</p>
-                <p>Maximium Consumer Use Limit : {{jaldeecoupon_list.maxConsumerUseLimit}}</p>
-                <p>usageMaxLimitPerProvider : {{jaldeecoupon_list.usageMaxLimitPerProvider}}</p>
-                <p>consumerFirstCheckInUsageOnly : {{jaldeecoupon_list.consumerFirstCheckInUsageOnly}}</p>
-                <p>providerFirstCheckInUseOnly : {{jaldeecoupon_list.providerFirstCheckInUseOnly}}</p>
-                <p>selfPaymentRequired : {{jaldeecoupon_list.selfPaymentRequired}}</p>
-                <p>onlineCheckinRequired : {{jaldeecoupon_list.onlineCheckinRequired}}</p>
-                <p>combineWithOtherjaldeecoupon_list : {{jaldeecoupon_list.combineWithOtherjaldeecoupon_list}}</p>
-                <p>defaultEnable : {{jaldeecoupon_list.defaultEnable}}</p>
-                <p>alwaysEnabled : {{jaldeecoupon_list.alwaysEnabled}}</p>
-                <p>consumerTermsAndcondition : {{jaldeecoupon_list.consumerTermsAndcondition}}</p>
-                <p>providerDescription : {{jaldeecoupon_list.providerDescription}}</p>
+            <div class="col-a pl0 col-md-12 col-lg-8 col-xl-8">
+                <div class="card p0">
+                    <div class="pubs w-dta">
+                        <div class="row">
+                            <div class="card">
+                                <div class="copy">
+                                    <h5>Coupon Details</h5>
+
+                                    <p>Name : {{jaldeecoupon_list.couponName}}</p>
+                                    <p>Code : {{jaldeecoupon_list.jaldeecouponCode}}</p>
+                                    <p>Description : {{jaldeecoupon_list.couponDescription}}</p>
+                                    <p>Percent/Amount : </p>
+                                    <p>Start Date : {{jaldeecoupon_list.startDate}}</p>
+                                    <p>Expiry Date : {{jaldeecoupon_list.endDate}}</p>
+                                    <p><b>Rules</b></p>
+                                    <p>Discount Value : {{jaldeecoupon_list.couponRules.discountValue}}</p>
+                                    <p>Maximum Discount Value : {{jaldeecoupon_list.couponRules.maxDiscountValue}}</p>
+                                    <p>Maximum Reimbursement Percentage :
+                                        {{jaldeecoupon_list.couponRules.maxReimbursePercentage}}</p>
+                                    <p>Maximum Provider Use Limit :
+                                        {{jaldeecoupon_list.couponRules.maxProviderUseLimit}}</p>
+                                    <p>Maximium Consumer Use Limit :
+                                        {{jaldeecoupon_list.couponRules.maxConsumerUseLimit}}</p>
+                                    <p>usageMaxLimitPerProvider :
+                                        {{jaldeecoupon_list.couponRules.usageMaxLimitPerProvider}}</p>
+                                    <p>consumerFirstCheckInUsageOnly :
+                                        {{jaldeecoupon_list.couponRules.consumerFirstCheckInUsageOnly}}</p>
+                                    <p>providerFirstCheckInUseOnly :
+                                        {{jaldeecoupon_list.couponRules.providerFirstCheckInUseOnly}}</p>
+                                    <p>selfPaymentRequired : {{jaldeecoupon_list.couponRules.selfPaymentRequired}}</p>
+                                    <p>onlineCheckinRequired : {{jaldeecoupon_list.couponRules.onlineCheckinRequired}}</p>
+                                    <p>combineWithOtherjaldeecoupon_list :
+                                        {{jaldeecoupon_list.couponRules.combineWithOtherjaldeecoupon_list}}</p>
+                                    <p>defaultEnable : {{jaldeecoupon_list.couponRules.defaultEnable}}</p>
+                                    <p>alwaysEnabled : {{jaldeecoupon_list.couponRules.alwaysEnabled}}</p>
+                                    <p>consumerTermsAndcondition :
+                                        {{jaldeecoupon_list.couponRules.consumerTermsAndcondition}}</p>
+                                    <p>providerDescription : {{jaldeecoupon_list.couponRules.providerDescription}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                   
                 </div>
-                </div>
-                
-  
+
+            </div>
+        </div>
+
+    </div>
+
+
+
 </section>

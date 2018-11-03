@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProviderServices } from '../../services/provider-services.service';
 
 @Component({
   selector: 'app-view-report',
@@ -22,22 +23,27 @@ export class ViewReportComponent implements OnInit {
       url: '/provider/settings/coupons/report'
     },
     {
-      title: '',
-      url: '/provider/settings/coupons/report/view_report'
+      title: 'Report View',
+     
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
+  viewreport : any [];
+public id;
 
 
-
-
-  constructor(private router: Router) { }
+  constructor(private router: Router,private provider_servicesobj: ProviderServices) { }
 
   ngOnInit() {
+    this.getjaldeeReport();
   }
 
   // goBack() {
   //   this.router.navigate(['provider', 'settings', 'coupons', 'report']);
   // }
+getjaldeeReport(){
+this.viewreport=this.provider_servicesobj.getJaldeeCouponReportsbyId(this.id);
+}
+
 
 }

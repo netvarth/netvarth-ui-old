@@ -165,7 +165,7 @@ couponView(){
 //   if (!id) {
 //     return ;
 //   }
-//   this.router.navigate(['provider', 'settings', 'items', id]);
+//   this.router.navigate(['provider', 'settings', 'coupons', 'coupon', id]);
 // }
 
 

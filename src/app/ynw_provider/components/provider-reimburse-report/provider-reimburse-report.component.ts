@@ -25,12 +25,14 @@ export class ProviderReimburseReportComponent implements OnInit {
     },
     {
       title: 'Report',
-      url: '/provider/settings/coupons/report'
+    
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
   open_filter =false;
   requestdialogRef;
+  
+
   
   constructor(private dialog: MatDialog, private router: Router,private provider_servicesobj: ProviderServices) {
   }

@@ -12,16 +12,27 @@
           <div class="copy">
 
 <!-- <div class="bk-ctrl">
-    <span class="backtodashboard" (click)="goBack()"><span class="strong">Go Back</span></span>
+    <span class="backtodashboard" (click)="goBack()"><span class="strong">Go Back
 </div> -->
+<div class="cd-t">
+  <div class="phtbl">
+      <ul class="tbl-list">
+<ng-container>
+ 
+<div class="otr">
+<div class="ctd">Report Id : {{viewreport.invoiceId}}</div>
+<div class="ctd">Period/Date : {{viewreport.paidate}}</div>
+<div class="ctd">Coupons Used : </div>
+<div class="ctd">Jaldee Account : {{viewreport.jaldeeAccountAmount}}</div>
+<div class="ctd">Coupon Amount : {{viewreport.jaldeeCouponAmount}}</div>
+<div class="ctd">Reimbursable Amount from Jaldee : {{viewreport.PaidAmount}}</div>
+<div class="ctd">Status : {{viewreport.invoiceStatus}}</div>
+</div>
 
-<span>Report Id </span><span></span>
-<span>Period/Date </span><span></span>
-<span>Coupons Used </span><span></span>
-<span>Jaldee Account </span><span></span>
-<span>Coupon Amount </span><span></span>
-<span>Reimbursable Amount from Jaldee </span><span></span>
-<span>Status </span><span></span>
+</ng-container>
+</ul>
+</div>
+</div>
 
 <div class="n-loc">
               

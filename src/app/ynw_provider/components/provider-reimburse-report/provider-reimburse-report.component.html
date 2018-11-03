@@ -98,13 +98,24 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let report of couponreport">
-                    <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">{{report.invoiceId}}</td>
+                    <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView(report.id)">{{report.invoiceId}}</td>
                     <td data-title="Period" class="pointer-cursor" class="td1">{{report.paidate}}</td>
                     <td data-title="coupons Used" class="pointer-cursor" class="td1"></td>
                     <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.jaldeeAccountAmount}}</td>
-                    <td data-title="Amount" class="pointer-cursor" class="td1">{{report.jaldeeCouponAmount}}</td>
+                    <td data-title="Amount" class="pointer-cursor" class="td1">{{report.PaidAmount}}</td>
                     <td data-title="Status" class="pointer-cursor" class="td1">{{report.invoiceStatus}}
-                        <!-- <span class="add-nloc cs-btn bt3" (click)="openrequest()">Request for payment</span> -->
+                       <!-- a={{report.invoiceStatus}}
+                      {{a}}
+                      <div [(ngModel)]="isStatus">
+                            <div *ngIf="paid">
+                            <span class="add-nloc cs-btn bt3" (click)="openrequest()">Request for payment</span>
+                        </div>
+                        <div *ngIf="!paid"> 
+
+                        </div>
+                      </div> -->
+
+   
                     </td>
                   </tr>
                   

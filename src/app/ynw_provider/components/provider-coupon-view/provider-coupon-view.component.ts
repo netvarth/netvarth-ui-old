@@ -8,7 +8,7 @@ import { ProviderServices } from '../../services/provider-services.service';
   styleUrls: ['./provider-coupon-view.component.css']
 })
 export class ProviderCouponViewComponent implements OnInit {
-  jaldeecouponview_list : any [] ;
+  jaldeecoupon_list : any [] ;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -18,12 +18,12 @@ export class ProviderCouponViewComponent implements OnInit {
       title: 'Coupons',
       url: '/provider/settings/coupons'
     },{
-      title: '',
-      url: '/provider/settings/coupons/coupon'
+      title: 'Coupon View',
+     
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-
+public jc_code;
 
   constructor(private provider_servicesobj: ProviderServices) { }
 
@@ -32,7 +32,7 @@ export class ProviderCouponViewComponent implements OnInit {
   }
 
   getCouponview() {
-    this.jaldeecouponview_list=this.provider_servicesobj.getJaldeeCoupon(jc_code);
+    this.jaldeecoupon_list=this.provider_servicesobj.getJaldeeCoupon(this.jc_code);
 
       // .subscribe(data => {
       //   console.log(data);
