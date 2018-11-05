@@ -88,7 +88,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, {'panelClass': 'snackbarerror'});
             }
           }
-        });
+        }));
 
     }
 

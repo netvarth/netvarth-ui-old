@@ -1,6 +1,6 @@
 
 import {interval as observableInterval, Observable,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -26,6 +26,8 @@ import {startWith, map,  count } from 'rxjs/operators';
 import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
 import { appendFile } from 'fs';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
+import { DomSanitizer } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-consumer-home',
