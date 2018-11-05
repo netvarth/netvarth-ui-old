@@ -73,14 +73,15 @@
                                 <span (click)="buyAdwords()" class="cs-btn bt3">Buy Adwords</span>
                         </div>
                         <div class="adwds w-dta" *ngIf="normal_adworkds_active && adwordsmaxcount > 0">
-                            <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div></h2>
+                            <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div><span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span></h2>
                             <div class="ad-tble">
                                 <div class="ad-l" *ngIf="adwords_maxremaining>0">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
                                 <div class="ad-l" *ngIf="adwords_maxremaining == 0">You have {{adword_list.length}} adword(s). To add more adwords, go to <a routerLink="/provider/settings/license"><strong>License & Invoice</strong></a></div>
                                 <div class="ad-r">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre" *ngIf="adwords_remaining>0"><a routerLink="/provider/settings/license">+{{adwords_remaining}} more</a></span>
+                                    <span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length>0"></span>
                                     <!-- <span  (click)="addAdwords()" class="cs-btn bt8" *ngIf="adwords_maxremaining>0">Add Adwords</span> -->
-                                    <span (click)="addAdwords()" class="addbt cs-btn bt8"></span>
+                                    
                                 </div>
                             </div>
                         </div>

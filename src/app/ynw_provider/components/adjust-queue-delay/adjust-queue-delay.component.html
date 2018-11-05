@@ -8,11 +8,11 @@ onSubmit(amForm.value)">
   </h1>
   <mat-dialog-content>
     <div class="adjustdelay">
-        <div class="form-group">
+        <div class="form-group" *ngIf="queues.length>1">
           <mat-form-field>
               <label class="col-form-label">Service Time Window</label>
-              <mat-select placeholder="Service Time Window" formControlName="queue_id">
-                <mat-option *ngFor="let queue of queues" [value]="queue.id" >
+              <mat-select placeholder="Service Time Window" [(ngModel)] = "selected_queue" [ngModelOptions]="{standalone: true}" #selQueue (change)="handle_queue_sel(selQueue.value)">
+                <mat-option *ngFor="let queue of queues" [value]="queue.id">
                   {{queue.name}}
                 </mat-option>
               </mat-select>
@@ -37,7 +37,7 @@ onSubmit(amForm.value)">
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button  type="submit" mat-button [disabled]="!amForm.valid || amForm.pristine" class="cs-btn bt1">Save</button>
+    <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
   </mat-dialog-actions>
 

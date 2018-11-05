@@ -21,6 +21,7 @@ export class AdjustQueueDelayComponent implements OnInit {
   api_error = null;
   time = {hour: 0, minute: 0};
   default_message = '';
+  selected_queue = 0;
   placeholder = Messages.ADJUSTDELAY_PLACEHOLDER;
 
   constructor(
@@ -44,20 +45,20 @@ export class AdjustQueueDelayComponent implements OnInit {
       this.getDefaultMessages();
 
       this.amForm = this.fb.group({
-        queue_id: ['', Validators.compose([Validators.required])],
+       // queue_id: ['', Validators.compose([Validators.required])],
         delay: ['', Validators.compose([Validators.required])],
         send_message: [false],
         // message: ['', Validators.compose([Validators.required])],
         message: [''],
       });
 
-      this.amForm.get('queue_id').valueChanges
+      /*this.amForm.get('queue_id').valueChanges
       .subscribe(
         data => {
           this.getQueueDelay(data);
         }
-      );
-
+      );*/
+      this.getQueueDelay(this.data.queue_id);
       this.amForm.get('send_message').valueChanges
       .subscribe(
         data => {
@@ -65,7 +66,8 @@ export class AdjustQueueDelayComponent implements OnInit {
         }
       );
 
-      this.amForm.get('queue_id').setValue(this.data.queue_id);
+      // this.amForm.get('queue_id').setValue(this.data.queue_id);
+      this.selected_queue = this.data.queue_id;
 
 
      }
@@ -84,30 +86,35 @@ export class AdjustQueueDelayComponent implements OnInit {
 
      onSubmit (form_data) {
        const time = this.getTimeinMin();
-       console.log(form_data);
-       const post_data = {
-                            'delayDuration': time,
-                            'sendMsg': form_data.send_message,
-                            'message': form_data.message || '',
-                         };
-      this.provider_services.addQueueDelay(form_data.queue_id, post_data)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY');
-          this.closePopup('reloadlist');
-        },
-        error => {
-          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+       // console.log('time', time);
+       if (time !== 0) {
+        const post_data = {
+                              'delayDuration': time,
+                              'sendMsg': form_data.send_message,
+                              'message': form_data.message || '',
+                          };
+        // this.provider_services.addQueueDelay(form_data.queue_id, post_data)
+        this.provider_services.addQueueDelay(this.selected_queue, post_data)
+        .subscribe(
+          data => {
+            // console.log(data);
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY');
+            this.closePopup('reloadlist');
+          },
+          error => {
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          }
+        );
+        } else {
+          this.sharedfunctionObj.apiErrorAutoHide(this, this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_TIME_ERROR'));
         }
-      );
      }
 
      getQueueDelay(queue_id) {
-
        this.provider_services.getQueueDelay(queue_id)
        .subscribe(
          data => {
+           // console.log('ddata', data);
           this.convertTime(data['delayDuration'] || 0);
           this.amForm.get('send_message').setValue(data['sendMsg']);
          },
@@ -145,6 +152,11 @@ export class AdjustQueueDelayComponent implements OnInit {
       } else {
         this.amForm.removeControl('message');
       }
+     }
+     handle_queue_sel(queueid) {
+       this.selected_queue = queueid;
+       this.getQueueDelay(this.selected_queue);
+       // console.log('selected queue', this.selected_queue);
      }
 
 }

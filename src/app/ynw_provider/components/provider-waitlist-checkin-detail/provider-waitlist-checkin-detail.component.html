@@ -54,7 +54,7 @@
                               </div>
                               <div class="btm" *ngIf="waitlist_data">
                                   <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">Communicate</button>
-                                  <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >Add note</button>
+                                  <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >Add Private note</button>
                                   <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()"
                                   *ngIf="!waitlist_data.history &&
                                   ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">Cancel {{checkin_label |capitalizeFirst}}</button>
@@ -82,7 +82,7 @@
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                   <!-- {{provider_label |capitalizeFirst}} Notes -->
-                                 Notes
+                                 Private Notes
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
                               <div  class="pnotes" *ngFor="let note of waitlist_notes">
@@ -90,7 +90,7 @@
                                 <p>{{note.timeStamp | date: dateTimeFormat}}</p>
                               </div>
                               <div *ngIf="waitlist_notes.length == 0">
-                                <p>No notes found</p>
+                                <p>No private notes found</p>
                               </div>
                             </mat-expansion-panel>
                           </mat-accordion>

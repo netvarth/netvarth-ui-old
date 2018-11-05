@@ -1145,7 +1145,7 @@
 
                                 .selsername {
                                     font-weight: 600;
-                                    color: $linkblack;
+                                    color: $hover-blue;
                                 }
                             }
                             .queue-waitingdiv {
@@ -1153,7 +1153,7 @@
                                     margin-bottom: 0;
 
                                     .queue-avail-date {
-                                        color: $green;
+                                        color: $hover-blue;
                                         font-weight: 600;
                                     }
                                 }

@@ -429,7 +429,7 @@
   .mat-button:hover {
     background: #1873f2 !important; }
   .mat-button.confirmbtn {
-    background: #00cc96 !important;
+    background: #1873f2 !important;
     font-weight: 600; }
   .mat-button.billcancel {
     background: #dbdbdb !important;
@@ -1696,11 +1696,11 @@ select:-webkit-autofill:focus {
             margin-bottom: 15px; }
             .ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .waitlist-button-outer .showDetOuter .showDetService .selsername {
               font-weight: 600;
-              color: #222223; }
+              color: #1873f2; }
           .ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head {
             margin-bottom: 0; }
             .ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date {
-              color: #00cc96;
+              color: #1873f2;
               font-weight: 600; }
         .ksk app-kiosk-home .ksk-cpy.checkin .kioskactions button {
           height: 50px;
@@ -10013,6 +10013,13 @@ footer.dashb {
         justify-content: center; }
       .content .col-a .card .adwds.w-dta h2 .helprighticon:hover {
         color: #00aef2; }
+    .content .col-a .card .adwds.w-dta h2 .addbt {
+      width: 20px;
+      height: 20px;
+      margin-left: 15px; }
+      .content .col-a .card .adwds.w-dta h2 .addbt:before {
+        font-size: 1.3rem;
+        font-weight: 500; }
   .content .col-a .card .adwds.w-dta .ad-tble {
     display: flex;
     flex-direction: column; }
@@ -10029,7 +10036,6 @@ footer.dashb {
     .content .col-a .card .adwds.w-dta .ad-tble .ad-r {
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-end;
       margin-bottom: 10px; }
       @media only screen and (max-width: 767px) {
         .content .col-a .card .adwds.w-dta .ad-tble .ad-r {
@@ -10056,6 +10062,8 @@ footer.dashb {
             background: #00aef2; }
             .content .col-a .card .adwds.w-dta .ad-tble .ad-r span.mre:hover a {
               color: #fff; }
+        .content .col-a .card .adwds.w-dta .ad-tble .ad-r span.addbt {
+          margin-left: 10px; }
       .content .col-a .card .adwds.w-dta .ad-tble .ad-r .bt8 {
         margin: 0 0 0 auto;
         padding: 0;
@@ -12450,6 +12458,11 @@ footer.dashb {
               display: none; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
             font-weight: 500; }
+          .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name {
+            color: #00aef2;
+            font-weight: 600; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name:before {
+              color: #222223; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
             display: flex;
             flex-wrap: wrap; }
@@ -12898,7 +12911,9 @@ footer.dashb {
         font-weight: normal; }
       .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) {
         /*width: 15%;*/
-        cursor: pointer; }
+        cursor: pointer;
+        color: #00aef2;
+        font-weight: 500; }
         .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(1) .itm-prdct img {
           width: 100%; }
         @media only screen and (max-width: 767px) {
@@ -12925,7 +12940,6 @@ footer.dashb {
             align-items: center;
             justify-content: center; }
       .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(2) {
-        color: #00aef2;
         font-weight: 500; }
         .comn-cls .w-dta .card .table-outer.q-itm table tbody tr td:nth-child(2):before {
           color: #222223; }
@@ -13015,9 +13029,6 @@ footer.dashb {
         margin-bottom: 15px;
         border-bottom: 1px solid #f8f8f8;
         padding-bottom: 10px; }
-        @media only screen and (max-width: 575px) {
-          .comn-cls .w-dta .card .itm-d .itm-r .dtls {
-            flex-direction: column; } }
         .comn-cls .w-dta .card .itm-d .itm-r .dtls .label {
           font-weight: 600;
           width: 30%;
@@ -13025,8 +13036,15 @@ footer.dashb {
           @media only screen and (max-width: 575px) {
             .comn-cls .w-dta .card .itm-d .itm-r .dtls .label {
               width: 100%; } }
+        .comn-cls .w-dta .card .itm-d .itm-r .dtls .ttle {
+          width: 70%; }
         .comn-cls .w-dta .card .itm-d .itm-r .dtls:last-child {
           border: none; }
+        @media only screen and (max-width: 575px) {
+          .comn-cls .w-dta .card .itm-d .itm-r .dtls {
+            flex-direction: column; }
+            .comn-cls .w-dta .card .itm-d .itm-r .dtls .ttle {
+              width: 100%; } }
   .comn-cls .w-dta .card .copy {
     display: flex;
     font-size: .875rem; }
@@ -16600,9 +16618,10 @@ header.consumer {
                     flex-basis: 32%;
                     font-size: .875rem;
                     margin-bottom: 20px;
-                    border: 2px solid $linkblue;
+                    border: 1px solid $cc-mediumgray;
                     @include transition(all 400ms);
                     @include border-radius(10px);
+                    @include box-shadow(0px, 1px, 5px, 0px, rgba(0,0,0,0.2));
 
                     .header {
                         display: flex;
@@ -16611,7 +16630,7 @@ header.consumer {
                         padding: 15px;
                         background: transparent;
                         margin-bottom: 0;
-                        border-bottom: 2px solid $linkblue;
+                        border-bottom: 1px solid $cc-mediumgray;
 
                         .lt {
                             flex-grow: 1;
@@ -16652,9 +16671,14 @@ header.consumer {
 
                         .rt {
                             display: flex;
+                            flex-direction: column;
 
                             .favourite {
+                                display: flex;
+                                
                                 .icon-favourite-filled {
+                                    margin-left: auto;
+                                    
                                     &:before {
                                         color: $cc-red;
                                         width: 20px;
@@ -16666,6 +16690,50 @@ header.consumer {
                                     }
                                 }
                             }
+                            .cancel-label,
+                            .started-label,
+                            .done-label {
+                                color: $cc-red;
+                                padding: 2px 0px 2px 12px;
+                                font-size: .65rem;
+                                line-height: 1.2rem;
+                                font-weight: 600;
+                                letter-spacing: .5px;
+                                @include border-radius(20px);
+                                position: relative;
+
+                                @include respond-to(ynw-400) {
+                                    margin-left: 10px;
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    width: 6px;
+                                    height: 6px;
+                                    background: $cc-red;
+                                    content: "";
+                                    left: 0;
+                                    top: 50%;
+                                    margin-top: -4px;
+                                    @include border-radius(20px);
+                                }
+                            }
+
+                            .started-label {
+                                color: $start;
+
+                                &:before {
+                                    background: $start;
+                                }
+                            }
+
+                            .done-label {
+                                color: $done;
+
+                                &:before {
+                                    background: $done;
+                                }
+                            }
                         }
                     }
 
@@ -16674,6 +16742,8 @@ header.consumer {
                         flex-direction: column;
                         background: transparent;
                         @include transition(all 400ms);
+                        height: 100%;
+                        justify-content: space-between;
 
                         @include respond-to(ynw-575) {
                             flex-direction: column;
@@ -16681,22 +16751,19 @@ header.consumer {
 
                         .lt {
                             font-weight: 500;
-                            display: flex;
-                            flex-wrap: wrap;
                             border-bottom: none;
                             border-top: none;
                             border-right: none;
+                            padding: 0 15px;
 
                             .lt0 {
-                                padding: 15px;
+                                padding: 10px 0px;
                                 border-top: none;
                                 border-left: none;
                                 flex-grow: 1;
                                 margin: 0;
-
-                                @include respond-to(ynw-575) {
-                                    padding: 10px;
-                                }
+                                display: block;
+                                border-bottom: 1px solid $cc-body;
 
                                 .service,
                                 .forwhom,
@@ -16741,22 +16808,27 @@ header.consumer {
 
                                 &:last-child {
                                     margin-bottom: 0;
+                                    border: none;
+                                }
+                                
+                                @include respond-to(ynw-575) {
+                                    padding: 10px;
                                 }
                             }
                         }
 
                         .rt {
-                            border-top: 2px solid $cc-body;
+                            border-top: 1px solid $cc-body;
                             display: flex;
 
                             .controls {
                                 margin: 0;
-                                margin-left: auto;
                                 padding: 0 10px;
                                 display: flex;
                                 flex-direction: column;
                                 flex-direction: row;
                                 justify-content: flex-end;
+                                width: 100%;
 
                                 @include respond-to(ynw-767) {
                                     margin-left: 0;
@@ -16773,16 +16845,20 @@ header.consumer {
                                     margin: 0;
                                     font-weight: 500;
                                     display: flex;
-                                    align-items: center;
+                                    flex-grow: 1;
 
                                     span {
                                         padding: 10px;
-                                        position: relative;
-                                        padding-left: 25px;
+                                        padding-left: 10px;
                                         padding-right: 10px;
                                         cursor: pointer;
                                         @include transition(all 300ms);
                                         color: $linkblack;
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        text-align: center;
+                                        width: 100%;
 
                                         @include respond-to(ynw-575) {
                                             padding: 5px;
@@ -16791,17 +16867,15 @@ header.consumer {
                                         }
 
                                         &:before {
-                                            position: absolute;
                                             content: "";
-                                            left: 5px;
-                                            top: 50%;
-                                            margin-top: -8px;
                                             @include font-custom;
                                             display: flex;
                                             align-items: center;
                                             justify-content: center;
                                             width: 16px;
                                             height: 16px;
+                                            margin-left: auto;
+                                            margin-right: auto;
                                         }
 
                                         &:hover {
@@ -16860,6 +16934,7 @@ header.consumer {
                                                 content: "\69";
                                                 font-size: .65rem;
                                                 height: 18px;
+                                                position: relative;
                                             }
                                         }
                                     }
@@ -16870,51 +16945,6 @@ header.consumer {
                                 }
                             }
 
-                            .started-label,
-                            .done-label {
-                                color: $cc-red;
-                                padding: 10px 0px 10px 12px;
-                                font-size: .65rem;
-                                line-height: 1.2rem;
-                                font-weight: 600;
-                                margin-left: 15px;
-                                letter-spacing: .5px;
-                                @include border-radius(20px);
-                                position: relative;
-                                align-self: center;
-
-                                @include respond-to(ynw-400) {
-                                    margin-left: 10px;
-                                }
-
-                                &:before {
-                                    position: absolute;
-                                    width: 6px;
-                                    height: 6px;
-                                    background: $cc-red;
-                                    content: "";
-                                    left: 0;
-                                    top: 50%;
-                                    margin-top: -4px;
-                                    @include border-radius(20px);
-                                }
-                            }
-
-                            .started-label {
-                                color: $start;
-
-                                &:before {
-                                    background: $start;
-                                }
-                            }
-
-                            .done-label {
-                                color: $done;
-
-                                &:before {
-                                    background: $done;
-                                }
-                            }
                         }
                     }
 
@@ -16922,62 +16952,12 @@ header.consumer {
                         margin-bottom: 0;
                     }
 
-                    &.cancelled {
-                        .details {
-                            .rt {
-                                display: flex;
-
-                                .cancel-label,
-                                .started-label,
-                                .done-label {
-                                    color: $cc-red;
-                                    padding: 10px 0px 10px 12px;
-                                    font-size: .65rem;
-                                    line-height: 1.2rem;
-                                    font-weight: 600;
-                                    margin-left: 15px;
-                                    letter-spacing: .5px;
-                                    @include border-radius(20px);
-                                    position: relative;
-
-                                    @include respond-to(ynw-400) {
-                                        margin-left: 10px;
-                                    }
-
-                                    &:before {
-                                        position: absolute;
-                                        width: 6px;
-                                        height: 6px;
-                                        background: $cc-red;
-                                        content: "";
-                                        left: 0;
-                                        top: 50%;
-                                        margin-top: -4px;
-                                        @include border-radius(20px);
-                                    }
-                                }
-
-                                .started-label {
-                                    color: $start;
-
-                                    &:before {
-                                        background: $start;
-                                    }
-                                }
-
-                                .done-label {
-                                    color: $done;
-
-                                    &:before {
-                                        background: $done;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     &:hover {
                         @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .1));
+                    }
+                    
+                    @include respond-to(ynw-768-991) {
+                        flex-basis: 48%;
                     }
                 }
             }
@@ -17258,7 +17238,7 @@ header.consumer {
                     height: 18px; }
                 .consumer-dash .card .outer .list .details .rt .controls li span.payment {
                   color: #00aef2;
-                  padding: 2px 3px 2px 25px; }
+                  padding: 2px 5px 2px 25px; }
                   .consumer-dash .card .outer .list .details .rt .controls li span.payment:before {
                     content: "\56"; }
               .consumer-dash .card .outer .list .details .rt .controls li:last-child {

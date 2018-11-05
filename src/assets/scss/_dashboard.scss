@@ -1545,6 +1545,16 @@ footer {
                                 color: $linkblue;
                             }
                         }
+                        .addbt {
+                            width: 20px;
+                            height: 20px;
+                            margin-left: 15px;
+                            
+                            &:before {
+                                font-size: 1.3rem;
+                                font-weight: 500;
+                            }
+                        }
                     }
                     
                     .ad-tble {
@@ -1568,7 +1578,6 @@ footer {
                         .ad-r {
                             display: flex;
                             flex-wrap: wrap;
-                            justify-content: flex-end;
                             margin-bottom: 10px;
                             
                             @include respond-to(ynw-767){
@@ -1603,6 +1612,9 @@ footer {
                                             color: $white;
                                         }
                                     }
+                                }
+                                &.addbt {
+                                    margin-left: 10px;
                                 }
                             }
                             .bt8 {
@@ -4887,6 +4899,14 @@ footer {
                                     &.name, &.service, &.seq {
                                         font-weight: 500;
                                     }
+                                    &.name {
+                                        color: $linkblue;
+                                        font-weight: 600;
+                                        
+                                        &:before {
+                                            color: $linkblack;
+                                        }
+                                    }
                                     &.actions {
                                         display: flex;
                                         flex-wrap: wrap;
@@ -5549,6 +5569,8 @@ footer {
                                         &:nth-child(1) {
                                             /*width: 15%;*/
                                             cursor: pointer;
+                                            color: $linkblue;
+                                            font-weight: 500;
                                             
                                             .itm-prdct {
                                                 img {
@@ -5588,7 +5610,6 @@ footer {
                                             }
                                         }
                                         &:nth-child(2) {
-                                            color: $linkblue;
                                             font-weight: 500;
 
                                             &:before {
@@ -5722,10 +5743,6 @@ footer {
                         border-bottom: 1px solid $cc-lightgray;
                         padding-bottom: 10px;
 
-                        @include respond-to(ynw-575) {
-                            flex-direction: column;
-                        }
-
                         .label {
                             font-weight: 600;
                             width: 30%;
@@ -5735,8 +5752,20 @@ footer {
                                 width: 100%;
                             }
                         }
+                        .ttle {
+                            width: 70%;
+                            
+                        }
                         &:last-child {
                             border: none;
+                        }
+                        
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
+                            
+                            .ttle {
+                                width: 100%;
+                            }
                         }
                     }
                 }

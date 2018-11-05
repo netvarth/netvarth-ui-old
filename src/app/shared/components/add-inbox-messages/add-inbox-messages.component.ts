@@ -127,6 +127,11 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
 
     this.resetApiErrors();
 
+    // console.log('msg', form_data.message);
+    const blankvalidate = projectConstants.VALIDATOR_BLANK;
+    if (blankvalidate.test(form_data.message)) {
+      this.api_error = this.sharedfunctionObj.getProjectMesssages('MSG_ERROR');
+    } else {
     const post_data =  {
           communicationMessage: form_data.message
       };
@@ -137,6 +142,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         case 'consumer-common' : this.consumerToProviderNoteAdd(post_data); break;
         case 'provider-common' : this.providerToConsumerNoteAdd(post_data); break;
       }
+    }
   }
 
   providerToConsumerWaitlistNote(post_data) {

@@ -116,11 +116,13 @@ export const Messages = {
   // Dashboard
 
   'ADD_DELAY': 'New delay added successfully',
+  'ADD_DELAY_TIME_ERROR': 'Please specify the delay',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to [status]',
   'PROVIDER_NOTE_ADD': 'Note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message send successfully',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message send successfully',
+  'MSG_ERROR': 'Please enter the message',
   'ESTDATE' : 'Estimated Service time',
 
   'SEARCH_ESTIMATE_TOOPTIP' : 'Estimated Waiting Time',

@@ -3532,9 +3532,10 @@ header {
                     flex-basis: 32%;
                     font-size: .875rem;
                     margin-bottom: 20px;
-                    border: 2px solid $linkblue;
+                    border: 1px solid $cc-mediumgray;
                     @include transition(all 400ms);
                     @include border-radius(10px);
+                    @include box-shadow(0px, 1px, 5px, 0px, rgba(0,0,0,0.2));
 
                     .header {
                         display: flex;
@@ -3543,7 +3544,7 @@ header {
                         padding: 15px;
                         background: transparent;
                         margin-bottom: 0;
-                        border-bottom: 2px solid $linkblue;
+                        border-bottom: 1px solid $cc-mediumgray;
 
                         .lt {
                             flex-grow: 1;
@@ -3584,9 +3585,14 @@ header {
 
                         .rt {
                             display: flex;
+                            flex-direction: column;
 
                             .favourite {
+                                display: flex;
+                                
                                 .icon-favourite-filled {
+                                    margin-left: auto;
+                                    
                                     &:before {
                                         color: $cc-red;
                                         width: 20px;
@@ -3598,6 +3604,50 @@ header {
                                     }
                                 }
                             }
+                            .cancel-label,
+                            .started-label,
+                            .done-label {
+                                color: $cc-red;
+                                padding: 2px 0px 2px 12px;
+                                font-size: .65rem;
+                                line-height: 1.2rem;
+                                font-weight: 600;
+                                letter-spacing: .5px;
+                                @include border-radius(20px);
+                                position: relative;
+
+                                @include respond-to(ynw-400) {
+                                    margin-left: 10px;
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    width: 6px;
+                                    height: 6px;
+                                    background: $cc-red;
+                                    content: "";
+                                    left: 0;
+                                    top: 50%;
+                                    margin-top: -4px;
+                                    @include border-radius(20px);
+                                }
+                            }
+
+                            .started-label {
+                                color: $start;
+
+                                &:before {
+                                    background: $start;
+                                }
+                            }
+
+                            .done-label {
+                                color: $done;
+
+                                &:before {
+                                    background: $done;
+                                }
+                            }
                         }
                     }
 
@@ -3606,6 +3656,8 @@ header {
                         flex-direction: column;
                         background: transparent;
                         @include transition(all 400ms);
+                        height: 100%;
+                        justify-content: space-between;
 
                         @include respond-to(ynw-575) {
                             flex-direction: column;
@@ -3613,22 +3665,19 @@ header {
 
                         .lt {
                             font-weight: 500;
-                            display: flex;
-                            flex-wrap: wrap;
                             border-bottom: none;
                             border-top: none;
                             border-right: none;
+                            padding: 0 15px;
 
                             .lt0 {
-                                padding: 15px;
+                                padding: 10px 0px;
                                 border-top: none;
                                 border-left: none;
                                 flex-grow: 1;
                                 margin: 0;
-
-                                @include respond-to(ynw-575) {
-                                    padding: 10px;
-                                }
+                                display: block;
+                                border-bottom: 1px solid $cc-body;
 
                                 .service,
                                 .forwhom,
@@ -3673,22 +3722,27 @@ header {
 
                                 &:last-child {
                                     margin-bottom: 0;
+                                    border: none;
+                                }
+                                
+                                @include respond-to(ynw-575) {
+                                    padding: 10px;
                                 }
                             }
                         }
 
                         .rt {
-                            border-top: 2px solid $cc-body;
+                            border-top: 1px solid $cc-body;
                             display: flex;
 
                             .controls {
                                 margin: 0;
-                                margin-left: auto;
                                 padding: 0 10px;
                                 display: flex;
                                 flex-direction: column;
                                 flex-direction: row;
                                 justify-content: flex-end;
+                                width: 100%;
 
                                 @include respond-to(ynw-767) {
                                     margin-left: 0;
@@ -3705,16 +3759,20 @@ header {
                                     margin: 0;
                                     font-weight: 500;
                                     display: flex;
-                                    align-items: center;
+                                    flex-grow: 1;
 
                                     span {
                                         padding: 10px;
-                                        position: relative;
-                                        padding-left: 25px;
+                                        padding-left: 10px;
                                         padding-right: 10px;
                                         cursor: pointer;
                                         @include transition(all 300ms);
                                         color: $linkblack;
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        text-align: center;
+                                        width: 100%;
 
                                         @include respond-to(ynw-575) {
                                             padding: 5px;
@@ -3723,17 +3781,15 @@ header {
                                         }
 
                                         &:before {
-                                            position: absolute;
                                             content: "";
-                                            left: 5px;
-                                            top: 50%;
-                                            margin-top: -8px;
                                             @include font-custom;
                                             display: flex;
                                             align-items: center;
                                             justify-content: center;
                                             width: 16px;
                                             height: 16px;
+                                            margin-left: auto;
+                                            margin-right: auto;
                                         }
 
                                         &:hover {
@@ -3792,6 +3848,7 @@ header {
                                                 content: "\69";
                                                 font-size: .65rem;
                                                 height: 18px;
+                                                position: relative;
                                             }
                                         }
                                     }
@@ -3802,51 +3859,6 @@ header {
                                 }
                             }
 
-                            .started-label,
-                            .done-label {
-                                color: $cc-red;
-                                padding: 10px 0px 10px 12px;
-                                font-size: .65rem;
-                                line-height: 1.2rem;
-                                font-weight: 600;
-                                margin-left: 15px;
-                                letter-spacing: .5px;
-                                @include border-radius(20px);
-                                position: relative;
-                                align-self: center;
-
-                                @include respond-to(ynw-400) {
-                                    margin-left: 10px;
-                                }
-
-                                &:before {
-                                    position: absolute;
-                                    width: 6px;
-                                    height: 6px;
-                                    background: $cc-red;
-                                    content: "";
-                                    left: 0;
-                                    top: 50%;
-                                    margin-top: -4px;
-                                    @include border-radius(20px);
-                                }
-                            }
-
-                            .started-label {
-                                color: $start;
-
-                                &:before {
-                                    background: $start;
-                                }
-                            }
-
-                            .done-label {
-                                color: $done;
-
-                                &:before {
-                                    background: $done;
-                                }
-                            }
                         }
                     }
 
@@ -3854,62 +3866,12 @@ header {
                         margin-bottom: 0;
                     }
 
-                    &.cancelled {
-                        .details {
-                            .rt {
-                                display: flex;
-
-                                .cancel-label,
-                                .started-label,
-                                .done-label {
-                                    color: $cc-red;
-                                    padding: 10px 0px 10px 12px;
-                                    font-size: .65rem;
-                                    line-height: 1.2rem;
-                                    font-weight: 600;
-                                    margin-left: 15px;
-                                    letter-spacing: .5px;
-                                    @include border-radius(20px);
-                                    position: relative;
-
-                                    @include respond-to(ynw-400) {
-                                        margin-left: 10px;
-                                    }
-
-                                    &:before {
-                                        position: absolute;
-                                        width: 6px;
-                                        height: 6px;
-                                        background: $cc-red;
-                                        content: "";
-                                        left: 0;
-                                        top: 50%;
-                                        margin-top: -4px;
-                                        @include border-radius(20px);
-                                    }
-                                }
-
-                                .started-label {
-                                    color: $start;
-
-                                    &:before {
-                                        background: $start;
-                                    }
-                                }
-
-                                .done-label {
-                                    color: $done;
-
-                                    &:before {
-                                        background: $done;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     &:hover {
                         @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .1));
+                    }
+                    
+                    @include respond-to(ynw-768-991) {
+                        flex-basis: 48%;
                     }
                 }
             }
