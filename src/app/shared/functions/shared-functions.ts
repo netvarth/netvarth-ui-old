@@ -93,8 +93,8 @@ export class SharedFunctions {
       }
      consumerLogin(post_data, moreParams?) {
 
-      post_data.mUniqueId = localStorage.getItem("mUniqueId");
-      console.log("Key:" + localStorage.getItem("mUniqueId"));
+      post_data.mUniqueId = localStorage.getItem('mUniqueId');
+      console.log('Key:' + localStorage.getItem('mUniqueId'));
       this.sendMessage({ttype: 'main_loading' , action: true});
       const promise = new Promise((resolve, reject) => {
         this.shared_service.ConsumerLogin(post_data)

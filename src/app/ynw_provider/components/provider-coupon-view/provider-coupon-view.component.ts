@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
-
-
 @Component({
   selector: 'app-provider-coupon-view',
   templateUrl: './provider-coupon-view.component.html',
   styleUrls: ['./provider-coupon-view.component.css']
 })
 export class ProviderCouponViewComponent implements OnInit {
-  jaldeecoupon_list : any [] ;
+  jaldeecoupon_list: any[];
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -17,27 +15,21 @@ export class ProviderCouponViewComponent implements OnInit {
     {
       title: 'Coupons',
       url: '/provider/settings/coupons'
-    },{
+    }, {
       title: 'Coupon View',
-     
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-public jc_code;
-
+  public jc_code;
   constructor(private provider_servicesobj: ProviderServices) { }
-
   ngOnInit() {
     this.getCouponview();
   }
-
   getCouponview() {
-    this.jaldeecoupon_list=this.provider_servicesobj.getJaldeeCoupon(this.jc_code);
-
-      // .subscribe(data => {
-      //   console.log(data);
-        // this.jaldeecoupon_list = data;
-        // this.query_executed = true;
-      };
-
+    this.jaldeecoupon_list = this.provider_servicesobj.getJaldeeCoupon(this.jc_code);
+    // .subscribe(data => {
+    //   console.log(data);
+    // this.jaldeecoupon_list = data;
+    // this.query_executed = true;
+  }
 }

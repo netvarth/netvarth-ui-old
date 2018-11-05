@@ -23,16 +23,15 @@ export class ViewReportComponent implements OnInit {
       url: '/provider/settings/coupons/report'
     },
     {
-      title: 'Report View',
-     
+      title: 'Report View'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-  viewreport : any [];
+  viewreport: any [];
 public id;
 
 
-  constructor(private router: Router,private provider_servicesobj: ProviderServices) { }
+  constructor(private router: Router, private provider_servicesobj: ProviderServices) { }
 
   ngOnInit() {
     this.getjaldeeReport();
@@ -41,8 +40,8 @@ public id;
   // goBack() {
   //   this.router.navigate(['provider', 'settings', 'coupons', 'report']);
   // }
-getjaldeeReport(){
-this.viewreport=this.provider_servicesobj.getJaldeeCouponReportsbyId(this.id);
+getjaldeeReport() {
+this.viewreport = this.provider_servicesobj.getJaldeeCouponReportsbyId(this.id);
 }
 
 

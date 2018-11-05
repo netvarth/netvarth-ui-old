@@ -339,8 +339,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.item_count = this.item_list.length;
       });
   }
-
   reloadHandler() {
-
   }
 }

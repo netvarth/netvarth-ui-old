@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
       'countryCode': '+91',
       'loginId': data.phonenumber,
       'password': data.password,
-      'mUniqueId':null
+      'mUniqueId': null
     };
     this.api_loading = true;
     if (this.data.type === 'provider') {
@@ -103,10 +103,10 @@ export class LoginComponent implements OnInit {
           this.api_loading = false;
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
-        //setTimeout(function () {
-          console.log('Key:' + localStorage.getItem("mUniqueId"));
-          post_data.mUniqueId=localStorage.getItem("mUniqueId");
-          console.log(JSON.stringify(post_data))
+        // setTimeout(function () {
+          console.log('Key:' + localStorage.getItem('mUniqueId'));
+          post_data.mUniqueId = localStorage.getItem('mUniqueId');
+          console.log(JSON.stringify(post_data));
           this.shared_functions.consumerLogin(post_data, this.moreParams)
             .then(
               success => { this.dialogRef.close('success'); },

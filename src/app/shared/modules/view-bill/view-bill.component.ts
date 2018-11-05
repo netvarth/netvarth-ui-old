@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
@@ -19,9 +19,11 @@ import { ProviderRefundComponent } from '../../../ynw_provider/components/provid
 })
 
 export class ViewBillComponent implements OnInit, OnChanges {
-
+  // tslint:disable-next-line:no-input-rename
   @Input('checkin') checkin;
+  // tslint:disable-next-line:no-input-rename
   @Input('billdata') billdata;
+  // tslint:disable-next-line:no-input-rename
   @Input('prepaymentlog') prepaymentlog;
   @Input() source;
 
@@ -51,7 +53,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
   selectedItems = [];
   cart = {
     'items': [],
-    'prepayment_amount' : 0,
+    'prepayment_amount': 0,
     'sub_total': 0,
     'discount': null,
     'coupon': null,
@@ -77,11 +79,11 @@ export class ViewBillComponent implements OnInit, OnChanges {
     public sharedfunctionObj: SharedFunctions,
     public shareServicesobj: SharedServices
 
-    ) {
+  ) {
 
 
 
-     }
+  }
 
   ngOnInit() {
     // this.getTaxDetails();
@@ -100,7 +102,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
 
     this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
-    this.bill_data.amount_to_pay = this.bill_data.netRate -  this.bill_data.totalAmountPaid;
+    this.bill_data.amount_to_pay = this.bill_data.netRate - this.bill_data.totalAmountPaid;
 
     if (this.bill_data.service.length) {
       for (let i = 0; i < this.bill_data.service.length; i++) {
@@ -122,18 +124,18 @@ export class ViewBillComponent implements OnInit, OnChanges {
         this.subtotalwithouttax += rtotal;
         if (this.bill_data.items[i].GSTpercentage > 0) {
           this.taxpercentage = this.bill_data.items[i].GSTpercentage;
-         // console.log('tax', this.bill_data.items[i].itemId, this.bill_data.items[i].GSTpercentage);
-          this.taxtotal += (((this.bill_data.items[i].price * this.bill_data.items[i].quantity) - ( this.bill_data.items[i].discountValue + this.bill_data.items[i].couponValue)) * this.bill_data.items[i].GSTpercentage / 100);
+          // console.log('tax', this.bill_data.items[i].itemId, this.bill_data.items[i].GSTpercentage);
+          this.taxtotal += (((this.bill_data.items[i].price * this.bill_data.items[i].quantity) - (this.bill_data.items[i].discountValue + this.bill_data.items[i].couponValue)) * this.bill_data.items[i].GSTpercentage / 100);
           this.taxabletotal += rtotal;
         }
       }
     }
     // console.log('taxable total', this.taxabletotal);
 
-    if ( !this.checkin) {
+    if (!this.checkin) {
       setTimeout(() => {
         this.dialogRef.close('error');
-        }, projectConstants.TIMEOUT_DELAY);
+      }, projectConstants.TIMEOUT_DELAY);
     }
 
     this.getPaymentModes();
@@ -152,7 +154,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     if (this.bill_data.createdDate) {
       const datearr = this.bill_data.createdDate.split(' ');
       const billdatearr = datearr[0].split('-');
-      this.billdate =  billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       this.billtime = datearr[1] + ' ' + datearr[2];
     }
   }
@@ -165,18 +167,18 @@ export class ViewBillComponent implements OnInit, OnChanges {
 
   getPaymentModes() {
     this.shareServicesobj.getPaymentModesofProvider(this.checkin.provider.id)
-    .subscribe(
-      data => {
-        this.payment_options = data;
-      },
-      error => {
-        // this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-      }
-    );
+      .subscribe(
+        data => {
+          this.payment_options = data;
+        },
+        error => {
+          // this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        }
+      );
   }
 
 
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
@@ -218,15 +220,15 @@ export class ViewBillComponent implements OnInit, OnChanges {
   confirmSettleBill() {
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message' : this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+        'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
       if (result) {
-          this.settleBill();
+        this.settleBill();
       }
     });
   }
@@ -237,7 +239,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
 
   showRefund(payment) {
 
-   const dialogrefundRef = this.dialog.open(ProviderRefundComponent, {
+    const dialogrefundRef = this.dialog.open(ProviderRefundComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
@@ -261,7 +263,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
           // console.log('payment log', this.pre_payment_log);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 
@@ -280,7 +282,6 @@ export class ViewBillComponent implements OnInit, OnChanges {
       } else if (mod === 'time') {
         retval = dtsarr[1] + ' ' + dtsarr[2];
       }
-
       return retval;
       // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
     } else {
@@ -299,7 +300,4 @@ export class ViewBillComponent implements OnInit, OnChanges {
     window.print();
     // this.showHeading = true;
   }
-
 }
-
-

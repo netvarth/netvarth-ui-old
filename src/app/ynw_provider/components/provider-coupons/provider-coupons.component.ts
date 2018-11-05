@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provider-coupons.component';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -17,10 +15,8 @@ import { Messages } from '../../../shared/constants/project-messages';
   styleUrls: ['./provider-coupons.component.css']
 })
 export class ProviderCouponsComponent implements OnInit, OnDestroy {
-
   coupon_list: any = [];
   jaldeecoupon_list: any = [];
-  
   query_executed = false;
   emptyMsg = '';
   breadcrumbs = [
@@ -29,28 +25,22 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       url: '/provider/settings'
     },
     {
-    title: 'Coupons'
+      title: 'Coupons'
     }
   ];
   addcoupdialogRef;
   editcoupdialogRef;
   confirmremdialogRef;
-
-
-
-
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('COUPON_LISTEMPTY');
   }
-
   ngOnInit() {
     this.getCoupons(); // Call function to get the list of discount lists
     this.getProviderJaldeeCoupon();
-   
-  }
 
+  }
   ngOnDestroy() {
     if (this.addcoupdialogRef) {
       this.addcoupdialogRef.close();
@@ -62,7 +52,6 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       this.confirmremdialogRef.close();
     }
   }
-
   getCoupons() {
     this.provider_servicesobj.getProviderCoupons()
       .subscribe(data => {
@@ -70,18 +59,13 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
         this.query_executed = true;
       });
   }
-
   getProviderJaldeeCoupon() {
-    this.jaldeecoupon_list=this.provider_servicesobj.getJaldeeCoupons();
-
-      // .subscribe(data => {
-      //   console.log(data);
-        // this.jaldeecoupon_list = data;
-        // this.query_executed = true;
-      };
-  
-
-
+    this.jaldeecoupon_list = this.provider_servicesobj.getJaldeeCoupons();
+    // .subscribe(data => {
+    //   console.log(data);
+    // this.jaldeecoupon_list = data;
+    // this.query_executed = true;
+  }
   addCoupons() {
     this.addcoupdialogRef = this.dialog.open(AddProviderCouponsComponent, {
       width: '50%',
@@ -135,7 +119,6 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   deleteCoupons(id) {
     this.provider_servicesobj.deleteCoupon(id)
       .subscribe(
@@ -147,28 +130,19 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-
   }
-
-
-
   reports() {
     this.router.navigate(['provider', 'settings', 'coupons', 'report']);
   }
-
-couponView(){
-  this.router.navigate(['provider', 'settings', 'coupons', 'coupon']);
-}
-
-
-// couponView(id) {
-//   if (!id) {
-//     return ;
-//   }
-//   this.router.navigate(['provider', 'settings', 'coupons', 'coupon', id]);
-// }
-
-
+  couponView() {
+    this.router.navigate(['provider', 'settings', 'coupons', 'coupon']);
+  }
+  // couponView(id) {
+  //   if (!id) {
+  //     return ;
+  //   }
+  //   this.router.navigate(['provider', 'settings', 'coupons', 'coupon', id]);
+  // }
   formatPrice(price) {
     return this.sharedfunctionObj.print_PricewithCurrency(price);
   }

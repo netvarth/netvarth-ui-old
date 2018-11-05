@@ -6,24 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pie-chart.component.css']
 })
 export class PieChartComponent implements OnInit {
-
+  // Pie
+  public pieChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
+  public pieChartData: number[] = [300, 500, 100];
+  public pieChartType = 'pie';
   constructor() { }
-
   ngOnInit() {
   }
 
-  // Pie
-  public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-  public pieChartData:number[] = [300, 500, 100];
-  public pieChartType:string = 'pie';
-
   // events
-  public chartClicked(e:any):void {
+  public chartClicked(e: any): void {
     console.log(e);
   }
-
-  public chartHovered(e:any):void {
+  public chartHovered(e: any): void {
     console.log(e);
   }
-
 }

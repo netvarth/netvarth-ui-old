@@ -12,9 +12,8 @@ import { ProviderServices } from '../../services/provider-services.service';
   styleUrls: ['./provider-reimburse-report.component.css']
 })
 export class ProviderReimburseReportComponent implements OnInit {
-
-  couponreport :any[];
-    breadcrumbs_init = [
+  couponreport: any[];
+  breadcrumbs_init = [
     {
       url: '/provider/settings',
       title: 'Settings'
@@ -24,50 +23,35 @@ export class ProviderReimburseReportComponent implements OnInit {
       url: '/provider/settings/coupons'
     },
     {
-      title: 'Report',
-    
+      title: 'Report'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-  open_filter =false;
+  open_filter = false;
   requestdialogRef;
-  
-
-  
-  constructor(private dialog: MatDialog, private router: Router,private provider_servicesobj: ProviderServices) {
+  constructor(private dialog: MatDialog, private router: Router, private provider_servicesobj: ProviderServices) {
   }
-
   ngOnInit() {
     this.getCouponReport();
   }
-
   toggleFilter() {
     this.open_filter = !this.open_filter;
   }
-  openrequest(){
+  openrequest() {
     this.requestdialogRef = this.dialog.open(RequestForComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
-    data: {
-   
-    }
+      data: {
+      }
     });
-  
     this.requestdialogRef.afterClosed().subscribe(result => {
-  
     });
   }
-
-
-  getCouponReport(){
-    this.couponreport=this.provider_servicesobj.getJaldeeCouponReports();
+  getCouponReport() {
+    this.couponreport = this.provider_servicesobj.getJaldeeCouponReports();
   }
-
-
-
-  reportView(){
+  reportView() {
     this.router.navigate(['provider', 'settings', 'coupons', 'report', 'report_view']);
   }
-
 }
