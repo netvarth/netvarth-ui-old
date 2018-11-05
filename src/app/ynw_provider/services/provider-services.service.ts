@@ -181,7 +181,6 @@ export class ProviderServices {
     const path = 'provider/bill/discounts/' + id;
     return this.servicemeta.httpDelete(path);
   }
-
   // Provider Coupons
   getProviderCoupons(id?) {
     if (id) {
@@ -190,7 +189,6 @@ export class ProviderServices {
       return this.servicemeta.httpGet('provider/bill/coupons');
     }
   }
-
   addCoupon(data) {
     return this.servicemeta.httpPost('provider/bill/coupons', data);
   }
@@ -202,158 +200,164 @@ export class ProviderServices {
     const path = 'provider/bill/coupons/' + id;
     return this.servicemeta.httpDelete(path);
   }
-  //Jaldee Coupons
+  // Jaldee Coupons
   getJaldeeCoupons() {
     let a ;
-    a=  [{
-      "jaldeeCouponCode": "CPN01",
-      "couponName": "10% Off",
-      "couponDescription": "Get 10% off for your first 5 check-ins",
-      "couponStatus": "Active",
-      "startDate": "31/10/2018",
-      "endDate": "31/11/2018",
-      "couponRules": {
-        "discountValue": 10,
-        "maxDiscountValue": 100,
-        "maxReimbursePercentage": 100,
-        "maxProviderUseLimit": 5000,
-        "maxConsumerUseLimit": 5000,
-        "usageMaxLimitPerProvider": 5000,
-        "consumerFirstCheckInUsageOnly": false,
-        "providerFirstCheckInUseOnly": true,
-        "selfPaymentRequired": true,
-        "onlineCheckinRequired": true,
-        "combineWithOtherCoupon": false,
-        "defaultEnable": true,
-        "alwaysEnabled": true,
-        "consumerTermsAndcondition": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word",
-        "providerDescription": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying."
+    a =  [{
+      'jaldeeCouponCode': 'CPN01',
+      'couponName': '10% Off',
+      'couponDescription': 'Get 10% off for your first 5 check-ins',
+      'couponStatus': 'Active',
+      'startDate': '31/10/2018',
+      'endDate': '31/11/2018',
+      'couponRules': {
+        'discountValue': 10,
+        'maxDiscountValue': 100,
+        'maxReimbursePercentage': 100,
+        'maxProviderUseLimit': 5000,
+        'maxConsumerUseLimit': 5000,
+        'usageMaxLimitPerProvider': 5000,
+        'consumerFirstCheckInUsageOnly': false,
+        'providerFirstCheckInUseOnly': true,
+        'selfPaymentRequired': true,
+        'onlineCheckinRequired': true,
+        'combineWithOtherCoupon': false,
+        'defaultEnable': true,
+        'alwaysEnabled': true,
+        // tslint:disable-next-line:max-line-length
+        'consumerTermsAndcondition': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word',
+        // tslint:disable-next-line:max-line-length
+        'providerDescription': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying.'
       },
-      "target": null
+      'target': null
     },
     {
-      "jaldeeCouponCode": "CPN02",
-      "couponName": "20% Off",
-      "couponDescription": "Get 20% off for your first 5 check-ins",
-      "couponStatus": "Active",
-      "startDate": "1/11/2018",
-      "endDate": "31/11/2018",
-      "couponRules": {
-        "discountValue": 20,
-        "maxDiscountValue": 100,
-        "maxReimbursePercentage": 100,
-        "maxProviderUseLimit": 5000,
-        "maxConsumerUseLimit": 5000,
-        "usageMaxLimitPerProvider": 5000,
-        "consumerFirstCheckInUsageOnly": false,
-        "providerFirstCheckInUseOnly": true,
-        "selfPaymentRequired": true,
-        "onlineCheckinRequired": true,
-        "combineWithOtherCoupon": false,
-        "defaultEnable": true,
-        "alwaysEnabled": true,
-        "consumerTermsAndcondition": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word",
-        "providerDescription": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying."
+      'jaldeeCouponCode': 'CPN02',
+      'couponName': '20% Off',
+      'couponDescription': 'Get 20% off for your first 5 check-ins',
+      'couponStatus': 'Active',
+      'startDate': '1/11/2018',
+      'endDate': '31/11/2018',
+      'couponRules': {
+        'discountValue': 20,
+        'maxDiscountValue': 100,
+        'maxReimbursePercentage': 100,
+        'maxProviderUseLimit': 5000,
+        'maxConsumerUseLimit': 5000,
+        'usageMaxLimitPerProvider': 5000,
+        'consumerFirstCheckInUsageOnly': false,
+        'providerFirstCheckInUseOnly': true,
+        'selfPaymentRequired': true,
+        'onlineCheckinRequired': true,
+        'combineWithOtherCoupon': false,
+        'defaultEnable': true,
+        'alwaysEnabled': true,
+        // tslint:disable-next-line:max-line-length
+        'consumerTermsAndcondition': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word',
+        // tslint:disable-next-line:max-line-length
+        'providerDescription': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying.'
       },
-      "target": null
+      'target': null
     }];
     return a;
-    //  return this.servicemeta.httpGet('provider/coupons');
+    // return this.servicemeta.httpGet('provider/coupons');
   }
   getJaldeeCoupon(jc_code) {
-    const url='provider/coupons/'+jc_code;
+    const url = 'provider/coupons/' + jc_code;
     let a ;
-    a= {
-      "jaldeeCouponCode": "CPN01",
-      "couponName": "10% Off",
-      "couponDescription": "Get 10% off for your first 5 check-ins",
-      "couponStatus": "Active",
-      "startDate": "31/10/2018",
-      "endDate": "31/11/2018",
-      "couponRules": {
-        "discountValue": 10,
-        "maxDiscountValue": 100,
-        "maxReimbursePercentage": 100,
-        "maxProviderUseLimit": 5000,
-        "maxConsumerUseLimit": 5000,
-        "usageMaxLimitPerProvider": 5000,
-        "consumerFirstCheckInUsageOnly": false,
-        "providerFirstCheckInUseOnly": true,
-        "selfPaymentRequired": true,
-        "onlineCheckinRequired": true,
-        "combineWithOtherCoupon": false,
-        "defaultEnable": true,
-        "alwaysEnabled": true,
-        "consumerTermsAndcondition": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word",
-        "providerDescription": "People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying."
+    a = {
+      'jaldeeCouponCode': 'CPN01',
+      'couponName': '10% Off',
+      'couponDescription': 'Get 10% off for your first 5 check-ins',
+      'couponStatus': 'Active',
+      'startDate': '31/10/2018',
+      'endDate': '31/11/2018',
+      'couponRules': {
+        'discountValue': 10,
+        'maxDiscountValue': 100,
+        'maxReimbursePercentage': 100,
+        'maxProviderUseLimit': 5000,
+        'maxConsumerUseLimit': 5000,
+        'usageMaxLimitPerProvider': 5000,
+        'consumerFirstCheckInUsageOnly': false,
+        'providerFirstCheckInUseOnly': true,
+        'selfPaymentRequired': true,
+        'onlineCheckinRequired': true,
+        'combineWithOtherCoupon': false,
+        'defaultEnable': true,
+        'alwaysEnabled': true,
+        // tslint:disable-next-line:max-line-length
+        'consumerTermsAndcondition': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word',
+        // tslint:disable-next-line:max-line-length
+        'providerDescription': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying.'
       },
-      "target": null
-    }
+      'target': null
+    };
     return a;
-    //return this.servicemeta.httpGet(url);
+    // return this.servicemeta.httpGet(url);
   }
   applyJaldeeCoupon(jc_code, checkin_id) {
-    const url='/provider/coupons/'+jc_code+"/"+checkin_id;
+    const url = '/provider/coupons/' + jc_code + '/' + checkin_id;
     return true;
-    //return this.servicemeta.httpGet(url);
+    // return this.servicemeta.httpGet(url);
   }
   applyStatusJaldeeCoupon(jc_code, status) {
-    const url='/provider/coupons/'+jc_code+"/"+status;
+    const url = '/provider/coupons/' + jc_code + '/' + status;
     return true;
-    //return this.servicemeta.httpPut(url);
+    // return this.servicemeta.httpPut(url);
   }
   getJaldeeCouponReports(filter = {}) {
     return [{
-      "invoiceId": "1",
-      "providerId": "1",
-      "jaldeeAccountAmount": "2000",
-      "jaldeeCouponAmount": "1000",
-      "paidate": "30-10-2018",
-      "PaidAmount": "3000",
-      "invoiceStatus": "paid",
-      "paidMode": "cash"
+      'invoiceId': '1',
+      'providerId': '1',
+      'jaldeeAccountAmount': 2000,
+      'jaldeeCouponAmount': 1000,
+      'paidate': '30-10-2018',
+      'PaidAmount': 3000,
+      'invoiceStatus': 'paid',
+      'paidMode': 'cash'
     },
     {
-      "invoiceId": "2",
-      "providerId": "1",
-      "jaldeeAccountAmount": "1000",
-      "jaldeeCouponAmount": "500",
-      "paidate": "30-10-2018",
-      "PaidAmount": "1500",
-      "invoiceStatus": "paid",
-      "paidMode": "cash"
+      'invoiceId': '2',
+      'providerId': '1',
+      'jaldeeAccountAmount': 1000,
+      'jaldeeCouponAmount': 500,
+      'paidate': '30-10-2018',
+      'PaidAmount': 1500,
+      'invoiceStatus': 'paid',
+      'paidMode': 'cash'
     },
     {
-      "invoiceId": "3",
-      "providerId": "2",
-      "jaldeeAccountAmount": "2000",
-      "jaldeeCouponAmount": "1000",
-      "PaidAmount": "3000",
-      "invoiceStatus": "notpaid"
+      'invoiceId': '3',
+      'providerId': '2',
+      'jaldeeAccountAmount': 2000,
+      'jaldeeCouponAmount': 1000,
+      'PaidAmount': 3000,
+      'invoiceStatus': 'notpaid'
     }
   ];
-    //return this.servicemeta.httpGet('provider/coupons/jcreports', null, filter);
+    // return this.servicemeta.httpGet('provider/coupons/jcreports', null, filter);
   }
   getJaldeeCouponReportsbyId(id?) {
-    const url= 'provider/coupons/jcreports/' + id;
+    const url = 'provider/coupons/jcreports/' + id;
     let a;
-    a= {
-      "invoiceId": "1",
-      "providerId": "1",
-      "jaldeeAccountAmount": "2000",
-      "jaldeeCouponAmount": "1000",
-      "paidate": "30-10-2018",
-      "PaidAmount": "3000",
-      "invoiceStatus": "paid",
-      "paidMode": "cash"
+    a = {
+      'invoiceId': '1',
+      'providerId': '1',
+      'jaldeeAccountAmount': 2000,
+      'jaldeeCouponAmount': 1000,
+      'paidate': '30-10-2018',
+      'PaidAmount': 3000,
+      'invoiceStatus': 'paid',
+      'paidMode': 'cash'
     };
     return a;
-    //return this.servicemeta.httpGet(url);
+    // return this.servicemeta.httpGet(url);
   }
   requestforPaymentJC(id?) {
-    const url= 'provider/coupons/jcreports/' + id + "/requestPayment";
+    const url = 'provider/coupons/jcreports/' + id + '/requestPayment';
     return true;
-    //return this.servicemeta.httpGet(url);
+    // return this.servicemeta.httpGet(url);
   }
   // Non working days
   getProviderNonworkingdays(id?) {

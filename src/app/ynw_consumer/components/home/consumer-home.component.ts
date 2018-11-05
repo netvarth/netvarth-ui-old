@@ -1,9 +1,9 @@
 
-import {interval as observableInterval, Observable,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { interval as observableInterval, Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { ConsumerDataStorageService } from '../../services/consumer-datastorage.service';
@@ -15,15 +15,15 @@ import { NotificationListBoxComponent } from '../../shared/component/notificatio
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { ViewConsumerWaitlistCheckInBillComponent} from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
+import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-import {startWith, map,  count } from 'rxjs/operators';
-import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
+import { startWith, map, count } from 'rxjs/operators';
+import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 import { appendFile } from 'fs';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -35,9 +35,9 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./consumer-home.component.scss'],
   animations: [
     trigger('hideShowAnimator', [
-        state('true' , style({ opacity: 1 , height: '100%' })),
-        state('false', style({ opacity: 0 , height: 0 })),
-        transition('0 <=> 1', animate('.5s ease-out'))
+      state('true', style({ opacity: 1, height: '100%' })),
+      state('false', style({ opacity: 0, height: 0 })),
+      transition('0 <=> 1', animate('.5s ease-out'))
     ])
   ]
 })
@@ -45,17 +45,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   waitlists;
   fav_providers: any = [];
-  history ;
+  history;
   fav_providers_id_list = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
-  loadcomplete = {waitlist: false , fav_provider: false, history: false};
+  loadcomplete = { waitlist: false, fav_provider: false, history: false };
   tooltipcls = projectConstants.TOOLTIP_CLS;
-  pagination: any  = {
+  pagination: any = {
     startpageval: 1,
-    totalCnt : 0,
-    perPage : projectConstants.PERPAGING_LIMIT
+    totalCnt: 0,
+    perPage: projectConstants.PERPAGING_LIMIT
   };
 
   s3url = null;
@@ -63,10 +63,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   settings_exists = false;
   futuredate_allowed = false;
 
-  waitlistestimatetimetooltip  = Messages.SEARCH_ESTIMATE_TOOPTIP;
+  waitlistestimatetimetooltip = Messages.SEARCH_ESTIMATE_TOOPTIP;
   public searchfields: SearchFields = new SearchFields();
 
-  reload_history_api =  {status : true};
+  reload_history_api = { status: true };
 
   cronHandle: Subscription;
   countercronHandle: Subscription;
@@ -100,7 +100,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private dialog: MatDialog, private router: Router,
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer,
-  private consumer_datastorage: ConsumerDataStorageService) {}
+    private consumer_datastorage: ConsumerDataStorageService) { }
 
   ngOnInit() {
     this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
@@ -108,22 +108,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
-   // this.getHistoryCount();
-   // this.getFavouriteProvider();
-   this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
-    this.reloadAPIs();
-   });
+    // this.getHistoryCount();
+    // this.getFavouriteProvider();
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
+      this.reloadAPIs();
+    });
 
-   this.countercronHandle = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
-    this.recheckwaitlistCounters();
-   });
+    this.countercronHandle = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
+      this.recheckwaitlistCounters();
+    });
 
 
   }
 
   ngOnDestroy() {
     if (this.cronHandle) {
-     this.cronHandle.unsubscribe();
+      this.cronHandle.unsubscribe();
     }
     if (this.countercronHandle) {
       this.countercronHandle.unsubscribe();
@@ -155,26 +155,26 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.remfavdialogRef) {
       this.remfavdialogRef.close();
     }
- }
+  }
 
   getWaitlist() {
 
-      this.loadcomplete.waitlist = false;
+    this.loadcomplete.waitlist = false;
 
-       const params = {
-     //  'sort_id': 'asc',
-     // 'waitlistStatus-eq': 'checkedIn,arrived'
-      };
+    const params = {
+      //  'sort_id': 'asc',
+      // 'waitlistStatus-eq': 'checkedIn,arrived'
+    };
 
-      this.consumer_services.getWaitlist(params)
+    this.consumer_services.getWaitlist(params)
       .subscribe(
-      data => {
-        this.waitlists = data;
-        // console.log('waitlist', this.waitlists);
-        const today = new Date();
-        let i = 0;
-        let retval;
-        for (const waitlist of this.waitlists) {
+        data => {
+          this.waitlists = data;
+          // console.log('waitlist', this.waitlists);
+          const today = new Date();
+          let i = 0;
+          let retval;
+          for (const waitlist of this.waitlists) {
 
             const waitlist_date = new Date(waitlist.date);
 
@@ -200,18 +200,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               this.waitlists[i].estimated_timeinmins = retval.time_inmins;
             }
             i++;
-        }
+          }
 
-        this.loadcomplete.waitlist = true;
-      },
-      error => {
-        this.loadcomplete.waitlist = true;
-      }
+          this.loadcomplete.waitlist = true;
+        },
+        error => {
+          this.loadcomplete.waitlist = true;
+        }
       );
   }
 
   getAppxTime(waitlist) {
-    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime};
+    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime };
     // console.log('wait', waitlist.date, waitlist.queue.queueStartTime);
     // console.log('inside', waitlist.hasOwnProperty('serviceTime'));
     if (waitlist.hasOwnProperty('serviceTime')) {
@@ -271,37 +271,37 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getHistroy() {
-      this.loadcomplete.history = false;
-      const params = this.setPaginationFilter();
-      this.consumer_services.getWaitlistHistory(params)
+    this.loadcomplete.history = false;
+    const params = this.setPaginationFilter();
+    this.consumer_services.getWaitlistHistory(params)
       .subscribe(
-      data => {
+        data => {
           this.history = data;
           this.loadcomplete.history = true;
-      },
-      error => {
-        this.loadcomplete.history = true;
-      }
+        },
+        error => {
+          this.loadcomplete.history = true;
+        }
       );
   }
 
   getHistoryCount() {
     const date = moment().format(projectConstants.POST_DATE_FORMAT);
     this.consumer_services.getHistoryWaitlistCount()
-    .subscribe(
-    data => {
-      const counts: any = data;
-      this.pagination.totalCnt = data;
-      if (counts > 0) {
-          this.getHistroy();
-      } else {
-        this.loadcomplete.waitlist = true;
-      }
-    },
-    error => {
-      this.loadcomplete.waitlist = true;
-    }
-    );
+      .subscribe(
+        data => {
+          const counts: any = data;
+          this.pagination.totalCnt = data;
+          if (counts > 0) {
+            this.getHistroy();
+          } else {
+            this.loadcomplete.waitlist = true;
+          }
+        },
+        error => {
+          this.loadcomplete.waitlist = true;
+        }
+      );
   }
 
   getFavouriteProvider() {
@@ -309,29 +309,29 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.loadcomplete.fav_provider = false;
 
     this.shared_services.getFavProvider()
-    .subscribe(
-    data => {
+      .subscribe(
+        data => {
 
-      this.loadcomplete.fav_provider = true;
+          this.loadcomplete.fav_provider = true;
 
-      this.fav_providers = data;
-      this.fav_providers_id_list = [];
-      this.setWaitlistTimeDetails();
-      // console.log( this.fav_providers);
-    },
-    error => {
-      this.loadcomplete.fav_provider = true;
-    }
-    );
+          this.fav_providers = data;
+          this.fav_providers_id_list = [];
+          this.setWaitlistTimeDetails();
+          // console.log( this.fav_providers);
+        },
+        error => {
+          this.loadcomplete.fav_provider = true;
+        }
+      );
   }
 
   setWaitlistTimeDetails() {
     let k = 0;
     for (const x of this.fav_providers) {
 
-       this.fav_providers_id_list.push(x.id);
-       /// setWaitlistTimeDetailsProvider
-       k++;
+      this.fav_providers_id_list.push(x.id);
+      /// setWaitlistTimeDetailsProvider
+      k++;
 
     }
   }
@@ -339,110 +339,110 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   setWaitlistTimeDetailsProvider(provider, k) {
     if (this.s3url) {
       this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
-     }
-     const locarr = [];
-     let i = 0;
-     for (const loc of provider.locations) {
-      locarr.push({'locid': provider.id + '-' + loc.id, 'locindx': i});
+    }
+    const locarr = [];
+    let i = 0;
+    for (const loc of provider.locations) {
+      locarr.push({ 'locid': provider.id + '-' + loc.id, 'locindx': i });
       i++;
-     }
-     this.getWaitingTime(locarr, k);
+    }
+    this.getWaitingTime(locarr, k);
   }
 
   getWaitingTime(provids_locid, index) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
-          // if (provids[i] !== undefined) {
-            post_provids_locid.push(provids_locid[i].locid);
-         // }
+        // if (provids[i] !== undefined) {
+        post_provids_locid.push(provids_locid[i].locid);
+        // }
       }
 
-    this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
-      .subscribe (data => {
-        // console.log('waitingtime api', data);
-        let waitlisttime_arr: any = data;
-        const locationjson: any = [];
+      this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
+        .subscribe(data => {
+          // console.log('waitingtime api', data);
+          let waitlisttime_arr: any = data;
+          const locationjson: any = [];
 
-        if (waitlisttime_arr === '"Account doesn\'t exist"') {
-          waitlisttime_arr = [];
-        }
-        const today = new Date();
-        const dd = today.getDate();
-        const mm = today.getMonth() + 1; // January is 0!
-        const yyyy = today.getFullYear();
-        let cday = '';
-        if (dd < 10) {
+          if (waitlisttime_arr === '"Account doesn\'t exist"') {
+            waitlisttime_arr = [];
+          }
+          const today = new Date();
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
             cday = '0' + dd;
-        } else {
-          cday = '' + dd;
-        }
-        let cmon;
-        if (mm < 10) {
-          cmon = '0' + mm;
-        } else {
-          cmon = '' + mm;
-        }
-        const dtoday = yyyy + '-' + cmon + '-' + cday;
-        const ctoday = cday + '/' + cmon + '/' + yyyy;
-        let locindx;
-        const check_dtoday = new Date(dtoday);
-        let cdate = new Date();
-        for (let i = 0; i < waitlisttime_arr.length; i++) {
-          locindx = provids_locid[i].locindx;
-          // console.log('locindx', locindx);
-          this.fav_providers[index]['locations'][locindx]['waitingtime_res'] = waitlisttime_arr[i];
-          this.fav_providers[index]['locations'][locindx]['estimatedtime_det'] = [];
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          const ctoday = cday + '/' + cmon + '/' + yyyy;
+          let locindx;
+          const check_dtoday = new Date(dtoday);
+          let cdate = new Date();
+          for (let i = 0; i < waitlisttime_arr.length; i++) {
+            locindx = provids_locid[i].locindx;
+            // console.log('locindx', locindx);
+            this.fav_providers[index]['locations'][locindx]['waitingtime_res'] = waitlisttime_arr[i];
+            this.fav_providers[index]['locations'][locindx]['estimatedtime_det'] = [];
 
-          if (waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
-            this.fav_providers[index]['locations'][locindx]['opennow'] = waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
-            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
-            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
-            cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
-            // if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-            if (cdate.getTime() !== check_dtoday.getTime()) {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 1;
-              // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-              //     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-              // } else {
-              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-              //   + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-              // }
-              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+            if (waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+              this.fav_providers[index]['locations'][locindx]['opennow'] = waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
+              cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              // if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+              if (cdate.getTime() !== check_dtoday.getTime()) {
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 1;
+                // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                //     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                // } else {
+                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                //   + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                // }
+                if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                } else {
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                }
               } else {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
+                // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                // } else {
+                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                // }
+                if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                } else {
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                }
               }
             } else {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
-              // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-              // } else {
-              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
-              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-              // }
-              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-              } else {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-              }
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 0;
             }
-          } else {
-            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 0;
-          }
 
-          if (waitlisttime_arr[i]['message']) {
-            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['message'] = waitlisttime_arr[i]['message'];
+            if (waitlisttime_arr[i]['message']) {
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['message'] = waitlisttime_arr[i]['message'];
+            }
           }
-        }
-        // console.log('loc final', this.fav_providers[index]['locations']);
-      });
+          // console.log('loc final', this.fav_providers[index]['locations']);
+        });
     }
   }
 
@@ -452,16 +452,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
 
     this.shared_functions.doCancelWaitlist(waitlist, this)
-    .then (
-      data => {
-        if (data === 'reloadlist') {
-          this.getWaitlist();
+      .then(
+        data => {
+          if (data === 'reloadlist') {
+            this.getWaitlist();
+          }
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
-      },
-      error => {
-        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
-      }
-    );
+      );
   }
 
 
@@ -471,15 +471,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
 
     this.shared_functions.doDeleteFavProvider(fav, this)
-    .then(
-      data => {
-        if (data === 'reloadlist') {
-          this.getFavouriteProvider();
-        }
-      },
-      error => {
-        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
-      });
+      .then(
+        data => {
+          if (data === 'reloadlist') {
+            this.getFavouriteProvider();
+          }
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
   }
 
   addFavProvider(id) {
@@ -488,14 +488,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
 
     this.shared_services.addProvidertoFavourite(id)
-    .subscribe(
-    data => {
-        this.getFavouriteProvider();
-    },
-    error => {
+      .subscribe(
+        data => {
+          this.getFavouriteProvider();
+        },
+        error => {
 
-    }
-    );
+        }
+      );
   }
 
   goWaitlistDetail(waitlist) {
@@ -511,7 +511,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       width: '50%',
       disableClose: true,
       data: {
-        'messages' : data
+        'messages': data
       }
     });
 
@@ -524,8 +524,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     let fav = false;
 
     this.fav_providers_id_list.map((e) => {
-      if ( e === id) {
-        fav =  true;
+      if (e === id) {
+        fav = true;
       }
     });
     return fav;
@@ -599,21 +599,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
 
     const provider_data = data.provider_data;
-    const location_data =  data.location_data;
+    const location_data = data.location_data;
 
     this.checkindialogRef = this.dialog.open(CheckInComponent, {
-       width: '50%',
-       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
-       disableClose: true,
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
       data: {
-        type : origin,
-        is_provider : false,
-        moreparams: { source: 'provdet_checkin',
-                      bypassDefaultredirection: 1,
-                      provider: provider_data,
-                      location: location_data,
-                      sel_date: data.sel_date
-                    },
+        type: origin,
+        is_provider: false,
+        moreparams: {
+          source: 'provdet_checkin',
+          bypassDefaultredirection: 1,
+          provider: provider_data,
+          location: location_data,
+          sel_date: data.sel_date
+        },
         datechangereq: data.chdatereq
       }
     });
@@ -649,7 +650,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const post_data = {
       'provider_data': null,
       'location_data': null,
-      'sel_date' : currdate,
+      'sel_date': currdate,
       'chdatereq': chdatereq
     };
 
@@ -660,8 +661,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
 
     post_data.location_data = {
-    'id': location.id,
-    'name': location.place
+      'id': location.id,
+      'name': location.place
     };
 
     this.showCheckin(post_data);
@@ -680,7 +681,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   // gets the various json files based on the value of "section" parameter
   getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
-    let  UTCstring = null ;
+    let UTCstring = null;
 
     if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
       return false;
@@ -690,7 +691,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
-    .subscribe (res => {
+      .subscribe(res => {
         switch (section) {
 
           case 'settings': {
@@ -699,11 +700,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           }
 
         }
-    },
-    error => {
+      },
+        error => {
 
-    }
-  );
+        }
+      );
   }
 
   showcheckInButton(provider) {
@@ -711,20 +712,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       return true;
     }
   }
-
   reloadAPIs() {
-   // console.log('reload api' + this.getCurtime());
+    // console.log('reload api' + this.getCurtime());
     this.getWaitlist();
-    this.reload_history_api = {status : true};
+    this.reload_history_api = { status: true };
   }
-
   recheckwaitlistCounters() {
-   // console.log('reload counter' + this.getCurtime());
+    // console.log('reload counter' + this.getCurtime());
     for (let i = 0; i < this.waitlists.length; i++) {
       if (this.waitlists[i].estimated_autocounter) {
-       // console.log('time', this.waitlists[i].estimated_time);
+        // console.log('time', this.waitlists[i].estimated_time);
         if (this.waitlists[i].estimated_timeinmins > 0) {
-         // console.log('iamhere');
+          // console.log('iamhere');
           this.waitlists[i].estimated_timeinmins = (this.waitlists[i].estimated_timeinmins - 1);
           if (this.waitlists[i].estimated_timeinmins === 0) {
             this.waitlists[i].estimated_time = 'Now';
@@ -735,40 +734,36 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     }
   }
-
- getWaitlistBill(waitlist) {
-  // console.log('waitlist', waitlist);
+  getWaitlistBill(waitlist) {
+    // console.log('waitlist', waitlist);
     this.consumer_services.getWaitlistBill(waitlist.ynwUuid)
-    .subscribe(
-      data => {
-        const bill_data = data;
-        this.viewBill(waitlist, bill_data);
-      },
-      error => {
-        this.shared_functions.openSnackBar(error,  {'panelClass': 'snackbarerror'});
-      }
-    );
+      .subscribe(
+        data => {
+          const bill_data = data;
+          this.viewBill(waitlist, bill_data);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
-
   viewBill(checkin, bill_data) {
     bill_data['passedProvname'] = checkin['provider']['businessName'];
     this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'billpopup'],
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'billpopup'],
       disableClose: true,
       data: {
         checkin: checkin,
         bill_data: bill_data
       }
     });
-
     this.billdialogRef.afterClosed().subscribe(result => {
-      if ( result === 'makePayment') {
+      if (result === 'makePayment') {
         this.makePayment(checkin, bill_data);
       }
     });
   }
-
   makePayment(checkin, bill_data) {
     this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
       width: '50%',
@@ -779,12 +774,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         bill_data: bill_data
       }
     });
-
     this.paydialogRef.afterClosed().subscribe(result => {
       this.reloadAPIs();
     });
   }
-
   rateService(waitlist) {
     this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
@@ -793,7 +786,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       autoFocus: true,
       data: waitlist
     });
-
     this.ratedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getWaitlist();
@@ -801,69 +793,50 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   isRated(wait) {
-    if (wait.hasOwnProperty('rating') ) {
+    if (wait.hasOwnProperty('rating')) {
       return true;
     } else {
       return false;
     }
   }
-
   toogleDetail(provider, i) {
-      let open_fav_div = null;
-      if (this.open_fav_div === i) {
-        this.hideShowAnimator = false;
-        open_fav_div = null;
-      } else {
-        this.hideShowAnimator = true;
-        open_fav_div = i;
-        this.setWaitlistTimeDetailsProvider(provider, i);
-      }
-      setTimeout( () => {
-        this.open_fav_div = open_fav_div;
-      }, 500);
+    let open_fav_div = null;
+    if (this.open_fav_div === i) {
+      this.hideShowAnimator = false;
+      open_fav_div = null;
+    } else {
+      this.hideShowAnimator = true;
+      open_fav_div = i;
+      this.setWaitlistTimeDetailsProvider(provider, i);
+    }
+    setTimeout(() => {
+      this.open_fav_div = open_fav_div;
+    }, 500);
   }
-
   providerManagePrivacy(provider, i) {
-
     this.privacydialogRef = this.dialog.open(AddManagePrivacyComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
-      data: {'provider': provider}
+      data: { 'provider': provider }
     });
-
     this.privacydialogRef.afterClosed().subscribe(result => {
       if (result.message === 'reloadlist') {
         this.fav_providers[i]['revealPhoneNumber'] = result.data.revealPhoneNumber;
       }
     });
-
   }
-
-
   openCoupons() {
-    
     // alert('Clicked coupon');
-     
- 
     this.coupondialogRef = this.dialog.open(CouponsComponent, {
-     width: '50%',
-     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
-     disableClose: true,
-   data: {
-  
-   }
-   });
- 
-   this.coupondialogRef.afterClosed().subscribe(result => {
- 
-   });
-   
-   }
- 
-
-
-
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
+      disableClose: true,
+      data: {}
+    });
+    this.coupondialogRef.afterClosed().subscribe(result => {
+    });
+  }
   showPersonsAhead(waitlist) {
     let retstat = false;
     if (waitlist.hasOwnProperty('personsAhead')) {
@@ -871,10 +844,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         case 'cancelled':
         case 'started':
         case 'done':
-          retstat =  false;
-        break;
+          retstat = false;
+          break;
         default:
-          retstat =  true;
+          retstat = true;
       }
     } else {
       retstat = false;
@@ -882,46 +855,43 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return retstat;
   }
   makeFailedPayment(waitlist) {
-   // console.log('pay', waitlist.queue.location.id, waitlist.service.id, waitlist.ynwUuid);
+    // console.log('pay', waitlist.queue.location.id, waitlist.service.id, waitlist.ynwUuid);
     let prepayamt = 0;
-    this.shared_services.getServicesByLocationId (waitlist.queue.location.id)
-      .subscribe ( data => {
-          this.servicesjson = data;
-          // console.log('service', this.servicesjson);
-          for (let i = 0; i < this.servicesjson.length; i++) {
-            if (this.servicesjson[i].id === waitlist.service.id) {
-              prepayamt = this.servicesjson[i].minPrePaymentAmount || 0;
-              if (prepayamt > 0) {
-                const payData = {
-                  'amount': prepayamt,
-                  'paymentMode': 'DC',
-                  'uuid': waitlist.ynwUuid
-                };
-                this.shared_services.consumerPayment(payData)
-                  .subscribe (pData => {
-                      if (pData['response']) {
-                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                          setTimeout(() => {
-                            this.document.getElementById('payuform').submit();
-                          }, 2000);
-                      } else {
-                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), {'panelClass': 'snackbarerror'});
-                      }
-                  },
+    this.shared_services.getServicesByLocationId(waitlist.queue.location.id)
+      .subscribe(data => {
+        this.servicesjson = data;
+        // console.log('service', this.servicesjson);
+        for (let i = 0; i < this.servicesjson.length; i++) {
+          if (this.servicesjson[i].id === waitlist.service.id) {
+            prepayamt = this.servicesjson[i].minPrePaymentAmount || 0;
+            if (prepayamt > 0) {
+              const payData = {
+                'amount': prepayamt,
+                'paymentMode': 'DC',
+                'uuid': waitlist.ynwUuid
+              };
+              this.shared_services.consumerPayment(payData)
+                .subscribe(pData => {
+                  if (pData['response']) {
+                    this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                    setTimeout(() => {
+                      this.document.getElementById('payuform').submit();
+                    }, 2000);
+                  } else {
+                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                  }
+                },
                   error => {
-                    this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                   });
-              } else {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), {'panelClass': 'snackbarerror'});
-              }
+            } else {
+              this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), { 'panelClass': 'snackbarerror' });
             }
           }
+        }
       },
-    error => {
-    });
-
+        error => {
+        });
   }
-
 }
-

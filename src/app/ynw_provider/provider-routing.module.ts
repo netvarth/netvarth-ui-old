@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { ProviderComponent } from './provider.component';
 import { ProviderHomeComponent } from './components/home/provider-home.component';
 import { ProviderProfileComponent } from './components/provider-profile/provider-profile.component';
@@ -28,7 +27,6 @@ import { ProviderWaitlistQueueDetailComponent } from './components/provider-wait
 import { ProviderPaymentHistoryComponent } from './components/provider-payment-history/provider-payment-history.component';
 import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { ProviderCustomersComponent } from './components/provider-customers/provider-customers.component';
-
 import { AuthGuardProviderHome, AuthGuardNewProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
 import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
@@ -37,12 +35,10 @@ import { ChangeEmailComponent } from '../shared/modules/change-email/change-emai
 import { ProviderPaymentSettingsComponent } from './components/provider-payment-settings/provider-payment-settings.component';
 import { ProviderSystemAuditLogComponent } from './components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { ProviderSystemAlertComponent } from './components/provider-system-alerts/provider-system-alerts.component';
-
 import { ProviderResolver } from './services/provider-resolver.service';
 import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
 import { ViewReportComponent } from './components/view-report/view-report.component';
 import { ProviderCouponViewComponent } from './components/provider-coupon-view/provider-coupon-view.component';
-
 const routes: Routes = [
   {
     path: '', component: ProviderComponent,
@@ -50,7 +46,6 @@ const routes: Routes = [
       terminologies: ProviderResolver
     },
     children: [
-
       {
         path: '',
         component: ProviderHomeComponent,
@@ -76,27 +71,25 @@ const routes: Routes = [
           {
             path: 'coupons',
             component: ProviderCouponsComponent
-          }, 
+          },
           {
             path: 'coupons',
             children: [
               {
                 path: 'report',
                 component: ProviderReimburseReportComponent
-              },{
+              }, {
                 path: 'coupon',
                 component: ProviderCouponViewComponent
-              },{
+              }, {
                 path: 'report',
                 children: [
                   {
                     path: 'report_view',
-                component: ViewReportComponent
+                    component: ViewReportComponent
                   }
-                 
                 ]
               }
-             
             ]
           },
           {
@@ -192,12 +185,9 @@ const routes: Routes = [
     ]
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-
 export class ProviderRouterModule {
-
 }

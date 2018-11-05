@@ -50,8 +50,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     emailidVerified = false;
     profileQueryExecuted = false;
     ineditMode = false;
-    isJaldeeAccount : Boolean=true;
-    optJaldeeAccount : Boolean= true;
+    isJaldeeAccount: Boolean = true;
+    optJaldeeAccount: Boolean = true;
     maxcnt100 = projectConstants.VALIDATOR_MAX100;
     maxcnt10 = 10;
     maxcnt11 = 11;

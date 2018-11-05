@@ -27,14 +27,14 @@ export class ProviderResolver implements Resolve<{}> {
     const sub_domain =  user_data.subSector || null;
 
     if (domain && sub_domain) {
-      return this.provider_services.getIdTerminologies(domain,sub_domain).pipe(
-        map(term=>{
+      return this.provider_services.getIdTerminologies(domain, sub_domain).pipe(
+        map(term => {
           return term;
         }),
-        catchError(error=>{
+        catchError(error => {
           return of(null);
         })
-      )
+      );
       //   return this.provider_services.getIdTerminologies(domain, sub_domain).pipe(
       //   map(term => {
       //     return term;
