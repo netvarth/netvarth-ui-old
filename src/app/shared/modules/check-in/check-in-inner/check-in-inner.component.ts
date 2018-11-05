@@ -47,6 +47,7 @@ export class CheckInInnerComponent implements OnInit {
     sel_queue_timecaption;
     sel_queue_indx;
     sel_queue_det;
+    sel_queue_personaahead = 0;
     showfuturediv;
     multipleMembers_allowed = false;
     partySize = false;
@@ -365,6 +366,7 @@ export class CheckInInnerComponent implements OnInit {
             case 'settings':
               this.settingsjson = res;
               this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+              // console.log('settings', this.settingsjson);
               /*this.maxsize = this.settingsjson.maxPartySize;
               if (this.maxsize === undefined) {
                 this.maxsize = 1;
@@ -458,6 +460,7 @@ export class CheckInInnerComponent implements OnInit {
               this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
               this.sel_queue_name = this.queuejson[selindx].name;
               this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+              this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
 
           } else {
               this.sel_queue_indx = -1;
@@ -466,6 +469,7 @@ export class CheckInInnerComponent implements OnInit {
               this.sel_queue_servicetime = '';
               this.sel_queue_name = '';
               this.sel_queue_timecaption = '';
+              this.sel_queue_personaahead = 0;
           }
 
         });
@@ -480,6 +484,7 @@ export class CheckInInnerComponent implements OnInit {
     this.sel_queue_id = 0;
     this.sel_queue_waitingmins = 0;
     this.sel_queue_servicetime = '';
+    this.sel_queue_personaahead = 0;
     this.sel_queue_name = '';
     this.resetApi();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
@@ -532,6 +537,7 @@ export class CheckInInnerComponent implements OnInit {
       this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
       this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
       this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+      this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
       // this.queueReloaded = true;
     }
   }
@@ -646,8 +652,7 @@ export class CheckInInnerComponent implements OnInit {
           const payData = {
             'amount': this.sel_ser_det.minPrePaymentAmount,
             'paymentMode': this.paytype,
-            'uuid': retUUID,
-            'accountId':this.account_id
+            'uuid': retUUID
           };
           this.shared_services.consumerPayment(payData)
             .subscribe (pData => {

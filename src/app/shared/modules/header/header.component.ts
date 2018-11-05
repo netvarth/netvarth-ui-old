@@ -42,9 +42,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   evnt;
   subscription: Subscription;
   bname;
-  bsector;
-  bsubsector;
-  blogo;
+  bsector = '';
+  bsubsector = '';
+  blogo = '';
   inboxUnreadCnt;
   inboxCntFetched;
   cronHandle: Subscription;

@@ -10,7 +10,9 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
-import { Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 
 

@@ -5,18 +5,20 @@ import { SharedServices } from '../services/shared-services';
 import { projectConstants } from '../constants/project-constants';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
-import {Observable,  Subject } from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
+import { Subject } from 'rxjs/Subject';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
+import { post } from 'selenium-webdriver/http';
 
 @Injectable()
 
 export class SharedFunctions {
-
+  holdbdata: any = [];
     dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov']; // ['isBusinessOwner'];
 
     private subject = new Subject<any>();
-
+    mUniqueId;
     constructor(private shared_service: SharedServices, private router: Router,
       private dialog: MatDialog,
       private snackBar: MatSnackBar,
@@ -91,8 +93,10 @@ export class SharedFunctions {
         });
         return promise;
       }
-
      consumerLogin(post_data, moreParams?) {
+
+      post_data.mUniqueId = localStorage.getItem("mUniqueId");
+      console.log("Key:" + localStorage.getItem("mUniqueId"));
       this.sendMessage({ttype: 'main_loading' , action: true});
       const promise = new Promise((resolve, reject) => {
         this.shared_service.ConsumerLogin(post_data)
@@ -736,6 +740,47 @@ export class SharedFunctions {
     this.setitemonLocalStorage('ynwbp', buss_det);
     // const pdata = { 'test': 'this is a test' };
     // this.sendMessage(pdata);
+  }
+  retSubSectorNameifRequired(domain, subdomainname) {
+    const bprof = this.getitemfromLocalStorage('ynw-bconf');
+    // console.log('bdata', bprof);
+    if (bprof === null || bprof === undefined) {
+      this.shared_service.bussinessDomains()
+        .subscribe (
+          res => {
+            this.holdbdata = res;
+            // console.log('domainlilst_fetched', this.domainlist_data);
+            const today = new Date();
+            const postdata = {
+              cdate: today,
+              bdata: this.holdbdata
+            };
+            // this.setitemonLocalStorage('ynw-bconf', postdata);
+            // const bprofn = this.getitemfromLocalStorage('ynw-bconf');
+            const bprofn = postdata;
+            const getdata = this.compareData(bprofn, domain, subdomainname);
+            return getdata;
+          }
+        );
+    } else {
+      const getdata =  this.compareData(bprof, domain, subdomainname);
+      return getdata;
+    }
+  }
+  compareData(bprof, domain, subdomainname) {
+    let retsubdom = '';
+    // console.log('inbound', domain, subdomainname);
+    for (let i = 0; i < bprof.bdata.length; i++) {
+     // console.log('data', bprof.bdata[i].domain, domain);
+      if (bprof.bdata[i]['domain'] === domain) {
+        if (bprof.bdata[i].subDomains.length > 1) {
+          retsubdom =  subdomainname;
+          return retsubdom;
+        }
+      }
+    }
+   // console.log('return inside', retsubdom);
+    return retsubdom;
   }
 
   sendMessage(message: any) {

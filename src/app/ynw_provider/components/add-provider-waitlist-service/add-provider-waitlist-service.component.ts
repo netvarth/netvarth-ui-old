@@ -1,7 +1,3 @@
-
-import {of as observableOf,  Observable ,  Subscription } from 'rxjs';
-
-import {delay} from 'rxjs/operators';
 import { Component, Inject, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -12,8 +8,10 @@ import {projectConstants} from '../../../shared/constants/project-constants';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-
-
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 @Component({
@@ -368,7 +366,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
             imagesArray.push(img);
           }
 
-        this.images = observableOf(imagesArray).pipe(delay(300));
+        this.images = Observable.of(imagesArray).delay(300);
   }
 
   openImageModal(index) {

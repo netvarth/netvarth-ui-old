@@ -5,8 +5,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/toPromise';
 
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
@@ -17,9 +17,10 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
-import { Observable ,  Subscription } from 'rxjs';
-
-
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
@@ -30,11 +31,6 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
-import { CouponsComponent } from '../coupons/coupons.component';
-import { CouponviewComponent } from '../couponview/couponview.component';
-
-
-
 
 @Component({
   selector: 'app-provider-detail',
@@ -145,7 +141,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
-  couponviewdialogRef: MatDialogRef<CouponviewComponent, any>;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -938,28 +933,6 @@ getTerminologyTerm(term) {
       return term;
   }
 }
-
-
-openCouponview() {
-
-  this.couponviewdialogRef = this.dialog.open(CouponviewComponent, {
-   width: '50%',
-   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
-   disableClose: true,
- data: {
-
- }
- });
-
- this.couponviewdialogRef.afterClosed().subscribe(result => {
-
- });
- 
- }
-
-
-
-
 handleEmailPhonediv() {
   if (this.showEmailPhonediv) {
     this.showEmailPhonediv = false;

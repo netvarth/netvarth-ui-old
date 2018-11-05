@@ -46,6 +46,7 @@ export const Messages = {
 
   // Common
   'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
+  'NETWORK_ERROR': 'Network error. Please check your internet connectivity',
 
   // Business Profile
   'BPROFILE_CREATED' : 'Business Profile created successfully',
@@ -209,6 +210,8 @@ export const Messages = {
   'APPX_WAIT_TIME_CAPTION' : 'Appox Waiting Time',
 
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
-  'CHECKIN_TIME_CAPTION': 'Est Service Time'
+  'CHECKIN_TIME_CAPTION': 'Est Service Time',
+
+  'PREPAYMENT_ERROR': 'Sorry! an error occured'
 
 };

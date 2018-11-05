@@ -1,8 +1,9 @@
 
       <div class="copy">
               <div class="row">
-                
-
+                  <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                    <label>Waiting Time Calculation</label>
+                  </div>
                   <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
                     <mat-radio-group
                     [(ngModel)]="form['calculationMode']" ngDefaultControl
@@ -14,7 +15,7 @@
                             <label for="">Automatic (Machine Learning)</label>
                           </div>
                         </div>
-                        <div class="rw">
+                        <div class="rw fxd">
                           <div class="form-group">
                             <mat-radio-button value="Fixed"
                             ></mat-radio-button>
@@ -42,11 +43,7 @@
                     </mat-radio-group>
                   </div>
               </div>
-
               <div class="row">
-            
-
-              
                   <div class="lbl col-sm-12 col-md-12 col-lg-12">
                     <label>Accept Future {{checkin_label | capitalizeFirst}}
                       <mat-slide-toggle

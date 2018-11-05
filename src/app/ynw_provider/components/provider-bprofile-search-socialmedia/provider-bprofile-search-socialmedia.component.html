@@ -4,6 +4,7 @@
 <mat-form-field  class="example-full-width">
 <label class="col-form-label" for="socialkey">Select</label>
 <mat-select placeholder="Please Select" #selsocial [(ngModel)]="socialkey">
+    <mat-option [value]="''">- Select One -</mat-option>
     <mat-option *ngFor="let slist of social_list" [value]="slist.key">
     <mat-icon [class]="slist.iconClass" aria-hidden="true"></mat-icon>
     {{ slist.displayName }}

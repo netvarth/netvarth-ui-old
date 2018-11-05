@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="col-form-label">Category</label>
                         <mat-form-field>
-                            <mat-select [(ngModel)]="logSelcat" name="catg" (selectionChange)="selectCategory()">
+                            <mat-select [(ngModel)]="logSelcat" name="catg" (change)="selectCategory()">
                                 <mat-option value = ""> -- Select --</mat-option>
                                 <mat-option *ngFor="let cat of logCategories; let i = index" [value]="i">
                                 {{ cat.displayName }}

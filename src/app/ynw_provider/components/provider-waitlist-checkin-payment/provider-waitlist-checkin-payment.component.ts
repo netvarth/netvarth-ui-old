@@ -53,7 +53,7 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       this.checkin = this.data.checkin || null;
       this.bill_data = this.data.bill_data || null;
 
-      console.log(this.bill_data);
+      // console.log(this.bill_data);
       if ( !this.bill_data) {
         setTimeout(() => {
           this.dialogRef.close('error');
@@ -147,7 +147,7 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
     });
     dialogrefd.afterClosed().subscribe(result => {
       if (result) {
-        console.log('call settle');
+       // console.log('call settle');
          this.settleBill();
       }
     });

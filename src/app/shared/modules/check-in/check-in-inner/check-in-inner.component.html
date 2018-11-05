@@ -14,7 +14,7 @@
               <div class="service-head" *ngIf="step==1">Select Service</div>
               <ng-container *ngIf="step==1">
                     <mat-form-field *ngIf="servicesjson.length > 0">
-                        <mat-select [ngModel]="sel_ser" #servsel (selectionChange)="handleServiceSel(servsel.value)">
+                        <mat-select [ngModel]="sel_ser" #servsel (change)="handleServiceSel(servsel.value)">
                         <mat-option *ngFor="let serv of servicesjson" [value]="serv.id" >
                                 {{serv.name | capitalizeFirst}}
                         </mat-option>
@@ -94,6 +94,7 @@
                                 </ng-container>
                             </div>
                         </div>
+
                         <!-- <div class="showDetOuter" *ngIf="queuejson.length > 0">
                             <div class="showDetService">
                                 Check-In for service:  <span class='selsername'>{{ sel_ser_det.name }}</span>
@@ -132,24 +133,7 @@
                     </div> -->
                  </div>
               </div>
-            </ng-container>
-
-
-
-              <ng-container>
-              <div class="coupon-code">
-                <div class="form-group" *ngIf="page_source != 'provider_checkin'">
-                    <label>Coupon Code</label>                       
-                    <input type="text" id="coupon_code" placeholder="Enter your Coupon code" style="height:30px;">
-                    <button mat-button class="cs-btn bt1 makepayment">Apply</button>
-                </div>                            
-            </div>
-            </ng-container>
-
-
-
-              
-             
+              </ng-container>
               </ng-container>
     
               <ng-container *ngIf="step==3">
@@ -205,9 +189,13 @@
                     <div class="showDetService" *ngIf="sel_ser_det.name">
                     <strong>{{checkinLabel}} for</strong>  <span class='selsername'>{{ sel_ser_det.name }}</span>
                     </div>
-                    <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                    <div class="queue-head">
-                        <strong>Today, {{estimateCaption}}:</strong> <span class="queue-avail-date">{{sel_queue_waitingmins}}</span></div>
+                    <div class="queue-waitingdiv" >
+                    <div class="queue-head" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                        <strong>Today, {{estimateCaption}}:</strong> <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
+                    </div>
+                    <div class="queue-head" *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc'">
+                        <strong>Persons Ahead:</strong> <span class="queue-avail-date">{{sel_queue_personaahead}}</span>
+                    </div>
                     </div>
                     <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                     <div class="queue-head">

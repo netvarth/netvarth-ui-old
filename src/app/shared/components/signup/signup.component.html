@@ -49,7 +49,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true'">
     <mat-form-field>
         <label class="col-form-label" for="last_name">Select Domain *</label>
-      <mat-select formControlName="selectedDomainIndex" #seldom (selectionChange)="setDomain(seldom.value)">
+      <mat-select formControlName="selectedDomainIndex" #seldom (change)="setDomain(seldom.value)">
         <mat-option *ngFor="let domain of business_domains; let i = index" [value]="i">
             {{domain.displayName}}
         </mat-option>
@@ -66,7 +66,7 @@ onSubmit()" (keyup)="resetApiErrors()">
 
     <mat-form-field>
       <label class="col-form-label" for="last_name">Select Sub Domain *</label>
-      <mat-select subdom formControlName="selectedSubDomains" #subdom (selectionChange)="onItemSelect(subdom.value)">
+      <mat-select subdom formControlName="selectedSubDomains" #subdom (change)="onItemSelect(subdom.value)">
         <mat-option *ngFor="let subdomain of subDomainList; let i = index" [value]="i">
             {{subdomain.itemName}}
         </mat-option>

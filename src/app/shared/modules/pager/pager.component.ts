@@ -1,8 +1,8 @@
 import { Component, Input, Output, OnInit, Injectable, EventEmitter, OnChanges } from '@angular/core';
 // import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import * as _ from 'underscore';
 
 import { PagerService } from '../pager/pager.service';

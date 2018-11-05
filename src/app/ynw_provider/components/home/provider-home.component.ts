@@ -1,8 +1,6 @@
-
-import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
 import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
-
+import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
@@ -51,6 +49,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   time_type = 1;
   check_in_list: any = [];
   check_in_filtered_list: any = [];
+  holdbdata: any = [];
   status_type = 'all';
   queue_date = moment(new Date()).format(projectConstants.POST_DATE_FORMAT);
   edit_location = 0;
@@ -188,10 +187,32 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.status_type = stattype;
     }
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
-    this.getBusinessProfile();
-    this.getLocationList();
-    this.getServiceList();
-    this.getProviderSettings();
+
+    const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    // console.log('bdata', bprof);
+    if (bprof === null || bprof === undefined) {
+      this.shared_services.bussinessDomains()
+        .subscribe (
+          res => {
+            this.holdbdata = res;
+            const today = new Date();
+            const postdata = {
+              cdate: today,
+              bdata: this.holdbdata
+            };
+            this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+            this.getBusinessProfile();
+            this.getLocationList();
+            this.getServiceList();
+            this.getProviderSettings();
+          }
+        );
+    } else {
+      this.getBusinessProfile();
+      this.getLocationList();
+      this.getServiceList();
+      this.getProviderSettings();
+    }
 
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
         this.reloadAPIs();
@@ -250,9 +271,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         bProfile = data;
         if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
           // calling function which saves the business related details to show in the header
+          // this.shared_functions.retSubSectorNameifRequired();
+
+          const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
+          // console.log('subsector home', subsectorname);
           this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-           || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
-           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '');
+           || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
 
            const pdata = { 'ttype': 'updateuserdetails' };
            this.shared_functions.sendMessage(pdata);
@@ -384,7 +409,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         // this.all_queues = data;
 
         const Cqueues = data;
-        // console.log('cqueue', Cqueues);
+        console.log('cqueue', Cqueues);
         this.all_queues = [];
         let indx = 0;
 
@@ -1059,7 +1084,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     // console.log('add bill', bill_data);
     this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'width-100'],
+      panelClass: ['commonpopupmainclass', 'billpopup'],
       disableClose: true,
       data: {
         checkin: checkin,
@@ -1078,7 +1103,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     // console.log('billdata', bill_data);
     this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'width-100'],
+      panelClass: ['commonpopupmainclass', 'billpopup'],
       disableClose: true,
       data: {
         checkin: checkin,

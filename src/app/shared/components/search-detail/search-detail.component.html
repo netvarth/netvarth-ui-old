@@ -1,5 +1,4 @@
-<app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'" (searchclick)="handlesearchClick($event)"
-    [passedDomain]="domain" [passedkwdet]="kwdet" [passedRefine]="searchcommononlyrefine_arr"></app-header>
+<app-header *ngIf="showsearchsection && obtainedRefined"  [headerTitle]="'Header'" (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet" [passedRefine]="searchcommononlyrefine_arr"></app-header>
 <!-- <app-search *ngIf="showsearchsection" [showopennow]="0" [searchfields] = "searchfields" [subdomainpassedfromrefined]="subdomainleft" [domainpassedfromrefined]="domain"  (searchclick)="handlesearchClick($event)"></app-search> -->
 
 <section class="content">
@@ -7,8 +6,8 @@
         <div class="row">
             <!-- <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && search_result_count > 0"> -->
             <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">
-                <div class="ct1">
-                    <span class="mnu" (click)="togger_refinesection()" [matTooltipClass]="tooltipcls" [matTooltip]="refTooltip">
+                <div class="ct1" >
+                    <span class="mnu" (click)="togger_refinesection()" [matTooltipClass] = "tooltipcls" [matTooltip]="refTooltip">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -20,58 +19,56 @@
             <div class="c-outer">
                 <!-- <div class="sidebar-overlay" *ngIf="showrefinedsection && search_result_count > 0" (click)="togger_refinesection()"></div>
                 <div class="sidebar" [class.show]="showrefinedsection && search_result_count > 0" *ngIf="showrefinedsection && search_result_count > 0"> -->
-                <div class="sidebar-overlay" *ngIf="showrefinedsection && additionalRefineCondition()" (click)="togger_refinesection()"></div>
-                <div class="sidebar" [class.show]="showrefinedsection" *ngIf="showrefinedsection && additionalRefineCondition()">
+                    <div class="sidebar-overlay" *ngIf="showrefinedsection && additionalRefineCondition()" (click)="togger_refinesection()"></div>
+                    <div class="sidebar" [class.show]="showrefinedsection" *ngIf="showrefinedsection && additionalRefineCondition()">
                     <div class="rs-box">
-                        <div *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
-                            <!-- <div class="bx-block" *ngIf="domainlist_data && kwtyp != 'subdom'"> -->
+                        <div  *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
+                          <!-- <div class="bx-block" *ngIf="domainlist_data && kwtyp != 'subdom'"> -->
                             <div class="bx-block" *ngIf="domainlist_data && (domain =='' || domain =='All')">
-                                <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true">
-                                        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
-                                            <mat-panel-title>
-                                                <span class="refine-head">Select Domain </span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <mat-form-field>
-                                            <div>
-                                                <mat-select placeholder="" [(ngModel)]="refined_domain" #refineddomain
-                                                    (selectionChange)="handlerefineddomainchange(refineddomain.value)">
-                                                    <mat-option value="">-- Select --</mat-option>
-                                                    <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain">
-                                                        {{ domain.displayName }}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </div>
-                                        </mat-form-field>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
-                            </div>
-                            <!-- <div  class="bx-block" *ngIf="subdomainlist_data && kwtyp != 'subdom' && domain != 'All'"> -->
-                            <div class="bx-block" *ngIf="subdomainlist_data && !specialization_hide  && (subsector=='' || subsector == undefined)">
+                              <mat-accordion>
+                                <mat-expansion-panel [expanded]="true">
+                                    <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
+                                      <mat-panel-title>
+                                      <span class="refine-head">Select Domain </span>
+                                      </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <mat-form-field>
+                                      <div>
+                                        <mat-select placeholder="" [(ngModel)]="refined_domain" #refineddomain (change)="handlerefineddomainchange(refineddomain.value)">
+                                          <mat-option value="">--  Select --</mat-option>
+                                          <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain" >
+                                            {{ domain.displayName }}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                    </mat-form-field>
+                                </mat-expansion-panel>
+                              </mat-accordion>
+                          </div>
+                          <!-- <div  class="bx-block" *ngIf="subdomainlist_data && kwtyp != 'subdom' && domain != 'All'"> -->
+                            <div  class="bx-block" *ngIf="subdomainlist_data && !specialization_hide  && (subsector=='' || subsector == undefined)">
 
-                                <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true">
-                                        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
-                                            <mat-panel-title>
-                                                <span class="refine-head">Select Sub Domain</span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <mat-form-field>
-                                            <div>
-                                                <mat-select placeholder="" [(ngModel)]="refined_subdomain"
-                                                    #refinedsubdomain (selectionChange)="handlerefinedsubdomainchange(refinedsubdomain.value)">
-                                                    <mat-option value="">-- Select --</mat-option>
-                                                    <mat-option *ngFor="let sdomain of subdomainlist_data" [value]="sdomain.subDomain">
-                                                        {{ sdomain.displayName }}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </div>
-                                        </mat-form-field>
-                                    </mat-expansion-panel>
+                              <mat-accordion>
+                                  <mat-expansion-panel [expanded]="true">
+                                      <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
+                                        <mat-panel-title>
+                                        <span class="refine-head">Select Sub Domain</span>
+                                        </mat-panel-title>
+                                      </mat-expansion-panel-header>
+                                      <mat-form-field>
+                                          <div>
+                                            <mat-select placeholder="" [(ngModel)]="refined_subdomain" #refinedsubdomain (change)="handlerefinedsubdomainchange(refinedsubdomain.value)" >
+                                              <mat-option value="">--  Select --</mat-option>
+                                              <mat-option *ngFor="let sdomain of subdomainlist_data" [value]="sdomain.subDomain" >
+                                                {{ sdomain.displayName }}
+                                              </mat-option>
+                                            </mat-select>
+                                          </div>
+                                      </mat-form-field>
+                                  </mat-expansion-panel>
                                 </mat-accordion>
 
-                                <!-- <div class="refine_subheader">Select Sub Domain</div>
+                              <!-- <div class="refine_subheader">Select Sub Domain</div>
                               <mat-form-field>
                                   <div>
                                     <mat-select placeholder="" [(ngModel)]="selected_leftsubdomain" #leftselsubdomain (change)="handleleftsubdomainchange(leftselsubdomain.value)" >
@@ -82,167 +79,149 @@
                                     </mat-select>
                                   </div>
                               </mat-form-field> -->
-                            </div>
+                          </div>
 
-                            <ng-container *ngFor="let refine_data of searchrefine_arr; let refindx=index">
-                                <div class="bx-block" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean' && refine_data.dataType!='URL'">
-                                    <ng-container *ngIf="refine_data.cloudSearchIndex!='specialization'">
-                                        <mat-accordion>
-                                            <mat-expansion-panel [expanded]="isExpanded(refine_data.dataType, refine_data.cloudSearchIndex)">
-                                                <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
-                                                    <mat-panel-title>
-                                                        <span class="refine-head">{{refine_data.displayName}}</span>
-                                                    </mat-panel-title>
-                                                </mat-expansion-panel-header>
+                          <ng-container *ngFor="let refine_data of searchrefine_arr; let refindx=index">
+                          <div  class="bx-block" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean' && refine_data.dataType!='URL'">
+                            <ng-container *ngIf="refine_data.cloudSearchIndex!='specialization'">
+                              <mat-accordion>
+                                  <mat-expansion-panel [expanded]="isExpanded(refine_data.dataType, refine_data.cloudSearchIndex)">
+                                      <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
+                                        <mat-panel-title>
+                                        <span class="refine-head">{{refine_data.displayName}}</span>
+                                        </mat-panel-title>
+                                      </mat-expansion-panel-header>
 
-                                                <div *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'">
-                                                    <mat-form-field class="example-full-width">
-                                                        <!-- <input matInput placeholder="Enter {{refine_data.displayName}}" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (blur)="handleTextrefineblur(refine_data.cloudSearchIndex	,$event.target.value,refine_data.dataType, false)"> -->
-                                                        <input matInput autocomplete="off" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
-                                                            (keyup)="handleTextrefineKeypress($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)">
-                                                    </mat-form-field>
-                                                    <span class="glyphicon glyphicon-search"></span>
-                                                </div>
+                                          <div *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'" >
+                                              <mat-form-field class="example-full-width">
+                                                <!-- <input matInput placeholder="Enter {{refine_data.displayName}}" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (blur)="handleTextrefineblur(refine_data.cloudSearchIndex	,$event.target.value,refine_data.dataType, false)"> -->
+                                                <input matInput autocomplete="off" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (keyup)="handleTextrefineKeypress($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)">
+                                              </mat-form-field>
+                                              <span class="glyphicon glyphicon-search"></span>
+                                          </div>
 
-                                                <div *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum' || refine_data.dataType=='Gender'">
-                                                    <div *ngIf="refine_data.enumeratedConstants.length>0">
-                                                        <ng-container *ngFor="let refine_field of refine_data.enumeratedConstants; let i=index">
-                                                            <div class="refine_field_subouter">
-                                                                <ng-container *ngIf="i<showmore_defaultcnt">
-                                                                    <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)"
-                                                                        class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
+                                          <div *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum' || refine_data.dataType=='Gender'">
+                                              <div *ngIf="refine_data.enumeratedConstants.length>0">
+                                                    <ng-container *ngFor="let refine_field of refine_data.enumeratedConstants; let i=index">
+                                                        <div class="refine_field_subouter" >
+                                                            <ng-container *ngIf="i<showmore_defaultcnt">
+                                                                <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefined || !refine_data.showhiddendet)">
-                                                                    <div class="refinemore" (click)="showmore(refindx)">show
-                                                                        more</div>
-                                                                </ng-container>
+                                                                <div class="refinemore" (click)="showmore(refindx)">show more</div>
+                                                            </ng-container>
 
-                                                                <ng-container *ngIf="refine_data.showhiddendet != undefined && refine_data.showhiddendet">
-                                                                    <ng-container *ngIf="i>=showmore_defaultcnt">
-                                                                        <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)"
-                                                                            class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
+                                                            <ng-container *ngIf="refine_data.showhiddendet != undefined && refine_data.showhiddendet">
+                                                                <ng-container *ngIf="i>=showmore_defaultcnt">
+                                                                    <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                     </ng-container>
                                                                     <ng-container *ngIf="i==(refine_data.enumeratedConstants.length-1)">
-                                                                        <div class="refinemore showless" (click)="hidemore(refindx)">show
-                                                                            less</div>
+                                                                        <div class="refinemore showless" (click)="hidemore(refindx)">show less</div>
                                                                     </ng-container>
-                                                                </ng-container>
-                                                            </div>
-                                                        </ng-container>
-                                                        <!-- <div class="refine_field_subouter" *ngFor="let refine_field of refine_data.enumeratedConstants">
+                                                            </ng-container>
+                                                        </div>
+                                                    </ng-container>
+                                                  <!-- <div class="refine_field_subouter" *ngFor="let refine_field of refine_data.enumeratedConstants">
 
                                                     <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
 
                                                   </div> -->
 
 
-                                                    </div>
-                                                </div>
+                                              </div>
+                                          </div>
 
-                                                <div *ngIf="refine_data.dataType=='Rating'">
-                                                    <app-rating-star [cloudindex]="refine_data.cloudSearchIndex"
-                                                        [ratingval]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
-                                                        (ratingreturn)="handleratingClick($event)" [includedFrom]="'refined'"></app-rating-star>
-                                                </div>
+                                          <div *ngIf="refine_data.dataType=='Rating'">
+                                            <app-rating-star  [cloudindex]="refine_data.cloudSearchIndex" [ratingval]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (ratingreturn)="handleratingClick($event)" [includedFrom]="'refined'"></app-rating-star>
+                                          </div>
 
-                                            </mat-expansion-panel>
-                                        </mat-accordion>
-                                    </ng-container>
+                                  </mat-expansion-panel>
+                                </mat-accordion>
+                            </ng-container>
 
-                                    <ng-container *ngIf="refine_data.cloudSearchIndex=='specialization' && !specialization_hide">
-                                        <mat-accordion>
-                                            <mat-expansion-panel [expanded]="true">
-                                                <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
-                                                    <mat-panel-title>
-                                                        <span class="refine-head">{{refine_data.displayName}}</span>
-                                                    </mat-panel-title>
-                                                </mat-expansion-panel-header>
+                            <ng-container *ngIf="refine_data.cloudSearchIndex=='specialization' && !specialization_hide">
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="true">
+                                            <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
+                                              <mat-panel-title>
+                                              <span class="refine-head">{{refine_data.displayName}}</span>
+                                              </mat-panel-title>
+                                            </mat-expansion-panel-header>
 
                                                 <div *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum'">
                                                     <div *ngIf="refine_data.enumeratedConstants.length>0">
 
                                                         <ng-container *ngFor="let refine_field of refine_data.enumeratedConstants; let i=index">
-                                                            <div class="refine_field_subouter">
+                                                            <div class="refine_field_subouter" >
                                                                 <ng-container *ngIf="i<showmore_defaultcnt">
-                                                                    <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)"
-                                                                        class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
-                                                                </ng-container>
-                                                                <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefined || !refine_data.showhiddendet)">
-                                                                    <div class="refinemore" (click)="showmore(refindx)">show
-                                                                        more</div>
+                                                                    <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefined || !refine_data.showhiddendet)">
+                                                                    <div class="refinemore" (click)="showmore(refindx)">show more</div>
                                                                 </ng-container>
 
                                                                 <ng-container *ngIf="refine_data.showhiddendet != undefined && refine_data.showhiddendet">
                                                                     <ng-container *ngIf="i>=showmore_defaultcnt">
-                                                                        <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)"
-                                                                            class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
-                                                                    </ng-container>
-                                                                    <ng-container *ngIf="i==(refine_data.enumeratedConstants.length-1)">
-                                                                        <div class="refinemore showless" (click)="hidemore(refindx)">show
-                                                                            less</div>
-                                                                    </ng-container>
+                                                                        <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="i==(refine_data.enumeratedConstants.length-1)">
+                                                                            <div class="refinemore showless" (click)="hidemore(refindx)">show less</div>
+                                                                        </ng-container>
                                                                 </ng-container>
                                                             </div>
                                                         </ng-container>
                                                     </div>
                                                 </div>
 
-                                            </mat-expansion-panel>
-                                        </mat-accordion>
-                                    </ng-container>
-                                </div>
+                                        </mat-expansion-panel>
+                                      </mat-accordion>
                             </ng-container>
+                          </div>
+                        </ng-container>
 
-                            <div class="bx-block">
-                                <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true">
-                                        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
-                                            <mat-panel-title>
-                                                <span class="refine-head">Other Filters</span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
+                          <div  class="bx-block">
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="true">
+                                    <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
+                                      <mat-panel-title>
+                                      <span class="refine-head">Other Filters</span>
+                                      </mat-panel-title>
+                                    </mat-expansion-panel-header>
 
-                                        <ng-container *ngFor="let refine_data of searchrefine_arr">
-                                            <div *ngIf="refine_data.dataType=='Boolean'">
-                                                <mat-slide-toggle #{{refine_data.name}} [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
-                                                    (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1,false)">{{refine_data.displayName}}</mat-slide-toggle>
-                                            </div>
-                                        </ng-container>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
+                                    <ng-container *ngFor="let refine_data of searchrefine_arr">
+                                        <div *ngIf="refine_data.dataType=='Boolean'">
+                                          <mat-slide-toggle #{{refine_data.name}}  [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1,false)">{{refine_data.displayName}}</mat-slide-toggle>
+                                        </div>
+                                    </ng-container>
+                                </mat-expansion-panel>
+                              </mat-accordion>
 
 
-                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="c-body" [class.hideme]="showrefinedsection" *ngIf="search_result_count">
+                <div class="c-body" [class.hideme]="showrefinedsection" *ngIf = "search_result_count">
                     <div class="ct2" [class.ct2pad]="!showrefinedsection">
                         <div class="ct-l">
-                            <div class="rslts"> {{ (search_data.hits.found>10) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong>
-                                {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ?
-                                'result': ''}} found
-                                <!-- for <span>�Dentists�</span> -->
-                            </div>
+                            <div class="rslts"> {{ (search_data.hits.found>10) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong> {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ? 'result': ''}} found <!-- for <span>‘Dentists’</span> --></div>
                         </div>
                         <div class="ct-r ml-auto">
                             <div class="fltr">
                                 <div class="search_sort_display">
                                     <mat-form-field>
-                                        <mat-select name="sortfield" panelClass="search_domaindropdown_class"
-                                            #sortfieldsel (selectionChange)="selected_sortfield(sortfieldsel.value)"
-                                            [(ngModel)]="sortfieldsels">
-                                            <mat-option value="">
-                                                None
-                                            </mat-option>
-                                            <mat-option value="distanceasc">
-                                                Distance
-                                            </mat-option>
-                                            <mat-option value="ynw_verified_levelasc">
-                                                Jaldee Verified
-                                            </mat-option>
-                                            <!-- <mat-option value="titleasc">
+                                        <mat-select name="sortfield" panelClass ="search_domaindropdown_class" #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)" [(ngModel)]="sortfieldsels">
+                                                <mat-option value="">
+                                                    None
+                                                </mat-option>
+                                                <mat-option value="distanceasc">
+                                                    Distance
+                                                </mat-option>
+                                                <mat-option value="ynw_verified_levelasc">
+                                                    Jaldee Verified
+                                                </mat-option>
+                                          <!-- <mat-option value="titleasc">
                                             Title (Ascending)
                                           </mat-option>
                                           <mat-option value="titledesc">
@@ -254,14 +233,14 @@
                                             <mat-option value="sectordesc">
                                                 Sector (Descending)
                                              </mat-option>-->
-                                        </mat-select>
+                                        </mat-select> 
                                     </mat-form-field>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- <div class="srlst" *ngFor = "let search_result of search_data.hits.hit" [@search_data]="search_data.length"> -->
-                    <div class="srlst" *ngFor="let search_result of search_data.hits.hit">
+                        <div class="srlst" *ngFor = "let search_result of search_data.hits.hit">   
                         <div class="top-sect">
                             <div class="tp-l">
                                 <div class="tp1">
@@ -280,65 +259,65 @@
                                     <div class="rating-stars">
                                         <!-- {{search_result.fields.rating}}  -->
                                         <ng-container *ngIf="search_result.fields.rating>0">
-                                            <ng-container *ngIf="search_result.fields.rating==.5">
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
-                                                <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star-disabled.svg" />
-                                            </ng-container>
-
-                                            <ng-container *ngIf="search_result.fields.rating==1">
-                                                <img class="ratingstar" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star-disabled.svg" />
-                                            </ng-container>
-
-                                            <ng-container *ngIf="search_result.fields.rating==1.5">
-                                                <img class="ratingstar" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
-                                                <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star-disabled.svg" />
-                                            </ng-container>
-                                            <ng-container *ngIf="search_result.fields.rating==2">
-                                                <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star-disabled.svg" />
-                                            </ng-container>
-
-                                            <ng-container *ngIf="search_result.fields.rating==2.5">
-                                                <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
-                                                <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" />
-                                            </ng-container>
-
-                                            <ng-container *ngIf="search_result.fields.rating==3">
-                                                <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" />
-                                            </ng-container>
-
-                                            <ng-container *ngIf="search_result.fields.rating==3.5">
-                                                <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" />
-                                            </ng-container>
-
-                                            <ng-container *ngIf="search_result.fields.rating==4">
-                                                <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" />
-                                            </ng-container>
-
-                                            <ng-container *ngIf="search_result.fields.rating==4.5">
-                                                <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
-                                            </ng-container>
-
-                                            <ng-container *ngIf="search_result.fields.rating==5">
-                                                <ng-container *ngFor="let number of [1,2,3,4,5]">
-                                                    <img class="ratingstar" src="./assets/images/star.svg" />
+                                                <ng-container *ngIf="search_result.fields.rating==.5">
+                                                    <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star-disabled.svg"/>
                                                 </ng-container>
-                                            </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==1">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==1.5">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+                                                <ng-container *ngIf="search_result.fields.rating==2">
+                                                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==2.5">
+                                                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==3">
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==3.5">
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==4">
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==4.5">
+                                                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg"/>
+                                                        <img class="ratingstar" src="./assets/images/star-half.svg"/>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==5">
+                                                    <ng-container *ngFor="let number of [1,2,3,4,5]">
+                                                       <img class="ratingstar" src="./assets/images/star.svg"/>
+                                                    </ng-container>
+                                                </ng-container>
 
 
                                         </ng-container>
                                         <ng-container *ngIf="search_result.fields.rating==0">
                                             <ng-container *ngFor="let number of [1,2,3,4,5]">
 
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                                                <img class="ratingstar" src="./assets/images/star-disabled.svg"/>
 
                                             </ng-container>
                                         </ng-container>
@@ -347,18 +326,13 @@
                                 </div>
                                 <div class="tp2">
                                     <!-- <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div> -->
-                                    <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) "
-                                        class="ynw-verified">
-                                        <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
-                                        <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic
-                                            Plus</span>
-                                        <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
-
+                                    <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) " class="ynw-verified">
+                                            <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
+                                            <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</span>
+                                            <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
+                                        
                                     </div>
-                                    <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="bNameTooltip">{{search_result.fields.title | capitalizeFirst}}<span
-                                            class="cert" *ngIf="search_result.fields.qualification">,
-                                            {{search_result.fields.qualification}}</span></h3>
+                                    <h3 (click)="providerDetClicked(search_result)" [matTooltipClass] = "tooltipcls" [matTooltip]="bNameTooltip">{{search_result.fields.title | capitalizeFirst}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
                                     <span class="address">{{search_result.fields.place1 | capitalizeFirst }}</span>
 
                                     <div class="clr">
@@ -367,10 +341,8 @@
                                             <span class="cert">{{search_result.fields.qualification}}</span>
                                         </div> -->
                                         <div class="otr-elements">
-                                            <span class="category">{{search_result.fields.sub_sector_displayname}}</span>
-                                            <span *ngIf="search_result.fields.specialization"><span class="categoryspec"
-                                                    *ngFor="let spec of search_result.fields.specialization_displayname; let i = index"><span
-                                                        *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
+                                        <span class="category">{{search_result.fields.sub_sector_displayname}}</span>
+                                        <span *ngIf="search_result.fields.specialization"><span class="categoryspec" *ngFor="let spec of search_result.fields.specialization_displayname; let i = index"><span *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
                                         </div>
 
                                         <div class="schedule" *ngIf="search_result.fields.display_schedule">
@@ -385,68 +357,40 @@
 
                                         <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
-                                                <li *ngFor="let serv of search_result.fields.services" (click)="serviceClicked(serv,search_result)">{{serv
-                                                    | capitalizeFirst}}</li>
+                                                <li *ngFor="let serv of search_result.fields.services" (click)="serviceClicked(serv,search_result)">{{serv | capitalizeFirst}}</li>
                                             </ul>
                                         </div>
                                     </div>
 
                                     <div class="more-clinics" *ngIf="search_result.fields.moreclinics>0" (click)="providerDetClicked(search_result)">
-                                        <span><span class="count">{{search_result.fields.moreclinics}}</span> {{
-                                            (search_result.fields.moreclinics==1) ? 'more clinic' : 'more Clinics'}}</span>
+                                        <span><span class="count">{{search_result.fields.moreclinics}}</span> {{ (search_result.fields.moreclinics==1) ? 'more clinic' : 'more Clinics'}}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="tp-r">
-                                <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3)"
-                                    class="ynw-verified">
+                                <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3)" class="ynw-verified">
                                     <!-- <mat-chip-list>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==1">Basic</mat-chip>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</mat-chip>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==3">Premium</mat-chip>
                                     </mat-chip-list> -->
                                     <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
-                                    <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic
-                                        Plus</span>
+                                    <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</span>
                                     <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
 
                                 </div>
                                 <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
-                                    <li *ngIf="search_result.fields.parking_type_location1 && search_result.fields.parking_type_location1 !='none'"
-                                        [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span
-                                            class="icon-parking"></span></li>
-                                    <li *ngIf="search_result.fields.always_open_location1==1" [matTooltip]="'24 Hours Open'"><span
-                                            class="icon-open-time"></span></li>
-                                    <li *ngIf="search_result.fields.traumacentre_location1==1" [matTooltip]="'Trauma Centre'"><span
-                                            class="icon-trauma"></span></li>
-                                    <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1"><span
-                                            class="icon-emergency"></span></li>
-                                    <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'"><span
-                                            class="icon-first-aid"></span></li>
-                                    <li *ngIf="search_result.fields.docambulance_location1==1" [matTooltip]="'Ambulance Service'"><span
-                                            class="icon-ambulance"></span></li>
+                                    <li *ngIf="search_result.fields.parking_type_location1 && search_result.fields.parking_type_location1 !='none'" [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span class="icon-parking"></span></li>
+                                    <li *ngIf="search_result.fields.always_open_location1==1" [matTooltip]="'24 Hours Open'"><span class="icon-open-time"></span></li>
+                                    <li *ngIf="search_result.fields.traumacentre_location1==1" [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
+                                    <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1"><span class="icon-emergency"></span></li>
+                                    <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
+                                    <li *ngIf="search_result.fields.docambulance_location1==1" [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
                                     <!-- <li><span class="icon-ambulance"></span></li>
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
-                                <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1"
-                                    [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">Communicate</span>
-                                <span class="claim-business" (click)="claimBusiness(search_result)" *ngIf="search_result.fields.claimable==1">Claim
-                                    my Business</span>
-
-
-                                <!--<span class="coupon">
-                                    <div class="mbap-dir-r">
-                                        <a (click)="openCoupons()"><img src="assets/images/coupon1.svg" height="50" width="80" ></a>
-                                    </div>
-                                </span>  -->
-
-                                <div class="mbap-dir-r">
-                                    <span class="cs-btn bt10" (click)="openCoupons()">Jaldee coupon</span>
-                                    <br>
-                                    <span class="cs-btn bt10" (click)="openCoupons()">First Check-in</span>
-                                </div>
-
-
+                                <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1" [matTooltipClass] = "tooltipcls" [matTooltip]="commTooltip">Communicate</span>
+                                <span class="claim-business" (click)="claimBusiness(search_result)" *ngIf="search_result.fields.claimable==1">Claim my Business</span>
                             </div>
                         </div>
                         <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']">
@@ -455,26 +399,20 @@
                                     <div class="o-now" *ngIf="search_result.fields['opennow']==true">Open Now</div>
                                     <div class="timing" *ngIf="(search_result.fields.hasOwnProperty('show_waiting_time') && search_result.fields.show_waiting_time==1)">
                                         <span class="est-time" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
-                                        <span class="time-data" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['time']}}
-                                            <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
+                                        <span class="time-data" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['time']}} <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
                                     </div>
                                 </div>
 
                                 <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0 || (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==0) || (!search_result.fields.hasOwnProperty('online_checkins'))">
-                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">Sorry!!
-                                        {{getTerminologyTerm('waitlist', search_result.fields)}} not allowed</ng-container>
+                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">Sorry!! {{getTerminologyTerm('waitlist', search_result.fields)}} not allowed</ng-container>
                                     <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">{{search_result.fields['estimatedtime_det']['message']}}</ng-container>
                                 </div>
                             </div>
                             <div class="bt-r" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1 && (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==1)">
-                                <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==2">{{getTerminologyTerm('waitlist',
-                                    search_result.fields)}}</span>
-                                <span class="cs-btn chk-btn disabled" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">{{getTerminologyTerm('waitlist',
-                                    search_result.fields)}}</span>
+                                <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==2">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
+                                <span class="cs-btn chk-btn disabled" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
                                 <!-- <span class="future-text" (click)="checkinClicked(search_result)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">Do you want to Check in for this date ?</span>   -->
-                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">Do
-                                    you want to <span>{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
-                                    for <span>different Date?</span></span>
+                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">Do you want to <span>{{getTerminologyTerm('waitlist', search_result.fields)}}</span> for <span>different Date?</span></span>
                             </div>
 
 
@@ -482,8 +420,7 @@
                     </div>
 
                     <div class="search_paging">
-                        <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()" (pagerclick)="handle_pageclick($event)"
-                            [curpage]="startpageval"></app-pager>
+                      <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
                     </div>
                 </div>
                 <div *ngIf="nosearch_results" class="no-search-result">No YNW results found</div>
@@ -492,3 +429,4 @@
     </div>
 </section>
 <app-footer></app-footer>
+

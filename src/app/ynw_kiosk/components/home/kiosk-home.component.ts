@@ -1,11 +1,11 @@
-
-import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription ,  Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
+import { Subscription, ISubscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
 
 import { KioskServices } from '../../services/kiosk-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -97,7 +97,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
 
     // Section which handles the periodic reload
     if (this.ctype === 'provider') {
-      this.subscription = observableInterval(5 * 1000).subscribe(x => {
+      this.subscription = Observable.interval(5 * 1000).subscribe(x => {
         this.checkloggedIn();
       });
     } else {

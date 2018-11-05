@@ -12,7 +12,7 @@
                       <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
                         <mat-form-field class="example-full-width" *ngIf="edit_location">
 
-                          <mat-select placeholder="Locations" [(value)]="selected_location_index" (selectionChange)="onChangeLocationSelect($event)">
+                          <mat-select placeholder="Locations" [(value)]="selected_location_index" (change)="onChangeLocationSelect($event)">
                             <mat-option *ngFor="let location of locations;let i = index" [value]="i">
                               {{ location.place | capitalizeFirst }}
                             </mat-option>
@@ -339,7 +339,7 @@
                                         <i class="icon-play" ></i>View Bill
                                      </ng-container> -->
 
-                                     <ng-container *ngIf="!checkin.billStatus">
+                                     <ng-container *ngIf="!checkin.billStatus && checkin.waitlistStatus != 'prepaymentPending'">
                                         <i class="icon-play" ></i>Bill
                                      </ng-container>
                                      <ng-container *ngIf="checkin.billStatus== 'Settled' || checkin.billStatus== 'New'">
@@ -375,7 +375,7 @@
                                   </td>
                                   <!-- <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td> -->
-                                  <td data-title="{{customer_label | capitalizeFirst}} Note" class="cnote" *ngIf="time_type ==1 && !small_device_display">
+                                  <td class="cnote" *ngIf="time_type ==1 && !small_device_display">
                                     <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
@@ -395,7 +395,7 @@
                                           <button type="button" mat-menu-item
                                           (click)="addProviderNote(checkin)">
                                             <!-- Add {{provider_label  | capitalizeFirst}} Note -->
-                                            Add Note
+                                            Add Private Note
                                           </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"

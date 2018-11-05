@@ -7,219 +7,279 @@
   </h1>
   <mat-dialog-content >
     <app-innerloading-spinner *ngIf="!bill_load_complete"></app-innerloading-spinner>
-    <div class="group-outer">
-        <ng-container *ngIf="bill_load_complete">
 
-          <div class="form-group bill-basic">
-              <div class="btl"><span class="label">{{customer_label  | capitalizeFirst}} Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName | capitalizeFirst}} {{checkin.consumer.userProfile.lastName}}</span></div>
-              <!-- <div class="btl"><span class="label">Date</span> <span class="label-valu">{{today  | date: dateFormat}}</span></div>
-              <div class="btl"><span class="label">Time</span> <span class="label-valu">{{today  | date: timeFormat}}</span></div> -->
-              <div class="btl"><span class="label">Date</span> <span class="label-valu">{{billdate}}</span></div>
-              <div class="btl"><span class="label">Time</span> <span class="label-valu">{{billtime}}</span></div>
+    <div class="bill-wrapper" *ngIf="bill_load_complete">
+      
+      <div class="section-one">
+          <h3>{{bname | capitalizeFirst}}</h3>
+          <div class="details">
+              <span class="columns">
+                  <span class="title">{{customer_label  | capitalizeFirst}}</span>
+                  <span class="dynamic">{{checkin.consumer.userProfile.firstName | capitalizeFirst}} {{checkin.consumer.userProfile.lastName}}</span>
+              </span>
+              <span class="columns">
+                  <span class="title">Date &amp; Time</span>
+                  <span class="dynamic">{{billdate}} {{billtime}}</span>
+              </span>
+              <span class="columns" *ngIf="billnumber">
+                  <span class="title">Bill Number</span>
+                  <span class="dynamic">{{billnumber}}</span>
+              </span>
+              <span class="columns" *ngIf="gstnumber">
+                  <span class="title">GSTIN</span>
+                  <span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
+              </span>
+          </div>
+      </div>
+
+      <div class="section-two" *ngIf="!showPaidlist">
+          <div class="add-button" *ngIf="!showAddItemsec">
+              <button class="cs-btn bt3" (click)="showAddItem()">Add Service/Item</button>
           </div>
 
-          <div class="form-group search">
-            <mat-form-field class="example-full-width">
-              <label class="col-form-label" for="displayName">Search for Items/Services</label>
-              <input type="text" #itemservicesearch aria-label="Number" matInput
-              [formControl]="itemServiceSearch" [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <ng-container *ngFor="let group of ItemServiceGroupOptions | async">
-                <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
-                  <mat-option *ngFor="let value of group.values; let i = index" [value]="value" (click)="itemServiceSelected(group.type, i)">
-                    {{ value }}
-                  </mat-option>
-                  <mat-option *ngIf="group.values.length==0" [disabled]="true"><span class="no-data"></span>No {{group.type}} Available</mat-option>
-                </mat-optgroup>
-                </ng-container>
-              </mat-autocomplete>
-            </mat-form-field>
-          </div>
-
-          <div class="table-outer bill-tbl">
-              <table class="table">
-                  <thead>
-                    <tr>
-                        <th>Service/Item</th>
-                        <th>Quantity</th>
-                        <th>StdRate</th>
-                        <th>Discount</th>
-                        <th>Coupon</th>
-                        <th>Tax-SGST</th>
-                        <th>Tax-CGST</th>
-                        <th>Net-Rate</th>
-                        <th>Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of cart.items; let i = index">
-                      <td data-title="Service/Item">{{item.name | capitalizeFirst}}</td>
-                      <td data-title="Quantity">
-                        <input matInput type="number" min="1" [disabled]="cart.items[i].type == 'Services'" [(ngModel)]="cart.items[i].quantity"
-                        [ngModelOptions]="{standalone: true}" (change)="quantityChange(i)" autocomplete="off"> </td>
-                      <td data-title="StdRate">
-                        <input matInput type="number" [(ngModel)]="item.price" min="1"
-                        [ngModelOptions]="{standalone: true}" (change)="stdRateChange(i)" autocomplete="off" disabled>
-                      </td>
-                      <td data-title="Discount">
-                        <div class="form-group" *ngIf="discounts.length >0">
-                        <mat-form-field>
-                          <mat-select [(ngModel)]="cart.items[i].discount" [ngModelOptions]="{standalone: true}"
-                          (selectionChange)="itemDiscountChange(i)">
-                            <mat-option [value]="''">Select one </mat-option>
-                            <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
-                              {{ discount.name }}
-                            </mat-option>
-                          </mat-select>
+          <!--When click ADD ITEM/SERVICE this section shows-->
+          <div class="edit-row service" *ngIf="showAddItemsec">
+              <div class="spl">
+                  <div class="item selectbox">
+                      <mat-form-field class="example-full-width">
+                          <input type="text" #itemservicesearch aria-label="Number" matInput
+                          [formControl]="itemServiceSearch" [matAutocomplete]="auto">
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <ng-container *ngFor="let group of ItemServiceGroupOptions | async">
+                            <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
+                              <mat-option *ngFor="let value of group.values; let i = index" [value]="value" (onSelectionChange)="itemServiceSelected(group.type, i)">
+                                {{ value }}
+                              </mat-option>
+                              <mat-option *ngIf="group.values.length==0" [disabled]="true"><span class="no-data"></span>No {{group.type}} Available</mat-option>
+                            </mat-optgroup>
+                            </ng-container>
+                          </mat-autocomplete>
+                      </mat-form-field>
+                  </div>
+                  <div class="item qty">
+                      <span class="label">QTY</span>
+                      <span class="number">
+                        <mat-form-field class="example-full-width">  
+                        <input type="number" matInput #itemserviceqty aria-label="Number" matInput value="1" size="3" [(ngModel)]="curSelItm.qty" (blur)="blurQty($event.target.value, curSelItm)">
                         </mat-form-field>
+                    </span>
+                  </div>
+              </div>
+              <div class="spr">
+                  <button class="cs-btn bt1" (click)="addItem()" [disabled]="curSelItm.indx == 0">Add</button>
+                  <button class="cs-btn bt2" (click)="hideAddItem()">Cancel</button>
+              </div>
+          </div>
+          <!--ENDS-->
 
-                        </div>
-                      </td>
-                      <td data-title="Coupon">
-                          <div class="form-group" *ngIf="coupons.length > 0">
-                              <mat-form-field>
-                                  <mat-select [(ngModel)]="cart.items[i].coupon" [ngModelOptions]="{standalone: true}"
-                                  (selectionChange)="itemCouponChange(i)">
-                                    <mat-option [value]="''">Select one </mat-option>
-                                    <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
-                                      {{ coupon.name }}
-                                    </mat-option>
-                                  </mat-select>
-                                </mat-form-field>
+      </div>
+
+      <div class="section-three" *ngIf="!showPaidlist">
+          <div class="bill-breakup">
+              <div class="list" *ngFor="let item of cart.items; let i = index">
+                  <div class="list-content">
+
+                      <div class="c-row one">
+                          <div class="name">{{item.name | capitalizeFirst}} @ {{item.price}}</div>
+                          <div class="quantity">Qty {{cart.items[i].quantity}}</div>
+                          <div class="price">{{item.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
+                      </div>
+
+                      <div class="c-row two">
+
+                          <!--When click MENU this section shows-->
+                          <div class="edit-row discoup" *ngIf="cart.items[i].showdisccoup">
+                              <div class="spl">
+                                  <div class="item selectbox1" *ngIf="discounts.length >0">
+                                        <mat-form-field>
+                                            <mat-select [(ngModel)]="cart.items[i].discount" [ngModelOptions]="{standalone: true}"
+                                            (selectionChange)="itemDiscountChange(i)">
+                                            <mat-option [value]="''">Select one </mat-option>
+                                            <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
+                                                {{ discount.name }}
+                                            </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                  </div>
+                                  <div class="item selectbox2" *ngIf="coupons.length > 0">
+                                    <mat-form-field>
+                                        <mat-select [(ngModel)]="cart.items[i].coupon" [ngModelOptions]="{standalone: true}"
+                                        (selectionChange)="itemCouponChange(i)" matNativeControl>
+                                          <mat-option [value]="''">Select one </mat-option>
+                                          <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
+                                            {{ coupon.name }}
+                                          </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+                                  </div>
+                              </div>
+                              <div class="spr">
+                                  <button class="cs-btn bt1" (click)="itemDiscCoupSec(i)">Done</button>
+                                  <!-- <button class="cs-btn bt2" (click)="itemDiscCoupSec(i)">Cancel</button> -->
+                              </div>
                           </div>
-                      </td>
-                      <td data-title="Tax-SGST">{{item.gst_percentage}} %</td>
-                      <td data-title="Tax-CGST">{{item.cgst_percentage}} %</td>
-                      <td data-title="Net-Rate">{{item.subtotal | currency:'INR':'symbol':'.2-2'}}</td>
-                      <td data-title="" class="delete"><button (click)="deleteCartItem(i)">Delete</button></td>
-                    </tr>
-                    <tr *ngIf="bill_load_complete && cart.items.length == 0">
-                      <td colspan="9">No items added</td>
-                    </tr>
-                  </tbody>
-              </table>
-              <div class="form-group bill-total">
-                  <div class="total"><span class="label">Total</span>
-                    <span class="label-valu">{{cart.sub_total | currency:'INR':'symbol':'.2-2'}}</span>
-                  </div>
-              </div>
-              <div class="form-group bill-discount">
-                  <div class="total"><span class="label">Discount</span>
-                    <span class="label-valu">{{totdisc_val | currency:'INR':'symbol':'.2-2'}}</span>
-                  </div>
-              </div>
-              <div class="form-group bill-coupon">
-                  <div class="total"><span class="label">Coupon</span>
-                    <span class="label-valu">{{totcoup_val | currency:'INR':'symbol':'.2-2'}}</span>
-                  </div>
-              </div>
+                          <!--ENDS-->
 
-              <div class="form-group bill-total">
-
-                  <div class="discount form-group" *ngIf="discounts.length >0">
-                      <mat-form-field>
-                          <label class="col-form-label" for="displayName">Discounts For Total Amount</label>
-                          <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
-                          (selectionChange)="discountChange()">
-                            <mat-option [value]="''">Select one </mat-option>
-                            <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
-                              {{ discount.name }}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-
+                          <div class="discount-row" *ngIf="cart.items[i].discountamt">
+                              <div class="name">Discount</div>
+                              <div class="price">(-){{cart.items[i].discountamt | currency:'INR':'symbol':'.2-2'}}</div>
+                          </div>
+                          <div class="coupon-row" *ngIf="cart.items[i].couponamt">
+                              <div class="name">Coupon</div>
+                              <div class="price">(-){{cart.items[i].couponamt | currency:'INR':'symbol':'.2-2'}}</div>
+                          </div>
+                      </div>
+                      <div class="c-row three" *ngIf="cart.items[i].discountamt || cart.items[i].couponamt">
+                          <div class="name">Sub Total</div>
+                          <div class="price">{{item.subtotalwithouttax | currency:'INR':'symbol':'.2-2'}}</div>
+                      </div>
                   </div>
 
-                  <div class="coupon form-group" *ngIf="coupons.length > 0">
-                      <mat-form-field>
-                          <label class="col-form-label" for="displayName">Coupons For Total Amount</label>
-                          <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
-                          (selectionChange)="couponChange()">
-                            <mat-option [value]="''">Select one </mat-option>
-                            <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
-                              {{ coupon.name }}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-
-                  </div>
-
-                  <div  class="topay"><span class="label">Amount to pay</span>
-                    <span class="label-valu">{{cart.total | currency:'INR':'symbol':'.2-2'}}</span></div>
-
+                  <div class="more">
+                      <!-- <span class="icon-vertical-ellipse"></span> -->
+                      <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="itemDiscCoupSec(i)">
+                              <span>Discounts / Coupons</span>
+                            </button>
+                            <button mat-menu-item (click)="deleteCartItem(i)">
+                              <span>Delete</span>
+                            </button>
+                          </mat-menu>
+                          
+                    </div>
               </div>
-
-              <div class="table-outer log-tbl">
-                  <p class="paymentlogs">Payment Logs</p>
-                  <p *ngIf="pre_payment_log.length == 0">
-                    No  payments found
-                  </p>
-
-                  <!-- <table class="table" *ngIf="pre_payment_log.length > 0">
-                    <thead>
-                      <tr>
-                          <th>Date and Time</th>
-                          <th>Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let payment of pre_payment_log; let i = index">
-                        <td data-title="Date and Time">{{payment.paymentOn}}</td>
-                        <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
-                      </tr>
-                    </tbody>
-                  </table> -->
-                  <table class="table" *ngIf="pre_payment_log.length > 0">
-                      <thead>
-                        <tr>
-                            <th>Date and Time</th>
-                            <th>Status</th>
-                            <th>Mode</th>
-                            <th>Amount</th>
-                            <th>Refunded</th>
-                            <th>Refundable</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ng-container *ngFor="let payment of pre_payment_log; let i = index">
-                            <tr>
-                            <!-- <td data-title="Date and Time">{{payment.paymentOn | date:Pipe_disp_date}}</td> -->
-                            <td data-title="Date and Time">{{stringtoDate(payment.paymentOn)}}</td>
-                            <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | capitalizeFirst}}</span></td>
-                            <td data-title="Mode">{{payment.acceptPaymentBy | capitalizeFirst }}</td>
-                            <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
-                            <td data-title="Refunded">-</td>
-                            <td data-title="Refundable">
-                               <span *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount | currency:'INR':'symbol':'.2-2'}}</span>
-                            </td>
-                            </tr>
-        
-                            <tr *ngFor="let refund of payment.refundDetails" class="refundtr">
-                                    <td data-title="Date and Time">{{refund.paymentOn | date:Pipe_disp_date}}</td>
-                                    <td data-title="Status"><span [class]="refund.status | lowercase">{{refund.status | capitalizeFirst}}</span></td>
-                                    <td data-title="Mode">{{refund.refundBy | capitalizeFirst }}</td>
-                                    <td data-title="Amount">-</td>
-                                    <td data-title="Refunded">{{refund.amount | currency:'INR':'symbol':'.2-2' }}</td>
-                                    <td></td>
-                            </tr>
-        
-                        </ng-container>
-                        
-                      </tbody>
-                    </table>
-              </div>
-
-
           </div>
 
-        </ng-container>
+          <div class="amount-table">
+              <div class="amt-content">
+                  <div class="amt gross">
+                      <div class="name">Gross Amount <span class="bill-discount"><span (click)="handleTotalDiscSec()" *ngIf="cart.sub_total">Bill Discount</span></span></div>
+                      <div class="price">{{cart.totalwithouttax | currency:'INR':'symbol':'.2-2'}}</div>
+                  </div>
+
+                  <ng-container *ngIf="showmainDiscSelsec">
+                  <!--When click BILL DISCOUNT this section shows-->
+                  <div class="edit-row discoup">
+                      <div class="spl">
+                          <div class="item selectbox1" *ngIf="discounts.length >0">
+                            <mat-form-field>
+                            <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
+                            (selectionChange)="discountChange()">
+                                <mat-option [value]="''">Select one </mat-option>
+                                <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
+                                {{ discount.name }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="item selectbox2"  *ngIf="coupons.length >0">
+                            <mat-form-field>
+                            <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
+                            (selectionChange)="couponChange()">
+                                <mat-option [value]="''">Select one </mat-option>
+                                <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
+                                {{ coupon.name }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                          </div>
+                      </div>
+                      <div class="spr">
+                          <button class="cs-btn bt1" (click)="handleTotalDiscSec()">Done</button>
+                          <!-- <button class="cs-btn bt2" (click)="handleTotalDiscSec()">Cancel</button> -->
+                      </div>
+                  </div>
+                  <!--ENDS-->
+                  </ng-container>
+                  <div class="amt discount" *ngIf="totdisc_val">
+                      <div class="name">{{discounts[cart.discount].name}}</div>
+                      <div class="price">(-){{totdisc_val | currency:'INR':'symbol':'.2-2'}}</div>
+                  </div>
+                  <div class="amt coupon" *ngIf="totcoup_val">
+                      <div class="name">{{coupons[cart.coupon].name}}</div>
+                      <div class="price">(-){{totcoup_val | currency:'INR':'symbol':'.2-2'}}</div>
+                  </div>
+                  <div class="amt tax" *ngIf="cart.sub_total">
+                      <div class="name"><span class="tax-top">Tax {{item_service_tax}}% of {{taxabletotal | currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{item_service_tax/2}}%, SGST-{{item_service_tax/2}}%)</span></div>
+                      <div class="price">(+){{tottaxvalue | currency:'INR':'symbol':'.2-2'}}</div>
+                  </div>
+                  <div class="amt paid" *ngIf="totpaid > 0">
+                      <div class="name"><span class="link" (click)="showpaidSection()">Amount Paid</span></div>
+                      <div class="price">{{totpaid | currency:'INR':'symbol':'.2-2'}}</div>
+                  </div>
+                  <div class="amt total">
+                      <div class="name">Amount to Pay</div>
+                      <div class="price">{{cart.total | currency:'INR':'symbol':'.2-2'}}</div>
+                  </div>
+              </div>
+
+              <div class="bill-discount-btn" *ngIf="cart.sub_total && !showmainDiscSelsec"><button class="cs-btn bt3 active" (click)="handleTotalDiscSec()">Bill Discount</button></div>
+          </div>
+      </div>
+      <div class="section-four" *ngIf="showPaidlist">
+        <div class="heading">
+            <span class="back" (click)="showpaidSection()">Back to Bill</span>
+            <h4>Payment Logs</h4>
+        </div>
+        
+        <div class="list-outer">
+            <div class="table-th">
+                <div class="th one">Date &amp; Time</div>
+                <div class="th two">Amount</div>
+                <div class="th three">Refundable</div>
+            </div>
+            
+            <div class="listing" *ngFor="let payment of pre_payment_log; let i = index">
+                <div class="wrap">
+                    <div class="td one">
+                        <span class="date">{{stringtoDate(payment.paymentOn, 'date')}}</span>
+                        <span class="time">{{stringtoDate(payment.paymentOn, 'time')}}</span> 
+                    </div>
+                    <div class="td two">
+                        <span class="amt">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</span>
+                        <span class="others">
+                            <span class="status">
+                                <span class="title">Status</span>
+                                <span><span [class]="payment.status | lowercase">{{payment.status | capitalizeFirst}}</span></span>
+                            </span>
+                            <span class="mode">
+                                <span class="title">Mode</span>
+                                <span>{{payment.acceptPaymentBy | capitalizeFirst }}</span>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="td three">
+                        <span class="amt">{{payment.refundableAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                        <!-- <button class="cs-btn bt3" *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">Refund</button> -->
+                    </div>
+                </div>
+                <div class="refunds-table" *ngIf="payment.refundDetails.length">
+                    <div class="table-th"><h5>Refunds</h5></div>
+                    <div class="table-th1">
+                        <div class="th one">Status</div>
+                        <div class="th two">Mode</div>
+                        <div class="th three">Amount</div>
+                    </div>
+                    <div class="tbody" *ngFor="let refund of payment.refundDetails">
+                        <div class="td one"><span [class]="refund.status | lowercase">{{refund.status | capitalizeFirst}}</span></div>
+                        <div class="td two">{{refund.refundBy | capitalizeFirst }}</div>
+                        <div class="td three">{{refund.amount | currency:'INR':'symbol':'.2-2' }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+  </div>
+
 
   </mat-dialog-content>
-  <mat-dialog-actions>
+  <mat-dialog-actions *ngIf="!showPaidlist">
       <button  type="button" mat-button class="cs-btn bt1 save" [disabled]="cart.items.length <= 0"
-      (click)="submitBill()" *ngIf="bill_load_complete">Save</button>
-    <button  type="button" mat-dialog-close class="cs-btn bt2 cancel">Cancel</button>
+      (click)="submitBill()" *ngIf="bill_load_complete && !showPaidlist">Save</button>
+    <button  type="button" mat-dialog-close class="cs-btn bt2 cancel" *ngIf="!showPaidlist">Cancel</button>
   </mat-dialog-actions>
   <app-field-error-display [displayError]="true" *ngIf="api_error"
   errorMsg="{{api_error}}"></app-field-error-display>

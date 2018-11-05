@@ -1,9 +1,9 @@
-
-import {interval as observableInterval, Observable,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DOCUMENT } from '@angular/common';
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { ConsumerDataStorageService } from '../../services/consumer-datastorage.service';
@@ -22,10 +22,15 @@ import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-priv
 
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-import {startWith, map,  count } from 'rxjs/operators';
+
+
+import {Observable} from 'rxjs/Observable';
+import {startWith} from 'rxjs/operators/startWith';
+import {map} from 'rxjs/operators/map';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
 import { appendFile } from 'fs';
-import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
+import { count } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consumer-home',
@@ -89,12 +94,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   privacydialogRef;
   canceldialogRef;
   remfavdialogRef;
-  coupondialogRef: MatDialogRef<{}, any>;
+  payment_popup = null;
+  servicesjson: any = [];
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog, private router: Router,
+    @Inject(DOCUMENT) public document,
+    public _sanitizer: DomSanitizer,
   private consumer_datastorage: ConsumerDataStorageService) {}
 
   ngOnInit() {
@@ -105,11 +113,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.getWaitlist();
    // this.getHistoryCount();
    // this.getFavouriteProvider();
-   this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
+   this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
     this.reloadAPIs();
    });
 
-   this.countercronHandle = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
+   this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
     this.recheckwaitlistCounters();
    });
 
@@ -165,7 +173,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
       data => {
         this.waitlists = data;
-        console.log('waitlist', this.waitlists);
+        // console.log('waitlist', this.waitlists);
         const today = new Date();
         let i = 0;
         let retval;
@@ -732,7 +740,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
  getWaitlistBill(waitlist) {
-
+  // console.log('waitlist', waitlist);
     this.consumer_services.getWaitlistBill(waitlist.ynwUuid)
     .subscribe(
       data => {
@@ -746,9 +754,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   viewBill(checkin, bill_data) {
+    bill_data['passedProvname'] = checkin['provider']['businessName'];
     this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
       width: '50%',
-      panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'width-100'],
+      panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'billpopup'],
       disableClose: true,
       data: {
         checkin: checkin,
@@ -833,31 +842,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
   }
-
-
-  openCoupons() {
-    
-    // alert('Clicked coupon');
-     
- 
-    this.coupondialogRef = this.dialog.open(CouponsComponent, {
-     width: '50%',
-     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
-     disableClose: true,
-   data: {
-  
-   }
-   });
- 
-   this.coupondialogRef.afterClosed().subscribe(result => {
- 
-   });
-   
-   }
- 
-
-
-
   showPersonsAhead(waitlist) {
     let retstat = false;
     if (waitlist.hasOwnProperty('personsAhead')) {
@@ -874,6 +858,47 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       retstat = false;
     }
     return retstat;
+  }
+  makeFailedPayment(waitlist) {
+   // console.log('pay', waitlist.queue.location.id, waitlist.service.id, waitlist.ynwUuid);
+    let prepayamt = 0;
+    this.shared_services.getServicesByLocationId (waitlist.queue.location.id)
+      .subscribe ( data => {
+          this.servicesjson = data;
+          // console.log('service', this.servicesjson);
+          for (let i = 0; i < this.servicesjson.length; i++) {
+            if (this.servicesjson[i].id === waitlist.service.id) {
+              prepayamt = this.servicesjson[i].minPrePaymentAmount || 0;
+              if (prepayamt > 0) {
+                const payData = {
+                  'amount': prepayamt,
+                  'paymentMode': 'DC',
+                  'uuid': waitlist.ynwUuid
+                };
+                this.shared_services.consumerPayment(payData)
+                  .subscribe (pData => {
+                      if (pData['response']) {
+                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                          setTimeout(() => {
+                            this.document.getElementById('payuform').submit();
+                          }, 2000);
+                      } else {
+                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), {'panelClass': 'snackbarerror'});
+                      }
+                  },
+                  error => {
+                    this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+                  });
+              } else {
+                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), {'panelClass': 'snackbarerror'});
+              }
+            }
+          }
+      },
+    error => {
+    });
+
   }
 
 }

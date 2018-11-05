@@ -20,7 +20,7 @@
   <div class="sa-dm flex-shrink-0 ml5">
     <mat-form-field>
       <div>
-        <mat-select panelClass ="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange(seldomain.value)" >
+        <mat-select panelClass ="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (change)="handledomainchange(seldomain.value)" >
           <mat-option value="All">All</mat-option>
           <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain" >
             {{ domain.displayName }} 

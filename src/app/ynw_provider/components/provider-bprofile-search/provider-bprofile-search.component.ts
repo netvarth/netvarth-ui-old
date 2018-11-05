@@ -5,9 +5,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 // import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable ,  Subscription } from 'rxjs';
-
-
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
@@ -351,10 +352,11 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
               Object.keys(this.bProfile['domainVirtualFields']) .length === 0) {
                 this.normal_domainfield_show = 2;
           }
-
+          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          // console.log('subsector bprofile', subsectorname);
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-           || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '');
+           || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
 
            const pdata = { 'ttype': 'updateuserdetails' };
            this.sharedfunctionobj.sendMessage(pdata);
@@ -995,9 +997,11 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         } else {
           logo = '';
         }
+        const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+        // console.log('subsector bprofile', subsectorname);
         // calling function which saves the business related details to show in the header
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-         || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', logo );
+         || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo );
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);
@@ -1021,9 +1025,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
        const today = new Date();
        const tday = today.toString().replace(/\s/g, '');
        const blogo = this.blogo[0].url + '?' + tday;
-
+       const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+       // console.log('subsector bprofile', subsectorname);
        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-        || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', blogo || '' );
+        || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '' );
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);
@@ -1045,8 +1050,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         // calling function which saves the business related details to show in the header
         this.blogo = [];
         this.profimg_exists = false;
+        const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          // console.log('subsector bprofile', subsectorname);
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-         || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '', true);
+         || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);

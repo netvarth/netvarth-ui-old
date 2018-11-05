@@ -1,12 +1,10 @@
-
-import {tap} from 'rxjs/operators';
 import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-
-
-
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/do';
 
 import { base_url } from './../constants/urls';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
@@ -66,7 +64,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         req = req.clone({url: url, responseType: 'json'});
 
 
-        return next.handle(req).pipe(tap((event: HttpEvent<any>) => {
+        return next.handle(req).do((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             if (this.loaderDisplayed) {
               // this.hideLoader();
@@ -85,10 +83,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // or show a modal
             } else if (err.status === 0) {
               console.log( 'NETWORK ERROR');
-              this.shared_functions.openSnackBar(Messages.API_ERROR, {'panelClass': 'snackbarerror'});
+              this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, {'panelClass': 'snackbarerror'});
             }
           }
-        }));
+        });
 
     }
 

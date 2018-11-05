@@ -10,9 +10,10 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable ,  Subscription } from 'rxjs';
-
-
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 
 @Component({
   selector: 'app-add-provider-waitlist-service-gallery',

@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
+import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SignUpComponent } from '../../components/signup/signup.component';
-import {projectConstants} from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../shared/constants/project-constants';
+import { post } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-login',
@@ -33,14 +34,14 @@ export class LoginComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public dialog: MatDialog
-    ) {
-        if (this.shared_functions.checkLogin()) {
-          this.shared_functions.logout();
-        }
-        this.test_provider = data.test_account;
-        this.is_provider = data.is_provider || 'true';
-       // console.log('login data', data);
-     }
+  ) {
+    if (this.shared_functions.checkLogin()) {
+      this.shared_functions.logout();
+    }
+    this.test_provider = data.test_account;
+    this.is_provider = data.is_provider || 'true';
+    // console.log('login data', data);
+  }
 
   ngOnInit() {
     this.moreParams = this.data.moreparams;
@@ -56,16 +57,16 @@ export class LoginComponent implements OnInit {
   createForm() {
     this.loginForm = this.fb.group({
       phonenumber: ['', Validators.compose(
-        [ Validators.required,
-          Validators.maxLength(10),
-          Validators.minLength(10),
-          Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])  ],
+        [Validators.required,
+        Validators.maxLength(10),
+        Validators.minLength(10),
+        Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
       password: ['', Validators.compose([Validators.required])]
 
     });
   }
 
-  showError () {
+  showError() {
     this.show_error = true;
   }
 
@@ -77,40 +78,46 @@ export class LoginComponent implements OnInit {
     const post_data = {
       'countryCode': '+91',
       'loginId': data.phonenumber,
-      'password': data.password
+      'password': data.password,
+      'mUniqueId':null
     };
     this.api_loading = true;
     if (this.data.type === 'provider') {
       this.shared_functions.providerLogin(post_data)
-      .then(
-        success =>  {
-       // this.dialogRef.close();
-       setTimeout(() => {
-        this.dialogRef.close();
-        }, projectConstants.TIMEOUT_DELAY_SMALL);
-      },
-        error => {
-          ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          this.api_loading = false;
-         }
-      );
+        .then(
+          success => {
+            // this.dialogRef.close();
+            setTimeout(() => {
+              this.dialogRef.close();
+            }, projectConstants.TIMEOUT_DELAY_SMALL);
+          },
+          error => {
+            ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            this.api_loading = false;
+          }
+        );
     } else if (this.data.type === 'consumer') {
-      if (post_data.loginId.startsWith('55') &&  this.test_provider === false) {
+      if (post_data.loginId.startsWith('55') && this.test_provider === false) {
         setTimeout(() => {
           ob.api_error = this.shared_functions.getProjectMesssages('TESTACC_LOGIN_NA');
           this.api_loading = false;
-          }, projectConstants.TIMEOUT_DELAY_SMALL);
+        }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
-      this.shared_functions.consumerLogin(post_data, this.moreParams)
-      .then(
-        success =>  { this.dialogRef.close('success'); },
-        error => {
-          ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          this.api_loading = false;
-        }
-      );
+        //setTimeout(function () {
+          console.log('Key:' + localStorage.getItem("mUniqueId"));
+          post_data.mUniqueId=localStorage.getItem("mUniqueId");
+          console.log(JSON.stringify(post_data))
+          this.shared_functions.consumerLogin(post_data, this.moreParams)
+            .then(
+              success => { this.dialogRef.close('success'); },
+              error => {
+                ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                this.api_loading = false;
+              }
+            );
+       // }, 2000);
+      }
     }
-  }
   }
 
   doForgotPassword() {
@@ -143,16 +150,16 @@ export class LoginComponent implements OnInit {
     }
   }
   doSignup() {
-      const dialogReflog = this.dialog.open(SignUpComponent, {
-        width: '50%',
-        panelClass: ['signupmainclass', 'consumerpopupmainclass'],
-        disableClose: true,
-        data: { is_provider : this.is_provider}
-      });
-      dialogReflog.afterClosed().subscribe(result => {
-        // console.log('The dialog was closed');
-        // this.animal = result;
-      });
+    const dialogReflog = this.dialog.open(SignUpComponent, {
+      width: '50%',
+      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+      disableClose: true,
+      data: { is_provider: this.is_provider }
+    });
+    dialogReflog.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      // this.animal = result;
+    });
   }
 
   /*doSignup() {

@@ -10,8 +10,9 @@ import { SharedServices } from '../../../shared/services/shared-services';
 
 import * as moment from 'moment';
 
-import {Observable} from 'rxjs';
-import {startWith, map} from 'rxjs/operators';
+import {Observable} from 'rxjs/Observable';
+import {startWith} from 'rxjs/operators/startWith';
+import {map} from 'rxjs/operators/map';
 import {FormControl} from '@angular/forms';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
