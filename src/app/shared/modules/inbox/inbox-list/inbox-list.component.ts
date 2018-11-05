@@ -1,3 +1,5 @@
+
+import {interval as observableInterval,  Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -8,10 +10,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { InboxServices } from '../inbox.service';
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 
 import { AddInboxMessagesComponent } from '../../../components/add-inbox-messages/add-inbox-messages.component';
@@ -74,7 +72,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.loading = false;
     }
 
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadApi.emit();
     });
 

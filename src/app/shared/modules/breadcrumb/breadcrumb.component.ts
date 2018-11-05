@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import 'rxjs/add/operator/filter';
+
 
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';

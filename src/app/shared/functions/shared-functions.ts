@@ -5,11 +5,9 @@ import { SharedServices } from '../services/shared-services';
 import { projectConstants } from '../constants/project-constants';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
-import {Observable} from 'rxjs/Observable';
+import {Observable,  Subject } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
-import { Subject } from 'rxjs/Subject';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
-import { post } from 'selenium-webdriver/http';
 
 @Injectable()
 

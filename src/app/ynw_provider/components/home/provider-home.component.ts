@@ -1,6 +1,8 @@
+
+import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
 import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
-import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
+
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 

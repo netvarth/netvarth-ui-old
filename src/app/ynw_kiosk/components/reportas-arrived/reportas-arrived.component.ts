@@ -119,7 +119,6 @@ export class ReportasArrivedComponent implements OnInit {
         retval.waitingtimemins = '';
       break;
     }
-    console.log('mod', mod);
     if (mod === 'class') {
       return retval.class;
     } else if (mod === 'caption') {

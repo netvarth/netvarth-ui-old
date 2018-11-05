@@ -15,7 +15,8 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-provider-paymentsettings',
-    templateUrl: './provider-payment-settings.component.html'
+    templateUrl: './provider-payment-settings.component.html',
+    styleUrls: ['./provider-payment-settings.component.css']
 })
 
 export class ProviderPaymentSettingsComponent implements OnInit {
@@ -49,9 +50,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     emailidVerified = false;
     profileQueryExecuted = false;
     ineditMode = false;
+    isJaldeeAccount : Boolean=true;
+    optJaldeeAccount : Boolean= true;
     maxcnt100 = projectConstants.VALIDATOR_MAX100;
     maxcnt10 = 10;
     maxcnt11 = 11;
+    activeLicPkg;
     breadcrumbs = [
         {
           title: 'Settings',
@@ -77,11 +81,13 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.getPaymentSettings(2);
         this.getTaxpercentage();
         this.getProviderProfile();
+        this.activeLicPkg = this.shared_Functionsobj.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
     getPaymentSettings(showmsg) {
         this.provider_services.getPaymentSettings()
             .subscribe(data => {
                 this.paySettings = data;
+                console.log(JSON.stringify(this.paySettings));
                 this.paystatus = this.paySettings.onlinePayment || false;
                 this.paytmenabled = this.paySettings.payTm || false;
                 this.ccenabled = this.paySettings.dcOrCcOrNb || false;
@@ -97,6 +103,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.bankactype = this.paySettings.accountType || '';
                 this.paytmverified = this.paySettings.payTmVerified	 || false;
                 this.payuverified = this.paySettings.payUVerified	 || false;
+                this.isJaldeeAccount = this.paySettings.isJaldeeAccount;
+                this.optJaldeeAccount = this.isJaldeeAccount;
             });
             if (showmsg === 1) {
                 this.tabid = 0;
@@ -282,6 +290,20 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.errorExist = true;
             this.showError['bankbranch'] = {status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_CHARONLY')};
         }
+    }
+    saveAccountPaymentSettings(status) {
+        this.provider_services.setPaymentAccountSettings(status)
+            .subscribe (data => {
+                // console.log('save ret', data);
+                this.getPaymentSettings(1);
+                this.saveEnabled = true;
+                this.handleEditPaySettings(false);
+            },
+        error => {
+            this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
+            this.getPaymentSettings(2);
+            this.saveEnabled = true;
+        });
     }
     savePaySettings(includepaystatus) {
         this.resetApi();

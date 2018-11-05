@@ -1,17 +1,12 @@
 import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
+import { Subscription, SubscriptionLike as ISubscription ,  Observable } from 'rxjs';
 
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-
-/// import { LoginComponent } from '../../components/login/login.component';
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
 import { ViewChild } from '@angular/core';
