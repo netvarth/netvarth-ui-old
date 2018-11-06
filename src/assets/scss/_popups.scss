@@ -93,6 +93,7 @@
     .mat-autocomplete-panel {
         box-shadow: none !important;
         border: 1px solid #e6e6e6;
+        max-height: 482px;
 
         .mat-option {
             @include font-regular;
@@ -204,11 +205,11 @@
             .mat-form-field {
                 width: 100%;
 
-                .mat-form-field-wrapper {
+                .mat-input-wrapper {
                     padding: 0;
                     margin: 0;
                     
-                    .mat-form-field-prefix {
+                    .mat-input-prefix {
                         align-self: center;
                         
                         .rupee {
@@ -216,7 +217,7 @@
                         }
                     }
 
-                    .mat-form-field-infix {
+                    .mat-input-infix {
                         margin: 0;
                         padding: 0;
                         border: none;
@@ -243,7 +244,7 @@
                         }
                     }
 
-                    .mat-form-field-underline {
+                    .mat-input-underline {
                         display: none;
                     }
                 }
@@ -455,7 +456,7 @@
         .mat-form-field {
             width: 100%;
 
-            .mat-form-field-wrapper {
+            .mat-input-wrapper {
                 padding: 0;
                 margin: 0;
 
@@ -463,7 +464,7 @@
                     color: $cc-red;
                 }
 
-                .mat-form-field-infix {
+                .mat-input-infix {
                     margin: 0;
                     padding: 0;
                     border: none;
@@ -515,7 +516,7 @@
                     }
                 }
 
-                .mat-form-field-underline {
+                .mat-input-underline {
                     display: none;
                 }
             }
@@ -820,8 +821,8 @@
                 width: 280px;
 
                 .mat-form-field {
-                    .mat-form-field-wrapper {
-                        .mat-form-field-infix {
+                    .mat-input-wrapper {
+                        .mat-input-infix {
                             .col-form-label {
                                 padding: 0px;
                                 margin-bottom: 5px;
@@ -856,11 +857,11 @@
                                     .mat-form-field {
                                         width: 100px;
 
-                                        .mat-form-field-wrapper {
+                                        .mat-input-wrapper {
                                             padding: 0;
                                             margin: 0;
 
-                                            .mat-form-field-infix {
+                                            .mat-input-infix {
                                                 margin: 0;
                                                 padding: 0;
                                                 border: none;
@@ -894,7 +895,7 @@
                                                 }
                                             }
 
-                                            .mat-form-field-underline {
+                                            .mat-input-underline {
                                                 display: none;
                                             }
                                         }
@@ -1047,11 +1048,11 @@
                     
                     .mat-form-field {
 
-                        .mat-form-field-wrapper {
+                        .mat-input-wrapper {
                             padding: 0;
                             margin: 0;
 
-                            .mat-form-field-infix {
+                            .mat-input-infix {
                                 margin: 0;
                                 padding: 0;
                                 border: none;
@@ -1089,7 +1090,7 @@
                                 }
                             }
 
-                            .mat-form-field-underline {
+                            .mat-input-underline {
                                 display: none;
                             }
                         }
@@ -1340,6 +1341,7 @@
         @include box-shadow(0, 0, 30px, rgba(0,0,0,0.1));
         position: relative;
         display: flex;
+        z-index: 5;
         
         .bt1 {
             margin-right: 10px;
@@ -1383,7 +1385,7 @@
                     
                     .selsername {
                         font-weight: 600;
-                        color: $linkblack;
+                        color: $hover-blue;
                     }
                 }
                 .queue-waitingdiv {
@@ -1392,7 +1394,7 @@
                         font-size: .875rem;
 
                         .queue-avail-date {
-                            color: $green;
+                            color: $hover-blue;
                             font-weight: 600;
                         }
                     }
@@ -1477,6 +1479,7 @@
         width: 100% !important;
     }
 }
+
 // #### Login Popup
 .loginmainclass {    
     .mat-dialog-actions {
@@ -2916,6 +2919,732 @@
         &:last-child {
             margin-bottom: 0;
         }
+    }
+}
+
+// #### Bill Popup
+.billpopup {    
+    .mat-dialog-content {
+        padding: 0px;
+        
+        .bill-wrapper {
+            background: $white;
+            width: 100%;
+            margin: 0 auto;
+
+            .section-one, .section-two, .section-three, .section-four {
+                padding: 20px;
+                border-bottom: 1px solid $cc-ash;
+            }
+
+            .section-one {
+                h3 {
+                    font-size: 1rem;
+                    margin-bottom: 15px;
+                }
+
+                .details {
+                    display: flex;
+                    flex-wrap: wrap;
+                    font-size: .875rem;
+                    font-weight: 500;
+
+                    .columns {
+                        flex-basis: 50%;
+
+                        .title {
+                            font-weight: 600;
+                            position: relative;
+                            margin-right: 10px;
+
+                            &:after {
+                                position: absolute;
+                                content: ":";
+                                right: -5px;
+
+                            }
+                        }
+
+                        &:nth-child(1), &:nth-child(2) {
+                            margin-bottom: 10px;
+                        }
+                    }
+
+                    @include respond-to(ynw-500){
+                        flex-direction: column;
+
+                        .columns {
+                            margin-bottom: 10px;
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .section-two {
+
+                .add-button {
+                    .bt3 {
+                        text-transform: none;
+                        letter-spacing: .2px;
+                    }
+                }
+                .edit-row {
+                    font-size: .875rem;
+                    font-weight: 500;
+
+                    &.service {
+                        display: flex;
+
+                        .spl {
+                            display: flex;
+                            flex-grow: 1;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            .item {                                
+                                &.selectbox {
+                                    flex-grow: 1;
+                                    
+                                    .mat-form-field {
+                                        .mat-input-wrapper {
+                                            .mat-input-flex {
+                                                .mat-form-field-infix {
+                                                    width: auto;
+                                                    
+                                                    .mat-input-element{
+                                                        height: 30px;
+                                                        width: 100%;
+                                                        padding: 5px 10px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                &.qty {
+                                    display: flex;
+                                    align-items: center;
+                                    margin-left: 15px;
+                                    
+                                    .label {
+                                        font-weight: 600;
+                                        margin-right: 10px;
+                                    }
+                                    
+                                    .number {
+                                        .mat-form-field {
+                                            .mat-input-wrapper {
+                                                .mat-input-flex {
+                                                    .mat-form-field-infix {
+                                                        width: auto;
+                                                        
+                                                        .mat-input-element{
+                                                            height: 30px;
+                                                            width: 80px;
+                                                            padding: 5px 5px 5px 10px;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .spr {
+                            margin-left: 15px;
+                            
+                            .cs-btn {
+                                height: 30px;
+                                line-height: 12px;
+                                padding: 6px 10px;
+                                text-transform: none;
+                                float: left;
+                                font-size: .75rem;
+
+                                &.bt2 {
+                                    margin-left: 10px;
+                                }
+                            }
+                        }
+
+                        @include respond-to(ynw-400) {
+                            flex-direction: column;
+
+                            .spl {
+                                margin-bottom: 10px;
+                            }
+                        }
+                    }
+                    
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
+                        
+                        &.service{
+                            .spr {
+                                margin-left: 0;
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .section-three {
+                border: none;
+                
+                .bill-breakup {
+                    font-size: .875rem;
+                    font-weight: 500;
+
+                    .list {
+                        position: relative;
+                        border-bottom: 1px solid $cc-ash;
+                        margin-bottom: 15px;
+                        padding-bottom: 15px;
+
+                        .list-content {                    
+                            .c-row {
+                                display: flex;
+                                padding: 5px 0;
+                                margin-right: 110px;
+                                text-align: right;
+
+                                &.one {
+                                    display: flex;
+
+                                    .name {
+                                        font-weight: 600;
+                                        flex-basis: 60%;
+                                        padding-right: 15px;
+                                    }
+                                    .quantity {
+                                        flex-basis: 20%;
+                                    }
+                                    .price {
+                                        flex-basis: 20%;
+                                    }
+                                }
+                                &.two {
+                                    display: block;
+                                    margin-right: 0;
+                                    padding: 0;
+
+                                    .edit-row {
+                                        padding: 10px 0;
+
+                                        &.discoup {
+                                            display: flex;
+
+                                            .spl {
+                                                display: flex;
+                                                flex-grow: 1;
+                                                margin-right: 20px;
+                                                justify-content: space-between;
+
+                                                .item {
+                                                    flex-basis: 48%;
+                                                    
+                                                    .mat-form-field {
+                                                        .mat-input-wrapper {
+                                                            .mat-input-flex {
+                                                                .mat-form-field-infix {
+                                                                    width: auto;
+
+                                                                    .mat-select{
+                                                                        height: 30px;
+                                                                        width: 100%;
+                                                                        padding: 5px 10px;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                @include respond-to(ynw-768) {
+                                                    margin-right: 0;
+                                                }
+                                            }
+                                            .spr {
+                                                .cs-btn {
+                                                    height: 30px;
+                                                    line-height: 12px;
+                                                    padding: 6px 10px;
+                                                    text-transform: none;
+                                                    float: left;
+                                                    font-size: .75rem;
+
+                                                    &.bt2 {
+                                                        margin-left: 10px;
+                                                    }
+                                                }
+                                            }
+
+                                            @include respond-to(ynw-500) {
+                                                flex-direction: column;
+
+                                                .spl {
+                                                    margin-right: 0;
+                                                }
+                                            }
+                                            
+                                            @include respond-to(ynw-575) {
+                                                flex-direction: column;
+                                                
+                                                &.discoup {
+                                                    .spr {
+                                                        margin-top: 5px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .discount-row, .coupon-row {
+                                        margin-right: 110px;
+                                        display: flex;
+                                        padding: 5px 0;
+                                        color: $cc-mediumgray;
+
+                                        .name {
+                                            flex-grow: 1;
+                                            flex-basis: 60%;
+                                            padding-right: 15px;
+                                        }
+                                        .price {
+                                            flex-basis: 40%;
+                                        }
+                                    }
+                                }
+                                &.three {
+                                    padding: 0;
+
+                                    .name {
+                                        flex-basis: 60%;
+                                        font-weight: 600;
+                                        padding: 5px 0;
+                                        padding-right: 15px;
+                                    }
+                                    .price {
+                                        flex-basis: 40%;
+                                        padding: 5px 0;
+                                        border-top: dashed 1px $cc-ash;
+                                    }
+                                }
+
+                                @include respond-to(ynw-500) {
+                                    margin-right: 40px;
+
+                                    &.two {
+                                        .discount-row, .coupon-row {
+                                            margin-right: 40px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .more {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            
+                            .mat-icon-button {
+                                height: 30px;
+                                width: 30px;
+                                line-height: 30px;
+                            }
+                        }
+                    }
+                }
+
+                .amount-table {
+                    position: relative;
+
+                    .amt-content {
+                        font-size: 1rem;
+                        font-weight: 500;
+
+                        .amt{
+                            display: flex;
+                            text-align: right;
+                            margin-right: 110px;
+                            padding: 5px 0;
+
+                            .name {
+                                flex-basis: 80%;
+                            }
+                            .price {
+                                flex-basis: 20%;
+                            }
+
+                            &.gross {
+                                .name {
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                    
+                                    .bill-discount {
+                                        color: $linkblue;
+                                        display: none;
+                                        font-size: .875rem;
+
+                                        span {
+                                            text-decoration: underline;
+                                            cursor: pointer;
+                                        }
+
+                                    }
+                                }
+                                .price {
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                }
+                            }
+                            &.discount, &.coupon {
+                                .name, .price {
+                                    color: $cc-mediumgray;
+                                    font-size: .875rem;
+                                    font-weight: 600;
+                                }
+                            }
+                            &.tax {
+                                .name, .price {
+                                    font-size: .875rem;
+                                    font-weight: 600;
+                                    
+                                    span {
+                                        display: block;
+
+                                        &.txn {
+                                            font-weight: 500;
+                                            font-size: .69rem;
+                                        }
+                                    }
+                                }
+                            }
+                            &.paid {
+                                .name, .price {
+                                    font-weight: 600;
+                                    font-size: .875rem;
+                                    
+                                    .link {
+                                        color: $linkblue;
+                                        text-decoration: underline;
+                                        cursor: pointer;
+                                    }
+                                }
+                            }
+                            &.total {
+                                .name, .price {
+                                    font-size: 1.1rem;
+                                    font-weight: 700;
+                                }
+                            }
+
+                            @include respond-to(ynw-500) {
+                                margin-right: 40px;
+
+                                &.gross {
+                                    .name {
+                                        .bill-discount {
+                                            display: block;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .edit-row {
+                            padding: 10px 0;
+
+                            &.discoup {
+                                display: flex;
+
+                                .spl {
+                                    display: flex;
+                                    flex-grow: 1;
+                                    margin-right: 20px;
+                                    justify-content: space-between;
+
+                                    .item {
+                                        flex-basis: 48%;
+
+                                        .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+                                            height: 30px;
+                                            width: 100%;
+                                            padding: 5px 10px;
+                                        }
+                                    }
+                                }
+                                .spr {
+                                    .cs-btn {
+                                        height: 30px;
+                                        line-height: 12px;
+                                        padding: 6px 10px;
+                                        text-transform: none;
+                                        float: left;
+                                        font-size: .75rem;
+
+                                        &.bt2 {
+                                            margin-left: 10px;
+                                        }
+                                    }
+                                }
+
+                                @include respond-to(ynw-500) {
+                                    flex-direction: column;
+
+                                    .spl {
+                                        margin-right: 0;
+                                        margin-bottom: 10px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .bill-discount-btn {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+
+                        .cs-btn {
+                            text-transform: none;
+                            padding-left: 5px;
+                            padding-right: 5px;
+
+                            &.active {
+                                background: $linkblue;
+                                color: $white;
+                            }
+                        }
+
+                        @include respond-to(ynw-500) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .section-four {
+                border-bottom: none;
+
+                .heading {
+                    .back {
+                        font-size:.75rem;
+                        color: $linkblue;
+                        display: table;
+                        font-weight: 600;
+                        position: relative;
+                        padding-left: 20px;
+                        margin-bottom: 20px;
+                        cursor: pointer;
+
+                        &:before {
+                            @include font-custom;
+                            content: "\2e";
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                        }
+                    }
+                    h4 {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        margin-bottom: 10px;
+                    }
+                }
+
+                .list-outer {
+                    border: 1px solid $cc-ash;
+                    font-size: .875rem;
+                    font-weight: 500;
+
+                    .table-th {
+                        display: flex;
+                        border-bottom: 1px solid $cc-ash;
+                        background: $cc-ash;
+
+                        .th {
+                            flex-basis: 33.3333%;
+                            padding:10px;
+                            font-weight: 600;
+                            text-align: center;
+                            border-right: 1px solid $white;
+
+                            &:last-child {
+                                border: none;
+                            }
+                        }
+                    }
+
+                    .listing {
+                        border-bottom: 1px solid $cc-ash;
+
+                        .wrap {
+                            display: flex;
+                            align-items: center;
+
+                            .td {
+                                flex-basis: 33.3333%;
+                                padding:10px;
+                                text-align: center;
+                                position: relative;
+
+                                &.one {
+                                    .date {
+                                        display: block;
+                                        font-weight: 600;
+                                    }
+                                    .time {
+                                        display: block;
+                                    }
+                                }
+                                &.two {
+                                    .amt {
+                                        display: block;
+                                        font-weight: 600;
+                                    }
+                                    .others {
+                                        font-size: .75rem;
+                                        .status, .mode {
+                                            display: block;
+
+                                            .title {
+                                                position: relative;
+                                                margin-right: 5px;
+
+                                                &:after {
+                                                    position: absolute;
+                                                    content: ":";
+                                                    right:-5px;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                &.three {
+                                    .amt {
+                                        display: block;
+                                        font-weight: 600;
+                                        margin-bottom: 3px;
+                                    }
+                                    .cs-btn {
+                                        height: 24px;
+                                        line-height: 12px;
+                                        padding: 6px 10px;
+                                        text-transform: none;
+                                        font-size: .75rem;
+                                    }
+                                }
+
+                                &:after {
+                                    border-right: 1px solid $cc-ash;
+                                    height: 30px;
+                                    width: 1px;
+                                    position: absolute;
+                                    content: "";
+                                    right: 0;
+                                    top: 50%;
+                                    margin-top: -15px;
+                                }
+
+                                &:last-child {
+                                    &:after {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+
+                        .refunds-table {
+                            margin: 10px;
+                            border: 1px solid $cc-ash;
+
+                            .table-th {
+                                text-align: center;
+                                padding: 5px;
+                                background: transparent;
+
+                                h5 {
+                                    font-size: .875rem;
+                                    margin: 0 auto;
+                                }
+                            }
+                            .table-th1 {
+                                display: flex;
+                                border-bottom: 1px solid $cc-ash;
+
+                                .th {
+                                    flex-basis: 33.3333%;;
+                                    padding: 5px;
+                                    text-align: center;
+                                    border-right: 1px solid $cc-ash;
+                                    font-weight: 600;
+
+                                    &:last-child {
+                                        border: none;
+                                    }
+                                }
+                            }
+                            .tbody {
+                                display: flex;
+
+                                .td {
+                                    flex-basis: 33.3333%;;
+                                    padding: 5px;
+                                    text-align: center;
+                                    border-right: 1px solid $cc-ash;
+                                    font-size: .75rem;
+
+                                    &:last-child {
+                                        border: none;
+                                    }
+                                }
+                            }
+                        }
+
+                        &:last-child {
+                            border: none;
+                        }
+                    }
+                }
+            }
+            
+            &.viewbill {
+                .section-three {
+                    .bill-breakup {
+                        .list {
+                            .list-content {
+                                .c-row {
+                                    margin-right: 50px;
+                                    
+                                    .discount-row, .coupon-row {
+                                        margin-right: 0px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .amount-table {
+                        .amt-content {
+                            .amt {
+                                margin-right: 50px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @include respond-to(ynw-767) {
+        width: 100% !important;
+        max-width: 94vw !important;
     }
 }
 

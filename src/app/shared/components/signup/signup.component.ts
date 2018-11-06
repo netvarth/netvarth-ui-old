@@ -367,7 +367,6 @@ export class SignUpComponent implements OnInit {
 
       this.resetApiErrors();
       this.resendemailotpsuccess = false;
-      // console.log(user_details);
       this.shared_services.signUpProvider(user_details)
       .subscribe(
         data => {

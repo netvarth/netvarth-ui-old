@@ -127,6 +127,11 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
 
     this.resetApiErrors();
 
+    // console.log('msg', form_data.message);
+    const blankvalidate = projectConstants.VALIDATOR_BLANK;
+    if (blankvalidate.test(form_data.message)) {
+      this.api_error = this.sharedfunctionObj.getProjectMesssages('MSG_ERROR');
+    } else {
     const post_data =  {
           communicationMessage: form_data.message
       };
@@ -137,6 +142,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         case 'consumer-common' : this.consumerToProviderNoteAdd(post_data); break;
         case 'provider-common' : this.providerToConsumerNoteAdd(post_data); break;
       }
+    }
   }
 
   providerToConsumerWaitlistNote(post_data) {
@@ -157,13 +163,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
          }
         );
     }
-
-
   }
-
   consumerToProviderWaitlistNote(post_data) {
     if (this.uuid !== null) {
-
       this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
         post_data)
         .subscribe(
@@ -179,10 +181,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         );
     }
   }
-
   providerToConsumerNoteAdd(post_data) {
     if (this.user_id !== null) {
-
       this.shared_services.addProvidertoConsumerNote(this.user_id,
         post_data)
         .subscribe(
@@ -196,13 +196,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             this.sharedfunctionObj.apiErrorAutoHide(this, error);
          }
         );
-
     }
   }
-
   consumerToProviderNoteAdd(post_data) {
     if (this.user_id) {
-
       this.shared_services.addConsumertoProviderNote(this.user_id,
         post_data)
         .subscribe(
@@ -219,11 +216,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
 
     }
   }
-
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;
   }
 }
-
-

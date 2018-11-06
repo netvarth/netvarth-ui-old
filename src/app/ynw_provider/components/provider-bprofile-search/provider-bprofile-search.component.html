@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="ct-r ml-auto">
                                     <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="confirm_searchStatus()">Turn Off</button>
-                                    <!-- <span *ngIf="normal_search_active"><i data-icon="m" ></i>Your customer can’t find you online</span> -->
+                                    <!-- <span *ngIf="normal_search_active"><i data-icon="m" ></i>Your customer canâ€™t find you online</span> -->
                                     <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="confirm_searchStatus()">Turn On</button>
                                 </div>
                             </div>
@@ -73,14 +73,15 @@
                                 <span (click)="buyAdwords()" class="cs-btn bt3">Buy Adwords</span>
                         </div>
                         <div class="adwds w-dta" *ngIf="normal_adworkds_active && adwordsmaxcount > 0">
-                            <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div></h2>
+                            <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div><span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span></h2>
                             <div class="ad-tble">
                                 <div class="ad-l" *ngIf="adwords_maxremaining>0">You have {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} more.</div>
                                 <div class="ad-l" *ngIf="adwords_maxremaining == 0">You have {{adword_list.length}} adword(s). To add more adwords, go to <a routerLink="/provider/settings/license"><strong>License & Invoice</strong></a></div>
                                 <div class="ad-r">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre" *ngIf="adwords_remaining>0"><a routerLink="/provider/settings/license">+{{adwords_remaining}} more</a></span>
+                                    <span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length>0"></span>
                                     <!-- <span  (click)="addAdwords()" class="cs-btn bt8" *ngIf="adwords_maxremaining>0">Add Adwords</span> -->
-                                    <span (click)="addAdwords()" class="addbt cs-btn bt8"></span>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -104,7 +105,7 @@
                                     <div class="warning" >
 
                                         <i data-icon="m"></i>
-                                        <p><span>You haven’t added any <strong>Basic Information*</strong> such as</span> Business Name, Profile Summary &amp; Profile Picture.</p>
+                                        <p><span>You havenâ€™t added any <strong>Basic Information*</strong> such as</span> Business Name, Profile Summary &amp; Profile Picture.</p>
                                         <span class="cs-btn bt3" (click)="showBPrimary()">Add It Now</span>
                                         <p class="smlft">* Need Basic Information to turn on Public Search</p>
                                     </div>
@@ -140,7 +141,7 @@
                                     </div>
                                     <div class="warning" *ngIf="normal_locationinfo_show==2">
                                         <i data-icon="m"></i>
-                                        <p><span>You haven’t added any</span> <strong>Location &amp; Working Hours*</strong> information.</p>
+                                        <p><span>You havenâ€™t added any</span> <strong>Location &amp; Working Hours*</strong> information.</p>
                                         <span class="cs-btn bt3" (click)="addLocation()">Add It Now</span>
                                         <p class="smlft">* Need Location &amp; Working Hours to turn on Public Search</p>
                                     </div>
@@ -198,7 +199,7 @@
                                             <ng-container *ngIf="normal_locationamenities_show==2">
                                             <div class="warning">
                                                 <i data-icon="m"></i>
-                                                <p><span>You haven’t added any</span> <strong>Location Amenities</strong></p>
+                                                <p><span>You havenâ€™t added any</span> <strong>Location Amenities</strong></p>
                                                 <span class="cs-btn bt3" (click)="editLocation('badge')">Add It Now</span>
                                             </div>
                                             </ng-container>
@@ -217,7 +218,7 @@
                                             <ng-container *ngIf="display_schedule.length == 0">
                                             <!-- <div class="no-dta" *ngIf="normal_privacy_settings_show==2"> -->
                                             <div class="no-dta">
-                                                <p>You haven’t added any working hours.</p>
+                                                <p>You havenâ€™t added any working hours.</p>
                                                 <span class="cs-btn bt3" (click)="change_schedulepopup()">Add It Now</span>
                                             </div>
                                             </ng-container>
@@ -250,7 +251,7 @@
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
                                     <div class="no-dta" *ngIf="normal_privacy_settings_show==2">
-                                        <p>You haven’t added any Privacy Settings information.</p>
+                                        <p>You havenâ€™t added any Privacy Settings information.</p>
                                         <span class="cs-btn bt3" (click)="handlePrivacysettings('phone')">Add It Now</span>
                                     </div>
 
@@ -356,7 +357,7 @@
                                 <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                             </div>
                             <div class="no-dta" *ngIf="normal_specilization_show==2">
-                            <p>You haven’t added any Specializations.</p>
+                            <p>You havenâ€™t added any Specializations.</p>
                             <span (click)="handleSpecialization()" class="cs-btn bt3">Add It Now</span>
                             </div>
                             <div class="special-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
@@ -381,7 +382,7 @@
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_language_show==2">
-                                <p>You haven’t added any Languages Known.</p>
+                                <p>You havenâ€™t added any Languages Known.</p>
                                 <span (click)="handleSpokenLanguages()" class="cs-btn bt3">Add It Now</span>
                                 </div>
 
@@ -408,7 +409,7 @@
                             </div>
 
                             <div class="no-dta"  *ngIf="normal_subdomainfield_show== 4 ">
-                                    <p>You haven’t added any Specialization.</p>
+                                    <p>You havenâ€™t added any Specialization.</p>
                             </div>
                             <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
                                 <div class="acc-cont" *ngFor="let fields of subdomain_fields">
@@ -586,7 +587,7 @@
                                 </div>
 
                                 <div class="no-dta"  *ngIf="normal_domainfield_show== 4 && normal_subdomainfield_show== 4">
-                                        <p>You haven’t added any Additional Information.</p>
+                                        <p>You havenâ€™t added any Additional Information.</p>
                                 </div>
 
 
@@ -940,7 +941,7 @@
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_gallery_show==2">
-                                    <p>You haven’t added any photos to the Gallery</p>
+                                    <p>You havenâ€™t added any photos to the Gallery</p>
                                     <span class="cs-btn bt3" (click)="handleGalleryImages()">Add It Now</span>
                                 </div>
                                 <div class="ph-gal-bx" *ngIf="normal_gallery_show==3">
@@ -1008,7 +1009,7 @@
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==2" >
-                                    <p>You haven’t added any social media links</p>
+                                    <p>You havenâ€™t added any social media links</p>
                                     <span class="cs-btn bt3" (click)="handleSocialmedia()">Add It Now</span>
                                 </div>
 

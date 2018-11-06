@@ -1,4 +1,4 @@
-const ip_url = 'http://54.215.5.201:8181/v1/rest/';
+// const ip_url = 'http://54.215.5.201:8181/v1/rest/';
 // const ip_url = 'http://35.154.241.175/v1/rest/';
 // const ip_url = 'http://192.168.5.139:8080/v1/rest/';
 

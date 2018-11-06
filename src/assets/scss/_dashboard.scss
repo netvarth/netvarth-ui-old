@@ -1241,7 +1241,7 @@ footer {
             }
 
             .pubs {
-                margin-bottom: 30px;
+                /*margin-bottom: 30px;*/
 
                 .wbox {
                     p {
@@ -1249,6 +1249,33 @@ footer {
 
                         &:last-child {
                             margin-bottom: 0;
+                        }
+                    }
+                }
+                
+                h2 {
+                    margin-bottom: 20px;
+                    font-size: 1.125rem;
+                    font-weight: 500;
+                    display: flex;
+
+                    .helprighticon {
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 5px;
+                        cursor: pointer;
+                        @include transition(all 300ms);
+
+                        i {
+                            width: 20px;
+                            height: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        &:hover {
+                            color: $linkblue;
                         }
                     }
                 }
@@ -1518,6 +1545,16 @@ footer {
                                 color: $linkblue;
                             }
                         }
+                        .addbt {
+                            width: 20px;
+                            height: 20px;
+                            margin-left: 15px;
+                            
+                            &:before {
+                                font-size: 1.3rem;
+                                font-weight: 500;
+                            }
+                        }
                     }
                     
                     .ad-tble {
@@ -1541,7 +1578,6 @@ footer {
                         .ad-r {
                             display: flex;
                             flex-wrap: wrap;
-                            justify-content: flex-end;
                             margin-bottom: 10px;
                             
                             @include respond-to(ynw-767){
@@ -1576,6 +1612,9 @@ footer {
                                             color: $white;
                                         }
                                     }
+                                }
+                                &.addbt {
+                                    margin-left: 10px;
                                 }
                             }
                             .bt8 {
@@ -4153,14 +4192,14 @@ footer {
                     font-size: .875rem;
                     
                     .mat-form-field {                        
-                        .mat-form-field-wrapper {
+                        .mat-input-wrapper {
                             padding-bottom: 0px;
 
-                            .mat-form-field-underline, .mat-form-field-subscript-wrapper, .mat-form-field-label-wrapper {
+                            .mat-input-underline, .mat-input-subscript-wrapper, .mat-form-field-label-wrapper {
                                 display: none;
                             }
 
-                            .mat-form-field-flex {
+                            .mat-input-flex {
                                 height: 40px;
 
                                 .mat-form-field-infix {
@@ -4670,15 +4709,15 @@ footer {
                                             width: 100%;
                                         }
 
-                                        .mat-form-field-wrapper {
+                                        .mat-input-wrapper {
                                             margin-bottom: 0px;
                                             padding-bottom: 0px;
 
-                                            .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                                            .mat-input-underline, .mat-input-subscript-wrapper {
                                                 display: none;
                                             }
 
-                                            .mat-form-field-flex {
+                                            .mat-input-flex {
 
                                                 .mat-form-field-infix {
                                                     padding: 0;
@@ -4753,19 +4792,19 @@ footer {
                                     margin: 0;
                                     
                                     mat-form-field {
-                                        .mat-form-field-wrapper {
-                                            .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                                        .mat-input-wrapper {
+                                            .mat-input-underline, .mat-input-subscript-wrapper {
                                                 display: block;
                                                 margin-bottom: -15px;
                                                 opacity: 0;
                                             }
                                             
-                                            .mat-form-field-flex {
+                                            .mat-input-flex {
                                                 align-items: center;
                                                 height: 28px;
                                                 width: 150px;
                                                 
-                                                .mat-form-field-suffix {
+                                                .mat-input-suffix {
                                                     width: 40px;
                                                     height: 40px;
                                                     
@@ -4859,6 +4898,14 @@ footer {
                                     }
                                     &.name, &.service, &.seq {
                                         font-weight: 500;
+                                    }
+                                    &.name {
+                                        color: $linkblue;
+                                        font-weight: 600;
+                                        
+                                        &:before {
+                                            color: $linkblack;
+                                        }
                                     }
                                     &.actions {
                                         display: flex;
@@ -5522,6 +5569,8 @@ footer {
                                         &:nth-child(1) {
                                             /*width: 15%;*/
                                             cursor: pointer;
+                                            color: $linkblue;
+                                            font-weight: 500;
                                             
                                             .itm-prdct {
                                                 img {
@@ -5561,7 +5610,6 @@ footer {
                                             }
                                         }
                                         &:nth-child(2) {
-                                            color: $linkblue;
                                             font-weight: 500;
 
                                             &:before {
@@ -5695,10 +5743,6 @@ footer {
                         border-bottom: 1px solid $cc-lightgray;
                         padding-bottom: 10px;
 
-                        @include respond-to(ynw-575) {
-                            flex-direction: column;
-                        }
-
                         .label {
                             font-weight: 600;
                             width: 30%;
@@ -5708,8 +5752,20 @@ footer {
                                 width: 100%;
                             }
                         }
+                        .ttle {
+                            width: 70%;
+                            
+                        }
                         &:last-child {
                             border: none;
+                        }
+                        
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
+                            
+                            .ttle {
+                                width: 100%;
+                            }
                         }
                     }
                 }
@@ -6847,15 +6903,15 @@ footer {
                                     width: 100%;
                                 }
                                 
-                                .mat-form-field-wrapper {
+                                .mat-input-wrapper {
                                     /*margin-bottom: 5px;*/
                                     padding-bottom: 0px;
 
-                                    .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                                    .mat-input-underline, .mat-input-subscript-wrapper {
                                         display: none;
                                     }
 
-                                    .mat-form-field-flex {
+                                    .mat-input-flex {
                                         height: 40px;
 
                                         .mat-form-field-infix {
@@ -6958,7 +7014,7 @@ footer {
                                     display: flex;
                                     align-items: center;
 
-                                    .mat-form-field-suffix {
+                                    .mat-input-suffix {
                                         margin-left: 5px;
                                     }
                                 }
@@ -7432,11 +7488,11 @@ footer {
                         .mat-form-field {
                             width: 100%;
 
-                            .mat-form-field-wrapper {
+                            .mat-input-wrapper {
                                 padding: 0;
                                 margin: 0;
 
-                                .mat-form-field-infix {
+                                .mat-input-infix {
                                     margin: 0;
                                     padding: 0;
                                     border: none;
@@ -7452,7 +7508,7 @@ footer {
                                     }
                                 }
 
-                                .mat-form-field-underline {
+                                .mat-input-underline {
                                     display: none;
                                 }
                             }

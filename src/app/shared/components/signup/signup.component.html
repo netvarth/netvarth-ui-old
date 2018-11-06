@@ -62,7 +62,7 @@ onSubmit()" (keyup)="resetApiErrors()">
     </app-field-error-display>
   </div>
 
-  <div class="form-group"  *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
+  <div class="form-group"  *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere && subDomainList.length >1">
 
     <mat-form-field>
       <label class="col-form-label" for="last_name">Select Sub Domain *</label>

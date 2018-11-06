@@ -252,14 +252,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 767) {
       this.show_small_device_queue_display = true;
-      if (this.screenWidth <= projectConstants.SMALL_DEVICE_BOUNDARY) {
-        this.small_device_display = true;
-      } else {
-        this.small_device_display = false;
-      }
     } else {
       this.small_device_display = false;
       this.show_small_device_queue_display = false;
+    }
+    if (this.screenWidth <= projectConstants.SMALL_DEVICE_BOUNDARY) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
     }
   // console.log('resized', this.screenWidth,  this.small_device_display);
 }
@@ -411,7 +411,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         // this.all_queues = data;
 
         const Cqueues = data;
-        console.log('cqueue', Cqueues);
+        // console.log('cqueue', Cqueues);
         this.all_queues = [];
         let indx = 0;
 

@@ -12,7 +12,7 @@
                       <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
                         <mat-form-field class="example-full-width" *ngIf="edit_location">
 
-                          <mat-select placeholder="Locations" [(value)]="selected_location_index" (selectionChange)="onChangeLocationSelect($event)">
+                          <mat-select placeholder="Locations" [(value)]="selected_location_index" (change)="onChangeLocationSelect($event)">
                             <mat-option *ngFor="let location of locations;let i = index" [value]="i">
                               {{ location.place | capitalizeFirst }}
                             </mat-option>
@@ -60,7 +60,11 @@
                   <div class="ctrls">
                       <ul>
                           <li [ngClass]="{'active': status_type =='all'}"  (click)="changeStatusType('all')"
-                          *ngIf="time_type != 1 || (time_type ==1 && selected_queue!=null && selected_queue.id)">
+                          *ngIf="(time_type ==1 && selected_queue!=null && selected_queue.id)">
+                          <span>{{checkin_label |capitalizeFirst}}s</span>
+                          </li>
+                          <li class="active"  
+                          *ngIf="time_type != 1">
                           <span>{{checkin_label |capitalizeFirst}}s</span>
                           </li>
                           <ng-container  *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">

@@ -1068,7 +1068,7 @@
                         .mat-form-field {
                             width: 100%;
 
-                            .mat-form-field-wrapper {
+                            .mat-input-wrapper {
                                 padding: 0;
                                 margin: 0;
 
@@ -1076,7 +1076,7 @@
                                     color: $cc-red;
                                 }
 
-                                .mat-form-field-infix {
+                                .mat-input-infix {
                                     margin: 0;
                                     padding: 0;
                                     border: none;
@@ -1126,7 +1126,7 @@
                                     }
                                 }
 
-                                .mat-form-field-underline {
+                                .mat-input-underline {
                                     display: none;
                                 }
                             }
@@ -1145,7 +1145,7 @@
 
                                 .selsername {
                                     font-weight: 600;
-                                    color: $linkblack;
+                                    color: $hover-blue;
                                 }
                             }
                             .queue-waitingdiv {
@@ -1153,7 +1153,7 @@
                                     margin-bottom: 0;
 
                                     .queue-avail-date {
-                                        color: $green;
+                                        color: $hover-blue;
                                         font-weight: 600;
                                     }
                                 }
