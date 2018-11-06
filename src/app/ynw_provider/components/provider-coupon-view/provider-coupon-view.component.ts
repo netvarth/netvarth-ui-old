@@ -15,8 +15,6 @@ export class ProviderCouponViewComponent implements OnInit {
     {
       title: 'Coupons',
       url: '/provider/settings/coupons'
-    }, {
-      title: 'Coupon View',
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -27,9 +25,14 @@ export class ProviderCouponViewComponent implements OnInit {
   }
   getCouponview() {
     this.jaldeecoupon_list = this.provider_servicesobj.getJaldeeCoupon(this.jc_code);
-    // .subscribe(data => {
-    //   console.log(data);
-    // this.jaldeecoupon_list = data;
-    // this.query_executed = true;
+  const breadcrumbs = [];
+  this.breadcrumbs_init.map((e) => {
+    breadcrumbs.push(e);
+  });
+  breadcrumbs.push({
+      title: this.jaldeecoupon_list.couponName
+  });
+  this.breadcrumbs = breadcrumbs;
   }
-}
+  }
+

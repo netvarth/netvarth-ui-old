@@ -9,6 +9,7 @@ import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 @Injectable()
 export class ProviderSharedFuctions {
+  jaldeecoupon_list: any = [];
 
     constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
     public shared_functions: SharedFunctions,
@@ -34,12 +35,31 @@ export class ProviderSharedFuctions {
         .subscribe(data => {
           this.shared_functions.openSnackBar (msg);
           this.queueReloadApi(ob, source);
-        },
+        });
         error => {
           this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
           this.queueReloadApi(ob, source);
-        });
+        }
     }
+
+
+    changecouponStatus(ob, obj, source = 'coupons') {
+      let chgstatus = '';
+      let chstatusmsg = '';
+      if (obj.couponStatus === 'Active') {
+        chgstatus = 'disabled';
+        chstatusmsg = 'disabled';
+      } else {
+        chgstatus = 'active';
+        chstatusmsg = 'enabled';
+      }
+     this.jaldeecoupon_list= ob.provider_services.changecouponStatus(obj.id, chgstatus);
+     
+     
+  }
+
+  
+
 
     addEditQueuePopup(ob, type, source, obj = null) {
 

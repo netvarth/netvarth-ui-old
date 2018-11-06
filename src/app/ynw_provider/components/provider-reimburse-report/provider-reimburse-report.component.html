@@ -9,14 +9,10 @@
       <div class="row">
         <div class="card">
           <div class="copy">
-
             <div class="n-loc">
-              
-               <h5>Reimbursement Report</h5>
-               
-
+              <h5>Reimbursement Report</h5>
               <mat-accordion>
-                  
+
                 <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
                   <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
                     <span *ngIf="open_filter === true" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
@@ -60,9 +56,6 @@
 
                   <div class="form-group waitlist_status">
                     <label class="col-form-label" for="displayName">Status</label>
-
-
-
                     <mat-form-field>
                       <mat-select>
                         <mat-option [value]="'all'">
@@ -74,12 +67,7 @@
                       </mat-option> -->
                       </mat-select>
                     </mat-form-field>
-
-
-
-
                   </div>
-
                 </mat-expansion-panel>
               </mat-accordion>
             </div>
@@ -104,21 +92,11 @@
                     <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.jaldeeAccountAmount}}</td>
                     <td data-title="Amount" class="pointer-cursor" class="td1">{{report.PaidAmount}}</td>
                     <td data-title="Status" class="pointer-cursor" class="td1">{{report.invoiceStatus}}
-                       <!-- a={{report.invoiceStatus}}
-                      {{a}}
-                      <div [(ngModel)]="isStatus">
-                            <div *ngIf="paid">
-                            <span class="add-nloc cs-btn bt3" (click)="openrequest()">Request for payment</span>
-                        </div>
-                        <div *ngIf="!paid"> 
-
-                        </div>
-                      </div> -->
-
-   
+                      <div *ngIf="report.invoiceStatus=='notpaid'">
+                        <span class="add-nloc cs-btn bt3" (click)="openrequest()">Request for payment</span>
+                      </div>
                     </td>
                   </tr>
-                  
                 </tbody>
               </table>
             </div>
