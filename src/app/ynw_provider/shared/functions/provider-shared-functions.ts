@@ -53,15 +53,9 @@ export class ProviderSharedFuctions {
         chgstatus = 'active';
         chstatusmsg = 'enabled';
       }
-     this.jaldeecoupon_list= ob.provider_services.changecouponStatus(obj.id, chgstatus);
-     
-     
+     this.jaldeecoupon_list= ob.provider_services.changecouponStatus(obj.id, chgstatus);   
   }
-
-  
-
-
-    addEditQueuePopup(ob, type, source, obj = null) {
+  addEditQueuePopup(ob, type, source, obj = null) {
 
         ob.queuedialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
             width: '50%',
