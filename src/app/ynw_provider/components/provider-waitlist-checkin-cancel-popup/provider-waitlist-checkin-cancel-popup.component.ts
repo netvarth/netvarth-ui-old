@@ -19,6 +19,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   api_success = null;
   message = [];
   cancel_reasons = projectConstants.WAITLIST_CANCEL_RESON;
+  
 
   customer_label = '';
   checkin_label = '';

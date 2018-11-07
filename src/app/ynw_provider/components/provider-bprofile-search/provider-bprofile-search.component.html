@@ -174,8 +174,10 @@
     <iframe width="100%" height="100%" frameborder="0" style="border:0"
     [src]="mapurl" allowfullscreen *ngIf="mapurl"></iframe>
                                                 <div class="gps" *ngIf="base_loc.longitude != '' && base_loc.lattitude != ''">
-                                                    Longitude: <span>{{base_loc.longitude}}</span>
-                                                    Latitude: <span>{{base_loc.lattitude}}</span>
+                                                    <div>Longitude: <span>{{base_loc.longitude}}</span></div>
+                                                    <div>Latitude: <span>{{base_loc.lattitude}}</span></div>
+                                                    
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -199,7 +201,7 @@
                                             <ng-container *ngIf="normal_locationamenities_show==2">
                                             <div class="warning">
                                                 <i data-icon="m"></i>
-                                                <p><span>You havenâ€™t added any</span> <strong>Location Amenities</strong></p>
+                                                <p><span>You haven't added any</span> <strong>Location Amenities</strong></p>
                                                 <span class="cs-btn bt3" (click)="editLocation('badge')">Add It Now</span>
                                             </div>
                                             </ng-container>
@@ -218,7 +220,7 @@
                                             <ng-container *ngIf="display_schedule.length == 0">
                                             <!-- <div class="no-dta" *ngIf="normal_privacy_settings_show==2"> -->
                                             <div class="no-dta">
-                                                <p>You havenâ€™t added any working hours.</p>
+                                                <p>You haven't added any working hours.</p>
                                                 <span class="cs-btn bt3" (click)="change_schedulepopup()">Add It Now</span>
                                             </div>
                                             </ng-container>
@@ -251,7 +253,7 @@
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
                                     <div class="no-dta" *ngIf="normal_privacy_settings_show==2">
-                                        <p>You havenâ€™t added any Privacy Settings information.</p>
+                                        <p>You haven't added any Privacy Settings information.</p>
                                         <span class="cs-btn bt3" (click)="handlePrivacysettings('phone')">Add It Now</span>
                                     </div>
 
@@ -357,7 +359,7 @@
                                 <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                             </div>
                             <div class="no-dta" *ngIf="normal_specilization_show==2">
-                            <p>You havenâ€™t added any Specializations.</p>
+                            <p>You haven't added any Specializations.</p>
                             <span (click)="handleSpecialization()" class="cs-btn bt3">Add It Now</span>
                             </div>
                             <div class="special-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
@@ -382,7 +384,7 @@
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_language_show==2">
-                                <p>You havenâ€™t added any Languages Known.</p>
+                                <p>You haven't added any Languages Known.</p>
                                 <span (click)="handleSpokenLanguages()" class="cs-btn bt3">Add It Now</span>
                                 </div>
 
@@ -587,7 +589,7 @@
                                 </div>
 
                                 <div class="no-dta"  *ngIf="normal_domainfield_show== 4 && normal_subdomainfield_show== 4">
-                                        <p>You havenâ€™t added any Additional Information.</p>
+                                        <p>You haven't added any Additional Information.</p>
                                 </div>
 
 
@@ -941,7 +943,7 @@
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_gallery_show==2">
-                                    <p>You havenâ€™t added any photos to the Gallery</p>
+                                    <p>You haven't added any photos to the Gallery</p>
                                     <span class="cs-btn bt3" (click)="handleGalleryImages()">Add It Now</span>
                                 </div>
                                 <div class="ph-gal-bx" *ngIf="normal_gallery_show==3">
@@ -1009,7 +1011,7 @@
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==2" >
-                                    <p>You havenâ€™t added any social media links</p>
+                                    <p>You haven't added any social media links</p>
                                     <span class="cs-btn bt3" (click)="handleSocialmedia()">Add It Now</span>
                                 </div>
 

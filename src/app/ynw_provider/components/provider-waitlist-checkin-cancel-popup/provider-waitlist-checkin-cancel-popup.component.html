@@ -18,8 +18,7 @@
   </div>
 
   <div class="form-group ">
-    <label class="col-form-label" for="displayName">Send message to {{rep_username}}</label>
-    <mat-checkbox formControlName="send_message"></mat-checkbox>
+      <mat-checkbox formControlName="send_message">Send message to {{rep_username}}</mat-checkbox>
   </div>
 
   <div class="form-group" *ngIf="amForm.get('send_message').value">

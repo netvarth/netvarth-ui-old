@@ -23,8 +23,8 @@ onSubmit(amForm.value)">
           <ngb-timepicker [(ngModel)]="time" formControlName="delay"></ngb-timepicker>
         </div>
         <div class="form-group inline">
-          <label class="col-form-label">Send Message</label>
-          <mat-checkbox formControlName="send_message"></mat-checkbox>
+          <!-- <label class="col-form-label"></label> -->
+          <mat-checkbox formControlName="send_message">Send Message</mat-checkbox>
         </div>
         <div class="form-group">
           <ng-container class="example-full-width"  *ngIf="amForm.get('send_message').value === true">
