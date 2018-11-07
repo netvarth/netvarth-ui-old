@@ -20,7 +20,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   jaldeecoupon_list: any = [];
   query_executed = false;
   emptyMsg = '';
-  couponStatus :boolean;
+  couponStatus: boolean;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -140,21 +140,11 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   couponView() {
     this.router.navigate(['provider', 'settings', 'coupons', 'coupon']);
   }
-  // couponView(id) {
-  //   if (!id) {
-  //     return ;
-  //   }
-  //   this.router.navigate(['provider', 'settings', 'coupons', 'coupon', id]);
-  // }
   formatPrice(price) {
     return this.sharedfunctionObj.print_PricewithCurrency(price);
   }
 
-
-  changecouponStatus (obj) {
-
-//  this.provider_shared_functions.changecouponStatus(this, obj, 'coupons');
-
-}
-
+  changecouponStatus(obj) {
+    //  this.provider_shared_functions.changecouponStatus(this, obj, 'coupons');
+  }
 }

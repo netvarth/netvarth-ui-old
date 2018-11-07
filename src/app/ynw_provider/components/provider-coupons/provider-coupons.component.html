@@ -8,63 +8,58 @@
         <div class="container">
             <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid">
                 <mat-tab label="Jaldee coupons">
-                    <!-- <div class="no-dta" *ngIf="jaldeecoupon_list.length == 0 && query_executed == true">
-                                        <p>No Jaldee coupons exists</p>
-                                        <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
-                                </div>
-                                <div class="w-dta" *ngIf="jaldeecoupon_list.length>0"> -->
-                    <div class="row">
-                        <div class="card">
-                            <div class="copy">
-                                <div class="n-loc">
-                                    <span class="add-nloc cs-btn bt3" (click)="reports()">Reports</span>
-                                </div>
-                                <div class="table-outer q-tbl">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Valid From</th>
-                                                <th>Valid To</th>
-                                                <th>consumers# applied</th>
-                                                <th>providers# honored</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let jaldeecoupon of jaldeecoupon_list">
-                                                <td data-title="name" id="Id" class="td1" class="pointer-cursor" (click)="couponView(jaldeecoupon.jc_code)">{{jaldeecoupon.couponName}}</td>
-                                                <td data-title="code" class="pointer-cursor" class="td1">{{jaldeecoupon.jaldeeCouponCode}}</td>
-                                                <td data-title="Valid From" class="pointer-cursor" class="td1">{{jaldeecoupon.startDate}}</td>
-                                                <td data-title="Valid To" class="pointer-cursor" class="td1">{{jaldeecoupon.endDate}}</td>
-                                                <td data-title="consumers# applied" class="pointer-cursor" class="td1"></td>
-                                                <td data-title="providers# applied" class="pointer-cursor" class="td1"></td>
-                                            
-                                                        <!-- <mat-slide-toggle [(ngModel)]="couponstatus">
-                                                                <div *ngIf="couponstatus">
-                                                                  Active
-                                                                </div>
-                                                                <div *ngIf="!couponstatus">
-                                                                   Inactive
-                                                                </div>
-                                                            </mat-slide-toggle>
-                                                    {{jaldeecoupon.couponStatus}} -->
-                                                  
-                                                        <td>
-                                                                {{jaldeecoupon.couponStatus}}
-                                                                <mat-slide-toggle [(ngModel)]="jaldeecoupon.couponstatus">
-                                                                        <div *ngIf="jaldeecoupon.couponstatus">
-                                                                                Inactive
-                                                                        </div>
-                                                                        <div *ngIf="!jaldeecoupon.couponstatus">
-                                                                                Active
-                                                                          
-                                                                        </div>
-                                                                    </mat-slide-toggle>
+                    <div class="no-dta" *ngIf="jaldeecoupon_list.length == 0 && query_executed == true">
+                        <p>No Jaldee coupons exists</p>
+                        <span class="cs-btn bt3" (click)="addCoupons()">Add Coupons</span>
+                    </div>
+                    <div class="w-dta" *ngIf="jaldeecoupon_list.length>0">
+                        <div class="row">
+                            <div class="card">
+                                <div class="copy">
+                                    <div class="n-loc">
+                                        <span class="add-nloc cs-btn bt3" (click)="reports()">Reports</span>
+                                    </div>
+                                    <div class="table-outer q-tbl">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Code</th>
+                                                    <th>Valid From</th>
+                                                    <th>Valid To</th>
+                                                    <th>consumers# applied</th>
+                                                    <th>providers# honored</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let jaldeecoupon of jaldeecoupon_list">
+                                                    <td data-title="name" id="Id" class="td1" class="pointer-cursor"
+                                                        (click)="couponView(jaldeecoupon.jc_code)">{{jaldeecoupon.couponName}}</td>
+                                                    <td data-title="code" class="pointer-cursor" class="td1">{{jaldeecoupon.jaldeeCouponCode}}</td>
+                                                    <td data-title="Valid From" class="pointer-cursor" class="td1">{{jaldeecoupon.startDate}}</td>
+                                                    <td data-title="Valid To" class="pointer-cursor" class="td1">{{jaldeecoupon.endDate}}</td>
+                                                    <td data-title="consumers# applied" class="pointer-cursor" class="td1"></td>
+                                                    <td data-title="providers# applied" class="pointer-cursor" class="td1"></td>
+                                                    <td>
+                                                            
+                                                                    <mat-slide-toggle  [checked]="jaldeecoupon.couponStatus=='Active'"
+                                                                    (change)="changecouponStatus(jaldeecoupon)"></mat-slide-toggle>
+                                                                 
+                                                                  <span class='enabled'  *ngIf="jaldeecoupon.couponStatus=='Active'">Active</span>
+                                                                  <span class='disabled' *ngIf="jaldeecoupon.couponStatus=='Inactive'">Inactive</span>
+                                                             
+                                                        <!-- {{jaldeecoupon.couponStatus}}
+                                                        <mat-slide-toggle [(ngModel)]="jaldeecoupon.couponstatus">
+                                                            <div *ngIf="jaldeecoupon.couponstatus">
+                                                                Inactive
+                                                            </div>
+                                                            <div *ngIf="!jaldeecoupon.couponstatus">
+                                                                Active
+                                                            </div>
+                                                        </mat-slide-toggle> -->
 
-                                                                       
-                                                                <!-- <mat-menu #menu="matMenu">
+                                                        <!-- <mat-menu #menu="matMenu">
                                                                     
                                                                     <button type="button" (click)="changecouponStatus(jaldeecoupon)"  mat-menu-item>
                                                                         <i *ngIf="jaldeecoupon.couponStatus=='Disabled'" class="icon-enable"></i>
@@ -72,20 +67,15 @@
                                                                         <span > {{(jaldeecoupon.couponStatus=='Active') ? 'Inactive' :' Active'}}</span>
                                                                     </button>
                                                                 </mat-menu> -->
-                                                        </td>
-                                                        <!-- <td data-title="Status" class="status">
-                                                                <span class="icon-enable" *ngIf="jaldeecoupon.couponStatus=='Active'"> Active</span>
-                                                                <span class="icon-disable" *ngIf="jaldeecoupon.couponStatus=='Disabled'"> Inactive</span>
-                                                            </td> -->
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--   </div>-->
                 </mat-tab>
 
                 <mat-tab label="My Coupons">

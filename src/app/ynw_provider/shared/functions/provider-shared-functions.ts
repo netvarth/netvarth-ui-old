@@ -10,6 +10,7 @@ import { CommonDataStorageService } from '../../../shared/services/common-datast
 @Injectable()
 export class ProviderSharedFuctions {
   private activeQueues: any = [];
+  jaldeecoupon_list : any = [];
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
     public shared_functions: SharedFunctions,
     public common_datastorage: CommonDataStorageService) {
@@ -41,7 +42,7 @@ export class ProviderSharedFuctions {
         });
   }
 
- changecouponStatus(ob, obj, source = 'coupons') {
+ changecouponStatus(ob, obj) {
       let chgstatus = '';
       let chstatusmsg = '';
       if (obj.couponStatus === 'Active') {

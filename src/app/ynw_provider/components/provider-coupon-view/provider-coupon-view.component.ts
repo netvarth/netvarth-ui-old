@@ -6,7 +6,7 @@ import { ProviderServices } from '../../services/provider-services.service';
   styleUrls: ['./provider-coupon-view.component.css']
 })
 export class ProviderCouponViewComponent implements OnInit {
-  jaldeecoupon_list: any[];
+  jaldeecoupon_list: any = [];
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -25,14 +25,13 @@ export class ProviderCouponViewComponent implements OnInit {
   }
   getCouponview() {
     this.jaldeecoupon_list = this.provider_servicesobj.getJaldeeCoupon(this.jc_code);
-  const breadcrumbs = [];
-  this.breadcrumbs_init.map((e) => {
-    breadcrumbs.push(e);
-  });
-  breadcrumbs.push({
+    const breadcrumbs = [];
+    this.breadcrumbs_init.map((e) => {
+      breadcrumbs.push(e);
+    });
+    breadcrumbs.push({
       title: this.jaldeecoupon_list.couponName
-  });
-  this.breadcrumbs = breadcrumbs;
+    });
+    this.breadcrumbs = breadcrumbs;
   }
-  }
-
+}

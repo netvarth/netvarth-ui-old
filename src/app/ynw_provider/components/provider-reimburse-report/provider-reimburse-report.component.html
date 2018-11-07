@@ -12,7 +12,6 @@
             <div class="n-loc">
               <h5>Reimbursement Report</h5>
               <mat-accordion>
-
                 <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
                   <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
                     <span *ngIf="open_filter === true" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
@@ -91,7 +90,8 @@
                     <td data-title="coupons Used" class="pointer-cursor" class="td1"></td>
                     <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.jaldeeAccountAmount}}</td>
                     <td data-title="Amount" class="pointer-cursor" class="td1">{{report.PaidAmount}}</td>
-                    <td data-title="Status" class="pointer-cursor" class="td1">{{report.invoiceStatus}}
+                    <td data-title="Status" class="pointer-cursor" class="td1">{{report.invoiceStatus}}</td>
+                    <td>
                       <div *ngIf="report.invoiceStatus=='notpaid'">
                         <span class="add-nloc cs-btn bt3" (click)="openrequest()">Request for payment</span>
                       </div>

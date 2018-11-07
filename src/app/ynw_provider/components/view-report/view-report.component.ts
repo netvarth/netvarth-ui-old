@@ -24,31 +24,24 @@ export class ViewReportComponent implements OnInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-  viewreport: any [];
-public id;
-
+  viewreport: any = [];
+  public id;
 
   constructor(private router: Router, private provider_servicesobj: ProviderServices) { }
 
   ngOnInit() {
     this.getjaldeeReport();
   }
-
-  // goBack() {
-  //   this.router.navigate(['provider', 'settings', 'coupons', 'report']);
-  // }
-getjaldeeReport() {
-this.viewreport = this.provider_servicesobj.getJaldeeCouponReportsbyId(this.id);
-const breadcrumbs = [];
-this.breadcrumbs_init.map((e) => {
-  breadcrumbs.push(e);
-});
-breadcrumbs.push({
-    title: this.viewreport.invoiceId
-});
-this.breadcrumbs = breadcrumbs;
+  
+  getjaldeeReport() {
+    this.viewreport = this.provider_servicesobj.getJaldeeCouponReportsbyId(this.id);
+    const breadcrumbs = [];
+    this.breadcrumbs_init.map((e) => {
+      breadcrumbs.push(e);
+    });
+    breadcrumbs.push({
+      title: this.viewreport.invoiceId
+    });
+    this.breadcrumbs = breadcrumbs;
+  }
 }
-}
-
-
-
