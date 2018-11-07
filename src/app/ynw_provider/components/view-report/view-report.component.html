@@ -4,168 +4,159 @@
 </section>
 
 <section>
-
   <div class="content comn-cls">
     <div class="container">
       <div class="row">
         <div class="card">
           <div class="copy">
-
-<!-- <div class="bk-ctrl">
+            <!-- <div class="bk-ctrl">
     <span class="backtodashboard" (click)="goBack()"><span class="strong">Go Back
 </div> -->
-<div class="cd-t">
-  <div class="phtbl">
-      <ul class="tbl-list">
-<ng-container>
- 
-<div class="otr">
-<div class="ctd">Report Id : {{viewreport.invoiceId}}</div>
-<div class="ctd">Period/Date : {{viewreport.paidate}}</div>
-<div class="ctd">Coupons Used : </div>
-<div class="ctd">Jaldee Account : {{viewreport.jaldeeAccountAmount}}</div>
-<div class="ctd">Coupon Amount : {{viewreport.jaldeeCouponAmount}}</div>
-<div class="ctd">Reimbursable Amount from Jaldee : {{viewreport.PaidAmount}}</div>
-<div class="ctd">Status : {{viewreport.invoiceStatus}}</div>
-</div>
+            <div class="cd-t">
+              <div class="phtbl">
+                <ul class="tbl-list">
+                  <ng-container>
+                    <div class="otr">
+                      <div class="ctd">Report Id : {{viewreport.invoiceId}}</div>
+                      <div class="ctd">Period/Date : {{viewreport.paidate}}</div>
+                      <div class="ctd">Coupons Used : </div>
+                      <div class="ctd">Jaldee Account : {{viewreport.jaldeeAccountAmount}}</div>
+                      <div class="ctd">Coupon Amount : {{viewreport.jaldeeCouponAmount}}</div>
+                      <div class="ctd">Reimbursable Amount from Jaldee : {{viewreport.PaidAmount}}</div>
+                      <div class="ctd">Status : {{viewreport.invoiceStatus}}</div>
+                    </div>
+                  </ng-container>
+                </ul>
+              </div>
+            </div>
 
-</ng-container>
-</ul>
-</div>
-</div>
+            <div class="n-loc">
 
-<div class="n-loc">
-              
-  <h5>Jaldee financial Account</h5>
-<div class="table-outer q-tbl">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Bill Id</th>
-        <th>Bill Amount</th>
-        <th>Consumer Id</th>
-        <th>Consumer Name</th>
-        <th>Service</th>
-        <th>Check-in Id</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
-        <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
-        <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
-        <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
-        <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
-        <td data-title="Status" class="pointer-cursor" class="td1">Not Paid      
-        </td>
-        <td data-title="Status" class="pointer-cursor" class="td1"></td>
-      </tr>
-      <tr>
-        <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
-        <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
-        <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
-        <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
-        <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
-        <td data-title="Status" class="pointer-cursor" class="td1">Paid           
-        </td>
-        <td data-title="Status" class="pointer-cursor" class="td1"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+              <h5>Jaldee financial Account</h5>
+              <div class="table-outer q-tbl">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Bill Id</th>
+                      <th>Bill Amount</th>
+                      <th>Consumer Id</th>
+                      <th>Consumer Name</th>
+                      <th>Service</th>
+                      <th>Check-in Id</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
+                      <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
+                      <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
+                      <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
+                      <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
+                      <td data-title="Status" class="pointer-cursor" class="td1">Not Paid
+                      </td>
+                      <td data-title="Status" class="pointer-cursor" class="td1"></td>
+                    </tr>
+                    <tr>
+                      <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
+                      <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
+                      <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
+                      <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
+                      <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
+                      <td data-title="Status" class="pointer-cursor" class="td1">Paid
+                      </td>
+                      <td data-title="Status" class="pointer-cursor" class="td1"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-<div class="n-loc">
-              
-  <h5>Jaldee Coupon1-details</h5>
-<div class="table-outer q-tbl">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Bill Id</th>
-        <th>Bill Amount</th>
-        <th>Consumer Id</th>
-        <th>Consumer Name</th>
-        <th>Service</th>
-        <th>Check-in Id</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
-        <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
-        <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
-        <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
-        <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
-        <td data-title="Status" class="pointer-cursor" class="td1">Not Paid      
-        </td>
-        <td data-title="Status" class="pointer-cursor" class="td1"></td>
-      </tr>
-      <tr>
-        <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
-        <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
-        <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
-        <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
-        <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
-        <td data-title="Status" class="pointer-cursor" class="td1">Paid           
-        </td>
-        <td data-title="Status" class="pointer-cursor" class="td1"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="n-loc">
-              
-  <h5>Jaldee Coupon2-details</h5>
-<div class="table-outer q-tbl">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Bill Id</th>
-        <th>Bill Amount</th>
-        <th>Consumer Id</th>
-        <th>Consumer Name</th>
-        <th>Service</th>
-        <th>Check-in Id</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
-        <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
-        <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
-        <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
-        <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
-        <td data-title="Status" class="pointer-cursor" class="td1">Not Paid      
-        </td>
-        <td data-title="Status" class="pointer-cursor" class="td1"></td>
-      </tr>
-      <tr>
-        <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
-        <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
-        <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
-        <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
-        <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
-        <td data-title="Status" class="pointer-cursor" class="td1">Paid           
-        </td>
-        <td data-title="Status" class="pointer-cursor" class="td1"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+            <div class="n-loc">
 
+              <h5>Jaldee Coupon1-details</h5>
+              <div class="table-outer q-tbl">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Bill Id</th>
+                      <th>Bill Amount</th>
+                      <th>Consumer Id</th>
+                      <th>Consumer Name</th>
+                      <th>Service</th>
+                      <th>Check-in Id</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
+                      <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
+                      <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
+                      <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
+                      <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
+                      <td data-title="Status" class="pointer-cursor" class="td1">Not Paid
+                      </td>
+                      <td data-title="Status" class="pointer-cursor" class="td1"></td>
+                    </tr>
+                    <tr>
+                      <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
+                      <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
+                      <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
+                      <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
+                      <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
+                      <td data-title="Status" class="pointer-cursor" class="td1">Paid
+                      </td>
+                      <td data-title="Status" class="pointer-cursor" class="td1"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="n-loc">
 
+              <h5>Jaldee Coupon2-details</h5>
+              <div class="table-outer q-tbl">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Bill Id</th>
+                      <th>Bill Amount</th>
+                      <th>Consumer Id</th>
+                      <th>Consumer Name</th>
+                      <th>Service</th>
+                      <th>Check-in Id</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
+                      <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
+                      <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
+                      <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
+                      <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
+                      <td data-title="Status" class="pointer-cursor" class="td1">Not Paid
+                      </td>
+                      <td data-title="Status" class="pointer-cursor" class="td1"></td>
+                    </tr>
+                    <tr>
+                      <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView()">32123</td>
+                      <td data-title="Period" class="pointer-cursor" class="td1">10/12/2018</td>
+                      <td data-title="coupons Used" class="pointer-cursor" class="td1">Coupon1-10</td>
+                      <td data-title="Jaldee" class="pointer-cursor" class="td1">500</td>
+                      <td data-title="Amount" class="pointer-cursor" class="td1">2000</td>
+                      <td data-title="Status" class="pointer-cursor" class="td1">Paid
+                      </td>
+                      <td data-title="Status" class="pointer-cursor" class="td1"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
-
 </section>

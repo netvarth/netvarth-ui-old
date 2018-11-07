@@ -40,8 +40,8 @@
                                                 <td data-title="Valid To" class="pointer-cursor" class="td1">{{jaldeecoupon.endDate}}</td>
                                                 <td data-title="consumers# applied" class="pointer-cursor" class="td1"></td>
                                                 <td data-title="providers# applied" class="pointer-cursor" class="td1"></td>
-                                                <td data-title="Status" class="pointer-cursor" class="td1">
-                                                        <mat-slide-toggle [(ngModel)]="couponstatus">
+                                            
+                                                        <!-- <mat-slide-toggle [(ngModel)]="couponstatus">
                                                                 <div *ngIf="couponstatus">
                                                                   Active
                                                                 </div>
@@ -49,9 +49,34 @@
                                                                    Inactive
                                                                 </div>
                                                             </mat-slide-toggle>
-                                                    {{jaldeecoupon.couponStatus}}
-                                                    
-                                                </td>
+                                                    {{jaldeecoupon.couponStatus}} -->
+                                                  
+                                                        <td>
+                                                                {{jaldeecoupon.couponStatus}}
+                                                                <mat-slide-toggle [(ngModel)]="jaldeecoupon.couponstatus">
+                                                                        <div *ngIf="jaldeecoupon.couponstatus">
+                                                                                Inactive
+                                                                        </div>
+                                                                        <div *ngIf="!jaldeecoupon.couponstatus">
+                                                                                Active
+                                                                          
+                                                                        </div>
+                                                                    </mat-slide-toggle>
+
+                                                                       
+                                                                <!-- <mat-menu #menu="matMenu">
+                                                                    
+                                                                    <button type="button" (click)="changecouponStatus(jaldeecoupon)"  mat-menu-item>
+                                                                        <i *ngIf="jaldeecoupon.couponStatus=='Disabled'" class="icon-enable"></i>
+                                                                        <i *ngIf="jaldeecoupon.couponStatus=='Active'" class="icon-disable"></i>
+                                                                        <span > {{(jaldeecoupon.couponStatus=='Active') ? 'Inactive' :' Active'}}</span>
+                                                                    </button>
+                                                                </mat-menu> -->
+                                                        </td>
+                                                        <!-- <td data-title="Status" class="status">
+                                                                <span class="icon-enable" *ngIf="jaldeecoupon.couponStatus=='Active'"> Active</span>
+                                                                <span class="icon-disable" *ngIf="jaldeecoupon.couponStatus=='Disabled'"> Inactive</span>
+                                                            </td> -->
                                             </tr>
                                             
                                         </tbody>

@@ -8,6 +8,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provider-coupons.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -19,6 +20,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   jaldeecoupon_list: any = [];
   query_executed = false;
   emptyMsg = '';
+  couponStatus :boolean;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -33,7 +35,8 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   confirmremdialogRef;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
-    private sharedfunctionObj: SharedFunctions) {
+    private sharedfunctionObj: SharedFunctions,
+    private provider_shared_functions: ProviderSharedFuctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
@@ -146,4 +149,12 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   formatPrice(price) {
     return this.sharedfunctionObj.print_PricewithCurrency(price);
   }
+
+
+  changecouponStatus (obj) {
+
+//  this.provider_shared_functions.changecouponStatus(this, obj, 'coupons');
+
+}
+
 }

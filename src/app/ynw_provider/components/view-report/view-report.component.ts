@@ -21,9 +21,6 @@ export class ViewReportComponent implements OnInit {
     {
       title: 'Report',
       url: '/provider/settings/coupons/report'
-    },
-    {
-      title: 'Report View'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -42,7 +39,16 @@ public id;
   // }
 getjaldeeReport() {
 this.viewreport = this.provider_servicesobj.getJaldeeCouponReportsbyId(this.id);
+const breadcrumbs = [];
+this.breadcrumbs_init.map((e) => {
+  breadcrumbs.push(e);
+});
+breadcrumbs.push({
+    title: this.viewreport.invoiceId
+});
+this.breadcrumbs = breadcrumbs;
+}
 }
 
 
-}
+
