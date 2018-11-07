@@ -312,7 +312,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
       return false;
     }
     if (this.blankPattern.test(this.srch_fname) || this.srch_fname.length < 3) {
-      this.shared_functions.openSnackBar('Please enter atleast the first 3 letters of your first name', {'panelClass': 'snackbarerror'});
+      this.shared_functions.openSnackBar('Please enter atleast the first 3 letters of your First/Last Name', {'panelClass': 'snackbarerror'});
       if (this.srchname.nativeElement) {
         this.srchname.nativeElement.focus();
       }

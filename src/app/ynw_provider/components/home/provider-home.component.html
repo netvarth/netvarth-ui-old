@@ -486,9 +486,12 @@
 
                   </div>
                   <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
-                    <div class="qlst no-dta" *ngIf="load_waitlist ==1 && check_in_filtered_list.length == 0">
+                    <div class="qlst no-dta" *ngIf="time_type !=2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
                       No {{checkin_label |capitalizeFirst}}s available
                     </div>
+                    <div class="qlst no-dta" *ngIf="time_type==2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
+                        {{no_future_checkins}}
+                      </div>
                   </ng-container>
 
               </div>

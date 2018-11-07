@@ -214,6 +214,7 @@ export const Messages = {
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
   'CHECKIN_TIME_CAPTION': 'Est Service Time',
 
-  'PREPAYMENT_ERROR': 'Sorry! an error occured'
+  'PREPAYMENT_ERROR': 'Sorry! an error occured',
 
+  'FUTURE_NO_CHECKINS': 'No future [waitlist]s'
 };

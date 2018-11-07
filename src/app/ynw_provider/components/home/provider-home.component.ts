@@ -101,7 +101,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   cancelled_upper = '';
   checkin_label  = '';
   start_label = '';
-
+  no_future_checkins = '';
   pagination: any  = {
     startpageval: 1,
     totalCnt : 0,
@@ -159,7 +159,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
 
       this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-
+      this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist',Messages.FUTURE_NO_CHECKINS);
       this.waitlist_status = [
         {name :  this.checkedin_upper, value: 'checkedIn'},
         {name : this.cancelled_upper, value: 'cancelled'},
@@ -1154,10 +1154,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   addConsumerInboxMessage(waitlist) {
-
+    
     const uuid = waitlist.ynwUuid || null;
 
-    this.provider_shared_functions.addConsumerInboxMessage(uuid, this)
+    this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
     .then(
       result => {
 

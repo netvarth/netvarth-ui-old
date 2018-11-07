@@ -31,7 +31,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   selservice_arr: any = [];
   weekdays = projectConstants.myweekdaysSchedule;
   Selall = false;
-
+  activeSchedules: any = [];
   customer_label = '';
 
   constructor(
@@ -47,6 +47,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.activeSchedules = this.data.schedules;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
     this.dstart_time =  {hour: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')};
     this.dend_time =  {hour: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')};

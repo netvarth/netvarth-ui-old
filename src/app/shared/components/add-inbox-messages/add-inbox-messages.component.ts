@@ -105,11 +105,13 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   setLabel () {
     this.api_loading = false;
     let provider_label = this.receiver_name;
+    let consumer_label = this.receiver_name;
     if (!provider_label) {
       provider_label = (this.terminologies && this.terminologies['provider']) ? this.terminologies['provider'] : 'provider';
     }
-    const consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
-
+    if(!consumer_label){
+      consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
+    }
     switch (this.source) {
       case 'provider-waitlist' : this.message_label = 'Message to ' + consumer_label; break;
       case 'consumer-waitlist' : this.message_label = 'Message to ' + provider_label;  break;

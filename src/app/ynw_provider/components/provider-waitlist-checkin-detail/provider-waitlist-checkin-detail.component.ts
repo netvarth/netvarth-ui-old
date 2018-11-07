@@ -228,8 +228,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     addConsumerInboxMessage() {
 
       const uuid = this.waitlist_data.ynwUuid || null;
-
-      this.provider_shared_functions.addConsumerInboxMessage(uuid, this)
+      this.provider_shared_functions.addConsumerInboxMessage(this.waitlist_data, this)
       .then(
         result => {
           this.getCommunicationHistory(uuid);

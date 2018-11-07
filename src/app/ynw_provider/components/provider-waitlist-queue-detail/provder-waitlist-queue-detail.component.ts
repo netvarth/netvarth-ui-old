@@ -20,7 +20,6 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 })
 
 export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
-
     queue_id = null;
     queue_data;
     mapurl;
@@ -28,20 +27,21 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
     loc_badges: any = [];
     badge_map_arr: any = [];
     display_schedule: any = [];
+    activeSchedules: any = [];
     breadcrumbs_init = [
         {
-          title: 'Settings',
-          url: '/provider/settings'
+            title: 'Settings',
+            url: '/provider/settings'
         },
         {
-          title: 'Waitlist Manager',
-          url: '/provider/settings/waitlist-manager'
+            title: 'Waitlist Manager',
+            url: '/provider/settings/waitlist-manager'
         },
         {
-          title: 'Service Time Windows',
-          url: '/provider/settings/waitlist-manager/queues'
+            title: 'Service Time Windows',
+            url: '/provider/settings/waitlist-manager/queues'
         }
-      ];
+    ];
     breadcrumbs = this.breadcrumbs_init;
     customer_label = '';
     queuedialogRef;
@@ -55,15 +55,13 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
         private activated_route: ActivatedRoute,
         private sanitizer: DomSanitizer,
         public provider_shared_functions: ProviderSharedFuctions) {
-
-            this.activated_route.params.subscribe(params => {
-                this.queue_id = params.id;
-            });
-            this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
-        }
-
+        this.activated_route.params.subscribe(params => {
+            this.queue_id = params.id;
+        });
+        this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
+    }
     ngOnInit() {
-
+        this.activeSchedules = this.provider_shared_functions.getActiveQueues();
         if (this.queue_id) {
             this.getQueueDetail();
 
@@ -71,57 +69,46 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
             this.goBack();
         }
     }
-
     ngOnDestroy() {
         if (this.queuedialogRef) {
             this.queuedialogRef.close();
         }
     }
-
     getQueueDetail() {
         this.provider_services.getQueueDetail(this.queue_id)
-        .subscribe(
-            data => {
-                this.queue_data = data;
-                let schedule_arr = [];
-                if (this.queue_data.queueSchedule) {
-                 schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
+            .subscribe(
+                data => {
+                    this.queue_data = data;
+                    let schedule_arr = [];
+                    if (this.queue_data.queueSchedule) {
+                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
+                    }
+                    this.display_schedule = [];
+                    this.display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+
+                    // remove multiple end breadcrumb on edit function
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: this.queue_data.name
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                },
+                error => {
+                    this.goBack();
                 }
-                this.display_schedule = [];
-                this.display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-
-                // remove multiple end breadcrumb on edit function
-                const breadcrumbs = [];
-                this.breadcrumbs_init.map((e) => {
-                   breadcrumbs.push(e);
-                });
-                breadcrumbs.push({
-                    title: this.queue_data.name
-                });
-                this.breadcrumbs = breadcrumbs;
-
-           },
-            error => {
-                this.goBack();
-            }
-        );
+            );
     }
-
     goBack() {
-        this.router.navigate(['provider', 'settings' , 'waitlist-manager',
-        'queues']);
+        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+            'queues']);
     }
-
-
     addEditProviderQueue(type) {
-      this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_detail', this.queue_data);
-
+        this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_detail', this.queue_data, this.activeSchedules);
     }
-
     changeProviderQueueStatus(obj) {
-      this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'queue_detail');
+        this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'queue_detail');
     }
-
-
-
 }
