@@ -46,10 +46,10 @@ export class ProviderSharedFuctions {
       let chgstatus = '';
       let chstatusmsg = '';
       if (obj.couponStatus === 'Active') {
-        chgstatus = 'disabled';
+        chgstatus = 'Inactive';
         chstatusmsg = 'disabled';
       } else {
-        chgstatus = 'active';
+        chgstatus = 'Active';
         chstatusmsg = 'enabled';
       }
      this.jaldeecoupon_list= ob.provider_services.changecouponStatus(obj.id, chgstatus);

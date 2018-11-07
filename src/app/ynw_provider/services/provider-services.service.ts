@@ -202,8 +202,8 @@ export class ProviderServices {
   }
   // Jaldee Coupons
   getJaldeeCoupons() {
-    let a ;
-    a =  [{
+    let a;
+    a = [{
       'jaldeeCouponCode': 'CPN01',
       'couponName': '10% Off',
       'couponDescription': 'Get 10% off for your first 5 check-ins',
@@ -264,7 +264,7 @@ export class ProviderServices {
   }
   getJaldeeCoupon(jc_code) {
     const url = 'provider/coupons/' + jc_code;
-    let a ;
+    let a;
     a = {
       'jaldeeCouponCode': 'CPN01',
       'couponName': '10% Off',
@@ -335,7 +335,7 @@ export class ProviderServices {
       'PaidAmount': 3000,
       'invoiceStatus': 'notpaid'
     }
-  ];
+    ];
     // return this.servicemeta.httpGet('provider/coupons/jcreports', null, filter);
   }
   getJaldeeCouponReportsbyId(id?) {

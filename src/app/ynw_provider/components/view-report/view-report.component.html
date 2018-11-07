@@ -9,23 +9,15 @@
       <div class="row">
         <div class="card">
           <div class="copy">
-            <div class="cd-t">
-              <div class="phtbl">
-                <ul class="tbl-list">
-                  <ng-container>
-                    <div class="otr">
-                      <div class="ctd">Report Id : {{viewreport.invoiceId}}</div>
-                      <div class="ctd">Period/Date : {{viewreport.paidate}}</div>
-                      <div class="ctd">Coupons Used : </div>
-                      <div class="ctd">Jaldee Account : {{viewreport.jaldeeAccountAmount}}</div>
-                      <div class="ctd">Coupon Amount : {{viewreport.jaldeeCouponAmount}}</div>
-                      <div class="ctd">Reimbursable Amount from Jaldee : {{viewreport.PaidAmount}}</div>
-                      <div class="ctd">Status : {{viewreport.invoiceStatus}}</div>
-                    </div>
-                  </ng-container>
-                </ul>
-              </div>
-            </div>
+            <ng-container>
+                <span style=" padding-right: 30px"> Report Id : {{viewreport.invoiceId}}</span>
+                <span style=" padding-right: 30px"> Period/Date : {{viewreport.paidate}}</span>
+                <span style=" padding-right: 30px">Coupons Used : </span>
+                <span style=" padding-right: 30px">Jaldee Account : {{viewreport.jaldeeAccountAmount}}</span>
+                <span style=" padding-right: 30px">Coupon Amount : {{viewreport.jaldeeCouponAmount}}</span>
+                <span style=" padding-right: 30px">Reimbursable Amount from Jaldee : {{viewreport.PaidAmount}}</span>
+                <span style=" padding-right: 30px">Status : {{viewreport.invoiceStatus}}</span>
+            </ng-container>
             <div class="n-loc">
               <h5>Jaldee financial Account</h5>
               <div class="table-outer q-tbl">
