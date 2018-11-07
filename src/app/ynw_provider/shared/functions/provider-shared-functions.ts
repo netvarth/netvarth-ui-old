@@ -30,7 +30,7 @@ export class ProviderSharedFuctions {
     let msg = this.shared_functions.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
     msg = msg.replace('[status]', chstatusmsg);
 
-    ob.provider_services.changeProviderQueueStatus(obj.id, chgstatus)
+     ob.provider_services.changeProviderQueueStatus(obj.id, chgstatus)
       .subscribe(data => {
         this.shared_functions.openSnackBar(msg);
         this.queueReloadApi(ob, source);
