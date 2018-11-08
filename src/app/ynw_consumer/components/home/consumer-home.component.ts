@@ -42,7 +42,10 @@ import { DOCUMENT } from '@angular/common';
   ]
 })
 export class ConsumerHomeComponent implements OnInit, OnDestroy {
-
+  active_cap = Messages.ACTIVE_CHECKINS_CAP;
+  no_checkins_cap = Messages.NO_CHECKINS_CAP;
+  send_msg_cap = Messages.SEND_MSG_CAP;
+  make_pay_cap=Messages.MAKE_PAYMENT_CAP;
   waitlists;
   fav_providers: any = [];
   history;

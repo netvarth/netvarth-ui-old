@@ -96,10 +96,10 @@
                     </div>
                     <ul class="controls">
                       <li (click)="makeFailedPayment(waitlist)" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
-                        <span class="payment">Make Payment</span>
+                        <span class="payment">{{make_pay_cap}}</span>
                       </li>
                       <li (click)="addWaitlistMessage(waitlist)">
-                        <span class="message">Send Message</span>
+                        <span class="message">{{send_msg_cap}}</span>
                       </li>
 
                       <li *ngIf="!checkIfFav(waitlist.provider.id)">
@@ -124,7 +124,7 @@
               </div>
 
               <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0">
-                <p>No current Check-Ins available</p>
+                <p>{{no_checkins_cap}}</p>
               </div>
 
             </div>
@@ -150,7 +150,7 @@
                   <div class="rt">
                     <ul class="controls">
                       <a (click)="openCoupons()"><img src="assets/images/coupon1.svg" height="30" width="60"></a>
-                      <li (click)="addCommonMessage(provider)"><span class="message">Send Message</span></li>
+                      <li (click)="addCommonMessage(provider)"><span class="message">{{send_msg_cap}}</span></li>
                       <li>
                         <button mat-icon-button [matMenuTriggerFor]="appMenu">
                           <mat-icon>more_vert</mat-icon>

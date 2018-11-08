@@ -20,6 +20,10 @@ export class AddManagePrivacyComponent implements OnInit {
 
   api_error = null;
   api_success = null;
+  manage_privacy_caption=Messages.MANAGE_PRIVACY;
+  revealph_caption=Messages.REVEAL_PHNO;
+  save_btn_caption=Messages.SAVE_BTN;
+  cancel_btn_caption=Messages.CANCEL_BTN;
 
   provider = null;
 
@@ -40,6 +44,7 @@ export class AddManagePrivacyComponent implements OnInit {
     }
 
   ngOnInit() {
+    
   }
 
   providerManagePrivacy() {

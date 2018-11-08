@@ -17,7 +17,11 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 })
 
 export class AddMembersHolderComponent implements OnInit {
-
+  family_member_cap=Messages.FAMILY_MEMBERS;
+  cancel_btn_cap=Messages.CANCEL_BTN;
+  save_btn_cap=Messages.SAVE_BTN;
+  update_btn_cap=Messages.UPDATE_BTN;
+  member_cap=Messages.MEMBER_CAPTION;
   api_error = null;
   api_success = null;
   member_list: any = [] ;
@@ -28,7 +32,7 @@ export class AddMembersHolderComponent implements OnInit {
       url: '/consumer'
     },
     {
-      title: 'Family Members',
+      title: Messages.FAMILY_MEMBERS,
       // url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/members'
     }
   ];
@@ -71,18 +75,18 @@ export class AddMembersHolderComponent implements OnInit {
     const phonecntpattern =   new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
 
     if (!namepattern.test(this.addmemberobj.lname) || this.addmemberobj.lname.trim() === '') {
-      derror = 'Please enter a valid last name';
+      derror = Messages.LASTNAME_INVAL_MSG;
     }
     if (!namepattern.test(this.addmemberobj.fname)) {
-      derror = 'Please enter a valid first name';
+      derror =Messages.FIRSTNAME_INVAL_MSG;
     }
 
     if (derror === '') {
       if (this.addmemberobj.mobile !== '') {
         if (!phonepattern.test(this.addmemberobj.mobile)) {
-          derror = 'Phone number should have only numbers';
+          derror = Messages.PHONE_NUM_VAL_MSG;
         } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
-          derror = 'Phone number should have 10 digits';
+          derror = Messages.PHONE_DIGIT_VAL_MSG;
         }
       }
     }
