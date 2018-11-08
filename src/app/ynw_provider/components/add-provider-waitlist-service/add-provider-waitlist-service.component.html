@@ -189,8 +189,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{button_title}}</button>
     <button *ngIf="mode=='normal'" type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+    <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{button_title}}</button>
 
     <span class="service-tooltip" *ngIf="type == 'add' && mode=='normal'">
         <i class="icon-bell"></i>

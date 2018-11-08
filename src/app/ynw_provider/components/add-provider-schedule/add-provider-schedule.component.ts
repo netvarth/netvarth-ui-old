@@ -49,7 +49,7 @@ export class AddProviderSchedulesComponent implements OnInit {
      }
 
   ngOnInit() {
-    // console.log('source', this.Isource);
+   // console.log('source', this.Isource);
     this.dstart_time =  {hour: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')};
     this.dend_time =  {hour: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')};
 
@@ -240,14 +240,18 @@ export class AddProviderSchedulesComponent implements OnInit {
     this.saveScheduleClick.emit(this.schedule_arr);
   }
   addScheduleSelection() {
+    // this.Selall = false;
+    this.handleselectnone();
     this.addeditScheduleClick.emit('addeditclicked');
     this.showScheduleselection();
   }
   cancelscheduleClicked() {
+    this.handleselectnone();
     this.showScheduleselection();
     this.cancelScheduleClick.emit(this.schedule_arr);
   }
   editwScheduleselection(indx, schedule) {
+    this.handleselectnone();
     this.addeditScheduleClick.emit('addeditclicked');
     this.showScheduleselection(indx, schedule);
   }

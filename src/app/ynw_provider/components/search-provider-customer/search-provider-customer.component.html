@@ -46,12 +46,12 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 
 </mat-dialog-content>
 <mat-dialog-actions>
+<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 <button  mat-button
 [disabled]="!amForm.valid" class="cs-btn bt1">
 <ng-container *ngIf="source=='createCustomer'">Create</ng-container>
 <ng-container *ngIf="source=='providerCheckin'">{{checkin_label}}</ng-container>
 </button>
-<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 </mat-dialog-actions>
 </form>
 

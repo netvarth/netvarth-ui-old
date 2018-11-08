@@ -67,6 +67,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
   taxtotal = 0;
   taxabletotal = 0;
   taxpercentage = 0;
+  billDatedisp;
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
     public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
@@ -87,6 +88,9 @@ export class ViewBillComponent implements OnInit, OnChanges {
     // this.getTaxDetails();
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
+    const bildatesarr = this.bill_data.createdDate.split(' ');
+    const billdatearr = bildatesarr[0].split('-');
+    this.billDatedisp = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0] + ' ' + bildatesarr[1] + ' ' + bildatesarr[2];
     // console.log('billdata', this.bill_data);
 
     if (this.bill_data['passedProvname']) {

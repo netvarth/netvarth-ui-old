@@ -7,8 +7,8 @@
 <app-consumer-add-member [calledFrom]="'addmemberholder'" (returnDetails)="handleReturnDetails($event)"></app-consumer-add-member>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button class="cs-btn bt1" (click)="handleSaveMember()">{{ (data.type == 'add') ? 'Save' : 'Update'}} Member</button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+    <button mat-button class="cs-btn bt1" (click)="handleSaveMember()">{{ (data.type == 'add') ? 'Save' : 'Update'}} Member</button>
 </mat-dialog-actions>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

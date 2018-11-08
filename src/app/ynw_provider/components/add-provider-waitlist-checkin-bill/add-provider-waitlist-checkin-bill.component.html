@@ -46,12 +46,14 @@
                           [formControl]="itemServiceSearch" [matAutocomplete]="auto">
                           <mat-autocomplete #auto="matAutocomplete">
                             <ng-container *ngFor="let group of ItemServiceGroupOptions | async">
-                            <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
+                            <!-- <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)"> -->
+                                <ng-container *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
                               <mat-option *ngFor="let value of group.values; let i = index" [value]="value" (onSelectionChange)="itemServiceSelected(group.type, i)">
-                                {{ value }}
+                                {{ value }} {{(group.type=='Items')? ' - [Item]' : ' - [Service]'}}
                               </mat-option>
+                            </ng-container>
                               <mat-option *ngIf="group.values.length==0" [disabled]="true"><span class="no-data"></span>No {{group.type}} Available</mat-option>
-                            </mat-optgroup>
+                            <!-- </mat-optgroup> -->
                             </ng-container>
                           </mat-autocomplete>
                       </mat-form-field>
@@ -66,6 +68,7 @@
                   </div>
               </div>
               <div class="spr">
+                  
                   <button class="cs-btn bt1" (click)="addItem()" [disabled]="curSelItm.indx == 0">Add</button>
                   <button class="cs-btn bt2" (click)="hideAddItem()">Cancel</button>
               </div>
@@ -94,7 +97,7 @@
                                         <mat-form-field>
                                             <mat-select [(ngModel)]="cart.items[i].discount" [ngModelOptions]="{standalone: true}"
                                             (selectionChange)="itemDiscountChange(i)">
-                                            <mat-option [value]="''">Select one </mat-option>
+                                            <mat-option [value]="''">Select Discount </mat-option>
                                             <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
                                                 {{ discount.name }}
                                             </mat-option>
@@ -105,7 +108,7 @@
                                     <mat-form-field>
                                         <mat-select [(ngModel)]="cart.items[i].coupon" [ngModelOptions]="{standalone: true}"
                                         (selectionChange)="itemCouponChange(i)" matNativeControl>
-                                          <mat-option [value]="''">Select one </mat-option>
+                                          <mat-option [value]="''">Select Coupon </mat-option>
                                           <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
                                             {{ coupon.name }}
                                           </mat-option>
@@ -141,7 +144,7 @@
                             <mat-icon>more_vert</mat-icon>
                           </button>
                           <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="itemDiscCoupSec(i)">
+                            <button mat-menu-item (click)="itemDiscCoupSec(i)" *ngIf="(discounts.length >0 || coupons.length >0)">
                               <span>Discounts / Coupons</span>
                             </button>
                             <button mat-menu-item (click)="deleteCartItem(i)">
@@ -156,7 +159,7 @@
           <div class="amount-table">
               <div class="amt-content">
                   <div class="amt gross">
-                      <div class="name">Gross Amount <span class="bill-discount"><span (click)="handleTotalDiscSec()" *ngIf="cart.sub_total">Bill Discount</span></span></div>
+                      <div class="name">Gross Amount <span class="bill-discount"><span (click)="handleTotalDiscSec()" *ngIf="cart.sub_total && (discounts.length >0 || coupons.length >0)">Bill Discount</span></span></div>
                       <div class="price">{{cart.totalwithouttax | currency:'INR':'symbol':'.2-2'}}</div>
                   </div>
 
@@ -168,7 +171,7 @@
                             <mat-form-field>
                             <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
                             (selectionChange)="discountChange()">
-                                <mat-option [value]="''">Select one </mat-option>
+                                <mat-option [value]="''">Select Discount </mat-option>
                                 <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
                                 {{ discount.name }}
                                 </mat-option>
@@ -179,7 +182,7 @@
                             <mat-form-field>
                             <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
                             (selectionChange)="couponChange()">
-                                <mat-option [value]="''">Select one </mat-option>
+                                <mat-option [value]="''">Select Coupon </mat-option>
                                 <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
                                 {{ coupon.name }}
                                 </mat-option>
@@ -216,7 +219,7 @@
                   </div>
               </div>
 
-              <div class="bill-discount-btn" *ngIf="cart.sub_total && !showmainDiscSelsec"><button class="cs-btn bt3 active" (click)="handleTotalDiscSec()">Bill Discount</button></div>
+              <div class="bill-discount-btn" *ngIf="cart.sub_total && !showmainDiscSelsec && (discounts.length >0 || coupons.length >0)"><button class="cs-btn bt3 active" (click)="handleTotalDiscSec()">Bill Discount</button></div>
           </div>
       </div>
       <div class="section-four" *ngIf="showPaidlist">
@@ -277,9 +280,10 @@
 
   </mat-dialog-content>
   <mat-dialog-actions *ngIf="!showPaidlist">
+    <button  type="button" mat-dialog-close class="cs-btn bt2 cancel" *ngIf="!showPaidlist">Cancel</button>
       <button  type="button" mat-button class="cs-btn bt1 save" [disabled]="cart.items.length <= 0"
       (click)="submitBill()" *ngIf="bill_load_complete && !showPaidlist">Save</button>
-    <button  type="button" mat-dialog-close class="cs-btn bt2 cancel" *ngIf="!showPaidlist">Cancel</button>
+    
   </mat-dialog-actions>
   <app-field-error-display [displayError]="true" *ngIf="api_error"
   errorMsg="{{api_error}}"></app-field-error-display>

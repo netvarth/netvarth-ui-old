@@ -104,12 +104,13 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
   }
 
   checkAmount(evt) {
-  //  console.log(evt.which);
+    // console.log(evt.which);
     if (evt.which !== 8 && evt.which !== 0 &&
       ((evt.which < 48 || evt.which > 57) &&
       (evt.which < 96 || evt.which > 105) && (evt.which !== 110) ) ||
       isNaN(this.amount_to_pay) || this.amount_to_pay < 0) {
-      event.preventDefault();
+      // event.preventDefault();
+      evt.preventDefault();
     }
   }
 

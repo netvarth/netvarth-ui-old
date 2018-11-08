@@ -57,8 +57,9 @@
 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button (click)="saveImages()" *ngIf="item_pic.files.length >0" mat-button class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>
   <button  type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled">Cancel</button>
+  <button (click)="saveImages()" *ngIf="item_pic.files.length >0" mat-button class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>
+  
 </mat-dialog-actions>
 <app-field-error-display [displayError]="(error_list.length > 0) ? true : false"  [errorMsg]="error_msg">
 </app-field-error-display>

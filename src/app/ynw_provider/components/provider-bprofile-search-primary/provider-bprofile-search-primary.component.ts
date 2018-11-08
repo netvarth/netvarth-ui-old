@@ -56,7 +56,8 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       this.formfields = {
         bname: [{ value: this.bProfile.businessName, disabled: false }, Validators.compose([Validators.required])],
         // shortname: [{ value: this.bProfile.shortName, disabled: false }],
-        bdesc: [{ value: this.bProfile.businessDesc, disabled: false }, Validators.compose([Validators.required])]
+        // bdesc: [{ value: this.bProfile.businessDesc, disabled: false }, Validators.compose([Validators.required])]
+        bdesc: [{ value: this.bProfile.businessDesc, disabled: false }]
       };
      this.prov_curstatus = this.bProfile.status;
     this.amForm = this.fb.group(this.formfields);
@@ -77,11 +78,11 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
      this.document.getElementById('bname').focus();
      return;
    }
-   if (blankpatterm.test(form_data.bdesc)) {
+   /*if (blankpatterm.test(form_data.bdesc)) {
     this.api_error = 'Please enter the business description';
     this.document.getElementById('bdesc').focus();
     return;
-  }
+   }*/
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
       this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
     } else  if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {

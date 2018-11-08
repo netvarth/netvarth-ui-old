@@ -3028,11 +3028,13 @@ header {
         padding: 0;
 
         .mat-accordion {
+            border: 1px solid $linkblue;
+            @include border-radius(5px);
 
             .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused,
             .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused,
             .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
-                background: transparent;
+                background: $hover-blue;
             }
 
             .mat-expansion-panel {
@@ -3040,17 +3042,19 @@ header {
                 background: none;
 
                 .mat-expansion-panel-header {
-                    font-size: 1.4rem;
+                    font-size: 1.2rem;
                     @include font-medium;
+                    font-weight: 700;
                     padding: 0px 20px 0px 20px;
                     display: flex;
+                    background: $hover-blue;
 
                     .mat-content {
                         flex: auto;
                         flex-grow: 0;
 
                         .mat-expansion-panel-header-title {
-                            color: $linkblack;
+                            color: $white;
                         }
                     }
 
@@ -3063,7 +3067,7 @@ header {
                         align-items: center;
                         justify-content: center;
                         @include border-radius(30px);
-                        background: $linkblack;
+                        background: $white;
 
                         &:after {
                             display: none;
@@ -3080,21 +3084,7 @@ header {
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            color: $white;
-                        }
-                    }
-
-                    &.mat-expanded {
-                        .mat-expansion-panel-header-title {
-                            color: lighten($linkblack, 40%);
-                        }
-
-                        .mat-expansion-indicator {
-                            background: lighten($linkblack, 40%);
-
-                            &:before {
-                                content: "\66";
-                            }
+                            color: $hover-blue;
                         }
                     }
                 }
@@ -3104,415 +3094,474 @@ header {
 
                     .mat-expansion-panel-body {
                         padding: 20px;
-                        padding-top: 0px;
+
+                        p {
+                            margin-bottom: 0;
+                        }
                     }
                 }
 
-            }
-        }
+                &.mat-expanded {
+                    .mat-expansion-panel-header {
+                        border-bottom: 1px solid $linkblue;
+                        background: transparent;
 
-        .outer {
-            .list {
-                display: flex;
-                font-size: .875rem;
-                margin-bottom: 30px;
-                flex-direction: column;
-
-                .header {
-                    display: flex;
-                    position: relative;
-                    align-items: center;
-                    min-height: 30px;
-                    padding: 15px 20px;
-                    background: $white;
-                    margin-bottom: 0;
-                    @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .03));
-                    @include border-radius(30px);
-                    border: 2px solid $linkblue;
-
-                    .lt {
-                        flex-grow: 1;
-                        display: flex;
-
-                        @include respond-to(ynw-400) {
-                            flex-direction: column;
-                        }
-
-                        .title {
-                            h3 {
-                                font-size: 1rem;
-                                font-weight: 600;
-                                margin-bottom: 0px;
-                                display: table;
-                                cursor: pointer;
+                        .mat-content {
+                            .mat-expansion-panel-header-title {
                                 color: $linkblue;
                             }
                         }
 
-                        .location {
-                            margin-left: 5px;
-
-                            @include respond-to(ynw-400) {
-                                margin-left: 0;
-                            }
-
-                            .icon-location {
-                                color: $cc-gray;
-                                font-weight: 500;
-                                padding-left: 16px;
-                                @include align-icon;
-                                cursor: pointer;
-                                font-size: .875rem;
-                            }
-                        }
-                    }
-
-                    .rt {
-                        display: flex;
-
-                        .favourite {
-                            .icon-favourite-filled {
-                                &:before {
-                                    color: $cc-red;
-                                    width: 20px;
-                                    height: 20px;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    font-size: 1rem;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                .details {
-                    display: flex;
-                    flex-direction: column;
-                    margin: 0 20px;
-                    background: $white;
-                    @include border-bottom-radius(5px);
-                    @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .03));
-                    @include transition(all 400ms);
-
-                    @include respond-to(ynw-575) {
-                        flex-direction: column;
-                    }
-
-                    .lt {
-                        font-weight: 500;
-                        display: flex;
-                        flex-wrap: wrap;
-                        border-bottom: none;
-                        border-top: none;
-                        border-right: none;
-
-                        .lt0 {
-                            padding: 15px;
-                            border-top: none;
-                            border-left: none;
-                            flex-grow: 1;
-                            margin: 0;
-
-                            @include respond-to(ynw-575) {
-                                padding: 10px;
-                            }
-
-                            .service,
-                            .forwhom,
-                            .time,
-                            .token,
-                            .persons {
-                                font-weight: 600;
-
-                                &.now {
-                                    color: $green;
-                                }
-                            }
-
-                            .forwhom {
-                                position: relative;
-                                margin-right: 10px;
-
-                                &:after {
-                                    position: absolute;
-                                    content: ",";
-                                    right: -5px;
-                                }
-
-                                &:last-child {
-                                    &:after {
-                                        display: none;
-                                    }
-                                }
-                            }
-
-                            .token,
-                            .persons {
-                                padding-left: 10px;
-                                position: relative;
-
-                                &:before {
-                                    position: absolute;
-                                    content: ":";
-                                    left: 0;
-                                }
-                            }
-
-                            &:last-child {
-                                margin-bottom: 0;
-                            }
-                        }
-                    }
-
-                    .rt {
-                        border-top: 2px solid $cc-body;
-                        display: flex;
-
-                        .controls {
-                            margin: 0;
-                            margin-left: auto;
-                            padding: 0 10px;
-                            display: flex;
-                            flex-direction: column;
-                            flex-direction: row;
-                            justify-content: flex-end;
-
-                            @include respond-to(ynw-767) {
-                                margin-left: 0;
-                            }
-
-                            @include respond-to(ynw-575) {
-                                justify-content: flex-start;
-                                flex-wrap: wrap;
-                                flex-direction: row;
-                            }
-
-                            li {
-                                list-style: none;
-                                margin: 0;
-                                font-weight: 500;
-                                display: flex;
-                                align-items: center;
-
-                                span {
-                                    padding: 10px;
-                                    position: relative;
-                                    padding-left: 25px;
-                                    padding-right: 10px;
-                                    cursor: pointer;
-                                    @include transition(all 300ms);
-                                    color: $linkblack;
-
-                                    @include respond-to(ynw-575) {
-                                        padding: 5px;
-                                        padding-left: 25px;
-                                        padding-right: 10px;
-                                    }
-
-                                    &:before {
-                                        position: absolute;
-                                        content: "";
-                                        left: 5px;
-                                        top: 50%;
-                                        margin-top: -8px;
-                                        @include font-custom;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                        width: 16px;
-                                        height: 16px;
-                                    }
-
-                                    &:hover {
-                                        color: $linkblue;
-                                    }
-
-                                    &.message {
-                                        &:before {
-                                            content: "\53";
-                                        }
-                                    }
-
-                                    &.view-bill {
-                                        &:before {
-                                            content: "\4f";
-                                        }
-                                    }
-
-                                    &.rate-service {
-                                        &:before {
-                                            content: "\3b";
-                                        }
-
-                                        &:hover {
-                                            &:before {
-                                                content: "\3c";
-                                                color: $cc-warning;
-                                            }
-                                        }
-
-                                        &.rated {
-                                            &:before {
-                                                content: "\3c";
-                                                color: $cc-warning;
-                                            }
-                                        }
-                                    }
-
-                                    &.add-fav {
-                                        &:before {
-                                            content: "\26";
-                                        }
-
-                                        &:hover {
-                                            &:before {
-                                                content: "\27";
-                                                color: $cc-red;
-                                            }
-                                        }
-                                    }
-
-                                    &.cancel {
-                                        @include align-icon;
-
-                                        &:before {
-                                            content: "\69";
-                                            font-size: .65rem;
-                                            height: 18px;
-                                        }
-                                    }
-                                    &.payment {
-                                        color: $linkblue;
-                                        padding: 2px 5px 2px 25px;
-                                        
-                                        &:before {
-                                            content: "\56";
-                                        }
-                                    }
-                                }
-
-                                &:last-child {
-                                    margin-bottom: 0;
-                                }
-                            }
-                        }
-
-                        .started-label,
-                        .done-label {
-                            color: $cc-red;
-                            padding: 10px 0px 10px 12px;
-                            font-size: .65rem;
-                            line-height: 1.2rem;
-                            font-weight: 600;
-                            margin-left: 15px;
-                            letter-spacing: .5px;
-                            @include border-radius(20px);
-                            position: relative;
-                            align-self: center;
-
-                            @include respond-to(ynw-400) {
-                                margin-left: 10px;
-                            }
+                        .mat-expansion-indicator {
+                            background: $linkblue;
 
                             &:before {
-                                position: absolute;
-                                width: 6px;
-                                height: 6px;
-                                background: $cc-red;
-                                content: "";
-                                left: 0;
-                                top: 50%;
-                                margin-top: -4px;
-                                @include border-radius(20px);
+                                content: "\66";
+                                color: $white;
                             }
                         }
-
-                        .started-label {
-                            color: $start;
-
-                            &:before {
-                                background: $start;
-                            }
-                        }
-
-                        .done-label {
-                            color: $done;
-
-                            &:before {
-                                background: $done;
-                            }
-                        }
-                    }
-                }
-
-                &:last-child {
-                    margin-bottom: 0;
-                }
-
-                &.cancelled {
-                    .details {
-                        .rt {
-                            display: flex;
-
-                            .cancel-label,
-                            .started-label,
-                            .done-label {
-                                color: $cc-red;
-                                padding: 10px 0px 10px 12px;
-                                font-size: .65rem;
-                                line-height: 1.2rem;
-                                font-weight: 600;
-                                margin-left: 15px;
-                                letter-spacing: .5px;
-                                @include border-radius(20px);
-                                position: relative;
-
-                                @include respond-to(ynw-400) {
-                                    margin-left: 10px;
-                                }
-
-                                &:before {
-                                    position: absolute;
-                                    width: 6px;
-                                    height: 6px;
-                                    background: $cc-red;
-                                    content: "";
-                                    left: 0;
-                                    top: 50%;
-                                    margin-top: -4px;
-                                    @include border-radius(20px);
-                                }
-                            }
-
-                            .started-label {
-                                color: $start;
-
-                                &:before {
-                                    background: $start;
-                                }
-                            }
-
-                            .done-label {
-                                color: $done;
-
-                                &:before {
-                                    background: $done;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                &:hover {
-                    .details {
-                        @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .1));
                     }
                 }
             }
         }
 
-        /*&.c-checkins {
+        &.c-checkins {
+            border: 1px solid $linkblue !important;
+            @include border-radius(5px);
+
+            h2 {
+                font-size: 1.2rem;
+                padding: 20px;
+                border-bottom: 1px solid $linkblue;
+                margin-bottom: 0px;
+                color: $linkblue;
+            }
+
+            .outer {
+                padding: 20px 30px;
+
+                .banner {
+                    width: 100%;
+
+                    .ngxcarousel {
+                        position: relative;
+
+                        .ngxcarousel-inner {
+                            .ngxcarousel-items {
+                                display: flex;
+                                justify-content: space-between;
+
+                                .item {
+                                    display: flex;
+                                    flex-direction: column;
+                                    font-size: .875rem;
+                                    border: 1px solid $cc-ash;
+                                    @include transition(all 400ms);
+                                    @include border-radius(5px);
+                                    @include box-shadow(0,1px,10px,rgba(0,0,0,.1));
+                                    min-width: 32%;
+                                    margin-right: 7px;
+                                    margin-left: 7px;
+
+
+                                    .header {
+                                        display: flex;
+                                        align-items: center;
+                                        position: relative;
+                                        padding: 15px;
+                                        background: transparent;
+                                        margin-bottom: 0;
+                                        @include transition(all 400ms);
+
+                                        .lt {
+                                            flex-grow: 1;
+
+                                            @include respond-to(ynw-400) {
+                                                flex-direction: column;
+                                            }
+
+                                            .title {
+                                                margin-bottom: 5px;
+
+                                                h3 {
+                                                    font-size: 1rem;
+                                                    font-weight: 600;
+                                                    margin-bottom: 0px;
+                                                    display: table;
+                                                    cursor: pointer;
+                                                    color: $linkblue;
+                                                }
+                                            }
+
+                                            .location {
+
+                                                @include respond-to(ynw-400) {
+                                                    margin-left: 0;
+                                                }
+
+                                                .icon-location {
+                                                    color: $cc-gray;
+                                                    font-weight: 500;
+                                                    padding-left: 16px;
+                                                    @include align-icon;
+                                                    cursor: pointer;
+                                                    font-size: .875rem;
+                                                    
+                                                    &:before {
+                                                        left: 0;
+                                                        top: 0;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .rt {
+                                            display: flex;
+                                            flex-direction: column;
+
+                                            .favourite {
+                                                display: flex;
+
+                                                .icon-favourite-filled {
+                                                    margin-left: auto;
+
+                                                    &:before {
+                                                        color: $cc-red;
+                                                        width: 20px;
+                                                        height: 20px;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                        font-size: 1rem;
+                                                    }
+                                                }
+                                            }
+
+                                            .cancel-label,
+                                            .started-label,
+                                            .done-label {
+                                                color: $cc-red;
+                                                padding: 2px 0px 2px 12px;
+                                                font-size: .65rem;
+                                                line-height: 1.2rem;
+                                                font-weight: 600;
+                                                letter-spacing: .5px;
+                                                @include border-radius(20px);
+                                                position: relative;
+
+                                                @include respond-to(ynw-400) {
+                                                    margin-left: 10px;
+                                                }
+
+                                                &:before {
+                                                    position: absolute;
+                                                    width: 6px;
+                                                    height: 6px;
+                                                    background: $cc-red;
+                                                    content: "";
+                                                    left: 0;
+                                                    top: 50%;
+                                                    margin-top: -4px;
+                                                    @include border-radius(20px);
+                                                }
+                                            }
+
+                                            .started-label {
+                                                color: $start;
+
+                                                &:before {
+                                                    background: $start;
+                                                }
+                                            }
+
+                                            .done-label {
+                                                color: $done;
+
+                                                &:before {
+                                                    background: $done;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .details {
+                                        display: flex;
+                                        flex-direction: column;
+                                        background: transparent;
+                                        @include transition(all 400ms);
+                                        height: 100%;
+                                        justify-content: space-between;
+
+                                        @include respond-to(ynw-575) {
+                                            flex-direction: column;
+                                        }
+
+                                        .lt {
+                                            font-weight: 500;
+                                            border-bottom: none;
+                                            border-top: none;
+                                            border-right: none;
+                                            padding: 0 15px;
+
+                                            .lt0 {
+                                                padding: 10px 0px;
+                                                border-top: none;
+                                                border-left: none;
+                                                flex-grow: 1;
+                                                margin: 0;
+                                                display: block;
+                                                border-bottom: 1px solid $cc-body;
+                                                font-size: .75rem;
+
+                                                .service,
+                                                .forwhom,
+                                                .time,
+                                                .token,
+                                                .persons {
+                                                    font-weight: 600;
+
+                                                    &.now {
+                                                        color: $green;
+                                                    }
+                                                }
+
+                                                .forwhom {
+                                                    position: relative;
+                                                    margin-right: 10px;
+
+                                                    &:after {
+                                                        position: absolute;
+                                                        content: ",";
+                                                        right: -5px;
+                                                    }
+
+                                                    &:last-child {
+                                                        &:after {
+                                                            display: none;
+                                                        }
+                                                    }
+                                                }
+
+                                                .token,
+                                                .persons {
+                                                    padding-left: 10px;
+                                                    position: relative;
+
+                                                    &:before {
+                                                        position: absolute;
+                                                        content: ":";
+                                                        left: 0;
+                                                    }
+                                                }
+
+                                                &:last-child {
+                                                    margin-bottom: 0;
+                                                }
+
+                                                @include respond-to(ynw-575) {
+                                                    padding: 10px;
+                                                }
+                                            }
+                                        }
+
+                                        .rt {
+                                            display: flex;
+
+                                            .controls {
+                                                margin: 0;
+                                                padding: 0 10px;
+                                                display: flex;
+                                                flex-direction: column;
+                                                flex-direction: row;
+                                                justify-content: flex-end;
+                                                width: 100%;
+
+                                                @include respond-to(ynw-767) {
+                                                    margin-left: 0;
+                                                }
+
+                                                @include respond-to(ynw-575) {
+                                                    justify-content: flex-start;
+                                                    flex-wrap: wrap;
+                                                    flex-direction: row;
+                                                }
+
+                                                li {
+                                                    list-style: none;
+                                                    margin: 0;
+                                                    font-weight: 500;
+                                                    display: flex;
+                                                    flex-grow: 1;
+
+                                                    span {
+                                                        padding: 10px;
+                                                        padding-left: 10px;
+                                                        padding-right: 10px;
+                                                        cursor: pointer;
+                                                        @include transition(all 300ms);
+                                                        color: $linkblack;
+                                                        display: flex;
+                                                        flex-direction: column;
+                                                        justify-content: center;
+                                                        text-align: center;
+                                                        width: 100%;
+                                                        font-size: .75rem;
+                                                        font-weight: 600;
+
+                                                        @include respond-to(ynw-575) {
+                                                            padding: 5px;
+                                                            padding-left: 25px;
+                                                            padding-right: 10px;
+                                                        }
+
+                                                        &:before {
+                                                            content: "";
+                                                            @include font-custom;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            width: 16px;
+                                                            height: 16px;
+                                                            margin-left: auto;
+                                                            margin-right: auto;
+                                                        }
+
+                                                        &:hover {
+                                                            color: $linkblue;
+                                                        }
+
+                                                        &.payment {
+                                                            color: $linkblue;
+
+                                                            &:before {
+                                                                content: "\56";
+                                                            }
+                                                        }
+
+                                                        &.message {
+                                                            &:before {
+                                                                content: "\53";
+                                                            }
+                                                        }
+
+                                                        &.view-bill {
+                                                            &:before {
+                                                                content: "\4f";
+                                                            }
+                                                        }
+
+                                                        &.rate-service {
+                                                            &:before {
+                                                                content: "\3b";
+                                                            }
+
+                                                            &:hover {
+                                                                &:before {
+                                                                    content: "\3c";
+                                                                    color: $cc-warning;
+                                                                }
+                                                            }
+
+                                                            &.rated {
+                                                                &:before {
+                                                                    content: "\3c";
+                                                                    color: $cc-warning;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        &.add-fav {
+                                                            &:before {
+                                                                content: "\26";
+                                                            }
+
+                                                            &:hover {
+                                                                &:before {
+                                                                    content: "\27";
+                                                                    color: $cc-red;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        &.cancel {
+                                                            @include align-icon;
+
+                                                            &:before {
+                                                                content: "\69";
+                                                                font-size: .65rem;
+                                                                height: 18px;
+                                                                position: relative;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    &:last-child {
+                                                        margin-bottom: 0;
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                    }
+
+                                    &:hover {
+                                        border-color: $linkblue;
+
+                                        .header {
+                                            border-color: $linkblue;
+                                        }
+                                    }
+
+                                    @include respond-to(ynw-767) {
+                                        min-width: 90%;
+                                        margin-left: 5%;
+                                        margin-right: 5%;
+                                    }
+
+                                    @include respond-to(ynw-768-991) {
+                                        min-width: 47%;
+                                        margin-left: 10px;
+                                        margin-right: 10px;
+                                    }
+                                    @include respond-to(ynw-992-1199) {
+                                        margin-left: 6px;
+                                        margin-right: 6px;
+                                    }
+                                }
+                            }
+                        }
+
+                        button {
+                            position: absolute;
+                            border: none;
+                            background: $linkblue;
+                            @include border-radius(60px);
+                            width: 40px;
+                            height: 40px;
+                            color: $white;
+
+                            &.rightRs {
+                                right: -25px;
+                                top: 50%;
+                                margin-top: -20px;
+                            }
+
+                            &.leftRs {
+                                left: -25px;
+                                top: 50%;
+                                margin-top: -20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.favourites {
             h2 {
                 font-size: 1.2rem;
                 padding: 20px;
@@ -3521,377 +3570,20 @@ header {
             }
 
             .outer {
-                padding: 20px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-
                 .list {
-                    display: flex;
-                    flex-direction: column;
-                    flex-basis: 32%;
-                    font-size: .875rem;
-                    margin-bottom: 20px;
-                    border: 1px solid $cc-mediumgray;
-                    @include transition(all 400ms);
-                    @include border-radius(10px);
-                    @include box-shadow(0px, 1px, 5px, 0px, rgba(0,0,0,0.2));
+                    border-bottom: 1px solid $cc-ash;
 
                     .header {
-                        display: flex;
-                        align-items: center;
-                        position: relative;
-                        padding: 15px;
-                        background: transparent;
-                        margin-bottom: 0;
-                        border-bottom: 1px solid $cc-mediumgray;
-
-                        .lt {
-                            flex-grow: 1;
-
-                            @include respond-to(ynw-400) {
-                                flex-direction: column;
-                            }
-
-                            .title {
-                                margin-bottom: 5px;
-                                
-                                h3 {
-                                    font-size: 1rem;
-                                    font-weight: 600;
-                                    margin-bottom: 0px;
-                                    display: table;
-                                    cursor: pointer;
-                                    color: $linkblue;
-                                }
-                            }
-
-                            .location {
-
-                                @include respond-to(ynw-400) {
-                                    margin-left: 0;
-                                }
-
-                                .icon-location {
-                                    color: $cc-gray;
-                                    font-weight: 500;
-                                    padding-left: 16px;
-                                    @include align-icon;
-                                    cursor: pointer;
-                                    font-size: .875rem;
-                                }
-                            }
-                        }
-
-                        .rt {
-                            display: flex;
-                            flex-direction: column;
-
-                            .favourite {
-                                display: flex;
-                                
-                                .icon-favourite-filled {
-                                    margin-left: auto;
-                                    
-                                    &:before {
-                                        color: $cc-red;
-                                        width: 20px;
-                                        height: 20px;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                        font-size: 1rem;
-                                    }
-                                }
-                            }
-                            .cancel-label,
-                            .started-label,
-                            .done-label {
-                                color: $cc-red;
-                                padding: 2px 0px 2px 12px;
-                                font-size: .65rem;
-                                line-height: 1.2rem;
-                                font-weight: 600;
-                                letter-spacing: .5px;
-                                @include border-radius(20px);
-                                position: relative;
-
-                                @include respond-to(ynw-400) {
-                                    margin-left: 10px;
-                                }
-
-                                &:before {
-                                    position: absolute;
-                                    width: 6px;
-                                    height: 6px;
-                                    background: $cc-red;
-                                    content: "";
-                                    left: 0;
-                                    top: 50%;
-                                    margin-top: -4px;
-                                    @include border-radius(20px);
-                                }
-                            }
-
-                            .started-label {
-                                color: $start;
-
-                                &:before {
-                                    background: $start;
-                                }
-                            }
-
-                            .done-label {
-                                color: $done;
-
-                                &:before {
-                                    background: $done;
-                                }
-                            }
-                        }
-                    }
-
-                    .details {
-                        display: flex;
-                        flex-direction: column;
-                        background: transparent;
-                        @include transition(all 400ms);
-                        height: 100%;
-                        justify-content: space-between;
-
-                        @include respond-to(ynw-575) {
-                            flex-direction: column;
-                        }
-
-                        .lt {
-                            font-weight: 500;
-                            border-bottom: none;
-                            border-top: none;
-                            border-right: none;
-                            padding: 0 15px;
-
-                            .lt0 {
-                                padding: 10px 0px;
-                                border-top: none;
-                                border-left: none;
-                                flex-grow: 1;
-                                margin: 0;
-                                display: block;
-                                border-bottom: 1px solid $cc-body;
-
-                                .service,
-                                .forwhom,
-                                .time,
-                                .token,
-                                .persons {
-                                    font-weight: 600;
-
-                                    &.now {
-                                        color: $green;
-                                    }
-                                }
-
-                                .forwhom {
-                                    position: relative;
-                                    margin-right: 10px;
-
-                                    &:after {
-                                        position: absolute;
-                                        content: ",";
-                                        right: -5px;
-                                    }
-
-                                    &:last-child {
-                                        &:after {
-                                            display: none;
-                                        }
-                                    }
-                                }
-
-                                .token,
-                                .persons {
-                                    padding-left: 10px;
-                                    position: relative;
-
-                                    &:before {
-                                        position: absolute;
-                                        content: ":";
-                                        left: 0;
-                                    }
-                                }
-
-                                &:last-child {
-                                    margin-bottom: 0;
-                                    border: none;
-                                }
-                                
-                                @include respond-to(ynw-575) {
-                                    padding: 10px;
-                                }
-                            }
-                        }
-
-                        .rt {
-                            border-top: 1px solid $cc-body;
-                            display: flex;
-
-                            .controls {
-                                margin: 0;
-                                padding: 0 10px;
-                                display: flex;
-                                flex-direction: column;
-                                flex-direction: row;
-                                justify-content: flex-end;
-                                width: 100%;
-
-                                @include respond-to(ynw-767) {
-                                    margin-left: 0;
-                                }
-
-                                @include respond-to(ynw-575) {
-                                    justify-content: flex-start;
-                                    flex-wrap: wrap;
-                                    flex-direction: row;
-                                }
-
-                                li {
-                                    list-style: none;
-                                    margin: 0;
-                                    font-weight: 500;
-                                    display: flex;
-                                    flex-grow: 1;
-
-                                    span {
-                                        padding: 10px;
-                                        padding-left: 10px;
-                                        padding-right: 10px;
-                                        cursor: pointer;
-                                        @include transition(all 300ms);
-                                        color: $linkblack;
-                                        display: flex;
-                                        flex-direction: column;
-                                        justify-content: center;
-                                        text-align: center;
-                                        width: 100%;
-
-                                        @include respond-to(ynw-575) {
-                                            padding: 5px;
-                                            padding-left: 25px;
-                                            padding-right: 10px;
-                                        }
-
-                                        &:before {
-                                            content: "";
-                                            @include font-custom;
-                                            display: flex;
-                                            align-items: center;
-                                            justify-content: center;
-                                            width: 16px;
-                                            height: 16px;
-                                            margin-left: auto;
-                                            margin-right: auto;
-                                        }
-
-                                        &:hover {
-                                            color: $linkblue;
-                                        }
-
-                                        &.message {
-                                            &:before {
-                                                content: "\53";
-                                            }
-                                        }
-
-                                        &.view-bill {
-                                            &:before {
-                                                content: "\4f";
-                                            }
-                                        }
-
-                                        &.rate-service {
-                                            &:before {
-                                                content: "\3b";
-                                            }
-
-                                            &:hover {
-                                                &:before {
-                                                    content: "\3c";
-                                                    color: $cc-warning;
-                                                }
-                                            }
-
-                                            &.rated {
-                                                &:before {
-                                                    content: "\3c";
-                                                    color: $cc-warning;
-                                                }
-                                            }
-                                        }
-
-                                        &.add-fav {
-                                            &:before {
-                                                content: "\26";
-                                            }
-
-                                            &:hover {
-                                                &:before {
-                                                    content: "\27";
-                                                    color: $cc-red;
-                                                }
-                                            }
-                                        }
-
-                                        &.cancel {
-                                            @include align-icon;
-
-                                            &:before {
-                                                content: "\69";
-                                                font-size: .65rem;
-                                                height: 18px;
-                                                position: relative;
-                                            }
-                                        }
-                                    }
-
-                                    &:last-child {
-                                        margin-bottom: 0;
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-
-                    &:last-child {
-                        margin-bottom: 0;
-                    }
-
-                    &:hover {
-                        @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .1));
-                    }
-                    
-                    @include respond-to(ynw-768-991) {
-                        flex-basis: 48%;
-                    }
-                }
-            }
-        }*/
-
-        &.favourites {
-            .outer {
-                .list {
-                    margin-bottom: 30px;
-
-                    .header {
-                        /*border-bottom: 1px solid $cc-ash;*/
                         padding: 0;
                         position: relative;
                         z-index: 50;
+                        display: flex;
 
                         .lt {
-                            padding: 17px 10px 17px 20px;
+                            padding: 10px;
                             flex-grow: 1;
                             cursor: pointer;
+                            @include transition(all 300ms);
 
                             h3 {
                                 font-size: 1rem;
@@ -3900,11 +3592,25 @@ header {
                                 display: table;
                                 cursor: pointer;
                                 color: $linkblue;
+                                position: relative;
+                                
+                                &:after {
+                                    content: "\72";
+                                    position: absolute;
+                                    right: -20px;
+                                    @include font-custom;
+                                    font-size: .65rem;
+                                    top: 4px;
+                                    
+                                }
                             }
                         }
 
                         .rt {
                             padding-right: 10px;
+                            display: flex;
+                            align-items: center;
+                            @include transition(all 300ms);
 
                             .controls {
                                 margin: 0;
@@ -4003,62 +3709,33 @@ header {
                                     }
                                 }
                             }
-                        }
 
-                        &:after {
-                            width: 95%;
-                            height: 10px;
-                            position: absolute;
-                            content: "";
-                            left: 0;
-                            right: 0;
-                            bottom: -12px;
-                            @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .05));
-                            @include border-bottom-radius(10px);
-                            opacity: .7;
-                            margin: 0 auto;
-                            background: $white;
+                            @include respond-to(ynw-575) {
+                                padding-right: 0;
 
-                            @include respond-to(ynw-767) {
-                                width: 90%
-                            }
+                                .controls {
+                                    width: 100%;
 
-                            @include respond-to(ynw-768-991) {
-                                width: 92%
+                                    li {
+                                        flex-grow: 1;
+
+                                        button {
+                                            margin-left: auto;
+                                            margin-top: -60px;
+                                        }
+                                    }
+                                }
                             }
                         }
 
-                        &:before {
-                            width: 90%;
-                            height: 10px;
-                            position: absolute;
-                            content: "";
-                            left: 0;
-                            right: 0;
-                            bottom: -22px;
-                            @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .03));
-                            @include border-bottom-radius(10px);
-                            opacity: .4;
-                            margin: 0 auto;
-                            background: $white;
-
-                            @include respond-to(ynw-767) {
-                                width: 85%
-                            }
-
-                            @include respond-to(ynw-768-991) {
-                                width: 87%
-                            }
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
                         }
                     }
 
                     .detail {
-                        margin: 0 20px;
-                        border-left: 1px solid $cc-body;
-                        border-right: 1px solid $cc-body;
-                        background: $white;
+                        background: transparent;
                         @include border-bottom-radius(5px);
-                        @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .03));
                         animation: favanim 600ms forwards 0s ease-in-out;
                         opacity: 0;
                         position: relative;
@@ -4066,7 +3743,7 @@ header {
 
                         .location {
                             display: flex;
-                            border-bottom: 2px solid $cc-body;
+                            border-bottom: 1px solid $cc-body;
 
                             @include respond-to(ynw-767) {
                                 flex-direction: column;
@@ -4231,6 +3908,10 @@ header {
                                         display: table;
                                     }
                                 }
+
+                                @include respond-to(ynw-767) {
+                                    padding-bottom: 0;
+                                }
                             }
 
                             .bt-r {
@@ -4266,17 +3947,31 @@ header {
                     }
 
                     &:last-child {
+                        border-bottom: none;
+
                         .detail {
                             border-bottom: 1px solid $cc-body;
                         }
                     }
 
-                    &.active {
+                    &.active,
+                    &:hover {
                         .header {
 
-                            &:before,
-                            &:after {
-                                opacity: 0;
+                            .lt,
+                            .rt {
+                                background: $cc-body;
+                            }
+                        }
+                    }
+                    &.active {
+                        .header {
+                            .lt {
+                                h3 {
+                                    &:after {
+                                        content: "\66";
+                                    }
+                                }
                             }
                         }
                     }
@@ -4287,305 +3982,324 @@ header {
         &.history {
             margin-bottom: 0;
 
-            .history-tbl {
-                padding: 0px;
-                font-weight: 500;
-                background: $white;
-                @include box-shadow(0px, 10px, 20px, rgba(0, 0, 0, .03));
-                @include border-radius(5px);
+            .mat-accordion {
+                .mat-expansion-panel {
+                    .mat-expansion-panel-content {
+                        .mat-expansion-panel-body {
+                            padding: 0px;
+                            
+                            .history-tbl {
+                                padding: 0px;
+                                font-weight: 500;
 
-                .table {
-                    border: none;
-                    margin: 0;
+                                .table {
+                                    border: none;
+                                    margin: 0;
 
-                    thead {
-                        tr {
-                            th {
-                                &.th1 {
-                                    width: 20%;
-                                }
+                                    thead {
+                                        tr {
+                                            th {
+                                                background: $cc-gray;
+                                                color: $white;
+                                                border: none;
 
-                                &.th4 {
-                                    /*border-right: 1px solid $cc-body;*/
-                                }
-                            }
-                        }
-                    }
-
-                    tbody {
-                        tr {
-                            td {
-                                &.td1 {
-                                    width: 20%;
-                                    color: $linkblue;
-                                    cursor: pointer;
-                                }
-
-                                &.td4 {
-                                    border-right: 1px solid $cc-body;
-
-                                    .arrived,
-                                    .started,
-                                    .done,
-                                    .cancelled,
-                                    .checkedIn {
-                                        color: $start;
-                                        padding: 2px 5px 2px 14px;
-                                        font-size: .75rem;
-                                        font-weight: 600;
-                                        position: relative;
-
-                                        &:before {
-                                            position: absolute;
-                                            content: "";
-                                            background: $start;
-                                            width: 6px;
-                                            height: 6px;
-                                            @include border-radius(10px);
-                                            top: 50%;
-                                            left: 4px;
-                                            margin-top: -4px;
-                                        }
-                                    }
-
-                                    .arrived {
-                                        color: $arrived;
-
-                                        &:before {
-                                            background: $arrived;
-                                        }
-                                    }
-
-                                    .done {
-                                        color: $done;
-
-                                        &:before {
-                                            background: $done;
-                                        }
-                                    }
-
-                                    .cancelled {
-                                        color: $cc-red;
-
-                                        &:before {
-                                            background: $cc-red;
-                                        }
-                                    }
-
-                                    .checkedIn {
-                                        color: $checkedin;
-
-                                        &:before {
-                                            background: $checkedin;
-                                        }
-                                    }
-                                }
-
-                                &.td5 {
-                                    display: flex;
-                                    justify-content: flex-start;
-
-                                    .controls {
-                                        margin: 0;
-                                        /*margin-left: auto;*/
-                                        padding: 0;
-                                        display: flex;
-                                        flex-wrap: wrap;
-
-                                        li {
-                                            list-style: none;
-                                            margin: 0 5px;
-
-                                            @include respond-to(ynw-767) {
-                                                margin-top: 8px;
-                                            }
-
-                                            @include respond-to(ynw-768-991) {
-                                                margin-top: 8px;
-                                            }
-
-                                            span {
-                                                padding: 3px;
-                                                position: relative;
-                                                padding-left: 22px;
-                                                padding-right: 10px;
-                                                cursor: pointer;
-                                                @include transition(all 300ms);
-                                                color: $linkblack;
-
-                                                &:before {
-                                                    position: absolute;
-                                                    content: "";
-                                                    left: 2px;
-                                                    top: 4px;
-                                                    @include font-custom;
-                                                    display: flex;
-                                                    align-items: center;
-                                                    justify-content: center;
-                                                    width: 16px;
-                                                    height: 16px;
+                                                &.th1 {
+                                                    width: 20%;
                                                 }
 
-                                                &:hover {
+                                                &.th4 {
+                                                    /*border-right: 1px solid $cc-body;*/
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    tbody {
+                                        tr {
+                                            td {
+                                                border: none;
+                                                
+                                                &.td1 {
+                                                    width: 20%;
                                                     color: $linkblue;
-                                                }
-
-                                                &.checkin {
-                                                    text-transform: uppercase;
-                                                    @include border-radius(50px);
-                                                    @include left-gradient(#00aef2, #1873f2);
-                                                    color: $white;
-                                                    padding-left: 10px;
-                                                    padding-right: 10px;
-                                                    font-weight: 600;
-                                                }
-
-                                                &.message {
-                                                    &:before {
-                                                        content: "\53";
+                                                    cursor: pointer;
+                                                    
+                                                    .name {
+                                                        position: relative;
+                                                        font-weight: 600;
                                                     }
                                                 }
 
-                                                &.view-bill {
-                                                    &:before {
-                                                        content: "\4f";
-                                                    }
-                                                }
+                                                &.td4 {
+                                                    border-right: 1px solid $cc-ash;
 
-                                                &.rate-service {
-                                                    &:before {
-                                                        content: "\3b";
-                                                    }
+                                                    .arrived,
+                                                    .started,
+                                                    .done,
+                                                    .cancelled,
+                                                    .checkedIn {
+                                                        color: $start;
+                                                        padding: 2px 5px 2px 14px;
+                                                        font-size: .75rem;
+                                                        font-weight: 600;
+                                                        position: relative;
+                                                        width: 95px;
+                                                        display: block;
 
-                                                    &.rated {
                                                         &:before {
-                                                            content: "\3c";
-                                                            color: $cc-warning;
+                                                            position: absolute;
+                                                            content: "";
+                                                            background: $start;
+                                                            width: 6px;
+                                                            height: 6px;
+                                                            @include border-radius(10px);
+                                                            top: 50%;
+                                                            left: 4px;
+                                                            margin-top: -4px;
+                                                        }
+                                                    }
+
+                                                    .arrived {
+                                                        color: $arrived;
+
+                                                        &:before {
+                                                            background: $arrived;
+                                                        }
+                                                    }
+
+                                                    .done {
+                                                        color: $done;
+
+                                                        &:before {
+                                                            background: $done;
+                                                        }
+                                                    }
+
+                                                    .cancelled {
+                                                        color: $cc-red;
+
+                                                        &:before {
+                                                            background: $cc-red;
+                                                        }
+                                                    }
+
+                                                    .checkedIn {
+                                                        color: $checkedin;
+
+                                                        &:before {
+                                                            background: $checkedin;
                                                         }
                                                     }
                                                 }
 
-                                                &.pay-bill {
+                                                &.td5 {
+                                                    display: flex;
+                                                    justify-content: flex-start;
+
+                                                    .controls {
+                                                        margin: 0;
+                                                        /*margin-left: auto;*/
+                                                        padding: 0;
+                                                        display: flex;
+                                                        flex-wrap: wrap;
+
+                                                        li {
+                                                            list-style: none;
+                                                            margin: 0 5px 5px;
+
+                                                            @include respond-to(ynw-767) {
+                                                                margin-top: 8px;
+                                                            }
+
+                                                            @include respond-to(ynw-768-991) {
+                                                                margin-top: 8px;
+                                                            }
+
+                                                            span {
+                                                                padding: 3px;
+                                                                position: relative;
+                                                                padding-left: 22px;
+                                                                padding-right: 10px;
+                                                                cursor: pointer;
+                                                                @include transition(all 300ms);
+                                                                color: $linkblack;
+
+                                                                &:before {
+                                                                    position: absolute;
+                                                                    content: "";
+                                                                    left: 2px;
+                                                                    top: 4px;
+                                                                    @include font-custom;
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: center;
+                                                                    width: 16px;
+                                                                    height: 16px;
+                                                                }
+
+                                                                &:hover {
+                                                                    color: $linkblue;
+                                                                }
+
+                                                                &.checkin {
+                                                                    text-transform: uppercase;
+                                                                    @include border-radius(50px);
+                                                                    @include left-gradient(#00aef2, #1873f2);
+                                                                    color: $white;
+                                                                    padding-left: 10px;
+                                                                    padding-right: 10px;
+                                                                    font-weight: 600;
+                                                                }
+
+                                                                &.message {
+                                                                    &:before {
+                                                                        content: "\53";
+                                                                    }
+                                                                }
+
+                                                                &.view-bill {
+                                                                    &:before {
+                                                                        content: "\4f";
+                                                                    }
+                                                                }
+
+                                                                &.rate-service {
+                                                                    &:before {
+                                                                        content: "\3b";
+                                                                    }
+
+                                                                    &.rated {
+                                                                        &:before {
+                                                                            content: "\3c";
+                                                                            color: $cc-warning;
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                &.pay-bill {
+                                                                    &:before {
+                                                                        content: "\57";
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
                                                     &:before {
-                                                        content: "\57";
+                                                        @include respond-to(ynw-767) {
+                                                            display: none;
+                                                        }
+                                                    }
+
+                                                    @include respond-to(ynw-767) {
+                                                        justify-content: flex-end;
+                                                    }
+                                                }
+
+                                                @include respond-to(ynw-767) {
+                                                    &.td1 {
+                                                        width: 100%;
+
+                                                        &:before {
+                                                            color: $linkblack;
+                                                            cursor: default;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                .search_paging {
+                                    padding: 20px;
+                                    border-top: 1px solid $cc-ash;
+
+                                    .container {
+                                        padding: 0;
+
+                                        .text-center {
+                                            display: flex;
+                                            justify-content: flex-end;
+                                            margin-bottom: 0px;
+
+                                            .paginghead-outer {
+                                                width: 120px;
+                                                margin-right: auto;
+
+                                                .paging {
+                                                    font-size: .875rem;
+                                                    text-align: left;
+                                                    font-weight: 500;
+
+                                                    .paging-curr,
+                                                    .paging-max {
+                                                        font-weight: 600;
+                                                        display: inline-block;
+                                                        text-align: center;
+                                                        color: $linkblue;
+                                                        padding: 3px;
+                                                    }
+                                                }
+                                            }
+
+                                            .pagination {
+                                                margin: 0px;
+                                                display: flex;
+                                                flex-wrap: wrap;
+
+                                                li {
+                                                    padding: 3px 5px;
+                                                    font-size: .875rem;
+                                                    font-weight: 500;
+                                                    color: $linkblue;
+                                                    background: $white;
+                                                    cursor: pointer;
+                                                    margin-right: 10px;
+                                                    min-width: 30px;
+                                                    border: 1px solid $linkblue;
+
+                                                    @include respond-to(ynw-575) {
+                                                        margin-bottom: 5px;
+                                                    }
+
+                                                    &.ng-star-inserted {
+                                                        border: none;
+                                                    }
+
+                                                    &.disabled {
+                                                        background: $cc-ash;
+                                                        color: $cc-mediumgray;
+                                                        border: none;
+                                                        pointer-events: none;
+                                                    }
+
+                                                    &.active {
+                                                        background: $linkblue;
+                                                        color: $white;
+                                                    }
+
+                                                    &:last-child {
+                                                        margin-right: 0;
                                                     }
                                                 }
                                             }
                                         }
-                                    }
 
-                                    &:before {
-                                        @include respond-to(ynw-767) {
-                                            display: none;
-                                        }
-                                    }
-                                }
-
-                                @include respond-to(ynw-767) {
-                                    &.td1 {
-                                        width: 100%;
-
-                                        &:before {
-                                            color: $linkblack;
-                                            cursor: default;
-                                        }
-                                    }
-                                }
-                            }
-
-                            &:hover {
-                                td {
-                                    &.td1 {
-                                        font-weight: 600;
                                     }
                                 }
                             }
                         }
-                    }
-                }
-
-                .search_paging {
-                    padding: 20px;
-                    border-top: 1px solid $cc-body;
-
-                    .container {
-                        padding: 0;
-
-                        .text-center {
-                            display: flex;
-                            justify-content: flex-end;
-                            margin-bottom: 0px;
-
-                            .paginghead-outer {
-                                width: 120px;
-                                margin-right: auto;
-
-                                .paging {
-                                    font-size: .875rem;
-                                    text-align: left;
-                                    font-weight: 500;
-
-                                    .paging-curr,
-                                    .paging-max {
-                                        font-weight: 600;
-                                        display: inline-block;
-                                        text-align: center;
-                                        color: $linkblue;
-                                        padding: 3px;
-                                    }
-                                }
-                            }
-
-                            .pagination {
-                                margin: 0px;
-                                display: flex;
-                                flex-wrap: wrap;
-
-                                li {
-                                    padding: 3px 5px;
-                                    font-size: .875rem;
-                                    font-weight: 500;
-                                    color: $linkblue;
-                                    background: $white;
-                                    cursor: pointer;
-                                    margin-right: 10px;
-                                    min-width: 30px;
-                                    border: 1px solid $linkblue;
-
-                                    @include respond-to(ynw-575) {
-                                        margin-bottom: 5px;
-                                    }
-
-                                    &.ng-star-inserted {
-                                        border: none;
-                                    }
-
-                                    &.disabled {
-                                        background: $cc-ash;
-                                        color: $cc-mediumgray;
-                                        border: none;
-                                        pointer-events: none;
-                                    }
-
-                                    &.active {
-                                        background: $linkblue;
-                                        color: $white;
-                                    }
-
-                                    &:last-child {
-                                        margin-right: 0;
-                                    }
-                                }
-                            }
-                        }
-
                     }
                 }
             }
 
-            &.one {
+
+
+            /*&.one {
                 padding: 20px;
-            }
+            }*/
         }
     }
 

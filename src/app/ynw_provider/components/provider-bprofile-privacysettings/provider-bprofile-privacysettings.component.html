@@ -96,8 +96,9 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button (click)="savePrivacySettings()" type="button" mat-button class="cs-btn bt1">Save</button>
-    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+        <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+        <button (click)="savePrivacySettings()" type="button" mat-button class="cs-btn bt1">Save</button>
+    
 </mat-dialog-actions>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error"

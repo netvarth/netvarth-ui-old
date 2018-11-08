@@ -29,8 +29,9 @@
 </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button  type="button" mat-button (click)="saveSocial()" [disabled]="!socialkey || !socialurl || posted" class="cs-btn bt1">Save</button>
     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+    <button  type="button" mat-button (click)="saveSocial()" [disabled]="!socialkey || !socialurl || posted" class="cs-btn bt1">Save</button>
+    
 
 </mat-dialog-actions>
 <app-form-success-display  [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

@@ -82,11 +82,11 @@
 
 </mat-dialog-content>
 <mat-dialog-actions>
+    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
     <button  type="button" mat-button class="cs-btn bt1"
     [disabled]="!pay_data.amount || pay_data.amount == 0 ||
     !pay_data.uuid || !pay_data.paymentMode || payment_loading"
     (click)="makePayment()" *ngIf="source != 'payment-history'">Make Payment</button>
-     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
 </mat-dialog-actions>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error"

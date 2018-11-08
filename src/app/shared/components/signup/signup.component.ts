@@ -172,7 +172,7 @@ export class SignUpComponent implements OnInit {
                           selectedDomainIndex: ['', Validators.compose([Validators.required])],
                           selectedSubDomains: [0, Validators.compose([Validators.required])],
                           package_id : ['', Validators.compose([Validators.required])],
-                          terms_condition: ['false'],
+                          terms_condition: [''],
 
                  });
                  this.signupForm.get('is_provider').setValue(this.is_provider);

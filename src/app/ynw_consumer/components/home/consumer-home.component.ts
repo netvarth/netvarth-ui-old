@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -31,6 +31,7 @@ import { Subscription, ISubscription } from 'rxjs/Subscription';
 import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
 import { appendFile } from 'fs';
 import { count } from 'rxjs/operators';
+import { NgxCarousel } from 'ngx-carousel';
 
 @Component({
   selector: 'app-consumer-home',
@@ -45,7 +46,6 @@ import { count } from 'rxjs/operators';
   ]
 })
 export class ConsumerHomeComponent implements OnInit, OnDestroy {
-
   waitlists;
   fav_providers: any = [];
   history ;
@@ -96,6 +96,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   remfavdialogRef;
   payment_popup = null;
   servicesjson: any = [];
+  public time = 300;
+  public mode = 'horizontal';
+  public perspective = 2000;
+  public init = 0;
 
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -103,9 +107,23 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private dialog: MatDialog, private router: Router,
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer,
-  private consumer_datastorage: ConsumerDataStorageService) {}
+    private consumer_datastorage: ConsumerDataStorageService) {}
+    public carouselOne: NgxCarousel;
 
-  ngOnInit() {
+    ngOnInit() {
+    this.carouselOne = {
+      grid: {xs: 1, sm: 1, md: 2, lg: 3, all: 0},
+      slide: 3,
+      speed: 400,
+      interval: 1000,
+      point: {
+        visible: false
+      },
+      load: 2,
+      touch: true,
+      loop: false,
+      easing: 'ease'
+    };
     this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
@@ -123,6 +141,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
 
   }
+  public myfunc(event: Event) {
+    // carouselLoad will trigger this funnction when your load value reaches
+    // it is helps to load the data by parts to increase the performance of the app
+    // must use feature to all carousel
+ }
 
   ngOnDestroy() {
     if (this.cronHandle) {

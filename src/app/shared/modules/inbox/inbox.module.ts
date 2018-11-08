@@ -10,6 +10,7 @@ import { InboxListComponent } from './inbox-list/inbox-list.component';
 import { InboxServices } from './inbox.service';
 import { InboxRoutingModule } from './inbox-routing.module';
 import { InboxOuterComponent } from './inbox-outer/inbox-outer.component';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { InboxOuterComponent } from './inbox-outer/inbox-outer.component';
         FormMessageDisplayModule,
         FormsModule,
         BreadCrumbModule,
-        InboxRoutingModule
+        InboxRoutingModule,
+        Nl2BrPipeModule
     ],
     entryComponents: [
       InboxListComponent

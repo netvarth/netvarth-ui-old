@@ -1,138 +1,105 @@
 <section class="content consumer-dash">
   <div class="container">
-      <div class="row">
+        <!-- <div class="row"> -->
           <!-- <h1>Consumer <span>Dashboard</span></h1> -->
-          <div class="card c-chekins">
-              <mat-accordion >
-                <mat-expansion-panel [expanded]= 'true' [disabled]="true">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title  [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip" >
-                      Active Check-Ins
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div class="outer">
-                    <div class="list" *ngFor=" let waitlist of waitlists"
-                    [ngClass]="{'cancelled': waitlist.waitlistStatus == 'cancelled'}">
-                      <div class="header">
-                          <div class="lt">
-                            <div class="title" (click)="providerDetail(waitlist.provider)">
-                              <h3>{{waitlist.provider.businessName || '' | capitalizeFirst}}</h3>
+          <div class="card c-checkins">
+
+              <h2 [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip">Active Check-Ins</h2>
+              <div class="outer">
+                    <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)" class="banner">
+                    <ngx-item NgxCarouselItem *ngFor="let waitlist of waitlists" >
+                    <!-- <div class="list"> -->
+                            <div class="header">
+                                <div class="lt">
+                                    <div class="title" (click)="providerDetail(waitlist.provider)"><h3>{{waitlist.provider.businessName || '' | capitalizeFirst}}</h3></div>
+                                    <div class="location" *ngIf="waitlist.queue.location">
+                                        <a *ngIf="waitlist.queue.location.googleMapUrl"
+                                        [href]="waitlist.queue.location.googleMapUrl" target="_blank"
+                                        class="icon-location" matTooltip="Click to navigate"> {{waitlist.queue.location.place || '' | capitalizeFirst}}</a>
+                                    </div>
+                                </div>
+                                <div class="rt">
+                                    <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)">
+                                        <span class="icon-favourite-filled"></span>
+                                    </div>
+                                    <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
+                                        Cancelled
+                                    </div>
+                                    <div class="started-label" *ngIf="waitlist.waitlistStatus == 'started'">
+                                        Started
+                                    </div>
+                                    <div class="done-label" *ngIf="waitlist.waitlistStatus == 'done'">
+                                        Done
+                                    </div>
+                                </div>
                             </div>
-                            <div class="location" *ngIf="waitlist.queue.location">
-                                <a *ngIf="waitlist.queue.location.googleMapUrl"
-                                [href]="waitlist.queue.location.googleMapUrl" target="_blank"
-                                class="icon-location" matTooltip="Click to navigate"> {{waitlist.queue.location.place || '' | capitalizeFirst}}</a>
+                            
+                            <div class="details">
+                                <div class="lt">
+                                    <div class="lt0">
+                                        <span class="service">{{waitlist.service.name  | capitalizeFirst}}</span> for <span class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
+                                            {{user.firstName  | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                                            </span>
+                                    </div>
+                                    <ng-container *ngIf="waitlist.calculationMode != 'NoCalc' && waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
+                                        waitlist.waitlistStatus == 'arrived')">
+                                            <div class="lt0" *ngIf="waitlist.estimated_date==''">
+                                                {{waitlist.estimated_caption}} <span class="time now">
+                                                    {{waitlist.estimated_time}}</span>
+                                            </div>
+                                            <div class="lt0" *ngIf="waitlist.estimated_date!=''">
+                                                {{waitlist.estimated_caption}} <span class="time now">
+                                            <span *ngIf="waitlist.estimated_date_type == 'date'">{{waitlist.estimated_date | date: dateFormatSp }}</span>
+                                            <span *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}}, </span>
+                                                {{waitlist.estimated_time}}</span>
+                                            </div>
+                                        </ng-container>
+                                    <div class="lt0" *ngIf="showPersonsAhead(waitlist)"> 
+                                        Persons Ahead <span class="persons">{{waitlist.personsAhead}}</span>
+                                    </div>
+                                    <div class="lt0" *ngIf="waitlist.token">
+                                        Token No <span class="token">{{waitlist.token}}</span>
+                                    </div>
+                                    <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
+                                        Party Size <span class="persons">{{waitlist.partySize}}</span>
+                                        </div>
+                                </div>
+                                <div class="rt">
+                                    <ul class="controls">
+                                        <li *ngIf="waitlist.billStatus"> 
+                                            <span class="view-bill" (click)="getWaitlistBill(waitlist)">Bill</span>
+                                            </li>
+                                        <li (click)="makeFailedPayment(waitlist)" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
+                                            <span class="payment">Make Payment</span>
+                                            </li>
+                                        <li (click)="addWaitlistMessage(waitlist)">
+                                            <span class="message">Message</span>
+                                        </li>
+                                        <li *ngIf="!checkIfFav(waitlist.provider.id)">
+                                        <span class="add-fav" (click)="addFavProvider(waitlist.provider.id)">Favourites</span></li>
+                                        <li *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived'">
+                                            <span class="cancel" (click)="doCancelWaitlist(waitlist)">Cancel</span>
+                                        </li>
+                                        <li *ngIf="waitlist.waitlistStatus == 'done'">
+                                            <span class="rate-service"  [class.rated] = "isRated(waitlist)" (click)="rateService(waitlist)">Rate</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                          </div>
-                          <div class="rt">
-                              <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)"><span class="icon-favourite-filled"></span></div>
+                    <!-- </div> -->
+                    </ngx-item>
+                    <button NgxCarouselPrev class='leftRs'>&lt;</button>
+                    <button NgxCarouselNext class='rightRs'>&gt;</button>
+              </ngx-carousel>
+                <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0" class="nocheckins">
+                    <p>No current Check-Ins available</p>
+                </div>
+            </div>
+                
+              </div>
+        <!-- </div> -->
 
-                          </div>
-                      </div>
-
-                      <div class="details">
-                          <div class="lt">
-                              <div class="lt0">
-                                  <span class="service"> {{waitlist.service.name  | capitalizeFirst}}</span> for
-                                  <span class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
-                                    {{user.firstName  | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                                  </span>
-                              </div>
-
-                              <ng-container *ngIf="waitlist.calculationMode != 'NoCalc' && waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
-                              waitlist.waitlistStatus == 'arrived')">
-                                  <div class="lt0" *ngIf="waitlist.estimated_date==''">
-                                      {{waitlist.estimated_caption}} <span class="time now">
-                                        {{waitlist.estimated_time}}</span>
-                                  </div>
-                                  <div class="lt0" *ngIf="waitlist.estimated_date!=''">
-                                    {{waitlist.estimated_caption}} <span class="time now">
-                                   <span *ngIf="waitlist.estimated_date_type == 'date'">{{waitlist.estimated_date | date: dateFormatSp }}</span>
-                                   <span *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}}, </span>
-                                    {{waitlist.estimated_time}}</span>
-                                  </div>
-                                  <!-- <div class="lt0" *ngIf="waitlist.future">
-                                      Check-In Time  <span class="time now">
-                                          {{waitlist.date | date: dateFormatSp }}
-                                          {{waitlist.estimated_time | date: timeFormat}}
-                                        </span>
-                                  </div> -->
-
-                              </ng-container>
-
-                              <!-- <ng-container  *ngIf="waitlist.calculationMode != 'NoCalc' && !waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
-                              waitlist.waitlistStatus == 'arrived')">
-                                  <div class="lt0" *ngIf="waitlist.future">
-                                      Check-In Time  <span class="time now">
-                                         {{waitlist.date | date: dateFormatSp }}
-                                         {{waitlist.estimated_time | date: timeFormat}} 
-                                        </span>
-                                  </div>
-                                  <div class="lt0" *ngIf="!waitlist.future">
-                                      Estimated Time  <span class="time now">
-                                          Now
-                                        </span>
-                                  </div>
-                              </ng-container> -->
-
-                              <div class="lt0" *ngIf="waitlist.token">
-                                  Token No <span class="token">{{waitlist.token}}</span>
-                              </div>
-                              <div class="lt0" *ngIf="showPersonsAhead(waitlist)">
-                                  Persons Ahead <span class="persons">{{waitlist.personsAhead}}</span>
-                              </div>
-                              <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
-                              Party Size <span class="persons">{{waitlist.partySize}}</span>
-                            </div>
-                          </div>
-                          <div class="rt">
-                              <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
-                                  Cancelled
-                              </div>
-                              <div class="started-label" *ngIf="waitlist.waitlistStatus == 'started'">
-                                  Started
-                              </div>
-                              <div class="done-label" *ngIf="waitlist.waitlistStatus == 'done'">
-                                  Done
-                              </div>
-                              <ul class="controls">
-                                  <li (click)="makeFailedPayment(waitlist)" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
-                                      <span class="payment">Make Payment</span>
-                                    </li>
-                                  <li (click)="addWaitlistMessage(waitlist)">
-                                    <span class="message">Send Message</span>
-                                  </li>
-
-                                  <li *ngIf="!checkIfFav(waitlist.provider.id)">
-                                  <span class="add-fav" (click)="addFavProvider(waitlist.provider.id)">Add to Favourites</span></li>
-
-                                  <li *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived'">
-                                    <span class="cancel" (click)="doCancelWaitlist(waitlist)">Cancel Check-in</span>
-                                  </li>
-
-                                  <!-- <li *ngIf="waitlist.waitlistStatus == 'done'"> -->
-                                  <li *ngIf="waitlist.billStatus"> 
-                                    <span class="view-bill" (click)="getWaitlistBill(waitlist)">Bill</span>
-                                  </li>
-
-                                  <li *ngIf="waitlist.waitlistStatus == 'done'">
-                                    <span class="rate-service"  [class.rated] = "isRated(waitlist)" (click)="rateService(waitlist)">Rate Your Visit</span>
-                                  </li>
-                              </ul>
-                          </div>
-                      </div>
-                    </div>
-
-                    <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0">
-                      <p>No current Check-Ins available</p>
-                    </div>
-
-                  </div>
-                </mat-expansion-panel>
-                </mat-accordion>
-          </div>
-
-          <div class="card favourites">
+        <div class="card favourites">
               <mat-accordion>
                 <mat-expansion-panel [expanded]= 'true'>
                   <mat-expansion-panel-header>
@@ -209,9 +176,9 @@
                   </div>
                 </mat-expansion-panel>
               </mat-accordion>
-          </div>
+        </div>
 
-          <div class="card history">
+        <div class="card history">
               <mat-accordion>
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
@@ -225,8 +192,8 @@
                   </app-consumer-checkin-history-list>
                 </mat-expansion-panel>
               </mat-accordion>
-          </div>
-      </div>
+        </div>
   </div>
+  <!-- </div> -->
 </section>
 <div [innerHTML]= "payment_popup" #div [style.display]="'none'"></div>

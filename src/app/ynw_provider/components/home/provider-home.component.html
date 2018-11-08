@@ -33,7 +33,6 @@
                         History</span>
                   </div>
               </div>
-
               <div class="qlst" *ngIf="time_type ==1 && queues.length > 1">
                   <ul *ngIf = "!show_small_device_queue_display">
                       <li
@@ -403,8 +402,9 @@
                                           </button>
                                           <button type="button" mat-menu-item
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"
-                                          *ngIf="time_type!=0 &&
-                                          ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
+                                          *ngIf="(time_type!=0 &&
+                                          ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')) || (time_type==0 &&
+                                          ( checkin.waitlistStatus == 'checkedIn'))">
                                             Cancel {{checkin_label}}
                                           </button>
                                           <button type="button" mat-menu-item
@@ -449,7 +449,7 @@
                                           <button type="button" class="cancel_cls"
                                           (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                                           *ngIf="time_type==0 && 
-                                          ( checkin.waitlistStatus == 'arrived')">
+                                          ( checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn')">
                                             Cancel {{checkin_label}}
                                           </button>
                                           <button type="button" class="provnote_cls"

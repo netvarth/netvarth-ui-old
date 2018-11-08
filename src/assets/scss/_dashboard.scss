@@ -4896,6 +4896,17 @@ footer {
                                             }
                                         }
                                     }
+                                    &.seq {
+                                        width: 90px;
+                                        text-align: center;
+                                        
+                                        @include respond-to(ynw-767) {
+                                            width: auto;
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            width: auto;
+                                        }
+                                    }
                                     &.name, &.service, &.seq {
                                         font-weight: 500;
                                     }
