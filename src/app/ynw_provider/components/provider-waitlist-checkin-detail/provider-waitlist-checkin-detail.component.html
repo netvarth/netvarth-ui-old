@@ -53,7 +53,7 @@
                                   <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span class="ttle">Party Size:</span><span> {{waitlist_data.partySize}}</span></div>
                               </div>
                               <div class="btm" *ngIf="waitlist_data">
-                                  <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">Communicate</button>
+                                  <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">Send Message</button>
                                   <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >Add Private note</button>
                                   <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()"
                                   *ngIf="!waitlist_data.history &&
