@@ -17,18 +17,18 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 })
 
 export class AddMembersHolderComponent implements OnInit {
-  family_member_cap=Messages.FAMILY_MEMBERS;
-  cancel_btn_cap=Messages.CANCEL_BTN;
-  save_btn_cap=Messages.SAVE_BTN;
-  update_btn_cap=Messages.UPDATE_BTN;
-  member_cap=Messages.MEMBER_CAPTION;
+  family_member_cap = Messages.FAMILY_MEMBERS;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
+  update_btn_cap = Messages.UPDATE_BTN;
+  member_cap = Messages.MEMBER_CAPTION;
   api_error = null;
   api_success = null;
   member_list: any = [] ;
   addmemberobj = {'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': ''};
   breadcrumbs_init = [
     {
-      title: 'Dashboard',
+      title: Messages.BREADCRUMBS_DASHBOARD,
       url: '/consumer'
     },
     {

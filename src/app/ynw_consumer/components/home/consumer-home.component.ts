@@ -28,6 +28,7 @@ import { appendFile } from 'fs';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-consumer-home',
@@ -46,6 +47,29 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   no_checkins_cap = Messages.NO_CHECKINS_CAP;
   send_msg_cap = Messages.SEND_MSG_CAP;
   make_pay_cap=Messages.MAKE_PAYMENT_CAP;
+  token_no = Messages.TOKEN_NO;
+  persons_ahead = Messages.PERSONS_AHEAD;
+  party_size = Messages.PARTY_SIZE;
+  status_cancelled = Messages.STATUS_CANCELLED;
+  status_started = Messages.STATUS_STARTED;
+  status_done = Messages.STATUS_DONE;
+  add_fav = Messages.ADD_TO_FAV;
+  cancel_checkin = Messages.CANCEL_CHECKIN;
+  bill_caption = Messages.BILL_CAPTION;
+  rate_visit = Messages.RATE_VISIT;
+
+  my_fav = Messages.MY_FAV_CAP;
+  view_cap = Messages.VIEW_CAP;
+  remove_fav_cap = Messages.REMOVE_FAV;
+  manage_privacy_cap = Messages.MANAGE_PRIVACY;
+  open_now_cap = Messages.OPEN_NOW_CAP;
+  do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
+  checkin_caption = Messages.CHECKIN_CAP;
+  for_caption = Messages.FOR_CAP;
+  different_date_cap = Messages.DIFFERENT_DATE_CAP;
+  you_havent_cap = Messages.YOU_HAVENT_ADDED_CAP;
+  history_cap = Messages.HISTORY_CAP;
+
   waitlists;
   fav_providers: any = [];
   history;

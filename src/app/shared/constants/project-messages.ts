@@ -222,7 +222,11 @@ export const Messages = {
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
   'UPDATE_BTN': 'Update',
+  'EDIT_BTN' : 'Edit',
+  'DELETE_BTN' : 'Delete',
   // Consumer Constants
+  // Breadcrumbs
+  'BREADCRUMBS_DASHBOARD' : 'Dashboard',
   // Reveal Phone No
   'MANAGE_PRIVACY': 'Manage Privacy',
   'REVEAL_PHNO': 'Reveal Phone number',
@@ -233,9 +237,52 @@ export const Messages = {
   'PHONE_NUM_VAL_MSG': 'Phone number should have only numbers',
   'LASTNAME_INVAL_MSG': 'Please enter a valid last name',
   'FIRSTNAME_INVAL_MSG': 'Please enter a valid first name',
+  
+  'ADD_FAMILY_MEMBER' : 'Add Family Member',
+  'FIRST_NAME_CAP' : 'First Name',
+  'LAST_NAME_CAP' : 'Last Name',
+  'MOBILE_NUMBER_CAP' : 'Moble Number',
+  'GENDER_CAP' : 'Gender',
+  'DOB_CAP' : 'Date of Birth',
   //Dashboard
+  //Consumer Account Settings
+  'RELATED_LINKS' : 'Related Links',
+  'USER_PROF_CAP' : 'User Profile',
+  'CHANGE_PASSWORD_CAP' : 'Change Password',
+  'CHANGE_MOB_CAP' : 'Change Mobile',
+  'ADD_CHANGE_EMAIL' : 'Add or Change Email',
+
+  //Active Checkins
   'ACTIVE_CHECKINS_CAP':'Active Checkins',
   'SEND_MSG_CAP':'Send Message',
   'NO_CHECKINS_CAP':'No current Check-Ins available',
-  'MAKE_PAYMENT_CAP':'Make Payment'
+  'MAKE_PAYMENT_CAP':'Make Payment',
+  'TOKEN_NO' : 'Token Number',
+  'PERSONS_AHEAD' : 'Persons Ahead',
+  'PARTY_SIZE' : 'Party Size',
+  'STATUS_CANCELLED' : 'Cancelled',
+  'STATUS_STARTED' : 'Started',
+  'STATUS_DONE' : 'Done',
+  'ADD_TO_FAV' : 'Add to Favourites',
+  'CANCEL_CHECKIN' : 'Cancel Check-in',
+  'BILL_CAPTION' : 'Bill',
+  'RATE_VISIT' : 'Rate Your Visit',
+
+  //Favourite Checkins
+  'MY_FAV_CAP' : 'My Favourites',
+  'VIEW_CAP' : 'View',
+  'REMOVE_FAV' : 'Remove Favourite',
+  //'MANAGE_PRIVACY' : 'Manage Privacy',
+  'OPEN_NOW_CAP' : 'Open Now',
+
+  //Do You Want To Checkin For Different Date
+  'DO_YOU_WANT_TO_CAP' : 'Do you want to',
+  'CHECKIN_CAP' : 'Check-in',
+  'FOR_CAP' : 'for',
+  'DIFFERENT_DATE_CAP' : 'different Date?',
+  'YOU_HAVENT_ADDED_CAP' : 'You havent added any favourite providers',
+  
+  //History
+  'HISTORY_CAP' : 'History',
+
 };

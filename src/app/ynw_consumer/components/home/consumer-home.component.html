@@ -7,7 +7,7 @@
           <mat-expansion-panel [expanded]='true' [disabled]="true">
             <mat-expansion-panel-header>
               <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="currentcheckinsTooltip">
-                Active Check-Ins
+                {{active_cap}}
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="outer">
@@ -31,7 +31,7 @@
                 <div class="details">
                   <div class="lt">
                     <div class="lt0">
-                      <span class="service"> {{waitlist.service.name | capitalizeFirst}}</span> for
+                      <span class="service"> {{waitlist.service.name | capitalizeFirst}}</span> {{for_caption}}
                       <span class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                       </span>
@@ -75,24 +75,24 @@
                               </ng-container> -->
 
                     <div class="lt0" *ngIf="waitlist.token">
-                      Token No <span class="token">{{waitlist.token}}</span>
+                      {{token_no}} <span class="token">{{waitlist.token}}</span>
                     </div>
                     <div class="lt0" *ngIf="showPersonsAhead(waitlist)">
-                      Persons Ahead <span class="persons">{{waitlist.personsAhead}}</span>
+                      {{persons_ahead}} <span class="persons">{{waitlist.personsAhead}}</span>
                     </div>
                     <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
-                      Party Size <span class="persons">{{waitlist.partySize}}</span>
+                      {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
                     </div>
                   </div>
                   <div class="rt">
                     <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
-                      Cancelled
+                      {{status_cancelled}}
                     </div>
                     <div class="started-label" *ngIf="waitlist.waitlistStatus == 'started'">
-                      Started
+                      {{status_started}}
                     </div>
                     <div class="done-label" *ngIf="waitlist.waitlistStatus == 'done'">
-                      Done
+                      {{status_done}}
                     </div>
                     <ul class="controls">
                       <li (click)="makeFailedPayment(waitlist)" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
@@ -103,20 +103,19 @@
                       </li>
 
                       <li *ngIf="!checkIfFav(waitlist.provider.id)">
-                        <span class="add-fav" (click)="addFavProvider(waitlist.provider.id)">Add to Favourites</span></li>
+                        <span class="add-fav" (click)="addFavProvider(waitlist.provider.id)">{{add_fav}}</span></li>
 
                       <li *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived'">
-                        <span class="cancel" (click)="doCancelWaitlist(waitlist)">Cancel Check-in</span>
+                        <span class="cancel" (click)="doCancelWaitlist(waitlist)">{{cancel_checkin}}</span>
                       </li>
 
                       <!-- <li *ngIf="waitlist.waitlistStatus == 'done'"> -->
                       <li *ngIf="waitlist.billStatus">
-                        <span class="view-bill" (click)="getWaitlistBill(waitlist)">Bill</span>
+                        <span class="view-bill" (click)="getWaitlistBill(waitlist)">{{bill_caption}}</span>
                       </li>
 
                       <li *ngIf="waitlist.waitlistStatus == 'done'">
-                        <span class="rate-service" [class.rated]="isRated(waitlist)" (click)="rateService(waitlist)">Rate
-                          Your Visit</span>
+                        <span class="rate-service" [class.rated]="isRated(waitlist)" (click)="rateService(waitlist)">{{rate_visit}}</span>
                       </li>
                     </ul>
                   </div>
@@ -137,7 +136,7 @@
           <mat-expansion-panel [expanded]='true'>
             <mat-expansion-panel-header>
               <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="favTooltip">
-                My Favourites
+                {{my_fav}}
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="outer">
@@ -158,13 +157,13 @@
                       </li>
                     </ul>
                     <mat-menu #appMenu="matMenu">
-                      <button mat-menu-item (click)="providerDetail(provider)">View</button>
+                      <button mat-menu-item (click)="providerDetail(provider)">{{view_cap}}</button>
                       <button mat-menu-item (click)="doDeleteFavProvider(provider)">
                         <span class="add-fav favourited">
-                          Remove Favourite</span>
+                          {{remove_fav_cap}}</span>
                       </button>
                       <button mat-menu-item (click)="providerManagePrivacy(provider,i)">
-                        Manage Privacy
+                        {{manage_privacy_cap}}
                       </button>
                     </mat-menu>
                   </div>
@@ -177,7 +176,7 @@
 
                     <div class="bt-l">
                       <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
-                        <div class="o-now" *ngIf="loc.opennow">Open Now</div>
+                        <div class="o-now" *ngIf="loc.opennow">{{open_now_cap}}</div>
                         <div class="timing" *ngIf="loc['estimatedtime_det']['caption']
                                   && provider.settings && provider.settings.calculationMode
                                   && provider.settings.calculationMode!='NoCalc'">
@@ -192,18 +191,18 @@
 
                     <div class="bt-r" *ngIf="loc['estimatedtime_det']">
                       <span class="cs-btn chk-btn" (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')"
-                        *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(provider)">Check-In</span>
+                        *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(provider)">{{checkin_caption}}</span>
                       <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(provider)">Check-In</span>
                       <span class="cs-btn bt10" *ngIf="showcheckInButton(provider) && provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate']"
                         (click)="goCheckin(provider, loc,  loc['estimatedtime_det']['cdate'], true, 'fav_provider')">
-                        Do you want to <span>Check-in</span> for <span>different Date?</span>
+                        {{do_you_want_to_cap}} <span>{{checkin_caption}}</span> {{for_caption}} <span>{{different_date_cap}}</span>
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
               <div *ngIf="loadcomplete.fav_provider && fav_providers && fav_providers.length == 0">
-                <p>You haven't added any favourite providers</p>
+                <p>{{you_havent_cap}}</p>
               </div>
             </div>
           </mat-expansion-panel>
@@ -215,7 +214,7 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="historyTooltip">
-                History
+                {{history_cap}}
               </mat-panel-title>
             </mat-expansion-panel-header>
             <app-consumer-checkin-history-list [reloadapi]="reload_history_api">
