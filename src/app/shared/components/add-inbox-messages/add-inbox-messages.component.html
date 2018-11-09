@@ -16,8 +16,8 @@
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-        <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Send</button>
+        <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+        <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{send_btn_cap}}</button>
     </mat-dialog-actions>
     <app-field-error-display [displayError]="true" *ngIf="api_error"
     errorMsg="{{api_error}}"></app-field-error-display>

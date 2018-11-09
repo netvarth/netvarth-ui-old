@@ -26,6 +26,32 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
  @ViewChild ('regmobile') private regmobile: ElementRef;
  @ViewChild ('regfname') private regfname: ElementRef;
  @ViewChild ('reglname') private reglname: ElementRef;
+
+  welcome_cap = Messages.WELCOME_CAP;
+  checkin_youself_cap = Messages.CHECKIN_YOURSELF_CAP;
+  checkin_online_cap = Messages.CHECKIN_ONLINE_CAP;
+  check_your_status_cap = Messages.CHECK_YOUR_STATUS_CAP;
+  report_as_arrived_cap = Messages.REP_AS_ARRIVED_CAP;
+  do_you_want_to_signup_cap = Messages.DO_YOU_WANT_TO_SIGNUP_CAP;
+  marketing_text = Messages.MARKETING_TEXT;
+  enter_your = Messages.ENTER_YOUR_CAP;
+  mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
+  enter_first_letters_name = Messages.ENTER_FIR_LETTERS_CAP;
+  first_last_name_cap = Messages.FIR_LAS_NAME_CAP;
+  search_cap = Messages.SEARCH_CAP;
+  oops_cap = Messages.OOPS_CAP;
+  you_not_reg_cust_cap = Messages.LOOKS_NOT_REG_CUS_CAP;
+  fill_det_to_reg_cap = Messages.FILL_YOUR_DET_CAP;
+  first_name_cap = Messages.FIRST_NAME_CAP;
+  last_name_cap = Messages.LAST_NAME_CAP;
+  register_cap = Messages.REGISTER_CAP;
+  back_to_search_cap = Messages.BACK_TO_SEARCH_CAP;
+  home_cap = Messages.HOME_CAP;
+  checkin_youeself_cap = Messages.CHECKIN_YOURSELF_CAP;
+  exit_cap = Messages.EXIT_CAP;
+  not_auth_to_view_page = Messages.SORRY_NOT_AUTH_TO_VIEW_PAGE;
+
+
   provider_loggedin = false;
   srch_mobile = '';
   srch_fname = '';

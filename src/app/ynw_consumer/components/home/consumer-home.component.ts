@@ -46,6 +46,29 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   no_checkins_cap = Messages.NO_CHECKINS_CAP;
   send_msg_cap = Messages.SEND_MSG_CAP;
   make_pay_cap=Messages.MAKE_PAYMENT_CAP;
+  status_cancelled_cap = Messages.STATUS_CANCELLED;
+  status_started_cap = Messages.STATUS_STARTED;
+  status_done_cap = Messages.STATUS_DONE;
+  persons_ahead = Messages.PERSONS_AHEAD;
+  token_no = Messages.TOKEN_NO;
+  party_size = Messages.PARTY_SIZE;
+  bill_cap = Messages.BILL_CAPTION;
+  add_to_fav = Messages.ADD_TO_FAV;
+  rate_visit = Messages.RATE_VISIT;
+  cancel_checkin_cap = Messages.CANCEL_CHECKIN;
+  my_fav_cap = Messages.MY_FAV_CAP;
+  remove_fav_cap = Messages.REMOVE_FAV;
+  view_cap = Messages.VIEW_CAP;
+  manage_privacy_cap = Messages.MANAGE_PRIVACY;
+  open_now_cap = Messages.OPEN_NOW_CAP;
+  checkin_cap = Messages.CHECKIN_CAP;
+  do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
+  for_cap = Messages.FOR_CAP;
+  different_date_cap = Messages.DIFFERENT_DATE_CAP;
+  you_hav_added_caption = Messages.YOU_HAVENT_ADDED_CAP;
+  history_cap = Messages.HISTORY_CAP;
+
+
   waitlists;
   fav_providers: any = [];
   history;

@@ -17,6 +17,13 @@ export class ReportasArrivedComponent implements OnInit {
   @Input() passedInData: any =  [];
   @Output() handleArrived = new EventEmitter<any>();
 
+  no_checkins_exists_cap = Messages.NO_CHECKINS_EXISTS_CAP;
+  token_cap = Messages.TOKEN_CAP;
+  persons_ahead = Messages.PERS_AHEAD;
+  name_cap = Messages.NAME_CAP;
+  status_cap = Messages.STATUS_CAP;
+  confirm_arrival = Messages.CONFIRM_ARRIVAL_CAP;
+
   api_error = null;
   api_success = null;
 

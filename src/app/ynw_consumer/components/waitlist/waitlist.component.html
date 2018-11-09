@@ -25,46 +25,46 @@
             <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
                 <div class="card">
                     <div class="c-details">
-                        <h2>Check-In Details</h2>
+                        <h2>{{checkin_details_cap}}</h2>
                         <div class="tp" *ngIf="waitlist_detail">
-                            <div class="item"><span class="ttle">Bussiness Name:</span> <span> {{waitlist_detail.provider.businessName}}</span></div>
-                            <div class="item"><span class="ttle">Date:</span><span>{{waitlist_detail.date | date: dateFormat}}</span></div>
+                            <div class="item"><span class="ttle">{{bussiness_name_cap}}</span> <span> {{waitlist_detail.provider.businessName}}</span></div>
+                            <div class="item"><span class="ttle">{{date_cap}}</span><span>{{waitlist_detail.date | date: dateFormat}}</span></div>
                             <div class="item"><span class="ttle">{{estimateCaption}}:</span><span></span></div>
-                            <div class="item"><span class="ttle">Location:</span><span>{{waitlist_detail.queue.location.place}}</span></div>
-                            <div class="item"><span class="ttle">Waitlist For:</span>
+                            <div class="item"><span class="ttle">{{location_cap}}</span><span>{{waitlist_detail.queue.location.place}}</span></div>
+                            <div class="item"><span class="ttle">{{wait_for_cap}}</span>
                               <span class="waitlist_for" *ngFor="let user of waitlist_detail.waitlistingFor">
                                   {{user.firstName}} {{user.lastName}}
                               </span>
                             </div>
 
-                            <div class="item"><span class="ttle">Service:</span><span> {{waitlist_detail.service.name}}</span></div>
-                            <div class="item"><span class="ttle">Service Time Window:</span><span> {{waitlist_detail.queue.name}}</span></div>
-                            <div class="item"><span class="ttle">Payment Status:</span>
+                            <div class="item"><span class="ttle">{{service_cap}}</span><span> {{waitlist_detail.service.name}}</span></div>
+                            <div class="item"><span class="ttle">{{serv_time_window_cap}}</span><span> {{waitlist_detail.queue.name}}</span></div>
+                            <div class="item"><span class="ttle">{{payment_status}}</span>
                               <ng-container *ngIf="waitlist_detail && waitlist_detail.paymentStatus">
-                                  <span class="paid-n" *ngIf="waitlist_detail.paymentStatus == 'NotPaid'"><span class="text">Not Paid</span></span>
-                                  <span class="paid-h" *ngIf="waitlist_detail.paymentStatus == 'PartiallyPaid'"><span class="text">Partially Paid</span></span>
-                                  <span class="paid-f" *ngIf="waitlist_detail.paymentStatus == 'FullyPaid'"><span class="text">Paid</span></span>
+                                  <span class="paid-n" *ngIf="waitlist_detail.paymentStatus == 'NotPaid'"><span class="text">{{not_paid_cap}}</span></span>
+                                  <span class="paid-h" *ngIf="waitlist_detail.paymentStatus == 'PartiallyPaid'"><span class="text">{{partialy_paid_cap}}</span></span>
+                                  <span class="paid-f" *ngIf="waitlist_detail.paymentStatus == 'FullyPaid'"><span class="text">{{paid_cap}}</span></span>
 
                               </ng-container>
                             </div>
                         </div>
                         <div class="btm" *ngIf="waitlist_detail">
                             <button class="cs-btn bt3 communicate"
-                            (click)="addWaitlistMessage(waitlist_detail)">Communicate</button>
+                            (click)="addWaitlistMessage(waitlist_detail)">{{send_msg_cap}}</button>
 
                             <button class="cs-btn bt3">
                               <span class="add-fav" (click)="addFavProvider(waitlist_detail.provider.id)">
-                                  Add to Favourites</span>
+                                  {{add_to_fav_cap}}</span>
                             </button>
 
                             <button class="cs-btn bt3">
                                 <span class="add-fav favourited"
                                 (click)="doDeleteFavProvider(waitlist_detail.provider)">
-                                Remove Favourite</span>
+                                {{remove_fav_cap}}</span>
                             </button>
                             <button class="cs-btn bt7 cancel" (click)="doCancelWaitlist(waitlist_detail)"
                             *ngIf="!waitlist_detail.history &&
-                            ( waitlist_detail.waitlistStatus == 'checkedIn' || waitlist_detail.waitlistStatus == 'arrived')">Cancel Check-In</button>
+                            ( waitlist_detail.waitlistStatus == 'checkedIn' || waitlist_detail.waitlistStatus == 'arrived')">{{cancel_checkin_cap}}</button>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                       <mat-expansion-panel>
                         <mat-expansion-panel-header>
                           <mat-panel-title>
-                            Communication History
+                            {{comm_history_cap}}
                           </mat-panel-title>
                         </mat-expansion-panel-header>
                         <app-inbox-list [messages]="communication_history" [fromsource]="'consumer_checkin_detail'"

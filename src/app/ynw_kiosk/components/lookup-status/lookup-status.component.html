@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="card p0">
-                <div class="nolist" *ngIf="waitlist && waitlist.length==0">Sorry no Check-In exists</div>
+                <div class="nolist" *ngIf="waitlist && waitlist.length==0">{{no_checkins_exists}}</div>
 
                 <div class="table-outer q-tbl">
                     <table class="table">

@@ -224,7 +224,13 @@ export const Messages = {
   'UPDATE_BTN': 'Update',
   'EDIT_BTN' : 'Edit',
   'DELETE_BTN' : 'Delete',
+  'SEND_BTN' : 'Send',
+  'OK_BTN' : 'Ok',
+
+
+
   // Consumer Constants
+
   // Breadcrumbs
   'BREADCRUMBS_DASHBOARD' : 'Dashboard',
   // Reveal Phone No
@@ -244,7 +250,7 @@ export const Messages = {
   'MOBILE_NUMBER_CAP' : 'Moble Number',
   'GENDER_CAP' : 'Gender',
   'DOB_CAP' : 'Date of Birth',
-  //Dashboard
+  
   //Consumer Account Settings
   'RELATED_LINKS' : 'Related Links',
   'USER_PROF_CAP' : 'User Profile',
@@ -252,6 +258,7 @@ export const Messages = {
   'CHANGE_MOB_CAP' : 'Change Mobile',
   'ADD_CHANGE_EMAIL' : 'Add or Change Email',
 
+  //Dashboard
   //Active Checkins
   'ACTIVE_CHECKINS_CAP':'Active Checkins',
   'SEND_MSG_CAP':'Send Message',
@@ -272,7 +279,7 @@ export const Messages = {
   'MY_FAV_CAP' : 'My Favourites',
   'VIEW_CAP' : 'View',
   'REMOVE_FAV' : 'Remove Favourite',
-  //'MANAGE_PRIVACY' : 'Manage Privacy',
+  
   'OPEN_NOW_CAP' : 'Open Now',
 
   //Do You Want To Checkin For Different Date
@@ -284,5 +291,62 @@ export const Messages = {
   
   //History
   'HISTORY_CAP' : 'History',
+
+  //Consumer-Waitlist
+  'CHECKIN_DET_CAP' : 'Check-In Details',
+  'BUSS_NAME_CAP' : 'Bussiness Name:',
+  'DATE_CAP' : 'Date:',
+  'LOCATION_CAP' :'Location',
+  'WAITLIST_FOR_CAP' : 'Waitlist For:',
+  'SERVICE_CAP' : 'Service:',
+  'SER_TIME_WINDOW_CAP' : 'Service Time Window:',
+  'PAY_STATUS_CAP' : 'Payment Status:',
+  'NOT_PAID_CAP' : 'Not Paid',
+  'PARTIALLY_PAID_CAP' : 'Partially Paid',
+  'PAID_CAP' : 'Paid',
+  'COMMU_HISTORY_CAP' : 'Communication History',
+
+  //kiosk
+  'WELCOME_CAP' : 'Welcome',
+  'CHECKIN_YOURSELF_CAP' : 'Check-In Yourself',
+  'CHECKIN_ONLINE_CAP' : 'Checked-In Online?',
+  'CHECK_YOUR_STATUS_CAP' : 'Check your Status / ',
+  'REP_AS_ARRIVED_CAP' : 'Report As Arrived',
+  'DO_YOU_WANT_TO_SIGNUP_CAP' : 'Do you want to Sign Up?',
+  'MARKETING_TEXT' : 'This is the test marketing content. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci perspiciatis magni quae voluptatibus delectus, laudantium voluptate officia eligendi ducimus.',
+  'ENTER_YOUR_CAP' : 'Enter Your',
+  'ENTER_FIR_LETTERS_CAP' : 'Enter first 3 letters of your',
+  'FIR_LAS_NAME_CAP' : 'First/Last Name',
+  'SEARCH_CAP' : 'Search',
+  'OOPS_CAP' : 'Oops!!',
+  'LOOKS_NOT_REG_CUS_CAP' : 'Looks like youre not a registered customer.',
+  'FILL_YOUR_DET_CAP' : 'Please fll in your details to Register',
+  'REGISTER_CAP' : 'Register',
+  'BACK_TO_SEARCH_CAP' : 'Back to Search',
+  'HOME_CAP' : 'Home',
+  'EXIT_CAP' : 'Exit',
+  'SORRY_NOT_AUTH_TO_VIEW_PAGE' : 'Sorry you are not authorized to view this page.',
+  // Kiosk-Lookup
+  'NO_CHECKINS_EXISTS_CAP' : 'Sorry no Check-In exists',
+  //Kiosk-report as arrived
+  'TOKEN_CAP' : 'Token:',
+  'PERS_AHEAD' : 'Persons Ahead:',
+  'NAME_CAP' : 'Name:',
+  'STATUS_CAP' : 'Status:',
+  'CONFIRM_ARRIVAL_CAP' : 'Confirm Arrival',
+
+  //App-shared-components-consumer rate service popup
+  'RATE_YOU_VISIT' : 'Rate Your Visit',
+  'RATING_CAP' : 'Rate *',
+  'MESSAGE_CAP' : 'Message',
+  'RATE_BTN_CAP' : 'Rate',
+
+  //App-shared-components-consumer
+  'BACK_TO_CAP' : 'Back to',
+  'PROVIDER_DETAILS_CAP' : 'Provider Details',
+
+  //App-shared-components-existing checkin
+  
+
 
 };

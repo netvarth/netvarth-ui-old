@@ -27,6 +27,24 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   waitlist_id = null;
   communication_history: any =  [];
 
+  checkin_details_cap = Messages.CHECKIN_DET_CAP;
+  bussiness_name_cap = Messages.BUSS_NAME_CAP;
+  date_cap = Messages.DATE_CAP;
+  location_cap = Messages.LOCATION_CAP;
+  wait_for_cap = Messages.WAITLIST_FOR_CAP;
+  service_cap = Messages.SERVICE_CAP;
+  serv_time_window_cap = Messages.SER_TIME_WINDOW_CAP;
+  payment_status = Messages.PAY_STATUS_CAP;
+  not_paid_cap = Messages.NOT_PAID_CAP;
+  partialy_paid_cap = Messages.PARTIALLY_PAID_CAP;
+  paid_cap = Messages.PAID_CAP
+  send_msg_cap = Messages.SEND_MSG_CAP;
+  add_to_fav_cap = Messages.ADD_TO_FAV;
+  remove_fav_cap = Messages.REMOVE_FAV;
+  cancel_checkin_cap = Messages.CANCEL_CHECKIN;
+  comm_history_cap = Messages.COMMU_HISTORY_CAP;
+
+
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
 

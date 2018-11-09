@@ -20,6 +20,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   api_error = null;
   api_success = null;
 
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  send_btn_cap = Messages.SEND_BTN; 
+
   user_id = null;
   uuid = null;
   message = '';
