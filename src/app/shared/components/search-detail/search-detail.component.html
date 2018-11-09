@@ -221,32 +221,18 @@
                                                 <mat-option value="ynw_verified_levelasc">
                                                     Jaldee Verified
                                                 </mat-option>
-                                          <!-- <mat-option value="titleasc">
-                                            Title (Ascending)
-                                          </mat-option>
-                                          <mat-option value="titledesc">
-                                              Title (Descending)
-                                           </mat-option>
-                                           <mat-option value="sectorasc">
-                                              Sector (Ascending)
-                                            </mat-option>
-                                            <mat-option value="sectordesc">
-                                                Sector (Descending)
-                                             </mat-option>-->
                                         </mat-select> 
                                     </mat-form-field>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="srlst" *ngFor = "let search_result of search_data.hits.hit" [@search_data]="search_data.length"> -->
                         <div class="srlst" *ngFor = "let search_result of search_data.hits.hit">   
                         <div class="top-sect">
                             <div class="tp-l">
                                 <div class="tp1">
                                     <div class="pro-img" (click)="providerDetClicked(search_result)">
                                         <img *ngIf="search_result.fields.logo" [src]="search_result.fields.logo" alt="">
-                                        <!-- <img *ngIf="!search_result.fields.logo" src="./assets/images/img-null.svg" alt="">   -->
                                     </div>
                                     <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>
@@ -257,7 +243,6 @@
                                         </li>
                                     </ul>
                                     <div class="rating-stars">
-                                        <!-- {{search_result.fields.rating}}  -->
                                         <ng-container *ngIf="search_result.fields.rating>0">
                                                 <ng-container *ngIf="search_result.fields.rating==.5">
                                                     <img class="ratingstar" src="./assets/images/star-half.svg"/>
@@ -325,7 +310,6 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <!-- <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div> -->
                                     <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) " class="ynw-verified">
                                             <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
                                             <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</span>
@@ -336,10 +320,6 @@
                                     <span class="address">{{search_result.fields.place1 | capitalizeFirst }}</span>
 
                                     <div class="clr">
-                                        <!-- <div class="otr-elements">
-                                            <span class="category">{{search_result.fields.sector}}</span>
-                                            <span class="cert">{{search_result.fields.qualification}}</span>
-                                        </div> -->
                                         <div class="otr-elements">
                                         <span class="category">{{search_result.fields.sub_sector_displayname}}</span>
                                         <span *ngIf="search_result.fields.specialization"><span class="categoryspec" *ngFor="let spec of search_result.fields.specialization_displayname; let i = index"><span *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>

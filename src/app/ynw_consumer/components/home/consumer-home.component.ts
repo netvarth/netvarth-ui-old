@@ -85,6 +85,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   estimatesmallCaption = Messages.ESTIMATED_TIME_SMALL_CAPTION;
   checkinCaption = Messages.CHECKIN_TIME_CAPTION;
+  checkindisablemsg = Messages.DASHBOARD_PREPAY_MSG;
   notificationdialogRef;
   addnotedialogRef;
   checkindialogRef;

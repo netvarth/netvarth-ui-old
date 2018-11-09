@@ -177,6 +177,7 @@ export const Messages = {
 
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
   'Manage_Privacy': 'Manage privacy changed successfully',
+  'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in 5 minutes to complete your check-in',
 
     // Dynamic Field
   'YEAR_MONTH_VALID' : 'Future date not allowed',

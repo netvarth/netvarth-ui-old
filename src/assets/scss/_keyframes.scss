@@ -131,3 +131,40 @@
         opacity: 1;
         }
 }
+
+//Favourite Animation
+@-webkit-keyframes scale-up {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+            opacity: 1;
+  }
+    90%{
+        -webkit-transform: scale(3);
+            transform: scale(3);
+        opacity: 0;
+    }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+              opacity: 1;
+  }
+}
+@keyframes scale-up {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+      opacity: 1;
+  }
+  90%{
+        -webkit-transform: scale(3);
+            transform: scale(3);
+        opacity: 0;
+    }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+              opacity: 1;
+  }
+}
+

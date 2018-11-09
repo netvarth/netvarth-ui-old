@@ -434,6 +434,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.provider_services.getPaymentSettings()
     .subscribe(
       data => {
+        // console.log('paysettings', data);
         this.payment_settings = data;
         this.payment_loading = false;
         if (!this.payment_settings.onlinePayment) {
