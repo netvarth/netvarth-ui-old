@@ -1341,10 +1341,10 @@
         @include box-shadow(0, 0, 30px, rgba(0,0,0,0.1));
         position: relative;
         display: flex;
-        z-index: 5;
+        z-index: 99;
         
         .bt1 {
-            margin-right: 10px;
+            margin-left: 10px;
         }
         
         .resendouter {
@@ -2013,6 +2013,15 @@
                     &.pntr {
                         color: $ytb;
                     }
+                }
+            }
+        }
+        .mat-chip-list {
+            .mat-chip-list-wrapper {
+                .mat-chip {
+                    margin-left: 0;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
                 }
             }
         }
@@ -3111,7 +3120,7 @@
                             .c-row {
                                 display: flex;
                                 padding: 5px 0;
-                                margin-right: 110px;
+                                margin-right: 50px;
                                 text-align: right;
 
                                 &.one {
@@ -3190,6 +3199,11 @@
 
                                                 .spl {
                                                     margin-right: 0;
+                                                    flex-direction: column;
+                                        
+                                                    .selectbox1 {
+                                                        margin-bottom: 10px;
+                                                    }
                                                 }
                                             }
                                             
@@ -3206,7 +3220,7 @@
                                     }
 
                                     .discount-row, .coupon-row {
-                                        margin-right: 110px;
+                                        margin-right: 50px;
                                         display: flex;
                                         padding: 5px 0;
                                         color: $cc-mediumgray;
@@ -3239,7 +3253,12 @@
 
                                 @include respond-to(ynw-500) {
                                     margin-right: 40px;
-
+                                    
+                                    &.one {
+                                        .price {
+                                            flex-basis: 30%;
+                                        }
+                                    }
                                     &.two {
                                         .discount-row, .coupon-row {
                                             margin-right: 40px;
@@ -3273,7 +3292,7 @@
                         .amt{
                             display: flex;
                             text-align: right;
-                            margin-right: 110px;
+                            margin-right: 50px;
                             padding: 5px 0;
 
                             .name {
@@ -3290,8 +3309,8 @@
                                     
                                     .bill-discount {
                                         color: $linkblue;
-                                        display: none;
                                         font-size: .875rem;
+                                        display: block;
 
                                         span {
                                             text-decoration: underline;
@@ -3348,13 +3367,9 @@
 
                             @include respond-to(ynw-500) {
                                 margin-right: 40px;
-
-                                &.gross {
-                                    .name {
-                                        .bill-discount {
-                                            display: block;
-                                        }
-                                    }
+                                
+                                .price {
+                                    flex-basis: 30%;
                                 }
                             }
                         }
@@ -3401,6 +3416,11 @@
                                     .spl {
                                         margin-right: 0;
                                         margin-bottom: 10px;
+                                        flex-direction: column;
+                                        
+                                        .selectbox1 {
+                                            margin-bottom: 10px;
+                                        }
                                     }
                                 }
                             }
@@ -3411,6 +3431,7 @@
                         position: absolute;
                         top: 0;
                         right: 0;
+                        display: none;
 
                         .cs-btn {
                             text-transform: none;

@@ -65,7 +65,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   <div class="form-group"  *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere && subDomainList.length >1">
 
     <mat-form-field>
-      <label class="col-form-label" for="last_name">Select Sub Domain *</label>
+      <label class="col-form-label" for="last_name">Select Subdomain *</label>
       <mat-select subdom formControlName="selectedSubDomains" #subdom (selectionChange)="onItemSelect(subdom.value)">
         <mat-option *ngFor="let subdomain of subDomainList; let i = index" [value]="i">
             {{subdomain.itemName}}

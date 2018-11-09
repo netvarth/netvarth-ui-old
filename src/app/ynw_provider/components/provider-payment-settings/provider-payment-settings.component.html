@@ -177,14 +177,9 @@
                                 </div>
                             </div>
                             <div class="actiondiv" *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
-                                <button type="button" mat-button class="cs-btn bt1" (click)="savePaySettings(false)"
-                                    *ngIf="ineditMode">Save Settings</button>
-                                <button type="button" class="cs-btn bt2" (click)="handleEditPaySettings(false)" *ngIf="ineditMode">Cancel
-                                    Edit</button>
-                                <button type="button" mat-button class="cs-btn bt1" (click)="handleEditPaySettings(true)"
-                                    *ngIf="!ineditMode">Change Payment Settings</button>
-                                <!-- <button type="button" mat-button class="cs-btn bt1" (click)="saveJaldeePaymentSettings('enable')"
-                                    >Save Settings</button> -->
+                                   <button type="button" class="cs-btn bt2" (click)="handleEditPaySettings(false)" *ngIf="ineditMode">Cancel Edit</button>
+                                <button type="button" mat-button class="cs-btn bt1" (click)="savePaySettings(false)" *ngIf="ineditMode">Save Settings</button>
+                                <button type="button" mat-button class="cs-btn bt1" (click)="handleEditPaySettings(true)" *ngIf="!ineditMode">Change Payment Settings</button>
                             </div>
                         </div>
                         <div class="actiondiv" *ngIf="!isJaldeeAccount && optJaldeeAccount">

@@ -47,7 +47,8 @@
                       </div>
                       <div class="details" [class.show]="selectedMsg==i">
                           <div class="result">
-                              {{shared_functions.firstToUpper(message.msg)}}
+                              <div class="result" [innerHTML]="message.msg | nl2br | capitalizeFirst">
+                              <!-- {{shared_functions.firstToUpper(message.msg)}} -->
                           </div>
                           <div class="action">
                               <span class="icon-reply" (click)="replyMessage(message)" *ngIf="user_id != message.owner.id && !hide_reply_button">

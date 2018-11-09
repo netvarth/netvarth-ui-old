@@ -470,7 +470,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // Check whether the subdomain heading is to be displayed
     if (this.holdisplaylist['subdom']) {
       if (this.holdisplaylist['subdom'].length > 0) {
-        const groupdomainobj = {displayname: 'Sub Domains', name: 'subdom'};
+        const groupdomainobj = {displayname: 'Subdomains', name: 'subdom'};
         keywordgroup_val.push(groupdomainobj);
       }
     }

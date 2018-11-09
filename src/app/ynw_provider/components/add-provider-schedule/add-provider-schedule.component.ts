@@ -240,14 +240,18 @@ export class AddProviderSchedulesComponent implements OnInit {
     this.saveScheduleClick.emit(this.schedule_arr);
   }
   addScheduleSelection() {
+     // this.Selall = false;
+    this.handleselectnone();
     this.addeditScheduleClick.emit('addeditclicked');
     this.showScheduleselection();
   }
   cancelscheduleClicked() {
+   this.handleselectnone();
     this.showScheduleselection();
     this.cancelScheduleClick.emit(this.schedule_arr);
   }
   editwScheduleselection(indx, schedule) {
+  this.handleselectnone();
     this.addeditScheduleClick.emit('addeditclicked');
     this.showScheduleselection(indx, schedule);
   }

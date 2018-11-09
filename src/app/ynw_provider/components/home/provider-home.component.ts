@@ -1,4 +1,3 @@
-
 import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
 import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
@@ -422,7 +421,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             indx += 1;
           }
         }
-
+ const getsavedqueueid = this.shared_functions.getitemfromLocalStorage('pdq');
+        let selqid = 0;
         for (let ii = 0; ii < this.all_queues.length; ii++) {
           let schedule_arr = [];
           // extracting the schedule intervals
@@ -432,8 +432,21 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           let display_schedule = [];
           display_schedule =  this.shared_functions.arrageScheduleforDisplay(schedule_arr);
           this.all_queues[ii]['displayschedule'] = display_schedule[0];
+           if (this.all_queues[ii].id === getsavedqueueid) {
+            selqid = ii;
+          }
         }
         // console.log('all queues', this.all_queues);
+        if (this.queues.length === 0 ) {
+          this.queues = this.all_queues;
+        }
+        this.selected_queue = this.all_queues[selqid];
+        this.getTodayCheckinCount()
+          .then(
+            (result) => {
+              this.today_waitlist_count = result;
+            }
+        );
       },
       error => {
       },
@@ -782,6 +795,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     }
     this.setFilterDateMaxMin();
     // this.queues = [];
+      // console.log('ttype', this.time_type, this.queues.length);
+    if (this.time_type === 1 && this.queues.length === 0) {
+      this.getQueueListByDate();
+    }
     this.loadApiSwitch('setTimeType');
   }
 
