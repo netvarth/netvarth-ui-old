@@ -3,7 +3,7 @@ import { interval as observableInterval, Observable, Subscription, SubscriptionL
 import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -17,7 +17,7 @@ import { NotificationListBoxComponent } from '../../shared/component/notificatio
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { ViewConsumerWaitlistCheckInBillComponent} from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
+import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
@@ -25,9 +25,9 @@ import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-priv
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
-import {startWith} from 'rxjs/operators/startWith';
-import {map} from 'rxjs/operators/map';
-import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
+import { startWith } from 'rxjs/operators/startWith';
+import { map } from 'rxjs/operators/map';
+import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 import { appendFile } from 'fs';
 import { count } from 'rxjs/operators';
 import { NgxCarousel } from 'ngx-carousel';
@@ -48,7 +48,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   active_cap = Messages.ACTIVE_CHECKINS_CAP;
   no_checkins_cap = Messages.NO_CHECKINS_CAP;
   send_msg_cap = Messages.SEND_MSG_CAP;
-  make_pay_cap=Messages.MAKE_PAYMENT_CAP;
+  make_pay_cap = Messages.MAKE_PAYMENT_CAP;
   status_cancelled_cap = Messages.STATUS_CANCELLED;
   status_started_cap = Messages.STATUS_STARTED;
   status_done_cap = Messages.STATUS_DONE;
@@ -123,7 +123,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   remfavdialogRef;
   payment_popup = null;
   servicesjson: any = [];
-    public time = 300;
+  public time = 300;
   public mode = 'horizontal';
   public perspective = 2000;
   public init = 0;
@@ -135,11 +135,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer,
     private consumer_datastorage: ConsumerDataStorageService) { }
-    public carouselOne: NgxCarousel;
+  public carouselOne: NgxCarousel;
 
   ngOnInit() {
-   this.carouselOne = {
-      grid: {xs: 1, sm: 1, md: 2, lg: 3, all: 0},
+    this.carouselOne = {
+      grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
       slide: 3,
       speed: 400,
       interval: 1000,
@@ -168,11 +168,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
 
   }
- public myfunc(event: Event) {
+  public myfunc(event: Event) {
     // carouselLoad will trigger this funnction when your load value reaches
     // it is helps to load the data by parts to increase the performance of the app
     // must use feature to all carousel
- }
+  }
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
@@ -470,24 +470,23 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
               } else {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                  + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
+                // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                // } else {
+                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                // }
+                if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                } else {
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                }
               }
             } else {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
-              // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-              // } else {
-              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
-              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-              // }
-              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-              } else {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-              }
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 0;
             }
 
             if (waitlisttime_arr[i]['message']) {
@@ -944,7 +943,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           }
         }
       },
-        error => {
-        });
+      error => {
+      });
   }
 }
