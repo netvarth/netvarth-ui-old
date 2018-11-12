@@ -27,7 +27,6 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
     loc_badges: any = [];
     badge_map_arr: any = [];
     display_schedule: any = [];
-    activeSchedules: any = [];
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -61,7 +60,6 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
-        this.activeSchedules = this.provider_shared_functions.getActiveQueues();
         if (this.queue_id) {
             this.getQueueDetail();
 
@@ -75,6 +73,7 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
         }
     }
     getQueueDetail() {
+        this.getProviderQueues();
         this.provider_services.getQueueDetail(this.queue_id)
             .subscribe(
                 data => {
@@ -106,9 +105,30 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
             'queues']);
     }
     addEditProviderQueue(type) {
-        this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_detail', this.queue_data, this.activeSchedules);
+        this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_detail', this.queue_data, this.provider_shared_functions.getActiveQueues());
     }
     changeProviderQueueStatus(obj) {
         this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'queue_detail');
     }
+    getProviderQueues() {
+        let activeQueues: any = [];
+        let queue_list: any = [];
+        this.provider_services.getProviderQueues()
+          .subscribe(data => {
+            queue_list = data;
+            for (let ii = 0; ii < queue_list.length; ii++) {
+              let schedule_arr = [];
+              // extracting the schedule intervals
+              if (queue_list[ii].queueSchedule) {
+                schedule_arr = this.shared_Functionsobj.queueSheduleLoop(queue_list[ii].queueSchedule);
+              }
+              let display_schedule = [];
+              display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+              if (queue_list[ii].queueState === 'ENABLED') {
+                activeQueues.push(display_schedule[0]);
+              }
+            }
+            this.provider_shared_functions.setActiveQueues(activeQueues);
+          });
+      }
 }

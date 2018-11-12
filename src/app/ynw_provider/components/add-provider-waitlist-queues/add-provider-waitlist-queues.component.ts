@@ -42,15 +42,16 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     public provider_services: ProviderServices,
     private provider_datastorageobj: ProviderDataStorageService,
     private sharedfunctionObj: SharedFunctions
-    ) {
-      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-     }
+  ) {
+    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+  }
 
   ngOnInit() {
     this.activeSchedules = this.data.schedules;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
-    this.dstart_time =  {hour: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')};
-    this.dend_time =  {hour: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')};
+    this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')) };
+    this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')) };
+    
     // moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH:mm');
     // this.dend_time =  moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH:mm');
     // Get the provider locations
@@ -63,7 +64,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
   // creates the form
   createForm() {
-
+    console.log(this.dstart_time);
     this.amForm = this.fb.group({
       qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
       qlocation: ['', Validators.compose([Validators.required])],
@@ -78,24 +79,28 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // }
 
     if (this.data.source === 'location_detail' &&
-    this.data.type === 'add' &&
-    this.data.queue.location.id) {
-      this.amForm.get('qlocation').setValue(this.data.queue.location.id );
+      this.data.type === 'add' &&
+      this.data.queue.location.id) {
+      this.amForm.get('qlocation').setValue(this.data.queue.location.id);
     }
   }
 
   // sets up the form with the values filled in
   updateForm() {
-   // console.log(this.data.queue.queueSchedule.timeSlots[0].sTime);
-    const sttime = {hour: moment(this.data.queue.queueSchedule.timeSlots[0].sTime,
-                      ['h:mm A']).format('HH'),
-                      minute: moment(this.data.queue.queueSchedule.timeSlots[0].sTime,
-                      ['h:mm A']).format('mm')};
-    const edtime = {hour: moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
-                      ['h:mm A']).format('HH'),
-                      minute: moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
-                      ['h:mm A']).format('mm')};
-// console.log('dataQ', this.data.queue);
+    // console.log(this.data.queue.queueSchedule.timeSlots[0].sTime);
+    const sttime = {
+      hour: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('HH')),
+      minute: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('mm'))
+    };
+    const edtime = {
+      hour: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('HH')),
+      minute: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('mm'))
+    };
+    // console.log('dataQ', this.data.queue);
     this.amForm.setValue({
       qname: this.data.queue.name || null,
       qlocation: this.data.queue.location.id || null,
@@ -123,7 +128,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         }
       }
     }
-    this.dstart_time =  sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
+    this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
     this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
   }
 
@@ -137,13 +142,13 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
   // get the list of services
   getProviderServices() {
-    const params = { 'status': 'ACTIVE'};
+    const params = { 'status': 'ACTIVE' };
     this.provider_services.getServicesList(params)
       .subscribe(data => {
         this.serv_list = data;
         if (this.data.type === 'edit') {
           this.updateForm();
-      }
+        }
       });
   }
 
@@ -175,16 +180,16 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
 
   // handled the time box changes
-  changetime (src, passtime) {
+  changetime(src, passtime) {
     switch (src) {
       case 'start':
         this.dstart_time = passtime;
-      break;
+        break;
       case 'end':
         this.dend_time = passtime;
-      break;
+        break;
     }
-   // console.log(this.dstart_time, this.dend_time);
+    // console.log(this.dstart_time, this.dend_time);
   }
 
   // checks whether a given value is there in the given array
@@ -200,8 +205,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
 
   // handles the submit button click for add and edit
-  onSubmit (form_data) {
-    this.resetApiErrors ();
+  onSubmit(form_data) {
+    this.resetApiErrors();
     const selser: any = [];
     let schedulejson: any = [];
     // Check whether atleast one service is selected
@@ -211,35 +216,35 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       return;
     } else {
       for (const sel of this.selservice_arr) {
-        selser.push({'id': sel});
+        selser.push({ 'id': sel });
       }
     }
     // Check whether atleast one day is selected
     if (this.selday_arr.length === 0) {
-      const error  = 'Please select the days';
+      const error = 'Please select the days';
       this.sharedfunctionObj.apiErrorAutoHide(this, error);
       return;
     } else {
       // Numeric validation
       if (isNaN(form_data.qcapacity)) {
-        const error  = 'Please enter a numeric value for capacity';
+        const error = 'Please enter a numeric value for capacity';
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       }
       if (!this.sharedfunctionObj.checkIsInteger(form_data.qcapacity)) {
-        const error  = 'Please enter an integer value for capacity';
+        const error = 'Please enter an integer value for capacity';
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       } else {
         if (form_data.qcapacity === 0) {
-          const error  = 'Maximum Capacity should be greater than 0';
+          const error = 'Maximum Capacity should be greater than 0';
           this.sharedfunctionObj.apiErrorAutoHide(this, error);
           return;
         }
       }
       // Numeric validation
       if (isNaN(form_data.qserveonce)) {
-        const error  = 'Please enter a numeric value for Number of ' + this.customer_label + 's served at a time';
+        const error = 'Please enter a numeric value for Number of ' + this.customer_label + 's served at a time';
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       }
@@ -294,8 +299,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       const endtime = new Date(today_date + ' ' + this.dend_time.hour + ':' + this.dend_time.minute + ':00');
       const endtime_format = moment(endtime).format('hh:mm A') || null;
 
-     // building the schedule json section
-     schedulejson = {
+      // building the schedule json section
+      schedulejson = {
         'recurringType': 'Weekly',
         'repeatIntervals': daystr,
         'startDate': today,
@@ -307,7 +312,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           'sTime': starttime_format,
           'eTime': endtime_format
         }]
-     };
+      };
       // generating the data to be posted
       const post_data = {
         'name': form_data.qname,
@@ -323,7 +328,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       if (this.data.type === 'edit') {
         this.editProviderQueue(post_data);
       } else if (this.data.type === 'add') {
-          this.addProviderQueue(post_data);
+        this.addProviderQueue(post_data);
       }
     }
   }
@@ -331,40 +336,40 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   // Created new provider queue
   addProviderQueue(post_data) {
     this.provider_services.addProviderQueue(post_data)
-        .subscribe(
-          data => {
-           this.api_success = this.sharedfunctionObj.getProjectMesssages('WAITLIST_QUEUE_CREATED');
-           setTimeout(() => {
+      .subscribe(
+        data => {
+          this.api_success = this.sharedfunctionObj.getProjectMesssages('WAITLIST_QUEUE_CREATED');
+          setTimeout(() => {
             this.dialogRef.close('reloadlist');
-           }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            // this.api_error = error.error;
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
-          }
-        );
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          // this.api_error = error.error;
+          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+        }
+      );
   }
 
   // update a queue
   editProviderQueue(post_data) {
-    post_data.id =  this.data.queue.id;
+    post_data.id = this.data.queue.id;
     this.provider_services.editProviderQueue(post_data)
-        .subscribe(
-          data => {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('WAITLIST_QUEUE_UPDATED');
-            setTimeout(() => {
+      .subscribe(
+        data => {
+          this.api_success = this.sharedfunctionObj.getProjectMesssages('WAITLIST_QUEUE_UPDATED');
+          setTimeout(() => {
             this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            // this.api_error = error.error;
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
-          }
-    );
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          // this.api_error = error.error;
+          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+        }
+      );
   }
 
   // resets api for success and failure
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
