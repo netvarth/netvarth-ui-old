@@ -73,8 +73,14 @@ export class AddMembersHolderComponent implements OnInit {
     if (!namepattern.test(this.addmemberobj.lname) || this.addmemberobj.lname.trim() === '') {
       derror = 'Please enter a valid last name';
     }
+    if (this.addmemberobj.lname.trim() === '') {
+      derror = 'Please enter the last name';
+    }
     if (!namepattern.test(this.addmemberobj.fname)) {
       derror = 'Please enter a valid first name';
+    }
+    if (this.addmemberobj.fname.trim() === '') {
+      derror = 'Please enter the first name';
     }
 
     if (derror === '') {
@@ -111,7 +117,7 @@ export class AddMembersHolderComponent implements OnInit {
         if (this.addmemberobj.dob !== '') {
           post_data.userProfile['dob'] = this.addmemberobj.dob;
         }
-        console.log('postdata', post_data);
+        // console.log('postdata', post_data);
         if (this.data.type === 'add') {
           this.shared_services.addMembers(post_data)
           .subscribe(data => {

@@ -56,9 +56,9 @@
 
                             <div class="pickerouter">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                             <!-- <input class="form-control" type="text" matInput [matDatepicker]="picker" #inputdob formControlName="dob" [max]="tday" readonly> -->
-                            <input matInput [matDatepicker]="picker" #inputdob formControlName="dob" [max]="tday" readonly>
+                            <input matInput [matDatepicker]="picker" #inputdob formControlName="dob" [max]="tday" disabled class="nofocus" tabindex="-1">
                             <!-- <button type="button" (click)="resetdob()" class="cs-btn resetsmall">Clear</button> -->
                             </div>
                             <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"

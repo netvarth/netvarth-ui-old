@@ -3624,6 +3624,12 @@ header {
                         }
                     }
                 }
+                
+                .nocheckins {
+                    p {
+                        margin: 0;
+                    }
+                }
             }
         }
 
@@ -4386,6 +4392,14 @@ header {
                                         }
 
                                     }
+                                }
+                            }
+                            
+                            .noprevhist {
+                                padding: 20px;
+                                
+                                p {
+                                    margin: 0;
                                 }
                             }
                         }

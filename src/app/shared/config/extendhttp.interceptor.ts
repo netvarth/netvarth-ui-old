@@ -78,6 +78,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
             // this.hideLoader();
             if ((err.status === 401 || err.status === 419) &&
               !this.checkUrl(url)) {
+                // console.log('logout reached', url);
                this.shared_functions.logout();
               // redirect to the login route
               // or show a modal
