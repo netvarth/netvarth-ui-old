@@ -51,7 +51,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     profileQueryExecuted = false;
     ineditMode = false;
     isJaldeeAccount: Boolean = true;
-    optJaldeeAccount: Boolean = true;
+    optJaldeeAccount;
     maxcnt100 = projectConstants.VALIDATOR_MAX100;
     maxcnt10 = 10;
     maxcnt11 = 11;
@@ -104,7 +104,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.paytmverified = this.paySettings.payTmVerified	 || false;
                 this.payuverified = this.paySettings.payUVerified	 || false;
                 this.isJaldeeAccount = this.paySettings.isJaldeeAccount;
-                this.optJaldeeAccount = this.isJaldeeAccount;
+                this.optJaldeeAccount =(this.isJaldeeAccount)?'enable':'disable';
             });
             if (showmsg === 1) {
                 this.tabid = 0;
