@@ -81,7 +81,7 @@
                               </mat-form-field> -->
                             </div>
 
-                            <ng-contai  ner *ngFor="let refine_data of searchrefine_arr; let refindx=index">
+                            <ng-container *ngFor="let refine_data of searchrefine_arr; let refindx=index">
                                 <div class="bx-block" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean' && refine_data.dataType!='URL'">
                                     <ng-container *ngIf="refine_data.cloudSearchIndex!='specialization'">
                                         <mat-accordion>
@@ -184,26 +184,26 @@
                                         </mat-accordion>
                                     </ng-container>
                                 </div>
-                            </ng-container>
+                                </ng-container>
 
-                            <div class="bx-block">
-                                <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true">
-                                        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
-                                            <mat-panel-title>
-                                                <span class="refine-head">Other Filters</span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
+                                <div class="bx-block">
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="true">
+                                            <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
+                                                <mat-panel-title>
+                                                    <span class="refine-head">Other Filters</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
 
-                                        <ng-container *ngFor="let refine_data of searchrefine_arr">
-                                            <div *ngIf="refine_data.dataType=='Boolean'">
-                                                <mat-slide-toggle #{{refine_data.name}} [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
-                                                    (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1,false)">{{refine_data.displayName}}</mat-slide-toggle>
-                                            </div>
-                                        </ng-container>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
-                            </div>
+                                            <ng-container *ngFor="let refine_data of searchrefine_arr">
+                                                <div *ngIf="refine_data.dataType=='Boolean'">
+                                                    <mat-slide-toggle #{{refine_data.name}} [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
+                                                        (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1,false)">{{refine_data.displayName}}</mat-slide-toggle>
+                                                </div>
+                                            </ng-container>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
                         </div>
                     </div>
                 </div>
