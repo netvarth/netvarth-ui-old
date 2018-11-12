@@ -21,6 +21,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   query_executed = false;
   emptyMsg = '';
   couponStatus: boolean;
+  tabid = 0;
   breadcrumbs = [
     {
       title: 'Settings',
