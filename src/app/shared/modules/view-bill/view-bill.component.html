@@ -327,7 +327,7 @@
 
     </ng-container>
  <button *ngIf="source == 'consumer_dashboard'" type="button"
-   mat-button [mat-dialog-close]="close_msg" class="cs-btn bt2" >
+   mat-button [mat-dialog-close]="close_msg" class="cs-btn bt2 billcancel" >
    Cancel</button>
     <ng-container *ngIf="source !== 'consumer_dashboard'">
         <button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'

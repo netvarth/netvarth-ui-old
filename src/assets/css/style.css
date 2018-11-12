@@ -449,7 +449,9 @@
   .mat-button.update, .mat-button.print {
     background: #fda60d !important; }
   .mat-button.accept {
-    background: #00cc96 !important; }
+    background: #00cc96 !important; 
+    margin-right: 0;
+    margin-left: 10px;}
   .mat-button.makepayment {
     background: #00cc96 !important; }
 
@@ -1785,7 +1787,7 @@ select:-webkit-autofill:focus {
                     .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class {
                       color: #5568ff; }
                     .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class {
-                      color: #4bc742; }
+                      color: #0edcb8; }
                     .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
                       color: #f24949; }
                   .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting {
@@ -5767,6 +5769,7 @@ header {
         .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn,
         .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn, .outer-card .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn, .specialclass .mat-dialog-actions .waitlist-button-outer .waitlist-action .confirmbtn {
           margin-right: 0;
+          margin-left: 0;
           margin-bottom: 0;
           width: 100%; }
     .signupmainclass .mat-dialog-actions:last-child,
@@ -11985,7 +11988,7 @@ footer.dashb {
           position: relative;
           min-height: 50px;
           justify-content: flex-start;
-          flex-basis: 30%; } }
+          flex-basis: 50%; } }
       @media only screen and (max-width: 575px) {
         .dashboard .card.w-dta .head .locn {
           width: 100%;
@@ -12530,8 +12533,8 @@ footer.dashb {
                 background: #63f2b2;
                 color: #0b7e4b; }
               .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions span.done {
-                background: #4bc742;
-                color: #102f0e; }
+                background: #0edcb8;
+                color: #021c18; }
             .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions:before {
               position: absolute; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment {
@@ -12603,9 +12606,9 @@ footer.dashb {
             .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .arrived:before {
               background: #79e688; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done {
-            color: #4bc742; }
+            color: #0edcb8; }
             .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .done:before {
-              background: #4bc742; }
+              background: #0edcb8; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled {
             color: #f24949; }
             .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.checkin_status .cancelled:before {
@@ -13736,7 +13739,7 @@ footer.dashb {
       .content.comn-cls .lbr .card .c-history li.checkedIn:before {
         background: #5568ff; }
       .content.comn-cls .lbr .card .c-history li.done:before {
-        background: #4bc742; }
+        background: #0edcb8; }
     .content.comn-cls .lbr .card .c-history:before {
       position: absolute;
       content: "";
@@ -14242,7 +14245,7 @@ footer.dashb {
             .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
               padding: 10px;
               height: 40px;
-              background: #e6e6e6; }
+              background: white; }
           .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-underline {
             display: none; }
       .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter {
@@ -16614,70 +16617,64 @@ header.consumer {
           .consumer-dash h1 span {
             font-weight: 700; }
         .consumer-dash .card {
-          margin-bottom: 15px;
+          margin-bottom: 30px;
           -webkit-border-radius: 0;
           border-radius: 0;
           background-clip: padding-box;
           /* stops bg color from leaking outside the border: */
           padding: 0; }
-    .consumer-dash .card .mat-accordion {
-      border: 1px solid #00aef2;
-      -webkit-border-radius: 5px;
-      border-radius: 5px;
-      background-clip: padding-box;
-      /* stops bg color from leaking outside the border: */ }
-      .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused,
-      .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused,
-      .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+    .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused,
+    .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused,
+    .consumer-dash .card .mat-accordion .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+      background: #1873f2; }
+    .consumer-dash .card .mat-accordion .mat-expansion-panel {
+      box-shadow: none !important;
+      background: none; }
+      .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+        font-size: 1.2rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        font-weight: 700;
+        padding: 0px 20px 0px 20px;
+        display: flex;
         background: #1873f2; }
-      .consumer-dash .card .mat-accordion .mat-expansion-panel {
-        box-shadow: none !important;
-        background: none; }
-        .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
-          font-size: 1.2rem;
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 500;
-          font-weight: 700;
-          padding: 0px 20px 0px 20px;
+        .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content {
+          flex: auto;
+          flex-grow: 0; }
+          .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content .mat-expansion-panel-header-title {
+            color: #fff; }
+        .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
+          position: relative;
+          transform: rotate(0deg) !important;
+          width: 20px;
+          height: 20px;
           display: flex;
-          background: #1873f2; }
-          .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content {
-            flex: auto;
-            flex-grow: 0; }
-            .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content .mat-expansion-panel-header-title {
-              color: #fff; }
-          .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
-            position: relative;
-            transform: rotate(0deg) !important;
+          align-items: center;
+          justify-content: center;
+          -webkit-border-radius: 30px;
+          border-radius: 30px;
+          background-clip: padding-box;
+          /* stops bg color from leaking outside the border: */
+          background: #fff; }
+          .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:before {
+            display: flex;
+            align-items: center;
+            height: 20px;
+            position: absolute; }
+          .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:after {
+            display: none; }
+          .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:before {
+            position: absolute;
+            font-family: "custom-ynw" !important;
+            content: "\72";
+            right: 0;
             width: 20px;
             height: 20px;
+            font-size: .65rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            -webkit-border-radius: 30px;
-            border-radius: 30px;
-            background-clip: padding-box;
-            /* stops bg color from leaking outside the border: */
-            background: #fff; }
-            .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:before {
-              display: flex;
-              align-items: center;
-              height: 20px;
-              position: absolute; }
-            .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:after {
-              display: none; }
-            .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:before {
-              position: absolute;
-              font-family: "custom-ynw" !important;
-              content: "\72";
-              right: 0;
-              width: 20px;
-              height: 20px;
-              font-size: .65rem;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              color: #1873f2; }
+            color: #1873f2; }
         .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content {
           font-family: 'Montserrat', sans-serif;
           font-weight: normal; }
@@ -16686,7 +16683,7 @@ header.consumer {
             .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body p {
               margin-bottom: 0; }
         .consumer-dash .card .mat-accordion .mat-expansion-panel.mat-expanded .mat-expansion-panel-header {
-          border-bottom: 1px solid #00aef2;
+          border-bottom: 2px solid #f2f2f2;
           background: transparent; }
           .consumer-dash .card .mat-accordion .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-content .mat-expansion-panel-header-title {
             color: #00aef2; }
@@ -16695,27 +16692,25 @@ header.consumer {
             .consumer-dash .card .mat-accordion .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-expansion-indicator:before {
               content: "\66";
               color: #fff; }
-    .consumer-dash .card.c-checkins {
-      border: 1px solid #00aef2 !important;
-      -webkit-border-radius: 5px;
-      border-radius: 5px;
+   .consumer-dash .card.c-checkins {
+      -webkit-border-radius: 0px;
+      border-radius: 0px;
       background-clip: padding-box;
       /* stops bg color from leaking outside the border: */ }
       .consumer-dash .card.c-checkins h2 {
         font-size: 1.2rem;
         padding: 20px;
-        border-bottom: 1px solid #00aef2;
+        border-bottom: 2px solid #f2f2f2;
         margin-bottom: 0px;
         color: #00aef2; }
       .consumer-dash .card.c-checkins .outer {
-        padding: 20px 30px; }
+        padding: 20px 15px; }
         .consumer-dash .card.c-checkins .outer .banner {
           width: 100%; }
           .consumer-dash .card.c-checkins .outer .banner .ngxcarousel {
             position: relative; }
             .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items {
-              display: flex;
-              justify-content: space-between; }
+              display: flex;}
               .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item {
                 display: flex;
                 flex-direction: column;
@@ -16725,8 +16720,8 @@ header.consumer {
                 -o-transition: all 400ms;
                 -webkit-transition: all 400ms;
                 transition: all 400ms;
-                -webkit-border-radius: 5px;
-                border-radius: 5px;
+                -webkit-border-radius: 0px;
+                border-radius: 0px;
                 background-clip: padding-box;
                 /* stops bg color from leaking outside the border: */
                 -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1) ;
@@ -16737,7 +16732,6 @@ header.consumer {
                 margin-left: 7px; }
                 .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header {
                   display: flex;
-                  align-items: center;
                   position: relative;
                   padding: 15px;
                   background: transparent;
@@ -16757,7 +16751,7 @@ header.consumer {
                         font-size: 1rem;
                         font-weight: 600;
                         margin-bottom: 0px;
-                        display: table;
+                        display: block;
                         cursor: pointer;
                         color: #00aef2; }
                     @media only screen and (max-width: 400px) {
@@ -16777,44 +16771,31 @@ header.consumer {
                         position: absolute; }
                       .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .location .icon-location:before {
                         left: 0;
-                        top: 0; }
-                  .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt {
-                    display: flex;
-                    flex-direction: column; }
-                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .favourite {
-                      display: flex; }
-                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .favourite .icon-favourite-filled {
-                        margin-left: auto; }
-                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .favourite .icon-favourite-filled:before {
-                          color: #f24949;
-                          width: 20px;
-                          height: 20px;
-                          display: flex;
-                          align-items: center;
-                          justify-content: center;
-                          font-size: 1rem; }
-                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .cancel-label,
-                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .started-label,
-                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .done-label {
-                      color: #f24949;
-                      padding: 2px 0px 2px 12px;
+                        top: -2px; }
+ .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .cancel-label,
+                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .started-label,
+                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .done-label {
+                      padding: 1px 0px 2px 10px;
                       font-size: .65rem;
-                      line-height: 1.2rem;
+                      line-height: 1.1rem;
                       font-weight: 600;
-                      letter-spacing: .5px;
+                      letter-spacing: .8px;
                       -webkit-border-radius: 20px;
                       border-radius: 20px;
                       background-clip: padding-box;
                       /* stops bg color from leaking outside the border: */
-                      position: relative; }
+                      position: relative;
+                      color: #f24949;
+                      margin-left: 4px;
+                      display: table; }
                       @media only screen and (max-width: 400px) {
-                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .cancel-label,
-                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .started-label,
-                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .done-label {
+                           .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .cancel-label,
+                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .started-label,
+                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .done-label {
                           margin-left: 10px; } }
-                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .cancel-label:before,
-                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .started-label:before,
-                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .done-label:before {
+                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .cancel-label:before,
+                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .started-label:before,
+                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .done-label:before {
                         position: absolute;
                         width: 6px;
                         height: 6px;
@@ -16827,14 +16808,36 @@ header.consumer {
                         border-radius: 20px;
                         background-clip: padding-box;
                         /* stops bg color from leaking outside the border: */ }
-                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .started-label {
+                                .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .started-label {
                       color: #4de2ff; }
-                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .started-label:before {
+                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .started-label:before {
                         background: #4de2ff; }
-                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .done-label {
-                      color: #4bc742; }
-                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .done-label:before {
-                        background: #4bc742; }
+                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .done-label {
+                      color: #0edcb8; }
+                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .status-outer .done-label:before {
+                        background: #0edcb8; }
+                  .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt {
+                    display: flex;
+                    flex-direction: column; }
+                    .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .favourite {
+                      display: flex; }
+                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .favourite .icon-favourite-filled {
+                        margin-left: auto;
+                        -webkit-animation: scale-up 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+                        animation: scale-up 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+                        transform: scale(1);
+                        -webkit-transform: scale(1); }
+                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .favourite .icon-favourite-filled:before {
+                          color: #f24949;
+                          width: 20px;
+                          height: 20px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          font-size: 1.2rem; }
+                      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .rt .favourite .icon-favourite {
+                        font-size: 1.2rem;
+                        cursor: pointer; }
                 .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details {
                   display: flex;
                   flex-direction: column;
@@ -16862,7 +16865,7 @@ header.consumer {
                       margin: 0;
                       display: block;
                       border-bottom: 1px solid #f2f2f2;
-                      font-size: .75rem; }
+                      font-size: .815rem; }
                       .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0 .service,
                       .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0 .forwhom,
                       .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0 .time,
@@ -16893,6 +16896,33 @@ header.consumer {
                           position: absolute;
                           content: ":";
                           left: 0; }
+          .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment {
+                        display: flex;
+                        flex-direction: column;
+                        border-bottom: none; }
+                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .paytext {
+                          display: block;
+                          margin-bottom: 5px;
+                          color: #1873f2; }
+                        .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .buttonouter {
+                          display: flex;
+                          flex-direction: column; }
+                          .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .buttonouter .amount {
+                            display: none; }
+                          .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .buttonouter .cs-btn {
+                            position: relative;
+                            width: 120px;
+                            height: auto;
+                            color: #fff;
+                            -webkit-border-radius: 3px;
+                            border-radius: 3px;
+                            background-clip: padding-box;
+                            /* stops bg color from leaking outside the border: */
+                            padding: 3px 8px;
+                            text-transform: none; }
+                            .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .buttonouter .cs-btn:hover {
+                              background: #1873f2;
+                              color: #fff; }
                       .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0:last-child {
                         margin-bottom: 0; }
                       @media only screen and (max-width: 575px) {
@@ -16941,9 +16971,7 @@ header.consumer {
                           font-weight: 600; }
                           @media only screen and (max-width: 575px) {
                             .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .rt .controls li span {
-                              padding: 5px;
-                              padding-left: 25px;
-                              padding-right: 10px; } }
+                              padding: 5px;} }
                           .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .rt .controls li span:before {
                             content: "";
                             font-family: "custom-ynw" !important;
@@ -17021,22 +17049,45 @@ header.consumer {
               /* stops bg color from leaking outside the border: */
               width: 40px;
               height: 40px;
-              color: #fff; }
+               color: #00aef2;
+              cursor: pointer;
+              -moz-transition: all 300ms;
+              -o-transition: all 300ms;
+              -webkit-transition: all 300ms;
+              transition: all 300ms; }
               .consumer-dash .card.c-checkins .outer .banner .ngxcarousel button.rightRs {
                 right: -25px;
                 top: 50%;
                 margin-top: -20px; }
+                  .consumer-dash .card.c-checkins .outer .banner .ngxcarousel button.rightRs:after {
+                  position: absolute;
+                  content: "\67";
+                  color: #fff;
+                  left: 13px;
+                  top: 8px;
+                  font-family: "custom-ynw" !important; }
               .consumer-dash .card.c-checkins .outer .banner .ngxcarousel button.leftRs {
                 left: -25px;
                 top: 50%;
                 margin-top: -20px; }
+                       .consumer-dash .card.c-checkins .outer .banner .ngxcarousel button.leftRs:after {
+                  position: absolute;
+                  content: "\61";
+                  color: #fff;
+                  left: 11px;
+                  top: 8px;
+                  font-family: "custom-ynw" !important; }
+              .consumer-dash .card.c-checkins .outer .banner .ngxcarousel button:hover {
+                background-color: #1873f2;
+                color: #1873f2; }
     .consumer-dash .card.favourites h2 {
       font-size: 1.2rem;
       padding: 20px;
       border-bottom: 1px solid #f2f2f2;
       margin-bottom: 0px; }
     .consumer-dash .card.favourites .outer .list {
-      border-bottom: 1px solid #dbdbdb; }
+       border: 1px solid #00aef2;
+      border-bottom: none;  }
       .consumer-dash .card.favourites .outer .list .header {
         padding: 0;
         position: relative;
@@ -17052,7 +17103,7 @@ header.consumer {
           transition: all 300ms; }
           .consumer-dash .card.favourites .outer .list .header .lt h3 {
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 0px;
             display: table;
             cursor: pointer;
@@ -17158,7 +17209,9 @@ header.consumer {
                     margin-top: -60px; } }
         @media only screen and (max-width: 575px) {
           .consumer-dash .card.favourites .outer .list .header {
-            flex-direction: column; } }
+            flex-direction: column; } 
+              .consumer-dash .card.favourites .outer .list .header .rt {
+              background: #fff; } }
       .consumer-dash .card.favourites .outer .list .detail {
         background: transparent;
         -webkit-border-bottom-right-radius: 5px;
@@ -17172,10 +17225,7 @@ header.consumer {
         z-index: 49; }
         .consumer-dash .card.favourites .outer .list .detail .location {
           display: flex;
-          border-bottom: 1px solid #f2f2f2; }
-          @media only screen and (max-width: 767px) {
-            .consumer-dash .card.favourites .outer .list .detail .location {
-              flex-direction: column; } }
+          border-bottom: 1px dashed #f2f2f2; }
           .consumer-dash .card.favourites .outer .list .detail .location .locationname {
             flex-grow: 1;
             font-weight: 600;
@@ -17199,7 +17249,7 @@ header.consumer {
                 align-items: center;
                 background: #00cc96;
                 height: auto;
-                padding: 8px;
+                padding: 4px 8px;
                 position: relative;
                 color: #fff;
                 font-weight: 600;
@@ -17222,8 +17272,8 @@ header.consumer {
                   z-index: 2;
                   width: 10px;
                   height: auto;
-                  border-top: 18px solid transparent;
-                  border-bottom: 18px solid transparent;
+                  border-top: 14px solid transparent;
+                  border-bottom: 13px solid transparent;
                   border-left: 7px solid #00cc96; }
                   @media only screen and (max-width: 767px) {
                     .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .o-now:after {
@@ -17235,18 +17285,18 @@ header.consumer {
                       bottom: 0;
                       left: 50%;
                       margin-left: -6px;
-                      top: 17px; } }
-                  @media (min-width: 768px) and (max-width: 991px) {
+                      top: 21px; } }
+                   @media (min-width: 768px) and (max-width: 991px) {
                     .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .o-now:after {
-                      -moz-transform: rotate(90deg);
-                      -o-transform: rotate(90deg);
-                      -ms-transform: rotate(90deg);
-                      -webkit-transform: rotate(90deg);
-                      transform: rotate(90deg);
+                      -moz-transform: rotate(0deg);
+                      -o-transform: rotate(0deg);
+                      -ms-transform: rotate(0deg);
+                      -webkit-transform: rotate(0deg);
+                      transform: rotate(0deg);
                       bottom: 0;
-                      left: 50%;
-                      margin-left: -6px;
-                      top: 17px; } }
+                      right: -10px;
+                      margin-left: 0px;
+                      top: 0px; } }
               .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .timing {
                 display: flex;
                 flex-direction: column; }
@@ -17326,13 +17376,23 @@ header.consumer {
               width: 200px;
               text-align: right;
               margin-top: 5px; }
-              @media only screen and (max-width: 767px) {
-                .consumer-dash .card.favourites .outer .list .detail .location .bt-r .bt10 {
-                  text-align: left; } }
-          .consumer-dash .card.favourites .outer .list .detail .location:last-child {
+              .consumer-dash .card.favourites .outer .list .detail .location:last-child {
             border-bottom: none; }
+ @media only screen and (max-width: 767px) {
+            .consumer-dash .card.favourites .outer .list .detail .location {
+              flex-direction: column; }
+              .consumer-dash .card.favourites .outer .list .detail .location .locationname {
+                text-align: center; }
+              .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme {
+                align-items: center; }
+              .consumer-dash .card.favourites .outer .list .detail .location .bt-r .chk-btn {
+                margin-left: auto;
+                margin-right: auto; }
+              .consumer-dash .card.favourites .outer .list .detail .location .bt-r .bt10 {
+                width: 100%;
+                text-align: center; } }
       .consumer-dash .card.favourites .outer .list:last-child {
-        border-bottom: none; }
+        border-bottom: 1px solid #00aef2; }
         .consumer-dash .card.favourites .outer .list:last-child .detail {
           border-bottom: 1px solid #f2f2f2; }
       .consumer-dash .card.favourites .outer .list.active .header .lt,
@@ -17341,6 +17401,9 @@ header.consumer {
         background: #f2f2f2; }
       .consumer-dash .card.favourites .outer .list.active .header .lt h3:after {
         content: "\66"; }
+        @media only screen and (max-width: 575px) {
+        .consumer-dash .card.favourites .outer .list.active .header .rt, .consumer-dash .card.favourites .outer .list:hover .header .rt {
+          background: #fff; } }
     .consumer-dash .card.history {
       margin-bottom: 0;
       /*&.one {
@@ -17379,7 +17442,7 @@ header.consumer {
                 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .cancelled,
                 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .checkedIn {
                   color: #4de2ff;
-                  padding: 2px 5px 2px 14px;
+                  padding: 2px 5px 2px 12px;
                   font-size: .75rem;
                   font-weight: 600;
                   position: relative;
@@ -17407,9 +17470,9 @@ header.consumer {
                   .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .arrived:before {
                     background: #79e688; }
                 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .done {
-                  color: #4bc742; }
+                  color: #0edcb8; }
                   .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .done:before {
-                    background: #4bc742; }
+                    background: #0edcb8; }
                 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .cancelled {
                   color: #f24949; }
                   .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .cancelled:before {
@@ -17446,7 +17509,8 @@ header.consumer {
                       -o-transition: all 300ms;
                       -webkit-transition: all 300ms;
                       transition: all 300ms;
-                      color: #222223; }
+                      color: #222223;
+                       display: flex; }
                       .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td5 .controls li span:before {
                         position: absolute;
                         content: "";
@@ -18630,6 +18694,32 @@ footer {
     opacity: 1; }
   100% {
     transform: rotate(0) scale(1) translateY(-5px);
+    opacity: 1; } }
+    @-webkit-keyframes scale-up {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    opacity: 1; }
+  90% {
+    -webkit-transform: scale(3);
+    transform: scale(3);
+    opacity: 0; }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1; } }
+@keyframes scale-up {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    opacity: 1; }
+  90% {
+    -webkit-transform: scale(3);
+    transform: scale(3);
+    opacity: 0; }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
     opacity: 1; } }
 .text-primary {
   color: #f24949 !important; }

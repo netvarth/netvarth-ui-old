@@ -402,6 +402,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           dataCreateProv: storage_Data
         };
         this.doSignup('provider', moreOptions);
+         this.router.navigate(['/']);
       },
       error => {
         // console.log(error);

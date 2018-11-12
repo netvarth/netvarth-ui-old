@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, Output, ElementRef } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
 import {NgForm} from '@angular/forms';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-sp-form',
@@ -18,6 +19,7 @@ export class SetPasswordFormComponent  implements OnInit {
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
+    @Inject(DOCUMENT) public document,
     public shared_services: SharedServices) {}
 
   ngOnInit() {
@@ -33,7 +35,11 @@ export class SetPasswordFormComponent  implements OnInit {
                           [Validators.required]) ],
 
                   });
-
+      setTimeout(() => {
+        if (this.document.getElementById('newpassfield')) {
+          this.document.getElementById('newpassfield').focus();
+        }
+      }, 500);
   }
 
   doOnPasswordSubmit(value) {

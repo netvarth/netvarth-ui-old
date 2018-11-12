@@ -3023,13 +3023,11 @@ header {
     }
 
     .card {
-        margin-bottom: 15px;
+        margin-bottom: 30px;
         @include border-radius(0);
         padding: 0;
 
         .mat-accordion {
-            border: 1px solid $linkblue;
-            @include border-radius(5px);
 
             .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused,
             .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused,
@@ -3103,7 +3101,7 @@ header {
 
                 &.mat-expanded {
                     .mat-expansion-panel-header {
-                        border-bottom: 1px solid $linkblue;
+                        border-bottom: 2px solid $cc-body;
                         background: transparent;
 
                         .mat-content {
@@ -3126,19 +3124,18 @@ header {
         }
 
         &.c-checkins {
-            border: 1px solid $linkblue !important;
-            @include border-radius(5px);
+            @include border-radius(0px);
 
             h2 {
                 font-size: 1.2rem;
                 padding: 20px;
-                border-bottom: 1px solid $linkblue;
+                border-bottom: 2px solid $cc-body;
                 margin-bottom: 0px;
                 color: $linkblue;
             }
 
             .outer {
-                padding: 20px 30px;
+                padding: 20px 15px;
 
                 .banner {
                     width: 100%;
@@ -3149,7 +3146,6 @@ header {
                         .ngxcarousel-inner {
                             .ngxcarousel-items {
                                 display: flex;
-                                justify-content: space-between;
 
                                 .item {
                                     display: flex;
@@ -3157,7 +3153,7 @@ header {
                                     font-size: .875rem;
                                     border: 1px solid $cc-ash;
                                     @include transition(all 400ms);
-                                    @include border-radius(5px);
+                                    @include border-radius(0px);
                                     @include box-shadow(0,1px,10px,rgba(0,0,0,.1));
                                     min-width: 32%;
                                     margin-right: 7px;
@@ -3166,7 +3162,6 @@ header {
 
                                     .header {
                                         display: flex;
-                                        align-items: center;
                                         position: relative;
                                         padding: 15px;
                                         background: transparent;
@@ -3187,7 +3182,7 @@ header {
                                                     font-size: 1rem;
                                                     font-weight: 600;
                                                     margin-bottom: 0px;
-                                                    display: table;
+                                                    display: block;
                                                     cursor: pointer;
                                                     color: $linkblue;
                                                 }
@@ -3209,7 +3204,56 @@ header {
                                                     
                                                     &:before {
                                                         left: 0;
-                                                        top: 0;
+                                                        top: -2px;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            .status-outer {
+                                                .cancel-label,
+                                                .started-label,
+                                                .done-label {
+                                                    padding: 1px 0px 2px 10px;
+                                                    font-size: .65rem;
+                                                    line-height: 1.1rem;
+                                                    font-weight: 600;
+                                                    letter-spacing: .8px;
+                                                    @include border-radius(20px);
+                                                    position: relative;
+                                                    color: $cc-red;
+                                                    margin-left: 4px;
+                                                    display: table;
+
+                                                    @include respond-to(ynw-400) {
+                                                        margin-left: 10px;
+                                                    }
+
+                                                    &:before {
+                                                        position: absolute;
+                                                        width: 6px;
+                                                        height: 6px;
+                                                        background: $cc-red;
+                                                        content: "";
+                                                        left: 0;
+                                                        top: 50%;
+                                                        margin-top: -4px;
+                                                        @include border-radius(20px);
+                                                    }
+                                                }
+
+                                                .started-label {
+                                                    color: $start;
+
+                                                    &:before {
+                                                        background: $start;
+                                                    }
+                                                }
+
+                                                .done-label {
+                                                    color: $done;
+
+                                                    &:before {
+                                                        background: $done;
                                                     }
                                                 }
                                             }
@@ -3224,6 +3268,10 @@ header {
 
                                                 .icon-favourite-filled {
                                                     margin-left: auto;
+	                                                -webkit-animation: scale-up 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	                                                animation: scale-up 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+                                                    transform:scale(1);
+                                                    -webkit-transform:scale(1);
 
                                                     &:before {
                                                         color: $cc-red;
@@ -3232,53 +3280,12 @@ header {
                                                         display: flex;
                                                         align-items: center;
                                                         justify-content: center;
-                                                        font-size: 1rem;
+                                                        font-size: 1.2rem;
                                                     }
                                                 }
-                                            }
-
-                                            .cancel-label,
-                                            .started-label,
-                                            .done-label {
-                                                color: $cc-red;
-                                                padding: 2px 0px 2px 12px;
-                                                font-size: .65rem;
-                                                line-height: 1.2rem;
-                                                font-weight: 600;
-                                                letter-spacing: .5px;
-                                                @include border-radius(20px);
-                                                position: relative;
-
-                                                @include respond-to(ynw-400) {
-                                                    margin-left: 10px;
-                                                }
-
-                                                &:before {
-                                                    position: absolute;
-                                                    width: 6px;
-                                                    height: 6px;
-                                                    background: $cc-red;
-                                                    content: "";
-                                                    left: 0;
-                                                    top: 50%;
-                                                    margin-top: -4px;
-                                                    @include border-radius(20px);
-                                                }
-                                            }
-
-                                            .started-label {
-                                                color: $start;
-
-                                                &:before {
-                                                    background: $start;
-                                                }
-                                            }
-
-                                            .done-label {
-                                                color: $done;
-
-                                                &:before {
-                                                    background: $done;
+                                                .icon-favourite {
+                                                    font-size: 1.2rem;
+                                                    cursor: pointer;
                                                 }
                                             }
                                         }
@@ -3311,7 +3318,7 @@ header {
                                                 margin: 0;
                                                 display: block;
                                                 border-bottom: 1px solid $cc-body;
-                                                font-size: .75rem;
+                                                font-size: .815rem;
 
                                                 .service,
                                                 .forwhom,
@@ -3351,6 +3358,42 @@ header {
                                                         position: absolute;
                                                         content: ":";
                                                         left: 0;
+                                                    }
+                                                }
+                                                
+                                                &.payment {
+                                                    display: flex;
+                                                    flex-direction: column;
+                                                    border-bottom: none;
+                                                    
+                                                    .paytext {
+                                                        display: block;
+                                                        margin-bottom: 5px;
+                                                        color: $hover-blue;
+                                                    }
+                                                    .buttonouter {
+                                                        display: flex;
+                                                        flex-direction: column;
+                                                        
+                                                        .amount {
+                                                            display: none;
+                                                        }
+                                                        
+                                                        .cs-btn {
+                                                            position: relative;
+                                                            width: 120px;
+                                                            height: auto;
+                                                            color: $white;
+                                                            @include border-radius(3px);
+                                                            padding: 3px 8px;
+                                                            text-transform: none;
+                                                            
+                                                            &:hover {
+                                                                background: $hover-blue;
+                                                                color: $white;
+                                                            }
+                                                        }
+                                                        
                                                     }
                                                 }
 
@@ -3410,8 +3453,6 @@ header {
 
                                                         @include respond-to(ynw-575) {
                                                             padding: 5px;
-                                                            padding-left: 25px;
-                                                            padding-right: 10px;
                                                         }
 
                                                         &:before {
@@ -3542,18 +3583,43 @@ header {
                             @include border-radius(60px);
                             width: 40px;
                             height: 40px;
-                            color: $white;
+                            color: $linkblue;
+                            cursor: pointer;
+                            @include transition(all 300ms);
 
                             &.rightRs {
                                 right: -25px;
                                 top: 50%;
                                 margin-top: -20px;
+                                
+                                &:after {
+                                    position: absolute;
+                                    content: "\67";
+                                    color: $white;
+                                    left: 13px;
+                                    top: 8px;
+                                    @include font-custom;
+                                }
                             }
 
                             &.leftRs {
                                 left: -25px;
                                 top: 50%;
                                 margin-top: -20px;
+                                
+                                &:after {
+                                    position: absolute;
+                                    content: "\61";
+                                    color: $white;
+                                    left: 11px;
+                                    top: 8px;
+                                    @include font-custom;
+                                }
+                            }
+                            
+                            &:hover {
+                                background-color: $hover-blue;
+                                color: $hover-blue;
                             }
                         }
                     }
@@ -3571,7 +3637,8 @@ header {
 
             .outer {
                 .list {
-                    border-bottom: 1px solid $cc-ash;
+                    border: 1px solid $linkblue;
+                    border-bottom: none;
 
                     .header {
                         padding: 0;
@@ -3587,7 +3654,7 @@ header {
 
                             h3 {
                                 font-size: 1rem;
-                                font-weight: 600;
+                                font-weight: 500;
                                 margin-bottom: 0px;
                                 display: table;
                                 cursor: pointer;
@@ -3730,6 +3797,10 @@ header {
 
                         @include respond-to(ynw-575) {
                             flex-direction: column;
+                            
+                            .rt {
+                                background: $white;
+                            }
                         }
                     }
 
@@ -3743,11 +3814,7 @@ header {
 
                         .location {
                             display: flex;
-                            border-bottom: 1px solid $cc-body;
-
-                            @include respond-to(ynw-767) {
-                                flex-direction: column;
-                            }
+                            border-bottom: 1px dashed $cc-body;
 
                             .locationname {
                                 flex-grow: 1;
@@ -3778,7 +3845,7 @@ header {
                                         align-items: center;
                                         background: $green;
                                         height: auto;
-                                        padding: 8px;
+                                        padding: 4px 8px;
                                         position: relative;
                                         color: $white;
                                         font-weight: 600;
@@ -3804,8 +3871,8 @@ header {
                                             z-index: 2;
                                             width: 10px;
                                             height: auto;
-                                            border-top: 18px solid transparent;
-                                            border-bottom: 18px solid transparent;
+                                            border-top: 14px solid transparent;
+                                            border-bottom: 13px solid transparent;
                                             border-left: 7px solid $green;
 
                                             @include respond-to(ynw-767) {
@@ -3813,15 +3880,15 @@ header {
                                                 bottom: 0;
                                                 left: 50%;
                                                 margin-left: -6px;
-                                                top: 17px;
+                                                top: 21px;
                                             }
 
                                             @include respond-to(ynw-768-991) {
-                                                @include rotate(90);
+                                                @include rotate(0);
                                                 bottom: 0;
-                                                left: 50%;
-                                                margin-left: -6px;
-                                                top: 17px;
+                                                right: -10px;
+                                                margin-left: 0px;
+                                                top: 0px;
                                             }
                                         }
                                     }
@@ -3933,21 +4000,41 @@ header {
                                     width: 200px;
                                     text-align: right;
                                     margin-top: 5px;
-
-                                    @include respond-to(ynw-767) {
-                                        text-align: left;
-                                    }
                                 }
                             }
 
                             &:last-child {
                                 border-bottom: none;
                             }
+                            
+                            @include respond-to(ynw-767) {
+                                flex-direction: column;
+                                
+                                .locationname {
+                                    text-align: center;
+                                }
+                                
+                                .bt-l {
+                                    .wt-tme {
+                                        align-items: center;
+                                    }
+                                }
+                                .bt-r {
+                                    .chk-btn {
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                    }
+                                    .bt10 {
+                                        width: 100%;
+                                        text-align: center;
+                                    }
+                                }
+                            }
                         }
                     }
 
                     &:last-child {
-                        border-bottom: none;
+                        border-bottom: 1px solid $linkblue;
 
                         .detail {
                             border-bottom: 1px solid $cc-body;
@@ -3971,6 +4058,16 @@ header {
                                     &:after {
                                         content: "\66";
                                     }
+                                }
+                            }
+                        }
+                    }
+                    
+                    @include respond-to(ynw-575) {
+                        &.active, &:hover {
+                            .header {
+                                .rt {
+                                    background: $white;
                                 }
                             }
                         }
@@ -4039,7 +4136,7 @@ header {
                                                     .cancelled,
                                                     .checkedIn {
                                                         color: $start;
-                                                        padding: 2px 5px 2px 14px;
+                                                        padding: 2px 5px 2px 12px;
                                                         font-size: .75rem;
                                                         font-weight: 600;
                                                         position: relative;
@@ -4123,6 +4220,7 @@ header {
                                                                 cursor: pointer;
                                                                 @include transition(all 300ms);
                                                                 color: $linkblack;
+                                                                display: flex;
 
                                                                 &:before {
                                                                     position: absolute;

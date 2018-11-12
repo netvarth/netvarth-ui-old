@@ -95,6 +95,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   public refinedExists = false;
   public showopnow = 0;
   public subdomainleft;
+    public scrolltop = 0;
+  public retscrolltop = 0;
   ratingholder;
   changedate_req = false;
   specialization_exists = false;
@@ -156,6 +158,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       });
     // this.sortfieldsels = 'distanceasc';
     this.nosearch_results = false;
+        this.retscrolltop = this.shared_functions.getitemfromLocalStorage('sctop') || 0;
+    this.shared_functions.setitemonLocalStorage('sctop', 0);
+    // setTimeout(() => {
+    //   console.log('i am here', scrolltop);
+    //   window.scrollTo(0, scrolltop);
+    //  }, 3200);
 
   }
   ngOnDestroy() {
@@ -181,6 +189,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
     // console.log('here', this.screenWidth, this.screenHeight);
   }
+  @HostListener('window:scroll', ['$event'])
+doScroll(event) {
+  this.scrolltop = window.pageYOffset;
+  // console.log('scroll', this.scrolltop);
+}
   checkRefineSpecial() {
     const ynwsrchbuttonClicked = this.shared_functions.getitemfromLocalStorage('ynw_srchb');
     // console.log('test', ynwsrchbuttonClicked);
@@ -264,102 +277,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     }
   }
-  /*getDomainList(bypassotherfunction?) {
-    const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-    let run_api = true;
-    if (bconfig) { // case if data is there in local storage
-      const bdate = bconfig.cdate;
-      const bdata = bconfig.bdata;
-      const saveddate = new Date(bdate);
-      const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
-      // console.log('diff hours search', diff['hours']);
-      if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
-        run_api = false;
-        this.domainlist_data = bdata;
-        if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
-          const domainobtain = this.getdomainofaSubdomain(this.subsector);
-          if (domainobtain !== undefined && domainobtain) {
-            this.kwautoname = domainobtain['subdom_dispname'] || '';
-            this.kwdomain = domainobtain['dom'] || '';
-          }
-          this.kwsubdomain = '';
-          this.kwtyp = 'subdom';
-        }
-        let fetchsubdom = true;
-        if (this.domain) {
-           if (this.kw) {
-              if (this.kwtyp === 'subdom') {
-                fetchsubdom = false;
-              }
-              if (this.kwtyp === 'special') {
-                if (this.kwsubdomain !== '') {
-                  fetchsubdom = false;
-                }
-                this.specialization_exists = true;
-              }
-           }
-           if (fetchsubdom) {
-            this.getlistofSubdomains(this.domain);
-           }
-        }
-        this.showsearchsection = true;
-        if (!bypassotherfunction) {
-          this.setfields();
-          // this.getRefinedSearch(true);
-          if (this.labelq === '') {
-            this.getRefinedSearch(true, 0, 'domainlist');
-          } else {
-            this.buildQuery(false);
-          }
-        }
-      }
-    }
-    if (run_api) { // case if data is not there in data
-      this.shared_service.bussinessDomains()
-      .subscribe (
-        res => {
-          this.domainlist_data = res;
-          const today = new Date();
-          const postdata = {
-            cdate: today,
-            bdata: this.domainlist_data
-          };
-          this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
-          if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
-            const domainobtain = this.getdomainofaSubdomain(this.subsector);
-            if (domainobtain !== undefined && domainobtain) {
-              this.kwautoname = domainobtain['subdom_dispname'] || '';
-              this.kwdomain = domainobtain['dom'] || '';
-            }
-            this.kwsubdomain = '';
-            this.kwtyp = 'subdom';
-          }
-          let fetchsubdom = true;
-          if (this.domain) {
-              if (this.kw) {
-                  if (this.kwtyp === 'subdom') {
-                    fetchsubdom = false;
-                  }
-                  if (this.kwtyp === 'special') {
-                    if (this.kwsubdomain !== '') {
-                      fetchsubdom = false;
-                    }
-                    this.specialization_exists = true;
-                  }
-              }
-              if (fetchsubdom) {
-                this.getlistofSubdomains(this.domain);
-              }
-            }
-            this.showsearchsection = true;
-            if (!bypassotherfunction) {
-              this.setfields();
-              this.getRefinedSearch(true, 0, 'domainlist');
-            }
-        }
-      );
-    }
-  }*/
   checklocationExistsinStorage() {
     const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
 
@@ -1059,6 +976,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
                 this.hideRefineifOneresultchk = false;
               }
+               setTimeout(() => {
+              // console.log('i am here', this.retscrolltop);
+               window.scrollTo(0, this.retscrolltop);
+               this.retscrolltop = 0;
+              }, 1000);
             });
         });
     }
@@ -1804,10 +1726,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   providerDetClicked(obj) {
-    if (obj) {
+    if (obj && obj.fields.unique_id !== undefined) {
       // const arr = obj.id.split('-');
       const providforDetails = obj.fields.unique_id;
       // check whether logged in as consumer
+      this.shared_functions.setitemonLocalStorage('sctop', this.scrolltop);
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {

@@ -1,7 +1,6 @@
 <app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'" (searchclick)="handlesearchClick($event)"
     [passedDomain]="domain" [passedkwdet]="kwdet" [passedRefine]="searchcommononlyrefine_arr"></app-header>
 <!-- <app-search *ngIf="showsearchsection" [showopennow]="0" [searchfields] = "searchfields" [subdomainpassedfromrefined]="subdomainleft" [domainpassedfromrefined]="domain"  (searchclick)="handlesearchClick($event)"></app-search> -->
-
 <section class="content">
     <div class="container">
         <div class="row">
@@ -49,7 +48,6 @@
                             </div>
                             <!-- <div  class="bx-block" *ngIf="subdomainlist_data && kwtyp != 'subdom' && domain != 'All'"> -->
                             <div class="bx-block" *ngIf="subdomainlist_data && !specialization_hide  && (subsector=='' || subsector == undefined)">
-
                                 <mat-accordion>
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
@@ -70,7 +68,6 @@
                                         </mat-form-field>
                                     </mat-expansion-panel>
                                 </mat-accordion>
-
                                 <!-- <div class="refine_subheader">Select Subdomain</div>
                               <mat-form-field>
                                   <div>
@@ -84,7 +81,7 @@
                               </mat-form-field> -->
                             </div>
 
-                            <ng-container *ngFor="let refine_data of searchrefine_arr; let refindx=index">
+                            <ng-contai  ner *ngFor="let refine_data of searchrefine_arr; let refindx=index">
                                 <div class="bx-block" *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean' && refine_data.dataType!='URL'">
                                     <ng-container *ngIf="refine_data.cloudSearchIndex!='specialization'">
                                         <mat-accordion>
@@ -235,32 +232,18 @@
                                             <mat-option value="ynw_verified_levelasc">
                                                 Jaldee Verified
                                             </mat-option>
-                                            <!-- <mat-option value="titleasc">
-                                            Title (Ascending)
-                                          </mat-option>
-                                          <mat-option value="titledesc">
-                                              Title (Descending)
-                                           </mat-option>
-                                           <mat-option value="sectorasc">
-                                              Sector (Ascending)
-                                            </mat-option>
-                                            <mat-option value="sectordesc">
-                                                Sector (Descending)
-                                             </mat-option>-->
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="srlst" *ngFor = "let search_result of search_data.hits.hit" [@search_data]="search_data.length"> -->
                     <div class="srlst" *ngFor="let search_result of search_data.hits.hit">
                         <div class="top-sect">
                             <div class="tp-l">
                                 <div class="tp1">
                                     <div class="pro-img" (click)="providerDetClicked(search_result)">
                                         <img *ngIf="search_result.fields.logo" [src]="search_result.fields.logo" alt="">
-                                        <!-- <img *ngIf="!search_result.fields.logo" src="./assets/images/img-null.svg" alt="">   -->
                                     </div>
                                     <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>
@@ -337,7 +320,6 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <!-- <div class="ynw-verified" *ngIf="search_result.fields.ynw_verified==1"></div> -->
                                     <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) "
                                         class="ynw-verified">
                                         <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
@@ -353,10 +335,6 @@
                                     <span class="address">{{search_result.fields.place1 | capitalizeFirst }}</span>
 
                                     <div class="clr">
-                                        <!-- <div class="otr-elements">
-                                            <span class="category">{{search_result.fields.sector}}</span>
-                                            <span class="cert">{{search_result.fields.qualification}}</span>
-                                        </div> -->
                                         <div class="otr-elements">
                                             <span class="category">{{search_result.fields.sub_sector_displayname}}</span>
                                             <span *ngIf="search_result.fields.specialization"><span class="categoryspec"

@@ -3,7 +3,9 @@ import { interval as observableInterval, Observable, Subscription, SubscriptionL
 import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DOCUMENT } from '@angular/common';
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { ConsumerDataStorageService } from '../../services/consumer-datastorage.service';
@@ -15,20 +17,21 @@ import { NotificationListBoxComponent } from '../../shared/component/notificatio
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
+import { ViewConsumerWaitlistCheckInBillComponent} from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-import { startWith, map, count } from 'rxjs/operators';
-import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
-import { appendFile } from 'fs';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
-import { DomSanitizer } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
+import {startWith} from 'rxjs/operators/startWith';
+import {map} from 'rxjs/operators/map';
+import {trigger, state, style, animate, transition, keyframes} from '@angular/animations';
+import { appendFile } from 'fs';
+import { count } from 'rxjs/operators';
 import { NgxCarousel } from 'ngx-carousel';
+
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -62,6 +65,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   manage_privacy_cap = Messages.MANAGE_PRIVACY;
   open_now_cap = Messages.OPEN_NOW_CAP;
   checkin_cap = Messages.CHECKIN_CAP;
+  checkindisablemsg = Messages.DASHBOARD_PREPAY_MSG;
   do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
   for_cap = Messages.FOR_CAP;
   different_date_cap = Messages.DIFFERENT_DATE_CAP;
