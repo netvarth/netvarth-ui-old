@@ -164,10 +164,10 @@ app-footer {
 .mat-form-field {
     @include font-medium;
     
-    .mat-input-wrapper {
-        .mat-input-flex {
-            .mat-input-infix {
-                .mat-input-element {
+    .mat-form-field-wrapper {
+        .mat-form-field-flex {
+            .mat-form-field-infix {
+                .mat-form-field-element {
                     background: $cc-inputbg;
                     border: 1px solid $cc-formborder;
                     font-size: 0.875rem;

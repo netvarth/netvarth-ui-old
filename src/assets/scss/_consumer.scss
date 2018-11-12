@@ -286,11 +286,11 @@ header {
                                     height: $input-h;
                                 }
 
-                                .mat-input-infix {
+                                .mat-form-field-infix {
                                     padding: 0;
                                     border-top: none;
 
-                                    .mat-input-element {
+                                    .mat-form-field-element {
                                         padding: 15px;
                                         vertical-align: top;
                                         height: 50px;
@@ -362,10 +362,10 @@ header {
                         .mat-form-field {
                             display: block;
 
-                            .mat-input-wrapper {
+                            .mat-form-field-wrapper {
                                 padding-bottom: 0;
 
-                                .mat-input-infix {
+                                .mat-form-field-infix {
                                     padding: 0;
                                     border-top: none;
 
@@ -442,11 +442,11 @@ header {
                             border: none;
                             width: 100%;
 
-                            .mat-input-infix {
+                            .mat-form-field-infix {
                                 padding: 0;
                                 border-top: none;
 
-                                .mat-input-element {
+                                .mat-form-field-element {
                                     height: 50px;
                                     padding: 15px;
                                     @include font-regular;
@@ -840,9 +840,9 @@ header {
                                         display: block;
                                         @include font-regular;
 
-                                        .mat-input-wrapper {
-                                            .mat-input-flex {
-                                                .mat-input-infix {
+                                        .mat-form-field-wrapper {
+                                            .mat-form-field-flex {
+                                                .mat-form-field-infix {
                                                     padding: 0px;
 
                                                     .mat-select {
@@ -852,7 +852,7 @@ header {
                                                 }
                                             }
 
-                                            .mat-input-underline {
+                                            .mat-form-field-underline {
                                                 display: none;
                                             }
                                         }
@@ -1050,8 +1050,8 @@ header {
                                 .mat-form-field-wrapper {
                                     padding: 0;
 
-                                    .mat-input-flex {
-                                        .mat-input-infix {
+                                    .mat-form-field-flex {
+                                        .mat-form-field-infix {
                                             padding: 0;
                                             border: 1px solid $cc-mediumgray;
 
@@ -1067,11 +1067,11 @@ header {
                                         }
                                     }
 
-                                    .mat-input-underline {
+                                    .mat-form-field-underline {
                                         display: none;
                                     }
 
-                                    .mat-input-subscript-wrapper {
+                                    .mat-form-field-subscript-wrapper {
                                         display: none;
                                     }
                                 }

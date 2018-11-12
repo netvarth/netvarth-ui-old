@@ -1068,7 +1068,7 @@
                         .mat-form-field {
                             width: 100%;
 
-                            .mat-input-wrapper {
+                            .mat-form-field-wrapper {
                                 padding: 0;
                                 margin: 0;
 
@@ -1076,7 +1076,7 @@
                                     color: $cc-red;
                                 }
 
-                                .mat-input-infix {
+                                .mat-form-field-infix {
                                     margin: 0;
                                     padding: 0;
                                     border: none;
@@ -1085,7 +1085,7 @@
                                         display: none;
                                     }
 
-                                    .mat-input-element {
+                                    .mat-form-field-element {
                                         padding: 10px;
                                         background: $cc-inputbg;
                                         height: 40px;
@@ -1126,7 +1126,7 @@
                                     }
                                 }
 
-                                .mat-input-underline {
+                                .mat-form-field-underline {
                                     display: none;
                                 }
                             }

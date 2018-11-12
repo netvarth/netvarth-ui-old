@@ -295,7 +295,7 @@
                         padding: 0;
                         overflow: visible;
                         
-                        .mat-input-element {
+                        .mat-form-field-element {
                             width: 50%;
 
                             @include respond-to(ynw-767) {

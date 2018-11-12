@@ -115,11 +115,11 @@
                             height: $input-h;
                         }
                         
-                        .mat-input-infix {
+                        .mat-form-field-infix {
                             padding: 0;
                             border-top: none;
                             
-                            .mat-input-element {
+                            .mat-form-field-element {
                                 padding: 15px;
                                 vertical-align: top;
                                 height: 90px;
@@ -183,10 +183,10 @@
                 .mat-form-field {
                     display: block;
                     
-                    .mat-input-wrapper {
+                    .mat-form-field-wrapper {
                         padding-bottom: 0;
                         
-                        .mat-input-infix {
+                        .mat-form-field-infix {
                             padding: 0;
                             border-top: none;
 
@@ -263,11 +263,11 @@
                     border: none;
                     width: 100%;
                     
-                    .mat-input-infix {
+                    .mat-form-field-infix {
                         padding: 0;
                         border-top: none;
                         
-                        .mat-input-element {
+                        .mat-form-field-element {
                             height: 90px;
                             padding: 15px;
                             @include font-regular;
