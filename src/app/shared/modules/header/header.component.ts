@@ -310,10 +310,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   doLogout() {
     // console.log('here');
-    this.router.navigate(['logout']);
+    // this.router.navigate(['logout']);
+    this.shared_functions.doLogout()
+    .then (
+      success =>  {
+        // console.log('logout succ');
+        this.router.navigate(['/home']);
+      },
+        error => {
+          // console.log('logout fail');
+         // this.router.navigate(['/']);
+        }
+    );
   }
   upgradeMembership() {
-    console.log(this.router.url);
+   // console.log(this.router.url);
     this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
     this.router.navigate(['provider', 'settings', 'license', 'upgrade']);
   }

@@ -123,7 +123,7 @@ export class AddMemberComponent implements OnInit {
     );
   }*/
   valuechange() {
-    console.log('value change', this.firstname, this.lastname, this.mobile, this.gender, this.dob);
+    // console.log('value change', this.firstname, this.lastname, this.mobile, this.gender, this.dob);
     const retobj = {
       'fname': this.firstname || '',
       'lname': this.lastname || '',

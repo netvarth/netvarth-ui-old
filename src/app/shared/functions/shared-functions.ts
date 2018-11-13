@@ -64,11 +64,13 @@ export class SharedFunctions {
         this.shared_service.ConsumerLogout()
         .subscribe(data => {
              // console.log(data);
+             // console.log('reached resolve');
              this.clearLocalstorage();
              resolve();
         },
         error => {
            // console.log(error);
+           // console.log('reached error');
            resolve();
         }
         );
