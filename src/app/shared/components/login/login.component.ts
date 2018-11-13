@@ -7,6 +7,8 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { post } from 'selenium-webdriver/http';
+import {Messages} from '../../constants/project-messages';
+
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,13 @@ import { post } from 'selenium-webdriver/http';
 })
 export class LoginComponent implements OnInit {
 
+  mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
+  mobile_no_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
+  password_cap = Messages.PASSWORD_CAP;
+  login_cap = Messages.LOGIN_CAP;
+  forgot_password_cap = Messages.FORGOT_PASS_CAP;
+  new_user_cap = Messages.NEW_USER_CAP;
+  sign_up_here_cap = Messages.SIGNUP_HERE_CAP;
 
   loginForm: FormGroup;
   api_error = null;

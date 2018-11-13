@@ -60,6 +60,25 @@ import { CouponviewComponent } from '../couponview/couponview.component';
 export class ProviderDetailComponent implements OnInit, OnDestroy {
 
 
+
+  go_back_cap = Messages.GO_BACK_CAP;
+  more_cap = Messages.MORE_CAP;
+  less_cap = Messages.LESS_CAP;
+  contact_details_cap = Messages.CONTACT_DETAILS_CAP;
+  add_to_fav_cap = Messages.ADD_TO_FAV;
+  rem_from_fav_cap = Messages.REM_FROM_FAV_CAP;
+  send_msg_cap = Messages.SEND_MSG_CAP;
+  you_have_cap = Messages.YOU_HAVE_CAP;
+  at_this_loc_cap = Messages.AT_THIS_LOC_CAP;
+  get_directions_cap = Messages.GET_DIRECTIONS_CAP;
+  workig_hrs_cap = Messages.WORKING_HRS_CAP;
+  services_offered = Messages.SERV_OFFERED_CAP;
+  coupons_offered = Messages.COUPONS_OFFERED_CAP;
+  open_now_cap = Messages.OPEN_NOW_CAP;
+  do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
+  for_cap = Messages.FOR_CAP;
+  different_date_cap = Messages.DIFFERENT_DATE_CAP
+
   s3url;
   retval;
   kwdet: any = [];

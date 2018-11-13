@@ -14,6 +14,17 @@ import {Messages} from '../../constants/project-messages';
 })
 export class SignUpComponent implements OnInit {
 
+  mobile_no_cap = Messages.MOBILE_NO_CAP;
+  mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
+  first_name_cap = Messages.F_NAME_CAP;
+  last_name_cap = Messages.L_NAME_CAP;
+  select_domain_cap = Messages.SELECT_DMN_CAP;
+  select_subdomain_cap = Messages.SELECT_SB_DMN_CAP;
+  lic_package_cap = Messages.LIC_PACKAGE_CAP;
+  i_agree_cap = Messages.I_AGREE_CAP;
+  terms_cond_cap = Messages.TERMS_CONDITIONS_CAP;
+  sign_up_cap = Messages.SIGN_UP_CAP;
+
   business_domains ;
   packages ;
   subDomainList = [];

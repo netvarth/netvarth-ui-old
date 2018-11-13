@@ -28,6 +28,10 @@ export class ForgotPasswordModel {
 export class ForgotPasswordComponent  {
 
 
+  forgot_password_cap = Messages.FORGOT_PASSWORD_CAP;
+  mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
+  ok_btn_cap = Messages.OK_BTN;
+  back_to_login_cap = Messages.BACK_TO_LOGIN_CAP;
 
   fp = new ForgotPasswordModel();
   fpForm: FormGroup;

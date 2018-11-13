@@ -12,16 +12,16 @@
               (keyup)="resetApiErrors()">
 
                 <div class="form-group">
-                  <label class="col-form-label" for="email">Email *</label>
+                  <label class="col-form-label" for="email">{{email_cap}}</label>
                   <input type="text" class="form-control" id="email" autofocus
                   formControlName="email" (keyup)="isVerified(spForm.controls['email'].value)" autocomplete="off">
-                  <div *ngIf="is_verified" class="verified">Verified</div>
+                  <div *ngIf="is_verified" class="verified">{{verified_cap}}</div>
                   <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'email')"
                   errorMsg="Please enter a valid email.">
                 </app-field-error-display>
 
                 </div>
-                <button  type="submit" mat-button  [disabled]="!spForm.valid || is_verified">Save</button>
+                <button  type="submit" mat-button  [disabled]="!spForm.valid || is_verified">{{save_btn_cap}}</button>
 
               </form>
 
@@ -40,12 +40,12 @@
             successMsg="{{api_success}}"></app-form-success-display>
           </div>
           <div class="right-menu">
-              <div class="right-menu-header">Related Links</div>
+              <div class="right-menu-header">{{related_links_cap}}</div>
               <ul class="related-link">
-                  <li (click)="shared_functions.redirectto('profile')" class="icon-profile">User Profile</li>
-                  <li (click)="shared_functions.redirectto('change-password')" class="icon-password">Change Password</li>
-                  <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">Change Mobile</li>
-                  <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">Family Members</li>
+                  <li (click)="shared_functions.redirectto('profile')" class="icon-profile">{{user_profile_cap}}</li>
+                  <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_password_cap}}</li>
+                  <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">{{change_mobile_cap}}</li>
+                  <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">{{family_members_cap}}</li>
               </ul>
           </div>
       </div>

@@ -6,7 +6,7 @@
             <div class="c-outer">
                 <div class="c-body prov-detail-outer">
                     <div class="bk-ctrl">
-                        <span class="backtoresults" (click)="backtoSearchResult()"><span class="strong">Go Back</span></span>
+                        <span class="backtoresults" (click)="backtoSearchResult()"><span class="strong">{{go_back_cap}}</span></span>
                     </div>
                     <div class="srlst details">
                         <div class="top-sect">
@@ -100,13 +100,13 @@
                                         <div class="pro-desc">
                                             <span *ngIf="bNameStart!=''" [innerHTML]="bNameStart | nl2br | capitalizeFirst"></span><span
                                                 *ngIf="bNameEnd!='' && showmoreDesc" [innerHTML]="bNameEnd | nl2br | capitalizeFirst"></span>
-                                            <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">More</span>
-                                            <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">Less</span>
+                                            <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">{{more_cap}}</span>
+                                            <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">{{less_cap}}</span>
                                         </div>
 
                                         <div class="emails-phones-outer" *ngIf="( emaillist.length > 0 || phonelist.length > 0)">
                                             <span class="email-phone-title" (click)="handleEmailPhonediv()">
-                                                <ng-container>Contact Details</ng-container> <i [class]="(showEmailPhonediv)? 'icon-disable' : 'icon-enable'"></i>
+                                                <ng-container>{{contact_details_cap}}</ng-container> <i [class]="(showEmailPhonediv)? 'icon-disable' : 'icon-enable'"></i>
                                             </span>
                                             <ng-container *ngIf="showEmailPhonediv">
                                                 <div class="phone-outer" *ngIf="phonelist.length > 0">
@@ -157,12 +157,10 @@
                                 <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
                                     <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
-                                    <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">Add
-                                            to Favourites</span></li>
-                                    <li><span class="icon-favourite-filled" *ngIf="isInFav" (click)="doRemoveFav()">Remove
-                                            from Favourites</span></li>
+                                    <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
+                                    <li><span class="icon-favourite-filled" *ngIf="isInFav" (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
                                     <!-- <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li> -->
-                                    <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">Send Message</span></li>
+                                    <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">{{send_msg_cap}}</span></li>
                                     <!-- <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li> -->
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
@@ -219,15 +217,13 @@
                             <div class="top-sect">
                                 <div class="tp-l">
                                     <div class="tp2">
-                                        <span class="ch-title" *ngIf="loc.checkins.length>0" (click)="showExistingCheckin(loc)">You
-                                            have <span class="count">{{loc.checkins.length}}
-                                                {{getTerminologyTerm('waitlist')}}</span> at this location</span>
+                                        <span class="ch-title" *ngIf="loc.checkins.length>0" (click)="showExistingCheckin(loc)">{{you_have_cap}} <span class="count">{{loc.checkins.length}}
+                                                {{getTerminologyTerm('waitlist')}}</span> {{at_this_loc_cap}}</span>
                                         <h3>{{loc.place | capitalizeFirst}}</h3>
-                                        <a class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">Get
-                                            Directions</a>
+                                        <a class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
                                         <div class="clr">
                                             <div class="schedule" *ngIf="loc.display_schedule.length > 0">
-                                                <span class="sub-title">Working Hours</span>
+                                                <span class="sub-title">{{workig_hrs_cap}}</span>
                                                 <ul>
                                                     <li *ngFor="let schedule of loc.display_schedule">
                                                         <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
@@ -236,14 +232,14 @@
                                             </div>
 
                                             <div class="services" *ngIf="loc.services.length > 0">
-                                                <span class="sub-title">Services Offered</span>
+                                                <span class="sub-title">{{services_offered}}</span>
                                                 <ul>
                                                     <li *ngFor="let serv of loc.services" (click)="showServiceDetail(serv, businessjson.businessName)">{{serv.name
                                                         | capitalizeFirst}}</li>
                                                 </ul>
                                             </div>
                                             <div class="services">
-                                                <span class="sub-title">Coupons Offered</span>
+                                                <span class="sub-title">{{coupons_offered}}</span>
                                                 <ul>
                                                     <li (click)="openCouponview()">Coupon1</li>
                                                     <li (click)="openCouponview()">Coupon2</li>
@@ -292,7 +288,7 @@
                               </div> -->
 
                                     <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
-                                        <div class="o-now" *ngIf="loc.opennow">Open Now</div>
+                                        <div class="o-now" *ngIf="loc.opennow">{{open_now_cap}}</div>
                                         <div class="timing" *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                                             <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
                                             <span class="time-data">{{loc['estimatedtime_det']['time']}} <span class="icon-question"
@@ -312,9 +308,7 @@
                                         *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(loc.services.length)">{{getTerminologyTerm('waitlist')}}</span>
                                     <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(loc.services.length)">{{getTerminologyTerm('waitlist')}}</span>
                                     <span class="cs-btn bt10" *ngIf="showcheckInButton(loc.services.length) && loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
-                                        (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">Do
-                                        you want to <span>{{getTerminologyTerm('waitlist')}}</span> for <span>different
-                                            Date?</span></span>
+                                        (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}} <span>{{getTerminologyTerm('waitlist')}}</span> {{for_cap}} <span>{{different_date_cap}}</span></span>
                                 </div>
                             </div>
                         </div>

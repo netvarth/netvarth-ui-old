@@ -1,4 +1,4 @@
-    <h1 class="mat-dialog-title">Your {{checkinLabel}} at {{this.data.locdet.place | capitalizeFirst}}
+    <h1 class="mat-dialog-title">{{your_cap}} {{checkinLabel}} {{at_cap}} {{this.data.locdet.place | capitalizeFirst}}
     <button #queue [mat-dialog-close]="changeOccured" class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -12,9 +12,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Service</th>
-                        <th>For</th>
-                        <th>Scheduled on</th>
+                        <th>{{service_cap}}</th>
+                        <th>{{for_cap}}</th>
+                        <th>{{scheduled_on_cap}}</th>
                         <th></th>      
                     </tr>
                 </thead>
@@ -22,7 +22,7 @@
                     <tr *ngFor="let chkin of loc">
                         <td class="chk-service" data-title="Service">{{chkin.service.name | capitalizeFirst}}</td>
                         <td class="chk-service" data-title="For">{{getWaitlistingFor(chkin.waitlistingFor) | capitalizeFirst}}</td>
-                        <td class="chk-service" data-title="Time"><div class="schedulediv"><span class="schedule">{{getDateDisplay(chkin.date)}}</span><ng-container *ngIf="chkin.serviceTime != undefined">, <span class="est-time">{{chkin.serviceTime}}</span></ng-container><ng-container *ngIf="chkin.serviceTime == undefined && chkin.appxWaitingTime != undefined">, {{estimateCaption}} <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span></ng-container>
+                        <td class="chk-service" data-title="Time"><div class="schedulediv"><span class="schedule">{{getDateDisplay(chkin.date)}}</span><ng-container *ngIf="chkin.serviceTime != undefined">, <span class="est-time">{{chkin.serviceTime}}</span></ng-container><ng-container *ngIf="chkin.serviceTime == undefined && chkin.appxWaitingTime != undefined">, {{estimateCaption}} <span class="est-time">{{chkin.appxWaitingTime}} {{mins_cap}}</span></ng-container>
                     </div></td>
                         <td class="chk-cancel" (click)="confirmCancelChecin(chkin)" [matTooltip] = "'Cancel ' + checkinLabel "><span class="icon-delete"></span></td>
                     </tr>
@@ -31,12 +31,12 @@
         </div>
     </div> 
     <div class="c-checkin-blank" *ngIf="loc.length==0">
-        No {{checkinLabel}} exists at {{this.data.locdet.place | capitalizeFirst}}
+        {{no_cap}} {{checkinLabel}} {{exists_at_cap}} {{this.data.locdet.place | capitalizeFirst}}
     </div>
     </mat-dialog-content>
 
     <mat-dialog-actions>
-    <button  type="button" [mat-dialog-close]="changeOccured" class="cs-btn bt2">Close</button>
+    <button  type="button" [mat-dialog-close]="changeOccured" class="cs-btn bt2">{{close_btn_cap}}</button>
     </mat-dialog-actions>
 
     <app-field-error-display [displayError]="true" *ngIf="api_error"

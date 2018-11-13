@@ -12,7 +12,7 @@
                         <span></span>
                         <span></span>
                     </span>
-                    <span class="ttle" *ngIf="showrefinedsection">Refine Search</span>
+                    <span class="ttle" *ngIf="showrefinedsection">{{refine_search_cap}}</span>
                 </div>
             </div>
 
@@ -29,14 +29,14 @@
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                             <mat-panel-title>
-                                                <span class="refine-head">Select Domain </span>
+                                                <span class="refine-head">{{select_domain_cap}} </span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <mat-form-field>
                                             <div>
                                                 <mat-select placeholder="" [(ngModel)]="refined_domain" #refineddomain
                                                     (change)="handlerefineddomainchange(refineddomain.value)">
-                                                    <mat-option value="">-- Select --</mat-option>
+                                                    <mat-option value="">{{select_cap}}</mat-option>
                                                     <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain">
                                                         {{ domain.displayName }}
                                                     </mat-option>
@@ -52,14 +52,14 @@
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                             <mat-panel-title>
-                                                <span class="refine-head">Select Subdomain</span>
+                                                <span class="refine-head">{{select_subdomain_cap}}</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <mat-form-field>
                                             <div>
                                                 <mat-select placeholder="" [(ngModel)]="refined_subdomain"
                                                     #refinedsubdomain (change)="handlerefinedsubdomainchange(refinedsubdomain.value)">
-                                                    <mat-option value="">-- Select --</mat-option>
+                                                    <mat-option value="">{{select_cap}}</mat-option>
                                                     <mat-option *ngFor="let sdomain of subdomainlist_data" [value]="sdomain.subDomain">
                                                         {{ sdomain.displayName }}
                                                     </mat-option>
@@ -110,8 +110,7 @@
                                                                         class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefined || !refine_data.showhiddendet)">
-                                                                    <div class="refinemore" (click)="showmore(refindx)">show
-                                                                        more</div>
+                                                                    <div class="refinemore" (click)="showmore(refindx)">{{show_more_cap}}</div>
                                                                 </ng-container>
 
                                                                 <ng-container *ngIf="refine_data.showhiddendet != undefined && refine_data.showhiddendet">
@@ -120,8 +119,7 @@
                                                                             class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                     </ng-container>
                                                                     <ng-container *ngIf="i==(refine_data.enumeratedConstants.length-1)">
-                                                                        <div class="refinemore showless" (click)="hidemore(refindx)">show
-                                                                            less</div>
+                                                                        <div class="refinemore showless" (click)="hidemore(refindx)">{{show_less_cap}}</div>
                                                                     </ng-container>
                                                                 </ng-container>
                                                             </div>
@@ -162,8 +160,7 @@
                                                                         class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="i==showmore_defaultcnt && (refine_data.showhiddendet == undefined || !refine_data.showhiddendet)">
-                                                                    <div class="refinemore" (click)="showmore(refindx)">show
-                                                                        more</div>
+                                                                    <div class="refinemore" (click)="showmore(refindx)">{{show_more_cap}}</div>
                                                                 </ng-container>
 
                                                                 <ng-container *ngIf="refine_data.showhiddendet != undefined && refine_data.showhiddendet">
@@ -172,8 +169,7 @@
                                                                             class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
                                                                     </ng-container>
                                                                     <ng-container *ngIf="i==(refine_data.enumeratedConstants.length-1)">
-                                                                        <div class="refinemore showless" (click)="hidemore(refindx)">show
-                                                                            less</div>
+                                                                        <div class="refinemore showless" (click)="hidemore(refindx)">{{show_less_cap}}</div>
                                                                     </ng-container>
                                                                 </ng-container>
                                                             </div>
@@ -191,7 +187,7 @@
                                         <mat-expansion-panel [expanded]="true">
                                             <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                                 <mat-panel-title>
-                                                    <span class="refine-head">Other Filters</span>
+                                                    <span class="refine-head">{{other_filters_cap}}</span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
 
@@ -213,7 +209,7 @@
                         <div class="ct-l">
                             <div class="rslts"> {{ (search_data.hits.found>10) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong>
                                 {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ?
-                                'result': ''}} found
+                                'result': ''}} {{found_cap}}
                                 <!-- for <span>‘Dentists’</span> -->
                             </div>
                         </div>
@@ -224,13 +220,13 @@
                                         <mat-select name="sortfield" panelClass="search_domaindropdown_class"
                                             #sortfieldsel (change)="selected_sortfield(sortfieldsel.value)" [(ngModel)]="sortfieldsels">
                                             <mat-option value="">
-                                                None
+                                                {{none_cap}}
                                             </mat-option>
                                             <mat-option value="distanceasc">
-                                                Distance
+                                                {{distance_cap}}
                                             </mat-option>
                                             <mat-option value="ynw_verified_levelasc">
-                                                Jaldee Verified
+                                                {{jaldee_verified}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -322,10 +318,9 @@
                                 <div class="tp2">
                                     <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) "
                                         class="ynw-verified">
-                                        <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
-                                        <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic
-                                            Plus</span>
-                                        <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
+                                        <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">{{basic_cap}}</span>
+                                        <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">{{basic_plus_cap}}</span>
+                                        <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">{{premium_cap}}</span>
 
                                     </div>
                                     <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"
@@ -373,10 +368,9 @@
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</mat-chip>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==3">Premium</mat-chip>
                                     </mat-chip-list> -->
-                                    <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">Basic</span>
-                                    <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic
-                                        Plus</span>
-                                    <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
+                                    <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">{{basic_cap}}</span>
+                                    <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">{{basic_plus_cap}}</span>
+                                    <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">{{premium_cap}}</span>
 
                                 </div>
                                 <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
@@ -397,15 +391,14 @@
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
                                 <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1"
-                                    [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">Send Message</span>
-                                <span class="claim-business" (click)="claimBusiness(search_result)" *ngIf="search_result.fields.claimable==1">Claim
-                                    my Business</span>
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">{{send_message_cap}}</span>
+                                <span class="claim-business" (click)="claimBusiness(search_result)" *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}}</span>
                             </div>
                         </div>
                         <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']">
                             <div class="bt-l">
                                 <div class="wt-tme" *ngIf="waitlisttime_arr.length>0 && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1 && (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==1)">
-                                    <div class="o-now" *ngIf="search_result.fields['opennow']==true">Open Now</div>
+                                    <div class="o-now" *ngIf="search_result.fields['opennow']==true">{{open_now_cap}}</div>
                                     <div class="timing" *ngIf="(search_result.fields.hasOwnProperty('show_waiting_time') && search_result.fields.show_waiting_time==1)">
                                         <span class="est-time" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
                                         <span class="time-data" *ngIf="search_result.fields['estimatedtime_det']">{{search_result.fields['estimatedtime_det']['time']}}
@@ -414,8 +407,8 @@
                                 </div>
 
                                 <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0 || (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==0) || (!search_result.fields.hasOwnProperty('online_checkins'))">
-                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">Sorry!!
-                                        {{getTerminologyTerm('waitlist', search_result.fields)}} not allowed</ng-container>
+                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">{{sorry_cap}}
+                                        {{getTerminologyTerm('waitlist', search_result.fields)}} {{not_allowed_cap}}</ng-container>
                                     <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">{{search_result.fields['estimatedtime_det']['message']}}</ng-container>
                                 </div>
                             </div>
@@ -425,9 +418,8 @@
                                 <span class="cs-btn chk-btn disabled" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
                                 <!-- <span class="future-text" (click)="checkinClicked(search_result)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==1">Do you want to Check in for this date ?</span>   -->
-                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">Do
-                                    you want to <span>{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
-                                    for <span>different Date?</span></span>
+                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)" *ngIf="search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">{{do_you_want_to_cap}} <span>{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
+                                    {{for_cap}} <span>{{different_date}}</span></span>
                             </div>
                         </div>
                     </div>
@@ -436,7 +428,7 @@
                             [curpage]="startpageval"></app-pager>
                     </div>
                 </div>
-                <div *ngIf="nosearch_results" class="no-search-result">No YNW results found</div>
+                <div *ngIf="nosearch_results" class="no-search-result">{{no_ynw_results_found}}</div>
             </div>
         </div>
     </div>

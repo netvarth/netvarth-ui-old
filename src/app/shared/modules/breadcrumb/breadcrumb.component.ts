@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { LearnmoreComponent } from '../learnmore/learnmore.component';
+import { Messages } from '../../constants/project-messages';
 
 
 @Component({
@@ -17,6 +18,8 @@ import { LearnmoreComponent } from '../learnmore/learnmore.component';
 
 
 export class BreadCrumbComponent implements OnInit {
+
+    lear_more_cap = Messages.LEARN_MORE_CAP;
 
     @Input () breadcrumbs;
     @Input () moreOptions: any = [];

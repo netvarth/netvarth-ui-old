@@ -5,6 +5,8 @@ import {NgForm} from '@angular/forms';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
 import { DOCUMENT } from '@angular/common';
+import { Messages } from '../../../shared/constants/project-messages';
+
 
 @Component({
   selector: 'app-sp-form',
@@ -12,6 +14,12 @@ import { DOCUMENT } from '@angular/common';
 })
 export class SetPasswordFormComponent  implements OnInit {
 
+
+  new_password_cap = Messages.NEW_PASSWORD_CAP;
+  password_valid_cap = Messages.PASSWORD_VALID_CAP;
+  re_enter_password_cap =Messages.RE_ENTER_PASSWORD_CAP;
+  submit_cap = Messages.SUBMIT_CAP;
+  
   spForm: FormGroup;
 
   @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();

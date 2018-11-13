@@ -25,6 +25,7 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-search-detail',
@@ -51,6 +52,30 @@ import { CouponsComponent } from '../coupons/coupons.component';
 
 
 export class SearchDetailComponent implements OnInit, OnDestroy {
+
+  refine_search_cap = Messages.REFINE_SEARCH_CAP;
+  select_domain_cap = Messages.SELECT_DOMAIN_CAP;
+  select_subdomain_cap = Messages.SELECT_SUBDOMAIN_CAP;
+  select_cap = Messages.SELECT_CAP;
+  show_more_cap = Messages.SHOW_MORE_CAP;
+  show_less_cap = Messages.SHOW_LESS_CAP;
+  other_filters_cap = Messages.OTHER_FILTERS_CAP;
+  found_cap = Messages.FOUND_CAP;
+  none_cap = Messages.NONE_CAP;
+  distance_cap = Messages.DISTANCE_CAP;
+  jaldee_verified = Messages.JALDEE_VERIFIED_CAP;
+  basic_cap = Messages.BASIC_CAP;
+  basic_plus_cap = Messages.BASIC_PLUS_CAP;
+  premium_cap = Messages.PREMIUM_CAP;
+  send_message_cap = Messages.SEND_MSG_CAP;
+  claim_my_business_cap =Messages.CLAIM_BUSINESS_CAP;
+  open_now_cap = Messages.OPEN_NOW_CAP;
+  sorry_cap = Messages.SORRY_CAP;
+  not_allowed_cap = Messages.NOT_ALLOWED_CAP;
+  do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
+  for_cap = Messages.FOR_CAP;
+  different_date = Messages.DIFFERENT_DATE_CAP;
+  no_ynw_results_found = Messages.NO_YNW_RES_FOUND_CAP;
 
   public domainlist_data;
   public domain;
@@ -95,7 +120,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   public refinedExists = false;
   public showopnow = 0;
   public subdomainleft;
-    public scrolltop = 0;
+  public scrolltop = 0;
   public retscrolltop = 0;
   ratingholder;
   changedate_req = false;

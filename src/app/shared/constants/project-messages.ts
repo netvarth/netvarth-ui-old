@@ -227,6 +227,7 @@ export const Messages = {
   'DELETE_BTN' : 'Delete',
   'SEND_BTN' : 'Send',
   'OK_BTN' : 'Ok',
+  'CLOSE_BTN':'Close',
 
 
 
@@ -234,9 +235,12 @@ export const Messages = {
 
   // Breadcrumbs
   'BREADCRUMBS_DASHBOARD' : 'Dashboard',
+  'LEARN_MORE_CAP' : 'Learn More',
+
   // Reveal Phone No
   'MANAGE_PRIVACY': 'Manage Privacy',
   'REVEAL_PHNO': 'Reveal Phone number',
+
   // Family Member
   'FAMILY_MEMBERS': 'Family Members',
   'MEMBER_CAPTION': 'Member',
@@ -347,7 +351,104 @@ export const Messages = {
   'PROVIDER_DETAILS_CAP' : 'Provider Details',
 
   //App-shared-components-existing checkin
+  'YOUR_CAP' : 'Your',
+  'AT_CAP' : 'at',
+  'SCHEDULED_ON_CAP' : 'Scheduled on',
+  'MIN_CAP' : 'Min(s)',
+  'NO_CAP' : 'No',
+  'EXISTS_AT' : 'exists at',
+
+  //App-shared-components-Forgot Password
+  'FORGOT_PASSWORD_CAP' : 'Forgot Password',
+  'BACK_TO_LOGIN_CAP' : 'Back To Login',
   
+  // App-shared-components-login
+  'MOB_NO_PREFIX_CAP' : '+91',
+  'PASSWORD_CAP' : 'Password',
+  'LOGIN_CAP' : 'Login',
+  'FORGOT_PASS_CAP' : 'Forgot Password?',
+  'NEW_USER_CAP' : 'New User?',
+  'SIGNUP_HERE_CAP' : 'Signup here',
+
+  //App-shared-components-provider-details
+  'GO_BACK_CAP' : 'Go Back',
+  'MORE_CAP' : 'More',
+  'LESS_CAP' : 'Less',
+  'CONTACT_DETAILS_CAP' : 'Contact Details',
+  'REM_FROM_FAV_CAP' : 'Remove From Favourites',
+  'YOU_HAVE_CAP' : 'You have',
+  'AT_THIS_LOC_CAP' : 'at this location',
+  'GET_DIRECTIONS_CAP' : 'Get Directions',
+  'WORKING_HRS_CAP' : 'Working Hours',
+  'SERV_OFFERED_CAP' : 'Services Offered',
+  'COUPONS_OFFERED_CAP' : 'Coupons Offered',
+  
+  //App-shared-components-return-payment
+  'PAY_DONE_SUCCESS_CAP' : 'Your payment has done successfully!',
+  'GO_BACK_HOME_CAP' : 'Go Back to home',
+  'PAY_FAILED_CAP' : 'Your payment has failed!',
+
+  //App-shared-components-search-details
+  'REFINE_SEARCH_CAP' : 'Refine Search',
+  'SELECT_DOMAIN_CAP' : 'Select Domain',
+  'SELECT_SUBDOMAIN_CAP' : 'Select Subdomain',
+  'SELECT_CAP' : '-- Select --',
+  'SHOW_MORE_CAP' : 'show more',
+  'SHOW_LESS_CAP' : 'show less',
+  'OTHER_FILTERS_CAP' : 'Other Filters',
+  'FOUND_CAP' : 'found',
+  'NONE_CAP' : 'None',
+  'DISTANCE_CAP' : 'Distance',
+  'JALDEE_VERIFIED_CAP' : 'Jaldee Verified',
+  'BASIC_CAP' : 'Basic',
+  'BASIC_PLUS_CAP' : 'Basic Plus',
+  'PREMIUM_CAP' : 'Premium',
+  'CLAIM_BUSINESS_CAP' : 'Claim my Business',
+  'SORRY_CAP' : 'Sorry!!',
+  'NOT_ALLOWED_CAP' : 'not allowed',
+  'NO_YNW_RES_FOUND_CAP' : 'No YNW results found',
+
+  //App-shared-components-search-service-detail
+  
+  'DURATION_CAP' : 'Duration:',
+  'PRICE_CAP' : 'Price:',
+  'PREPAYMENT_AMOUNT_CAP' : 'Prepayment Amount:',
+  'DESCRIPTION_CAP' : 'Description:',
+
+  //App-shared-components-set-password-form
+  'NEW_PASSWORD_CAP' : 'New Password *',
+  'PASSWORD_VALID_CAP' : 'Atleast one uppercase, one number and 8 characters',
+  'RE_ENTER_PASSWORD_CAP' : 'Re-enter Password *',
+  'SUBMIT_CAP' : 'Submit',
+
+  //App-shared-components-signup
+  'MOBILE_NO_CAP' : 'Mobile Number *',
+  'F_NAME_CAP' : 'First Name *',
+  'L_NAME_CAP' : 'Last Name *',
+  'SELECT_DMN_CAP' : 'Select Domain *',
+  'SELECT_SB_DMN_CAP' : 'Select Subdomain *',
+  'LIC_PACKAGE_CAP' : 'License Package *',
+  'I_AGREE_CAP' : 'I Agree',
+  'TERMS_CONDITIONS_CAP' :'Terms & Conditions',
+  'SIGN_UP_CAP' : 'Sign Up',
+
+  //App-shared-modules-add-member
+  'FILL_FOLL_DETAILS_CAP' : 'Please fill in the following details',
+  'MALE_CAP' : 'Male',
+  'FEMALE_CAP' : 'Female',
+
+  //App-shared-modules-change email
+  'EMAIL_CAP' : 'Email *',
+  'VERIFIED_CAP' : 'Verified',
+
+  //App-shared-modules-change-mobile
+  'MOBILE_CAP' : 'Mobile *',
+  'ADD_CHANGE_EMAIL_CAP' : 'Add or Change Email',
+
+  
+
+
+
 
 
 };
