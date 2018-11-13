@@ -44,6 +44,6 @@
       *ngIf="pagination.totalCnt != 0" [curpage]="pagination.startpageval"></app-pager>
     </div>
 </div>
-<div *ngIf="loadcomplete.history && history && history.length == 0">
+<div *ngIf="loadcomplete.history && history && history.length == 0" class="noprevhist">
 <p>No previous Check-Ins available</p>
 </div>

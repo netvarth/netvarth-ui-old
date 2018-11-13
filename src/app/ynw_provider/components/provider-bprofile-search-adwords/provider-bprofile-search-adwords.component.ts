@@ -21,6 +21,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     @Input() reloadadwordapi;
 
     adword_list: any = [] ;
+        showadword_list: any = [] ;
     adwordsmaxcount: any = 0;
     remaining_adword = 0;
     tooltipcls = projectConstants.TOOLTIP_CLS;
@@ -28,6 +29,8 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     addwordTooltip = '';
     adwords_mincnt = 5;
     adwords_cntr = 0;
+    startpageval = 1;
+    perpage = 5;
     adwordshowmore = false;
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
     remadwdialogRef;
@@ -68,6 +71,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         .subscribe(data => {
             this.adword_list = data;
             this.remaining_adword = this.adwordsmaxcount - this.adword_list.length;
+            this.showAdwordBuilder(0);
             this.query_executed = true;
         });
     }
@@ -128,6 +132,33 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
           this.adwordshowmore = false;
         } else {
           this.adwordshowmore = true;
+        }
+      }
+       private pass_totalpages() {
+        return this.adword_list.length;
+      }
+      private pass_pagesize() {
+        return this.perpage;
+      }
+      private handle_pageclick(pg) {
+        this.startpageval = pg;
+        let passstartval = 0;
+        if (this.startpageval) {
+          passstartval = (this.startpageval - 1) * this.perpage;
+        } else {
+          passstartval = 0;
+        }
+        // console.log('pg', passstartval);
+        this.showAdwordBuilder(passstartval);
+        // console.log('flist', this.adword_list);
+        // console.log('clist', this.showadword_list);
+        // this.do_search();
+      }
+      showAdwordBuilder(startval) {
+        this.showadword_list = [];
+        const rLimit = ((startval + this.perpage) > this.adword_list.length) ? this.adword_list.length : (startval + this.perpage);
+        for (let i = startval; i < rLimit; i++) {
+          this.showadword_list.push(this.adword_list[i]);
         }
       }
 }

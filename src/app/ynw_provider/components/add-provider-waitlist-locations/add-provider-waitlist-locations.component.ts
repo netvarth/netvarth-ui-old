@@ -118,7 +118,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
         loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
         loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-        locmapurl: [''],
+        locmapurl: [{value: '', disabled: true}],
        /* locparkingtype: [''],*/
        /* locpincode: [''] ,
         loct24hour: ['']*/
@@ -135,7 +135,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
           loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
           loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-          locmapurl: ['']/*,
+          locmapurl: [{value: '', disabled: true}]/*,
           locpincode: ['']*/
         });
       }

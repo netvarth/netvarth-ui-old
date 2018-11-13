@@ -37,8 +37,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"> -->
     <!-- <input type="text" [(ngModel)] = "dob" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number"> -->
     <div class="pickerouter">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker (selectedChanged)="dateChanged($event)"></mat-datepicker> 
-        <input class="form-control" type="text" matInput [matDatepicker]="picker" [max]="tday" readonly [(ngModel)] = "dob">
+         <mat-datepicker #picker (selectedChanged)="dateChanged($event)"  [disabled]="false"></mat-datepicker> 
+        <input class="form-control nofocus" type="text" matInput [matDatepicker]="picker" [max]="tday" disabled [(ngModel)] = "dob" tabindex="-1">
       </div>
     <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
     errorMsg="Please enter the mobile number.">

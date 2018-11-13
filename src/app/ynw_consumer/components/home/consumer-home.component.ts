@@ -405,96 +405,96 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
-        // if (provids[i] !== undefined) {
-        post_provids_locid.push(provids_locid[i].locid);
-        // }
+          // if (provids[i] !== undefined) {
+            post_provids_locid.push(provids_locid[i].locid);
+         // }
       }
 
-      this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
-        .subscribe(data => {
-          // console.log('waitingtime api', data);
-          let waitlisttime_arr: any = data;
-          const locationjson: any = [];
+    this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
+      .subscribe (data => {
+        // console.log('waitingtime api', data);
+        let waitlisttime_arr: any = data;
+        const locationjson: any = [];
 
-          if (waitlisttime_arr === '"Account doesn\'t exist"') {
-            waitlisttime_arr = [];
-          }
-          const today = new Date();
-          const dd = today.getDate();
-          const mm = today.getMonth() + 1; // January is 0!
-          const yyyy = today.getFullYear();
-          let cday = '';
-          if (dd < 10) {
+        if (waitlisttime_arr === '"Account doesn\'t exist"') {
+          waitlisttime_arr = [];
+        }
+        const today = new Date();
+        const dd = today.getDate();
+        const mm = today.getMonth() + 1; // January is 0!
+        const yyyy = today.getFullYear();
+        let cday = '';
+        if (dd < 10) {
             cday = '0' + dd;
-          } else {
-            cday = '' + dd;
-          }
-          let cmon;
-          if (mm < 10) {
-            cmon = '0' + mm;
-          } else {
-            cmon = '' + mm;
-          }
-          const dtoday = yyyy + '-' + cmon + '-' + cday;
-          const ctoday = cday + '/' + cmon + '/' + yyyy;
-          let locindx;
-          const check_dtoday = new Date(dtoday);
-          let cdate = new Date();
-          for (let i = 0; i < waitlisttime_arr.length; i++) {
-            locindx = provids_locid[i].locindx;
-            // console.log('locindx', locindx);
-            this.fav_providers[index]['locations'][locindx]['waitingtime_res'] = waitlisttime_arr[i];
-            this.fav_providers[index]['locations'][locindx]['estimatedtime_det'] = [];
+        } else {
+          cday = '' + dd;
+        }
+        let cmon;
+        if (mm < 10) {
+          cmon = '0' + mm;
+        } else {
+          cmon = '' + mm;
+        }
+        const dtoday = yyyy + '-' + cmon + '-' + cday;
+        const ctoday = cday + '/' + cmon + '/' + yyyy;
+        let locindx;
+        const check_dtoday = new Date(dtoday);
+        let cdate = new Date();
+        for (let i = 0; i < waitlisttime_arr.length; i++) {
+          locindx = provids_locid[i].locindx;
+          // console.log('locindx', locindx);
+          this.fav_providers[index]['locations'][locindx]['waitingtime_res'] = waitlisttime_arr[i];
+          this.fav_providers[index]['locations'][locindx]['estimatedtime_det'] = [];
 
-            if (waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
-              this.fav_providers[index]['locations'][locindx]['opennow'] = waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
-              cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
-              // if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-              if (cdate.getTime() !== check_dtoday.getTime()) {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 1;
-                // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                //     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                // } else {
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                //   + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                // }
-                if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                }
+          if (waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+            this.fav_providers[index]['locations'][locindx]['opennow'] = waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
+            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
+            cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+            // if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
+            if (cdate.getTime() !== check_dtoday.getTime()) {
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 1;
+              // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+              //     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              // } else {
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+              //   + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              // }
+              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
-                // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                // } else {
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                // }
-                if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                }
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
+                + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
               }
             } else {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 0;
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
+              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
+              // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              // } else {
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
+              //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              // }
+              if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              } else {
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+              }
             }
-
-            if (waitlisttime_arr[i]['message']) {
-              this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['message'] = waitlisttime_arr[i]['message'];
-            }
+          } else {
+            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 0;
           }
-          // console.log('loc final', this.fav_providers[index]['locations']);
-        });
+
+          if (waitlisttime_arr[i]['message']) {
+            this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['message'] = waitlisttime_arr[i]['message'];
+          }
+        }
+        // console.log('loc final', this.fav_providers[index]['locations']);
+      });
     }
   }
 

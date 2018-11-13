@@ -4,7 +4,7 @@
           <!-- <h1>Consumer <span>Dashboard</span></h1> -->
           <div class="card c-checkins">
 
-              <h2 [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip">{{active_cap}} <ng-container *ngIf="waitlists">({{waitlists.length}})</ng-container></h2>
+              <h2><span [matTooltipClass] = "tooltipcls" [matTooltip]="currentcheckinsTooltip">Active Check-Ins <ng-container *ngIf="waitlists && waitlists.length>0">({{waitlists.length}})</ng-container></span></h2>
               <div class="outer">
                     <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)" class="banner">
                     <ngx-item NgxCarouselItem *ngFor="let waitlist of waitlists" >

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import * as moment from 'moment';
@@ -31,6 +31,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     all_license_metadata: any = [];
     license_upgarde_sub = {};
     license_tooltip = '';
+    hide_invoiceperiod = false;
     breadcrumbs = [
       {
         title: 'Settings',
@@ -60,6 +61,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions,
       private route: ActivatedRoute) {
+      this.onResize();
         this.license_tooltip = this.sharedfunctionObj.getProjectMesssages('LICENSE_TOOLTIP');
 
         this.route.params.subscribe((data) => {
@@ -101,7 +103,16 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
         this.upgradesubscriptdialogRef.close();
       }
     }
-
+   @HostListener('window:resize', ['$event'])
+    onResize(event?) {
+      console.log('innerwidth', window.innerWidth);
+      if (window.innerWidth <= 400) {
+        this.hide_invoiceperiod = true;
+      } else {
+        this.hide_invoiceperiod = false;
+      }
+    // console.log('resized', this.screenWidth, this.screenHeight, this.small_device_display);
+  }
 
     getLicenseDetails(call_type = 'init') {
 

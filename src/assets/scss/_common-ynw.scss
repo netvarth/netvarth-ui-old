@@ -137,6 +137,11 @@ app-footer {
             font-size: .75rem;
             font-style: italic;
         }
+        &.nofocus {
+            pointer-events: none;
+            cursor: default;
+            background: $cc-body;
+        }
     }
     input[type="text"], input[type="email"], input[type="password"] {
         height: 40px;
@@ -158,6 +163,45 @@ app-footer {
         font-size: .875rem;
         font-weight: 500;
     }
+    
+    // Date Picker
+    .pickerouter {
+        display: flex;
+        /*height: 26px;
+        width: 26px;*/
+
+        input {
+            width: 100px;
+            padding:10px;
+            border: 1px solid $cc-formborder;
+            @include font-regular;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: $linkblack;
+            text-overflow: ellipsis;
+            
+            &.nofocus {
+                width: 100px;
+                pointer-events: none;
+                cursor: default;
+                background: $cc-body;
+                border: 1px solid $cc-formborder;
+            }
+        }
+
+        .mat-datepicker-toggle {
+            margin-right: 15px;
+
+            button {
+                height: 38px;
+                background: $linkblue;
+
+                svg {
+                    fill: $white;
+                }
+            }
+        }
+    }
 }
 
 // Form BG/Border 
@@ -167,7 +211,7 @@ app-footer {
     .mat-form-field-wrapper {
         .mat-form-field-flex {
             .mat-form-field-infix {
-                .mat-form-field-element {
+                .mat-input-element {
                     background: $cc-inputbg;
                     border: 1px solid $cc-formborder;
                     font-size: 0.875rem;
@@ -747,7 +791,6 @@ app-footer {
 }
 
 // #### Common Styles to apply everywhere  #### //
-
 .mat-checkbox, .mat-select, .mat-form-field {
     @include font-medium;
 }

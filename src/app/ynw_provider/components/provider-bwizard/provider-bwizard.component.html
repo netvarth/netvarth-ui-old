@@ -92,9 +92,9 @@
                                     <span class="expl">GPS coordinates needed for the {{customer_label}}s who uses their mobile phone for search by location proximity.</span>
                                     <div class="row">
                                         <div class="col-6"><input matInput type="text" class="form-control" id="blatId" [(ngModel)]="wizard_data_holder['lat']" name="lat"
-                                          placeholder="Latitude" autocomplete="off"></div>
+                                          placeholder="Latitude" autocomplete="off" (keyup)="handlekeyup('coord_error')"></div>
                                         <div class="col-6"><input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lon']" name="lon"
-                                          placeholder="Longitude" autocomplete="off"></div>
+                                          placeholder="Longitude" autocomplete="off"  (keyup)="handlekeyup('coord_error')"></div>
                                     </div>
                                     <div class="sts-msg error" *ngIf="coord_error!=''">{{coord_error}}</div>
                                 </div>
@@ -111,13 +111,13 @@
                                 <div class="form-group">
                                     <label>Location Name</label>
                                     <span class="expl">Display name of the location where you render services for your {{customer_label}}s.</span>
-                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="This is what your {{customer_label}}s see when they search online" autocomplete="off" maxlength="50">
+                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="This is what your {{customer_label}}s see when they search online" autocomplete="off" maxlength="50" (keyup)="handlekeyup('locname_error')">
                                     <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Google Map URL</label>
                                     <span class="expl">This can be used to find the exact location</span>
-                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder="" autocomplete="off" readonly>
+                                    <input matInput type="text" class="form-control nofocus" id="" [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder="" autocomplete="off" readonly tabindex="-1">
                                     <div class="sts-msg error" *ngIf="gurl_error!=''">{{gurl_error}}</div>
                                 </div>
                             </div>

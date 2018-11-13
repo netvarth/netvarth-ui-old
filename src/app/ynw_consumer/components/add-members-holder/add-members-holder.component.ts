@@ -74,11 +74,18 @@ export class AddMembersHolderComponent implements OnInit {
     const phonepattern =   new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
     const phonecntpattern =   new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
 
-    if (!namepattern.test(this.addmemberobj.lname) || this.addmemberobj.lname.trim() === '') {
+if (!namepattern.test(this.addmemberobj.lname) || this.addmemberobj.lname.trim() === '') {
       derror = Messages.LASTNAME_INVAL_MSG;
+    }
+    
+    if (this.addmemberobj.lname.trim() === '') {
+      derror = 'Please enter the last name';
     }
     if (!namepattern.test(this.addmemberobj.fname)) {
       derror =Messages.FIRSTNAME_INVAL_MSG;
+    }
+    if (this.addmemberobj.fname.trim() === '') {
+      derror = 'Please enter the first name';
     }
 
     if (derror === '') {

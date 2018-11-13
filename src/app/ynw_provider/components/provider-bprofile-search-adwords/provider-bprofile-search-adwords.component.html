@@ -6,9 +6,14 @@
         </div>
     </div>
     <ng-container *ngIf="adwordsmaxcount != 0">
-
-
-        <div *ngFor="let adword of adword_list; let i = index">
+		<div *ngFor="let adword of showadword_list; let i = index">
+            <div class="lc3-2 lcd">
+            <div class="ttle">{{adword.name}}</div>
+            <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
+            </div>
+        </div>
+        
+<!--         <div *ngFor="let adword of adword_list; let i = index">
             <ng-container *ngIf="i<5">
                 <div class="lc3-2 lcd">
                 <div class="ttle">{{adword.name}}</div>
@@ -26,7 +31,10 @@
                 </div>
             </ng-container>
         </div>
-        <div ckass="adwordshowless" *ngIf="adwordshowmore" (click)="toggle_adwordshowmore()"><strong>Show less</strong></div>
+        <div ckass="adwordshowless" *ngIf="adwordshowmore" (click)="toggle_adwordshowmore()"><strong>Show less</strong></div> -->
+        <div class="search_paging" *ngIf="adwordsmaxcount > 0 && adword_list.length >0 && query_executed == true">
+                <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()" (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
+              </div>
         <div class="lc3-2 lcd" *ngIf="adwordsmaxcount > 0 && adword_list.length ==0 && query_executed == true">
             <div class="ttle">{{emptyMsg}}</div>
         </div>

@@ -290,7 +290,7 @@ header {
                                     padding: 0;
                                     border-top: none;
 
-                                    .mat-form-field-element {
+                                    .mat-input-element {
                                         padding: 15px;
                                         vertical-align: top;
                                         height: 50px;
@@ -446,7 +446,7 @@ header {
                                 padding: 0;
                                 border-top: none;
 
-                                .mat-form-field-element {
+                                .mat-input-element {
                                     height: 50px;
                                     padding: 15px;
                                     @include font-regular;
@@ -3624,6 +3624,12 @@ header {
                         }
                     }
                 }
+                
+                .nocheckins {
+                    p {
+                        margin: 0;
+                    }
+                }
             }
         }
 
@@ -4386,6 +4392,14 @@ header {
                                         }
 
                                     }
+                                }
+                            }
+                            
+                            .noprevhist {
+                                padding: 20px;
+                                
+                                p {
+                                    margin: 0;
                                 }
                             }
                         }

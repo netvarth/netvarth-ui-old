@@ -631,4 +631,14 @@ export class ProviderbWizardComponent implements OnInit {
    // console.log('genschedule', this.general_schedule, 'gen sch length', this.general_schedule.length);
    // console.log('display schedule', this.schedule_arr);
   }
+    handlekeyup(mod) {
+    switch (mod) {
+      case 'locname_error':
+        this.locname_error = '';
+      break;
+      case 'coord_error':
+        this.coord_error = '';
+      break;
+    }
+  }
 }

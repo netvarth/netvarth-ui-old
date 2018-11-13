@@ -23,6 +23,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   schedule_arr: any = [];
   schedule_json: any = [];
   bProfile: any = [];
+    holdloc_list: any = [];
   loc_list: any = [];
   serv_list: any = [];
   dstart_time;
@@ -136,7 +137,13 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   getProviderLocations() {
     this.provider_services.getProviderLocations()
       .subscribe(data => {
-        this.loc_list = data;
+        this.holdloc_list = data;
+        this.loc_list = [];
+        for (let i = 0; i < this.holdloc_list.length; i++) {
+          if (this.holdloc_list[i].status === 'ACTIVE') {
+            this.loc_list.push(this.holdloc_list[i]);
+          }
+        }
       });
   }
 
