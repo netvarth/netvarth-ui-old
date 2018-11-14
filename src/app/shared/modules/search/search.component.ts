@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material';
+import {Messages} from '../../constants/project-messages';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
@@ -40,6 +41,8 @@ export class Keywordscls {
 })
 export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
+  all_cap = Messages.ALL_CAP;
+  more_options_cap =Messages.MORE_OPTIONS_CAP;
   @Input() searchfields: SearchFields;
   @Input() showopennow: number;
   @Input() domainpassedfromrefined: string;

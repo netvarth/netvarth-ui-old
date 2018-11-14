@@ -12,6 +12,8 @@ import { Messages } from '../../../constants/project-messages';
   templateUrl: './learnmore-adjustdelay.component.html'
 })
 export class LearnmoreAdjustDelayComponent implements OnInit {
+
+  adjust_delay_cap = Messages.ADJUST_DELAY_CAP;
   @Input() target: string;
   constructor(
    // @Inject(MAT_DIALOG_DATA) public data: any,

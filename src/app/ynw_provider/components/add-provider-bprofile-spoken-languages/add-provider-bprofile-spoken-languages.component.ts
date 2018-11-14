@@ -6,6 +6,7 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { ProviderServices } from '../../services/provider-services.service';
 import {projectConstants} from '../../../shared/constants/project-constants';
 import {SharedFunctions} from '../../../shared/functions/shared-functions';
+import { Messages} from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-bprofile-spoken-languages',
@@ -13,6 +14,11 @@ import {SharedFunctions} from '../../../shared/functions/shared-functions';
   // styleUrls: ['./home.component.scss']
 })
 export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
+
+  lang_known_cap = Messages.LANG_KNOWN_CAP;
+  no_lang_found_cap = Messages.NO_LANG_FOUND_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
 
   api_error = null;
   api_success = null;

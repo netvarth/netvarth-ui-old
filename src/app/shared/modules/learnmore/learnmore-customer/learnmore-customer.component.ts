@@ -12,6 +12,8 @@ import { Messages } from '../../../constants/project-messages';
   templateUrl: './learnmore-customer.component.html'
 })
 export class LearnmoreCustomerComponent implements OnInit {
+
+  customers_cap = Messages.CUSTOMERS_CAP;
   @Input() target: string;
   constructor(
     // @Inject(MAT_DIALOG_DATA) public data: any,

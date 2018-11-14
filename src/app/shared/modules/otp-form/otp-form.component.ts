@@ -16,6 +16,18 @@ import {Messages} from '../../constants/project-messages';
 })
 export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
 
+  enter_otp_cap = Messages.ENTER_OTP_CAP;
+  ok_btn_cap = Messages.OK_BTN;
+  resend_otp_to_cap = Messages.RESEND_OTP_TO_CAP;
+  email_id_cap = Messages.EMAIL_ID_CAP;
+  mobile_cap = Messages.MOBILE_CAP;
+  resend_otp_email = Messages.RESEND_OTP_EMAIL_CAP;
+  resend_otp_opt_active_cap = Messages.RESEND_OTP_OPT_ACTIVE_IN_CAP;
+  seconds_cap = Messages.SECONDS_CAP;
+  enter_email_cap = Messages.ENTER_EMAIL_CAP;
+  resend_btn_cap = Messages.RESEND_BTN;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+
   otp_form: FormGroup;
   email_form: FormGroup;
 

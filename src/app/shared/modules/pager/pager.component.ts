@@ -7,6 +7,7 @@ import * as _ from 'underscore';
 
 import { PagerService } from '../pager/pager.service';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import {Messages} from '../../constants/project-messages';
 
 @Component({
     // moduleId: module.id,
@@ -15,6 +16,10 @@ import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 })
 
 export class PagerComponent implements OnInit, OnChanges {
+
+    previous_cap = Messages.PREVIOUS_CAP;
+    next_cap = Messages.NEXT_CAP;
+    
     constructor(private pagerService: PagerService) { }
 
     // array of all items to be paged

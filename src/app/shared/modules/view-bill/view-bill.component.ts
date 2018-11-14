@@ -32,6 +32,35 @@ export class ViewBillComponent implements OnInit, OnChanges {
   @Output() emailbill = new EventEmitter<any>();
   @Output() updatebill = new EventEmitter<any>();
 
+  bill_cap = Messages.BILL_CAPTION;
+  customer_cap = Messages.CUSTOMER_CAP;
+  date_cap = Messages.DATE_CAP;
+  time_cap = Messages.TIME_CAP;
+  bill_no_cap = Messages.BILL_NO_CAP;
+  gstin_cap = Messages.GSTIN_CAP;
+  qty_cap = Messages.QTY_CAP;
+  discount_cap = Messages.DISCOUNT_CAP;
+  coupon_cap = Messages.COUPON_CAP;
+  sub_tot_cap = Messages.SUB_TOT_CAP;
+  gross_amnt_cap = Messages.GROSS_AMNT_CAP;
+  tax_cap = Messages.TAX_CAP;
+  amount_paid_cap = Messages.AMNT_PAID_CAP;
+  tot_amnt_to_pay_cap = Messages.TOT_AMNT_PAY_CAP;
+  back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
+  payment_logs_cap = Messages.PAY_LOGS_CAP;
+  amount_cap =Messages.AMOUNT_CAP;
+  refundable_cap = Messages.REFUNDABLE_CAP;
+  status_cap = Messages.STATUS_CAP;
+  mode_cap = Messages.MODE_CAP;
+  refund_cap = Messages.REFUND_CAP;
+  refunds_cap = Messages.REFUNDS_CAP;
+  update_bill_cap = Messages.UPDATE_BILL_CAP;
+  settle_bill_cap =Messages.SETTLE_BILL_CAP;
+  print_bill_cap = Messages.PRINT_BILL_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  accept_payment_cap = Messages.ACCEPT_PAY_CAP;
+  make_payment_cap = Messages.MAKE_PAYMENT_CAP;
+
   amForm: FormGroup;
   api_error = null;
   api_success = null;

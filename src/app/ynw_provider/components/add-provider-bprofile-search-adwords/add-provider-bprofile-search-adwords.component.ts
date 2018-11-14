@@ -5,6 +5,8 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { ProviderServices } from '../../services/provider-services.service';
 import {projectConstants} from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages} from '../../../shared/constants/project-messages';
+
 @Component({
   selector: 'app-addprovider-bprofile-search-adwords',
   templateUrl: './add-provider-bprofile-search-adwords.component.html',
@@ -12,6 +14,11 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 
 export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
+
+  add_adword_cap = Messages.ADD_ADWORD_CAP;
+  adword_cap = Messages.ADWORD_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap =Messages.SAVE_BTN;
 
   amForm: FormGroup;
   api_error = null;

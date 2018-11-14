@@ -2,18 +2,18 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Add Addon
+<h1 class="mat-dialog-title">{{add_addon_cap}}
   <button #queue mat-dialog-close class="modal_close" tabindex="-1" >
       <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
 </h1>
 <mat-dialog-content>
     <div class="form-group" *ngIf="obtainedaddons && upgradableaddons.length>0">
-        <label class="col-form-label" for="displayName">Addons *</label>
+        <label class="col-form-label" for="displayName">{{addons_cap}}</label>
         <mat-form-field>
           <mat-select name="addons_selpackage" #addons_selpackage formControlName="addons_selpackage" *ngIf="upgradableaddons"
           (selectionChange)="licenseaddon_Select(addons_selpackage.value)">
-          <mat-option [value]="''">- Select One -</mat-option>
+          <mat-option [value]="''">{{select_one_cap}}</mat-option>
             <mat-option *ngFor="let addons of upgradableaddons"
             [value]="addons.addonId">
             {{addons.addonName}}
@@ -28,12 +28,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         {{selected_addondesc}}
       </div>
       <div *ngIf="obtainedaddons && upgradableaddons.length==0">
-          Sorry no upgradable addons found.
+          {{no_upgrade_addons_found}}
       </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-   <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-  <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
+   <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+  <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{save_btn_cap}}</button>
 </mat-dialog-actions>
 </form>
 

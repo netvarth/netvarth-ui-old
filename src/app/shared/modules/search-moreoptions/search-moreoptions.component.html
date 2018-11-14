@@ -1,4 +1,4 @@
-<div mat-dialog-title>More Search Options 
+<div mat-dialog-title>{{more_search_opt}}
   <!-- <button mat-dialog-close class="modal_close"><i class="fa fa-window-close" aria-hidden="true"></i></button> -->
 </div>
 
@@ -40,7 +40,7 @@
         </div>
         </ng-container>
         <div class="more-box">
-            <div class="refine_subheader">Other Filters</div>
+            <div class="refine_subheader">{{other_filters_cap}}</div>
               <div class="refine_fieldlist" *ngFor="let refine_data of searchrefine_arr">
                 <div *ngIf="refine_data.dataType=='Boolean'">
                   <mat-slide-toggle #{{refine_data.name}}  (change)="handle_optionclick(refine_data.cloudSearchIndex,refine_data.dataType,1)">{{refine_data.displayName}}</mat-slide-toggle>
@@ -50,6 +50,6 @@
 
         
       </div>
-      <mat-dialog-actions><button mat-button (click)="handle_morebuttonclick()" *ngIf="searchrefine_arr.length>0">Search</button></mat-dialog-actions>
+      <mat-dialog-actions><button mat-button (click)="handle_morebuttonclick()" *ngIf="searchrefine_arr.length>0">{{search_cap}}</button></mat-dialog-actions>
       <div *ngIf="searchrefine_arr.length==0"><mat-spinner strokeWidth="5" diameter="50" style="margin: 0 auto;"></mat-spinner></div>
     

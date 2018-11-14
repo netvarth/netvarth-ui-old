@@ -230,6 +230,7 @@ export const Messages = {
   'CLOSE_BTN':'Close',
   'DONE_BTN' : 'Done',
   'SAVE_MEMBER_BTN' : 'Save Member',
+  'RESEND_BTN' : 'Resend',
 
 
 
@@ -534,6 +535,91 @@ export const Messages = {
   'DELETE_MSG_CAP' : 'Delete Message',
   'NO_MSG_EXISTS_CAP' : 'No Messages exists',
 
+  //App-shared-modules-learnmore-adjustdelay
+  'ADJUST_DELAY_CAP' : 'Adjust Delay',
+
+  //App-shared-modules-learnmore-checkin
+  'CHECK_IN_CAP' : 'Check In',
+
+  //App-shared-modules-learnmore-customer
+  'CUSTOMERS_CAP' : 'Customers',
+
+  //App-shared-modules-learnmore-kiosk
+  'KIOSK_CAP' : 'Kiosk',
+
+  //App-shared-modules-otp-form
+  'ENTER_OTP_CAP' : 'Enter OTP *',
+  'RESEND_OTP_TO_CAP' : 'Resend OTP To',
+  'RESEND_OTP_EMAIL_CAP' : 'Resend OTP Via Email',
+  'RESEND_OTP_OPT_ACTIVE_IN_CAP' : 'Resent OTP option will be active in',
+  'SECONDS_CAP' : 'seconds.',
+  'ENTER_EMAIL_CAP' : 'Enter Email',
+
+  //App-shared-modules-pager
+  'PREVIOUS_CAP' : 'Previous',
+  'NEXT_CAP' : 'Next',
+
+  //App-shared-modules-search
+  'MORE_OPTIONS_CAP' : 'More Options',
+  'ALL_CAP' : 'All',
+
+  //App-shared-modules-search-moreoptiions
+  'MORE_SEARCH_OPT_CAP' : 'More Search Options ',
+
+  //App-shared-modules-search-moreoptiions
+  'CUSTOMER_CAP' : 'Customer',
+  'TIME_CAP' : 'Time',
+  'BILL_NO_CAP' : 'Bill Number',
+  'GSTIN_CAP' : 'GSTIN',
+  'QTY_CAP' : 'Qty',
+  'DISCOUNT_CAP' : 'Discount',
+  'COUPON_CAP' : 'Coupon',
+  'SUB_TOT_CAP' : 'Sub Total',
+  'GROSS_AMNT_CAP' : 'Gross Amount',
+  'TAX_CAP' : 'Tax',
+  'AMNT_PAID_CAP' : 'Amount Paid',
+  'TOT_AMNT_PAY_CAP' : 'Total Amount to Pay',
+  'BACK_TO_BILL_CAP' : 'Back to Bill',
+  'PAY_LOGS_CAP' : 'Payment Logs',
+  'AMOUNT_CAP' : 'Amount',
+  'REFUNDABLE_CAP' : 'Refundable',
+  'MODE_CAP' : 'Mode',
+  'REFUND_CAP' : 'Refund',
+  'REFUNDS_CAP' : 'Refunds',
+  'UPDATE_BILL_CAP' : 'Update Bill',
+  'SETTLE_BILL_CAP' : 'Settle Bill',
+  'PRINT_BILL_CAP' : 'Print Bill',
+  'ACCEPT_PAY_CAP' : 'Accept Payment',
+
+  //App-ynw_provider-components-add-provider-addons
+  'ADD_ADDON_CAP' : 'Add Addon',
+  'ADDONS_CAP' : 'Addons *',
+  'SELECT_ONE_CAP' : '- Select One -',
+  'NO_UPGRADE_ADDONS_FOUND_CAP' : 'Sorry no upgradable addons found.',
+
+  //App-ynw_provider-components-add-provider-bprofile-search-adwords
+  'ADD_ADWORD_CAP' : 'Add Adword',
+  'ADWORD_CAP' : 'Adword',
+
+  //App-ynw_provider-components-add-provider-bprofile-specializations
+  'SPECIALIZATIONS_CAP' : 'Specializations',
+  'NO_SPECI_FOUND_CAP' : 'Sorry no specializations found.',
+
+  //App-ynw_provider-components-add-provider-bprofile-spoken-languages
+  'LANG_KNOWN_CAP' : 'Languages Known',
+  'NO_LANG_FOUND_CAP' : 'Sorry no languages found.',
+
+  //App-ynw_provider-components-add-provider-coupons
+  'BILLING_COUPONS_CAP' : 'Billing Coupons -',
+  'NAME_MAND_CAP' : 'Name *',
+  'TYPE_MAND_CAP' : 'Type *',
+  'FIXED_CAP' : 'Fixed',
+  'PERCENTAGE_CAP' : 'Percentage',
+  'DESCRIPTION_MAND_CAP' : 'Description *',
+
+  //App-ynw_provider-components-add-provider-coupons
+
+  // '' : '',
   // '' : '',
   // '' : '',
   // '' : '',

@@ -12,6 +12,9 @@ import { Messages } from '../../../constants/project-messages';
   templateUrl: './learnmore-checkin.component.html'
 })
 export class LearnmoreCheckinComponent implements OnInit {
+
+  checkin_cap = Messages.CHECK_IN_CAP;
+  
   @Input() target: string;
   constructor(
    // @Inject(MAT_DIALOG_DATA) public data: any,

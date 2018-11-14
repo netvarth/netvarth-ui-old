@@ -6,6 +6,7 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import {projectConstants} from '../../../shared/constants/project-constants';
+import { Messages} from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-bprofile-specializations',
@@ -14,6 +15,11 @@ import {projectConstants} from '../../../shared/constants/project-constants';
 })
 export class AddProviderBprofileSpecializationsComponent implements OnInit {
 
+  specializations_cap = Messages.SPECIALIZATIONS_CAP;
+  no_speci_found_cap = Messages.NO_SPECI_FOUND_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap =Messages.SAVE_BTN;
+  
   api_error = null;
   api_success = null;
   specialization_arr: any = [];

@@ -21,7 +21,7 @@
     <mat-form-field>
       <div>
         <mat-select panelClass ="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange(seldomain.value)" >
-          <mat-option value="All">All</mat-option>
+          <mat-option value="All">{{all_cap}}</mat-option>
           <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain" >
             {{ domain.displayName }} 
           </mat-option>
@@ -52,7 +52,7 @@
   </div>
   <!-- <div class="sa-mo flex-shrink-0" *ngIf="chk_moreoptionshow()"> -->
       <div class="sa-mo flex-shrink-0">
-      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'"  [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip">More Options</span>
+      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'"  [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip">{{more_options_cap}}</span>
       <span class="icon icon-filter" id="morefiltericon" (click)="showMoreOptions()" *ngIf="includedfrom=='consumer_header'" [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip"></span>
   </div>
   <ng-container>
