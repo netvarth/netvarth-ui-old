@@ -228,6 +228,8 @@ export const Messages = {
   'SEND_BTN' : 'Send',
   'OK_BTN' : 'Ok',
   'CLOSE_BTN':'Close',
+  'DONE_BTN' : 'Done',
+  'SAVE_MEMBER_BTN' : 'Save Member',
 
 
 
@@ -445,10 +447,95 @@ export const Messages = {
   'MOBILE_CAP' : 'Mobile *',
   'ADD_CHANGE_EMAIL_CAP' : 'Add or Change Email',
 
-  
+  //App-shared-modules-change-password
+  'OLD_PASSWORD_CAP' : 'Old Password *',
 
+  //App-shared-modules-checkin-checkin-inner
 
+  'SELECT_SER_CAP' : 'Select Service',
+  'NO_SER_AVAIL_CAP' : 'No services available.',
+  'ADD_CHANGE_MEMBER' : 'Add / Change Member',
+  'SERV_TIME_WINDOW_CAP' : 'Service Time Window',
+  'ENTER_PARTY_SIZE' : 'Enter Party Size',
+  'HAVE_NOTE_CLICK_HERE_CAP' : 'If you have a note, Click here.',
+  'NOT_ACCEPTED_THIS_DATE_CAP' : 's are not accepted for this date.',
+  'NEEDS_PREPAYMENT_FOR_CAP' : 'This service needs prepayment for',
+  'PRE_PAYMENT_AMNT_CAP' : 'Pre Payment Amount:',
+  'NO_PAY_MODES_AVAIL_CAP' : 'Sorry no payment modes available',
+  'APPLY_CAP' : 'Apply',
+  'SELECT_THE_CAP' : 'Select the',
+  'MEMBERS_CAP' : 'members',
+  'FOR_WHOM_CAP' : 'for whom the',
+  'IS_BEING_MADE_CAP' : 'is being made',
+  'ADD_MEMBER_CAP' : 'Add Member',
+  'TODAY_CAP' : 'Today,',
+ 
+  //App-shared-modules-consumer-checkin-history-list
+  'SERV_PROVIDER_CAP' : 'Service Provider',
+  'DATE_COL_CAP' : 'Date',
+  'NO_PREV_CHECKINS_AVAIL_CAP' : 'No previous Check-Ins available',
 
+  //App-shared-modules-consumer-waitlist-checkin-payment
+  'BILL_PAYMENT_CAP' : 'Bill Payment',
+  'COUPON_CODE_CAP' : 'Coupon Code',
+  'AMNT_TO_PAY_CAP' : 'Amount to pay',
+  'NO_PAY_OPT_AVIL_CAP' : 'No payment options available.',
 
+  //App-shared-modules-edit-profile
+  'EDIT_PHONE_NO_CAP' : 'Use "Change Mobile" option to edit the Phone number',
+  'CHANGE_EMAIL_CAP' : 'Use "Add or Change Email" option to edit the Email Id',
+  'PHONE_NO_CAP' : 'Phone Number',
+  'EMAIL_ID_CAP' : 'Email Id',
+
+  //App-shared-modules-footer
+  'ABOUT_CAP' : 'About',
+  'ABOUT_JALDEE_ONE' : 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providers’ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
+  'ABOUT_JALDEE_TWO' : 'Jaldees cloud-based platform is scalable, secure, and ready for any size deployment. Jaldee is owned and operated by Netvarth technologies Pvt Ltd.',
+  'CONTACT_CAP' : 'Contact',
+  'NETVARTH_TECH_PVT_LTD' : 'Netvarth Technologies Pvt Ltd',
+  'ADDRESS_ONE' : 'Museum cross lane',
+  'ADDRESS_TWO' : 'Chembukavu',
+  'ADDRESS_THREE' : 'Thrissur- 680020',
+  'ADDRESS_FOUR' : 'Kerala, India',
+  'SUPPORT_EMAIL' : 'E-mail : support@netvarth.com',
+  'SUPPORT_PHONE' : 'Phone : 0487-2325650',
+  'TERMS_CAP' : 'Terms',
+  'CONDITIONS_CAP' : 'Conditions',
+  'PRIVACY_POLICY_CAP' : 'Privacy Policy',
+  'PRICING_CAP' : 'Pricing',
+  'ABOUT_US_CAP' : 'About Us',
+  'CONTACT_US_CAP' : 'Contact Us',
+  'JALDEE_CAP' : 'jaldee',
+  'DATE_TIME_CAP' : 'Date/Time',
+  'TEXT_CAP' : 'Text',
+  'SUBJECT_CAP' : 'Subject',
+  'USER_NAME_CAP' : 'User Name',
+  'NO_AUDIT_LOGS_CAP' : 'No Audit Logs so far',
+  'VIEW_ALL_CAP' : 'View All',
+  'NO_ALERTS_CAP' : 'No Alerts so far',
+  'SETTINGS_NOT_FOUND_CAP' : 'Sorry! settings not found',
+  'ACC_ONLINE_CHECKIN_CAP' : 'Accept Online Check-in',
+
+  //App-shared-modules-header
+  'SIGN_IN_CAP' : 'Sign in',
+  'JOIN_CAP' : 'Join',
+  'ARE_YOU_SER_PRO_CAP' : 'Are you a Service Provider?',
+  'CLICK_HERE_CAP' : 'Click Here',
+  'SWITCH_TO_CONSUMER' : 'Switch to Consumer',
+  'LOGOUT_CAP' : 'Logout',
+  'UPGRADE_CAP' : 'Upgrade',
+  'MEMBERSHIP_CAP' : 'Membership',
+  'SWITCH_TO_PROVIDER' : 'Switch to Provider',
+  'CREATE_PRO_ACCNT' : 'Create a Provider Account',
+
+  //App-shared-modules-inbox-inbox-list
+  'PROVIDER_CONSUMER_CAP' : 'Provider / Consumer',
+  'REPLY_CAP' : 'Reply',
+  'DELETE_MSG_CAP' : 'Delete Message',
+  'NO_MSG_EXISTS_CAP' : 'No Messages exists',
+
+  // '' : '',
+  // '' : '',
+  // '' : '',
 
 };

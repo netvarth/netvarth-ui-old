@@ -2,12 +2,12 @@
     <table class="table" *ngIf="history && history.length > 0">
         <thead>
             <tr>
-                <th class="th1">Service Provider</th>
-                <th class="th6">Service</th>
-                <th class="th2">Location</th>
+                <th class="th1">{{service_provider_cap}}</th>
+                <th class="th6">{{service_cap}}</th>
+                <th class="th2">{{location_cap}}</th>
                 <!-- <th class="th3">Date/Time</th> -->
-                <th class="th3">Date</th>
-                <th class="th4">Status</th>
+                <th class="th3">{{date_cap}}</th>
+                <th class="th4">{{status_cap}}</th>
                 <th class="th5"></th>
             </tr>
         </thead>
@@ -23,15 +23,15 @@
                 </td>
                 <td data-title="" class="td5">
                     <ul class="controls">
-                        <li><span class="message" (click)="addWaitlistMessage(his_wait)">Send Message</span></li>
+                        <li><span class="message" (click)="addWaitlistMessage(his_wait)">{{send_message_cap}}</span></li>
                         <!-- <li><span class="view-bill" 
                           *ngIf="his_wait.waitlistStatus == 'done'" (click)="getWaitlistBill(his_wait)">Bill</span>
                         </li> -->
                         <li><span class="view-bill" 
-                            *ngIf="his_wait.billStatus" (click)="getWaitlistBill(his_wait)">Bill</span>
+                            *ngIf="his_wait.billStatus" (click)="getWaitlistBill(his_wait)">{{bill_cap}}</span>
                           </li>
                         <li><span class="rate-service" [class.rated] = "isRated(his_wait)"
-                          *ngIf="his_wait.waitlistStatus == 'done'" (click)="rateService(his_wait)">Rate Your Visit</span>
+                          *ngIf="his_wait.waitlistStatus == 'done'" (click)="rateService(his_wait)">{{rate_your_visit}}</span>
                           <!-- <span class="rate-no-service" *ngIf="his_wait.waitlistStatus !== 'done'"></span> -->
                         </li>
                     </ul>
@@ -45,5 +45,5 @@
     </div>
 </div>
 <div *ngIf="loadcomplete.history && history && history.length == 0" class="noprevhist">
-<p>No previous Check-Ins available</p>
+<p>{{no_prev_checkins_avail_cap}}</p>
 </div>

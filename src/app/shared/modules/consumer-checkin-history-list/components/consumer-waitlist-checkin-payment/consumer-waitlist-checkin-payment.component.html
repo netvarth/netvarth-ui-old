@@ -1,26 +1,26 @@
-<h1 class="mat-dialog-title"> Bill Payment
+<h1 class="mat-dialog-title"> {{bill_payment_cap}}
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
 </h1>
 <mat-dialog-content>
   <div class="full-outer">
-      <div class="btl"><span class="label">Name</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName | capitalizeFirst}}</span></div>
+      <div class="btl"><span class="label">{{name_cap}}</span> <span class="label-valu">{{bill_data.customer.userProfile.firstName | capitalizeFirst}}</span></div>
 
    
 
       <div class="coupon-code">
         <div class="form-group">
-            <label>Coupon Code</label>                       
+            <label>{{coupon_code_cap}}</label>                       
             <input type="text" id="coupon_code" placeholder="Enter your Coupon code" style="height:30px;">
-            <button mat-button class="cs-btn bt1 makepayment">Apply</button>
+            <button mat-button class="cs-btn bt1 makepayment">{{apply_cap}}</button>
         </div>                            
     </div>
     
     
 
       <div class="topay">
-        <span class="label">Amount to pay</span>
+        <span class="label">{{amount_to_pay}}</span>
         <span class="label-valu">
             {{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}
         </span>
@@ -34,7 +34,7 @@
           </mat-radio-button>
         </mat-radio-group> -->
         <!-- <span class="no-data" *ngIf="payment_options.length==0">No payment options available.</span> -->
-        <span class="no-data" *ngIf="payModesQueried && !payModesExists">No payment options available.</span>
+        <span class="no-data" *ngIf="payModesQueried && !payModesExists">{{no_pay_opt_avail_cap}}</span>
         
       </div>
   </div>
@@ -44,6 +44,6 @@
 <mat-dialog-actions>
     <button  type="button" mat-button class="cs-btn bt1 makepayment"
     [disabled]="!pay_data.amount || pay_data.amount == 0 || payment_options.length == 0 || !pay_data.paymentMode  || gateway_redirection"
-    (click)="makePayment()">Make Payment</button>
+    (click)="makePayment()">{{make_payment_cap}}</button>
 </mat-dialog-actions>
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

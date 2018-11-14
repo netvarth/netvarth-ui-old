@@ -23,6 +23,15 @@ import { AddInboxMessagesComponent } from '../../../components/add-inbox-message
 export class InboxListComponent implements OnInit, OnDestroy {
 
 
+  provider_consumer_cap = Messages.PROVIDER_CONSUMER_CAP;
+  service_cap = Messages.SERVICE_CAP;
+  message_cap = Messages.MESSAGE_CAP;
+  date_time_cap = Messages.DATE_TIME_CAP;
+  reply_cap = Messages.REPLY_CAP;
+  close_cap = Messages.CLOSE_BTN;
+  delete_msg_cap = Messages.DELETE_MSG_CAP;
+  no_msg_exists_cap = Messages.NO_MSG_EXISTS_CAP;
+
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   selectedMsg = -1;
   user_id;

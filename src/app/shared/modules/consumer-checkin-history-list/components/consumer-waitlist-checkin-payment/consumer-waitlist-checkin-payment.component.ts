@@ -18,6 +18,14 @@ import { DOCUMENT } from '@angular/common';
 
 export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
 
+  bill_payment_cap = Messages.BILL_PAYMENT_CAP;
+  name_cap = Messages.NAME_CAP;
+  coupon_code_cap = Messages.COUPON_CODE_CAP;
+  apply_cap = Messages.APPLY_CAP;
+  amount_to_pay = Messages.AMNT_TO_PAY_CAP;
+  no_pay_opt_avail_cap = Messages.NO_PAY_OPT_AVIL_CAP;
+  make_payment_cap = Messages.MAKE_PAYMENT_CAP;
+  
   checkin = null;
   bill_data = null;
   payment_options: any = [

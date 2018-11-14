@@ -16,6 +16,17 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 })
 export class ChangePasswordComponent implements OnInit {
 
+
+  old_password_cap = Messages.OLD_PASSWORD_CAP;
+  new_password_cap = Messages.NEW_PASSWORD_CAP;
+  re_enter_password_cap = Messages.RE_ENTER_PASSWORD_CAP;
+  done_btn_cap = Messages.DONE_BTN;
+  related_links_cap = Messages.RELATED_LINKS;
+  user_profile_cap = Messages.USER_PROF_CAP;
+  change_mobile_cap = Messages.CHANGE_MOB_CAP;
+  add_change_email_cap = Messages.ADD_CHANGE_EMAIL;
+  family_members_cap = Messages.FAMILY_MEMBERS;
+  
   spForm: FormGroup;
   api_error = null;
   api_success = null;

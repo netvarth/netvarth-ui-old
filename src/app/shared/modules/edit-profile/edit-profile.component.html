@@ -13,7 +13,7 @@
                     <div class="innercard">
                         <div class="leftcard">
                             <div class="form-group">
-                            <label class="col-form-label" for="first_name">First Name *</label>
+                            <label class="col-form-label" for="first_name">{{first_name_cap}}</label>
                             <input type="text" class="form-control" id="first_name" placeholder="First Name"
                             formControlName="first_name" autocomplete="off">
                             <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
@@ -26,7 +26,7 @@
                             </div>
 
                             <div class="form-group">
-                            <label class="col-form-label" for="last_name">Last Name *</label>
+                            <label class="col-form-label" for="last_name">{{last_name_cap}}</label>
                             <input type="text" class="form-control" id="last_name" placeholder="Last Name"
                             formControlName="last_name" autocomplete="off">
                             <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
@@ -39,17 +39,17 @@
                             </div>
 
                             <div class="form-group">
-                            <label class="col-form-label" for="gender">Gender </label>
+                            <label class="col-form-label" for="gender">{{gender_cap}} </label>
                             <mat-radio-group formControlName="gender">
-                            <mat-radio-button value="male">Male</mat-radio-button>
-                            <mat-radio-button value="female">Female</mat-radio-button>
+                            <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
+                            <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
                             </mat-radio-group>
                             <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
                             errorMsg="Please select the gender.">
                             </app-field-error-display>
                             </div>
                             <div class="form-group normalpicker">
-                            <label class="col-form-label" for="last_name">Date Of Birth </label>
+                            <label class="col-form-label" for="last_name">{{date_of_birth_cap}} </label>
                             <!-- <mat-datepicker #picker></mat-datepicker>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <input class="form-control" [matDatepicker]="picker" formControlName="dob" [max]="maxalloweddate"> -->
@@ -69,37 +69,37 @@
                         <div class="cardright">
                             <div class="grayouter">
                                 <div class="form-group">
-                                    <label class="col-form-label" >Phone Number</label>
+                                    <label class="col-form-label" >{{phone_no_cap}}</label>
                                     <span>{{phonenoHolder}}</span>
                                     <!-- <input type="text" class="form-control" id="phoneno" placeholder="Phone Number" disabled [value]="phonenoHolder" autocomplete="off"> -->
                                     <ul class="info-lst">
-                                        <li>Use "Change Mobile" option to edit the Phone number</li>
+                                        <li>{{edit_phone_no_cap}}</li>
                                     </ul>
                                 </div>
                                 <div class="form-group" *ngIf="emailHolder!=''">
-                                    <label class="col-form-label" >Email Id</label>
+                                    <label class="col-form-label" >{{email_id_cap}}</label>
                                     <span>{{emailHolder}}</span>
                                     <!-- <input type="text" class="form-control" id="emailid" placeholder="Email Id" disabled [value]="emailHolder" autocomplete="off"> -->
                                     <ul class="info-lst">
-                                        <li>Use "Add or Change Email" option to edit the Email Id</li>
+                                        <li>{{edit_email_cap}}</li>
                                     </ul>                    
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button  type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">Update</button>
+                    <button  type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">{{update_btn}}</button>
                     </form>
                 
             </div>
             <div class="right-menu">
                 <!-- <a [routerLink]="['/provider/bwizard']">Go to wizard</a> -->
                 
-                <div class="right-menu-header">Related Links</div>
+                <div class="right-menu-header">{{related_links_cap}}</div>
                 <ul class="related-link">
-                    <li (click)="shared_functions.redirectto('change-password')" class="icon-password">Change Password</li>
-                    <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">Change Mobile</li>
-                    <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">Add or Change Email</li>
-                    <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">Family Members</li>
+                    <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_password_cap}}</li>
+                    <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">{{change_mobile_cap}}</li>
+                    <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">{{change_email_cap}}</li>
+                    <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">{{family_members_cap}}</li>
                 </ul>
             </div>
             </div>

@@ -19,6 +19,24 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 })
 export class EditProfileComponent implements OnInit {
 
+  first_name_cap = Messages.F_NAME_CAP;
+  last_name_cap = Messages.L_NAME_CAP;
+  gender_cap = Messages.GENDER_CAP;
+  male_cap = Messages.MALE_CAP;
+  female_cap = Messages.FEMALE_CAP;
+  date_of_birth_cap = Messages.DOB_CAP;
+  phone_no_cap = Messages.PHONE_NO_CAP;
+  edit_phone_no_cap = Messages.EDIT_PHONE_NO_CAP;
+  email_id_cap = Messages.EMAIL_ID_CAP
+  edit_email_cap = Messages.CHANGE_EMAIL_CAP;
+  update_btn = Messages.UPDATE_BTN;
+  related_links_cap = Messages.RELATED_LINKS;
+  change_password_cap = Messages.CHANGE_PASSWORD_CAP;
+  change_mobile_cap = Messages.CHANGE_MOB_CAP;
+  change_email_cap = Messages.CHANGE_EMAIL_CAP;
+  family_members_cap = Messages.FAMILY_MEMBERS;
+  
+
   editProfileForm: FormGroup;
   api_error = null;
   api_success = null;

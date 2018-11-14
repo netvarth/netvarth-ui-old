@@ -18,6 +18,32 @@ import { CommonDataStorageService } from '../../../../shared/services/common-dat
 })
 export class CheckInInnerComponent implements OnInit {
 
+  select_service_cap = Messages.SELECT_SER_CAP;
+  no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;
+  add_change_member = Messages.ADD_CHANGE_MEMBER;
+  date_cap = Messages.DATE_CAP;
+  serv_time_window_cap = Messages.SERV_TIME_WINDOW_CAP;
+  enter_party_size_cap = Messages.ENTER_PARTY_SIZE;
+  have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
+  not_accepted_for_this_date =Messages.NOT_ACCEPTED_THIS_DATE_CAP;
+  service_needs_prepayment = Messages.NEEDS_PREPAYMENT_FOR_CAP;
+  prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
+  no_pay_modes_avail_cap = Messages.NO_PAY_MODES_AVAIL_CAP;
+  apply_cap = Messages.APPLY_CAP;
+  select_the_cap = Messages.SELECT_THE_CAP;
+  member_cap = Messages.MEMBER_CAPTION;
+  members_cap = Messages.MEMBERS_CAP;
+  for_whom_the_cap = Messages.FOR_WHOM_CAP;
+  is_beingmade_cap = Messages.IS_BEING_MADE_CAP;
+  add_member_cap = Messages.ADD_MEMBER_CAP;
+  for_cap = Messages.FOR_CAP;
+  today_cap = Messages.TODAY_CAP;
+  persons_ahead_cap = Messages.PERS_AHEAD;
+  back_to_cap = Messages.BACK_TO_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  save_member_cap = Messages.SAVE_MEMBER_BTN;
+
+
   s3url;
   provider_id;
   api_success = null;

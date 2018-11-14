@@ -14,7 +14,9 @@ import {projectConstants} from '../../../shared/constants/project-constants';
   // styleUrls: ['./home.component.scss']
 })
 export class CheckinAddMemberComponent implements OnInit {
-
+  fill_fol_det_cap = Messages.FILL_FOLL_DETAILS_CAP;
+  first_name_cap = Messages.F_NAME_CAP;
+  last_name_cap = Messages.L_NAME_CAP;
   firstname = '';
   lastname = '';
   mobile = '';
