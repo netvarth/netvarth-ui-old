@@ -186,7 +186,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
      // console.log('NOT');
     }
     const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp');
-    console.log('exists', stattype);
+    // console.log('exists', stattype);
     if (stattype !== undefined && stattype !== null && stattype !== '') {
       // console.log('exists', savedtype);
       this.status_type = stattype;
@@ -197,7 +197,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
 
     const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-    console.log('bdata', bprof);
+   // console.log('bdata', bprof);
     if (bprof === null || bprof === undefined) {
       this.shared_services.bussinessDomains()
         .subscribe (

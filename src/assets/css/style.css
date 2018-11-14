@@ -647,9 +647,6 @@
 .icon-customer-served:before {
   content: "\35"; }
 
-.icon-tick:before {
-  content: "\32"; }
-
 .icon-rupee:before {
   content: "\56"; }
 
@@ -784,6 +781,12 @@
 
 .icon-info:before {
   content: "\42"; }
+
+.icon-rupee:before {
+  content: "\56"; }
+
+.icon-tax:before {
+  content: "\5d"; }
 
 html {
   font-size: 16px; }
@@ -7003,6 +7006,10 @@ header {
                 font-weight: 600;
                 flex-basis: 60%;
                 padding-right: 15px; }
+                .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .icon-tax {
+                  font-size: 1.4rem;
+                  vertical-align: text-top;
+                  color: #1873f2; }
               .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .quantity {
                 flex-basis: 20%; }
               .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
@@ -17824,10 +17831,7 @@ header.consumer {
         .consumer-dash .card.favourites .outer .list.active .header .rt, .consumer-dash .card.favourites .outer .list:hover .header .rt {
           background: #fff; } }
     .consumer-dash .card.history {
-      margin-bottom: 0;
-      /*&.one {
-          padding: 20px;
-      }*/ }
+      margin-bottom: 0; }
       .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
         padding: 0px; }
         .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl {
@@ -18048,6 +18052,178 @@ header.consumer {
           padding: 20px; }
           .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .noprevhist p {
             margin: 0; }
+      .consumer-dash .card.history.one .history-tbl {
+        padding: 0;
+        margin-bottom: 0; }
+        .consumer-dash .card.history.one .history-tbl .table {
+          border: none;
+          margin: 0; }
+          .consumer-dash .card.history.one .history-tbl .table thead tr th {
+            background: #666;
+            color: #fff;
+            border: none; }
+            .consumer-dash .card.history.one .history-tbl .table thead tr th.th1 {
+              width: 20%; }
+            .consumer-dash .card.history.one .history-tbl .table thead tr th.th4 {
+              /*border-right: 1px solid $cc-body;*/ }
+          .consumer-dash .card.history.one .history-tbl .table tbody tr td {
+            border: none;
+            font-weight: 500; }
+            .consumer-dash .card.history.one .history-tbl .table tbody tr td.td1 {
+              width: 20%;
+              color: #00aef2;
+              cursor: pointer; }
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td1 .name {
+                position: relative;
+                font-weight: 600; }
+            .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 {
+              border-right: 1px solid #dbdbdb; }
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .arrived,
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .started,
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .done,
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .cancelled,
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .checkedIn {
+                color: #4de2ff;
+                padding: 2px 5px 2px 12px;
+                font-size: .75rem;
+                font-weight: 600;
+                position: relative;
+                width: 95px;
+                display: block; }
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .arrived:before,
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .started:before,
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .done:before,
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .cancelled:before,
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .checkedIn:before {
+                  position: absolute;
+                  content: "";
+                  background: #4de2ff;
+                  width: 6px;
+                  height: 6px;
+                  -webkit-border-radius: 10px;
+                  border-radius: 10px;
+                  background-clip: padding-box;
+                  /* stops bg color from leaking outside the border: */
+                  top: 50%;
+                  left: 4px;
+                  margin-top: -4px; }
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .arrived {
+                color: #79e688; }
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .arrived:before {
+                  background: #79e688; }
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .done {
+                color: #0edcb8; }
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .done:before {
+                  background: #0edcb8; }
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .cancelled {
+                color: #f24949; }
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .cancelled:before {
+                  background: #f24949; }
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .checkedIn {
+                color: #5568ff; }
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .checkedIn:before {
+                  background: #5568ff; }
+            .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 {
+              display: flex;
+              justify-content: flex-start; }
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls {
+                margin: 0;
+                /*margin-left: auto;*/
+                padding: 0;
+                display: flex;
+                flex-wrap: wrap; }
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li {
+                  list-style: none;
+                  margin: 0 5px 5px; }
+                  @media only screen and (max-width: 767px) {
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li {
+                      margin-top: 8px; } }
+                  @media (min-width: 768px) and (max-width: 991px) {
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li {
+                      margin-top: 8px; } }
+                  .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span {
+                    padding: 3px;
+                    position: relative;
+                    padding-left: 22px;
+                    padding-right: 10px;
+                    cursor: pointer;
+                    -moz-transition: all 300ms;
+                    -o-transition: all 300ms;
+                    -webkit-transition: all 300ms;
+                    transition: all 300ms;
+                    color: #222223;
+                    display: flex; }
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span:before {
+                      position: absolute;
+                      content: "";
+                      left: 2px;
+                      top: 4px;
+                      font-family: "custom-ynw" !important;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      width: 16px;
+                      height: 16px; }
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span:hover {
+                      color: #00aef2; }
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span.checkin {
+                      text-transform: uppercase;
+                      -webkit-border-radius: 50px;
+                      border-radius: 50px;
+                      background-clip: padding-box;
+                      /* stops bg color from leaking outside the border: */
+                      background: #00aef2;
+                      /* Old browsers */
+                      background: -moz-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+                      /* FF3.6+ */
+                      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00aef2), color-stop(100%, #1873f2));
+                      /* Chrome,Safari4+ */
+                      background: -webkit-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+                      /* Chrome10+,Safari5.1+ */
+                      background: -o-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+                      /* Opera 11.10+ */
+                      background: -ms-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+                      /* IE10+ */
+                      background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
+                      /* W3C */
+                      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2',GradientType=0 );
+                      /* IE6-9 */
+                      color: #fff;
+                      padding-left: 10px;
+                      padding-right: 10px;
+                      font-weight: 600; }
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span.message:before {
+                      content: "\53"; }
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span.view-bill:before {
+                      content: "\4f"; }
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span.rate-service:before {
+                      content: "\3b"; }
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span.rate-service.rated:before {
+                      content: "\3c";
+                      color: #fda60d; }
+                    .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span.pay-bill:before {
+                      content: "\57"; }
+              @media only screen and (max-width: 767px) {
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5:before {
+                  display: none; } }
+              @media only screen and (max-width: 767px) {
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 {
+                  justify-content: flex-end; } }
+            @media only screen and (max-width: 767px) {
+              .consumer-dash .card.history.one .history-tbl .table tbody tr td.td1 {
+                width: 100%; }
+                .consumer-dash .card.history.one .history-tbl .table tbody tr td.td1:before {
+                  color: #222223;
+                  cursor: default; } }
+      .consumer-dash .card.history.one .search_paging {
+        padding: 20px;
+        border-top: 1px solid #dbdbdb; }
+        .consumer-dash .card.history.one .search_paging .container {
+          padding: 0; }
+          .consumer-dash .card.history.one .search_paging .container .text-center {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0px; }
   .consumer-dash .c-outer {
     margin-top: 0; }
 

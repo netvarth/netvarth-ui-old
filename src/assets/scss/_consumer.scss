@@ -3154,7 +3154,7 @@ header {
                                     border: 1px solid $cc-ash;
                                     @include transition(all 400ms);
                                     @include border-radius(0px);
-                                    @include box-shadow(0,1px,10px,rgba(0,0,0,.1));
+                                    @include box-shadow(0, 1px, 10px, rgba(0, 0, 0, .1));
                                     min-width: 32%;
                                     margin-right: 7px;
                                     margin-left: 7px;
@@ -3201,15 +3201,16 @@ header {
                                                     @include align-icon;
                                                     cursor: pointer;
                                                     font-size: .875rem;
-                                                    
+
                                                     &:before {
                                                         left: 0;
                                                         top: -2px;
                                                     }
                                                 }
                                             }
-                                            
+
                                             .status-outer {
+
                                                 .cancel-label,
                                                 .started-label,
                                                 .done-label {
@@ -3268,10 +3269,10 @@ header {
 
                                                 .icon-favourite-filled {
                                                     margin-left: auto;
-	                                                -webkit-animation: scale-up 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-	                                                animation: scale-up 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-                                                    transform:scale(1);
-                                                    -webkit-transform:scale(1);
+                                                    -webkit-animation: scale-up 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+                                                    animation: scale-up 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+                                                    transform: scale(1);
+                                                    -webkit-transform: scale(1);
 
                                                     &:before {
                                                         color: $cc-red;
@@ -3283,6 +3284,7 @@ header {
                                                         font-size: 1.2rem;
                                                     }
                                                 }
+
                                                 .icon-favourite {
                                                     font-size: 1.2rem;
                                                     cursor: pointer;
@@ -3360,25 +3362,26 @@ header {
                                                         left: 0;
                                                     }
                                                 }
-                                                
+
                                                 &.payment {
                                                     display: flex;
                                                     flex-direction: column;
                                                     border-bottom: none;
-                                                    
+
                                                     .paytext {
                                                         display: block;
                                                         margin-bottom: 5px;
                                                         color: $hover-blue;
                                                     }
+
                                                     .buttonouter {
                                                         display: flex;
                                                         flex-direction: column;
-                                                        
+
                                                         .amount {
                                                             display: none;
                                                         }
-                                                        
+
                                                         .cs-btn {
                                                             position: relative;
                                                             width: 120px;
@@ -3387,13 +3390,13 @@ header {
                                                             @include border-radius(3px);
                                                             padding: 3px 8px;
                                                             text-transform: none;
-                                                            
+
                                                             &:hover {
                                                                 background: $hover-blue;
                                                                 color: $white;
                                                             }
                                                         }
-                                                        
+
                                                     }
                                                 }
 
@@ -3568,6 +3571,7 @@ header {
                                         margin-left: 10px;
                                         margin-right: 10px;
                                     }
+
                                     @include respond-to(ynw-992-1199) {
                                         margin-left: 6px;
                                         margin-right: 6px;
@@ -3591,7 +3595,7 @@ header {
                                 right: -25px;
                                 top: 50%;
                                 margin-top: -20px;
-                                
+
                                 &:after {
                                     position: absolute;
                                     content: "\67";
@@ -3606,7 +3610,7 @@ header {
                                 left: -25px;
                                 top: 50%;
                                 margin-top: -20px;
-                                
+
                                 &:after {
                                     position: absolute;
                                     content: "\61";
@@ -3616,7 +3620,7 @@ header {
                                     @include font-custom;
                                 }
                             }
-                            
+
                             &:hover {
                                 background-color: $hover-blue;
                                 color: $hover-blue;
@@ -3624,7 +3628,7 @@ header {
                         }
                     }
                 }
-                
+
                 .nocheckins {
                     p {
                         margin: 0;
@@ -3666,7 +3670,7 @@ header {
                                 cursor: pointer;
                                 color: $linkblue;
                                 position: relative;
-                                
+
                                 &:after {
                                     content: "\72";
                                     position: absolute;
@@ -3674,7 +3678,7 @@ header {
                                     @include font-custom;
                                     font-size: .65rem;
                                     top: 4px;
-                                    
+
                                 }
                             }
                         }
@@ -3803,7 +3807,7 @@ header {
 
                         @include respond-to(ynw-575) {
                             flex-direction: column;
-                            
+
                             .rt {
                                 background: $white;
                             }
@@ -4012,24 +4016,26 @@ header {
                             &:last-child {
                                 border-bottom: none;
                             }
-                            
+
                             @include respond-to(ynw-767) {
                                 flex-direction: column;
-                                
+
                                 .locationname {
                                     text-align: center;
                                 }
-                                
+
                                 .bt-l {
                                     .wt-tme {
                                         align-items: center;
                                     }
                                 }
+
                                 .bt-r {
                                     .chk-btn {
                                         margin-left: auto;
                                         margin-right: auto;
                                     }
+
                                     .bt10 {
                                         width: 100%;
                                         text-align: center;
@@ -4057,6 +4063,7 @@ header {
                             }
                         }
                     }
+
                     &.active {
                         .header {
                             .lt {
@@ -4068,9 +4075,11 @@ header {
                             }
                         }
                     }
-                    
+
                     @include respond-to(ynw-575) {
-                        &.active, &:hover {
+
+                        &.active,
+                        &:hover {
                             .header {
                                 .rt {
                                     background: $white;
@@ -4090,7 +4099,7 @@ header {
                     .mat-expansion-panel-content {
                         .mat-expansion-panel-body {
                             padding: 0px;
-                            
+
                             .history-tbl {
                                 padding: 0px;
                                 font-weight: 500;
@@ -4121,12 +4130,12 @@ header {
                                         tr {
                                             td {
                                                 border: none;
-                                                
+
                                                 &.td1 {
                                                     width: 20%;
                                                     color: $linkblue;
                                                     cursor: pointer;
-                                                    
+
                                                     .name {
                                                         position: relative;
                                                         font-weight: 600;
@@ -4394,10 +4403,10 @@ header {
                                     }
                                 }
                             }
-                            
+
                             .noprevhist {
                                 padding: 20px;
-                                
+
                                 p {
                                     margin: 0;
                                 }
@@ -4407,11 +4416,250 @@ header {
                 }
             }
 
+            &.one {
+                .history-tbl {
+                    padding: 0;
+                    margin-bottom: 0;
 
+                    .table {
+                        border: none;
+                        margin: 0;
 
-            /*&.one {
-                padding: 20px;
-            }*/
+                        thead {
+                            tr {
+                                th {
+                                    background: $cc-gray;
+                                    color: $white;
+                                    border: none;
+
+                                    &.th1 {
+                                        width: 20%;
+                                    }
+
+                                    &.th4 {
+                                        /*border-right: 1px solid $cc-body;*/
+                                    }
+                                }
+                            }
+                        }
+
+                        tbody {
+                            tr {
+                                td {
+                                    border: none;
+                                    font-weight: 500;
+
+                                    &.td1 {
+                                        width: 20%;
+                                        color: $linkblue;
+                                        cursor: pointer;
+
+                                        .name {
+                                            position: relative;
+                                            font-weight: 600;
+                                        }
+                                    }
+
+                                    &.td4 {
+                                        border-right: 1px solid $cc-ash;
+
+                                        .arrived,
+                                        .started,
+                                        .done,
+                                        .cancelled,
+                                        .checkedIn {
+                                            color: $start;
+                                            padding: 2px 5px 2px 12px;
+                                            font-size: .75rem;
+                                            font-weight: 600;
+                                            position: relative;
+                                            width: 95px;
+                                            display: block;
+
+                                            &:before {
+                                                position: absolute;
+                                                content: "";
+                                                background: $start;
+                                                width: 6px;
+                                                height: 6px;
+                                                @include border-radius(10px);
+                                                top: 50%;
+                                                left: 4px;
+                                                margin-top: -4px;
+                                            }
+                                        }
+
+                                        .arrived {
+                                            color: $arrived;
+
+                                            &:before {
+                                                background: $arrived;
+                                            }
+                                        }
+
+                                        .done {
+                                            color: $done;
+
+                                            &:before {
+                                                background: $done;
+                                            }
+                                        }
+
+                                        .cancelled {
+                                            color: $cc-red;
+
+                                            &:before {
+                                                background: $cc-red;
+                                            }
+                                        }
+
+                                        .checkedIn {
+                                            color: $checkedin;
+
+                                            &:before {
+                                                background: $checkedin;
+                                            }
+                                        }
+                                    }
+
+                                    &.td5 {
+                                        display: flex;
+                                        justify-content: flex-start;
+
+                                        .controls {
+                                            margin: 0;
+                                            /*margin-left: auto;*/
+                                            padding: 0;
+                                            display: flex;
+                                            flex-wrap: wrap;
+
+                                            li {
+                                                list-style: none;
+                                                margin: 0 5px 5px;
+
+                                                @include respond-to(ynw-767) {
+                                                    margin-top: 8px;
+                                                }
+
+                                                @include respond-to(ynw-768-991) {
+                                                    margin-top: 8px;
+                                                }
+
+                                                span {
+                                                    padding: 3px;
+                                                    position: relative;
+                                                    padding-left: 22px;
+                                                    padding-right: 10px;
+                                                    cursor: pointer;
+                                                    @include transition(all 300ms);
+                                                    color: $linkblack;
+                                                    display: flex;
+
+                                                    &:before {
+                                                        position: absolute;
+                                                        content: "";
+                                                        left: 2px;
+                                                        top: 4px;
+                                                        @include font-custom;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                        width: 16px;
+                                                        height: 16px;
+                                                    }
+
+                                                    &:hover {
+                                                        color: $linkblue;
+                                                    }
+
+                                                    &.checkin {
+                                                        text-transform: uppercase;
+                                                        @include border-radius(50px);
+                                                        @include left-gradient(#00aef2, #1873f2);
+                                                        color: $white;
+                                                        padding-left: 10px;
+                                                        padding-right: 10px;
+                                                        font-weight: 600;
+                                                    }
+
+                                                    &.message {
+                                                        &:before {
+                                                            content: "\53";
+                                                        }
+                                                    }
+
+                                                    &.view-bill {
+                                                        &:before {
+                                                            content: "\4f";
+                                                        }
+                                                    }
+
+                                                    &.rate-service {
+                                                        &:before {
+                                                            content: "\3b";
+                                                        }
+
+                                                        &.rated {
+                                                            &:before {
+                                                                content: "\3c";
+                                                                color: $cc-warning;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    &.pay-bill {
+                                                        &:before {
+                                                            content: "\57";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        &:before {
+                                            @include respond-to(ynw-767) {
+                                                display: none;
+                                            }
+                                        }
+
+                                        @include respond-to(ynw-767) {
+                                            justify-content: flex-end;
+                                        }
+                                    }
+
+                                    @include respond-to(ynw-767) {
+                                        &.td1 {
+                                            width: 100%;
+
+                                            &:before {
+                                                color: $linkblack;
+                                                cursor: default;
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                .search_paging {
+                    padding: 20px;
+                    border-top: 1px solid $cc-ash;
+
+                    .container {
+                        padding: 0;
+
+                        .text-center {
+                            display: flex;
+                            justify-content: flex-end;
+                            margin-bottom: 0px;
+                        }
+
+                    }
+                }
+            }
         }
     }
 

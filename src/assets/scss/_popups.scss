@@ -3141,6 +3141,12 @@
                                         font-weight: 600;
                                         flex-basis: 60%;
                                         padding-right: 15px;
+                                        
+                                        .icon-tax {
+                                            font-size: 1.4rem;
+                                            vertical-align: text-top;
+                                            color: $hover-blue;
+                                        }
                                     }
                                     .quantity {
                                         flex-basis: 20%;

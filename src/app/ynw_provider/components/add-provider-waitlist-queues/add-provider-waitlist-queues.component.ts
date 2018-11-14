@@ -113,6 +113,11 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       // pushing the day details to the respective array to show it in the page
       this.selday_arr.push(Number(this.data.queue.queueSchedule.repeatIntervals[j]));
     }
+    if (this.selday_arr.length === 7) {
+      this.Selall = true;
+    } else {
+      this.Selall = false;
+    }
     this.selservice_arr = [];
     // extracting the selected services
     for (let j = 0; j < this.data.queue.services.length; j++) {
@@ -161,6 +166,11 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       this.selday_arr.push(dayindx);
     } else {
       this.selday_arr.splice(selindx, 1);
+    }
+    if (this.selday_arr.length === 7) {
+      this.Selall = true;
+    } else {
+      this.Selall = false;
     }
   }
 

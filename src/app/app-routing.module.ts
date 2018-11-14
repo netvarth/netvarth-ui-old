@@ -37,7 +37,9 @@ const routes: Routes = [
     { path: 'searchdetail/:id/history', component: ConsumerWaitlistHistoryComponent },
     { path: 'payment-return/:id', component: ReturnPaymentComponent },
     { path: 'terms', component: TermsStaticComponent },
+    { path: 'terms/:id', component: TermsStaticComponent },
     { path: 'privacy', component: PrivacyStaticComponent },
+    { path: 'privacy/:id', component: PrivacyStaticComponent },
     { path: '**', redirectTo: 'not-found' }
 ];
 

@@ -740,7 +740,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   reloadAPIs() {
-    console.log('reload api' + moment.now());
+    // console.log('reload api' + moment.now());
     this.getWaitlist();
     this.reload_history_api = {status : true};
   }

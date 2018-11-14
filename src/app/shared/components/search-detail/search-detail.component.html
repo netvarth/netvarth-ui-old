@@ -47,8 +47,8 @@
                           </div>
                           <!-- <div  class="bx-block" *ngIf="subdomainlist_data && kwtyp != 'subdom' && domain != 'All'"> -->
                             <div  class="bx-block" *ngIf="subdomainlist_data && !specialization_hide  && (subsector=='' || subsector == undefined)">
-
-                              <mat-accordion>
+<!-- Domain: {{domain}} -->
+                              <mat-accordion *ngIf="refined_domain || (domain !='' && domain != 'All')" >
                                   <mat-expansion-panel [expanded]="true">
                                       <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
                                         <mat-panel-title>

@@ -49,7 +49,7 @@ export class AddProviderSchedulesComponent implements OnInit {
      }
 
   ngOnInit() {
-   // console.log('source', this.Isource);
+    // console.log('source', this.Isource);
     this.dstart_time =  {hour: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')};
     this.dend_time =  {hour: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')};
 
@@ -63,7 +63,7 @@ export class AddProviderSchedulesComponent implements OnInit {
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
     this.display_schedule =  this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
    // console.log('schedule', this.schedule_arr);
-   // console.log('dispschedule', this.display_schedule);
+  // console.log('dispschedule', this.display_schedule);
   }
 
   handlechecbox(dayindx) {
@@ -74,7 +74,12 @@ export class AddProviderSchedulesComponent implements OnInit {
     } else {
       this.selday_arr.splice(selindx, 1);
     }
-    // // console.log('curarr', this.selday_arr);
+    // console.log('curarr', this.selday_arr);
+    if (this.selday_arr.length === 7) {
+      this.Selall = true;
+    } else {
+      this.Selall = false;
+    }
   }
   handleselectall() {
     this.Selall = true;
@@ -281,6 +286,11 @@ export class AddProviderSchedulesComponent implements OnInit {
       this.show_schedule_selection = true;
       if (this.showsavebutton === '1') {
         this.show_savebutton = false;
+      }
+      if (this.selday_arr.length === 7) {
+        this.Selall = true;
+      } else {
+        this.Selall = false;
       }
       // // console.log('selday', this.selday_arr);
     } else {
