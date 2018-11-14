@@ -183,9 +183,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
      // console.log('NOT');
     }
     const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp');
-    if (stattype !== undefined && stattype !== null) {
+    if (stattype !== undefined && stattype !== null && stattype !== '') {
       // console.log('exists', savedtype);
       this.status_type = stattype;
+    }
+     if (stattype === null || stattype === '') {
+      this.status_type = 'all';
     }
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
 
@@ -441,6 +444,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           this.queues = this.all_queues;
         }
         this.selected_queue = this.all_queues[selqid];
+        if (this.time_type === 1) {
+          this.getTodayCheckIn();
+        }
         this.getTodayCheckinCount()
           .then(
             (result) => {

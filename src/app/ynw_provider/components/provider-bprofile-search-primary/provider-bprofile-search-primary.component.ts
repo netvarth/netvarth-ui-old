@@ -73,11 +73,18 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
   onSubmit(form_data) {
    // console.log('length', form_data.bname.length);
    const blankpatterm = projectConstants.VALIDATOR_BLANK;
+     form_data.bname = form_data.bname.trim();
    if (blankpatterm.test(form_data.bname)) {
      this.api_error = 'Please enter the business name';
      this.document.getElementById('bname').focus();
      return;
    }
+    if (form_data.bdesc !== '' && form_data.bdesc.trim() === '') {
+    this.api_error = 'Please enter the business description';
+    this.document.getElementById('bdesc').focus();
+    return;
+   }
+   form_data.bdesc = form_data.bdesc.trim();
    /*if (blankpatterm.test(form_data.bdesc)) {
     this.api_error = 'Please enter the business description';
     this.document.getElementById('bdesc').focus();

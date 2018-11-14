@@ -989,7 +989,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       .subscribe(
       data => {
         this.blogo = data;
-        // console.log('here logo', this.blogo);
+        console.log('here logo', this.blogo);
         let logo = '';
         if (this.blogo[0]) {
           logo = this.blogo[0].url;
