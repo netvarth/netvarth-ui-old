@@ -1,14 +1,14 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Create {{customer_label  | capitalizeFirst}}
+<h1 class="mat-dialog-title">{{create_cap}} {{customer_label  | capitalizeFirst}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
 <mat-dialog-content>
 <div class="form-group">
-    <label class="col-form-label" for="mobile_number">Mobile Number *</label>
+    <label class="col-form-label" for="mobile_number">{{mobile_cap}}</label>
     <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
     formControlName="mobile_number" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')"
@@ -23,7 +23,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 
 <div class="form-group" >
-    <label class="col-form-label" for="first_name">First Name *</label>
+    <label class="col-form-label" for="first_name">{{f_name_cap}}</label>
     <input matInput type="text" class="form-control" id="first_name" placeholder="First Name"
     formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
@@ -37,7 +37,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 
 <div class="form-group">
-    <label class="col-form-label" for="last_name">Last Name *</label>
+    <label class="col-form-label" for="last_name">{{l_name_cap}}</label>
     <input matInput type="text" class="form-control" id="last_name" placeholder="Last Name"
     formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
@@ -50,7 +50,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 
 <div class="form-group">
-    <label class="col-form-label" for="email_id">Email Id</label>
+    <label class="col-form-label" for="email_id">{{email_cap}}</label>
     <input matInput type="text" class="form-control" id="email_id" placeholder="Email Id"
     formControlName="email_id" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')"
@@ -59,10 +59,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 
 <div class="form-group">
-    <label class="col-form-label" for="gender">Gender</label>
+    <label class="col-form-label" for="gender">{{gender_cap}}</label>
     <mat-radio-group formControlName="gender">
-    <mat-radio-button value="male">Male</mat-radio-button>
-    <mat-radio-button value="female">Female</mat-radio-button>
+    <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
+    <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
     </mat-radio-group>
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'gender')"
     errorMsg="Please select the gender.">
@@ -70,7 +70,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 
 <div class="form-group normalpicker">
-    <label class="col-form-label" for="last_name">Date Of Birth</label>
+    <label class="col-form-label" for="last_name">{{dob_cap}}</label>
 
     <div class="pickerouter">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -86,16 +86,16 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 
 <div class="form-group">
-    <label class="col-form-label" for="email_id">Address</label>
+    <label class="col-form-label" for="email_id">{{adrress_cap}}</label>
     <textarea  class="form-control" id="address" placeholder="Address"
     formControlName="address"></textarea>
 </div>
 
 </mat-dialog-content>
 <mat-dialog-actions>
-<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+<button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
 <button  type="submit" mat-button
-[disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
+[disabled]="!amForm.valid" class="cs-btn bt1">{{save_btn}}</button>
 </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error"

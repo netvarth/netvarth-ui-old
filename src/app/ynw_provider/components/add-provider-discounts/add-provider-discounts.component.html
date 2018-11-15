@@ -1,14 +1,14 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Bill Discount - {{ data.type | capitalizeFirst }}
+<h1 class="mat-dialog-title">{{bill_discount_cap}}{{ data.type | capitalizeFirst }}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
 <mat-dialog-content>
 <div class="form-group">
-    <label class="col-form-label" for="first_name">Name *</label>
+    <label class="col-form-label" for="first_name">{{name_mand_cap}}</label>
     <input matInput type="text" class="form-control" id="name" placeholder="Name"
     formControlName="name" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
@@ -20,10 +20,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
    </app-field-error-display>
 </div>
 <div class="form-group">
-    <label class="col-form-label" for="calculationType">Type *</label>
+    <label class="col-form-label" for="calculationType">{{type_mand_cap}}</label>
       <mat-radio-group formControlName="calculationType" #calculationType>
-        <mat-radio-button value="Fixed" (click)="handleTypechange('Fixed')">Fixed</mat-radio-button>
-        <mat-radio-button value="Percentage" (click)="handleTypechange('Percentage')">Percentage</mat-radio-button>
+        <mat-radio-button value="Fixed" (click)="handleTypechange('Fixed')">{{fixed_cap}}</mat-radio-button>
+        <mat-radio-button value="Percentage" (click)="handleTypechange('Percentage')">{{percentage_cap}}</mat-radio-button>
       </mat-radio-group>
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'calculationType')"
     errorMsg="Please enter your discount type.">
@@ -47,7 +47,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 
 <div class="form-group">
-    <label class="col-form-label" for="last_name">Description *</label>
+    <label class="col-form-label" for="last_name">{{description_mand_cap}}</label>
     <input matInput type="text" class="form-control" id="description" placeholder="Description"
     formControlName="description" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
@@ -60,9 +60,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+<button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
 <button  type="submit" mat-button
-[disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
+[disabled]="!amForm.valid" class="cs-btn bt1">{{save_btn_cap}}</button>
 </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error"

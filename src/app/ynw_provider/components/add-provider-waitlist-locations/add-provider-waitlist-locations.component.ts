@@ -8,6 +8,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderSchedulesComponent } from '../add-provider-schedule/add-provider-schedule.component';
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-add-locations',
@@ -16,6 +17,21 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderWaitlistLocationsComponent implements OnInit {
   @ViewChild('loc') private elementRef: ElementRef;
+
+  location_cap = Messages.LOCATION_CAP;
+  amenities_cap = Messages.AMENITIES_CAP;
+  location_map_cap = Messages.LOCATION_MAP_CAP;
+  location_map_message = Messages.LOCATION_MAP_MESSAGE_CAP;
+  location_name = Messages.LOCATION_NAME_CAP;
+  latitude_cap = Messages.LATITUDE_CAP;
+  longitude_cap = Messages.LONGITUDE_CAP;
+  address_cap = Messages.LOCATION_ADDRESS_CAP;
+  map_url_cap = Messages.MAP_URL_CAP;
+  schedule_cap = Messages.SCHEULDE_CAP;
+  open_cap = Messages.OPEN_CAP;
+  parking_type_cap = Messages.PARKING_TYPE_CAP;
+cancel_btn = Messages.CANCEL_BTN;
+save_btn=Messages.SAVE_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

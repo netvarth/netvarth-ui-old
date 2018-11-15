@@ -6,6 +6,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ViewChild } from '@angular/core';
+import { Messages } from '../../../shared/constants/project-messages';
 // import { } from 'googlemaps';
 
 @Component({
@@ -19,6 +20,10 @@ export class GoogleMapComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
+  choose_location_cap = Messages.LOCATION_MAP_CAP;
+  mark_map_cap = Messages.MARK_MAP_CAP;
+  select_address_cap = Messages.SELECT_ADDRESS_CAP;
+  yes_done_cap = Messages.YES_DONE_CAP
   map: google.maps.Map;
   lat_lng = {
     latitude: 12.9715987,

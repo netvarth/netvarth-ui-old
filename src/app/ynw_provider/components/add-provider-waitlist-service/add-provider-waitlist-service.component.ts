@@ -23,6 +23,22 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 export class AddProviderWaitlistServiceComponent implements OnInit {
 
+  service_cap = Messages.SERVICE_CAP;
+  description_cap = Messages.DESCRIPTION_CAP;
+price_cap = Messages.PRICE_CAP;
+service_name_cap = Messages.SERVICE_NAME_CAP;
+est_duration_cap = Messages.EST_DURATION_CAP;
+enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
+prepayment_cap = Messages.PREPAYMENT_CAP;
+tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
+service_notify_cap = Messages.SERVICE_NOTIFY_CAP;
+push_message_cap = Messages.PUSH_MESSAGE_CAP;
+service_email_cap = Messages.SERVICE_EMAIL_CAP;
+gallery_cap = Messages.GALLERY_CAP;
+select_image_cap = Messages.SELECT_IMAGE_CAP;
+go_to_service_cap = Messages.GO_TO_SERVICE_CAP;
+delete_btn = Messages.DELETE_BTN;
+cancel_btn = Messages.CANCEL_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

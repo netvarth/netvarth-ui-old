@@ -6,6 +6,7 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-provider-note',
@@ -14,6 +15,10 @@ import { ProviderServices } from '../../services/provider-services.service';
 
 export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
 
+  add_provider_note_cap = Messages.ADD_PROVIDER_NOTE_CAP;
+  provider_note_cap = Messages.PROVIDER_NOTE_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  save_btn = Messages.SAVE_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

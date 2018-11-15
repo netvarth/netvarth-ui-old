@@ -8,6 +8,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-schedule',
@@ -24,6 +25,17 @@ export class AddProviderSchedulesComponent implements OnInit {
   @Output() cancelScheduleClick = new EventEmitter<any>();
   @Output() addeditScheduleClick = new EventEmitter<any>();
 
+
+  edit_btn = Messages.EDIT_BTN;
+  delete_btn = Messages.DELETE_BTN;
+  add_schedule = Messages.ADD_SCHEDULE_CAP;
+edit_schedule = Messages.EDIT_SCHEDULE_BTN;
+select_days_cap = Messages.SELECT_DAYS_BTN;
+start_time_cap = Messages.START_TIME_CAP;
+end_time_cap = Messages.END_TIME_CAP;
+save_schedule_cap = Messages.SAVE_SCHEDULE_CAP;
+cancel_btn = Messages.CANCEL_BTN;
+update_btn = Messages.UPDATE_BTN;
     api_error = null;
   api_success = null;
   weekdays_arr = projectConstants.myweekdaysSchedule;

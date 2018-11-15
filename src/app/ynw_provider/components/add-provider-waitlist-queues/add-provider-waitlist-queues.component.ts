@@ -17,6 +17,20 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderWaitlistQueuesComponent implements OnInit {
 
+  service_time_cap = Messages.SERV_TIME_WINDOW_CAP;
+  select_days_cap = Messages.SELECT_DAYS_BTN;
+  start_time_cap = Messages.START_TIME_CAP;
+  end_time_cap = Messages.END_TIME_CAP;
+  service_time_window_name = Messages.SERVICE_TIME_WINDOW_CAP;
+  location_cap = Messages.QUEUE_LOCATION_CAP;
+  service_cap = Messages.QUEUE_SERVICE_CAP;
+  schedule_cap = Messages.SCHEDULE_CAP;
+  existing_schedule_cap = Messages.EXISTING_SCHEDULE_CAP;
+  max_capacity_cap = Messages.MAX_CAPACITY_CAP;
+  No_cap = Messages.NO_OF_CAP;
+  servc_cap = Messages.SERVE_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  save_btn = Messages.SAVE_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

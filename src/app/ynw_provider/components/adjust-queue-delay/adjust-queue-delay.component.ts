@@ -15,6 +15,13 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AdjustQueueDelayComponent implements OnInit {
 
+  adjust_delay_cap = Messages.ADJUST_DELAY_CAP;
+  service_window_cap = Messages.SERV_TIME_WINDOW_CAP;
+  send_message_cap = Messages.SEND_MSG_CAP;
+  messgae_cap = Messages.MESSAGE_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  save_btn = Messages.SAVE_BTN;
+  delay_cap = Messages.DELAY_CAP;
   amForm: FormGroup;
   queues: any = [];
   api_success = null;

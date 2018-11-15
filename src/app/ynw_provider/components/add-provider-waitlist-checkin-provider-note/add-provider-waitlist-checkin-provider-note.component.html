@@ -1,14 +1,14 @@
 <form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <h1 class="mat-dialog-title">
         <!-- {{provider_label  | capitalizeFirst}} Note -->
-        Add Private Note
-      <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+{{add_provider_note_cap}} 
+     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
           <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
     </h1>
     <mat-dialog-content>
         <div class="form-group">
-            <label class="col-form-label" for="displayName">Private Note*</label>
+            <label class="col-form-label" for="displayName">{{provider_note_cap}}</label>
             <textarea class="form-control" id="message" placeholder="Type notes for your reference only" formControlName="message" maxlength="1000">
 
             </textarea>
@@ -17,8 +17,8 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
-   <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-       <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
+   <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
+       <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{save_btn}}</button>
     </mat-dialog-actions>
     <app-field-error-display [displayError]="true" *ngIf="api_error"
     errorMsg="{{api_error}}"></app-field-error-display>

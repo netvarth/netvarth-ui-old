@@ -1,16 +1,16 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Location <span *ngIf="forbadge">Amenities</span> <button #loc mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title">{{location_cap}} <span *ngIf="forbadge">{{amenities_cap}}</span> <button #loc mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
     <ng-container *ngIf=" data && !forbadge">
         <div class="form-group mapselection">
-            <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1"><i data-icon="j"></i>Choose your location in the MAP</button>
-            <span class="expl">If your location is not available in the MAP, kindly fill the location details manually.</span>
+            <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1"><i data-icon="j"></i>{{location_map_cap}}</button>
+            <span class="expl">{{location_map_message}}</span>
         </div>
         <div class="form-group">
         <!-- <mat-form-field class="example-full-width"> -->
-            <label class="col-form-label">Location Name *</label>
+            <label class="col-form-label">{{location_name}}</label>
             <input class="form-control" formControlName="locname" autocomplete="off" maxlength="50" placeholder="Enter your precise location">
         <!-- </mat-form-field> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')"
@@ -23,7 +23,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </div>
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <label class="col-form-label">Latitude *</label>
+                <label class="col-form-label">{{latitude_cap}}</label>
                 <input matInput type="text" placeholder="Latitude *" formControlName="loclattitude" autocomplete="off">
         </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')"
@@ -36,7 +36,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </div>
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <label class="col-form-label">Longitude *</label>
+                <label class="col-form-label">{{longitude_cap}}</label>
                 <input matInput type="text" placeholder="Longitude *" formControlName="loclongitude" autocomplete="off">
         </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')"
@@ -50,7 +50,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </div>
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <label class="col-form-label">Address *</label>
+                <label class="col-form-label">{{address_cap}}</label>
                 <!-- <input matInput type="text" placeholder="Address" formControlName="locaddress"> -->
                 <textarea matInput formControlName="locaddress" row="4"></textarea>
         </mat-form-field>
@@ -74,13 +74,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </div> -->
         <div class="form-group">
             <mat-form-field class="example-full-width">
-               <label class="col-form-label">Google Map URL1</label>
+               <label class="col-form-label">{{map_url_cap}}</label>
                 <input class="nofocus" matInput type="text" placeholder="Google Map URL" formControlName="locmapurl" autocomplete="off" tabindex="-1">
         </mat-form-field>
         </div>
         <!-- <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">  -->
         <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">
-            <label class="col-form-label">Business Schedules</label>
+            <label class="col-form-label">{{schedule_cap}}</label>
         </div>
         <!-- <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule> -->
         <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && proceedwithschedule" [Isource]= "'wizard'" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>
@@ -88,7 +88,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     <ng-container *ngIf="forbadge">
 
         <div class="form-group">
-        <mat-checkbox formControlName="loct24hour">24 hours Open</mat-checkbox>
+        <mat-checkbox formControlName="loct24hour">{{open_cap}}</mat-checkbox>
         </div>
 
         <div *ngIf="data.type=='edit'">
@@ -98,7 +98,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </div>
         <div class="form-group" #badgediv>
         <mat-form-field>
-            <label>Select Parking Type</label>
+            <label>{{parking_type_cap}}</label>
             <mat-select placeholder="Select Parking Type*" formControlName="locparkingtype">
                 <mat-option *ngFor="let ptype of parking_list" [value]="ptype">
                 {{ ptype }}
@@ -110,8 +110,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 </mat-dialog-content>
 <mat-dialog-actions>
- <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
- <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Save</button>
+ <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
+ <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{save_btn}}</button>
 </mat-dialog-actions>
 <app-field-error-display [displayError]="true" *ngIf="api_error"
 errorMsg="{{api_error}}"></app-field-error-display>

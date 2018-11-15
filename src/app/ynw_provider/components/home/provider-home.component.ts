@@ -36,6 +36,42 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 
 export class ProviderHomeComponent implements OnInit, OnDestroy {
 
+  today_cap = Messages.TODAY_HOME_CAP;
+  future_cap = Messages.FUTURE_HOME_CAP;
+  history_cap = Messages.HISTORY_HOME_CAP;
+  service_window_cap = Messages.SERVICE_TIME_CAP;
+  services_cap = Messages.SERVICES_CAP;
+  check_in_status = Messages.CHECK_IN_STATUS_CAP;
+  payment_status = Messages.PAYMENT_STATUS_CAP;
+  start_date = Messages.START_DATE_CAP;
+  end_date = Messages.END_DATE_CAP;
+  token_no = Messages.TOKEN_NO_CAP;
+  name_cap = Messages.PRO_NAME_CAP;
+  service_cap = Messages.PRO_SERVICE_CAP;
+  status_cap = Messages.PRO_STATUS_CAP;
+  note_cap = Messages.NOTE_CAP;
+  change_status = Messages.CHANGE_STATUS_CAP;
+  add_note_cap = Messages.ADD_NOTE_CAP;
+  available_cap = Messages.AVAILABLE_CAP;
+  no_service_cap = Messages.NO_SERVICE_CAP;
+  adjust_delay = Messages.ADJUST_DELAY_CAP;
+  first_name = Messages.FIRST_NAME_CAP;
+  last_name = Messages.LAST_NAME_CAP;
+  phone_no_cap = Messages.PHONE_NO_CAP;
+all_cap = Messages.ALL_CAP;
+date_cap = Messages.DATE_COL_CAP;
+actions_cap = Messages.ACTIONS_CAP;
+done_cap = Messages.DONE_BTN;
+bill_cap = Messages.BILL_CAPTION;
+accept_cap = Messages.ACCEPT_PAY_CAP;
+not_paid_cap = Messages.NOT_PAID_CAP;
+partially_paid_cap = Messages.PARTIALLY_PAID_CAP;
+paid_cap = Messages.PAID_CAP;
+send_message_cap = Messages.SEND_MSG_CAP;
+add_private_note = Messages.ADD_PROVIDER_NOTE_CAP;
+cancel_cap = Messages.CANCEL_BTN;
+view_cap = Messages.VIEW_CAP;
+no_cap = Messages.NO_CAP;
 
   locations: any = [];
   queues: any = [];

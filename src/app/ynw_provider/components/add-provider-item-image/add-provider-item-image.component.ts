@@ -7,6 +7,7 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-item-image-add',
@@ -15,6 +16,11 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderItemImageComponent implements OnInit {
 
+  delete_btn = Messages.DELETE_BTN;
+  item_image_cap = Messages.ITEM_IMAGE_CAP;
+  change_image = Messages.CHANGE_IMAGE;
+  select_image = Messages.SELECT_IMAGE;
+  cancel_btn = Messages.CANCEL_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
