@@ -97,7 +97,7 @@
 
                     <div class="consumer-comment" *ngIf="step==1">
                         <div class="form-group">
-                            <label for="reason" class="col-form-label" (click)="handleNote()">{{have_note_click_here}} <span [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote"></span></label>
+                        	<label for="reason" class="col-form-label">{{have_note_click_here}} <span [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote" (click)="handleNote()"></span></label>
                             <ng-container *ngIf="dispCustomernote">
                                 <textarea matInput #consumernote (change)="handleConsumerNote(consumernote.value)"
                                     maxlength="1000"></textarea>

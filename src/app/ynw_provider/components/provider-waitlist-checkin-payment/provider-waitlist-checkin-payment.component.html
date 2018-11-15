@@ -37,24 +37,24 @@
     bill_data.billPaymentStatus == 'FullyPaid'"
     (click)="makePayment()">Make Payment</button> -->
 
-    <button  type="button" mat-button class="cs-btn bt1 makepayment"
-    *ngIf="pay_data.amount && pay_data.amount > 0 && (pay_data.amount<org_amt) &&
+     <button  type="button" mat-button class="cs-btn bt1 makepayment"
+    *ngIf="pay_data.amount && pay_data.amount > 0 && (pay_data.amount<=org_amt) &&
     bill_data.billPaymentStatus != 'FullyPaid'"
     (click)="makePayment()">Make Payment</button>
 
-    <button  type="button" mat-button class="cs-btn bt1 makepayment"
+    <!-- <button  type="button" mat-button class="cs-btn bt1 makepayment"
     *ngIf="pay_data.amount && pay_data.amount > 0 && (pay_data.amount==org_amt) &&
     bill_data.billPaymentStatus != 'FullyPaid' && pay_data.acceptPaymentBy == 'self_pay'"
-    (click)="makePayment()">Make Payment</button> <!-- self pay -->
+    (click)="makePayment()">Make Payment</button> self pay -->
 
     <button  type="button" mat-button class="cs-btn bt1 settle"
-    *ngIf="pay_data.amount && pay_data.amount > 0 && (pay_data.amount<org_amt) && 
+    *ngIf="pay_data.amount && pay_data.amount > 0 && (pay_data.amount<=org_amt) && 
     bill_data.billPaymentStatus != 'FullyPaid' && pay_data.acceptPaymentBy != 'self_pay'" 
     (click)="confirmSettle()">Settle</button>
 
-    <button  type="button" mat-button class="cs-btn bt1 settle"
+    <!-- <button  type="button" mat-button class="cs-btn bt1 settle"
     *ngIf="pay_data.amount == org_amt && bill_data.billStatus == 'New'
     && bill_data.billStatus != 'Settled' && (payment_options.length>0) && 
     bill_data.billPaymentStatus != 'FullyPaid' && pay_data.acceptPaymentBy != 'self_pay'"
-    (click)="makePayment()">Make payment & Settle</button>
+    (click)="makePayment()">Make payment & Settle</button> -->
 </mat-dialog-actions>

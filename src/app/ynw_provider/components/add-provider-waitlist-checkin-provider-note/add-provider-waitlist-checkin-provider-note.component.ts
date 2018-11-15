@@ -58,7 +58,14 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     });
   }
   onSubmit (form_data) {
-    const post_data =  form_data.message || '';
+    const post_data =  form_data.message.trim() || '';
+ if (post_data === '') {
+   this.api_error = 'Please enter your note';
+    setTimeout(() => {
+    this.api_error = null;
+    }, projectConstants.TIMEOUT_DELAY);
+    return;
+ }
 
     this.provider_services.addProviderWaitlistNote(this.checkin_id,
     post_data)

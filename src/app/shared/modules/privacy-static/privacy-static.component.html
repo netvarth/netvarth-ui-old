@@ -1,4 +1,4 @@
-<app-header [headerTitle]="'Header'"  [passedDomain]="domain" [passedkwdet]="kwdet"></app-header>
+<app-header [headerTitle]="'Header'"  [passedDomain]="domain" [passedkwdet]="kwdet" *ngIf="showheaderandfooter"></app-header>
 
 <section class="content">
   <div class="container">
@@ -98,4 +98,4 @@
         </div>
     </div>
   </section>
-  <app-footer [includedfrom]="'home'"></app-footer> 
+<app-footer [includedfrom]="'home'" *ngIf="showheaderandfooter"></app-footer> 

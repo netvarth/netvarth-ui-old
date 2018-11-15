@@ -83,7 +83,7 @@
                   <div class="list-content">
 
                       <div class="c-row one">
-                          <div class="name">{{item.name | capitalizeFirst}} @ {{item.price}}</div>
+                          <div class="name">{{item.name | capitalizeFirst}} @ {{item.price}} <i class="icon-tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="item.taxable"></i></div>
                           <div class="quantity">{{qnty_cap}} {{cart.items[i].quantity}}</div>
                           <div class="price">{{item.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
                       </div>

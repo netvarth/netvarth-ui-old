@@ -142,7 +142,9 @@ export class ViewBillComponent implements OnInit, OnChanges {
         this.bill_data.service[i]['rowtotal'] = (this.bill_data.service[i].price * this.bill_data.service[i].quantity);
         const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - this.bill_data.service[i].discountValue - this.bill_data.service[i].couponValue;
         this.subtotalwithouttax += rtotal;
+        this.bill_data.service[i].isTaxable = false;
         if (this.bill_data.service[i].GSTpercentage > 0) {
+        this.bill_data.service[i].isTaxable = true;
           this.taxpercentage = this.bill_data.service[i].GSTpercentage;
           this.taxtotal += ((this.bill_data.service[i].price * this.bill_data.service[i].quantity) - (this.bill_data.service[i].discountValue + this.bill_data.service[i].couponValue) * this.bill_data.service[i].GSTpercentage / 100);
           this.taxabletotal += rtotal;
@@ -155,7 +157,9 @@ export class ViewBillComponent implements OnInit, OnChanges {
         this.bill_data.items[i]['rowtotal'] = (this.bill_data.items[i].price * this.bill_data.items[i].quantity);
         const rtotal = (this.bill_data.items[i].price * this.bill_data.items[i].quantity) - this.bill_data.items[i].discountValue - this.bill_data.items[i].couponValue;
         this.subtotalwithouttax += rtotal;
+        this.bill_data.items[i].isTaxable = false;
         if (this.bill_data.items[i].GSTpercentage > 0) {
+         this.bill_data.items[i].isTaxable = true;
           this.taxpercentage = this.bill_data.items[i].GSTpercentage;
           // console.log('tax', this.bill_data.items[i].itemId, this.bill_data.items[i].GSTpercentage);
           this.taxtotal += (((this.bill_data.items[i].price * this.bill_data.items[i].quantity) - (this.bill_data.items[i].discountValue + this.bill_data.items[i].couponValue)) * this.bill_data.items[i].GSTpercentage / 100);

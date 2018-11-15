@@ -87,6 +87,11 @@ update_btn = Messages.UPDATE_BTN;
       this.selday_arr.splice(selindx, 1);
     }
     // // console.log('curarr', this.selday_arr);
+     if (this.selday_arr.length === 7) {
+      this.Selall = true;
+    } else {
+      this.Selall = false;
+    }
   }
   handleselectall() {
     this.Selall = true;
@@ -285,6 +290,11 @@ update_btn = Messages.UPDATE_BTN;
           this.selday_arr.push(parseInt(this.schedule_arr[i]['day'], 10));
           sindx = i;
         }
+      }
+        if (this.selday_arr.length === 7) {
+        this.Selall = true;
+      } else {
+        this.Selall = false;
       }
       // console.log('sel day', this.selday_arr);
       this.dstart_time =  {hour: moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH'), minute: moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm')};

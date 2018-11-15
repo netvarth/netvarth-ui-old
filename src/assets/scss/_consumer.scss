@@ -4409,9 +4409,250 @@ header {
 
 
 
-            /*&.one {
-                padding: 20px;
-            }*/
+                        &.one {
+                .history-tbl {
+                    padding: 0;
+                    margin-bottom: 0;
+
+                    .table {
+                        border: none;
+                        margin: 0;
+
+                        thead {
+                            tr {
+                                th {
+                                    background: $cc-gray;
+                                    color: $white;
+                                    border: none;
+
+                                    &.th1 {
+                                        width: 20%;
+                                    }
+
+                                    &.th4 {
+                                        /*border-right: 1px solid $cc-body;*/
+                                    }
+                                }
+                            }
+                        }
+
+                        tbody {
+                            tr {
+                                td {
+                                    border: none;
+                                    font-weight: 500;
+
+                                    &.td1 {
+                                        width: 20%;
+                                        color: $linkblue;
+                                        cursor: pointer;
+
+                                        .name {
+                                            position: relative;
+                                            font-weight: 600;
+                                        }
+                                    }
+
+                                    &.td4 {
+                                        border-right: 1px solid $cc-ash;
+
+                                        .arrived,
+                                        .started,
+                                        .done,
+                                        .cancelled,
+                                        .checkedIn {
+                                            color: $start;
+                                            padding: 2px 5px 2px 12px;
+                                            font-size: .75rem;
+                                            font-weight: 600;
+                                            position: relative;
+                                            width: 95px;
+                                            display: block;
+
+                                            &:before {
+                                                position: absolute;
+                                                content: "";
+                                                background: $start;
+                                                width: 6px;
+                                                height: 6px;
+                                                @include border-radius(10px);
+                                                top: 50%;
+                                                left: 4px;
+                                                margin-top: -4px;
+                                            }
+                                        }
+
+                                        .arrived {
+                                            color: $arrived;
+
+                                            &:before {
+                                                background: $arrived;
+                                            }
+                                        }
+
+                                        .done {
+                                            color: $done;
+
+                                            &:before {
+                                                background: $done;
+                                            }
+                                        }
+
+                                        .cancelled {
+                                            color: $cc-red;
+
+                                            &:before {
+                                                background: $cc-red;
+                                            }
+                                        }
+
+                                        .checkedIn {
+                                            color: $checkedin;
+
+                                            &:before {
+                                                background: $checkedin;
+                                            }
+                                        }
+                                    }
+
+                                    &.td5 {
+                                        display: flex;
+                                        justify-content: flex-start;
+
+                                        .controls {
+                                            margin: 0;
+                                            /*margin-left: auto;*/
+                                            padding: 0;
+                                            display: flex;
+                                            flex-wrap: wrap;
+
+                                            li {
+                                                list-style: none;
+                                                margin: 0 5px 5px;
+
+                                                @include respond-to(ynw-767) {
+                                                    margin-top: 8px;
+                                                }
+
+                                                @include respond-to(ynw-768-991) {
+                                                    margin-top: 8px;
+                                                }
+
+                                                span {
+                                                    padding: 3px;
+                                                    position: relative;
+                                                    padding-left: 22px;
+                                                    padding-right: 10px;
+                                                    cursor: pointer;
+                                                    @include transition(all 300ms);
+                                                    color: $linkblack;
+                                                    display: flex;
+
+                                                    &:before {
+                                                        position: absolute;
+                                                        content: "";
+                                                        left: 2px;
+                                                        top: 4px;
+                                                        @include font-custom;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                        width: 16px;
+                                                        height: 16px;
+                                                    }
+
+                                                    &:hover {
+                                                        color: $linkblue;
+                                                    }
+
+                                                    &.checkin {
+                                                        text-transform: uppercase;
+                                                        @include border-radius(50px);
+                                                        @include left-gradient(#00aef2, #1873f2);
+                                                        color: $white;
+                                                        padding-left: 10px;
+                                                        padding-right: 10px;
+                                                        font-weight: 600;
+                                                    }
+
+                                                    &.message {
+                                                        &:before {
+                                                            content: "\53";
+                                                        }
+                                                    }
+
+                                                    &.view-bill {
+                                                        &:before {
+                                                            content: "\4f";
+                                                        }
+                                                    }
+
+                                                    &.rate-service {
+                                                        &:before {
+                                                            content: "\3b";
+                                                        }
+
+                                                        &.rated {
+                                                            &:before {
+                                                                content: "\3c";
+                                                                color: $cc-warning;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    &.pay-bill {
+                                                        &:before {
+                                                            content: "\57";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        &:before {
+                                            @include respond-to(ynw-767) {
+                                                display: none;
+                                            }
+                                        }
+
+                                        @include respond-to(ynw-767) {
+                                            justify-content: flex-end;
+                                        }
+                                    }
+
+                                    @include respond-to(ynw-767) {
+                                        &.td1 {
+                                            width: 100%;
+
+                                            &:before {
+                                                color: $linkblack;
+                                                cursor: default;
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                .search_paging {
+                    padding: 20px;
+                    border-top: 1px solid $cc-ash;
+
+                    .container {
+                        padding: 0;
+
+                        .text-center {
+                            display: flex;
+                            justify-content: flex-end;
+                            margin-bottom: 0px;
+                        }
+
+                    }
+                }
+            }
         }
     }
 
