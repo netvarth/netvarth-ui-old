@@ -48,14 +48,14 @@ export class ViewBillComponent implements OnInit, OnChanges {
   tot_amnt_to_pay_cap = Messages.TOT_AMNT_PAY_CAP;
   back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
   payment_logs_cap = Messages.PAY_LOGS_CAP;
-  amount_cap =Messages.AMOUNT_CAP;
+  amount_cap = Messages.AMOUNT_CAP;
   refundable_cap = Messages.REFUNDABLE_CAP;
   status_cap = Messages.STATUS_CAP;
   mode_cap = Messages.MODE_CAP;
   refund_cap = Messages.REFUND_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
   update_bill_cap = Messages.UPDATE_BILL_CAP;
-  settle_bill_cap =Messages.SETTLE_BILL_CAP;
+  settle_bill_cap = Messages.SETTLE_BILL_CAP;
   print_bill_cap = Messages.PRINT_BILL_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   accept_payment_cap = Messages.ACCEPT_PAY_CAP;
@@ -98,7 +98,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
   taxtotal = 0;
   taxabletotal = 0;
   taxpercentage = 0;
-    billDatedisp;
+  billDatedisp;
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
     public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
@@ -132,21 +132,25 @@ export class ViewBillComponent implements OnInit, OnChanges {
         this.bname = bdetails.bn || '';
       }
     }
-
     this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
     this.bill_data.amount_to_pay = this.bill_data.netRate - this.bill_data.totalAmountPaid;
 
     if (this.bill_data.service.length) {
       for (let i = 0; i < this.bill_data.service.length; i++) {
+        let service_discount_amount = 0;
+        if (this.bill_data.service[i].discount.length !== 0)
+          service_discount_amount = this.bill_data.service[i].discount[0].discountValue;
         this.bill_data.service[i]['rowtotal'] = (this.bill_data.service[i].price * this.bill_data.service[i].quantity);
-        const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - this.bill_data.service[i].discountValue - this.bill_data.service[i].couponValue;
+        //const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - this.bill_data.service[i].discountValue - this.bill_data.service[i].couponValue;
+        const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - service_discount_amount;
         this.subtotalwithouttax += rtotal;
         this.bill_data.service[i].isTaxable = false;
         if (this.bill_data.service[i].GSTpercentage > 0) {
-        this.bill_data.service[i].isTaxable = true;
+          this.bill_data.service[i].isTaxable = true;
           this.taxpercentage = this.bill_data.service[i].GSTpercentage;
-          this.taxtotal += ((this.bill_data.service[i].price * this.bill_data.service[i].quantity) - (this.bill_data.service[i].discountValue + this.bill_data.service[i].couponValue) * this.bill_data.service[i].GSTpercentage / 100);
+          //this.taxtotal += ((this.bill_data.service[i].price * this.bill_data.service[i].quantity) - (this.bill_data.service[i].discountValue + this.bill_data.service[i].couponValue) * this.bill_data.service[i].GSTpercentage / 100);
+          this.taxtotal += ((this.bill_data.service[i].price * this.bill_data.service[i].quantity) - service_discount_amount * this.bill_data.service[i].GSTpercentage / 100);
           this.taxabletotal += rtotal;
         }
       }
@@ -154,15 +158,20 @@ export class ViewBillComponent implements OnInit, OnChanges {
 
     if (this.bill_data.items.length) {
       for (let i = 0; i < this.bill_data.items.length; i++) {
+        let item_discount_amount = 0;
+        if (this.bill_data.items[i].discount.length !== 0)
+          item_discount_amount = this.bill_data.items[i].discount[0].discountValue;
         this.bill_data.items[i]['rowtotal'] = (this.bill_data.items[i].price * this.bill_data.items[i].quantity);
-        const rtotal = (this.bill_data.items[i].price * this.bill_data.items[i].quantity) - this.bill_data.items[i].discountValue - this.bill_data.items[i].couponValue;
+        // const rtotal = (this.bill_data.items[i].price * this.bill_data.items[i].quantity) - this.bill_data.items[i].discountValue - this.bill_data.items[i].couponValue;
+        const rtotal = (this.bill_data.items[i].price * this.bill_data.items[i].quantity) - item_discount_amount;
         this.subtotalwithouttax += rtotal;
         this.bill_data.items[i].isTaxable = false;
         if (this.bill_data.items[i].GSTpercentage > 0) {
-         this.bill_data.items[i].isTaxable = true;
+          this.bill_data.items[i].isTaxable = true;
           this.taxpercentage = this.bill_data.items[i].GSTpercentage;
           // console.log('tax', this.bill_data.items[i].itemId, this.bill_data.items[i].GSTpercentage);
-          this.taxtotal += (((this.bill_data.items[i].price * this.bill_data.items[i].quantity) - (this.bill_data.items[i].discountValue + this.bill_data.items[i].couponValue)) * this.bill_data.items[i].GSTpercentage / 100);
+          // this.taxtotal += (((this.bill_data.items[i].price * this.bill_data.items[i].quantity) - (this.bill_data.items[i].discountValue + this.bill_data.items[i].couponValue)) * this.bill_data.items[i].GSTpercentage / 100);
+          this.taxtotal += (((this.bill_data.items[i].price * this.bill_data.items[i].quantity) - item_discount_amount) * this.bill_data.items[i].GSTpercentage / 100);
           this.taxabletotal += rtotal;
         }
       }

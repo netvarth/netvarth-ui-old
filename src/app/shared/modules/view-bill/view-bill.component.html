@@ -38,8 +38,7 @@
                             <div class="quantity">{{qty_cap}} {{service.quantity}}</div>
                             <div class="price">{{service.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
                         </div>
-
-                        <div class="c-row two" *ngIf="service.discountValue > 0 || service.couponValue > 0">
+                        <!-- <div class="c-row two" *ngIf="service.discountValue > 0 || service.couponValue > 0">
                             <div class="discount-row" *ngIf="service.discountValue > 0">
                                 <div class="name">{{discount_cap}}</div>
                                 <div class="price">(-){{service.discountValue | currency:'INR':'symbol':'.2-2'}}</div>
@@ -48,11 +47,25 @@
                                 <div class="name">{{coupon_cap}}</div>
                                 <div class="price">(-){{service.couponValue | currency:'INR':'symbol':'.2-2'}}</div>
                             </div>
+                        </div> -->
+                        <div class="c-row two" *ngIf="service.discount.length > 0">
+                            <div class="discount-row" *ngIf="service.discount[0].discountValue > 0">
+                                <div class="name">{{discount_cap}}</div>
+                                <div class="price">(-){{service.discount[0].discountValue | currency:'INR':'symbol':'.2-2'}}</div>
+                            </div>
+                            <!-- <div class="coupon-row" *ngIf="service.couponValue > 0">
+                                <div class="name">{{coupon_cap}}</div>
+                                <div class="price">(-){{service.couponValue | currency:'INR':'symbol':'.2-2'}}</div>
+                            </div> -->
                         </div>
-                        <div class="c-row three" *ngIf="service.discountValue > 0 || service.couponValue > 0">
+                        <!-- <div class="c-row three" *ngIf="service.discountValue > 0 || service.couponValue > 0">
                             <div class="name">{{sub_tot_cap}}</div>
                             <div class="price">{{((service.price * service.quantity) - service.discountValue -
                                 service.couponValue) | currency:'INR':'symbol':'.2-2'}}</div>
+                        </div> -->
+                        <div class="c-row three" *ngIf="service.discount.length > 0">
+                            <div class="name">{{sub_tot_cap}}</div>
+                            <div class="price">{{((service.price * service.quantity) - service.discount[0].discountValue) | currency:'INR':'symbol':'.2-2'}}</div>
                         </div>
                     </div>
                 </div>
@@ -64,7 +77,7 @@
                             <div class="price">{{item.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
                         </div>
 
-                        <div class="c-row two" *ngIf="item.discountValue > 0 || item.couponValue > 0">
+                        <!-- <div class="c-row two" *ngIf="item.discountValue > 0 || item.couponValue > 0">
                             <div class="discount-row" *ngIf="item.discountValue > 0">
                                 <div class="name">{{discount_cap}}</div>
                                 <div class="price">-{{item.discountValue | currency:'INR':'symbol':'.2-2'}}</div>
@@ -78,6 +91,16 @@
                             <div class="name">{{sub_tot_cap}}</div>
                             <div class="price">{{ ((item.price * item.quantity) - item.discountValue -
                                 item.couponValue) | currency:'INR':'symbol':'.2-2'}}</div>
+                        </div> -->
+                        <div class="c-row two" *ngIf="item.discount[0].length > 0">
+                            <div class="discount-row" *ngIf="item.discount[0].discountValue > 0">
+                                <div class="name">{{discount_cap}}</div>
+                                <div class="price">-{{item.discount[0].discountValue | currency:'INR':'symbol':'.2-2'}}</div>
+                            </div>
+                        </div>
+                        <div class="c-row three" *ngIf="item.discount.length > 0">
+                            <div class="name">{{sub_tot_cap}}</div>
+                            <div class="price">{{ ((item.price * item.quantity) - item.discount[0].discountValue) | currency:'INR':'symbol':'.2-2'}}</div>
                         </div>
                     </div>
                 </div>
@@ -89,25 +112,33 @@
                         <div class="name">{{gross_amnt_cap}}</div>
                         <div class="price">{{subtotalwithouttax | currency:'INR':'symbol':'.2-2'}}</div>
                     </div>
-                    <div class="amt discount" *ngIf="bill_data.discountValue>0">
+                    <!-- <div class="amt discount" *ngIf="bill_data.discountValue>0">
                         <div class="name">{{bill_data.discountName}}</div>
                         <div class="price">(-){{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</div>
+                    </div> -->
+                    <div class="amt discount" *ngIf="bill_data.discount.length > 0">
+                        <div class="name">{{bill_data.discount[0].discountName}}</div>
+                        <div class="price">(-){{bill_data.discount[0].discountValue | currency:'INR':'symbol':'.2-2'}}</div>
                     </div>
-                    <div class="amt coupon" *ngIf="bill_data.couponValue>0">
+                    <!-- <div class="amt coupon" *ngIf="bill_data.couponValue>0">
                         <div class="name">{{bill_data.couponName}}</div>
                         <div class="price">(-){{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</div>
+                    </div> -->
+                    <div class="amt coupon" *ngIf="bill_data.providerCoupon.length > 0">
+                        <div class="name">{{bill_data.providerCoupon[0].couponName}}</div>
+                        <div class="price">(-){{bill_data.providerCoupon[0].couponValue | currency:'INR':'symbol':'.2-2'}}</div>
                     </div>
-                    <div class="amt tax" *ngIf="taxabletotal">
+                    <div class="amt tax" *ngIf="taxabletotal != 0">
                         <div class="name"><span class="tax-top">{{tax_cap}} {{taxpercentage}}% of {{taxabletotal |
                                 currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{taxpercentage/2}}%,
                                 SGST-{{taxpercentage/2}}%)</span></div>
                         <div class="price">(+){{taxabletotal*taxpercentage/100 | currency:'INR':'symbol':'.2-2'}}</div>
                     </div>
-                    <div class="amt paid" *ngIf="bill_data.totalAmountPaid">
+                    <div class="amt paid" *ngIf="bill_data.totalAmountPaid != 0">
                         <div class="name"><span class="link" (click)="showpaidSection()">{{amount_paid_cap}}</span></div>
                         <div class="price">{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</div>
                     </div>
-                    <div class="amt total">
+                    <div class="amt total" *ngIf="bill_data.amount_to_pay != 0" >
                         <div class="name">{{tot_amnt_to_pay_cap}}</div>
                         <div class="price">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</div>
                     </div>

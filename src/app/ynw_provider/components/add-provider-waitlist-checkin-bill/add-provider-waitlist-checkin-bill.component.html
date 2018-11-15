@@ -205,7 +205,7 @@
                       <div class="name">{{coupons[cart.coupon].name}}</div>
                       <div class="price">(-){{totcoup_val | currency:'INR':'symbol':'.2-2'}}</div>
                   </div>
-                  <div class="amt tax" *ngIf="cart.sub_total">
+                  <div class="amt tax" *ngIf="cart.sub_total && taxabletotal > 0">
                       <div class="name"><span class="tax-top">{{tax_cap}} {{item_service_tax}}% of {{taxabletotal | currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{item_service_tax/2}}%, SGST-{{item_service_tax/2}}%)</span></div>
                       <div class="price">(+){{tottaxvalue | currency:'INR':'symbol':'.2-2'}}</div>
                   </div>

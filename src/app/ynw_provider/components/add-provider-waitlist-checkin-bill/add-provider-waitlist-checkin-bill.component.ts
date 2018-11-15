@@ -253,14 +253,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     return this.itemServicesGroup;
   }
-
   private _filter(opt: string[], val: string) {
     const filterValue = val.toLowerCase();
     return opt.filter(item => item.toLowerCase().startsWith(filterValue));
   }
-
-
-
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;
@@ -308,7 +304,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
     });
-
   }
 
   getServiceList() {
@@ -352,8 +347,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         data => {
           this.coupons = data;
 
-          if (this.bill_data.couponId) {
-            this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.couponId);
+          //if (this.bill_data.couponId) {
+            if (this.bill_data.providerCoupon.length!=0) {
+            this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.providerCoupon[0].id);
+            //this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.couponId);
           }
           resolve();
         },
@@ -373,9 +370,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.discounts = data;
-
-          if (this.bill_data.discountId) {
-            this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discountId);
+         // if (this.bill_data.discountId) {
+          if (this.bill_data.discount.length!=0) {
+            // this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discountId);
+            this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discount[0].id);
           }
 
           resolve();
@@ -764,11 +762,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   submitBill() {
-
+    let order_discounts = [];
+    let order_coupons = [];
     const item_array = [];
     const service_array = [];
     // console.log(this.cart.items);
     for ( const item of  this.cart.items) {
+      let discountIds = [];
+      let couponIds = [];
       const ob = {
         'reason': '',
         'price': item.price,
@@ -776,13 +777,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       };
      // console.log(item, ob);
       if (item.coupon !== '' && this.coupons[item.coupon]) {
-        ob['couponId'] = this.coupons[item.coupon]['id'];
+        couponIds.push(this.coupons[item.coupon]['id']);
+        
+        // ob['couponId'] = this.coupons[item.coupon]['id'];
       }
 
       if (item.discount !== '' && this.discounts[item.discount]) {
-        ob['discountId'] = this.discounts[item.discount]['id'];
+        discountIds.push(this.discounts[item.discount]['id']);
+        // ob['discountId'] = this.discounts[item.discount]['id'];
       }
-
+      ob['couponIds'] = couponIds;
+      ob['discountIds'] = discountIds;
       if (item.type === 'Items') {
         ob['itemId'] =  item.itemId;
         item_array.push(ob);
@@ -809,13 +814,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // }
 
     if (this.cart.coupon !== '' && this.coupons[this.cart.coupon]) {
-      post_data['couponId'] = this.coupons[this.cart.coupon]['id'];
+      order_coupons.push(this.coupons[this.cart.coupon]['id']);
+      //post_data['couponId'] = this.coupons[this.cart.coupon]['id'];
     }
 
     if (this.cart.discount !== '' && this.discounts[this.cart.discount]) {
-      post_data['discountId'] = this.discounts[this.cart.discount]['id'];
+      order_discounts.push(this.discounts[this.cart.discount]['id']);
+      //post_data['discountId'] = this.discounts[this.cart.discount]['id'];
     }
-
+    post_data['couponIds'] = order_coupons;
+    post_data['discountIds'] = order_discounts;
     if (this.bill_data.length === 0) {
       this.provider_services.createWaitlistBill(post_data)
       .subscribe(
@@ -891,12 +899,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
             this.cart.items[retid] ['quantity']  = service.quantity || 1;
             this.cart.items[retid]['price'] = service.price || ob.totalAmount;
-            if (service.discountId !== 0) {
-              this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
-            }
-            if (service.couponId !== 0) {
-              this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, service.couponId);
-            }
+            // if (service.discountId !== 0) {
+            //   this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
+            // }
+            // if (service.couponId !== 0) {
+            //   this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, service.couponId);
+            // }
+            if (service.discount.length !== 0) {
+                this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, service.discount[0].id);
+              }
             this.calculateItemTotal(retid);
 
 
@@ -927,13 +938,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
           this.cart.items[retid] ['quantity']  = item.quantity;
           this.cart.items[retid]['price'] = item.price;
-          if (item.discountId !== 0) {
-            this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
+          // if (item.discountId !== 0) {
+          //   this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
+          // }
+          if (item.discount.length !== 0) {
+            this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, item.discount[0].id);
           }
-
-          if (item.couponId !== 0) {
-            this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
-          }
+          // if (item.couponId !== 0) {
+          //   this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
+          // }
 
           this.calculateItemTotal(retid);
         }
