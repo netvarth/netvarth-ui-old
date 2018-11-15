@@ -10,6 +10,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 
 
 @Component({
@@ -19,6 +20,12 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 
 export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
 
+  your_social_media_cap = Messages.BPROFILE_SOCIAL_MEDIA_CAP;
+  select_one_cap = Messages.SELECT_ONE_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  save_btn = Messages.SAVE_BTN;
+  social_url_cap = Messages.SOCIAL_URL_CAP;
+  select_cap = Messages.SOCIAL_SELECT_CAP;
   @ViewChild('nameit') private elementRef: ElementRef;
   bProfile: any = [];
   api_error = null;

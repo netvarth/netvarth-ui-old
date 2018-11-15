@@ -26,10 +26,10 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
   @Output() getWaitlistBillEvent = new EventEmitter<any>();
 
   service_provider_cap = Messages.SERV_PROVIDER_CAP;
-  service_cap =Messages.SERVICE_CAP;
+  service_cap =Messages.PRO_SERVICE_CAP;
   location_cap =Messages.LOCATION_CAP;
   date_cap = Messages.DATE_COL_CAP;
-  status_cap = Messages.STATUS_CAP;
+  status_cap = Messages.PRO_STATUS_CAP;
   send_message_cap = Messages.SEND_MSG_CAP;
   bill_cap = Messages.BILL_CAPTION;
   rate_your_visit = Messages.RATE_YOU_VISIT;

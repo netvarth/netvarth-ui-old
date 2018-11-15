@@ -1,84 +1,87 @@
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
-
-
 <section>
-  <div class="content comn-cls">
-      <div class="container">
-          <div class="no-dta" *ngIf="item_list.length ==0 && query_executed == true">
-                  <p>{{emptyMsg}}</p>
-                  <span class="cs-btn bt3" (click)="addItem()">Add Item</span>
-          </div>
-          <div class="w-dta" *ngIf="item_list.length>0">
-                  <div class="row">
-                      <div class="card">
-                          <div class="copy">
-                              <div class="table-outer q-itm">
-                                  <table class="table">
-                                      <thead>
-                                          <tr>
-                                              <!-- <th></th> -->
-                                              <th>Name</th>
-                                              <th>Price</th>
-                                              <th>Taxable</th>
-                                              <!-- <th>Status</th> -->
-                                              <th><span class="addbt" (click)="addItem()"></span></th>
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                              <tr *ngFor="let item of item_list">
-                                                      <!-- <td class="pointer-cursor"  class="td1" (click)="showDetails(item.itemId)">
+    <div class="content comn-cls">
+        <div class="container">
+            <div class="no-dta" *ngIf="item_list.length ==0 && query_executed == true">
+                <p>{{emptyMsg}}</p>
+                <span class="cs-btn bt3" (click)="addItem()">{{add_item_cap}}</span>
+            </div>
+            <div class="w-dta" *ngIf="item_list.length>0">
+                <div class="row">
+                    <div class="card">
+                        <div class="copy">
+                            <div class="table-outer q-itm">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th></th> -->
+                                            <th>{{name_cap}}</th>
+                                            <th>{{price_cap}}</th>
+                                            <th>{{taxable_cap}}</th>
+                                            <!-- <th>Status</th> -->
+                                            <th><span class="addbt" (click)="addItem()"></span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of item_list">
+                                            <!-- <td class="pointer-cursor"  class="td1" (click)="showDetails(item.itemId)">
                                                         <div class="itm-prdct">
                                                         <img [src]="item.picSmall" *ngIf="item.picSmall !='' && item.picSmall">
                                                         <div class="noimage" *ngIf="!item.picSmall"></div>
                                                         </div>
                                                         </td> -->
-                                                      <td data-title="Name"  class="td2" class="pointer-cursor" (click)="showDetails(item.itemId)"><span [matTooltipClass] = "tooltipcls" [matTooltip]="itemnameTooltip">{{item.displayName}}</span>
-                                                      </td>
-                                                      <td data-title="Status" clas="td4">{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
-                                                      <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}</td>
-                                                      
+                                            <td data-title="Name" class="td2" class="pointer-cursor" (click)="showDetails(item.itemId)"><span
+                                                    [matTooltipClass]="tooltipcls" [matTooltip]="itemnameTooltip">{{item.displayName}}</span>
+                                            </td>
+                                            <td data-title="Status" clas="td4">{{item.price |
+                                                currency:'INR':'symbol':'.2-2'}}</td>
+                                            <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}</td>
 
-                                                      <td class="action">
-                                                          <span class="mbt">
-                                                              <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                                  <mat-icon>more_vert</mat-icon>
-                                                              </button>
-                                                              <mat-menu #menu="matMenu">
-                                                                  <button type="button" (click)="editItem(item)" mat-menu-item>
-                                                                      <i class="icon-edit"></i>
-                                                                      Edit
-                                                                  </button>
-                                                                  <button type="button" (click)="dochangeStatus(item)" mat-menu-item *ngIf="item.status!='ACTIVE'">
-                                                                      <i class="icon-enable" >Enable</i>
-                                                                  </button>
-                                                                  <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
-                                                                      <i class="icon-delete"></i>
-                                                                      Delete
-                                                                  </button>
-                                                              </mat-menu>
-                                                          </span>
 
-                                                          <span class="mbt-mobile-show">
-                                                                <button class="editcls" type="button" (click)="editItem(item)">Edit</button>
-                                                                <button class="enablecls" type="button" (click)="dochangeStatus(item)" *ngIf="item.status!='ACTIVE'">Enable</button>
-                                                                <button class="deletecls" type="button" (click)="doRemoveItem(item)">Delete</button>
-                                                        </span>
-                                                      </td>
-                                                  </tr>
-                                      </tbody>
-                                  </table>
-                                  <span class="addbt d-block d-md-none" (click)="addItem()"></span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+                                            <td class="action">
+                                                <span class="mbt">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button type="button" (click)="editItem(item)" mat-menu-item>
+                                                            <i class="icon-edit"></i>
+                                                            {{edit_btn}}
+                                                        </button>
+                                                        <button type="button" (click)="dochangeStatus(item)"
+                                                            mat-menu-item *ngIf="item.status!='ACTIVE'">
+                                                            <i class="icon-enable">{{item_enable_btn}}</i>
+                                                        </button>
+                                                        <button type="button" (click)="doRemoveItem(item)"
+                                                            mat-menu-item>
+                                                            <i class="icon-delete"></i>
+                                                            {{delete_btn}}
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
+
+                                                <span class="mbt-mobile-show">
+                                                    <button class="editcls" type="button" (click)="editItem(item)">{{edit_btn}}</button>
+                                                    <button class="enablecls" type="button" (click)="dochangeStatus(item)"
+                                                        *ngIf="item.status!='ACTIVE'">{{item_enable_btn}}</button>
+                                                    <button class="deletecls" type="button" (click)="doRemoveItem(item)">{{delete_btn}}</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <span class="addbt d-block d-md-none" (click)="addItem()"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- <button (click)="addItem()">Add Item</button>
@@ -105,4 +108,3 @@
   </tbody>
 </table>
 <div *ngIf="item_list.length ==0 && query_executed == true">{{emptyMsg}}</div> -->
-

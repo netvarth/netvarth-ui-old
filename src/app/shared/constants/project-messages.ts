@@ -81,7 +81,6 @@ export const Messages = {
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 400 characters',
 
-
   // Adwords
   'ADWORD_LISTEMPTY': 'No adwords exists',
   'ADWORD_CREATED': 'Adword created successfully',
@@ -114,7 +113,6 @@ export const Messages = {
   'MESSAGE_SENT': 'Message sent successfully',
 
   // Dashboard
-
   'ADD_DELAY': 'New delay added successfully',
   'ADD_DELAY_TIME_ERROR': 'Please specify the delay',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
@@ -124,11 +122,11 @@ export const Messages = {
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message send successfully',
   'MSG_ERROR': 'Please enter the message',
   'ESTDATE': 'Estimated Service time',
-
   'SEARCH_ESTIMATE_TOOPTIP': 'Estimated Waiting Time',
   'CUSTOMER_SEARCH_EXIST': 'This [customer] already exist',
   'CUSTOMER_SEARCH_UNAVAILABLE': 'This [customer] doesnt exist',
   'PROVIDER_CUSTOMER_CREATED': 'New [customer] created',
+
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',
   'PAYSETTING_SAV_PAYSTATUS': 'Payment Status updated successfully',
@@ -155,8 +153,8 @@ export const Messages = {
   'PAYSETTING_PANMAXLEN10': 'Pancard should contain only 10 characters',
   'PAYSETTING_IFSCMAXLEN11': 'IFSC code should contain only 11 characters',
   'PAYSETTING_IFSCALPHANUMERIC': 'IFSC code should not contain special characters',
-  // Provider Bill
 
+  // Provider Bill
   'PROVIDER_BILL_CREATE': 'Bill created successfully',
   'PROVIDER_BILL_UPDATE': 'Bill updated successfully',
   'PROVIDER_BILL_SETTLE': 'Bill settled successfully',
@@ -174,7 +172,6 @@ export const Messages = {
 
 
   // Consumer Dashboard
-
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
   'Manage_Privacy': 'Manage privacy changed successfully',
   'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in 5 minutes to complete your check-in',
@@ -204,19 +201,13 @@ export const Messages = {
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
   'QUEUENAME_TOOLTIP': 'Click here to edit the Service Time Window',
-
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
-
-
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION': 'Next Available Time',
   'APPX_WAIT_TIME_CAPTION': 'Appox Waiting Time',
-
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
   'CHECKIN_TIME_CAPTION': 'Est Service Time',
-
   'PREPAYMENT_ERROR': 'Sorry! an error occured',
-
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
 
   //General
@@ -231,8 +222,6 @@ export const Messages = {
   'DONE_BTN': 'Done',
   'SAVE_MEMBER_BTN': 'Save Member',
   'RESEND_BTN': 'Resend',
-
-
 
   // Consumer Constants
 
@@ -255,7 +244,7 @@ export const Messages = {
   'ADD_FAMILY_MEMBER': 'Add Family Member',
   'FIRST_NAME_CAP': 'First Name',
   'LAST_NAME_CAP': 'Last Name',
-  'MOBILE_NUMBER_CAP': 'Moble Number',
+  'MOBILE_NUMBER_CAP': 'Mobile Number',
   'GENDER_CAP': 'Gender',
   'DOB_CAP': 'Date of Birth',
 
@@ -407,16 +396,15 @@ export const Messages = {
   'BASIC_PLUS_CAP': 'Basic Plus',
   'PREMIUM_CAP': 'Premium',
   'CLAIM_BUSINESS_CAP': 'Claim my Business',
-  'SORRY_CAP': 'Sorry!!',
+  'SORRY_CAP': 'Sorry',
   'NOT_ALLOWED_CAP': 'not allowed',
   'NO_YNW_RES_FOUND_CAP': 'No YNW results found',
 
   //App-shared-components-search-service-detail
-
   'DURATION_CAP': 'Duration:',
   'PRICE_CAP': 'Price:',
   'PREPAYMENT_AMOUNT_CAP': 'Prepayment Amount:',
-  'DESCRIPTION_CAP': 'Description:',
+  'DESCRIPTION_CAP': 'Description :',
 
   //App-shared-components-set-password-form
   'NEW_PASSWORD_CAP': 'New Password *',
@@ -452,7 +440,6 @@ export const Messages = {
   'OLD_PASSWORD_CAP': 'Old Password *',
 
   //App-shared-modules-checkin-checkin-inner
-
   'SELECT_SER_CAP': 'Select Service',
   'NO_SER_AVAIL_CAP': 'No services available.',
   'ADD_CHANGE_MEMBER': 'Add / Change Member',
@@ -685,7 +672,6 @@ export const Messages = {
   'SELECT_ADDRESS_CAP': 'Obtained Addresses, select the required one',
   'YES_DONE_CAP': 'Yes, I\'m Done!',
 
-
   //App-ynw_provider-components-provider-home
   'TODAY_HOME_CAP': 'Today',
   'FUTURE_HOME_CAP': 'Future',
@@ -707,14 +693,14 @@ export const Messages = {
   'NO_SERVICE_CAP': 'No service time windows available',
   'ACTIONS_CAP': 'Actions',
   'ITEM_HI_CAP': 'Item -',
-  'ITEM_NAME_CAP': 'Item Name *',
-  'SHORT_DESC_CAP': 'Short Description *',
-  'DETAIL_DESC_CAP': 'Detailed Description *',
+  'ITEM_NAME_CAP': 'Item Name',
+  'SHORT_DESC_CAP': 'Short Description',
+  'DETAIL_DESC_CAP': 'Detailed Description',
   'PRICES_CAP': 'Price',
-  'TAXABLE_CAP': 'Taxable *',
+  'TAXABLE_CAP': 'Taxable',
 
   //App-ynw_provider-components-add-provider-coupons
-  'NON_WORK_DAY_HI_CAP': 'Non Working Day -',
+  'NON_WORK_DAY_HI_CAP': 'Non Working Day',
   'REASON_CAP': 'Reason',
 
   //App-ynw_provider-components-add-provider-waitlist-checkin-bill
@@ -729,65 +715,169 @@ export const Messages = {
   'ADD_BTN': 'Add',
 
   //App-ynw_provider-components-provider-bprofile-search
-  'PUBLIC_SEARCH_CAP': 'Public Search',
-  'PROFILE_CAP': 'Your profile has been',
-  'DISABLED_CAP': 'disabled',
-  'ONLINE_VISIBLE_CAP': 'for public search online and will not be visible to',
-  'SET_UP_CAP': 'We recommend you to set up the',
-  'PROFILE_SUMMARY_CAP': 'Profile Name and Summary',
-  'ON_pUBLIC_SEARCH': 'section to turn ON the Public Search',
-  'CURRENT_STATUS': 'Current Status',
-  'ON_CAP': 'On',
-  'OFF_CAP' : 'Off',
-  'PROFILE_VISIBILITY_CAP' : 'Your profile is visible to',
-  'ONLINE_JALDEE_CAP' : 'online at jaldee.com',
-  // '' : 'You are offline. Turn ON public search to make your profile visible to',
-  // '' : 'Turn Off',
-  // '' : 'Turn On',
-  // '' : 'Adwords',
-  // '' : 'Sorry',
-  // '' : 'Currently you did not have any adwords. Would you like to buy adwords?',
-  // '' : 'Buy Adwords',
-  // '' : 'adword(s), you can create',
-  // '' : 'adword(s). To add more adwords, go to',
-  // '' : 'License & Invoice',
-  // '' : 'You haven\'t added any',
-  // '' : 'Basic Information*',
-  // '' : 'such as',
-  // '' : 'Business Name, Profile Summary',
-  // '' : 'Profile Picture',
-  // '' : 'Add It Now', 
-  // '' : 'Need Basic Information to turn on Public Search',
-  // '' : 'Change',
-  // '' : 'Picture',
-  // '' : 'Delete Picture',
-  // '' : 'information',
-  // '' : 'Need Location',
-  // '' : 'Working Hours to turn on Public Search',
-  // '' : 'Your Base Location details are Incomplete',
-  // '' : 'Please use the',
-  // '' : 'button to complete it',
-  // '' : 'Pin',
-  // '' : 'You can add more locations in the',
-  // '' : 'locations',
-  // '' : 'page',
-  // '' : 'Longitude:',
-  // '' : 'Latitude:',
-  // '' : 'Location Amenities',
-  // '' : 'You can change the working hours by editing the service time window of this location',
-  // '' : 'to view the service time windows',
-  // '' : 'Privacy Settings',
-  // '' : 'any',
-  // '' : 'Phone',
-  // '' : 'Visible to',
-  // '' : 'Specialization',
-  // '' : 'Additional Info',
-  // '' : 'Additional',
-  // '' : 'add_circle_outline',
-  // '' : 'photos to the',
-  // '' : 'Photo',
-  // '' : 'Your Social Media',
-  // '' : 'You can add your social media links here',
+  'BPROFILE_PUBLIC_SEARCH_CAP': 'Public Search',
+  'BPROFILE_PROFILE_CAP': 'Your profile has been',
+  'BPROFILE_DISABLED_CAP': 'disabled',
+  'BPROFILE_ONLINE_VISIBLE_CAP': 'for public search online and will not be visible to',
+  'BPROFILE_SET_UP_CAP': 'We recommend you to set up the',
+  'BPROFILE_SUMMARY_CAP': 'Profile Name and Summary',
+  'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn ON the Public Search',
+  'BPROFILE_CURRENT_STATUS': 'Current Status',
+  'BPROFILE_ON_CAP': 'On',
+  'BPROFILE_OFF_CAP': 'Off',
+  'BPROFILE_VISIBILITY_CAP': 'Your profile is visible to',
+  'BPROFILE_ONLINE_JALDEE_CAP': 'online at jaldee.com',
+  'BPROFILE_OFFLINE_CAP': 'You are offline. Turn ON public search to make your profile visible to',
+  'BPROFILE_TURN_OFF': 'Turn Off',
+  'BPROFILE_TURN_ON': 'Turn On',
+  'BPROFILE_ADWORDS_CAP': 'Adwords',
+  'BPROFILE_BUY_ADWORDS_CAP': 'Currently you did not have any adwords. Would you like to buy adwords?',
+  'BPROFILE_BUY_ADWORD_BTN': 'Buy Adwords',
+  'BPROFILE_CREATE_ADWORD_CAP': 'adword(s), you can create',
+  'BPROFILE_MOR_ADOWRDS_CAP': 'adword(s). To add more adwords, go to',
+  'BPROFILE_LICENSE_INVOICE_CAP': 'License & Invoice',
+  'BPROFILE_HAVE_NOT_ADD_CAP': 'You haven\'t added any',
+  'BPROFILE_BASIC_INFORMATION_CAP': 'Basic Information*',
+  'BPROFILE_SUCH_AS_CAP': 'such as',
+  'BPROFILE_BUSINESS_NAME_CAP': 'Business Name, Profile Summary',
+  'PROFILE_PICTURE_CAP': 'Profile Picture',
+  'BPROFILE_ADD_IT_NOW_CAP': 'Add It Now',
+  'BPROFILE_TURN_ON_PUBLIC_SEARCH': 'Need Basic Information to turn on Public Search',
+  'BPROFILE_CHANGE_CAP': 'Change',
+  'BPROFILE_PICTURE_CAP': 'Picture',
+  'BPROFILE_DELETE_PICTURE_CAP': 'Delete Picture',
+  'BPROFILE_INFORMATION_CAP': 'information',
+  'BPROFILE_NEED_LOCATION_CAP': 'Need Location',
+  'BPROFILE_WORK_HOURS_SEARCH_CAP': 'Working Hours to turn on Public Search',
+  'BPROFILE_BASE_LOCATION': 'Your Base Location details are Incomplete',
+  'BPROFILE_PLEASE_CAP': 'Please use the',
+  'BPROFILE_BUTTON_COMPLETE_CAP': 'button to complete it',
+  'BPROFILE_PIN_CAP': 'Pin',
+  'BPROFILE_MORE_LOCATIONS_CAP': 'You can add more locations in the',
+  'BPROFILE_LOCATIONS_CAP': 'locations',
+  'BPROFILE_PAGE_CAP': 'page',
+  'BPROFILE_LONGITUDE_CAP': 'Longitude:',
+  'BPROFILE_LATIITUDE_CAP': 'Latitude:',
+  'BPROFILE_LOCATION_AMENITIES': 'Location Amenities',
+  'BPROFILE_CHANGE_WORKING_HOURS_CAP': 'You can change the working hours by editing the service time window of this location',
+  'BPROFILE_VIEW_SERVICE_WINDOW_CAP': 'to view the service time windows',
+  'BPROFILE_PRIVACY_SETTINGS_CAP': 'Privacy Settings',
+  'BPROFILE_ANY_CAP': 'any',
+  'BPROFILE_PHONE_CAP': 'Phone',
+  'BPROFILE_VISIBLE_CAP': 'Visible to',
+  'BPROFILE_SPECIAL_CAP': 'Specialization',
+  'BPROFILE_ADDOTIONAL_INFO_CAP': 'Additional Info',
+  'BPROFILE_ADDITIONAL_CAP': 'Additional',
+  'BPROFILE_ADD_CIRCLE_CAP': 'add_circle_outline',
+  'BPROFILE_PHOTOS_CAP': 'photos to the',
+  'BPROFILE_PHOT0_CAP': 'Photo',
+  'BPROFILE_SOCIAL_MEDIA_CAP': 'Your Social Media',
+  'BPROFILE_ADD_SOCIAL_MEDIA_CAP': 'You can add your social media links here',
+  'NO_SOCIAL_MEDIA': 'You haven\'t added any social media links',
+
+  //App-ynw_provider-components-provider-bprofile-search-schedulepopup
+  'MANAGE_WORK_HOURS_CAP': 'Manage Working Hours',
+
+  //App-ynw_provider-components-provider-bprofile-search-socialmedia
+  'SOCIAL_SELECT_CAP': 'Select',
+  'SOCIAL_URL_CAP': 'Enter the URL',
+
+  //App-ynw_provider-components-provider-coupon_view
+  'COUPON_DETAILS_CAP': 'Coupon Deatils',
+  'CODE_CAP': 'Code',
+  'COUPON_PERCENT_CAP': 'Percent/Amount',
+  'COUPON_EXPIRY_CAP': 'Expiry Date',
+  'COUPON_RULES_CAP': 'Rules',
+  'COUP_DISC_VALUE': 'Discount Value',
+  'MAX_DISC_VALUE': 'Maximum Discount Value',
+  'MAX_REIMBURSE_PERC': 'Maximum Reimbursement Percentage',
+  'MAX_PRO_USE_LIMIT': 'Maximum Provider Use Limit',
+  'MAX_CONSU_USE_LIMIT': 'Maximium Consumer Use Limit',
+  'LIMIT_PER_PRO': 'usageMaxLimitPerProvider',
+  'CONSUM_FIRST_HECK': 'consumerFirstCheckInUsageOnly',
+  'PRO_FIRST_CHECK': 'providerFirstCheckInUseOnly',
+  'SELF_PAYMENT': 'selfPaymentRequired',
+  'ONLINE_CHECK': 'onlineCheckinRequired',
+  'COMBIN_COUPON_LIST': 'combineWithOtherjaldeecoupon_list',
+  'DEFAULT_ENABLE': 'defaultEnable',
+  'ALWAYS_ENABLE': 'alwaysEnabled',
+  'TERM_CONDITION': 'consumerTermsAndcondition',
+  'PRO_DESCR': 'providerDescription',
+  'CHART_CAP': 'chart',
+
+  //App-ynw_provider-components-provider-coupons
+  'REPORTS_CAP': 'Reports',
+  'VALID_FROM_CAP': 'Valid From',
+  'VALID_TO_CAP': 'Valid To',
+  'CONSUM_APPLY_CAP': 'consumers# applied',
+  'PROVID_APPLy_CAP': 'providers# honored',
+  'COUPONS_STATUS_CAP': 'Status',
+  'ENABLE_CAP': 'Enabled',
+  'DISABLE_CAP': 'Disabled',
+  'ADD_COUPON_BTN': 'Add Coupons',
+  'VALUE_CAP': 'Value',
+
+  //App-ynw_provider-components-provider-customers
+  'CUSTOMER_MOBILE_CAP': 'Mobile',
+  'LAST_VISIT_CAP': 'Last Visit',
+  'NO_CUSTOMER_CAP': 'You don\'t have any',
+
+  //App-ynw_provider-components-provider-discounts
+  'ADD_DISCOUNT_CAP': 'Add Bill Discounts',
+
+  //App-ynw_provider-components-provider-items
+  'ADD_ITEM_CAP': 'Add Item',
+  'ITEM_ENABLE_CAP': 'Enable',
+
+  //App-ynw_provider-components-provider-items-details
+  'ITEM_DETAIL_CAP': 'Item Details',
+
+  //App-ynw_provider-components-provider-license-detail
+  'INVOICE_CAP': 'Invoice',
+  'SERV_PERIOD_CAP': 'Service Period',
+  'GATEWAY_CAP': 'Payment Gateway',
+  'PAYMENT_CAP': 'Payment',
+  'ID_CAP': 'Id',
+  'REF_ID_CAP': 'Ref Id',
+
+  //App-ynw_provider-components-provider-license
+  'CURRENT_PACKAGE_CAP': 'Your current License Package is',
+  'UPGRADE_LICENSE': 'Upgrade License',
+  'LICENSE_CHANGE': 'License Change History',
+  'LICENSE_USAGE': 'License Usage',
+  'SUBSCRIPTION_CAP': 'Subscription',
+  'CURRENTLY_ENROLLED': 'You have currently enrolled to',
+  'DUE_AMT_CAP': 'Due Amount',
+  'PERIOD_CAP': 'Period',
+  'ADD_ON_CAP': 'Add-on',
+  'NO_ADDON_CAP': 'No addons exists',
+
+  //App-ynw_provider-components-provider-license-usage
+  'TOTAL_CAP': 'Total',
+  'USED_CAP': 'Used',
+  'COMPLIANCE_CAP': 'Compliance Info',
+  'NO_METRIC_CAP': 'No metric found',
+
+  //App-ynw_provider-components-provider-members
+  'FAMILY_MEMEBER': 'No family members exists',
+
+  //App-ynw_provider-components-provider-payment-history
+  'NO_TRANSACTION': 'No transactions done yet',
+
+  //App-ynw_provider-components-provider-profile
+  'PROFILE_CAP': 'Profile',
+  'BUS_NAME_CAP': 'Business Name',
+  'SHORT_NAME_CAP': 'Short Name',
+  'LOC_SCHEDULE_INFO': 'Location & Schedule Information',
+  'PLACE_CAP': 'Place',
+  'PINCODE_CAP': 'Pincode',
+  'COORDINATES_CAP': 'Coordinates',
+  'BACK_CAP': 'Back',
+  'NOW_DONE_CAP': 'You are now done.',
+
+  //App-ynw_provider-components-provider-refund
+  'AMT_WANT_TO_REFUND': 'Amount you wanted to Refund',
+  'PLEASE_WAIT': 'Please wait',
 
 };
 

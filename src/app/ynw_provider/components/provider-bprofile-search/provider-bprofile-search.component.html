@@ -22,12 +22,12 @@
                     </div>
                     <div class="card" *ngIf="normal_profile_active==2 || normal_locationinfo_show==4">
                         <div class="pubs" >
-                            <h2>Public Search <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search', $event)"></i></div> <!--<span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span>--></h2>
+                            <h2>{{public_search_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search', $event)"></i></div> <!--<span [matTooltipClass] = "tooltipcls" matTooltip="{{searchquestiontooltip}}" data-icon="F"></span>--></h2>
                             <div class="wbox" >
                                 <div class="bx-ico"><i data-icon="m"></i></div>
                                 <div class="bx-copy">
-                                    <p>Your profile has been <strong>disabled</strong> for public search online and will not be visible to {{customer_label}}s.</p>
-                                    <p>We recommend you to set up the <strong>'Profile Name and Summary'</strong> section to turn ON the Public Search</p>
+                                    <p>{{your_proflie_cap}} <strong>{{disabled_Cap}}</strong> {{not_visible_cap}} {{customer_label}}s.</p>
+                                    <p>{{set_up_cap}} <strong>'{{profile_summary_cap}}'</strong> {{on_search_cap}}</p>
 
                                     <!-- <p>Currently your profile is <strong>disabled</strong> for public search online.</p>
                                     <p>Your {{customer_label}}s cannot see you online, so they cannot do online checkins!</p>
@@ -46,37 +46,37 @@
 
                             <div class="ctrl">
                                 <div class="ct-l">
-                                        <h2>Public Search <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search', $event)"></i></div> <!--<span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span>--></h2>
+                                        <h2>{{public_search_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('public-search', $event)"></i></div> <!--<span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span>--></h2>
 
-                                        <span class="status">Current Status -
-                                            <span class="on" *ngIf="normal_search_active">On</span>
-                                            <span class="off" *ngIf="!normal_search_active">Off</span>
+                                        <span class="status">{{current_status_cap}} -
+                                            <span class="on" *ngIf="normal_search_active">{{on_cap}}</span>
+                                            <span class="off" *ngIf="!normal_search_active">{{off_cap}}</span>
                                         </span>
                                         <ng-container *ngIf="normal_search_active">
-                                        <span class="success">Your profile is visible to {{customer_label}}s online at jaldee.com</span>
+                                        <span class="success">{{profile_visible_cap}} {{customer_label}}s {{online_jaldee_cap}}</span>
                                         </ng-container>
                                         <ng-container *ngIf="!normal_search_active">
-                                            <span class="error"><i data-icon="m" ></i>You are offline. Turn ON public search to make your profile visible to {{customer_label}}s</span>
+                                            <span class="error"><i data-icon="m" ></i>{{offline_cap}} {{customer_label}}s</span>
                                         </ng-container>
                                 </div>
                                 <div class="ct-r ml-auto">
-                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="confirm_searchStatus()">Turn Off</button>
+                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="confirm_searchStatus()">{{turn_off_cap}}</button>
                                     <!-- <span *ngIf="normal_search_active"><i data-icon="m" ></i>Your customer canâ€™t find you online</span> -->
-                                    <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="confirm_searchStatus()">Turn On</button>
+                                    <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="confirm_searchStatus()">{{turn_on_cap}}</button>
                                 </div>
                             </div>
                         </div>
                         <!-- <div class="adwds" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0"> -->
                         <div class="adwds w-dta" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0">
-                                <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div></h2>
-                                <p><strong>Sorry!</strong> Currently you did not have any adwords. Would you like to buy adwords?</p>
-                                <span (click)="buyAdwords()" class="cs-btn bt3">Buy Adwords</span>
+                                <h2>{{adowrds_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div></h2>
+                                <p><strong>{{sorry_cap}}!</strong> {{buy_adowrds_cap}}</p>
+                                <span (click)="buyAdwords()" class="cs-btn bt3">{{buy_adowrds_btn}}</span>
                         </div>
                         <div class="adwds w-dta" *ngIf="normal_adworkds_active && adwordsmaxcount > 0">
-                            <h2>Adwords <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div><span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span></h2>
+                            <h2>{{adowrds_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div><span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span></h2>
                             <div class="ad-tble">
-                                <div class="ad-l" *ngIf="adwords_maxremaining>0">{{you_have_cap}} {{adword_list.length}} adword(s), you can create {{adwords_maxremaining}} {{more_cap}}.</div>
-                                <div class="ad-l" *ngIf="adwords_maxremaining == 0">{{you_have_cap}} {{adword_list.length}} adword(s). To add more adwords, go to <a routerLink="/provider/settings/license"><strong>License & Invoice</strong></a></div>
+                                <div class="ad-l" *ngIf="adwords_maxremaining>0">{{you_have_cap}} {{adword_list.length}} {{create_adword_cap}} {{adwords_maxremaining}} {{more_cap}}.</div>
+                                <div class="ad-l" *ngIf="adwords_maxremaining == 0">{{you_have_cap}} {{adword_list.length}} {{more_adword_cap}} <a routerLink="/provider/settings/license"><strong>{{license_cap}}</strong></a></div>
                                 <div class="ad-r">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre" *ngIf="adwords_remaining>0"><a routerLink="/provider/settings/license">+{{adwords_remaining}} {{more_cap}}</a></span>
                                     <span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length>0"></span>
@@ -92,7 +92,7 @@
                         <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Profile Name and Summary <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('basic-information', $event)"></i></div>
+                            {{profile_summary_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('basic-information', $event)"></i></div>
                         </mat-panel-title>
                         </mat-expansion-panel-header>
                         
@@ -105,9 +105,9 @@
                                     <div class="warning" >
 
                                         <i data-icon="m"></i>
-                                        <p><span>You haven't added any <strong>Basic Information*</strong> such as</span> Business Name, Profile Summary &amp; Profile Picture.</p>
-                                        <span class="cs-btn bt3" (click)="showBPrimary()">Add It Now</span>
-                                        <p class="smlft">* Need Basic Information to turn on Public Search</p>
+                                        <p><span>{{have_not_add_cap}} <strong>{{basic_info_cap}}*</strong> {{such_as_cap}}</span> {{name_summary_cap}} &amp; {{profile_pic_cap}}.</p>
+                                        <span class="cs-btn bt3" (click)="showBPrimary()">{{add_it_cap}}</span>
+                                        <p class="smlft">* {{to_turn_search}}</p>
                                     </div>
                                     </div>
                                     <div *ngIf="normal_basicinfo_show==3">
@@ -118,10 +118,10 @@
                                                             <div class="pro-pic" [class.yes]="profimg_exists">
                                                             <div class="pro-pic-img"><img [src]="showimg()" *ngIf="blogo[0] && blogo[0].url"></div>
                                                             <input #logofile type="file" accept=".jpeg,.jpg,.png,.bmp,.gif" style="display:none;" (change)="imageSelect(logofile,$event)">
-                                                        <div class="add"><span (click)="logofile.click()">{{add_cap}} <br/> Profile Picture</span></div>
+                                                        <div class="add"><span (click)="logofile.click()">{{add_cap}} <br/> {{profile_pic_cap}}</span></div>
                                                         <div class="change">
-                                                            <span class="change-pic" (click)="logofile.click()">Change <br/> Picture</span>
-                                                            <span class="del-pic" (click)="confirmLogoremove(blogo.keyName)">Delete Picture</span>
+                                                            <span class="change-pic" (click)="logofile.click()">{{change_cap}} <br/> {{pic_cap}}</span>
+                                                            <span class="del-pic" (click)="confirmLogoremove(blogo.keyName)">{{delete_pic}}</span>
                                                         </div>
                                                     </div>
                                                     <!-- <div class='remove-logo' *ngIf="blogo[0] && blogo[0].url" (click)="confirmLogoremove(blogo.keyName)"><span class="icon-delete"></span> Remove Picture</div> -->
@@ -141,15 +141,15 @@
                                     </div>
                                     <div class="warning" *ngIf="normal_locationinfo_show==2">
                                         <i data-icon="m"></i>
-                                        <p><span>You haven't added any</span> <strong>Location &amp; {{working_hours_cap}}*</strong> information.</p>
-                                        <span class="cs-btn bt3" (click)="addLocation()">Add It Now</span>
-                                        <p class="smlft">* Need Location &amp; Working Hours to turn on Public Search</p>
+                                        <p><span>{{have_not_add_cap}}</span> <strong>{{location_cap}} &amp; {{working_hours_cap}}*</strong> {{info_cap}}.</p>
+                                        <span class="cs-btn bt3" (click)="addLocation()">{{add_it_cap}}</span>
+                                        <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}</p>
                                     </div>
                                     <div class="warning" *ngIf="normal_locationinfo_show==4">
                                             <i data-icon="m"></i>
-                                            <p><span><strong>Your Base Location details are Incomplete.</strong></span></p> <p><span>Please use the <strong>{{edit_cap}} {{location_cap}}</strong> button to complete it.</span></p>
+                                            <p><span><strong>{{base_loc_det_cap}}.</strong></span></p> <p><span>{{please_use_cap}} <strong>{{edit_cap}} {{location_cap}}</strong> {{btn_to_compl_cap}}.</span></p>
                                             <span class="cs-btn bt3" (click)="editLocation()">{{edit_cap}} {{location_cap}}</span>
-                                            <p class="smlft">* Need Location &amp; Working Hours to turn on Public Search</p>
+                                            <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}</p>
                                     </div>
                                     <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
                                         <span (click)="editLocation()" class="editbt"></span>
@@ -161,11 +161,11 @@
                                                 <h4>{{base_loc.place | capitalizeFirst}}</h4>
                                                 <span>{{base_loc.address | capitalizeFirst}}</span>
                                                 <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
-                                                  Pin : {{base_loc.pinCode}}
+                                                  {{pin_cap}} : {{base_loc.pinCode}}
                                                 </span>
 
                                                 <ul class="info-lst" *ngIf="multipeLocationAllowed">
-                                                    <li>You can add more locations in the <a routerLink="/provider/settings/waitlist-manager/locations">locations</a> page.</li>
+                                                    <li>{{more_loc_cap}} <a routerLink="/provider/settings/waitlist-manager/locations">{{locations_cap}}</a> {{page_cap}}.</li>
                                                 </ul>
                                             </div>
                                             <div class="cop-r" *ngIf="loc_list.length>0">
@@ -174,8 +174,8 @@
     <iframe width="100%" height="100%" frameborder="0" style="border:0"
     [src]="mapurl" allowfullscreen *ngIf="mapurl"></iframe>
                                                 <div class="gps" *ngIf="base_loc.longitude != '' && base_loc.lattitude != ''">
-                                                    <div>Longitude: <span>{{base_loc.longitude}}</span></div>
-                                                    <div>Latitude: <span>{{base_loc.lattitude}}</span></div>
+                                                    <div>{{long_cap}}: <span>{{base_loc.longitude}}</span></div>
+                                                    <div>{{lat_cap}}: <span>{{base_loc.lattitude}}</span></div>
                                                     
                                                     
                                                 </div>
@@ -183,7 +183,7 @@
                                         </div>
                                         <!-- <ng-container *ngIf="bProfile.baseLocation && bProfile.baseLocation.parkingType"> -->
 
-                                            <h5>Location Amenities <span (click)="editLocation('badge')" class="editbt" *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span></h5>
+                                            <h5>{{loc_amenities_cap}} <span (click)="editLocation('badge')" class="editbt" *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span></h5>
                                             <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
                                             <div class="copy">
                                                 <ul class="amt-list">
@@ -201,8 +201,8 @@
                                             <ng-container *ngIf="normal_locationamenities_show==2">
                                             <div class="warning">
                                                 <i data-icon="m"></i>
-                                                <p><span>You haven't added any</span> <strong>Location Amenities</strong></p>
-                                                <span class="cs-btn bt3" (click)="editLocation('badge')">Add It Now</span>
+                                                <p><span>{{have_not_add_cap}}</span> <strong>{{loc_amenities_cap}}</strong></p>
+                                                <span class="cs-btn bt3" (click)="editLocation('badge')">{{add_it_cap}}</span>
                                             </div>
                                             </ng-container>
                                     </div>
@@ -220,14 +220,14 @@
                                             <ng-container *ngIf="display_schedule.length == 0">
                                             <!-- <div class="no-dta" *ngIf="normal_privacy_settings_show==2"> -->
                                             <div class="no-dta">
-                                                <p>You haven't added any {{working_hours_cap}}.</p>
-                                                <span class="cs-btn bt3" (click)="change_schedulepopup()">Add It Now</span>
+                                                <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
+                                                <span class="cs-btn bt3" (click)="change_schedulepopup()">{{add_it_cap}}</span>
                                             </div>
                                             </ng-container>
 
                                             <div class="schedule_msgdiv" *ngIf="display_schedule.length > 0">
                                             <ul class="info-lst">
-                                                <li>You can change the working hours by editing the service time window of this location. <span (click)="editQueue()" class="pointer-cursor"><b>{{click_here_cap}}</b></span> to view the service time windows.</li>
+                                                <li>{{can_change_hours}}. <span (click)="editQueue()" class="pointer-cursor"><b>{{click_here_cap}}</b></span> {{view_time_wind_cap}}.</li>
                                             </ul>
                                             <!-- <span  class="cs-btn bt3" (click)="change_schedulepopup()">Change</span> -->
                                             </div>
@@ -245,7 +245,7 @@
                                 <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Privacy Settings <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)"></i></div>
+                                    {{privacy_sett_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)"></i></div>
                                 </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 
@@ -253,8 +253,8 @@
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
                                     <div class="no-dta" *ngIf="normal_privacy_settings_show==2">
-                                        <p>You haven't added any Privacy Settings information.</p>
-                                        <span class="cs-btn bt3" (click)="handlePrivacysettings('phone')">Add It Now</span>
+                                        <p>{{have_not_add_cap}} {{privacy_sett_cap}} {{info_cap}}.</p>
+                                        <span class="cs-btn bt3" (click)="handlePrivacysettings('phone')">{{add_it_cap}}</span>
                                     </div>
 
                                     <div class="cd-t" *ngIf="normal_privacy_settings_show==3">
@@ -262,7 +262,7 @@
                                                 <ul class="tbl-list">
                                                     <li class="tth">
                                                         <div class="otr">
-                                                            <div class="cth">Phone <span (click)="handlePrivacysettings('phone')" class="addbt"></span></div>
+                                                            <div class="cth">{{phone_cap}} <span (click)="handlePrivacysettings('phone')" class="addbt"></span></div>
                                                         </div>
                                                     </li>
                                                     <ng-container *ngIf="phonearr.length>0">
@@ -271,7 +271,7 @@
                                                                 <div class="ctd">{{phone.label | capitalizeFirst}}</div>
                                                                 <div class="ctd">{{phone.number}}</div>
                                                                 <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[phone.permission]}}</div> -->
-                                                                <div class="ctd"><span>Visible to</span> {{show_privacyText(phone.permission)}}</div>
+                                                                <div class="ctd"><span>{{visible_cap}}</span> {{show_privacyText(phone.permission)}}</div>
                                                                 <!-- <a href="#" class="mbt"></a> -->
                                                                 <span class="mbt">
                                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -280,18 +280,18 @@
                                                                     <mat-menu #menu="matMenu">
                                                                         <button type="button" (click) = "handlePrivacysettings('phone', i)" mat-menu-item>
                                                                         <i class="icon-edit"></i>
-                                                                        <span>Edit</span>
+                                                                        <span>{{edit_cap}}</span>
                                                                         </button>
                                                                         <button type="button" (click) = "deletePrivacysettings('phone', i)" mat-menu-item>
                                                                             <i class="icon-delete"></i>
-                                                                            <span >Delete</span>
+                                                                            <span >{{delete_btn}}</span>
                                                                         </button>
                                                                     </mat-menu>
                                                                 </span>
                                                                 <div class="ctd">
                                                                     <span class="mbt-mobile-show">
-                                                                        <button class="editcls" type="button" (click)="handlePrivacysettings('phone', i)">Edit</button>
-                                                                        <button class="deletecls" type="button" (click)="deletePrivacysettings('phone', i)">Delete</button>
+                                                                        <button class="editcls" type="button" (click)="handlePrivacysettings('phone', i)">{{edit_cap}}</button>
+                                                                        <button class="deletecls" type="button" (click)="deletePrivacysettings('phone', i)">{{delete_btn}}</button>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -314,7 +314,7 @@
                                                                 <div class="ctd">{{email.label | capitalizeFirst}}</div>
                                                                 <div class="ctd">{{email.emailid}}</div>
                                                                 <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[email.permission]}}</div> -->
-                                                                <div class="ctd"><span>Visible to</span> {{show_privacyText(email.permission)}}</div>
+                                                                <div class="ctd"><span>{{visible_cap}}</span> {{show_privacyText(email.permission)}}</div>
                                                                 <span class="mbt">
                                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                             <mat-icon>more_vert</mat-icon>
@@ -322,19 +322,19 @@
                                                                     <mat-menu #menu="matMenu">
                                                                         <button type="button" (click) = "handlePrivacysettings('email', i)" mat-menu-item>
                                                                         <i class="icon-edit"></i>
-                                                                        <span>Edit</span>
+                                                                        <span>{{edit_cap}}</span>
                                                                         </button>
                                                                         <button type="button" (click) = "deletePrivacysettings('email', i)" mat-menu-item>
                                                                         <i class="icon-delete"></i>
-                                                                        <span >Delete</span>
+                                                                        <span >{{delete_btn}}</span>
                                                                         </button>
                                                                     </mat-menu>
 
                                                                 </span>
                                                                 <div class="ctd">
                                                                 <span class="mbt-mobile-show">
-                                                                    <button class="editcls" type="button" (click)="handlePrivacysettings('email', i)">Edit</button>
-                                                                    <button class="deletecls" type="button" (click)="deletePrivacysettings('email', i)">Delete</button>
+                                                                    <button class="editcls" type="button" (click)="handlePrivacysettings('email', i)">{{edit_cap}}</button>
+                                                                    <button class="deletecls" type="button" (click)="deletePrivacysettings('email', i)">{{delete_btn}}</button>
                                                                 </span>
                                                                 </div>
                                                             </div>
@@ -352,15 +352,15 @@
                             <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                             <mat-panel-title>
-                                Specialization <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('specialization', $event)"></i></div>
+                                {{special_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('specialization', $event)"></i></div>
                             </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="no-dta" *ngIf="normal_specilization_show==1">
                                 <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                             </div>
                             <div class="no-dta" *ngIf="normal_specilization_show==2">
-                            <p>You haven't added any Specializations.</p>
-                            <span (click)="handleSpecialization()" class="cs-btn bt3">Add It Now</span>
+                            <p>{{have_not_add_cap}} {{special_cap}}.</p>
+                            <span (click)="handleSpecialization()" class="cs-btn bt3">{{add_it_cap}}</span>
                             </div>
                             <div class="special-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
                                 <span class="editbt" (click)="handleSpecialization()"></span>
@@ -384,8 +384,8 @@
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_language_show==2">
-                                <p>You haven't added any {{lang_known_cap}}.</p>
-                                <span (click)="handleSpokenLanguages()" class="cs-btn bt3">Add It Now</span>
+                                <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
+                                <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
                                 </div>
 
                                 <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
@@ -581,7 +581,7 @@
                             <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                             <mat-panel-title>
-                                    Additional Info <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('additional-info', $event)"></i></div>
+                                    {{additional_info_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('additional-info', $event)"></i></div>
                             </mat-panel-title>
                             </mat-expansion-panel-header>
                                 <div class="no-dta" *ngIf="normal_domainfield_show==1 || normal_subdomainfield_show==1">
@@ -589,7 +589,7 @@
                                 </div>
 
                                 <div class="no-dta"  *ngIf="normal_domainfield_show== 4 && normal_subdomainfield_show== 4">
-                                        <p>You haven't added any Additional Information.</p>
+                                        <p>{{have_not_add_cap}} {{additional_cap}} {{info_cap}}.</p>
                                 </div>
 
 
@@ -604,7 +604,7 @@
                                                 </mat-panel-title>
                                                 <mat-panel-description class="acc-plus-btn">
                                                     <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
-                                                        <mat-icon>add_circle_outline</mat-icon>
+                                                        <mat-icon>{{add_circle_outline}}</mat-icon>
                                                     </button>
                                                 </mat-panel-description>
                                                 </mat-expansion-panel-header>
@@ -727,18 +727,18 @@
                                                                                 <button type="button" mat-menu-item (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">
                                                                                 <!-- <mat-icon>edit</mat-icon> -->
                                                                                 <i class="icon-edit"></i>
-                                                                                <span >Edit</span>
+                                                                                <span >{{edit_cap}}</span>
                                                                                 </button>
                                                                                 <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
                                                                                 <!-- <mat-icon>delete</mat-icon> -->
                                                                                 <i class="icon-delete"></i>
-                                                                                <span >Delete</span>
+                                                                                <span >{{delete_btn}}</span>
                                                                                 </button>
                                                                                 </mat-menu>
                                                                             </span>
                                                                             <span class="mbt-mobile-show">
-                                                                                    <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">Edit</button>
-                                                                                    <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">Delete</button>
+                                                                                    <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">{{edit_cap}}</button>
+                                                                                    <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">{{delete_btn}}</button>
                                                                             </span>
 
                                                                         </td>
@@ -770,7 +770,7 @@
                                                 </mat-panel-title>
                                                 <mat-panel-description class="acc-plus-btn">
                                                     <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
-                                                        <mat-icon>add_circle_outline</mat-icon>
+                                                        <mat-icon>{{add_circle_outline}}</mat-icon>
                                                     </button>
                                                 </mat-panel-description>
                                                 </mat-expansion-panel-header>
@@ -892,19 +892,19 @@
                                                                             <button type="button" mat-menu-item (click)="editGridDynamicField(fields.name,'domain_questions', i)">
                                                                             <!-- <mat-icon>edit</mat-icon> -->
                                                                             <i class="icon-edit"></i>
-                                                                            <span >Edit</span>
+                                                                            <span >{{edit_cap}}</span>
                                                                             </button>
                                                                             <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
                                                                             <!-- <mat-icon>delete</mat-icon> -->
                                                                             <i class="icon-delete"></i>
-                                                                            <span >Delete</span>
+                                                                            <span >{{delete_btn}}</span>
                                                                             </button>
                                                                             </mat-menu>
                                                                             </span>
 
                                                                             <span class="mbt-mobile-show">
-                                                                                    <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'domain_questions', i)">Edit</button>
-                                                                                    <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">Delete</button>
+                                                                                    <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'domain_questions', i)">{{edit_cap}}</button>
+                                                                                    <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">{{delete_btn}}</button>
                                                                             </span>
                                                                     </td>
                                                                     </tr>
@@ -943,8 +943,8 @@
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_gallery_show==2">
-                                    <p>You haven't added any photos to the {{gallery_cap}}</p>
-                                    <span class="cs-btn bt3" (click)="handleGalleryImages()">Add It Now</span>
+                                    <p>{{have_not_add_cap}} {{photos_to_cap}} {{gallery_cap}}</p>
+                                    <span class="cs-btn bt3" (click)="handleGalleryImages()">{{add_it_cap}}</span>
                                 </div>
                                 <div class="ph-gal-bx" *ngIf="normal_gallery_show==3">
                                     <ul class="ph-gal" [class.ph-gal-2]="image_list_popup.length==2">
@@ -959,13 +959,13 @@
                                                     <mat-menu #menu="matMenu">
                                                     <button type="button" (click)="confirmDelete(file, i)" mat-menu-item>
                                                         <i class="icon-delete"></i>
-                                                        <span >Delete</span>
+                                                        <span >{{delete_btn}}</span>
                                                         </button>
                                                     </mat-menu>
                                                 </span>
                                                 <div class="pop-mnu">
                                                     <ul>
-                                                        <li><a href="#" class="dlt">Delete Photo</a></li>
+                                                        <li><a href="#" class="dlt">{{delete_btn}} {{photo_cap}}</a></li>
                                                     </ul>
                                                 </div>
                                                 <div class="img-h" (click)="openImageModalRow(file)">
@@ -1004,15 +1004,15 @@
                         <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Your Social Media <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('your-social-media', $event)"></i></div>
+                            {{social_media_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('your-social-media', $event)"></i></div>
                         </mat-panel-title>
                         </mat-expansion-panel-header>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==1" >
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==2" >
-                                    <p>You haven't added any social media links</p>
-                                    <span class="cs-btn bt3" (click)="handleSocialmedia()">Add It Now</span>
+                                    <p>{{no_social_media}}</p>
+                                    <span class="cs-btn bt3" (click)="handleSocialmedia()">{{add_it_cap}}</span>
                                 </div>
 
                                 <div class="cd-t" *ngIf="normal_socialmedia_show==3">
@@ -1027,11 +1027,11 @@
                                                           <mat-menu #menu="matMenu">
                                                             <button type="button" (click)="editSocialmedia(social.Sockey)" mat-menu-item>
                                                                     <i class="icon-edit"></i>
-                                                              <span>Edit</span>
+                                                              <span>{{edit_cap}}</span>
                                                             </button>
                                                             <button type="button" (click)="deleteSocialmedia(social.Sockey)" mat-menu-item>
                                                                     <i class="icon-delete"></i>
-                                                                <span >Delete</span>
+                                                                <span >{{delete_btn}}</span>
                                                               </button>
                                                           </mat-menu>
                                                 </span>
@@ -1044,7 +1044,7 @@
                                 </div>
                                <div class="cd-b" >  <!-- *ngIf="normal_socialmedia_show==2" -->
                                     <ul class="info-lst" *ngIf="showaddsocialmedia">
-                                        <li>You can add your social media links here.</li>
+                                        <li>{{add_social_media}}.</li>
                                     </ul>
                                 </div>
 

@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import {HeaderComponent} from '../../../shared/modules/header/header.component';
+import { HeaderComponent } from '../../../shared/modules/header/header.component';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -9,27 +9,43 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
-    selector: 'app-provider-profile',
-    templateUrl: './provider-profile.component.html'
+  selector: 'app-provider-profile',
+  templateUrl: './provider-profile.component.html'
 })
 
 export class ProviderProfileComponent implements OnInit, OnDestroy {
 
+  profile_pic_cap = Messages.PROFILE_PICTURE_CAP;
+  mobile_cap = Messages.CUSTOMER_MOBILE_CAP;
+  email_cap = Messages.SERVICE_EMAIL_CAP;
+  description_cap = Messages.DESCRIPTION_MAND_CAP;
+  next_cap = Messages.NEXT_CAP;
+  address_cap = Messages.ADDRESS_CAP;
+  done_cap = Messages.DONE_BTN;
+  profile_cap = Messages.PROFILE_CAP;
+  bus_name_cap = Messages.BUS_NAME_CAP;
+  short_name_cap = Messages.SHORT_NAME_CAP;
+  loc_schedule_info = Messages.LOC_SCHEDULE_INFO;
+  pin_code_cap = Messages.PINCODE_CAP;
+  place_cap = Messages.PLACE_CAP;
+  coordinates_cap = Messages.COORDINATES_CAP;
+  back_cap = Messages.BACK_CAP;
+  now_done_cap = Messages.NOW_DONE_CAP;
   @ViewChild('ckeditor') ckeditor: ElementRef;
-
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   s3url = null;
   provider_id = null;
   basic_profile;
   selected_index = 0;
-  terminologies ;
+  terminologies;
   profile_pic = {
-                files: [],
-                base64: null
-              };
+    files: [],
+    base64: null
+  };
   location_data;
   public options: Object = {
     placeholderText: 'Add Description here',
@@ -41,30 +57,28 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
   ckeditorLoaded = false;
 
   constructor(private fb: FormBuilder,
-  private shared_functions: SharedFunctions,
-  private shared_services: SharedServices,
-  private provider_services: ProviderServices,
-  public fed_service: FormMessageDisplayService) {
+    private shared_functions: SharedFunctions,
+    private shared_services: SharedServices,
+    private provider_services: ProviderServices,
+    public fed_service: FormMessageDisplayService) {
 
     if (!window['CKEDITOR']) {
       const url = '//cdn.ckeditor.com/4.7.3/full/ckeditor.js';
       const script = document.createElement('script');
       script.onload = () => {
-          this.ckeditorLoaded = true;
-         };
+        this.ckeditorLoaded = true;
+      };
       script.type = 'text/javascript';
       script.src = url;
       document.body.appendChild(script);
     }
-
-
   }
 
   ngOnInit() {
     this.firstFormGroup = this.fb.group({
       business_name: ['', Validators.required],
       short_name: [''],
-      mobile: [{value: '', disabled: true}],
+      mobile: [{ value: '', disabled: true }],
       email: ['', Validators.compose([Validators.email])],
       business_desc: ['', Validators.required]
     });
@@ -76,11 +90,11 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
     });
 
     this.shared_functions.getS3Url('provider')
-    .then(
-      data => {
-        this.s3url = data;
-      }
-    );
+      .then(
+        data => {
+          this.s3url = data;
+        }
+      );
 
     this.stepInitFun();
 
@@ -88,16 +102,16 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
 
   stepChange(stepper) {
     setTimeout(() => {
-        this.selected_index = stepper.selectedIndex;
-        this.stepInitFun();
-      }, 100);
+      this.selected_index = stepper.selectedIndex;
+      this.stepInitFun();
+    }, 100);
   }
 
   stepInitFun() {
 
     switch (this.selected_index) {
-      case 0 : this.basicProfileInit(); break;
-      case 1 : this.profileLocationInit(); break;
+      case 0: this.basicProfileInit(); break;
+      case 1: this.profileLocationInit(); break;
     }
   }
 
@@ -107,7 +121,7 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       this.profile_pic.files = input.files[0];
       reader.onload = (e) => {
-        this.profile_pic.base64 =  e.target['result'];
+        this.profile_pic.base64 = e.target['result'];
       };
 
       reader.readAsDataURL(input.files[0]);
@@ -116,28 +130,28 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
   }
   basicProfileInit() {
     this.provider_services.getBussinessProfile()
-    .subscribe(
-      data => {
-        this.basic_profile = data;
-        this.provider_id = this.basic_profile.uniqueId || null;
-        console.log(data);
-        const user = JSON.parse(localStorage.getItem('ynw-user'));
-        this.getTerminologies();
-        this.firstFormGroup.setValue(
-          {
-            'business_name': this.basic_profile.businessName || null,
-            'email': this.basic_profile.email || null,
-            'mobile': this.basic_profile.primaryPhoneNo || user.primaryPhoneNumber || null,
-            'short_name': this.basic_profile.shortName || null,
-            'business_desc':  this.basic_profile.businessDesc || null
-          }
-        );
+      .subscribe(
+        data => {
+          this.basic_profile = data;
+          this.provider_id = this.basic_profile.uniqueId || null;
+          console.log(data);
+          const user = JSON.parse(localStorage.getItem('ynw-user'));
+          this.getTerminologies();
+          this.firstFormGroup.setValue(
+            {
+              'business_name': this.basic_profile.businessName || null,
+              'email': this.basic_profile.email || null,
+              'mobile': this.basic_profile.primaryPhoneNo || user.primaryPhoneNumber || null,
+              'short_name': this.basic_profile.shortName || null,
+              'business_desc': this.basic_profile.businessDesc || null
+            }
+          );
 
-      },
-      error => {
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
   }
 
@@ -149,11 +163,11 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
 
     const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, 'terminologies', UTCstring)
-    .subscribe (res => {
-      console.log(res);
-      this.terminologies = res;
-    }
-    );
+      .subscribe(res => {
+        console.log(res);
+        this.terminologies = res;
+      }
+      );
 
   }
 
@@ -168,9 +182,9 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
     }
 
     if (criteria !== '') {
-      if ( this.subscription ) {
-          this.subscription.unsubscribe();
-        }
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+      }
 
       // Creating criteria to be passed via get
       const pass_criteria = {
@@ -181,18 +195,18 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
           this.location_data = res;
           if (!res[0]) { this.setNulllocationvalues(res); }
         });
-      } else {
-      if ( this.subscription ) {
+    } else {
+      if (this.subscription) {
         this.subscription.unsubscribe();
       }
-      this.location_data =  [];
+      this.location_data = [];
     }
   }
 
   setNulllocationvalues(loc) {
 
-    this.secondFormGroup.patchValue({'coordinates' : null});
-    this.location_data =  [];
+    this.secondFormGroup.patchValue({ 'coordinates': null });
+    this.location_data = [];
   }
 
   setLocation(loc) {
@@ -200,8 +214,8 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
     if (!loc || !loc.name) {
       return false;
     }
-    this.secondFormGroup.patchValue({'place': loc.name});
-    this.secondFormGroup.patchValue({'coordinates' : loc.latitude + ',' + loc.longitude});
+    this.secondFormGroup.patchValue({ 'place': loc.name });
+    this.secondFormGroup.patchValue({ 'coordinates': loc.latitude + ',' + loc.longitude });
   }
 
   checkLocation(event) {
@@ -209,9 +223,9 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
     if (this.location_data && this.location_data[0] &&
       this.secondFormGroup.get('place').value !== this.location_data[0].name) {
       this.setLocation(this.location_data[0]);
-    } else if ( !this.location_data || this.location_data.length === 0) {
+    } else if (!this.location_data || this.location_data.length === 0) {
       this.setNulllocationvalues(this.location_data);
-      this.secondFormGroup.patchValue({'place' : null});
+      this.secondFormGroup.patchValue({ 'place': null });
     }
   }
 
@@ -225,12 +239,12 @@ export class ProviderProfileComponent implements OnInit, OnDestroy {
     }
 
 
- }
- ngOnDestroy() {
-  if (window['CKEDITOR']) {
-    window['CKEDITOR'].removeAllListeners(); this.ckeditorLoaded = false;
   }
+  ngOnDestroy() {
+    if (window['CKEDITOR']) {
+      window['CKEDITOR'].removeAllListeners(); this.ckeditorLoaded = false;
+    }
 
- }
+  }
 
 }

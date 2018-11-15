@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
+import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import {projectConstants} from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-refund',
@@ -13,6 +14,13 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class ProviderRefundComponent implements OnInit {
 
+  refund_cap = Messages.REFUND_CAP;
+  refundable_cap = Messages.REFUNDABLE_CAP;
+  amount_cap = Messages.AMOUNT_CAP;
+  mode_cap = Messages.MODE_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  amt_want_to_refund = Messages.AMT_WANT_TO_REFUND;
+  please_wait_cap = Messages.PLEASE_WAIT;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -28,17 +36,17 @@ export class ProviderRefundComponent implements OnInit {
   payment_options = [
     {
       label: 'Cash',
-      value : 'cash',
+      value: 'cash',
       enabled: false
     },
     {
       label: 'Online',
-      value : 'online',
+      value: 'online',
       enabled: false
     },
     {
       label: 'Other',
-      value : 'other',
+      value: 'other',
       enabled: false
     }
   ];
@@ -51,9 +59,9 @@ export class ProviderRefundComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
 
-    ) {
-        console.log('in-data', data);
-     }
+  ) {
+    console.log('in-data', data);
+  }
 
   ngOnInit() {
     this.refpayAmt = parseFloat(this.data.payment_det.refundableAmount);
@@ -90,20 +98,20 @@ export class ProviderRefundComponent implements OnInit {
           'refundBy': this.refpayMode
         };
         this.provider_services.refundBill(post_data)
-          .subscribe (data => {
+          .subscribe(data => {
             console.log('refund return', data);
             if (data && data['response'] === 'Success') {
               this.api_success = 'Refunded done successfully';
               setTimeout(() => {
                 this.dialogRef.close('reloadlist');
-                }, projectConstants.TIMEOUT_DELAY);
+              }, projectConstants.TIMEOUT_DELAY);
             } else {
               this.loading = false;
               this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(data['response']);
             }
           }, error => {
-              this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
-              this.loading = false;
+            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+            this.loading = false;
           });
       }
     }
@@ -112,33 +120,33 @@ export class ProviderRefundComponent implements OnInit {
 
   getUpgradableaddonPackages() {
     this.provider_services.getUpgradableAddonPackages()
-      .subscribe( (data: any) => {
+      .subscribe((data: any) => {
 
         this.upgradableaddons = [];
 
-          for (const metric of data) {
-            for (const addon of metric.addons) {
-              this.upgradableaddons.push(addon);
-            }
+        for (const metric of data) {
+          for (const addon of metric.addons) {
+            this.upgradableaddons.push(addon);
           }
-          this.obtainedaddons = true;
+        }
+        this.obtainedaddons = true;
       });
   }
   createForm() {
-      this.amForm = this.fb.group({
-        addons_selpackage: ['', Validators.compose([Validators.required])]
-      });
+    this.amForm = this.fb.group({
+      addons_selpackage: ['', Validators.compose([Validators.required])]
+    });
   }
-  onSubmit (form_data) {
+  onSubmit(form_data) {
     this.resetApiErrors();
     if (this.selected_addon) {
       this.provider_services.addAddonPackage(this.selected_addon)
-        .subscribe (data => {
+        .subscribe(data => {
           this.api_success = this.sharedfunctionObj.getProjectMesssages('ADDON_ADDED');
           setTimeout(() => {
-           this.dialogRef.close('reloadlist');
+            this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
-          },
+        },
           error => {
             // this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
             this.sharedfunctionObj.apiErrorAutoHide(this, error);
@@ -147,7 +155,7 @@ export class ProviderRefundComponent implements OnInit {
     }
   }
 
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }

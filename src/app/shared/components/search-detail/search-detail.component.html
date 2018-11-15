@@ -407,7 +407,7 @@
                                 </div>
 
                                 <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0 || (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==0) || (!search_result.fields.hasOwnProperty('online_checkins'))">
-                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">{{sorry_cap}}
+                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">{{sorry_cap}}!!
                                         {{getTerminologyTerm('waitlist', search_result.fields)}} {{not_allowed_cap}}</ng-container>
                                     <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">{{search_result.fields['estimatedtime_det']['message']}}</ng-container>
                                 </div>

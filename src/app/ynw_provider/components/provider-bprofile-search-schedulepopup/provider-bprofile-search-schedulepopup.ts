@@ -12,6 +12,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 
 
 @Component({
@@ -20,6 +21,9 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 })
 
 export class ProviderBprofileSearchSchedulepopupComponent implements OnInit {
+
+  close_btn = Messages.CLOSE_BTN;
+  manage_work_hours_cap = Messages.MANAGE_WORK_HOURS_CAP;
   schedule_arr: any = [];
   schedule_json: any = [];
   location_id = 0;

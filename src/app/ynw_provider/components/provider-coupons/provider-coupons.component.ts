@@ -16,6 +16,21 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
   styleUrls: ['./provider-coupons.component.css']
 })
 export class ProviderCouponsComponent implements OnInit, OnDestroy {
+
+  name_cap = Messages.PRO_NAME_CAP;
+  code_cap = Messages.CODE_CAP;
+  edit_btn = Messages.EDIT_BTN;
+  delete_btn = Messages.DELETE_BTN;
+  reports_cap = Messages.REPORTS_CAP;
+  valid_from_cap = Messages.VALID_FROM_CAP;
+  valid_to_cap = Messages.VALID_TO_CAP;
+  consumers_apply_cap = Messages.CONSUM_APPLY_CAP;
+  provid_apply_cap = Messages.CONSUM_APPLY_CAP;
+  status_cap = Messages.COUPONS_STATUS_CAP;
+  add_coupon_btn = Messages.ADD_COUPON_BTN;
+  value_cap = Messages.VALUE_CAP;
+  enable_cap = Messages.ENABLE_CAP;
+  disable_cap = Messages.DISABLE_CAP;
   coupon_list: any = [];
   jaldeecoupon_list: any = [];
   query_executed = false;
