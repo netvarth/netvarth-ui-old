@@ -1,7 +1,7 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Non Working Day - {{ data.type | capitalizeFirst }}
+<h1 class="mat-dialog-title">{{non_working_day_cap}} {{ data.type | capitalizeFirst }}
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
@@ -17,7 +17,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     </div>
 </div>
 <div class="form-group">
-   <label for="reason" class="col-form-label">Reason</label>
+   <label for="reason" class="col-form-label">{{reason_cap}}</label>
    <input type="text" matInput formControlName="reason" class="form-control" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
@@ -30,14 +30,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
   <div class="form-group bold">
   <div class="startendtime">
     <div class="starttimediv">
-      <label for="changeHourStep">Start Time</label>
+      <label for="changeHourStep">{{start_time_cap}}</label>
       <ngb-timepicker formControlName="starttime" meridian="true"></ngb-timepicker>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')"
         errorMsg="Please enter the start time">
         </app-field-error-display>
     </div>
     <div class="endtimediv">
-    <label for="changeHourStep">End Time</label>
+    <label for="changeHourStep">{{end_time_cap}}</label>
     <ngb-timepicker formControlName="endtime" meridian="true"></ngb-timepicker>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')"
       errorMsg="Please enter the Closing time">
@@ -47,8 +47,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-<button  type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">Save</button>
+<button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+<button  type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">{{save_btn_cap}}</button>
 </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error"

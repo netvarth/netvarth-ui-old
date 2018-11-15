@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
+import {Messages} from '../../../shared/constants/project-messages';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
@@ -14,6 +15,15 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
   // styleUrls: ['./home.component.scss']
 })
 export class AddProviderItemComponent implements OnInit {
+
+  item_hi_cap =Messages.ITEM_HI_CAP;
+  item_name_cap = Messages.ITEM_NAME_CAP;
+  short_desc_cap = Messages.SHORT_DESC_CAP;
+  detailed_dec_cap = Messages.DETAIL_DESC_CAP;
+  price_cap = Messages.PRICES_CAP;
+  taxable_cap = Messages.TAXABLE_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
 
   amForm: FormGroup;
   api_error = null;

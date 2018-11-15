@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
+import {Messages} from '../../../shared/constants/project-messages';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import {projectConstants} from '../../../shared/constants/project-constants';
@@ -14,6 +15,11 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderMemberComponent implements OnInit {
 
+  f_name_cap = Messages.F_NAME_CAP;
+  l_name_cap = Messages.L_NAME_CAP;
+  mob_no_cap = Messages.MOBILE_NO_CAP;
+  submit_btn_cap = Messages.SUBMIT_CAP;
+  
   amForm: FormGroup;
   api_error = null;
   api_success = null;

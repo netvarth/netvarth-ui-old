@@ -231,6 +231,7 @@ export const Messages = {
   'DONE_BTN' : 'Done',
   'SAVE_MEMBER_BTN' : 'Save Member',
   'RESEND_BTN' : 'Resend',
+  'ADD_BTN' : 'Add',
 
 
 
@@ -619,9 +620,28 @@ export const Messages = {
 
   //App-ynw_provider-components-add-provider-coupons
 
-  // '' : '',
-  // '' : '',
-  // '' : '',
-  // '' : '',
+  'ITEM_HI_CAP' : 'Item -',
+  'ITEM_NAME_CAP' : 'Item Name *',
+  'SHORT_DESC_CAP' : 'Short Description *',
+  'DETAIL_DESC_CAP' : 'Detailed Description *',
+  'PRICES_CAP' : 'Price',
+  'TAXABLE_CAP' : 'Taxable *',
+
+  //App-ynw_provider-components-add-provider-coupons
+  'NON_WORK_DAY_HI_CAP' : 'Non Working Day -',
+  'REASON_CAP' : 'Reason',
+  'START_TIME_CAP' : 'Start Time',
+  'END_TIME_CAP' : 'End Time',
+
+  //App-ynw_provider-components-add-provider-waitlist-checkin-bill
+  'NEW_CAP' : 'New',
+  'ADD_SER_ITEM_CAP' : 'Add Service/Item',
+  'AVAILABLE_CAP' : 'Available',  
+  'QTY_CAPITAL_CAP' : 'QTY',
+  'SEL_DISC_CAP' : 'Select Discount',
+  'SEL_COUPON_CAP' : 'Select Coupon ',
+  'DISCOUNTS_COUPONS_CAP' : 'Discounts / Coupons',
+  'BILL_DISCOUNT_CAP' : 'Bill Discount',
+
 
 };

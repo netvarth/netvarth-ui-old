@@ -23,6 +23,43 @@ export interface ItemServiceGroup {
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
+  new_cap = Messages.NEW_CAP;
+  bill_cap = Messages.BILL_CAPTION;
+  date_cap = Messages.DATE_CAP;
+  time_cap = Messages.TIME_CAP;
+  bill_no_cap = Messages.BILL_NO_CAP;
+  gstin_cap = Messages.GSTIN_CAP;
+  ad_ser_item_cap = Messages.ADD_SER_ITEM_CAP;
+  no_cap = Messages.NO_CAP;
+  available_cap = Messages.AVAILABLE_CAP;
+  qty_cap= Messages.QTY_CAPITAL_CAP;
+  add_btn_cap = Messages.ADD_BTN;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  qnty_cap = Messages.QTY_CAP;
+  select_discount_cap = Messages.SEL_DISC_CAP;
+  select_coupon_cap = Messages.SEL_COUPON_CAP;
+  done_btn_cap = Messages.DONE_BTN;
+  discount_cap = Messages.DISCOUNT_CAP;
+  coupon_cap = Messages.COUPON_CAP;
+  sub_tot_cap = Messages.SUB_TOT_CAP;
+  dis_coupons_cap = Messages.DISCOUNTS_COUPONS_CAP;
+  delete_btn_cap = Messages.DELETE_BTN;
+  gross_amnt_cap = Messages.GROSS_AMNT_CAP;
+  bill_disc_cap = Messages.BILL_DISCOUNT_CAP;
+  tax_cap = Messages.TAX_CAP;
+  amount_paid_cap = Messages.AMNT_PAID_CAP;
+  amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
+  back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
+  payment_logs_cap = Messages.PAY_LOGS_CAP;
+  amount_cap = Messages.AMOUNT_CAP;
+  refundable_cap = Messages.REFUNDABLE_CAP;
+  status_cap = Messages.STATUS_CAP;
+  mode_cap =Messages.MODE_CAP;
+  refunds_cap = Messages.REFUNDS_CAP;
+  save_btn_cap =Messages.SAVE_BTN;
+
+
+
 
   @ViewChild('itemservicesearch') item_service_search;
 
