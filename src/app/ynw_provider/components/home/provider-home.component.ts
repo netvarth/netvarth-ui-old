@@ -52,7 +52,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   note_cap = Messages.NOTE_CAP;
   change_status = Messages.CHANGE_STATUS_CAP;
   add_note_cap = Messages.ADD_NOTE_CAP;
-  available_cap = Messages.AVAILABLE_CAP;
+  available_cap = Messages.PRO_AVAILABLE_CAP;
   no_service_cap = Messages.NO_SERVICE_CAP;
   adjust_delay = Messages.ADJUST_DELAY_CAP;
   first_name = Messages.FIRST_NAME_CAP;
