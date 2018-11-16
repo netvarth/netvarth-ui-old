@@ -20,6 +20,17 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 })
 
 export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
+
+    location_cap = Messages.Q_DET_LOCATION_CAP;
+    service_cap = Messages.Q_DET_SERVICE_CAP;
+    max_cap = Messages.Q_DET_MAX_CAP_CAP;
+    no_of_cap = Messages.Q_DET_NO_OF_CAP;
+    served_at_time_cap = Messages.Q_DET_SERVED_AT_A_TIME_CAP;
+    ser_time_wind_status_cap = Messages.Q_DET_SER_TIME_WIND_STATUS_CAP;
+    enabled_cap = Messages.Q_DET_ENABLED_CAP;
+    disabled_cap = Messages.Q_DET_DISABLED_CAP;
+    schedule_cap = Messages.Q_DET_SCHEDULE_CAP;
+
     queue_id = null;
     queue_data;
     mapurl;

@@ -1,115 +1,119 @@
-<section>
-    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section>
 
-<section>
-    <div class="content loc-list">
-        <div class="container" *ngIf="service_data">
-            <div class="row">
-                <div class="card p0">
-                    <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                            <div class="cl1">
-                                <span class="editbt" (click)="editService()" *ngIf="service_data.status=='ACTIVE'"></span>
-                                <div class="ot-it">
-                                    <h4>{{service_data.name | capitalizeFirst}}</h4>
-                                    <div class="it-des">
-                                        {{service_data.description | capitalizeFirst}}
-                                    </div>
-                                    <div class="c-ot">
-                                        <div class="item" *ngIf="!disable_price">
-                                            <span class="ttle">{{est_duration_cap}}</span>
-                                            <span class="icon-time"> {{service_data.serviceDuration}} min</span>
-                                        </div>
-                                        <div class="item" *ngIf="!disable_price">
-                                            <span class="ttle">{{price_cap}}</span>
-                                            <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
-                                        </div>
-                                        <div class="item" *ngIf="service_data.isPrePayment && !disable_price">
-                                            <span class="ttle">{{pre_pay_amt}}</span>
-                                            <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="c-ot m0">
-                                        <div class="item" *ngIf="!disable_price">
-                                            <span>{{tax_applicable_cap}}:
-                                                <span class="noti-it" [class.yes]="service_data.taxable==true"
-                                                    [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
-                                                    'Yes' : 'No'}}</span></span>
-                                        </div>
-                                        <div class="item">
-                                            <span>{{end_service_notify_cap}}:
-                                                <span class="noti-it">{{((service_data.notificationType) ?
-                                                    service_data.notificationType : 'NONE') | capitalizeFirst}}</span></span>
-                                        </div>
-                                    </div>
-                                    <div class="btm-ctrl">
-                                        <div class="ctrl enable-disable">
-                                            <span class="ttle">{{serv_status}}</span>
-                                            <span>
-                                                <mat-slide-toggle [checked]="service_data.status=='ACTIVE'" (change)="changeServiceStatus(service_data)"></mat-slide-toggle>
-                                            </span>
-                                            <span class='enabled' *ngIf="service_data.status=='ACTIVE'">{{enable_cap}}</span>
-                                            <span class='disabled' *ngIf="service_data.status=='INACTIVE' || !service_data.status">{{disbale_cap}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
-                            <div class="cr1">
-                                <h5>{{serv_gallery}}</h5>
-                                <div class="no-dta" *ngIf="!image_list_popup || image_list_popup.length == 0">
-                                    <p>{{havent_added_cap}} {{photo_cap}} </p>
-                                    <span class="cs-btn bt3" (click)="editImageGallery()">{{add_now_cap}}</span>
-                                </div>
 
-                                <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
-                                    <ul class="ph-gal">
-                                        <ng-container *ngFor="let file of image_list_popup;let i = index">
-                                            <li *ngIf="i<2">
-                                                <div class="galbx">
-                                                    <span class="mbt">
-                                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                            <mat-icon>more_vert</mat-icon>
-                                                        </button>
-                                                        <mat-menu #menu="matMenu">
-                                                            <button type="button" mat-menu-item (click)="confirmDelete(file, i)">
-                                                                <i class="icon-delete"></i>
-                                                                <span>{{delete_btn}}</span>
-                                                            </button>
-                                                        </mat-menu>
-                                                    </span>
-                                                    <div class="img-h" (click)="openImageModalRow(file)">
-                                                        <div class="overlay-y"></div><img [src]="file.modal.img" *ngIf="file.modal.img" />
+    <section>
+            <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+            <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+        </section>
+
+        <section>
+            <div class="content loc-list">
+                <div class="container" *ngIf="service_data">
+                    <div class="row">
+                        <div class="card p0">
+                            <div class="copy locd">
+                                    <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                        <div class="cl1">
+                                            <span class="editbt" (click)="editService()" *ngIf="service_data.status=='ACTIVE'"></span>
+                                            <div class="ot-it">
+                                                <h4>{{service_data.name | capitalizeFirst}}</h4>
+                                                <div class="it-des">
+                                                    {{service_data.description | capitalizeFirst}}
+                                                </div>
+                                                <div class="c-ot">
+                                                    <div class="item" *ngIf="!disable_price">
+                                                        <span class="ttle">Estimated Duration</span>
+                                                        <span class="icon-time">  {{service_data.serviceDuration}} min</span>
+                                                    </div>
+                                                    <div class="item" *ngIf="!disable_price">
+                                                        <span class="ttle">Price</span>
+                                                        <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                                                    </div>
+                                                    <div class="item" *ngIf="service_data.isPrePayment && !disable_price">
+                                                        <span class="ttle">Prepayment Amount</span>
+                                                        <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                                                     </div>
                                                 </div>
-                                            </li>
-                                        </ng-container>
-                                        <li *ngIf="image_list_popup.length>2">
-                                            <div class="galbx">
-                                                <span class="mre" (click)="openImageModalRow(image_list_popup[2])"
-                                                    *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
-                                                <div class="img-h" *ngIf="(image_list_popup.length-3)>0"><img *ngIf="image_list_popup[2].modal.img"
-                                                        [src]="image_list_popup[2].modal.img" /></div>
-                                                <div class="img-h" (click)="openImageModalRow(image_list_popup[2])"
-                                                    *ngIf="(image_list_popup.length-3)==0"><img *ngIf="image_list_popup[2].modal.img"
-                                                        [src]="image_list_popup[2].modal.img" /></div>
+                                                <div class="c-ot m0">
+                                                    <div class="item" *ngIf="!disable_price">
+                                                        <span>Tax Applicable:
+                                                            <span class="noti-it" [class.yes]="service_data.taxable==true" [class.no]="service_data.taxable==false">{{(service_data.taxable) ? 'Yes' : 'No'}}</span></span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>End of Service Notification:
+                                                            <span class="noti-it">{{((service_data.notificationType) ? service_data.notificationType : 'NONE') | capitalizeFirst}}</span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="btm-ctrl">
+                                                    <div class="ctrl enable-disable">
+                                                        <span class="ttle">Service Status</span>
+                                                        <span>
+                                                          <mat-slide-toggle  [checked]="service_data.status=='ACTIVE'"
+                                                          (change)="changeServiceStatus(service_data)"></mat-slide-toggle>
+                                                        </span>
+                                                        <span class='enabled'  *ngIf="service_data.status=='ACTIVE'">Enabled</span>
+                                                        <span class='disabled' *ngIf="service_data.status=='INACTIVE' || !service_data.status">Disabled</span>
+                                                    </div>
+                                                  </div>
                                             </div>
-                                        </li>
-                                    </ul>
-                                    <span (click)="editImageGallery()" class="addbt" *ngIf="service_data.status=='ACTIVE'"></span>
+                                        </div>
+                                    </div>
+                                    <div class="lbr col-sm-12 col-md-4 col-lg-4">
 
-                                    <ks-modal-gallery [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-                                        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)"
-                                        (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
-                                </div>
+                                        <div class="cr1">
+                                            <h5>Service Gallery</h5>
+
+                                            <div class="no-dta"
+                                            *ngIf="!image_list_popup || image_list_popup.length == 0">
+
+                                                <p>You haven’t added any photos </p>
+                                                <span class="cs-btn bt3" (click)="editImageGallery()" >Add It Now</span>
+                                            </div>
+
+                                            <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
+                                                <ul class="ph-gal">
+                                                    <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                                    <li *ngIf="i<2">
+                                                        <div class="galbx">
+                                                            <span class="mbt">
+                                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                                <mat-menu #menu="matMenu">
+                                                                <button type="button" mat-menu-item (click)="confirmDelete(file, i)">
+                                                                    <i class="icon-delete"></i>
+                                                                    <span >Delete</span>
+                                                                </button>
+                                                                </mat-menu>
+                                                            </span>
+                                                            <div class="img-h" (click)="openImageModalRow(file)">
+                                                                <div class="overlay-y"></div><img [src] = "file.modal.img" *ngIf="file.modal.img"/>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    </ng-container>
+                                                    <li *ngIf="image_list_popup.length>2">
+                                                        <div class="galbx">
+                                                            <span class="mre" (click)="openImageModalRow(image_list_popup[2])"  *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                                            <div class="img-h" *ngIf="(image_list_popup.length-3)>0"><img *ngIf="image_list_popup[2].modal.img" [src] = "image_list_popup[2].modal.img" /></div>
+                                                            <div class="img-h" (click)="openImageModalRow(image_list_popup[2])" *ngIf="(image_list_popup.length-3)==0"><img *ngIf="image_list_popup[2].modal.img" [src] = "image_list_popup[2].modal.img" /></div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <span (click)="editImageGallery()" class="addbt" *ngIf="service_data.status=='ACTIVE'"></span>
+
+                                                <ks-modal-gallery [modalImages]="image_list_popup"
+                                                [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                                [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                                (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                                (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>

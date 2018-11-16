@@ -10,7 +10,7 @@
           <div class="row">
               <div class="card p0">
                   <div class="hd-t">
-                      <h2>Accept Online {{checkin_label | capitalizeFirst}}</h2>
+                      <h2>{{accept_online_cap}} {{checkin_label | capitalizeFirst}}</h2>
                       <div class="ctrl">
                           <mat-slide-toggle
                           class="example-margin"
@@ -29,7 +29,7 @@
           <div class="row">
               <div class="card p0">
                   <span (click)="goLocation()" class="b-link">
-                      <h2>Locations <span class="count">{{location_count}}</span></h2>
+                      <h2>{{locations_cap}} <span class="count">{{location_count}}</span></h2>
                   </span>
               </div>
           </div>
@@ -37,7 +37,7 @@
           <div class="row">
               <div class="card p0">
                   <span class="b-link" (click)="goService()">
-                      <h2>Services <span class="count">{{service_count}}</span></h2>
+                      <h2>{{services_cap}} <span class="count">{{service_count}}</span></h2>
                   </span>
               </div>
           </div>
@@ -45,7 +45,7 @@
           <div class="row">
               <div class="card p0">
                   <span  class="b-link" (click)="goQueue()">
-                      <h2>Service Time Windows <span class="count">{{queues_count}}</span></h2>
+                      <h2>{{ser_time_windows_cap}} <span class="count">{{queues_count}}</span></h2>
                   </span>
               </div>
           </div>

@@ -13,6 +13,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
 
+  note_cap = Messages.CONS_NOTE_NOTE_CAP;
+  cancel_btn_cap =Messages.CANCEL_BTN;
   checkin ;
   consumer_label = '';
 

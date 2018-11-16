@@ -1,35 +1,37 @@
-<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
-  <h1 class="mat-dialog-title">{{cancel_cap}} {{checkin_label | capitalizeFirst}}
+<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" >
+  <h1 class="mat-dialog-title">Cancel {{checkin_label | capitalizeFirst}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-      <i class="fa fa-window-close" aria-hidden="true"></i>
+        <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
   <mat-dialog-content>
-    <div class="form-group">
-      <label class="col-form-label" for="displayName">{{select_reason_cap}}*</label>
-      <mat-chip-list>
-        <mat-chip *ngFor="let cancel_reason of cancel_reasons" color="{{(cancel_reason.value === amForm.get('reason').value) ? 'primary' : ''}}"
-          selected="{{(cancel_reason.value === amForm.get('reason').value) ? true : false}}" (click)="selectReason(cancel_reason)">
-          {{cancel_reason.title}}
-        </mat-chip>
-      </mat-chip-list>
-    </div>
+  <div class="form-group">
+    <label class="col-form-label" for="displayName">Select a reason*</label>
+    <mat-chip-list>
+      <mat-chip *ngFor="let cancel_reason of cancel_reasons"
+      color="{{(cancel_reason.value === amForm.get('reason').value) ? 'primary' : ''}}"
+      selected="{{(cancel_reason.value === amForm.get('reason').value) ? true : false}}"
+      (click)="selectReason(cancel_reason)">
+        {{cancel_reason.title}}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
 
-    <div class="form-group ">
-      <mat-checkbox formControlName="send_message">{{send_message_cap}} {{rep_username}}</mat-checkbox>
-    </div>
+  <div class="form-group ">
+      <mat-checkbox formControlName="send_message">Send message to {{rep_username}}</mat-checkbox>
+  </div>
 
-    <div class="form-group" *ngIf="amForm.get('send_message').value">
-      <label class="col-form-label" for="displayName">{{message_cap}}*</label>
+  <div class="form-group" *ngIf="amForm.get('send_message').value">
+      <label class="col-form-label" for="displayName">Message*</label>
       <textarea class="form-control" id="message" placeholder="Message" formControlName="message">
 
       </textarea>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter a message.">
-      </app-field-error-display>
-    </div>
+    </app-field-error-display>
+  </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_cap}}</button>
-    <button type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{ok_btn}}</button>
+ <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+    <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">Ok</button>
   </mat-dialog-actions>
-</form>
+  </form>

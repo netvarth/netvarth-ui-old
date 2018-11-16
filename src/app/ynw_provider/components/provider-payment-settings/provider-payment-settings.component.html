@@ -15,13 +15,13 @@
                                 <div class="rw">
                                     <div class="form-group">
                                         <mat-radio-button [value]="'enable'"></mat-radio-button>
-                                        <label for="">Jaldee Account</label>
+                                        <label for="">{{jaldee_account_cap}}</label>
                                     </div>
                                 </div>
                                 <div class="rw">
                                     <div class="form-group" [ngClass]="{'disabledradio' :activeLicPkg<3}">
                                         <mat-radio-button [disabled]="activeLicPkg<3" [value]="'disable'"></mat-radio-button>
-                                        <label for="">My Own Account</label>
+                                        <label for="">{{my_own_account_cap}}</label>
                                         <div *ngIf="optJaldeeAccount!='enable'">
                                             <div class="outermost">
                                                 <!-- <div class='pay-outer'>
@@ -31,29 +31,23 @@
                                                 <span class="ctrl"><mat-slide-toggle [checked]="paystatus" (change)="showhidepaytype()"></mat-slide-toggle></span>
                                             </div> -->
                                                 <div class="no-dta" *ngIf="!emailidVerified && profileQueryExecuted">
-                                                    <p>Payment settings can be done only if your email id is verified.
-                                                        Please use the
-                                                        below button to set up your email id.</p>
-                                                    <span class="cs-btn bt3" (click)="redirectToEmail()">Go to Email
-                                                        Settings</span>
+                                                    <p>{{pay_if_mail_verified_cap}}</p>
+                                                    <span class="cs-btn bt3" (click)="redirectToEmail()">{{go_to_mail_settings_cap}}</span>
                                                     <p></p>
-                                                    <p>Please revisit this page to do the payment settings, once you
-                                                        have verified the
-                                                        email address</p>
+                                                    <p>{{revisit_this_page_cap}}</p>
                                                 </div>
 
                                                 <div class='paymode-outer' *ngIf="emailidVerified">
                                                     <div class='paytm-outer'>
                                                         <div class="form-group">
                                                             <mat-checkbox class="pay-chk" [checked]="paytmenabled"
-                                                                (change)="handleChange('pay')" [disabled]="!ineditMode">Paytm</mat-checkbox>
-                                                            <span *ngIf="paytmverified && paytmenabled" class="verified">(Verified)</span><span
-                                                                *ngIf="!paytmverified && paytmenabled" class="not-verified">(Not
-                                                                Verified)</span>
+                                                                (change)="handleChange('pay')" [disabled]="!ineditMode">{{pay_tm_cap}}</mat-checkbox>
+                                                            <span *ngIf="paytmverified && paytmenabled" class="verified">{{verified_cap}}</span><span
+                                                                *ngIf="!paytmverified && paytmenabled" class="not-verified">{{not_verified_cap}}</span>
                                                         </div>
                                                         <div class='paytm-det' *ngIf="paytmenabled">
                                                             <div class="form-group">
-                                                                <label class="caption">Enter Mobile Number *</label>
+                                                                <label class="caption">{{enter_mob_no_cap}}</label>
                                                                 <mat-form-field>
                                                                     <input matInput #paymobref [(ngModel)]="paytmmobile"
                                                                         (keypress)="resetApi('paytmmobile')"
@@ -68,16 +62,14 @@
                                                     <div class='cc-outer'>
                                                         <div class="form-group">
                                                             <mat-checkbox class="pay-chk" [checked]="ccenabled"
-                                                                (change)="handleChange('cc')" [disabled]="!ineditMode">CC
-                                                                / DC / Netbanking</mat-checkbox>
-                                                            <span *ngIf="payuverified  && ccenabled" class="verified">(Verified)</span><span
-                                                                *ngIf="!payuverified  && ccenabled" class="not-verified">(Not
-                                                                Verified)</span>
+                                                                (change)="handleChange('cc')" [disabled]="!ineditMode">{{cc_dc_netbanking_cap}}</mat-checkbox>
+                                                            <span *ngIf="payuverified  && ccenabled" class="verified">{{verified_cap}}</span><span
+                                                                *ngIf="!payuverified  && ccenabled" class="not-verified">{{not_verified_cap}}</span>
                                                         </div>
                                                         <div class='cc-det' *ngIf="ccenabled">
                                                             <div class='pan-outer'>
                                                                 <div class="form-group">
-                                                                    <label class="caption">Pan Card Number *</label>
+                                                                    <label class="caption">{{pan_card_number_cap}}</label>
                                                                     <mat-form-field>
                                                                         <input matInput [(ngModel)]="pannumber"
                                                                             (change)="resetApi('pannumber')"
@@ -88,7 +80,7 @@
                                                                         [errorMsg]="showError['pannumber']['msg']"></app-field-error-display>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="caption">Name on Pan Card *</label>
+                                                                    <label class="caption">{{name_on_pan_card_cap}}</label>
                                                                     <mat-form-field>
                                                                         <input matInput [(ngModel)]="panname" (change)="resetApi('panname')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
@@ -100,7 +92,7 @@
                                                             </div>
                                                             <div class='bank-outer'>
                                                                 <div class="form-group">
-                                                                    <label class="caption">Account Holder Name *</label>
+                                                                    <label class="caption">{{account_holder_name_cap}}</label>
                                                                     <mat-form-field>
                                                                         <input matInput #acholdernameref [(ngModel)]="bankacname"
                                                                             (change)="resetApi('bankacname')"
@@ -111,7 +103,7 @@
                                                                         [errorMsg]="showError['bankacname']['msg']"></app-field-error-display>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="caption">Bank Account Number *</label>
+                                                                    <label class="caption">{{bank_account_number_cap}}</label>
                                                                     <mat-form-field>
                                                                         <input matInput [(ngModel)]="bankacnumber"
                                                                             (change)="resetApi('bankacnumber')"
@@ -122,7 +114,7 @@
                                                                         [errorMsg]="showError['bankacnumber']['msg']"></app-field-error-display>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="caption">Bank Name *</label>
+                                                                    <label class="caption">{{bank_name_cap}}</label>
                                                                     <mat-form-field>
                                                                         <input matInput [(ngModel)]="bankname" (change)="resetApi('bankname')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
@@ -132,7 +124,7 @@
                                                                         [errorMsg]="showError['bankname']['msg']"></app-field-error-display>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="caption">IFSC Code *</label>
+                                                                    <label class="caption">{{ifsc_code_cap}}</label>
                                                                     <mat-form-field>
                                                                         <input matInput [(ngModel)]="bankifsc" (change)="resetApi('bankifsc')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
@@ -142,7 +134,7 @@
                                                                         [errorMsg]="showError['bankifsc']['msg']"></app-field-error-display>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="caption">Branch Name *</label>
+                                                                    <label class="caption">{{branch_name_cap}}</label>
                                                                     <mat-form-field>
                                                                         <input matInput [(ngModel)]="bankbranch"
                                                                             (change)="resetApi('bankbranch')"
@@ -153,36 +145,34 @@
                                                                         [errorMsg]="showError['bankbranch']['msg']"></app-field-error-display>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="caption">Business Filing Status *</label>
+                                                                    <label class="caption">{{business_filing_status_cap}}</label>
                                                                     <mat-form-field>
                                                                         <mat-select [(ngModel)]="bankfiling"
                                                                             (selectionChange)="resetApi('bankfiling')"
                                                                             [disabled]="!ineditMode">
-                                                                            <mat-option value="">-- Select --</mat-option>
-                                                                            <mat-option value="Proprietorship">Proprietorship</mat-option>
-                                                                            <mat-option value="Individual">Individual</mat-option>
-                                                                            <mat-option value="Partnership">Partnership</mat-option>
-                                                                            <mat-option value="Privatelimited">Private
-                                                                                Limited</mat-option>
-                                                                            <mat-option value="PublicLimited">Public
-                                                                                Limited</mat-option>
-                                                                            <mat-option value="LLP">LLP</mat-option>
-                                                                            <mat-option value="Trust">Trust</mat-option>
-                                                                            <mat-option value="Societies">Societies</mat-option>
+                                                                            <mat-option value="">{{select_cap}}</mat-option>
+                                                                            <mat-option value="Proprietorship">{{proprietorship_cap}}</mat-option>
+                                                                            <mat-option value="Individual">{{individual_cap}}</mat-option>
+                                                                            <mat-option value="Partnership">{{partnership_cap}}</mat-option>
+                                                                            <mat-option value="Privatelimited">{{pvt_ltd_cap}}</mat-option>
+                                                                            <mat-option value="PublicLimited">{{public_ltd_cap}}</mat-option>
+                                                                            <mat-option value="LLP">{{llp_cap}}</mat-option>
+                                                                            <mat-option value="Trust">{{trust_cap}}</mat-option>
+                                                                            <mat-option value="Societies">{{societies_cap}}</mat-option>
                                                                         </mat-select>
                                                                     </mat-form-field>
                                                                     <app-field-error-display [displayError]="showError['bankfiling']['status']"
                                                                         [errorMsg]="showError['bankfiling']['msg']"></app-field-error-display>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="caption">Account Type *</label>
+                                                                    <label class="caption">{{account_type_cap}}</label>
                                                                     <mat-form-field>
                                                                         <mat-select [(ngModel)]="bankactype"
                                                                             (selectionChange)="resetApi('bankactype')"
                                                                             [disabled]="!ineditMode">
-                                                                            <mat-option value="">-- Select --</mat-option>
-                                                                            <mat-option value="Current">Current</mat-option>
-                                                                            <mat-option value="Saving">Savings</mat-option>
+                                                                            <mat-option value="">{{select_cap}}</mat-option>
+                                                                            <mat-option value="Current">{{current_cap}}</mat-option>
+                                                                            <mat-option value="Saving">{{savings_cap}}</mat-option>
                                                                         </mat-select>
                                                                     </mat-form-field>
                                                                     <app-field-error-display [displayError]="showError['bankactype']['status']"
@@ -194,11 +184,11 @@
                                                 </div>
                                                 <div class="actiondiv" *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
                                                     <button type="button" class="cs-btn bt2" (click)="handleEditPaySettings(false)"
-                                                        *ngIf="ineditMode">Cancel Edit</button>&nbsp;
+                                                        *ngIf="ineditMode">{{cancel_edit_cap}}</button>&nbsp;
                                                     <button type="button" mat-button class="cs-btn bt1" (click)="savePaySettings(false)"
-                                                        *ngIf="ineditMode">Save Settings</button>&nbsp;
+                                                        *ngIf="ineditMode">{{save_settings_cap}}</button>&nbsp;
                                                     <button type="button" mat-button class="cs-btn bt1" (click)="handleEditPaySettings(true)"
-                                                        *ngIf="!ineditMode">Change Payment Settings</button>
+                                                        *ngIf="!ineditMode">{{change_pay_settings_cap}}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -207,7 +197,7 @@
                             </div>
                         </mat-radio-group>
                         <div class="actiondiv" *ngIf="(!isJaldeeAccount && optJaldeeAccount==='enable') || (isJaldeeAccount && optJaldeeAccount==='disable' && (payuverified || paytmverified))">
-                            <button type="button" mat-button class="cs-btn bt1" (click)="saveAccountPaymentSettings(optJaldeeAccount)">Save</button>
+                            <button type="button" mat-button class="cs-btn bt1" (click)="saveAccountPaymentSettings(optJaldeeAccount)">{{save_btn_cap}}</button>
                         </div>
                     </mat-tab>
                     <mat-tab label="Tax Settings">
@@ -215,7 +205,7 @@
                             <div class="taxouter">
 
                                 <div class="form-group gstval">
-                                    <label class="caption">GST Number *</label>
+                                    <label class="caption">{{gst_no_cap}}</label>
                                     <mat-form-field>
                                         <input matInput [(ngModel)]="gstnumber" (keypress)="resetApi()" autocomplete="off">
                                     </mat-form-field>
@@ -224,7 +214,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="caption">Tax Percentage *</label>
+                                    <label class="caption">{{tax_percentage_cap}}</label>
                                     <mat-form-field>
                                         <input matInput [(ngModel)]="taxpercentage" (keypress)="resetApi()" class="tax-per"
                                             autocomplete="off">
@@ -238,8 +228,7 @@
                             </div>
                         </div>
                         <div class="actiondiv" *ngIf="savetaxEnabled">
-                            <button type="button" mat-button class="cs-btn bt1" (click)="saveTaxSettings()" [disabled]="taxfieldValidation(false)">Update
-                                Tax</button>
+                            <button type="button" mat-button class="cs-btn bt1" (click)="saveTaxSettings()" [disabled]="taxfieldValidation(false)">{{update_tax_cap}}</button>
                         </div>
                     </mat-tab>
                 </mat-tab-group>

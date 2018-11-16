@@ -16,6 +16,16 @@ import { MessageService } from '../../services/provider-message.service';
 })
 export class UpgradeLicenseComponent implements OnInit {
 
+  lic_pack_cap = Messages.UP_LIC_PACKAGE_CAP;
+  lic_package_cap = Messages.UP_LIC_PACK_CAP;
+
+  select_one_cap = Messages.UP_SELECT_ONE_CAP;
+  no_up_pack_found_cap = Messages.UP_NO_UPGRADE_PACK_FOUND;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
+
+
+
   amForm: FormGroup;
   api_error = null;
   api_success = null;

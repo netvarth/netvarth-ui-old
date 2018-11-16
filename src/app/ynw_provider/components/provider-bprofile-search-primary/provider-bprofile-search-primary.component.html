@@ -1,9 +1,9 @@
-<h1 class="mat-dialog-title"> Profile Name and Summary <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title"> {{profile_name_summary_cap}} <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 <mat-dialog-content>
 <div class="form-group">
-    <label class="col-form-label" for="first_name">Business Name *</label>
+    <label class="col-form-label" for="first_name">{{business_name_cap}}</label>
     <input type="text" matInput class="form-control" id="bname" #bname
     formControlName="bname" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bname')"
@@ -20,7 +20,7 @@
 </div> -->
 
 <div class="form-group">
-    <label class="col-form-label" for="first_name">Profile Summary </label>
+    <label class="col-form-label" for="first_name">{{profile_summary_cap}} </label>
     <textarea class="form-control" id="bdesc"  formControlName="bdesc" row="4"></textarea>
     <!-- <input type="text" class="form-control" id="bdesc"
     formControlName="bdesc"> -->
@@ -30,8 +30,8 @@
 </div>
 </mat-dialog-content>
 <mat-dialog-actions>
- <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-    <button  type="submit"  [disabled]="!amForm.valid" class="cs-btn bt1" mat-button>Save</button>
+ <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+    <button  type="submit"  [disabled]="!amForm.valid" class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
 </mat-dialog-actions>
 </form>
 

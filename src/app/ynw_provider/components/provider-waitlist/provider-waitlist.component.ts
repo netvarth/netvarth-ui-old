@@ -11,6 +11,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
 import { Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Messages } from '../../../shared/constants/project-messages';
 
 
 
@@ -20,6 +21,11 @@ import { Observable ,  Subscription, SubscriptionLike as ISubscription } from 'r
 })
 
 export class ProviderWaitlistComponent implements OnInit, OnDestroy {
+
+  accept_online_cap = Messages.WAITLIST_ACCEPT_ONLINE_CAP;
+  locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
+  services_cap = Messages.WAITLIST_SERVICES_CAP;
+  ser_time_windows_cap = Messages.WAITLIST_SER_TIME_WINDOWS_CAP;
 
   bProfile = null;
   online_checkin = false ;

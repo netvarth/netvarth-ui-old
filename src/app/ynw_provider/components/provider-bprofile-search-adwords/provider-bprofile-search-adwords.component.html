@@ -1,6 +1,6 @@
 <div class="lc33">
     <div class="lc3-1 lcd">
-        <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addwordTooltip">Adwords
+        <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addwordTooltip">{{adwords_cap}}
           <span class="addbt" (click)="addAdwords()"
           *ngIf="adwordsmaxcount > 0"></span>
         </div>
@@ -43,7 +43,7 @@
 
     <div class="lc3-2 lcd" *ngIf="adwordsmaxcount == 0 && query_executed == true">
       <div  class="ttle">
-          <p><strong>Sorry!</strong> Currently you did not have any adwords. Please upgrade your Licence Package/Add-On </p>
+          <p><strong>{{sorry_cap}}</strong> {{not_have_any_adwords_msg}} </p>
       </div>
     </div>
 

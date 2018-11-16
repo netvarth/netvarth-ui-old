@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { Location } from '@angular/common';
+import { Messages } from '../../../shared/constants/project-messages';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
@@ -17,6 +18,13 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 })
 export class ProviderAuditLogComponent implements OnInit {
 
+  lic_history_cap = Messages.AUDIT_LIC_HISTORY_CAP;
+  name_cap = Messages.AUDIT_NAME_CAP;
+  applied_on_cap = Messages.AUDIT_APPLIED_ON_CAP;
+  expiry_date_cap = Messages.AUDIT_EXP_DATE_CAP;
+  status_cap = Messages.AUDIT_STATUS_CAP;
+  no_logs_founf_cap = Messages.AUDIT_NO_LOGS_FOUND;
+  
     auditlog_details: any = [] ;
     load_complete = 0;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;

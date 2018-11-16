@@ -20,10 +20,17 @@ import { AddProviderWaitlistServiceComponent } from '../add-provider-waitlist-se
 })
 
 export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
+
+  add_new_serv_cap = Messages.SER_ADD_NEW_SER_CAP;
+  est_duration_cap = Messages.SER_EST_DURATION_CAP;
+  min_cap = Messages.SER_MIN_CAP;
+  price_cap = Messages.SER_PRICE_CAP;
+  
   service_list: any = [];
   api_error = null;
   api_success = null;
   disable_price = true;
+
   breadcrumbs = [
     {
       title: 'Settings',
@@ -48,6 +55,7 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getServices();
+
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
      if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
         this.disable_price = true;
@@ -75,7 +83,9 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
   }
 
   changeServiceStatus(service) {
+
     this.provider_shared_functions.changeServiceStatus(this, service);
+
   }
 
   disableService(service, msg) {
@@ -91,6 +101,7 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
         const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
         this.getServices();
       });
+
   }
 
   enableService(service, msg) {
@@ -125,8 +136,13 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
   goServiceDetail(service) {
     this.router.navigate(['provider', 'settings' , 'waitlist-manager',
     'service-detail', service.id]);
   }
+
 }
+
+

@@ -10,6 +10,7 @@ import { SearchProviderCustomerComponent } from '../search-provider-customer/sea
 import { ProviderServices } from '../../services/provider-services.service';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.component';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-provider-subheader',
@@ -21,6 +22,12 @@ import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.
 
 export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
+  create_cap = Messages.SUB_HEADER_CREATE_CAP;
+  dashboard_cap = Messages.SUB_HEADER_DASHBOARD;
+  help_cap = Messages.SUB_HEADER_HELP;
+  kiosk_cap = Messages.SUB_HEADER_KIOSK;
+  settings_cap = Messages.SUB_HEADER_SETTINGS;
+  
   @Input() activeTab: string;
   @Output() reloadActionSubheader = new EventEmitter<any>();
   userdet: any = [];

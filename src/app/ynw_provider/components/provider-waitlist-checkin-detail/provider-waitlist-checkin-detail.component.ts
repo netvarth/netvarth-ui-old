@@ -25,6 +25,28 @@ import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-
 
 export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
 
+    go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
+    details_cap = Messages.CHECK_DET_DETAILS_CAP;
+    name_cap = Messages.CHECK_DET_NAME_CAP;
+    date_cap = Messages.CHECK_DET_DATE_CAP;
+    location_cap = Messages.CHECK_DET_LOCATION_CAP;
+    waitlist_for_cap = Messages.CHECK_DET_WAITLIST_FOR_CAP;
+    service_cap = Messages.CHECK_DET_SERVICE_CAP;
+    queue_cap = Messages.CHECK_DET_QUEUE_CAP;
+    pay_status_cap = Messages.CHECK_DET_PAY_STATUS_CAP;
+    not_paid_cap = Messages.CHECK_DET_NOT_PAID_CAP;
+    partially_paid_cap = Messages.CHECK_DET_PARTIALLY_PAID_CAP;
+    paid_cap = Messages.CHECK_DET_PAID_CAP;
+    party_size_cap = Messages.CHECK_DET_PARTY_SIZE_CAP;
+    send_msg_cap = Messages.CHECK_DET_SEND_MSG_CAP;
+    add_pvt_note_cap = Messages.CHECK_DET_ADD_PRVT_NOTE_CAP;
+    cancel_cap = Messages.CHECK_DET_CANCEL_CAP;
+    communication_history_cap = Messages.CHECK_DET_COMM_HISTORY_CAP;
+    pvt_notes_cap = Messages.CHECK_DET_PRVT_NOTES_CAP;
+    no_pvt_notes_cap = Messages.CHECK_DET_NO_PVT_NOTES_FOUND_CAP;
+    no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
+
+
     waitlist_id = null;
     waitlist_data;
     waitlist_notes: any = [];

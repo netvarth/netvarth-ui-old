@@ -15,6 +15,16 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
 
+  priv_settings_cap = Messages.PRIVACY_SETTINGS_HI_CAP;
+  phone_no_cap = Messages.PRI_PHONE_NUMBER_CAP;
+  phone_label_cap = Messages.PRI_PHONE_LABEL_CAP;
+  phone_no_visible_cap = Messages.PRI_THIS_PHONE_VISIBLE_TO_CAP;
+  email_id_cap = Messages.PRI_EMAIL_ID_CAP;
+  email_label_cap = Messages.PRI_EMAIL_LABEL_CAP;
+  email_visible_cap = Messages.PRI_MAIL_ID_IS_VISIBLE_TO_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
+
   amForm: FormGroup;
   api_error = null;
   api_success = null;

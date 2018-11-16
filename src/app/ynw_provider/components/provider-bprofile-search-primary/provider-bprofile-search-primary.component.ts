@@ -23,6 +23,12 @@ import { AddProviderSchedulesComponent } from '../add-provider-schedule/add-prov
 
 export class ProviderBprofileSearchPrimaryComponent implements OnInit {
   @ViewChild('bname') private elementRef: ElementRef;
+
+  profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
+  business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
+  profile_summary_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

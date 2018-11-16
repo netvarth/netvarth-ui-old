@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title"> Gallery <button mat-dialog-close class="modal_close" [disabled]="canceldisabled"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title"> {{gallery_cap}} <button mat-dialog-close class="modal_close" [disabled]="canceldisabled"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 
 <mat-dialog-content>
 
@@ -39,7 +39,7 @@
               <button type="button" mat-menu-item (click)="deleteTempImage(i)">
                   <!-- <mat-icon>delete</mat-icon> -->
                   <i class="icon-delete"></i>
-                  <span >Delete</span>
+                  <span >{{delete_btn_cap}}</span>
                 </button>
             </mat-menu>
       </div>
@@ -49,7 +49,7 @@
   </div>
 
   <div class="upload-doc" (click)="filed.click()">
-    <label class="col-form-label">Click here to select the image files</label>
+    <label class="col-form-label">{{select_img_file_cap}}</label>
     <span class="select-wrapper ">
       <input type="file"  multiple name="image_src" id="image_src"  accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #filed (change)="imageSelect(filed,$event)">
     </span>
@@ -57,7 +57,7 @@
 
 </mat-dialog-content>
 <mat-dialog-actions>
- <button  type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled">Cancel</button>
+ <button  type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled">{{cancel_btn_cap}}</button>
   <button (click)="saveImages()" *ngIf="item_pic.files.length >0" mat-button class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>
   
 </mat-dialog-actions>

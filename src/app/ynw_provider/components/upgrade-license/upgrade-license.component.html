@@ -1,17 +1,17 @@
 <form [formGroup]="amForm"  novalidate
 (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">License Package
+<h1 class="mat-dialog-title">{{lic_pack_cap}}
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
 </h1>
 <mat-dialog-content>
   <div class="form-group" *ngIf="obtainedUpgradable && upgradablepackages.length>0">
-    <label class="col-form-label" for="displayName">License Package *</label>
+    <label class="col-form-label" for="displayName">{{lic_package_cap}}</label>
     <mat-form-field>
       <mat-select #license_selpackage formControlName="license_selpackage" *ngIf="upgradablepackages"
       (selectionChange)="licensepackage_Select(license_selpackage.value)">
-      <mat-option [value]="''">- Select One -</mat-option>
+      <mat-option [value]="''">{{select_one_cap}}</mat-option>
         <mat-option *ngFor="let package of upgradablepackages"
         [value]="package.pkgId">
           {{package.displayName}}
@@ -23,13 +23,13 @@
     </app-field-error-display>
   </div>
   <div *ngIf="obtainedUpgradable && upgradablepackages.length==0">
-      Sorry No upgradable packages found.
+      {{no_up_pack_found_cap}}
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-     <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+     <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
     <button  type="submit" mat-button [disabled]="!amForm.valid"
-    *ngIf="obtainedUpgradable && upgradablepackages.length>0" class="cs-btn bt1">Save</button>
+    *ngIf="obtainedUpgradable && upgradablepackages.length>0" class="cs-btn bt1">{{save_btn_cap}}</button>
 </mat-dialog-actions>
 </form>
 

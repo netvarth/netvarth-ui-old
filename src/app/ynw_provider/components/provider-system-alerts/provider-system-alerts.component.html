@@ -10,18 +10,18 @@
             <div class="logfil-outer">
                 <div class="formgroup-outer">
                 <div class="form-group">
-                    <label class="col-form-label">Acknowledgement Status</label>
+                    <label class="col-form-label">{{acknow_status_cap}}</label>
                     <mat-form-field>
                         <mat-select [(ngModel)]="alertSelAck" name="catg">
-                            <mat-option value = ""> -- Any --</mat-option>
-                            <mat-option value = "true">Acknowledged</mat-option>
-                            <mat-option value = "false">Not Acknowledged</mat-option>
+                            <mat-option value = ""> {{any_cap}}</mat-option>
+                            <mat-option value = "true">{{acknowledged_cap}}</mat-option>
+                            <mat-option value = "false">{{not_acknowledged_cap}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
-                        <label for="reason" class="col-form-label">Select Date</label>
+                        <label for="reason" class="col-form-label">{{select_date_cap}}</label>
                          <div class="pickerouter">
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker></mat-datepicker>
@@ -31,7 +31,7 @@
                 </div>
                 </div>
                 <div class="actions-div">
-                    <button type="button"  class="cs-btn bt1 mat-button" (click)="do_search(false)">Search</button>
+                    <button type="button"  class="cs-btn bt1 mat-button" (click)="do_search(false)">{{search_cap}}</button>
                 </div>
             </div>
 
@@ -40,11 +40,11 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Subject</th>
-                                    <th>Details</th>
-                                    <th>Acknowledged</th>
-                                    <th>Date</th>
-                                    <th>Action</th>
+                                    <th>{{subject_cap}}</th>
+                                    <th>{{details_cap}}</th>
+                                    <th>{{acknowledged_cap}}</th>
+                                    <th>{{date_cap}}</th>
+                                    <th>{{action_cap}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,7 +57,7 @@
                                 </ng-container>
                                 <ng-container *ngIf="alertStatus==2" >
                                 <tr>
-                                    <td class="nodatafound" colspan="5">Sorry! No alerts found</td>
+                                    <td class="nodatafound" colspan="5">{{no_alerts_found_cap}}</td>
                                 </tr>
                                 </ng-container>
                                 <ng-container *ngIf="alertStatus==3">

@@ -15,14 +15,12 @@ import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
-  selector: 'app-provider-waitlist-locations',
-  templateUrl: './provider-waitlist-locations.component.html'
+    selector: 'app-provider-waitlist-locations',
+    templateUrl: './provider-waitlist-locations.component.html'
 })
 
 export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
-  base_loc_cap = Messages.WAITLIST_BASE_LOC_CAP;
-  set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
-  new_loc_cap = Messages.ADD_NEW_LOC_CAP;
+
   loc_list: any = [];
   bProfile: any = [];
   loc_badges: any = [];
@@ -44,8 +42,8 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
       url: '/provider/settings'
     },
     {
-      title: 'Waitlist Manager',
-      url: '/provider/settings/waitlist-manager'
+    title: 'Waitlist Manager',
+    url: '/provider/settings/waitlist-manager'
     },
     {
       title: 'Locations'
@@ -77,21 +75,21 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   }
   getBusinessConfiguration() {
     this.shared_services.bussinessDomains()
-      .subscribe(data => {
+      .subscribe (data => {
         this.businessConfig = data;
         // console.log('config', this.businessConfig);
         this.getBussinessProfile();
       },
-        error => {
+    error => {
 
-        });
+    });
   }
   getBussinessProfile() {
     this.provider_services.getBussinessProfile()
-      .subscribe(data => {
+      .subscribe (data => {
         this.bProfile = data;
         // console.log('sector Id', this.bProfile);
-        for (let i = 0; i < this.businessConfig.length; i++) {
+        for (let i = 0; i < this.businessConfig.length ; i++) {
           if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
             if (this.businessConfig[i].multipleLocation) {
               this.multipeLocationAllowed = true;
@@ -101,9 +99,9 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
         // calling the method to get the list of locations
         this.getProviderLocations();
       },
-        error => {
+    error => {
 
-        });
+    });
   }
   // get the list of locations added for the current provider
   getProviderLocations() {
@@ -124,67 +122,68 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
 
   getLocationBadges() {
     this.provider_services.getLocationBadges()
-      .subscribe(data => {
-        this.loc_badges = data;
-        for (const badge of this.loc_badges) {
+     .subscribe (data => {
+      this.loc_badges = data;
+      for (const badge of this.loc_badges) {
           this.badge_map_arr[badge.name] = badge.displayName;
-        }
-      });
+      }
+     });
   }
 
   changeProviderLocationStatus(obj) {
 
+
     this.provider_shared_functions.changeProviderLocationStatusMessage(obj)
-      .then((msg_data) => {
+    .then((msg_data) => {
 
-        this.provider_services.changeProviderLocationStatus(obj.id, msg_data['chgstatus'])
-          .subscribe(data => {
-            // this.api_success = 'here' + msg_data['msg'];
-            /*setTimeout(() => {
-              this.resetApiErrors();
-            }, projectConstants.TIMEOUT_DELAY_LARGE); */
-            this.shared_Functionsobj.openSnackBar(msg_data['msg']);
-            this.getProviderLocations();
-          },
-            error => {
-              this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              /*this.api_error = error.error;
-              setTimeout(() => {
-                this.resetApiErrors();
-              }, projectConstants.TIMEOUT_DELAY_LARGE);*/
-              this.getProviderLocations();
-            });
-
+      this.provider_services.changeProviderLocationStatus(obj.id, msg_data['chgstatus'])
+      .subscribe(data => {
+        // this.api_success = 'here' + msg_data['msg'];
+        /*setTimeout(() => {
+          this.resetApiErrors();
+        }, projectConstants.TIMEOUT_DELAY_LARGE); */
+        this.shared_Functionsobj.openSnackBar (msg_data['msg']);
+        this.getProviderLocations();
+      },
+      error => {
+        this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
+        /*this.api_error = error.error;
+        setTimeout(() => {
+          this.resetApiErrors();
+        }, projectConstants.TIMEOUT_DELAY_LARGE);*/
+        this.getProviderLocations();
       });
+
+    });
 
   }
 
   changeProviderBaseLocationStatus(obj) {
     this.resetApiErrors();
     this.provider_services.changeProviderBaseLocationStatus(obj.id)
-      .subscribe(data => {
-        const snackBarRef = this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place));
-        /*this.api_success = Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place);
-        setTimeout(() => {
-          this.resetApiErrors();
-        }, projectConstants.TIMEOUT_DELAY_LARGE);*/
-        this.getProviderLocations();
-      },
-        error => {
-          const snackBarRef = this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          /* this.api_error = error.error;
-           setTimeout(() => {
-             this.resetApiErrors();
-           }, projectConstants.TIMEOUT_DELAY_LARGE);*/
-          this.getProviderLocations();
-        });
+    .subscribe(data => {
+     const snackBarRef =  this.shared_Functionsobj.openSnackBar (Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place));
+      /*this.api_success = Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place);
+      setTimeout(() => {
+        this.resetApiErrors();
+      }, projectConstants.TIMEOUT_DELAY_LARGE);*/
+      this.getProviderLocations();
+    },
+    error => {
+     const snackBarRef =  this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
+     /* this.api_error = error.error;
+      setTimeout(() => {
+        this.resetApiErrors();
+      }, projectConstants.TIMEOUT_DELAY_LARGE);*/
+      this.getProviderLocations();
+    });
   }
 
   objectKeys(obj) {
     return Object.keys(obj);
   }
 
-  getLocationBadgeIcon(key) {
+  getLocationBadgeIcon (key) {
     let imgname = '';
     if (!projectConstants.LOCATION_BADGE_ICON[key]) {
       key = 'none';
@@ -200,8 +199,8 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   }
 
   goLocationDetail(location_detail) {
-    this.router.navigate(['provider', 'settings', 'waitlist-manager',
-      'location-detail', location_detail.id]);
+    this.router.navigate(['provider', 'settings' , 'waitlist-manager',
+    'location-detail', location_detail.id]);
   }
 
   addLocation() {
@@ -211,7 +210,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
       disableClose: true,
       autoFocus: true,
       data: {
-        type: 'add',
+        type : 'add',
         source: 'waitlist'
       }
     });
@@ -219,8 +218,11 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
       if (result) {
         if (result === 'reloadlist') {
           this.getProviderLocations();
-        }
       }
+    }
     });
   }
+
 }
+
+

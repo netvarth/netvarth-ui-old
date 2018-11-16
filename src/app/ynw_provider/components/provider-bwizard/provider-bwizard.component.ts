@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Messages } from '../../../shared/constants/project-messages';
 
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
 import { AddProviderSchedulesComponent } from '../add-provider-schedule/add-provider-schedule.component';
@@ -14,6 +15,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ViewChild } from '@angular/core';
+import { MessageService } from '../../services/provider-message.service';
 
 @Component({
     selector: 'app-provider-bwizard',
@@ -21,6 +23,53 @@ import { ViewChild } from '@angular/core';
 })
 
 export class ProviderbWizardComponent implements OnInit {
+
+
+  congradulations_cap = Messages.WIZ_CONGRATULATIONS_CAP;
+  right_choice_by_signin_up_cap = Messages.WIZ_RIGHT_CHOICE_BY_SIGNIN_UP_CAP;
+  jaldee_cap = Messages.WIZ_JALDEE_CAP;
+  enable_p_search_cap = Messages.WIZ_WILL_WALK_TO_ENABLE_P_SEARCH_CAP;
+  remember_cap = Messages.WIZ_REMEMBER_CAP;
+  adjust_sett_cap = Messages.WIZ_ADJUST_SETNGS_CAP;
+  business_pro_cap = Messages.WIZ_BUSIESS_PROFILE_CAP;
+  under_set_cap = Messages.WIZ_UNDER_SETTINGS_CAP;
+  get_start_cap = Messages.WIZ_LET_GET_STARTED_CAP;
+  profile_name_summary_cap = Messages.WIZ_PROFILE_NAME_SUMMARY_CAP;
+  business_name_cap = Messages.WIZ_BUSINESS_NAME_CAP;
+  your_cap = Messages.WIZ_YOUR_CAP;
+  view_in_pub_search_cap = Messages.WIZ_VIEW_IN_PUBLIC_SEARCH_CAP;
+  profile_summary_cap = Messages.WIZ_PROFILE_SUMMARY_CAP;
+  next_cap = Messages.WIZ_NEXT_CAP;
+  location_cap = Messages.WIZ_LOCATION_CAP;
+  add_more_loc_in_set_cap = Messages.WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP;
+  choose_loc_cap = Messages.WIZ_CHOOSE_YOUR_LOCA_CAP;
+  loc_not_avail_cap = Messages.WIZ_LOC_NOT_AVAIL_CAP;
+  gps_coordinates_cap = Messages.WIZ_GPS_COORDINATES_CAP;
+  gps_coordinated_needeed_cap = Messages.WIZ_GPS_COORDINATES_NEEDED_CAP;
+  mob_for_loc_proximity_cap = Messages.WIZ_MOB_FOR_LOCA_PROXIMITY_CAP;
+  address_cap = Messages.WIZ_ADDRESS_CAP;
+  enter_addr_cap = Messages.WIZ_ENTER_ADDRESS_CAP;
+  can_find_you_cap = Messages.WIZ_CAN_FIND_YOU_CAP;
+  loc_name_cap = Messages.WIZ_LOC_NAME_CAP;
+  disp_name_loc_cap = Messages.WIZ_DISPL_NAME_LOCA_CAP;
+  google_map_url_cap = Messages.WIZ_GOOGLE_MAP_URL_CAP;
+  used_find_exact_loc = Messages.WIZ_USED_FIND_EXACT_LOC_CAP;
+  back_cap = Messages.WIZ_BACK_CAP;
+  working_hrs_cap = Messages.WIZ_WORKING_HOURS_CAP;
+  shows_b_hrs_cap = Messages.WIZ_SHOWS_B_HOURS_CAP;
+  public_search_cap = Messages.WIZ_PUBLIC_SEARCH_CAP;
+  turn_on_off_cap = Messages.WIZ_TURN_ON_OFF_CAP;
+  prof_searchable_viewable_cap = Messages.WIZ_PRO_SEARCHABLE_VIEWABLE_CAP;
+  turnon_pub_search_cap = Messages.WIZ_TURN_ON_P_SEARCH_CAP;
+  your_pro_visible_cap = Messages.WIZ_YOUR_PROF_VISIBLE_TO_CAP;
+  online_at_cap = Messages.WIZ_ONLINE_AT_CAP;
+  jaldee_com_cap = Messages.WIZ_JALDEE_COM_CAP;
+  turnoff_publ_search_cap = Messages.WIZ_TURN_OFF_P_SEARCH_CAP;
+  prof_not_visible_cap = Messages.WIZ_PROF_NOT_VIBLE_TO_CAP;
+  some_info_missing_cap = Messages.WIZ_SOME_INFO_MISSING_CAP;
+  settings_cap = Messages.WIZ_SETTINGS_CAP;
+  complete_your_pro_cap = Messages.WIZ_COMPL_YOUR_PRO_CAP;
+  pub_search_cap = Messages.WIZ_PUB_SEARCH_CAP;
 
   @ViewChild('bnameId') bnameIdref: ElementRef;
   amForm: FormGroup;

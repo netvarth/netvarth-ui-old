@@ -21,6 +21,49 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 export class ProviderPaymentSettingsComponent implements OnInit {
 
+
+    jaldee_account_cap = Messages.PAY_SET_JALDEE_ACCOUNT_CAP;
+    my_own_account_cap = Messages.PAY_SET_MY_OWN_ACCOUNT_CAP;
+    pay_if_mail_verified_cap = Messages.PAY_SET_ONLY_IF_MAIL_VERIFIED_CAP;
+    go_to_mail_settings_cap = Messages.PAY_SET_GO_TO_EMAIL_SET_CAP;
+    revisit_this_page_cap = Messages.PAY_SET_REVISIT_THIS_PAGE_CAP;
+    pay_tm_cap = Messages.PAY_SET_PAYTM_CAP;
+    verified_cap = Messages.PAY_SET_VERIFIED_CAP;
+    not_verified_cap = Messages.PAY_SET_NOT_VERIFIED_CAP;
+    enter_mob_no_cap = Messages.PAY_SET_ENTER_MOB_NO_CAP;
+    cc_dc_netbanking_cap = Messages.PAY_SET_CC_DC_NETBANKING_CAP;
+    pan_card_number_cap = Messages.PAY_SET_PAN_CARD_NO_CAP;
+    name_on_pan_card_cap = Messages.PAY_SET_NAME_ON_PAN_CAP;
+    account_holder_name_cap = Messages.PAY_SET_ACCNT_HOLDER_NAME_CAP;
+    bank_account_number_cap = Messages.PAY_SET_BANK_ACCNT_NO_CAP;
+    bank_name_cap = Messages.PAY_SET_BANK_NAME_CAP;
+    ifsc_code_cap = Messages.PAY_SET_IFSC_CAODE_CAP;
+    branch_name_cap = Messages.PAY_SET_BRANCH_NAME_CAP;
+    business_filing_status_cap = Messages.PAY_SET_BUSINESS_FILING_STATUS_CAP;
+    select_cap = Messages.PAY_SET_SELECT_CAP;
+    proprietorship_cap = Messages.PAY_SET_PROPRIETORSHIP_CAP;
+    individual_cap = Messages.PAY_SET_INDIVIDUAL_CAP;
+    partnership_cap = Messages.PAY_SET_PARTNERSHIP_CAP;
+    pvt_ltd_cap = Messages.PAY_SET_PRIVATE_LTD_CAP;
+    public_ltd_cap = Messages.PAY_SET_PUBLIC_LTD_CAP;
+    llp_cap = Messages.PAY_SET_LLP_CAP;
+    trust_cap = Messages.PAY_SET_TRUST_CAP;
+    societies_cap = Messages.PAY_SET_SOCIETIES_CAP;
+    account_type_cap = Messages.PAY_SET_ACCOUNT_TYPE_CAP;
+    current_cap = Messages.PAY_SET_CURRENT_CAP;
+    savings_cap = Messages.PAY_SET_SAVINGS_CAP;
+    cancel_edit_cap = Messages.PAY_SET_CANCEL_EDIT_CAP;
+    save_settings_cap = Messages.PAY_SET_SAVE_SETTINGS_CAP;
+    change_pay_settings_cap = Messages.PAY_SET_CHANGE_PAYMENT_SETTINGS_CAP;
+    save_btn_cap = Messages.SAVE_BTN;
+    gst_no_cap = Messages.PAY_SET_GST_NUMBER_CAP;
+    tax_percentage_cap = Messages.PAY_SET_TAX_PER_CAP;
+    update_tax_cap = Messages.PAY_SET_UPDATE_TAX_CAP;
+    
+
+
+
+
     @ViewChild('paymobref') private paymobrefRef: ElementRef;
     @ViewChild('acholdernameref') private acholdernameRef: ElementRef;
     paytmenabled;
