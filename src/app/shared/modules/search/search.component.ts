@@ -169,7 +169,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   }
   checktoSetLocationtoDefaultLocation() {
-    // console.log('loccheck search', this.locationholder);
+    console.log('loccheck search start', this.locationholder);
     if (this.locationholder.autoname === '' || this.locationholder.autoname === undefined || this.locationholder.autoname === null) {
       /* if the location details are saved in the local storage, fetch them and set it as the location */
 
@@ -198,6 +198,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       }
 
     }
+    console.log('loccheck search end', this.locationholder);
   }
   ngDoCheck() {
     // console.log('ondocheck');
@@ -1025,6 +1026,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
    // console.log('seldomain', this.selected_domain);
     this.getSearchlabelsbydomain(domain);
     this.loadkeywordAPIreponsetoArray();
+    if (avoidclear === undefined) {
+      this.handleNormalSearchClick();
+    }
+   // this.handleNormalSearchClick();
   }
   getSearchlabelsbydomain(domain) {
     if ( domain == null || domain === '' || domain === 'All') {

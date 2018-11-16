@@ -1389,6 +1389,10 @@
                     margin-bottom: 3px;
                     font-size: .875rem;
                     
+                    @include respond-to(ynw-575) {
+                        font-size: .75rem;
+                    }
+                    
                     .selsername {
                         font-weight: 600;
                         color: $hover-blue;
@@ -1398,6 +1402,15 @@
                     .queue-head {
                         margin-bottom: 0;
                         font-size: .875rem;
+                        
+                        @include respond-to(ynw-575) {
+                            font-size: .75rem;
+                        }
+                        @include respond-to(ynw-400) {
+                            .checkin-footer-date {
+                                display: block;
+                            }
+                        }
 
                         .queue-avail-date {
                             color: $hover-blue;
@@ -2617,6 +2630,15 @@
                         &:last-child {
                             margin-bottom: 0;
                         }
+                        
+                        @include respond-to(ynw-400) {
+                            display: flex;
+                            
+                            .changemember {
+                                margin-left: auto;
+                                font-size: .75rem;
+                            }
+                        }
                     }
                 }
                 
@@ -2961,6 +2983,7 @@
                 h3 {
                     font-size: 1rem;
                     margin-bottom: 15px;
+                    text-align: center;
                 }
 
                 .details {
@@ -3141,11 +3164,15 @@
                                         font-weight: 600;
                                         flex-basis: 60%;
                                         padding-right: 15px;
+                                        position: relative;
                                         
-                                        .icon-tax {
-                                            font-size: 1.4rem;
-                                            vertical-align: text-top;
-                                            color: $hover-blue;
+                                        .tax {
+                                            font-size: .60rem;
+                                            font-weight: 600;
+                                            position: absolute;
+                                            top: -2px;
+                                            right: -4px;
+                                            color: $cc-warning;
                                         }
                                     }
                                     .quantity {
@@ -3314,18 +3341,22 @@
                     .amt-content {
                         font-size: 1rem;
                         font-weight: 500;
+                        width: 100%;
 
                         .amt{
-                            display: flex;
                             text-align: right;
                             margin-right: 50px;
                             padding: 5px 0;
 
                             .name {
-                                flex-basis: 80%;
+                                width: 80%;
+                                text-align: right;
                             }
                             .price {
-                                flex-basis: 20%;
+                                vertical-align: text-top;
+                                width: 20%;
+                                text-align: right;
+                                padding: 0 50px 0 15px;
                             }
 
                             &.gross {

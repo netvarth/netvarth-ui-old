@@ -50,11 +50,15 @@
                         </div>
 
                         <mat-menu #appMenu="matMenu">
-                            <button mat-menu-item (click)="changeProviderQueueStatus(queue)">
-                                    <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
-                                    <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
-                                {{(queue.queueState=='ENABLED') ? 'Disable' :'Enable'}}
+                            <button mat-menu-item (click)="addEditProviderQueue('edit', queue)" *ngIf="queue.queueState=='ENABLED'">
+                                    <i class="icon-edit"></i>
+                                Edit
                             </button>
+                            <button mat-menu-item (click)="changeProviderQueueStatus(queue)">
+                                <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
+                                <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
+                            {{(queue.queueState=='ENABLED') ? 'Disable' :'Enable'}}
+                        </button>
                         </mat-menu>
 
                     </div>

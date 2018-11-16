@@ -5765,6 +5765,14 @@ header {
         .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService, .outer-card .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService, .specialclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService {
           margin-bottom: 3px;
           font-size: .875rem; }
+          @media only screen and (max-width: 575px) {
+            .signupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService,
+            .loginmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService,
+            .moreoptionsmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService,
+            .forgotpasswordmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService,
+            .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService,
+            .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService, .outer-card .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService, .specialclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService {
+              font-size: .75rem; } }
           .signupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService .selsername,
           .loginmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService .selsername,
           .moreoptionsmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .showDetService .selsername,
@@ -5781,6 +5789,22 @@ header {
         .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head, .outer-card .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head, .specialclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head {
           margin-bottom: 0;
           font-size: .875rem; }
+          @media only screen and (max-width: 575px) {
+            .signupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head,
+            .loginmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head,
+            .moreoptionsmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head,
+            .forgotpasswordmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head,
+            .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head,
+            .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head, .outer-card .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head, .specialclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head {
+              font-size: .75rem; } }
+          @media only screen and (max-width: 400px) {
+            .signupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date,
+            .loginmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date,
+            .moreoptionsmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date,
+            .forgotpasswordmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date,
+            .commonpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date,
+            .googlemainmappopup .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date, .outer-card .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date, .consumerpopupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date, .specialclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .checkin-footer-date {
+              display: block; } }
           .signupmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date,
           .loginmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date,
           .moreoptionsmainclass .mat-dialog-actions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date,
@@ -6677,6 +6701,12 @@ header {
             display: none; }
           .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .availer-ul li:last-child {
             margin-bottom: 0; }
+          @media only screen and (max-width: 400px) {
+            .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .availer-ul li {
+              display: flex; }
+              .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .availer-ul li .changemember {
+                margin-left: auto;
+                font-size: .75rem; } }
       .consumerpopupmainclass .mat-dialog-content .mainouter .servicefor-outer .service-availer {
         color: #222223;
         font-weight: 600; }
@@ -6904,7 +6934,8 @@ header {
       border-bottom: 1px solid #dbdbdb; }
     .billpopup .mat-dialog-content .bill-wrapper .section-one h3 {
       font-size: 1rem;
-      margin-bottom: 15px; }
+      margin-bottom: 15px;
+      text-align: center; }
     .billpopup .mat-dialog-content .bill-wrapper .section-one .details {
       display: flex;
       flex-wrap: wrap;
@@ -7005,11 +7036,15 @@ header {
               .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name {
                 font-weight: 600;
                 flex-basis: 60%;
-                padding-right: 15px; }
-                .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .icon-tax {
-                  font-size: 1.4rem;
-                  vertical-align: text-top;
-                  color: #1873f2; }
+                padding-right: 15px;
+                position: relative; }
+                .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .tax {
+                  font-size: .60rem;
+                  font-weight: 600;
+                  position: absolute;
+                  top: -2px;
+                  right: -4px;
+                  color: #fda60d; }
               .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .quantity {
                 flex-basis: 20%; }
               .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
@@ -7102,16 +7137,20 @@ header {
         position: relative; }
         .billpopup .mat-dialog-content .bill-wrapper .section-three .amount-table .amt-content {
           font-size: 1rem;
-          font-weight: 500; }
+          font-weight: 500;
+          width: 100%; }
           .billpopup .mat-dialog-content .bill-wrapper .section-three .amount-table .amt-content .amt {
-            display: flex;
             text-align: right;
             margin-right: 50px;
             padding: 5px 0; }
             .billpopup .mat-dialog-content .bill-wrapper .section-three .amount-table .amt-content .amt .name {
-              flex-basis: 80%; }
+              width: 80%;
+              text-align: right; }
             .billpopup .mat-dialog-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-              flex-basis: 20%; }
+              vertical-align: text-top;
+              width: 20%;
+              text-align: right;
+              padding: 0 50px 0 15px; }
             .billpopup .mat-dialog-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name {
               font-weight: 600;
               font-size: 1rem; }
@@ -9637,6 +9676,10 @@ footer.dashb {
           border-radius: 0px;
           background-clip: padding-box;
           /* stops bg color from leaking outside the border: */ } }
+      @media only screen and (max-width: 575px) {
+        .tp-pnl .top-mnu .top-help-icon,
+        .tp-pnl .top-mnu .top-help-button {
+          padding: 5px 0px; } }
       @media only screen and (max-width: 400px) {
         .tp-pnl .top-mnu .top-help-icon:nth-child(3),
         .tp-pnl .top-mnu .top-help-button:nth-child(3) {
@@ -12077,7 +12120,6 @@ footer.dashb {
   .dashboard .card.w-dta .head {
     display: flex;
     height: 50px;
-    border-bottom: 1px solid #f2f2f2;
     position: relative;
     align-items: center;
     justify-content: center;
@@ -12181,7 +12223,6 @@ footer.dashb {
       @media only screen and (max-width: 575px) {
         .dashboard .card.w-dta .head .locn {
           width: 100%;
-          border-bottom: 1px solid #f2f2f2;
           justify-content: center; } }
       @media (min-width: 768px) and (max-width: 991px) {
         .dashboard .card.w-dta .head .locn {
@@ -12192,7 +12233,6 @@ footer.dashb {
     .dashboard .card.w-dta .head .links {
       display: flex; }
       .dashboard .card.w-dta .head .links .lnk {
-        border-left: 1px solid #f2f2f2;
         padding: 0 30px;
         height: 50px;
         align-self: center;
@@ -12223,7 +12263,8 @@ footer.dashb {
           margin-left: 5px; }
         .dashboard .card.w-dta .head .links .lnk.active {
           color: #00aef2;
-          font-weight: 600; }
+          font-weight: 600;
+          text-decoration: underline; }
           .dashboard .card.w-dta .head .links .lnk.active .count {
             width: auto;
             height: auto;
@@ -12240,10 +12281,9 @@ footer.dashb {
             vertical-align: middle;
             padding: 1px 5px;
             margin-left: 5px; }
-        .dashboard .card.w-dta .head .links .lnk:last-child {
-          border-right: 1px solid #f2f2f2; }
         .dashboard .card.w-dta .head .links .lnk:hover {
-          color: #00aef2; }
+          color: #00aef2;
+          text-decoration: underline; }
           .dashboard .card.w-dta .head .links .lnk:hover .count {
             background: #00aef2;
             color: #fff; }
@@ -12256,9 +12296,7 @@ footer.dashb {
               border-right: none; } }
         @media only screen and (max-width: 575px) {
           .dashboard .card.w-dta .head .links .lnk {
-            padding: 0 10px; }
-            .dashboard .card.w-dta .head .links .lnk:last-child {
-              border-right: 1px solid #f2f2f2; } }
+            padding: 0 10px; } }
       @media only screen and (max-width: 767px) {
         .dashboard .card.w-dta .head .links {
           flex-basis: 70%;
@@ -14858,7 +14896,7 @@ header.consumer {
         @media only screen and (max-width: 400px) {
           header.consumer .tp-1 .tp-r .tc1 {
             margin-top: 0px;
-            height: auto;
+            height: 60px;
             margin-bottom: 10px; } }
         @media (min-width: 768px) and (max-width: 991px) {
           header.consumer .tp-1 .tp-r .tc1 {

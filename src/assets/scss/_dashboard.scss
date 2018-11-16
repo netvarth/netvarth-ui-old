@@ -921,6 +921,10 @@ footer {
                 justify-content: center;
                 @include border-radius(0px);
             }
+            
+            @include respond-to(ynw-575) {
+                padding: 5px 0px;
+            }
 
             @include respond-to(ynw-400) {
                 &:nth-child(3) {
@@ -4360,7 +4364,6 @@ footer {
             .head {
                 display: flex;
                 height: 50px;
-                border-bottom: 1px solid $cc-body;
                 position: relative;
                 align-items: center;
                 justify-content: center;
@@ -4486,7 +4489,6 @@ footer {
 
                     @include respond-to(ynw-575) {
                         width: 100%;
-                        border-bottom: 1px solid $cc-body;
                         justify-content: center;
                     }
 
@@ -4502,7 +4504,6 @@ footer {
                     display: flex;
 
                     .lnk {
-                        border-left: 1px solid $cc-body;
                         padding: 0 30px;
                         height: 50px;
                         align-self: center;
@@ -4530,6 +4531,7 @@ footer {
                         &.active {
                             color: $linkblue;
                             font-weight: 600;
+                            text-decoration: underline;
 
                             .count {
                                 width: auto;
@@ -4546,12 +4548,9 @@ footer {
                             }
                         }
 
-                        &:last-child {
-                            border-right: 1px solid $cc-body;
-                        }
-
                         &:hover {
                             color: $linkblue;
+                            text-decoration: underline;
 
                             .count {
                                 background: $linkblue;
@@ -4571,10 +4570,6 @@ footer {
 
                         @include respond-to(ynw-575) {
                             padding: 0 10px;
-
-                            &:last-child {
-                                border-right: 1px solid $cc-body;
-                            }
                         }
                     }
 

@@ -32,7 +32,7 @@
                         <div class="list" *ngFor="let service of bill_data.service; let i = index">
                             <div class="list-content">
                                 <div class="c-row one">
-                                    <div class="name">{{service.serviceName}} @ {{service.price | currency:'INR':'symbol':'.2-2'}} <i class="icon-tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="service.isTaxable"></i></div>
+                                    <div class="name">{{service.serviceName}} @ {{service.price | currency:'INR':'symbol':'.2-2'}} <span class="tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="service.isTaxable">Tax</span></div>
                                     <div class="quantity">Qty {{service.quantity}}</div>
                                     <div class="price">{{service.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
                                 </div>
@@ -56,7 +56,7 @@
                         <div class="list" *ngFor="let item of bill_data.items; let i = index">
                                 <div class="list-content">
                                     <div class="c-row one">
-                                        <div class="name">{{item.itemName}} @ {{item.price | currency:'INR':'symbol':'.2-2'}} <i class="icon-tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="item.isTaxable"></i></div>
+                                        <div class="name">{{item.itemName}} @ {{item.price | currency:'INR':'symbol':'.2-2'}} <span class="tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="item.isTaxable">Tax</span></div>
                                         <div class="quantity">Qty {{item.quantity}}</div>
                                         <div class="price">{{item.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
                                     </div>
@@ -80,7 +80,37 @@
                     </div>
 
                     <div class="amount-table">
-                        <div class="amt-content">
+
+                            <table class="amt-content">
+                                <tbody>
+                                    <tr class="amt gross">
+                                        <td class="name">Gross Amount <!--<span class="bill-discount"><span>Bill Discount</span></span>--></td>
+                                        <td class="price">{{subtotalwithouttax | currency:'INR':'symbol':'.2-2'}}</td>
+                                    </tr>
+                                    <tr class="amt discount" *ngIf="bill_data.discountValue>0">
+                                        <td class="name">{{bill_data.discountName}}</td>
+                                        <td class="price">(-){{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</td>
+                                    </tr>
+                                    <tr class="amt coupon" *ngIf="bill_data.couponValue>0">
+                                        <td class="name">{{bill_data.couponName}}</td>
+                                        <td class="price">(-){{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</td>
+                                    </tr>
+                                    <tr class="amt tax" *ngIf="taxabletotal">
+                                        <td class="name"><span class="tax-top">Tax {{taxpercentage}}% of {{taxabletotal | currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{taxpercentage/2}}%, SGST-{{taxpercentage/2}}%)</span></td>
+                                        <td class="price">(+){{taxabletotal*taxpercentage/100 | currency:'INR':'symbol':'.2-2'}}</td>
+                                    </tr>
+                                    <tr class="amt paid" *ngIf="bill_data.totalAmountPaid">
+                                        <td class="name"><span class="link" (click)="showpaidSection()">Amount Paid</span></td>
+                                        <td class="price">{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</td>
+                                    </tr>
+                                    <tr class="amt total">
+                                        <td class="name">Total Amount</td>
+                                        <td class="price">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        <!-- <div class="amt-content">
                             <div class="amt gross">
                                 <div class="name">Gross Amount</div>
                                 <div class="price">{{subtotalwithouttax | currency:'INR':'symbol':'.2-2'}}</div>
@@ -105,7 +135,7 @@
                                 <div class="name">Total Amount to Pay</div>
                                 <div class="price">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 

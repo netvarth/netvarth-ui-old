@@ -23,6 +23,9 @@
                             'pattern' : 'Only alphabets are allowed'
                             })">
                             </app-field-error-display>
+                            <app-field-error-display [displayError]="true" *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
+                            [errorMsg]="fnameerror">
+                            </app-field-error-display>
                             </div>
 
                             <div class="form-group">
@@ -35,6 +38,9 @@
                             'required' : 'Last name is required',
                             'pattern' : 'Only alphabets are allowed'
                             })">
+                            </app-field-error-display>
+                            <app-field-error-display [displayError]="true" *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
+                            [errorMsg]="lnameerror">
                             </app-field-error-display>
                             </div>
 

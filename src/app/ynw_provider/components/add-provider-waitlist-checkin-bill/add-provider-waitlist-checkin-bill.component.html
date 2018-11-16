@@ -83,7 +83,7 @@
                   <div class="list-content">
 
                       <div class="c-row one">
-                          <div class="name">{{item.name | capitalizeFirst}} @ {{item.price}} <i class="icon-tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="item.taxable"></i></div>
+                          <div class="name">{{item.name | capitalizeFirst}} @ {{item.price}} <span class="tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="item.taxable">Tax</span></div>
                           <div class="quantity">Qty {{cart.items[i].quantity}}</div>
                           <div class="price">{{item.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
                       </div>
@@ -157,14 +157,78 @@
           </div>
 
           <div class="amount-table">
-              <div class="amt-content">
+                <table class="amt-content">
+                    <tbody>
+                        <tr class="amt gross">
+                            <td class="name">Gross Amount <span class="bill-discount"><span (click)="handleTotalDiscSec()" *ngIf="cart.sub_total && (discounts.length >0 || coupons.length >0)">Bill Discount</span></span></td>
+                            <td class="price">{{cart.totalwithouttax | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr *ngIf="showmainDiscSelsec">
+                            <td colspan="2">
+                                            <!--When click BILL DISCOUNT this section shows-->
+                                            <div class="edit-row discoup">
+                                                <div class="spl">
+                                                    <div class="item selectbox1" *ngIf="discounts.length >0">
+                                                      <mat-form-field>
+                                                      <mat-select [(ngModel)]="cart.discount" [ngModelOptions]="{standalone: true}"
+                                                      (selectionChange)="discountChange()">
+                                                          <mat-option [value]="''">Select Discount </mat-option>
+                                                          <mat-option *ngFor="let discount of discounts; let i = index" [value]="i">
+                                                          {{ discount.name }}
+                                                          </mat-option>
+                                                      </mat-select>
+                                                      </mat-form-field>
+                                                    </div>
+                                                    <div class="item selectbox2"  *ngIf="coupons.length >0">
+                                                      <mat-form-field>
+                                                      <mat-select [(ngModel)]="cart.coupon" [ngModelOptions]="{standalone: true}"
+                                                      (selectionChange)="couponChange()">
+                                                          <mat-option [value]="''">Select Coupon </mat-option>
+                                                          <mat-option *ngFor="let coupon of coupons; let i = index" [value]="i">
+                                                          {{ coupon.name }}
+                                                          </mat-option>
+                                                      </mat-select>
+                                                      </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="spr">
+                                                    <button class="cs-btn bt1" (click)="handleTotalDiscSec()">Done</button>
+                                                    <!-- <button class="cs-btn bt2" (click)="handleTotalDiscSec()">Cancel</button> -->
+                                                </div>
+                                            </div>
+                                            <!--ENDS-->
+                            </td>
+                        </tr>
+                        <tr class="amt discount" *ngIf="totdisc_val">
+                            <td class="name">{{discounts[cart.discount].name}}</td>
+                            <td class="price">(-){{totdisc_val | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr class="amt coupon" *ngIf="totcoup_val">
+                            <td class="name">{{coupons[cart.coupon].name}}</td>
+                            <td class="price">(-){{totcoup_val | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr class="amt tax" *ngIf="cart.sub_total">
+                            <td class="name"><span class="tax-top">Tax {{item_service_tax}}% of {{taxabletotal | currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{item_service_tax/2}}%, SGST-{{item_service_tax/2}}%)</span></td>
+                            <td class="price">(+){{tottaxvalue | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr class="amt paid"  *ngIf="totpaid > 0">
+                            <td class="name"><span class="link" (click)="showpaidSection()">Amount Paid</span></td>
+                            <td class="price">{{totpaid | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr class="amt total">
+                            <td class="name">Amount to Pay</td>
+                            <td class="price">{{cart.total | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+              <!-- <div class="amt-content">
                   <div class="amt gross">
                       <div class="name">Gross Amount <span class="bill-discount"><span (click)="handleTotalDiscSec()" *ngIf="cart.sub_total && (discounts.length >0 || coupons.length >0)">Bill Discount</span></span></div>
                       <div class="price">{{cart.totalwithouttax | currency:'INR':'symbol':'.2-2'}}</div>
                   </div>
 
                   <ng-container *ngIf="showmainDiscSelsec">
-                  <!--When click BILL DISCOUNT this section shows-->
+                  
                   <div class="edit-row discoup">
                       <div class="spl">
                           <div class="item selectbox1" *ngIf="discounts.length >0">
@@ -192,10 +256,8 @@
                       </div>
                       <div class="spr">
                           <button class="cs-btn bt1" (click)="handleTotalDiscSec()">Done</button>
-                          <!-- <button class="cs-btn bt2" (click)="handleTotalDiscSec()">Cancel</button> -->
                       </div>
                   </div>
-                  <!--ENDS-->
                   </ng-container>
                   <div class="amt discount" *ngIf="totdisc_val">
                       <div class="name">{{discounts[cart.discount].name}}</div>
@@ -217,9 +279,9 @@
                       <div class="name">Amount to Pay</div>
                       <div class="price">{{cart.total | currency:'INR':'symbol':'.2-2'}}</div>
                   </div>
-              </div>
+              </div> -->
 
-              <div class="bill-discount-btn" *ngIf="cart.sub_total && !showmainDiscSelsec && (discounts.length >0 || coupons.length >0)"><button class="cs-btn bt3 active" (click)="handleTotalDiscSec()">Bill Discount</button></div>
+              <!-- <div class="bill-discount-btn" *ngIf="cart.sub_total && !showmainDiscSelsec && (discounts.length >0 || coupons.length >0)"><button class="cs-btn bt3 active" (click)="handleTotalDiscSec()">Bill Discount</button></div> -->
           </div>
       </div>
       <div class="section-four" *ngIf="showPaidlist">
