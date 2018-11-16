@@ -828,9 +828,6 @@ export const Messages = {
   'ADD_ITEM_CAP': 'Add Item',
   'ITEM_ENABLE_CAP': 'Enable',
 
-  //App-ynw_provider-components-provider-items-details
-  'ITEM_DETAIL_CAP': 'Item Details',
-
   //App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
   'SERV_PERIOD_CAP': 'Service Period',
@@ -959,6 +956,201 @@ export const Messages = {
   'REPORT_REIMBURSE_AMT_CAP': 'Reimbursable Amount from Jaldee',
   'REPORT_JALDEE_ACCT_CAP': 'Jaldee financial Account',
   'REPORT_CONSUMER_CAP': 'Consumer',
+
+  //App-ynw_provider-components-provider-items-details
+  'ITEM_DETAIL_CAP': 'Item Details',
+
+  //App-ynw_provider-components-provider-auditlogs
+  'AUDIT_LIC_HISTORY_CAP' : 'License History',
+  'AUDIT_NAME_CAP' : 'Name',
+  'AUDIT_APPLIED_ON_CAP' : 'Applied On',
+  'AUDIT_EXP_DATE_CAP' : 'Expiry Date',
+  'AUDIT_STATUS_CAP' : 'Status',
+  'AUDIT_NO_LOGS_FOUND' : 'No logs found',
+  
+  //App-ynw_provider-components-provider-bprofile-privacy-settings
+  'PRIVACY_SETTINGS_HI_CAP' : 'Privacy Settings -',
+  'PRI_PHONE_NUMBER_CAP' : 'Phone Number *',
+  'PRI_PHONE_LABEL_CAP' : 'Phone Label *',
+  'PRI_THIS_PHONE_VISIBLE_TO_CAP' : 'This phone number is visible to',
+  'PRI_EMAIL_ID_CAP' : 'Email Id *',
+  'PRI_EMAIL_LABEL_CAP' : 'Email Label *',
+  'PRI_MAIL_ID_IS_VISIBLE_TO_CAP' : 'This email id is visible to',
+
+  //App-ynw_provider-components-provider-bprofile-search-adwords
+  'SEARCH_ADWORDS_CAP' : 'Adwords',
+  'SEARCH_SORRY_CAP' : 'Sorry!',
+  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG' : 'Currently you did not have any adwords. Please upgrade your Licence Package/Add-On',
+
+  //App-ynw_provider-components-provider-bprofile-search-gallery
+  'SEARCH_GALLERY_CAP' : 'Gallery',
+  'SEARCH_GALLERY_SELEC_IMG_FILE_CAP' : 'Click here to select the image files',
+
+  //App-ynw_provider-components-provider-bprofile-search-primary
+  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Summary',
+  'SEARCH_PRI_BUISINESS_NAME_CAP' : 'Business Name *',
+  'SEARCH_PRI_PROF_SUMMARY_CAP' : 'Profile Summary',
+
+  //App-ynw_provider-components-provider-bwizard
+  'WIZ_CONGRATULATIONS_CAP' : 'Congratulations,',
+  'WIZ_RIGHT_CHOICE_BY_SIGNIN_UP_CAP' : 'You have made a right choice by signing up for',
+  'WIZ_JALDEE_CAP' : 'Jaldee!',
+  'WIZ_WILL_WALK_TO_ENABLE_P_SEARCH_CAP' : 'We will walk you through to enable Public search!',
+  'WIZ_REMEMBER_CAP' : 'Remember!',
+  'WIZ_ADJUST_SETNGS_CAP' : 'You can always adjust any of the settings by going to',
+  'WIZ_BUSIESS_PROFILE_CAP' : 'Business Profile',
+  'WIZ_UNDER_SETTINGS_CAP' : 'under the settings!',
+  'WIZ_LET_GET_STARTED_CAP' : 'Let\'s Get Started',
+  'WIZ_PROFILE_NAME_SUMMARY_CAP' : 'Profile Name and Summary',
+  'WIZ_BUSINESS_NAME_CAP' : 'Business Name',
+  'WIZ_YOUR_CAP' : 'Your',
+  'WIZ_VIEW_IN_PUBLIC_SEARCH_CAP' : 's will view this in public profile',
+  'WIZ_PROFILE_SUMMARY_CAP' : 'Profile Summary',
+  'WIZ_NEXT_CAP' : 'Next',
+  'WIZ_LOCATION_CAP' : 'Location',
+  'WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP' : 'You can add more locations in the Settings -> Location, after you create your profile.',
+  'WIZ_CHOOSE_YOUR_LOCA_CAP' : 'Choose your location in the MAP',
+  'WIZ_LOC_NOT_AVAIL_CAP' : 'If your location is not available in the MAP, kindly fill the location details manually.',
+  'WIZ_GPS_COORDINATES_CAP' : 'GPS Coordinates',
+  'WIZ_GPS_COORDINATES_NEEDED_CAP' : 'GPS coordinates needed for the',
+  'WIZ_MOB_FOR_LOCA_PROXIMITY_CAP' : 's who uses their mobile phone for search by location proximity.',
+  'WIZ_ADDRESS_CAP' : 'Address',
+  'WIZ_ENTER_ADDRESS_CAP' : 'Enter the Address/Direction where your',
+  'WIZ_CAN_FIND_YOU_CAP' : 's can find you.',
+  'WIZ_LOC_NAME_CAP' : 'Location Name',
+  'WIZ_DISPL_NAME_LOCA_CAP' : 'Display name of the location where you render services for your',
+  'WIZ_GOOGLE_MAP_URL_CAP' : 'Google Map URL',
+  'WIZ_USED_FIND_EXACT_LOC_CAP' : 'This can be used to find the exact location',
+  'WIZ_BACK_CAP' : 'Back',
+  'WIZ_WORKING_HOURS_CAP' : 'Working Hours',
+  'WIZ_SHOWS_B_HOURS_CAP' : 'This shows your office/business hours',
+  'WIZ_PUBLIC_SEARCH_CAP' : 'Public Search',
+  'WIZ_TURN_ON_OFF_CAP' : 'You can turn On or Off anytime in Settings -> Profile & Search -> Profile',
+  'WIZ_PRO_SEARCHABLE_VIEWABLE_CAP' : 'Do you want to make your Profile searchable and viewable to public?',
+  'WIZ_TURN_ON_P_SEARCH_CAP' : 'Turn on Public Search',
+  'WIZ_YOUR_PROF_VISIBLE_TO_CAP' : 'Your profile is visible to',
+  'WIZ_ONLINE_AT_CAP' : 's online at',
+  'WIZ_JALDEE_COM_CAP' : 'jaldee.com',
+  'WIZ_TURN_OFF_P_SEARCH_CAP' : 'Turn off Public Search',
+  'WIZ_PROF_NOT_VIBLE_TO_CAP' : 'Your profile is not visible to',
+  'WIZ_SOME_INFO_MISSING_CAP' : 'Some of the information is missing, we recommend to visit',
+  'WIZ_SETTINGS_CAP' : 'Settings',
+  'WIZ_COMPL_YOUR_PRO_CAP' : 'page and complete your profile, then you can turn on',
+  'WIZ_PUB_SEARCH_CAP' : 'Public Search!',
+
+  //App-ynw_provider-components-provider-payment-settings
+  'PAY_SET_JALDEE_ACCOUNT_CAP' : 'Jaldee Account',
+  'PAY_SET_MY_OWN_ACCOUNT_CAP' : 'My Own Account',
+  'PAY_SET_ONLY_IF_MAIL_VERIFIED_CAP' : 'Payment settings can be done only if your email id is verified.Please use the below button to set up your email id.',
+  'PAY_SET_GO_TO_EMAIL_SET_CAP' : 'Go to Email Settings',
+  'PAY_SET_REVISIT_THIS_PAGE_CAP' : 'Please revisit this page to do the payment settings, once you have verified the email address',
+  'PAY_SET_PAYTM_CAP' : 'Paytm',
+  'PAY_SET_VERIFIED_CAP' : '(Verified)',
+  'PAY_SET_NOT_VERIFIED_CAP' : '(Not Verified)',
+  'PAY_SET_ENTER_MOB_NO_CAP' : 'Enter Mobile Number *',
+  'PAY_SET_CC_DC_NETBANKING_CAP' : 'CC / DC / Netbanking',
+  'PAY_SET_PAN_CARD_NO_CAP' : 'Pan Card Number *',
+  'PAY_SET_NAME_ON_PAN_CAP' : 'Name on Pan Card *',
+  'PAY_SET_ACCNT_HOLDER_NAME_CAP' : 'Account Holder Name *',
+  'PAY_SET_BANK_ACCNT_NO_CAP' : 'Bank Account Number *',
+  'PAY_SET_BANK_NAME_CAP' : 'Bank Name *',
+  'PAY_SET_IFSC_CAODE_CAP' : 'IFSC Code *',
+  'PAY_SET_BRANCH_NAME_CAP' : 'Branch Name *',
+  'PAY_SET_BUSINESS_FILING_STATUS_CAP' : 'Business Filing Status *',
+  'PAY_SET_SELECT_CAP' : '-- Select --',
+  'PAY_SET_PROPRIETORSHIP_CAP' : 'Proprietorship',
+  'PAY_SET_INDIVIDUAL_CAP' : 'Individual',
+  'PAY_SET_PARTNERSHIP_CAP' : 'Partnership',
+  'PAY_SET_PRIVATE_LTD_CAP' : 'Private Limited',
+  'PAY_SET_PUBLIC_LTD_CAP' : 'Public Limited',
+  'PAY_SET_LLP_CAP' : 'LLP',
+  'PAY_SET_TRUST_CAP' : 'Trust',
+  'PAY_SET_SOCIETIES_CAP' : 'Societies',
+  'PAY_SET_ACCOUNT_TYPE_CAP' : 'Account Type *',
+  'PAY_SET_CURRENT_CAP' : 'Current',
+  'PAY_SET_SAVINGS_CAP' : 'Savings',
+  'PAY_SET_CANCEL_EDIT_CAP' : 'Cancel Edit',
+  'PAY_SET_SAVE_SETTINGS_CAP' : 'Save Settings',
+  'PAY_SET_CHANGE_PAYMENT_SETTINGS_CAP' : 'Change Payment Settings',
+  'PAY_SET_GST_NUMBER_CAP' : 'GST Number *',
+  'PAY_SET_TAX_PER_CAP' : 'Tax Percentage *',
+  'PAY_SET_UPDATE_TAX_CAP' : 'Update Tax',
+
+  //App-ynw_provider-components-provider-subheader
+  'SUB_HEADER_CREATE_CAP' : 'Create',
+  'SUB_HEADER_KIOSK' : 'Kiosk',
+  'SUB_HEADER_DASHBOARD' : 'Dashboard',
+  'SUB_HEADER_SETTINGS' : 'Settings',
+  'SUB_HEADER_HELP' : 'Help',
+
+  //App-ynw_provider-components-provider-system-alerts
+  'SYS_ALERTS_ACKNOWLEDGEMENT_STATUS' : 'Acknowledgement Status',
+  'SYS_ALERTS_ANY_CAP' : '-- Any --',
+  'SYS_ALERTS_ACKNOWLEDGED_CAP' : 'Acknowledged',
+  'SYS_ALERTS_NOT_ACKNOWLEDGED_CAP' : 'Not Acknowledged',
+  'SYS_ALERTS_SELECT_DATE_CAP' : 'Select Date',
+  'SYS_ALERTS_SEARCH_CAP' : 'Search',
+  'SYS_ALERTS_SUBJECT_CAP' : 'Subject',
+  'SYS_ALERTS_DETAILS_CAP' : 'Details',
+  'SYS_ALERTS_DATE_CAP' : 'Date',
+  'SYS_ALERTS_ACTION_CAP' : 'Action',
+  'SYS_ALERTS_NO_ALERTS_FOUND_CAP' : 'Sorry! No alerts found',
+
+  //App-ynw_provider-components-provider-waitlist
+  'WAITLIST_ACCEPT_ONLINE_CAP' : 'Accept Online',
+  'WAITLIST_LOCATIONS_CAP' : 'Locations',
+  'WAITLIST_SERVICES_CAP' : 'Services',
+  'WAITLIST_SER_TIME_WINDOWS_CAP' : 'Service Time Windows',
+
+  //App-ynw_provider-components-provider-waitlist-checkin-consumer-note
+  'CONS_NOTE_NOTE_CAP' : 'Note',
+
+  //App-ynw_provider-components-provider-waitlist-checkin-detail
+  'CHECK_DET_GO_BACK_CAP' : 'Go Back',
+  'CHECK_DET_DETAILS_CAP' : 'Details',
+  'CHECK_DET_NAME_CAP' : 'Name:',
+  'CHECK_DET_DATE_CAP' : 'Date:',
+  'CHECK_DET_LOCATION_CAP' : 'Location:',
+  'CHECK_DET_WAITLIST_FOR_CAP' : 'Waitlist For:',
+  'CHECK_DET_SERVICE_CAP' : 'Service:',
+  'CHECK_DET_QUEUE_CAP' : 'Queue:',
+  'CHECK_DET_PAY_STATUS_CAP' : 'Payment Status:',
+  'CHECK_DET_NOT_PAID_CAP' : 'Not Paid',
+  'CHECK_DET_PARTIALLY_PAID_CAP' : 'Partially Paid',
+  'CHECK_DET_PAID_CAP' : 'Paid',
+  'CHECK_DET_PARTY_SIZE_CAP' : 'Party Size:',
+  'CHECK_DET_SEND_MSG_CAP' : 'Send Message',
+  'CHECK_DET_ADD_PRVT_NOTE_CAP' : 'Add Private note',
+  'CHECK_DET_CANCEL_CAP' : 'Cancel',
+  'CHECK_DET_COMM_HISTORY_CAP' : 'Communication History',
+  'CHECK_DET_PRVT_NOTES_CAP' : 'Private Notes',
+  'CHECK_DET_NO_PVT_NOTES_FOUND_CAP' : 'No private notes found',
+  'CHECK_DET_HISTORY_CAP' : 'History',
+  'CHECK_DET_NO_HISTORY_FOUND_CAP' : 'No history found',
+
+  //App-ynw_provider-components-provider-waitlist-checkin-detail
+  'Q_DET_LOCATION_CAP' : 'Location',
+  'Q_DET_SERVICE_CAP' : 'Service',
+  'Q_DET_MAX_CAP_CAP' : 'Maximum Capacity',
+  'Q_DET_NO_OF_CAP' : 'No of',
+  'Q_DET_SERVED_AT_A_TIME_CAP' : 's served at a time',
+  'Q_DET_SER_TIME_WIND_STATUS_CAP' : 'Service Time Window Status',
+  'Q_DET_ENABLED_CAP' : 'Enabled',
+  'Q_DET_DISABLED_CAP' : 'Disabled',
+  'Q_DET_SCHEDULE_CAP' : 'Schedule',
+
+  //App-ynw_provider-components-provider-waitlist-services
+  'SER_ADD_NEW_SER_CAP' : 'Add New Service',
+  'SER_EST_DURATION_CAP' : 'Estimated Duration',
+  'SER_PRICE_CAP' : 'Price',
+  'SER_MIN_CAP' : 'min',
+
+  //App-ynw_provider-components-upgrade-license
+  'UP_LIC_PACKAGE_CAP' : 'License Package',
+  'UP_LIC_PACK_CAP' : 'License Package *',
+  'UP_SELECT_ONE_CAP' : '- Select One -',
+  'UP_NO_UPGRADE_PACK_FOUND' : 'Sorry No upgradable packages found.',
+
 
 };
 
