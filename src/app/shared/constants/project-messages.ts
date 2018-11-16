@@ -240,7 +240,6 @@ export const Messages = {
   'PHONE_NUM_VAL_MSG': 'Phone number should have only numbers',
   'LASTNAME_INVAL_MSG': 'Please enter a valid last name',
   'FIRSTNAME_INVAL_MSG': 'Please enter a valid first name',
-
   'ADD_FAMILY_MEMBER': 'Add Family Member',
   'FIRST_NAME_CAP': 'First Name',
   'LAST_NAME_CAP': 'Last Name',
@@ -878,6 +877,88 @@ export const Messages = {
   //App-ynw_provider-components-provider-refund
   'AMT_WANT_TO_REFUND': 'Amount you wanted to Refund',
   'PLEASE_WAIT': 'Please wait',
+
+  //App-ynw_provider-components-provider-reimburse-report
+  'REIMBUSE_REPORT_CAP': 'Reimbursement Report',
+  'REPORT_ID_CAP': 'Report Id',
+  'TIME_PERIOD_CAP': 'Time Period',
+  'COUP_USE_CAP': 'Coupons Used',
+  'J_ACC_CAP': 'Jaldee Account',
+  'REIMBURSE_AMT_CAP': 'Reimbursable Amount',
+  'REQ_PAYMENT_CAP': 'Request for payment',
+
+  //App-ynw_provider-components-provider-settings
+  'WAITLIST_MANAGE_CAP': 'Waitlist Manager',
+  'ACCEPT_ONLINE_CAP': 'Accept Online',
+  'SETTINGS_CAP': 'Settings',
+  'LOCATIONS_CAP': 'Locations',
+  'LICENSE_CAP': 'License',
+  'ADDON_CAP': 'Add-ons',
+  'PAYMENTS_CAP': 'Payments',
+  'ACCEPT_PAYMENT_CAP': 'Accept Payments',
+  'PAYMENT_SETTING_CAP': 'Payment Settings',
+  'TAX_SETTING_CAP': 'Tax Settings',
+  'BILLING_CAP': 'Billing/POS',
+  'ITEMS_CAP': 'Items',
+  'DISCOUNTS_CAP': 'Discounts',
+  'COUPONS_CAP': 'Coupons',
+  'MISCELLANEOUS_CAP': 'Miscellaneous',
+  'NON_WORKING_CAP': 'Non-working Days',
+
+  //App-ynw_provider-components-provider-system-auditlogs
+  'AUDIT_CATEGORY_CAP': 'Category',
+  'AUDIT_SUB_CTAEGORY_CAP': 'Sub Category',
+  'AUDIT_ACTION_CAP': 'Action',
+  'AUDIT_SELECT_DATE_CAP': 'Select Date',
+  'AUDIT_NO_LOGS_CAP': 'Sorry! No logs found',
+
+  //App-ynw_provider-components-provider-waitlist-checkin-cancel-popup
+  'POPUP_SELECT_REASON_CAP': 'Select a reason',
+  'POPUP_SEND_MSG_CAP': 'Send message to',
+
+  //App-ynw_provider-components-provider-waitlist-checkin-payment
+  'PAY_SELECT_CAP': 'Select Payment Options',
+  'PAY_SETTLE': 'Settle',
+
+  //App-ynw_provider-components-provider-waitlist-location-detail
+  'WAITLIST_BASE_LOC_CAP': 'Base Location',
+  'WAITLIST_LOC_STATUS_CAP': 'Location Status',
+  'WAITLIST_SET_BASE_CAP': 'Set as base location',
+  'WAITLIST_SCHEDULE_CAP': 'Schedule',
+
+  //App-ynw_provider-components-provider-waitlist-locations
+  'ADD_NEW_LOC_CAP': 'Add New Location',
+
+  //App-ynw_provider-components-provider-waitlist-online-checkin
+  'CHECKIN_CALCULATE_CAP': 'Waiting Time Calculation',
+  'CHECKIN_ML_CAP': 'Automatic (Machine Learning)',
+  'CHECKIN_MINS_CAP': 'Minutes',
+  'CHECKIN_NO_WAIT_TIME_CAP': 'Do not show waiting time for',
+  'CHECKIN_TOKEN_ENABLE_CAP': '(Token Enabled)',
+  'CHECKIN_TOKEN_DISABLE_CAP': '(Token Disabled)',
+  'CHECKIN_FUTURE_CAP': 'Accept Future',
+
+  //App-ynw_provider-components-provider-waitlist-queues
+  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add New Service Time Window',
+  'QUEUE_MAX_CAPACITY_CAP': 'Max. Capacity',
+
+  //App-ynw_provider-components-provider-waitlist-service-detail
+  'SERVICE_DURATION_CAP': 'Estimated Duration',
+  'SERVICE_STATUS_CAP': 'Service Status',
+  'SERVICE_PHOTO_CAP': 'photos',
+
+  //App-ynw_provider-components-request-for
+  'REQUEST_CONFIRM_CAP': 'Confirm your request for payment',
+
+  //App-ynw_provider-components-search-provider-customer
+  'CUSTOMER_NOT_REGISTER_CAP': 'This is not a registered',
+
+  //App-ynw_provider-components-view-report
+  'REPORT_PERIOD_DATE_CAP': 'Period/Date',
+  'REPORT_COUPON_AMT_CAP': 'Coupon Amount',
+  'REPORT_REIMBURSE_AMT_CAP': 'Reimbursable Amount from Jaldee',
+  'REPORT_JALDEE_ACCT_CAP': 'Jaldee financial Account',
+  'REPORT_CONSUMER_CAP': 'Consumer',
 
 };
 

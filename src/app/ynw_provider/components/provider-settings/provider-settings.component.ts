@@ -10,7 +10,7 @@ import { FormMessageDisplayService } from '../../../shared/modules/form-message-
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
-
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-settings',
@@ -18,7 +18,28 @@ import { Observable, Subscription, SubscriptionLike as ISubscription } from 'rxj
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy {
-
+  profile_cap = Messages.PROFILE_CAP;
+  search_cap = Messages.SEARCH_CAP;
+  public_search_cap = Messages.BPROFILE_PUBLIC_SEARCH_CAP;
+  services_cap = Messages.SERVICES_CAP;
+  service_window_cap = Messages.SERVICE_TIME_CAP;
+  invoice_cap = Messages.INVOICE_CAP;
+  waitlist_manage_cap = Messages.WAITLIST_MANAGE_CAP;
+  accept_online_cap = Messages.ACCEPT_ONLINE_CAP;
+  settings_cap = Messages.SETTINGS_CAP;
+  locations_cap = Messages.LOCATIONS_CAP;
+  license_cap = Messages.LICENSE_CAP;
+  add_on_cap = Messages.ADDON_CAP;
+  payment_cap = Messages.PAYMENTS_CAP;
+  accept_payments_cap = Messages.ACCEPT_PAYMENT_CAP;
+  payment_setting_cap = Messages.PAYMENT_SETTING_CAP;
+  tax_setting_cap = Messages.TAX_SETTING_CAP;
+  billing_cap = Messages.BILLING_CAP;
+  items_cap = Messages.ITEMS_CAP;
+  discount_cap = Messages.DISCOUNTS_CAP;
+  coupons_cap = Messages.COUPONS_CAP;
+  miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
+  non_work_cap = Messages.NON_WORKING_CAP;
   waitlist_status = false;
   waitlist_statusstr = 'Off';
   search_status = false;
@@ -253,10 +274,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'report':
         this.routerobj.navigate(['provider', 'settings', 'coupons', 'report']);
         break;
-        case 'coupon':
+      case 'coupon':
         this.routerobj.navigate(['provider', 'settings', 'coupons', 'coupon']);
         break;
-        case 'report_view':
+      case 'report_view':
         this.routerobj.navigate(['provider', 'settings', 'coupons', 'report', 'report_view']);
         break;
       case 'nonworking':

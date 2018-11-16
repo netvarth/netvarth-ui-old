@@ -19,6 +19,20 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
     templateUrl: './provider-waitlist-location-detail.component.html'
 })
 export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestroy {
+    longitude_cap = Messages.BPROFILE_LONGITUDE_CAP;
+    latitude_cap = Messages.BPROFILE_LATIITUDE_CAP;
+    enable_cap = Messages.ENABLE_CAP;
+    disable_cap = Messages.DISABLE_CAP;
+    loc_amenities_cap = Messages.BPROFILE_LOCATION_AMENITIES;
+    you_havent_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+    add_it_now_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+    service_winds_cap = Messages.SERVICE_TIME_CAP;
+    serv_window_cap = Messages.SERV_TIME_WINDOW_CAP;
+    status_cap = Messages.COUPONS_STATUS_CAP;
+    base_loca_cap = Messages.WAITLIST_BASE_LOC_CAP;
+    loc_status_cap = Messages.WAITLIST_LOC_STATUS_CAP;
+    set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
+    schedule_cap = Messages.WAITLIST_SCHEDULE_CAP;
     location_id = null;
     location_data;
     queues: any = [];
