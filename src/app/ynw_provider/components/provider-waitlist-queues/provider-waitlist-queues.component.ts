@@ -23,6 +23,11 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 
 export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
 
+  loc_cap = Messages.LOCATION_CAP;
+  schedule_cap = Messages.WAITLIST_SCHEDULE_CAP;
+  no_service_cap = Messages.NO_SERVICE_CAP;
+  new_serv_cap = Messages.QUEUE_NEW_SERVICE_WIND_CAP;
+  max_capacity_cap = Messages.QUEUE_MAX_CAPACITY_CAP;
   queue_list: any = [];
   query_executed = false;
 

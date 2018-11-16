@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-view-report',
@@ -8,7 +9,22 @@ import { ProviderServices } from '../../services/provider-services.service';
   styleUrls: ['./view-report.component.css']
 })
 export class ViewReportComponent implements OnInit {
-
+  report_id_cap = Messages.REPORT_ID_CAP;
+  coupon_use_cap = Messages.COUP_USE_CAP;
+  j_acc_cap = Messages.J_ACC_CAP;
+  status_cap = Messages.COUPONS_STATUS_CAP;
+  date_cap = Messages.DATE_COL_CAP;
+  bill_cap = Messages.BILL_CAPTION;
+  id_cap = Messages.ID_CAP;
+  amt_cap = Messages.AMOUNT_CAP;
+  check_in_cap = Messages.CHECKIN_CAP;
+  service_cap = Messages.PRO_SERVICE_CAP;
+  name_cap = Messages.PRO_NAME_CAP;
+  period_date_cap = Messages.REPORT_PERIOD_DATE_CAP;
+  coupon_amt_cap = Messages.REPORT_COUPON_AMT_CAP;
+  reimburse_amt_cap = Messages.REPORT_REIMBURSE_AMT_CAP;
+  j_acct_cap = Messages.REPORT_JALDEE_ACCT_CAP;
+  consumer_cap = Messages.REPORT_CONSUMER_CAP;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -32,7 +48,7 @@ export class ViewReportComponent implements OnInit {
   ngOnInit() {
     this.getjaldeeReport();
   }
-  
+
   getjaldeeReport() {
     this.viewreport = this.provider_servicesobj.getJaldeeCouponReportsbyId(this.id);
     const breadcrumbs = [];

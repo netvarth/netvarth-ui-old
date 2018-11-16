@@ -65,8 +65,8 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     this.amForm.setValue({
       'selectdate': this.data.holiday.startDay || null,
       'reason': this.data.holiday.description || null,
-      'starttime': {hour: moment(this.data.holiday.nonWorkingHours.sTime, ['h:mm A']).format('HH'), minute: moment(this.data.holiday.nonWorkingHours.sTime, ['h:mm A']).format('mm')},
-      'endtime': {hour: moment(this.data.holiday.nonWorkingHours.eTime, ['h:mm A']).format('HH'), minute: moment(this.data.holiday.nonWorkingHours.eTime, ['h:mm A']).format('mm')}
+      'starttime': {hour: parseInt(moment(this.data.holiday.nonWorkingHours.sTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.data.holiday.nonWorkingHours.sTime, ['h:mm A']).format('mm'))},
+      'endtime': {hour: parseInt(moment(this.data.holiday.nonWorkingHours.eTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.data.holiday.nonWorkingHours.eTime, ['h:mm A']).format('mm'))}
     });
   }
   onSubmit (form_data) {

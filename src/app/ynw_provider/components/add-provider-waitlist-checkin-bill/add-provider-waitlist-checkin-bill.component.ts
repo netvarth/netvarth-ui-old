@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
-import {Observable} from 'rxjs';
-import {startWith, map} from 'rxjs/operators';
+import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
@@ -32,7 +32,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   ad_ser_item_cap = Messages.ADD_SER_ITEM_CAP;
   no_cap = Messages.NO_CAP;
   available_cap = Messages.AVAILABLE_CAP;
-  qty_cap= Messages.QTY_CAPITAL_CAP;
+  qty_cap = Messages.QTY_CAPITAL_CAP;
   add_btn_cap = Messages.ADD_BTN;
   cancel_btn_cap = Messages.CANCEL_BTN;
   qnty_cap = Messages.QTY_CAP;
@@ -54,9 +54,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   amount_cap = Messages.AMOUNT_CAP;
   refundable_cap = Messages.REFUNDABLE_CAP;
   status_cap = Messages.STATUS_CAP;
-  mode_cap =Messages.MODE_CAP;
+  mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
-  save_btn_cap =Messages.SAVE_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
 
 
 
@@ -86,23 +86,23 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   taxabletotal = 0;
   tottaxvalue = 0;
   totpaid = 0;
-  curSelItm = { indx: 0, typ: '', qty: 1};
+  curSelItm = { indx: 0, typ: '', qty: 1 };
   bname;
   showPaidlist = false;
   ItemServiceGroupOptions: Observable<ItemServiceGroup[]>;
   itemServicesGroup: ItemServiceGroup[] = [{
-    'type' : 'Services',
-    'values' : []
-    },
-    {
-      'type' : 'Items',
-      'values' : []
-    }] ;
+    'type': 'Services',
+    'values': []
+  },
+  {
+    'type': 'Items',
+    'values': []
+  }];
 
   selectedItems = [];
   cart = {
     'items': [],
-    'prepayment_amount' : 0,
+    'prepayment_amount': 0,
     'sub_total': 0,
     'sub_totalwithouttax': 0,
     'discount': '',
@@ -131,71 +131,68 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     @Inject(DOCUMENT) public document
 
-    ) {
-        this.checkin = this.data.checkin || null;
-        this.bill_data = this.data.bill_data || [];
-        // console.log('data' , this.bill_data);
-        if ( !this.checkin) {
-          setTimeout(() => {
-            this.dialogRef.close('error');
-            }, projectConstants.TIMEOUT_DELAY);
-        }
-        this.getBillDateandTime();
+  ) {
+    this.checkin = this.data.checkin || null;
+    this.bill_data = this.data.bill_data || [];
+    // console.log('data' , this.bill_data);
+    if (!this.checkin) {
+      setTimeout(() => {
+        this.dialogRef.close('error');
+      }, projectConstants.TIMEOUT_DELAY);
+    }
+    this.getBillDateandTime();
 
-        // this.getWaitlistBill();
+    // this.getWaitlistBill();
 
-        this.getPrePaymentDetails()
-        .then(
-          (result) => {
+    this.getPrePaymentDetails()
+      .then(
+        (result) => {
 
-            this.getCoupons()
+          this.getCoupons()
             .then(
               () => {
 
                 this.getDiscounts()
-                .then(
-                  () => {
+                  .then(
+                    () => {
 
-                    this.getTaxDetails()
-                    .then(
-                      () => {
-                          this.getDomainSubdomainSettings()
-                          .then(
-                            () => {
-                              this.getServiceList();
-                            },
-                            error => {
-                            }
+                      this.getTaxDetails()
+                        .then(
+                          () => {
+                            this.getDomainSubdomainSettings()
+                              .then(
+                                () => {
+                                  this.getServiceList();
+                                },
+                                error => {
+                                }
 
-                          );
+                              );
 
-                          this.getItemsList();
+                            this.getItemsList();
 
-                          this.bill_load_complete = 1;
-                      },
-                      (error) => {
-                        this.bill_load_complete = 0;
-                      });
+                            this.bill_load_complete = 1;
+                          },
+                          (error) => {
+                            this.bill_load_complete = 0;
+                          });
 
-                  },
-                  (error) => {
-                    this.bill_load_complete = 0;
-                  });
+                    },
+                    (error) => {
+                      this.bill_load_complete = 0;
+                    });
 
-                },
-                (error) => {
-                  this.bill_load_complete = 0;
-                });
-          },
-          (error) => {
-            this.bill_load_complete = 0;
-          }
-        );
-
-        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-
-     }
-
+              },
+              (error) => {
+                this.bill_load_complete = 0;
+              });
+        },
+        (error) => {
+          this.bill_load_complete = 0;
+        }
+      );
+    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+  }
   ngOnInit() {
     const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
     if (bdetails) {
@@ -212,27 +209,26 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (this.bill_data.hasOwnProperty('createdDate')) {
       const datearr = this.bill_data.createdDate.split(' ');
       const billdatearr = datearr[0].split('-');
-      this.billdate =  billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       this.billtime = datearr[1] + ' ' + datearr[2];
     } else {
-      this.billdate =  this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
+      this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
       // this.billtime = this.sharedfunctionObj.addZero(this.today.getHours()) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes());
       const gethrs = this.today.getHours();
       const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
-     // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
-     let hour = 0;
-     if (gethrs === 12) {
-       hour = 12;
-     } else if (gethrs > 12) {
-       hour = gethrs - 12;
-     } else {
-       hour = gethrs;
-     }
+      // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
+      let hour = 0;
+      if (gethrs === 12) {
+        hour = 12;
+      } else if (gethrs > 12) {
+        hour = gethrs - 12;
+      } else {
+        hour = gethrs;
+      }
       this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
       // const amOrPm = (this.today.getHours() < 12) ? 'AM' : 'PM';
       // const hour = (this.today.getHours() < 12) ? this.today.getHours() : this.today.getHours() - 12;
       // this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
-
     }
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
@@ -243,203 +239,178 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       // console.log('gst', this.billnumber);
     }
   }
-
   filterGroup(val: string): ItemServiceGroup[] {
     if (val) {
       return this.itemServicesGroup
         .map(group => ({ type: group.type, values: this._filter(group.values, val) }))
         .filter(group => group.values.length > 0);
     }
-
     return this.itemServicesGroup;
   }
   private _filter(opt: string[], val: string) {
     const filterValue = val.toLowerCase();
     return opt.filter(item => item.toLowerCase().startsWith(filterValue));
   }
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
-
   getWaitlistBill() {
     this.provider_services.getWaitlistBill(this.checkin.ynwUuid)
-    .subscribe(
-      data => {
-        this.bill_data = data;
-      },
-      error => {
-        if (error.status === 422) { this.bill_data = [];
-        // console.log('reached here');
-      }
-        this.bill_load_complete = 1;
-      },
-      () => {
-        this.bill_load_complete = 1;
-      }
-    );
+      .subscribe(
+        data => {
+          this.bill_data = data;
+        },
+        error => {
+          if (error.status === 422) {
+            this.bill_data = [];
+            // console.log('reached here');
+          }
+          this.bill_load_complete = 1;
+        },
+        () => {
+          this.bill_load_complete = 1;
+        }
+      );
   }
-
   getDomainSubdomainSettings() {
-
     const user_data = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
-
     const domain = user_data.sector || null;
-    const sub_domain =  user_data.subSector || null;
-
+    const sub_domain = user_data.subSector || null;
     return new Promise((resolve, reject) => {
       this.provider_services.domainSubdomainSettings(domain, sub_domain)
+        .subscribe(
+          (data: any) => {
+            if (data.serviceBillable === false) {
+              this.isServiceBillable = false;
+              reject();
+            } else {
+              this.isServiceBillable = true;
+              resolve();
+            }
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  getServiceList() {
+    this.provider_services.getServicesList()
       .subscribe(
         (data: any) => {
-          if (data.serviceBillable === false) {
-            this.isServiceBillable = false;
-            reject();
-          } else {
-            this.isServiceBillable = true;
-            resolve();
+          for (const ser of data) {
+            if (ser.status === 'ACTIVE') {
+              this.services.push(ser);
+            }
+          }
+          const services = this.services.map((ob) => ob.name);
+          this.itemServicesGroup[0]['values'] = services;
+          if (this.bill_data.service && this.bill_data.service.length > 0) {
+            this.addSavedServiceToCart(this.bill_data.service);
+          } else if (this.bill_data.length === 0 && this.checkin.service) {
+            // Add waitlist service by default
+            const service = [];
+            service.push({
+              name: this.checkin.service.id || '',
+              serviceId: this.checkin.service.id || 0
+            }); // Create an array same like service array
+            this.addSavedServiceToCart(service);
           }
         },
         error => {
-         reject(error);
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-    });
   }
-
-  getServiceList() {
-    this.provider_services.getServicesList()
-    .subscribe(
-      (data: any) => {
-
-        for (const ser of data) {
-          if (ser.status === 'ACTIVE') {
-            this.services.push(ser);
-          }
-        }
-
-        const services = this.services.map((ob) => ob.name );
-
-        this.itemServicesGroup[0]['values'] = services;
-
-        if (this.bill_data.service && this.bill_data.service.length > 0) {
-          this.addSavedServiceToCart(this.bill_data.service);
-        } else if (this.bill_data.length === 0 && this.checkin.service) {
-          // Add waitlist service by default
-          const service = [];
-          service.push({
-            name: this.checkin.service.id || '',
-            serviceId: this.checkin.service.id || 0
-          }); // Create an array same like service array
-          this.addSavedServiceToCart(service);
-        }
-
-      },
-      error => {
-        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-      }
-    );
-  }
-
   getCoupons() {
     return new Promise((resolve, reject) => {
       this.provider_services.getProviderCoupons()
-      .subscribe(
-        data => {
-          this.coupons = data;
-
-          //if (this.bill_data.couponId) {
-            if (this.bill_data.providerCoupon.length!=0) {
-            this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.providerCoupon[0].id);
-            //this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.couponId);
+        .subscribe(
+          data => {
+            this.coupons = data;
+            //if (this.bill_data.couponId) {
+            if (this.bill_data.providerCoupon) {
+              if (this.bill_data.providerCoupon.length != 0) {
+                this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.providerCoupon[0].id);
+                //this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.couponId);
+              }
+            }
+            resolve();
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            reject(error);
           }
-          resolve();
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-          reject(error);
-        }
-      );
+        );
     });
-
   }
-
   getDiscounts() {
-
     return new Promise((resolve, reject) => {
       this.provider_services.getProviderDiscounts()
-      .subscribe(
-        data => {
-          this.discounts = data;
-         // if (this.bill_data.discountId) {
-          if (this.bill_data.discount.length!=0) {
-            // this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discountId);
-            this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discount[0].id);
+        .subscribe(
+          data => {
+            this.discounts = data;
+            // if (this.bill_data.discountId) {
+            if (this.bill_data.discount) {
+              if (this.bill_data.discount.length != 0) {
+                // this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discountId);
+                this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discount[0].id);
+              }
+            }
+            resolve();
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            reject(error);
           }
-
-          resolve();
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-          reject(error);
-        }
-      );
-     });
-
-
+        );
+    });
   }
-
   getItemsList() {
     this.provider_services.getProviderItems()
-    .subscribe(
-      (data: any) => {
+      .subscribe(
+        (data: any) => {
+          this.items = data;
+          const items = this.items.map((ob) => ob.displayName);
+          this.itemServicesGroup[1]['values'] = items;
+          if (this.bill_data.items && this.bill_data.items.length > 0) {
+            this.addSavedItemToCart(this.bill_data.items);
+          }
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
-        this.items = data;
-        const items = this.items.map((ob) => ob.displayName );
-
-        this.itemServicesGroup[1]['values'] = items;
-
-        if (this.bill_data.items && this.bill_data.items.length > 0) {
-          this.addSavedItemToCart(this.bill_data.items);
         }
-      },
-      error => {
-        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-
-      }
-    );
+      );
   }
-
   getTaxDetails() {
     return new Promise((resolve, reject) => {
       this.provider_services.getProviderTax()
-      .subscribe(
-        data => {
-          this.item_service_tax = data['taxPercentage'];
-          resolve();
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        .subscribe(
+          data => {
+            this.item_service_tax = data['taxPercentage'];
+            resolve();
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
-          reject(error);
-        }
-      );
+            reject(error);
+          }
+        );
     });
-
   }
-
   keyupitemServiceSelected(ev, type, indx) {
     const kCode = parseInt(ev.keyCode, 10);
     if (kCode === 13) {
       this.itemServiceSelected(type, indx);
     }
   }
-
   itemServiceSelected(type, index) {
-
     // this.itemServiceSearch.reset();
     // this.item_service_search.nativeElement.blur();
     // console.log('typ', type, index);
-    this.curSelItm = { indx: 0, typ: '', qty: 1};
+    this.curSelItm = { indx: 0, typ: '', qty: 1 };
     if (type === 'Services') {
       this.curSelItm.indx = this.services[index];
       this.curSelItm.typ = 'Services';
@@ -452,19 +423,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.curSelItm.qty = 1;
     }
     // console.log('selected item', this.curSelItm);
-
   }
-
   addCartItem(item, type) {
-   // console.log(item);
-   let recalcreq = true;
+    // console.log(item);
+    let recalcreq = true;
     const retid = this.pushCartItem(item, type);
     if (type === 'Services') {
       if (retid !== -1) {
         this.api_error = Messages.PROVIDER_BILL_SERV_EXISTS;
         setTimeout(() => {
           this.api_error = '';
-          }, projectConstants.TIMEOUT_DELAY);
+        }, projectConstants.TIMEOUT_DELAY);
         recalcreq = false;
       }
     }
@@ -480,19 +449,18 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   pushCartItem(item, type) {
-
     let selected_item = {
     };
-   // console.log('cart', this.cart);
+    // console.log('cart', this.cart);
     // check whether item already exists in the cart
     let foundid = -1;
     const itmid = (type === 'Services') ? item.id : item.itemId;
     for (let i = 0; i < this.cart.items.length; i++) {
-        if (this.cart.items[i].itemId === itmid && this.cart.items[i].type === type) {
-          foundid = i;
-        }
+      if (this.cart.items[i].itemId === itmid && this.cart.items[i].type === type) {
+        foundid = i;
+      }
     }
-   // console.log('foundid', foundid);
+    // console.log('foundid', foundid);
     const tax = (item.taxable) ? this.item_service_tax : 0;
     if (foundid !== -1) { // case if item / service already exists in the array, then just increment the qty
       if (type !== 'Services') {
@@ -500,94 +468,82 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }
     } else {
       switch (type) {
-        case 'Services' :  selected_item = {
-                                  'name' : item.name,
-                                  'itemId': item.id,
-                                  // 'quantity': 1,
-                                  'quantity': Number(this.curSelItm.qty),
-                                  'price': item.totalAmount,
-                                  'rowtotal': item.totalAmount,
-                                  'subtotal': item.totalAmount,
-                                  'subtotalwithouttax': item.totalAmount,
-                                  'discount': '',
-                                  'discountamt': '',
-                                  'coupon': '',
-                                  'couponamt': '',
-                                  'gst_percentage': tax / 2,
-                                  'cgst_percentage': tax / 2,
-                                  'type' : type,
-                                  'taxable':  item.taxable,
-                                  'showdisccoup': false
-                                };
-                                break;
+        case 'Services': selected_item = {
+          'name': item.name,
+          'itemId': item.id,
+          // 'quantity': 1,
+          'quantity': Number(this.curSelItm.qty),
+          'price': item.totalAmount,
+          'rowtotal': item.totalAmount,
+          'subtotal': item.totalAmount,
+          'subtotalwithouttax': item.totalAmount,
+          'discount': '',
+          'discountamt': '',
+          'coupon': '',
+          'couponamt': '',
+          'gst_percentage': tax / 2,
+          'cgst_percentage': tax / 2,
+          'type': type,
+          'taxable': item.taxable,
+          'showdisccoup': false
+        };
+          break;
 
-        case 'Items' :  selected_item = {
-                                  'name' : item.displayName,
-                                  'itemId': item.itemId,
-                                  // 'quantity': 1,
-                                  'quantity': Number(this.curSelItm.qty),
-                                  'price': item.price,
-                                  'rowtotal': item.price,
-                                  'subtotal': item.price,
-                                  'subtotalwithouttax': item.price,
-                                  'discount': '',
-                                  'discountamt': '',
-                                  'coupon': '',
-                                  'couponamt': '',
-                                  'gst_percentage': tax / 2,
-                                  'cgst_percentage': tax / 2,
-                                  'type' : type,
-                                  'taxable':  item.taxable,
-                                  'showdisccoup': false
-                                };
-                                break;
+        case 'Items': selected_item = {
+          'name': item.displayName,
+          'itemId': item.itemId,
+          // 'quantity': 1,
+          'quantity': Number(this.curSelItm.qty),
+          'price': item.price,
+          'rowtotal': item.price,
+          'subtotal': item.price,
+          'subtotalwithouttax': item.price,
+          'discount': '',
+          'discountamt': '',
+          'coupon': '',
+          'couponamt': '',
+          'gst_percentage': tax / 2,
+          'cgst_percentage': tax / 2,
+          'type': type,
+          'taxable': item.taxable,
+          'showdisccoup': false
+        };
+          break;
       }
-
       this.cart.items.push(selected_item);
       this.selectedItems.push(item);
     }
     return foundid;
-
   }
-
   deleteCartItem(i) {
     this.hideAddItem();
     this.cart.items.splice(i, 1);
     this.selectedItems.splice(i, 1);
     this.calculateTotal();
   }
-
   itemDiscountChange(i) {
     this.cart['items'][i]['discountamt'] = 0;
     this.calculateItemTotal(i);
   }
-
   itemCouponChange(i) {
     this.cart['items'][i]['couponamt'] = 0;
     this.calculateItemTotal(i);
   }
-
   stdRateChange(i) {
     if (!this.cart['items'][i]['price'] ||
-    isNaN(this.cart['items'][i]['price']) ||
-    this.cart['items'][i]['price'] < 0) {
+      isNaN(this.cart['items'][i]['price']) ||
+      this.cart['items'][i]['price'] < 0) {
       this.cart['items'][i]['price'] = 1;
     }
-
     this.calculateItemTotal(i);
   }
-
   quantityChange(i) {
-
     if (!this.cart['items'][i]['quantity'] ||
-    this.cart['items'][i]['quantity'] < 0) {
+      this.cart['items'][i]['quantity'] < 0) {
       this.cart['items'][i]['quantity'] = 1;
     }
-
     this.calculateItemTotal(i);
-
   }
-
   calculateItemTotal(i) {
     this.cart['items'][i]['rowtotal'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
     this.cart['items'][i]['subtotal'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
@@ -595,52 +551,42 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.reduceItemDiscount(i);
     this.reduceItemCoupon(i);
     if (this.cart['items'][i]['taxable']) {
-
       this.applyTax(i);
     }
     this.calculateTotal();
   }
-
   reduceItemDiscount(i) {
-
     if (this.cart['items'][i].discount !== '' && this.discounts[this.cart['items'][i].discount]) {
       const discount = this.discounts[this.cart['items'][i].discount];
-      this.cart['items'][i].subtotal = this.discCalculation(discount, 'discount', this.cart['items'][i].subtotal, '' , -1);
+      this.cart['items'][i].subtotal = this.discCalculation(discount, 'discount', this.cart['items'][i].subtotal, '', -1);
       this.cart['items'][i].subtotalwithouttax = this.discCalculation(discount, 'discount', this.cart['items'][i].subtotalwithouttax, '', i);
     }
-
   }
-
   reduceItemCoupon(i) {
-
     if (this.cart['items'][i].coupon !== '' &&
-    this.coupons[this.cart['items'][i].coupon]) {
+      this.coupons[this.cart['items'][i].coupon]) {
       const discount = this.coupons[this.cart['items'][i].coupon];
       discount.discValue = discount.amount;
       // coupon dont have discValue field
       // but we need it because discount n coupon used same function
-      this.cart['items'][i].subtotal = this.discCalculation(discount, 'coupon', this.cart['items'][i].subtotal, '' , -1);
+      this.cart['items'][i].subtotal = this.discCalculation(discount, 'coupon', this.cart['items'][i].subtotal, '', -1);
       this.cart['items'][i].subtotalwithouttax = this.discCalculation(discount, 'coupon', this.cart['items'][i].subtotalwithouttax, '', i);
     }
-
   }
-
   applyTax(i) {
     this.cart['items'][i].subtotal = this.cart['items'][i].subtotal + (this.cart['items'][i].subtotal * this.item_service_tax / 100);
   }
-
   discountChange() {
     this.calculateTotal();
   }
   couponChange() {
     this.calculateTotal();
   }
-
   calculateTotal() {
     let total = 0;
     let totalwithouttax = 0;
     this.taxabletotal = 0;
-    for ( const item of this.cart.items) {
+    for (const item of this.cart.items) {
 
       if (item.subtotal && item.subtotal > 0) {
         total = total + item.subtotal;
@@ -657,9 +603,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       this.tottaxvalue = 0;
     }
-
-    this.cart.sub_total = (total < 0 ) ? 0 : total;
-    this.cart.sub_totalwithouttax = (totalwithouttax < 0 ) ? 0 : totalwithouttax;
+    this.cart.sub_total = (total < 0) ? 0 : total;
+    this.cart.sub_totalwithouttax = (totalwithouttax < 0) ? 0 : totalwithouttax;
     this.cart.total = total;
     this.cart.totalwithouttax = totalwithouttax;
 
@@ -670,20 +615,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // console.log('cart', this.cart);
 
   }
-
   reduceDiscount() {
-
     if (this.cart.discount !== '' && this.discounts[this.cart.discount]) {
       const discount = this.discounts[this.cart.discount];
       this.cart.total = this.discCalculation(discount, 'discount', this.cart.sub_total, 'totdiscount', -1);
     } else {
       this.totdisc_val = 0;
     }
-
   }
-
   reduceCoupon() {
-
     if (this.cart.coupon !== '' && this.coupons[this.cart.coupon]) {
       const discount = this.coupons[this.cart.coupon];
       discount.discValue = discount.amount;
@@ -693,9 +633,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       this.totcoup_val = 0;
     }
-
   }
-
   discCalculation(discount, curtype, cal_total, granddisc?, indx?) {
     // console.log('grand disc', granddisc);
     if (discount.calculationType === 'Fixed') {
@@ -707,7 +645,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.cart['items'][indx]['couponamt'] = (disc_value <= cal_total) ? disc_value : cal_total;
         }
       } else {
-          // this.cart['items'][indx]['discountamt'] = 0;
+        // this.cart['items'][indx]['discountamt'] = 0;
       }
       if (granddisc === 'totdiscount') {
         this.totdisc_val = disc_value;
@@ -720,7 +658,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
     } else if (discount.calculationType === 'Percentage') {
       const disc_value = (discount.discValue > 0) ? discount.discValue : 0;
-      const calcdisc = ( cal_total * disc_value / 100);
+      const calcdisc = (cal_total * disc_value / 100);
       if (granddisc === 'totdiscount') {
         this.totdisc_val = calcdisc;
       }
@@ -736,23 +674,22 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       } else {
         // this.cart['items'][indx]['discountamt'] = 0;
       }
-      const total = cal_total - ( cal_total * disc_value / 100);
+      const total = cal_total - (cal_total * disc_value / 100);
       return (total > 0) ? total : 0;
     }
   }
-
   reducePrePaidAmount() {
     let pre_total = 0;
     for (const pay of this.pre_payment_log) {
       if (pay.status === 'SUCCESS') {
         pre_total = pre_total + pay.amount;
         if (pay.refundDetails.length > 0) {
-                for (let j = 0; j < pay.refundDetails.length; j++) {
-                  if (pay.refundDetails[j].status === 'SUCCESS') {
-                    pre_total -= pay.refundDetails[j].amount;
-                  }
-                }
-              }
+          for (let j = 0; j < pay.refundDetails.length; j++) {
+            if (pay.refundDetails[j].status === 'SUCCESS') {
+              pre_total -= pay.refundDetails[j].amount;
+            }
+          }
+        }
       }
     } // console.log(pre_total);
     this.totpaid = pre_total;
@@ -760,14 +697,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // console.log(this.cart.total);
     this.cart.total = (this.cart.total > 0) ? this.cart.total : 0;
   }
-
   submitBill() {
     let order_discounts = [];
     let order_coupons = [];
     const item_array = [];
     const service_array = [];
     // console.log(this.cart.items);
-    for ( const item of  this.cart.items) {
+    for (const item of this.cart.items) {
       let discountIds = [];
       let couponIds = [];
       const ob = {
@@ -775,13 +711,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         'price': item.price,
         'quantity': item.quantity,
       };
-     // console.log(item, ob);
+      // console.log(item, ob);
       if (item.coupon !== '' && this.coupons[item.coupon]) {
         couponIds.push(this.coupons[item.coupon]['id']);
-        
         // ob['couponId'] = this.coupons[item.coupon]['id'];
       }
-
       if (item.discount !== '' && this.discounts[item.discount]) {
         discountIds.push(this.discounts[item.discount]['id']);
         // ob['discountId'] = this.discounts[item.discount]['id'];
@@ -789,21 +723,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       ob['couponIds'] = couponIds;
       ob['discountIds'] = discountIds;
       if (item.type === 'Items') {
-        ob['itemId'] =  item.itemId;
+        ob['itemId'] = item.itemId;
         item_array.push(ob);
       } else if (item.type === 'Services') {
-        ob['serviceId'] =  item.itemId;
+        ob['serviceId'] = item.itemId;
         service_array.push(ob);
       }
     }
-
-
     const post_data = {
-      'uuid' : this.checkin.ynwUuid,
+      'uuid': this.checkin.ynwUuid,
       'netTotal': this.cart.total,
       'service': service_array,
       'items': item_array
-    } ;
+    };
 
     // if (service_array.length > 0) {
     //   post_data['service'] = service_array;
@@ -826,148 +758,133 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     post_data['discountIds'] = order_discounts;
     if (this.bill_data.length === 0) {
       this.provider_services.createWaitlistBill(post_data)
-      .subscribe(
-        data => {
-          // console.log(data);
-          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_CREATE);
-          this.dialogRef.close('reloadlist');
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-        }
-      );
+        .subscribe(
+          data => {
+            // console.log(data);
+            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_CREATE);
+            this.dialogRef.close('reloadlist');
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
     } else {
       this.provider_services.updateWaitlistBill(post_data)
-      .subscribe(
-        data => {
-          // console.log(data);
-          if (data) {
-            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_UPDATE);
-            this.dialogRef.close('reloadlist');
+        .subscribe(
+          data => {
+            // console.log(data);
+            if (data) {
+              this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_UPDATE);
+              this.dialogRef.close('reloadlist');
+            }
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-        }
-      );
+        );
     }
   }
-
   getPrePaymentDetails() {
     return new Promise((resolve, reject) => {
       this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
-      .subscribe(
-        data => {
-          this.pre_payment_log = data;
-          // console.log('paid', this.pre_payment_log);
-          // for (let i = 0; i < this.pre_payment_log.length; i++) {
-          //   // if (this.pre_payment_log[i].status === 'SUCCESS')  {
-          //     this.totpaid += this.pre_payment_log[i].amount;
-          //     if (this.pre_payment_log[i].refundDetails.length > 0) {
-          //       for (let j = 0; j < this.pre_payment_log[i].refundDetails.length; j++) {
-          //         if (this.pre_payment_log[i].refundDetails[j].status === 'SUCCESS') {
-          //           // this.totpaid -= this.pre_payment_log[i].refundDetails[j].amount;
-          //         }
-          //       }
-          //     }
-          //  // }
-          // }
-          // console.log('tot paid', this.totpaid);
-          resolve();
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        .subscribe(
+          data => {
+            this.pre_payment_log = data;
+            // console.log('paid', this.pre_payment_log);
+            // for (let i = 0; i < this.pre_payment_log.length; i++) {
+            //   // if (this.pre_payment_log[i].status === 'SUCCESS')  {
+            //     this.totpaid += this.pre_payment_log[i].amount;
+            //     if (this.pre_payment_log[i].refundDetails.length > 0) {
+            //       for (let j = 0; j < this.pre_payment_log[i].refundDetails.length; j++) {
+            //         if (this.pre_payment_log[i].refundDetails[j].status === 'SUCCESS') {
+            //           // this.totpaid -= this.pre_payment_log[i].refundDetails[j].amount;
+            //         }
+            //       }
+            //     }
+            //  // }
+            // }
+            // console.log('tot paid', this.totpaid);
+            resolve();
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
-          reject(error);
-        }
-      );
+            reject(error);
+          }
+        );
     });
-
   }
-
   addSavedServiceToCart(services) {
-
     for (const service of services) {
       this.services
-      .map((ob) => {
-        // console.log(ob, service);
-        if (ob.id === service.serviceId) {// console.log('here');
-          let retid = this.pushCartItem(ob, 'Services');
-          // console.log('retid', retid);
-          if (retid === -1) {
-            retid = this.cart.items.length - 1;
+        .map((ob) => {
+          // console.log(ob, service);
+          if (ob.id === service.serviceId) {// console.log('here');
+            let retid = this.pushCartItem(ob, 'Services');
+            // console.log('retid', retid);
+            if (retid === -1) {
+              retid = this.cart.items.length - 1;
 
-            this.cart.items[retid] ['quantity']  = service.quantity || 1;
-            this.cart.items[retid]['price'] = service.price || ob.totalAmount;
-            // if (service.discountId !== 0) {
-            //   this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
-            // }
-            // if (service.couponId !== 0) {
-            //   this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, service.couponId);
-            // }
-            if (service.discount.length !== 0) {
-                this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, service.discount[0].id);
+              this.cart.items[retid]['quantity'] = service.quantity || 1;
+              this.cart.items[retid]['price'] = service.price || ob.totalAmount;
+              // if (service.discountId !== 0) {
+              //   this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
+              // }
+              // if (service.couponId !== 0) {
+              //   this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, service.couponId);
+              // }
+              if (service.discount) {
+                if (service.discount.length !== 0) {
+                  this.cart.items[retid]['discount'] = this.getIndexFromId(this.discounts, service.discount[0].id);
+                }
               }
-            this.calculateItemTotal(retid);
-
-
-          } else {
-             this.api_error = 'Service already exists in the bill';
+              this.calculateItemTotal(retid);
+            } else {
+              this.api_error = 'Service already exists in the bill';
+            }
           }
-        }
-
-      });
-
+        });
     }
-
     this.calculateTotal();
-
-
   }
 
   addSavedItemToCart(items) {
-
     for (const item of items) {
       this.items
-      .map((ob) => {
+        .map((ob) => {
 
-        if (ob.itemId === item.itemId) {
-          let retid = this.pushCartItem(ob, 'Items');
-          if (retid === -1) {
-            retid = this.cart.items.length - 1;
+          if (ob.itemId === item.itemId) {
+            let retid = this.pushCartItem(ob, 'Items');
+            if (retid === -1) {
+              retid = this.cart.items.length - 1;
+            }
+            this.cart.items[retid]['quantity'] = item.quantity;
+            this.cart.items[retid]['price'] = item.price;
+            // if (item.discountId !== 0) {
+            //   this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
+            // }
+            if (item.discount) {
+              if (item.discount.length !== 0) {
+                this.cart.items[retid]['discount'] = this.getIndexFromId(this.discounts, item.discount[0].id);
+              }
+            }
+            // if (item.couponId !== 0) {
+            //   this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
+            // }
+            this.calculateItemTotal(retid);
           }
-          this.cart.items[retid] ['quantity']  = item.quantity;
-          this.cart.items[retid]['price'] = item.price;
-          // if (item.discountId !== 0) {
-          //   this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
-          // }
-          if (item.discount.length !== 0) {
-            this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, item.discount[0].id);
-          }
-          // if (item.couponId !== 0) {
-          //   this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
-          // }
-
-          this.calculateItemTotal(retid);
-        }
-
-      });
-
+        });
     }
-
     this.calculateTotal();
-
-
   }
-
   getIndexFromId(array, id) {
     let index = '';
     array
-    .map((ob, i) => {
-      if (ob.id === id) {
-        index = i;
-      }
-    });
+      .map((ob, i) => {
+        if (ob.id === id) {
+          index = i;
+        }
+      });
     return index;
   }
   stringtoDate(dt, mod) {
@@ -990,16 +907,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       return;
     }
   }
-
   showAddItem() {
     this.showAddItemsec = true;
     this.ItemServiceGroupOptions = this.itemServiceSearch.valueChanges
-     .pipe(
-       startWith(''),
-       map(val => this.filterGroup(val))
-     );
-     // console.log('reached here');
-     setTimeout(() => {
+      .pipe(
+        startWith(''),
+        map(val => this.filterGroup(val))
+      );
+    // console.log('reached here');
+    setTimeout(() => {
       /*if (this.document.getElementById('itemservicesearch')) {
         console.log('focus here');
         this.document.getElementById('itemservicesearch').focus();
@@ -1010,7 +926,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   hideAddItem() {
     this.showAddItemsec = false;
     this.itemServiceSearch.reset();
-    this.curSelItm = { indx: 0, typ: '', qty: 1};
+    this.curSelItm = { indx: 0, typ: '', qty: 1 };
   }
   addItem() {
     // console.log('clicked add item', this.curSelItm);
@@ -1019,7 +935,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
     this.addCartItem(this.curSelItm.indx, this.curSelItm.typ);
     this.itemServiceSearch.reset();
-    this.curSelItm = { indx: 0, typ: '', qty: 1};
+    this.curSelItm = { indx: 0, typ: '', qty: 1 };
     // this.item_service_search.nativeElement.blur();
   }
   handleTotalDiscSec() {
@@ -1030,7 +946,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   itemDiscCoupSec(indx) {
-    // console.log('here', this.cart.items);
     if (this.cart.items[indx]) {
       if (this.cart.items[indx].showdisccoup) {
         this.cart.items[indx].showdisccoup = false;
@@ -1054,7 +969,4 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       itm.qty = vv;
     }
   }
-
 }
-
-

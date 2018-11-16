@@ -4,7 +4,7 @@ import { RequestForComponent } from '../request-for/request-for.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
-
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-reimburse-report',
@@ -12,6 +12,15 @@ import { ProviderServices } from '../../services/provider-services.service';
   styleUrls: ['./provider-reimburse-report.component.css']
 })
 export class ProviderReimburseReportComponent implements OnInit {
+  status_cap = Messages.PRO_STATUS_CAP;
+  all_cap = Messages.ALL_CAP;
+  reimburse_report_cap = Messages.REIMBUSE_REPORT_CAP;
+  report_id_cap = Messages.REPORT_ID_CAP;
+  time_period_cap = Messages.TIME_PERIOD_CAP;
+  coup_use_cap = Messages.COUP_USE_CAP;
+  j_acc_cap = Messages.J_ACC_CAP;
+  reimburse_amt_cap = Messages.REIMBURSE_AMT_CAP;
+  req_payment_cap = Messages.REQ_PAYMENT_CAP;
   couponreport: any[];
   breadcrumbs_init = [
     {

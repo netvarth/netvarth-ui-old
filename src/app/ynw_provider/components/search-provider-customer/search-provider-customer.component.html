@@ -1,16 +1,15 @@
 <div class="search_provider">
-<form [formGroup]="amForm"  novalidate
-(ngSubmit)="amForm.valid &&
+    <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">
-    <ng-container *ngIf="source=='createCustomer'">Create {{customer_label  | capitalizeFirst}}</ng-container>
-    <ng-container *ngIf="source=='providerCheckin'">{{checkin_label | capitalizeFirst}}</ng-container>
-    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-        <i class="fa fa-window-close" aria-hidden="true"></i>
-    </button>
-</h1>
-<mat-dialog-content>
-    <!-- <div class="heading-searchcust">
+        <h1 class="mat-dialog-title">
+            <ng-container *ngIf="source=='createCustomer'">{{create_cap}} {{customer_label | capitalizeFirst}}</ng-container>
+            <ng-container *ngIf="source=='providerCheckin'">{{checkin_label | capitalizeFirst}}</ng-container>
+            <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+            </button>
+        </h1>
+        <mat-dialog-content>
+            <!-- <div class="heading-searchcust">
         <span class="service-tooltip" *ngIf="source=='createCustomer'">
                 <i class="icon-bell"></i>
                 First step for creating a {{customer_label  | capitalizeFirst}} is searching.
@@ -20,50 +19,44 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
                 First step for {{checkin_label}} is searching for {{customer_label  | capitalizeFirst}}.
         </span>
     </div> -->
-<div class="form-group">
-    <label class="col-form-label" for="mobile_number">Mobile Number *</label>
-    <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
-    formControlName="mobile_number" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')"
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
+            <div class="form-group">
+                <label class="col-form-label" for="mobile_number">{{mob_cap}} *</label>
+                <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
+                    formControlName="mobile_number" autocomplete="off">
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
     {
       'required' : 'Mobile number is required',
       'minlength' : 'Mobile number should have 10 digits',
       'maxlength' : 'Mobile number should have 10 digits',
       'pattern' : 'Only numbers are allowed'
     })">
-   </app-field-error-display>
-</div>
+                </app-field-error-display>
+            </div>
 
-<div class="form-group">
-    <label class="col-form-label" for="first_last_name">First Name / Last Name *</label>
-    <input matInput type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
-    formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')"
-    errorMsg="Please enter First Name / Last Name.">
-   </app-field-error-display>
-</div>
+            <div class="form-group">
+                <label class="col-form-label" for="first_last_name">{{first_name_cap}} / {{last_name_cap}} *</label>
+                <input matInput type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
+                    formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')" errorMsg="Please enter First Name / Last Name.">
+                </app-field-error-display>
+            </div>
 
-</mat-dialog-content>
-<mat-dialog-actions>
-<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-<button  mat-button
-[disabled]="!amForm.valid" class="cs-btn bt1">
-<ng-container *ngIf="source=='createCustomer'">Create</ng-container>
-<ng-container *ngIf="source=='providerCheckin'">{{checkin_label}}</ng-container>
-</button>
-</mat-dialog-actions>
-</form>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
+            <button mat-button [disabled]="!amForm.valid" class="cs-btn bt1">
+                <ng-container *ngIf="source=='createCustomer'">{{create_cap}}</ng-container>
+                <ng-container *ngIf="source=='providerCheckin'">{{checkin_label}}</ng-container>
+            </button>
+        </mat-dialog-actions>
+    </form>
 
-<div class="create_new" *ngIf="create_new">
-  <span class="create_new_oops">Oops!!</span>
-  <span>This is not a registered {{customer_label}}</span>
-  <button class="create_new_button cs-btn bt3" (click)="createNew()" >Create {{customer_label}}</button>
-</div>
+    <div class="create_new" *ngIf="create_new">
+        <span class="create_new_oops">{{oops_cap}}</span>
+        <span>{{not_reg_customer_cap}} {{customer_label}}</span>
+        <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}} {{customer_label}}</button>
+    </div>
 
 </div>
-<app-field-error-display [displayError]="true" *ngIf="api_error"
-errorMsg="{{api_error}}"></app-field-error-display>
-
-<app-form-success-display [displayMsg]="true" *ngIf="api_success"
-successMsg="{{api_success}}"></app-form-success-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

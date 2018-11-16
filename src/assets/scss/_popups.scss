@@ -180,6 +180,75 @@
         }
     }
     
+    // Popup body section
+    .mat-dialog-content {
+        margin: 0;
+        padding: 20px;
+        overflow: auto;
+
+        .form-group {            
+            
+            // Messages shown under input fields
+            .sts-msg {
+                font-weight: 500;
+                font-size: .625rem;
+                padding: 5px;
+                background: transparent;
+                text-align: left;
+
+                &.error {
+                    color: $cc-red;
+                }
+            }
+            
+            // Dropdown Select Box Styles
+            .mat-form-field {
+                width: 100%;
+
+                .mat-form-field-wrapper {
+                    padding: 0;
+                    margin: 0;
+                    
+                    .mat-form-field-prefix {
+                        align-self: center;
+                        
+                        .rupee {
+                            font-size: 1.5rem;
+                        }
+                    }
+
+                    .mat-form-field-infix {
+                        margin: 0;
+                        padding: 0;
+                        border: none;
+
+                        .mat-form-field-label {
+                            display: none;
+                        }
+
+                        .mat-select {
+                            padding: 10px;
+                            height: 40px;
+                            background: $cc-inputbg;
+                            border: 1px solid $cc-formborder;
+                            
+                            &:focus {
+                                @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                border: 1px solid $linkblue;
+                                background: $white;
+                            }
+                        }
+                        
+                        .valfield {
+                            width: 100px;
+                        }
+                    }
+
+                    .mat-form-field-underline {
+                        display: none;
+                    }
+                }
+            }
             
             .expl {
                 color: $cc-mediumgray;
@@ -3073,7 +3142,7 @@
                                         flex-basis: 60%;
                                         padding-right: 15px;
                                         
-                                         .icon-tax {
+                                        .icon-tax {
                                             font-size: 1.4rem;
                                             vertical-align: text-top;
                                             color: $hover-blue;
