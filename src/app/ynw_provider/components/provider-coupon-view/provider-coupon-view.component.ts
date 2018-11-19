@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-provider-coupon-view',
   templateUrl: './provider-coupon-view.component.html',
@@ -32,7 +33,7 @@ export class ProviderCouponViewComponent implements OnInit {
   term_condition = Messages.TERM_CONDITION;
   provider_desc = Messages.PRO_DESCR;
   chart_cap = Messages.CHART_CAP;
-  jaldeecoupon_list: any = [];
+  jCouponInfo;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -44,19 +45,28 @@ export class ProviderCouponViewComponent implements OnInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-  public jc_code;
-  constructor(private provider_servicesobj: ProviderServices) { }
+  jc_code;
+  constructor(private provider_servicesobj: ProviderServices,
+    private router: ActivatedRoute, private route: Router) { }
   ngOnInit() {
-    this.getCouponview();
+    this.router.params
+      .subscribe(params => {
+        this.jc_code = params.id;
+        this.getCouponview();
+      });
   }
   getCouponview() {
-    this.jaldeecoupon_list = this.provider_servicesobj.getJaldeeCoupon(this.jc_code);
+    this.provider_servicesobj.getJaldeeCoupon(this.jc_code).subscribe(
+      data => {
+        this.jCouponInfo = data;
+      }
+    );
     const breadcrumbs = [];
     this.breadcrumbs_init.map((e) => {
       breadcrumbs.push(e);
     });
     breadcrumbs.push({
-      title: this.jaldeecoupon_list.couponName
+      title: this.jc_code
     });
     this.breadcrumbs = breadcrumbs;
   }

@@ -25,7 +25,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   valid_from_cap = Messages.VALID_FROM_CAP;
   valid_to_cap = Messages.VALID_TO_CAP;
   consumers_apply_cap = Messages.CONSUM_APPLY_CAP;
-  provid_apply_cap = Messages.CONSUM_APPLY_CAP;
+  provid_apply_cap = Messages.PROVID_APPLY_CAP;
   status_cap = Messages.COUPONS_STATUS_CAP;
   add_coupon_btn = Messages.ADD_COUPON_BTN;
   value_cap = Messages.VALUE_CAP;
@@ -79,11 +79,12 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       });
   }
   getProviderJaldeeCoupon() {
-    this.jaldeecoupon_list = this.provider_servicesobj.getJaldeeCoupons();
-    // .subscribe(data => {
-    //   console.log(data);
-    // this.jaldeecoupon_list = data;
-    // this.query_executed = true;
+    this.jaldeecoupon_list = this.provider_servicesobj.getJaldeeCoupons()
+    .subscribe(data => {
+      console.log(data);
+    this.jaldeecoupon_list = data;
+    this.query_executed = true;
+    });
   }
   addCoupons() {
     this.addcoupdialogRef = this.dialog.open(AddProviderCouponsComponent, {
@@ -153,14 +154,19 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   reports() {
     this.router.navigate(['provider', 'settings', 'coupons', 'report']);
   }
-  couponView() {
-    this.router.navigate(['provider', 'settings', 'coupons', 'coupon']);
+  couponView(jcCode) {
+    this.router.navigate(['provider', 'settings', 'coupons', jcCode]);
   }
   formatPrice(price) {
     return this.sharedfunctionObj.print_PricewithCurrency(price);
   }
 
-  changecouponStatus(obj) {
-    //  this.provider_shared_functions.changecouponStatus(this, obj, 'coupons');
+  changecouponStatus(jcCoupon) {
+    const jc_coupon_status = (jcCoupon.couponStatus === 'ENABLED') ? 'Disable' : 'Enable';
+    this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
   }
 }

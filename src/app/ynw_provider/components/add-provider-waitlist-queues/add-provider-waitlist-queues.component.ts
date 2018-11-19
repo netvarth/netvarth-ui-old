@@ -64,9 +64,10 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   ngOnInit() {
     this.activeSchedules = this.data.schedules;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
+    // tslint:disable-next-line:radix
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')) };
-    this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')) };
-    
+    // tslint:disable-next-line:radix
+    this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')) };  
     // moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH:mm');
     // this.dend_time =  moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH:mm');
     // Get the provider locations
@@ -104,14 +105,18 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   updateForm() {
     // console.log(this.data.queue.queueSchedule.timeSlots[0].sTime);
     const sttime = {
+      // tslint:disable-next-line:radix
       hour: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].sTime,
         ['h:mm A']).format('HH')),
+      // tslint:disable-next-line:radix
       minute: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].sTime,
         ['h:mm A']).format('mm'))
     };
     const edtime = {
+      // tslint:disable-next-line:radix
       hour: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
         ['h:mm A']).format('HH')),
+      // tslint:disable-next-line:radix
       minute: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
         ['h:mm A']).format('mm'))
     };

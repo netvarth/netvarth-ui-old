@@ -211,7 +211,7 @@ export const Messages = {
   'PREPAYMENT_ERROR': 'Sorry! an error occured',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
 
-  //General
+  // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
   'UPDATE_BTN': 'Update',
@@ -248,15 +248,15 @@ export const Messages = {
   'GENDER_CAP': 'Gender',
   'DOB_CAP': 'Date of Birth',
 
-  //Consumer Account Settings
+  // Consumer Account Settings
   'RELATED_LINKS': 'Related Links',
   'USER_PROF_CAP': 'User Profile',
   'CHANGE_PASSWORD_CAP': 'Change Password',
   'CHANGE_MOB_CAP': 'Change Mobile',
   'ADD_CHANGE_EMAIL': 'Add or Change Email',
 
-  //Dashboard
-  //Active Checkins
+  // Dashboard
+  // Active Checkins
   'ACTIVE_CHECKINS_CAP': 'Active Checkins',
   'SEND_MSG_CAP': 'Send Message',
   'NO_CHECKINS_CAP': 'No current Check-Ins available',
@@ -272,24 +272,24 @@ export const Messages = {
   'BILL_CAPTION': 'Bill',
   'RATE_VISIT': 'Rate Your Visit',
 
-  //Favourite Checkins
+  // Favourite Checkins
   'MY_FAV_CAP': 'My Favourites',
   'VIEW_CAP': 'View',
   'REMOVE_FAV': 'Remove Favourite',
 
   'OPEN_NOW_CAP': 'Open Now',
 
-  //Do You Want To Checkin For Different Date
+  // Do You Want To Checkin For Different Date
   'DO_YOU_WANT_TO_CAP': 'Do you want to',
   'CHECKIN_CAP': 'Check-in',
   'FOR_CAP': 'for',
   'DIFFERENT_DATE_CAP': 'different Date?',
   'YOU_HAVENT_ADDED_CAP': 'You havent added any favourite providers',
 
-  //History
+  // History
   'HISTORY_CAP': 'History',
 
-  //Consumer-Waitlist
+  // Consumer-Waitlist
   'CHECKIN_DET_CAP': 'Check-In Details',
   'BUSS_NAME_CAP': 'Bussiness Name:',
   'DATE_CAP': 'Date:',
@@ -303,7 +303,7 @@ export const Messages = {
   'PAID_CAP': 'Paid',
   'COMMU_HISTORY_CAP': 'Communication History',
 
-  //kiosk
+  // kiosk
   'WELCOME_CAP': 'Welcome',
   'CHECKIN_YOURSELF_CAP': 'Check-In Yourself',
   'CHECKIN_ONLINE_CAP': 'Checked-In Online?',
@@ -325,24 +325,24 @@ export const Messages = {
   'SORRY_NOT_AUTH_TO_VIEW_PAGE': 'Sorry you are not authorized to view this page.',
   // Kiosk-Lookup
   'NO_CHECKINS_EXISTS_CAP': 'Sorry no Check-In exists',
-  //Kiosk-report as arrived
+  // Kiosk-report as arrived
   'TOKEN_CAP': 'Token:',
   'PERS_AHEAD': 'Persons Ahead:',
   'NAME_CAP': 'Name:',
   'STATUS_CAP': 'Status:',
   'CONFIRM_ARRIVAL_CAP': 'Confirm Arrival',
 
-  //App-shared-components-consumer rate service popup
+  // App-shared-components-consumer rate service popup
   'RATE_YOU_VISIT': 'Rate Your Visit',
   'RATING_CAP': 'Rate *',
   'MESSAGE_CAP': 'Message',
   'RATE_BTN_CAP': 'Rate',
 
-  //App-shared-components-consumer
+  // App-shared-components-consumer
   'BACK_TO_CAP': 'Back to',
   'PROVIDER_DETAILS_CAP': 'Provider Details',
 
-  //App-shared-components-existing checkin
+  // App-shared-components-existing checkin
   'YOUR_CAP': 'Your',
   'AT_CAP': 'at',
   'SCHEDULED_ON_CAP': 'Scheduled on',
@@ -350,7 +350,7 @@ export const Messages = {
   'NO_CAP': 'No',
   'EXISTS_AT': 'exists at',
 
-  //App-shared-components-Forgot Password
+  // App-shared-components-Forgot Password
   'FORGOT_PASSWORD_CAP': 'Forgot Password',
   'BACK_TO_LOGIN_CAP': 'Back To Login',
 
@@ -362,7 +362,7 @@ export const Messages = {
   'NEW_USER_CAP': 'New User?',
   'SIGNUP_HERE_CAP': 'Signup here',
 
-  //App-shared-components-provider-details
+  // App-shared-components-provider-details
   'GO_BACK_CAP': 'Go Back',
   'MORE_CAP': 'More',
   'LESS_CAP': 'Less',
@@ -375,12 +375,12 @@ export const Messages = {
   'SERV_OFFERED_CAP': 'Services Offered',
   'COUPONS_OFFERED_CAP': 'Coupons Offered',
 
-  //App-shared-components-return-payment
+  // App-shared-components-return-payment
   'PAY_DONE_SUCCESS_CAP': 'Your payment has done successfully!',
   'GO_BACK_HOME_CAP': 'Go Back to home',
   'PAY_FAILED_CAP': 'Your payment has failed!',
 
-  //App-shared-components-search-details
+  // App-shared-components-search-details
   'REFINE_SEARCH_CAP': 'Refine Search',
   'SELECT_DOMAIN_CAP': 'Select Domain',
   'SELECT_SUBDOMAIN_CAP': 'Select Subdomain',
@@ -400,19 +400,19 @@ export const Messages = {
   'NOT_ALLOWED_CAP': 'not allowed',
   'NO_YNW_RES_FOUND_CAP': 'No YNW results found',
 
-  //App-shared-components-search-service-detail
+  // App-shared-components-search-service-detail
   'DURATION_CAP': 'Duration:',
   'PRICE_CAP': 'Price:',
   'PREPAYMENT_AMOUNT_CAP': 'Prepayment Amount:',
   'DESCRIPTION_CAP': 'Description :',
 
-  //App-shared-components-set-password-form
+  // App-shared-components-set-password-form
   'NEW_PASSWORD_CAP': 'New Password *',
   'PASSWORD_VALID_CAP': 'Atleast one uppercase, one number and 8 characters',
   'RE_ENTER_PASSWORD_CAP': 'Re-enter Password *',
   'SUBMIT_CAP': 'Submit',
 
-  //App-shared-components-signup
+  // App-shared-components-signup
   'MOBILE_NO_CAP': 'Mobile Number *',
   'F_NAME_CAP': 'First Name *',
   'L_NAME_CAP': 'Last Name *',
@@ -423,23 +423,23 @@ export const Messages = {
   'TERMS_CONDITIONS_CAP': 'Terms & Conditions',
   'SIGN_UP_CAP': 'Sign Up',
 
-  //App-shared-modules-add-member
+  // App-shared-modules-add-member
   'FILL_FOLL_DETAILS_CAP': 'Please fill in the following details',
   'MALE_CAP': 'Male',
   'FEMALE_CAP': 'Female',
 
-  //App-shared-modules-change email
+  // App-shared-modules-change email
   'EMAIL_CAP': 'Email *',
   'VERIFIED_CAP': 'Verified',
 
-  //App-shared-modules-change-mobile
+  // App-shared-modules-change-mobile
   'MOBILE_CAP': 'Mobile *',
   'ADD_CHANGE_EMAIL_CAP': 'Add or Change Email',
 
-  //App-shared-modules-change-password
+  // App-shared-modules-change-password
   'OLD_PASSWORD_CAP': 'Old Password *',
 
-  //App-shared-modules-checkin-checkin-inner
+  // App-shared-modules-checkin-checkin-inner
   'SELECT_SER_CAP': 'Select Service',
   'NO_SER_AVAIL_CAP': 'No services available.',
   'ADD_CHANGE_MEMBER': 'Add / Change Member',
@@ -458,24 +458,24 @@ export const Messages = {
   'ADD_MEMBER_CAP': 'Add Member',
   'TODAY_CAP': 'Today,',
 
-  //App-shared-modules-consumer-checkin-history-list
+  // App-shared-modules-consumer-checkin-history-list
   'SERV_PROVIDER_CAP': 'Service Provider',
   'DATE_COL_CAP': 'Date',
   'NO_PREV_CHECKINS_AVAIL_CAP': 'No previous Check-Ins available',
 
-  //App-shared-modules-consumer-waitlist-checkin-payment
+  // App-shared-modules-consumer-waitlist-checkin-payment
   'BILL_PAYMENT_CAP': 'Bill Payment',
   'COUPON_CODE_CAP': 'Coupon Code',
   'AMNT_TO_PAY_CAP': 'Amount to pay',
   'NO_PAY_OPT_AVIL_CAP': 'No payment options available.',
 
-  //App-shared-modules-edit-profile
+  // App-shared-modules-edit-profile
   'EDIT_PHONE_NO_CAP': 'Use "Change Mobile" option to edit the Phone number',
   'CHANGE_EMAIL_CAP': 'Use "Add or Change Email" option to edit the Email Id',
   'PHONE_NO_CAP': 'Phone Number',
   'EMAIL_ID_CAP': 'Email Id',
 
-  //App-shared-modules-footer
+  // App-shared-modules-footer
   'ABOUT_CAP': 'About',
   'ABOUT_JALDEE_ONE': 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providers’ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
   'ABOUT_JALDEE_TWO': 'Jaldees cloud-based platform is scalable, secure, and ready for any size deployment. Jaldee is owned and operated by Netvarth technologies Pvt Ltd.',
@@ -504,7 +504,7 @@ export const Messages = {
   'SETTINGS_NOT_FOUND_CAP': 'Sorry! settings not found',
   'ACC_ONLINE_CHECKIN_CAP': 'Accept Online Check-in',
 
-  //App-shared-modules-header
+  // App-shared-modules-header
   'SIGN_IN_CAP': 'Sign in',
   'JOIN_CAP': 'Join',
   'ARE_YOU_SER_PRO_CAP': 'Are you a Service Provider?',
@@ -516,25 +516,25 @@ export const Messages = {
   'SWITCH_TO_PROVIDER': 'Switch to Provider',
   'CREATE_PRO_ACCNT': 'Create a Provider Account',
 
-  //App-shared-modules-inbox-inbox-list
+  // App-shared-modules-inbox-inbox-list
   'PROVIDER_CONSUMER_CAP': 'Provider / Consumer',
   'REPLY_CAP': 'Reply',
   'DELETE_MSG_CAP': 'Delete Message',
   'NO_MSG_EXISTS_CAP': 'No Messages exists',
 
-  //App-shared-modules-learnmore-adjustdelay
+  // App-shared-modules-learnmore-adjustdelay
   'ADJUST_DELAY_CAP': 'Adjust Delay',
 
-  //App-shared-modules-learnmore-checkin
+  // App-shared-modules-learnmore-checkin
   'CHECK_IN_CAP': 'Check In',
 
-  //App-shared-modules-learnmore-customer
+  // App-shared-modules-learnmore-customer
   'CUSTOMERS_CAP': 'Customers',
 
-  //App-shared-modules-learnmore-kiosk
+  // App-shared-modules-learnmore-kiosk
   'KIOSK_CAP': 'Kiosk',
 
-  //App-shared-modules-otp-form
+  // App-shared-modules-otp-form
   'ENTER_OTP_CAP': 'Enter OTP *',
   'RESEND_OTP_TO_CAP': 'Resend OTP To',
   'RESEND_OTP_EMAIL_CAP': 'Resend OTP Via Email',
@@ -542,18 +542,18 @@ export const Messages = {
   'SECONDS_CAP': 'seconds.',
   'ENTER_EMAIL_CAP': 'Enter Email',
 
-  //App-shared-modules-pager
+  // App-shared-modules-pager
   'PREVIOUS_CAP': 'Previous',
   'NEXT_CAP': 'Next',
 
-  //App-shared-modules-search
+  // App-shared-modules-search
   'MORE_OPTIONS_CAP': 'More Options',
   'ALL_CAP': 'All',
 
-  //App-shared-modules-search-moreoptiions
+  // App-shared-modules-search-moreoptiions
   'MORE_SEARCH_OPT_CAP': 'More Search Options ',
 
-  //App-shared-modules-search-moreoptiions
+  // App-shared-modules-search-moreoptiions
   'CUSTOMER_CAP': 'Customer',
   'TIME_CAP': 'Time',
   'BILL_NO_CAP': 'Bill Number',
@@ -578,25 +578,25 @@ export const Messages = {
   'PRINT_BILL_CAP': 'Print Bill',
   'ACCEPT_PAY_CAP': 'Accept Payment',
 
-  //App-ynw_provider-components-add-provider-addons
+  // App-ynw_provider-components-add-provider-addons
   'ADD_ADDON_CAP': 'Add Addon',
   'ADDONS_CAP': 'Addons *',
   'SELECT_ONE_CAP': '- Select One -',
   'NO_UPGRADE_ADDONS_FOUND_CAP': 'Sorry no upgradable addons found.',
 
-  //App-ynw_provider-components-add-provider-bprofile-search-adwords
+  // App-ynw_provider-components-add-provider-bprofile-search-adwords
   'ADD_ADWORD_CAP': 'Add Adword',
   'ADWORD_CAP': 'Adword',
 
-  //App-ynw_provider-components-add-provider-bprofile-specializations
+  // App-ynw_provider-components-add-provider-bprofile-specializations
   'SPECIALIZATIONS_CAP': 'Specializations',
   'NO_SPECI_FOUND_CAP': 'Sorry no specializations found.',
 
-  //App-ynw_provider-components-add-provider-bprofile-spoken-languages
+  // App-ynw_provider-components-add-provider-bprofile-spoken-languages
   'LANG_KNOWN_CAP': 'Languages Known',
   'NO_LANG_FOUND_CAP': 'Sorry no languages found.',
 
-  //App-ynw_provider-components-add-provider-coupons
+  // App-ynw_provider-components-add-provider-coupons
   'BILLING_COUPONS_CAP': 'Billing Coupons -',
   'NAME_MAND_CAP': 'Name *',
   'TYPE_MAND_CAP': 'Type *',
@@ -604,16 +604,16 @@ export const Messages = {
   'PERCENTAGE_CAP': 'Percentage',
   'DESCRIPTION_MAND_CAP': 'Description *',
 
-  //App-ynw_provider-components-add-provider-customers
+  // App-ynw_provider-components-add-provider-customers
   'CREATE_CAP': 'Create',
   'ADDRESS_CAP': 'Address',
 
-  //App-ynw_provider-components-add-provider-item_image
+  // App-ynw_provider-components-add-provider-item_image
   'ITEM_IMAGE_CAP': 'Item Image - ',
   'SELECT_IMAGE': 'Click here to select the image',
   'CHANGE_IMAGE': 'Click here to change the image',
 
-  //App-ynw_provider-components-add-provider-schedule
+  // App-ynw_provider-components-add-provider-schedule
   'ADD_SCHEDULE_CAP': 'Add Schedule',
   'EDIT_SCHEDULE_BTN': 'Edit : ',
   'SELECT_DAYS_BTN': ' Select All Days',
@@ -621,11 +621,11 @@ export const Messages = {
   'END_TIME_CAP': 'End Time',
   'SAVE_SCHEDULE_CAP': 'Save Schedule',
 
-  //App-ynw_provider-components-add-provider-note
+  // App-ynw_provider-components-add-provider-note
   'ADD_PROVIDER_NOTE_CAP': 'Add Private Note',
   'PROVIDER_NOTE_CAP': 'Private Note*',
 
-  //App-ynw_provider-components-add-provider-location
+  // App-ynw_provider-components-add-provider-location
   'AMENITIES_CAP': 'Amenities',
   'LOCATION_MAP_CAP': 'Choose your location in the MAP',
   'LOCATION_MAP_MESSAGE_CAP': 'If your location is not available in the MAP, kindly fill the location details manually.',
@@ -638,7 +638,7 @@ export const Messages = {
   'OPEN_CAP': '24 hours Open',
   'PARKING_TYPE_CAP': 'Select Parking Type',
 
-  //App-ynw_provider-components-add-provider-waitlist_queue
+  // App-ynw_provider-components-add-provider-waitlist_queue
   'SERVICE_TIME_WINDOW_CAP': 'Service Time Window Name *',
   'QUEUE_LOCATION_CAP': 'Location *',
   'QUEUE_SERVICE_CAP': 'Service*',
@@ -648,7 +648,7 @@ export const Messages = {
   'NO_OF_CAP': 'No of ',
   'SERVE_CAP': 'served at a time',
 
-  //App-ynw_provider-components-add-provider-watlist-service
+  // App-ynw_provider-components-add-provider-watlist-service
   'SERVICE_NAME_CAP': 'Service Name *',
   'EST_DURATION_CAP': 'Estimated Duration (min)*',
   'ENABLE_PREPAYMENT_CAP': 'Enable prepayment',
@@ -661,18 +661,18 @@ export const Messages = {
   'SELECT_IMAGE_CAP': 'Click here to select the image files',
   'GO_TO_SERVICE_CAP': 'Please click here to go to the service time window List',
 
-  //App-ynw_provider-components-add-provider-service-gallery
+  // App-ynw_provider-components-add-provider-service-gallery
   'SERVICE_GALLERY_CAP': 'Service Gallery',
 
-  //App-ynw_provider-components-add-provider-queue-delay
+  // App-ynw_provider-components-add-provider-queue-delay
   'DELAY_CAP': 'Delay (Hour : Minute)',
 
-  //App-ynw_provider-components-add-provider-googlemap
+  // App-ynw_provider-components-add-provider-googlemap
   'MARK_MAP_CAP': 'Mark your location by clicking on the map or by dragging the Marker',
   'SELECT_ADDRESS_CAP': 'Obtained Addresses, select the required one',
   'YES_DONE_CAP': 'Yes, I\'m Done!',
 
-  //App-ynw_provider-components-provider-home
+  // App-ynw_provider-components-provider-home
   'TODAY_HOME_CAP': 'Today',
   'FUTURE_HOME_CAP': 'Future',
   'HISTORY_HOME_CAP': 'History',
@@ -699,11 +699,11 @@ export const Messages = {
   'PRICES_CAP': 'Price',
   'TAXABLE_CAP': 'Taxable',
 
-  //App-ynw_provider-components-add-provider-coupons
+  // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
   'REASON_CAP': 'Reason',
 
-  //App-ynw_provider-components-add-provider-waitlist-checkin-bill
+  // App-ynw_provider-components-add-provider-waitlist-checkin-bill
   'NEW_CAP': 'New',
   'ADD_SER_ITEM_CAP': 'Add Service/Item',
   'AVAILABLE_CAP': 'Available',
@@ -714,7 +714,7 @@ export const Messages = {
   'BILL_DISCOUNT_CAP': 'Bill Discount',
   'ADD_BTN': 'Add',
 
-  //App-ynw_provider-components-provider-bprofile-search
+  // App-ynw_provider-components-provider-bprofile-search
   'BPROFILE_PUBLIC_SEARCH_CAP': 'Public Search',
   'BPROFILE_PROFILE_CAP': 'Your profile has been',
   'BPROFILE_DISABLED_CAP': 'disabled',
@@ -775,14 +775,14 @@ export const Messages = {
   'BPROFILE_ADD_SOCIAL_MEDIA_CAP': 'You can add your social media links here',
   'NO_SOCIAL_MEDIA': 'You haven\'t added any social media links',
 
-  //App-ynw_provider-components-provider-bprofile-search-schedulepopup
+  // App-ynw_provider-components-provider-bprofile-search-schedulepopup
   'MANAGE_WORK_HOURS_CAP': 'Manage Working Hours',
 
-  //App-ynw_provider-components-provider-bprofile-search-socialmedia
+  // App-ynw_provider-components-provider-bprofile-search-socialmedia
   'SOCIAL_SELECT_CAP': 'Select',
   'SOCIAL_URL_CAP': 'Enter the URL',
 
-  //App-ynw_provider-components-provider-coupon_view
+  // App-ynw_provider-components-provider-coupon_view
   'COUPON_DETAILS_CAP': 'Coupon Deatils',
   'CODE_CAP': 'Code',
   'COUPON_PERCENT_CAP': 'Percent/Amount',
@@ -805,31 +805,31 @@ export const Messages = {
   'PRO_DESCR': 'providerDescription',
   'CHART_CAP': 'chart',
 
-  //App-ynw_provider-components-provider-coupons
+  // App-ynw_provider-components-provider-coupons
   'REPORTS_CAP': 'Reports',
   'VALID_FROM_CAP': 'Valid From',
   'VALID_TO_CAP': 'Valid To',
   'CONSUM_APPLY_CAP': 'consumers# applied',
-  'PROVID_APPLy_CAP': 'providers# honored',
+  'PROVID_APPLY_CAP': 'providers# honored',
   'COUPONS_STATUS_CAP': 'Status',
   'ENABLE_CAP': 'Enabled',
   'DISABLE_CAP': 'Disabled',
   'ADD_COUPON_BTN': 'Add Coupons',
   'VALUE_CAP': 'Value',
 
-  //App-ynw_provider-components-provider-customers
+  // App-ynw_provider-components-provider-customers
   'CUSTOMER_MOBILE_CAP': 'Mobile',
   'LAST_VISIT_CAP': 'Last Visit',
   'NO_CUSTOMER_CAP': 'You don\'t have any',
 
-  //App-ynw_provider-components-provider-discounts
+  // App-ynw_provider-components-provider-discounts
   'ADD_DISCOUNT_CAP': 'Add Bill Discounts',
 
-  //App-ynw_provider-components-provider-items
+  // App-ynw_provider-components-provider-items
   'ADD_ITEM_CAP': 'Add Item',
   'ITEM_ENABLE_CAP': 'Enable',
 
-  //App-ynw_provider-components-provider-license-detail
+  // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
   'SERV_PERIOD_CAP': 'Service Period',
   'GATEWAY_CAP': 'Payment Gateway',
@@ -837,7 +837,7 @@ export const Messages = {
   'ID_CAP': 'Id',
   'REF_ID_CAP': 'Ref Id',
 
-  //App-ynw_provider-components-provider-license
+  // App-ynw_provider-components-provider-license
   'CURRENT_PACKAGE_CAP': 'Your current License Package is',
   'UPGRADE_LICENSE': 'Upgrade License',
   'LICENSE_CHANGE': 'License Change History',
@@ -849,19 +849,19 @@ export const Messages = {
   'ADD_ON_CAP': 'Add-on',
   'NO_ADDON_CAP': 'No addons exists',
 
-  //App-ynw_provider-components-provider-license-usage
+  // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
   'USED_CAP': 'Used',
   'COMPLIANCE_CAP': 'Compliance Info',
   'NO_METRIC_CAP': 'No metric found',
 
-  //App-ynw_provider-components-provider-members
+  // App-ynw_provider-components-provider-members
   'FAMILY_MEMEBER': 'No family members exists',
 
-  //App-ynw_provider-components-provider-payment-history
+  // App-ynw_provider-components-provider-payment-history
   'NO_TRANSACTION': 'No transactions done yet',
 
-  //App-ynw_provider-components-provider-profile
+  // App-ynw_provider-components-provider-profile
   'PROFILE_CAP': 'Profile',
   'BUS_NAME_CAP': 'Business Name',
   'SHORT_NAME_CAP': 'Short Name',
@@ -872,11 +872,11 @@ export const Messages = {
   'BACK_CAP': 'Back',
   'NOW_DONE_CAP': 'You are now done.',
 
-  //App-ynw_provider-components-provider-refund
+  // App-ynw_provider-components-provider-refund
   'AMT_WANT_TO_REFUND': 'Amount you wanted to Refund',
   'PLEASE_WAIT': 'Please wait',
 
-  //App-ynw_provider-components-provider-reimburse-report
+  // App-ynw_provider-components-provider-reimburse-report
   'REIMBUSE_REPORT_CAP': 'Reimbursement Report',
   'REPORT_ID_CAP': 'Report Id',
   'TIME_PERIOD_CAP': 'Time Period',
@@ -885,7 +885,7 @@ export const Messages = {
   'REIMBURSE_AMT_CAP': 'Reimbursable Amount',
   'REQ_PAYMENT_CAP': 'Request for payment',
 
-  //App-ynw_provider-components-provider-settings
+  // App-ynw_provider-components-provider-settings
   'WAITLIST_MANAGE_CAP': 'Waitlist Manager',
   'ACCEPT_ONLINE_CAP': 'Accept Online',
   'SETTINGS_CAP': 'Settings',
@@ -903,31 +903,31 @@ export const Messages = {
   'MISCELLANEOUS_CAP': 'Miscellaneous',
   'NON_WORKING_CAP': 'Non-working Days',
 
-  //App-ynw_provider-components-provider-system-auditlogs
+  // App-ynw_provider-components-provider-system-auditlogs
   'AUDIT_CATEGORY_CAP': 'Category',
   'AUDIT_SUB_CTAEGORY_CAP': 'Sub Category',
   'AUDIT_ACTION_CAP': 'Action',
   'AUDIT_SELECT_DATE_CAP': 'Select Date',
   'AUDIT_NO_LOGS_CAP': 'Sorry! No logs found',
 
-  //App-ynw_provider-components-provider-waitlist-checkin-cancel-popup
+  // App-ynw_provider-components-provider-waitlist-checkin-cancel-popup
   'POPUP_SELECT_REASON_CAP': 'Select a reason',
   'POPUP_SEND_MSG_CAP': 'Send message to',
 
-  //App-ynw_provider-components-provider-waitlist-checkin-payment
+  // App-ynw_provider-components-provider-waitlist-checkin-payment
   'PAY_SELECT_CAP': 'Select Payment Options',
   'PAY_SETTLE': 'Settle',
 
-  //App-ynw_provider-components-provider-waitlist-location-detail
+  // App-ynw_provider-components-provider-waitlist-location-detail
   'WAITLIST_BASE_LOC_CAP': 'Base Location',
   'WAITLIST_LOC_STATUS_CAP': 'Location Status',
   'WAITLIST_SET_BASE_CAP': 'Set as base location',
   'WAITLIST_SCHEDULE_CAP': 'Schedule',
 
-  //App-ynw_provider-components-provider-waitlist-locations
+  // App-ynw_provider-components-provider-waitlist-locations
   'ADD_NEW_LOC_CAP': 'Add New Location',
 
-  //App-ynw_provider-components-provider-waitlist-online-checkin
+  // App-ynw_provider-components-provider-waitlist-online-checkin
   'CHECKIN_CALCULATE_CAP': 'Waiting Time Calculation',
   'CHECKIN_ML_CAP': 'Automatic (Machine Learning)',
   'CHECKIN_MINS_CAP': 'Minutes',
@@ -936,40 +936,39 @@ export const Messages = {
   'CHECKIN_TOKEN_DISABLE_CAP': '(Token Disabled)',
   'CHECKIN_FUTURE_CAP': 'Accept Future',
 
-  //App-ynw_provider-components-provider-waitlist-queues
+  // App-ynw_provider-components-provider-waitlist-queues
   'QUEUE_NEW_SERVICE_WIND_CAP': 'Add New Service Time Window',
   'QUEUE_MAX_CAPACITY_CAP': 'Max. Capacity',
 
-  //App-ynw_provider-components-provider-waitlist-service-detail
+  // App-ynw_provider-components-provider-waitlist-service-detail
   'SERVICE_DURATION_CAP': 'Estimated Duration',
   'SERVICE_STATUS_CAP': 'Service Status',
   'SERVICE_PHOTO_CAP': 'photos',
 
-  //App-ynw_provider-components-request-for
+  // App-ynw_provider-components-request-for
   'REQUEST_CONFIRM_CAP': 'Confirm your request for payment',
 
-  //App-ynw_provider-components-search-provider-customer
+  // App-ynw_provider-components-search-provider-customer
   'CUSTOMER_NOT_REGISTER_CAP': 'This is not a registered',
 
-  //App-ynw_provider-components-view-report
+  // App-ynw_provider-components-view-report
   'REPORT_PERIOD_DATE_CAP': 'Period/Date',
   'REPORT_COUPON_AMT_CAP': 'Coupon Amount',
   'REPORT_REIMBURSE_AMT_CAP': 'Reimbursable Amount from Jaldee',
   'REPORT_JALDEE_ACCT_CAP': 'Jaldee financial Account',
   'REPORT_CONSUMER_CAP': 'Consumer',
 
-  //App-ynw_provider-components-provider-items-details
+  // App-ynw_provider-components-provider-items-details
   'ITEM_DETAIL_CAP': 'Item Details',
 
-  //App-ynw_provider-components-provider-auditlogs
+  // App-ynw_provider-components-provider-auditlogs
   'AUDIT_LIC_HISTORY_CAP' : 'License History',
   'AUDIT_NAME_CAP' : 'Name',
   'AUDIT_APPLIED_ON_CAP' : 'Applied On',
   'AUDIT_EXP_DATE_CAP' : 'Expiry Date',
   'AUDIT_STATUS_CAP' : 'Status',
   'AUDIT_NO_LOGS_FOUND' : 'No logs found',
-  
-  //App-ynw_provider-components-provider-bprofile-privacy-settings
+  // App-ynw_provider-components-provider-bprofile-privacy-settings
   'PRIVACY_SETTINGS_HI_CAP' : 'Privacy Settings -',
   'PRI_PHONE_NUMBER_CAP' : 'Phone Number *',
   'PRI_PHONE_LABEL_CAP' : 'Phone Label *',
@@ -978,21 +977,21 @@ export const Messages = {
   'PRI_EMAIL_LABEL_CAP' : 'Email Label *',
   'PRI_MAIL_ID_IS_VISIBLE_TO_CAP' : 'This email id is visible to',
 
-  //App-ynw_provider-components-provider-bprofile-search-adwords
+  // App-ynw_provider-components-provider-bprofile-search-adwords
   'SEARCH_ADWORDS_CAP' : 'Adwords',
   'SEARCH_SORRY_CAP' : 'Sorry!',
   'SEARCH_NOT_HAVE_ANY_ADWORD_MSG' : 'Currently you did not have any adwords. Please upgrade your Licence Package/Add-On',
 
-  //App-ynw_provider-components-provider-bprofile-search-gallery
+  // App-ynw_provider-components-provider-bprofile-search-gallery
   'SEARCH_GALLERY_CAP' : 'Gallery',
   'SEARCH_GALLERY_SELEC_IMG_FILE_CAP' : 'Click here to select the image files',
 
-  //App-ynw_provider-components-provider-bprofile-search-primary
+  // App-ynw_provider-components-provider-bprofile-search-primary
   'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Summary',
   'SEARCH_PRI_BUISINESS_NAME_CAP' : 'Business Name *',
   'SEARCH_PRI_PROF_SUMMARY_CAP' : 'Profile Summary',
 
-  //App-ynw_provider-components-provider-bwizard
+  // App-ynw_provider-components-provider-bwizard
   'WIZ_CONGRATULATIONS_CAP' : 'Congratulations,',
   'WIZ_RIGHT_CHOICE_BY_SIGNIN_UP_CAP' : 'You have made a right choice by signing up for',
   'WIZ_JALDEE_CAP' : 'Jaldee!',
@@ -1039,7 +1038,7 @@ export const Messages = {
   'WIZ_COMPL_YOUR_PRO_CAP' : 'page and complete your profile, then you can turn on',
   'WIZ_PUB_SEARCH_CAP' : 'Public Search!',
 
-  //App-ynw_provider-components-provider-payment-settings
+  // App-ynw_provider-components-provider-payment-settings
   'PAY_SET_JALDEE_ACCOUNT_CAP' : 'Jaldee Account',
   'PAY_SET_MY_OWN_ACCOUNT_CAP' : 'My Own Account',
   'PAY_SET_ONLY_IF_MAIL_VERIFIED_CAP' : 'Payment settings can be done only if your email id is verified.Please use the below button to set up your email id.',
@@ -1077,14 +1076,14 @@ export const Messages = {
   'PAY_SET_TAX_PER_CAP' : 'Tax Percentage *',
   'PAY_SET_UPDATE_TAX_CAP' : 'Update Tax',
 
-  //App-ynw_provider-components-provider-subheader
+  // App-ynw_provider-components-provider-subheader
   'SUB_HEADER_CREATE_CAP' : 'Create',
   'SUB_HEADER_KIOSK' : 'Kiosk',
   'SUB_HEADER_DASHBOARD' : 'Dashboard',
   'SUB_HEADER_SETTINGS' : 'Settings',
   'SUB_HEADER_HELP' : 'Help',
 
-  //App-ynw_provider-components-provider-system-alerts
+  // App-ynw_provider-components-provider-system-alerts
   'SYS_ALERTS_ACKNOWLEDGEMENT_STATUS' : 'Acknowledgement Status',
   'SYS_ALERTS_ANY_CAP' : '-- Any --',
   'SYS_ALERTS_ACKNOWLEDGED_CAP' : 'Acknowledged',
@@ -1097,16 +1096,16 @@ export const Messages = {
   'SYS_ALERTS_ACTION_CAP' : 'Action',
   'SYS_ALERTS_NO_ALERTS_FOUND_CAP' : 'Sorry! No alerts found',
 
-  //App-ynw_provider-components-provider-waitlist
+  // App-ynw_provider-components-provider-waitlist
   'WAITLIST_ACCEPT_ONLINE_CAP' : 'Accept Online',
   'WAITLIST_LOCATIONS_CAP' : 'Locations',
   'WAITLIST_SERVICES_CAP' : 'Services',
   'WAITLIST_SER_TIME_WINDOWS_CAP' : 'Service Time Windows',
 
-  //App-ynw_provider-components-provider-waitlist-checkin-consumer-note
+  // App-ynw_provider-components-provider-waitlist-checkin-consumer-note
   'CONS_NOTE_NOTE_CAP' : 'Note',
 
-  //App-ynw_provider-components-provider-waitlist-checkin-detail
+  // App-ynw_provider-components-provider-waitlist-checkin-detail
   'CHECK_DET_GO_BACK_CAP' : 'Go Back',
   'CHECK_DET_DETAILS_CAP' : 'Details',
   'CHECK_DET_NAME_CAP' : 'Name:',
@@ -1129,7 +1128,7 @@ export const Messages = {
   'CHECK_DET_HISTORY_CAP' : 'History',
   'CHECK_DET_NO_HISTORY_FOUND_CAP' : 'No history found',
 
-  //App-ynw_provider-components-provider-waitlist-checkin-detail
+  // App-ynw_provider-components-provider-waitlist-checkin-detail
   'Q_DET_LOCATION_CAP' : 'Location',
   'Q_DET_SERVICE_CAP' : 'Service',
   'Q_DET_MAX_CAP_CAP' : 'Maximum Capacity',
@@ -1140,13 +1139,13 @@ export const Messages = {
   'Q_DET_DISABLED_CAP' : 'Disabled',
   'Q_DET_SCHEDULE_CAP' : 'Schedule',
 
-  //App-ynw_provider-components-provider-waitlist-services
+  // App-ynw_provider-components-provider-waitlist-services
   'SER_ADD_NEW_SER_CAP' : 'Add New Service',
   'SER_EST_DURATION_CAP' : 'Estimated Duration',
   'SER_PRICE_CAP' : 'Price',
   'SER_MIN_CAP' : 'min',
 
-  //App-ynw_provider-components-upgrade-license
+  // App-ynw_provider-components-upgrade-license
   'UP_LIC_PACKAGE_CAP' : 'License Package',
   'UP_LIC_PACK_CAP' : 'License Package *',
   'UP_SELECT_ONE_CAP' : '- Select One -',

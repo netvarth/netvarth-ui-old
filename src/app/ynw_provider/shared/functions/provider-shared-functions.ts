@@ -10,7 +10,7 @@ import { CommonDataStorageService } from '../../../shared/services/common-datast
 @Injectable()
 export class ProviderSharedFuctions {
   private activeQueues: any = [];
-  jaldeecoupon_list : any = [];
+  jaldeecoupon_list: any = [];
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
     public shared_functions: SharedFunctions,
     public common_datastorage: CommonDataStorageService) {
@@ -42,20 +42,18 @@ export class ProviderSharedFuctions {
         });
   }
 
- changecouponStatus(ob, obj) {
-      let chgstatus = '';
-      let chstatusmsg = '';
-      if (obj.couponStatus === 'Active') {
-        chgstatus = 'Inactive';
-        chstatusmsg = 'disabled';
-      } else {
-        chgstatus = 'Active';
-        chstatusmsg = 'enabled';
-      }
-     this.jaldeecoupon_list= ob.provider_services.changecouponStatus(obj.id, chgstatus);
-     
-     
-  }
+//  changecouponStatus(ob, obj) {
+//       let chgstatus = '';
+//       let chstatusmsg = '';
+//       if (obj.couponStatus === 'Active') {
+//         chgstatus = 'Inactive';
+//         chstatusmsg = 'disabled';
+//       } else {
+//         chgstatus = 'Active';
+//         chstatusmsg = 'enabled';
+//       }
+//      this.jaldeecoupon_list = ob.provider_services.changecouponStatus(obj.id, chgstatus);
+//      }
   addEditQueuePopup(ob, type, source, obj = null, schedules = null) {
 
     ob.queuedialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
@@ -110,7 +108,7 @@ export class ProviderSharedFuctions {
       ob.getProviderQueues();
     } else if (source === 'queue_detail') {
       ob.getQueueDetail();
-    } else if (source === 'location_detail') { 
+    } else if (source === 'location_detail') {
       ob.getProviderQueues();
     }
   }
@@ -206,7 +204,7 @@ export class ProviderSharedFuctions {
           source: 'provider-waitlist',
           type: 'send',
           terminologies: terminologies,
-          name:name
+          name: name
         }
       });
 

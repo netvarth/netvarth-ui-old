@@ -73,14 +73,15 @@ const routes: Routes = [
             component: ProviderCouponsComponent
           },
           {
+            path: 'coupons/:id',
+            component: ProviderCouponViewComponent
+          },
+          {
             path: 'coupons',
             children: [
               {
                 path: 'report',
                 component: ProviderReimburseReportComponent
-              }, {
-                path: 'coupon',
-                component: ProviderCouponViewComponent
               }, {
                 path: 'report',
                 children: [
