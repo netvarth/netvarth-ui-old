@@ -1000,6 +1000,7 @@ doScroll(event) {
                   }
                 }
                 this.hideRefineifOneresultchk = false;
+                this.showrefinedsection = false; // this is done to override all conditions and to hide the refined filter section by default
               }
                setTimeout(() => {
               // console.log('i am here', this.retscrolltop);

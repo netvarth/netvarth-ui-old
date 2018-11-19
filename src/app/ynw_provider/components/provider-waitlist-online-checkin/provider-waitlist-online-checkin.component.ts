@@ -84,6 +84,12 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     } else if (calcMode === 'NoCalc_WithoutToken') {
       calcMode = 'NoCalc';
       showToken = false;
+      } else if (calcMode === 'Fixed') {
+      const turntime = this.form.trnArndTime || 0;
+      if (turntime <= 0) {
+        this.shared_functions.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, {'panelClass': 'snackbarerror'});
+        return;
+      }
     }
     const postData = {
       calculationMode: calcMode,

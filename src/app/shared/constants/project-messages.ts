@@ -109,6 +109,7 @@ export const Messages = {
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
   'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant service time window by editing it',
+  'WAITLIST_TURNTIME_INVALID': 'Please enter a valid waiting time',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
 

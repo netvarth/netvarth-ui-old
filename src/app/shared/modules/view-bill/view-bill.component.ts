@@ -139,7 +139,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     if (this.bill_data.service.length) {
       for (let i = 0; i < this.bill_data.service.length; i++) {
         let service_discount_amount = 0;
-        if (this.bill_data.service[i].discount.length !== 0)
+        if (this.bill_data.service[i].discount && this.bill_data.service[i].discount.length !== 0)
           service_discount_amount = this.bill_data.service[i].discount[0].discountValue;
         this.bill_data.service[i]['rowtotal'] = (this.bill_data.service[i].price * this.bill_data.service[i].quantity);
         //const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - this.bill_data.service[i].discountValue - this.bill_data.service[i].couponValue;

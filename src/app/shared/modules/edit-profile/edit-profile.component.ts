@@ -45,6 +45,8 @@ export class EditProfileComponent implements OnInit {
   tday = new Date();
   emailHolder = '';
   phonenoHolder = '';
+    fnameerror = null;
+  lnameerror = null;
   breadcrumbs_init = [
     {
       title: 'Dashboard',
@@ -131,11 +133,20 @@ export class EditProfileComponent implements OnInit {
     let passtyp;
     const curuserdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
     // console.log('localstorage', curuserdet.id);
+    if (sub_data.first_name.trim() === '') {
+      this.fnameerror = 'First name is required';
+    }
+    if (sub_data.last_name.trim() === '') {
+      this.lnameerror = 'Last name is required';
+    }
+    if (this.fnameerror !== null || this.lnameerror !== null) {
+      return;
+    }    
     if (this.curtype === 'consumer') {
       post_data = {
                     'id': curuserdet['id'] || null,
-                    'firstName': sub_data.first_name || null,
-                    'lastName': sub_data.last_name || null,
+                    'firstName': sub_data.first_name.trim() || null,
+                    'lastName': sub_data.last_name.trim() || null,
                     'dob': date_format || null,
                     'gender': sub_data.gender || null
       };
@@ -145,8 +156,8 @@ export class EditProfileComponent implements OnInit {
       post_data = {
               'basicInfo': {
                   'id': curuserdet['id'] || null,
-                  'firstName': sub_data.first_name || null,
-                  'lastName': sub_data.last_name || null,
+                  'firstName': sub_data.first_name.trim() || null,
+                  'lastName': sub_data.last_name.trim() || null,
                   'dob': date_format || null,
                   'gender': sub_data.gender || null
               }
@@ -178,6 +189,8 @@ export class EditProfileComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+        this.fnameerror = null;
+    this.lnameerror = null;
   }
   resetdob() {
     this.editProfileForm.get('dob').setValue(null);

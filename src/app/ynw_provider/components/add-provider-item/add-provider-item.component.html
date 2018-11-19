@@ -49,7 +49,7 @@
     </div> -->
 
 <div class="form-group">
-    <label class="col-form-label" for="displayName">{{item_name_cap} *}</label>
+    <label class="col-form-label" for="displayName">{{item_name_cap}} *</label>
     <input matInput type="text" class="form-control" id="displayName" placeholder="Item Name" formControlName="displayName" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayName')" 
     [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',

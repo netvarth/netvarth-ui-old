@@ -227,8 +227,7 @@
             </div>
             <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                 <div class="queue-head">
-                    <ng-container *ngIf="isFuturedate"><strong>{{sel_day}} {{sel_checkindate | date: dateFormat}},
-                        </strong></ng-container>
+                                            <ng-container *ngIf="isFuturedate"><span class="checkin-footer-date"><strong>{{sel_day}} {{sel_checkindate | date: dateFormat}}, </strong></span></ng-container>
                     <ng-container *ngIf="!isFuturedate"><strong>{{today_cap}} </strong></ng-container>
                     <strong>{{checkinCaption}}:</strong> <span class="queue-avail-date">{{sel_queue_servicetime}}</span>
                 </div>

@@ -1,44 +1,42 @@
-<h1 class="mat-dialog-title" *ngIf="showHeading">{{bill_cap}}
-    <button #queue [mat-dialog-close]="close_msg" class="modal_close">
-        <i class="fa fa-window-close" aria-hidden="true"></i>
-    </button>
+<h1 class="mat-dialog-title" *ngIf="showHeading">
+	{{bill_cap}}
+	<button #queue [mat-dialog-close]="close_msg" class="modal_close">
+		<i class="fa fa-window-close" aria-hidden="true"></i>
+	</button>
 </h1>
 <mat-dialog-content>
-    <div class="bill-wrapper viewbill">
-        <div class="section-one">
-            <h3 *ngIf="bname">{{bname | capitalizeFirst}}</h3>
-            <div class="details">
-                <span class="columns">
-                    <span class="title">{{customer_cap}}</span>
-                    <span class="dynamic">{{checkin.consumer.userProfile.firstName}}
-                        {{checkin.consumer.userProfile.lastName}}</span>
-                </span>
-                <span class="columns">
-                    <span class="title">{{date_cap}} &amp; {{time_cap}}</span>
-                    <span class="dynamic">{{billDatedisp}}</span>
-                </span>
-                <span class="columns">
-                    <span class="title">{{bill_no_cap}}</span>
-                    <span class="dynamic">{{bill_data.id}}</span>
-                </span>
-                <span class="columns">
-                    <span class="title">{{gstin_cap}}</span>
-                    <span class="dynamic">{{item_service_gst}}</span>
-                </span>
-            </div>
-        </div>
+	<div class="bill-wrapper viewbill">
+		<div class="section-one">
+			<h3 *ngIf="bname">{{bname | capitalizeFirst}}</h3>
+			<div class="details">
+				<span class="columns"> <span class="title">{{customer_cap}}</span>
+					<span class="dynamic">{{checkin.consumer.userProfile.firstName}}
+						{{checkin.consumer.userProfile.lastName}}</span>
+				</span> <span class="columns"> <span class="title">{{date_cap}}
+						&amp; {{time_cap}}</span> <span class="dynamic">{{billDatedisp}}</span>
+				</span> <span class="columns"> <span class="title">{{bill_no_cap}}</span>
+					<span class="dynamic">{{bill_data.id}}</span>
+				</span> <span class="columns"> <span class="title">{{gstin_cap}}</span>
+					<span class="dynamic">{{item_service_gst}}</span>
+				</span>
+			</div>
+		</div>
 
-        <div class="section-three" *ngIf="!showPaidlist">
-            <div class="bill-breakup">
-                <div class="list" *ngFor="let service of bill_data.service; let i = index">
-                    <div class="list-content">
-                        <div class="c-row one">
-                            <div class="name">{{service.serviceName}} @ {{service.price |
-                                currency:'INR':'symbol':'.2-2'}} <i class="icon-tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="service.isTaxable"></i></div>
-                            <div class="quantity">{{qty_cap}} {{service.quantity}}</div>
-                            <div class="price">{{service.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
-                        </div>
-                        <!-- <div class="c-row two" *ngIf="service.discountValue > 0 || service.couponValue > 0">
+		<div class="section-three" *ngIf="!showPaidlist">
+			<div class="bill-breakup">
+				<div class="list" *ngFor="let service of bill_data.service; let i = index">
+					<div class="list-content">
+						<div class="c-row one">
+							<div class="name">
+								{{service.serviceName}} @ {{service.price |
+								currency:'INR':'symbol':'.2-2'}} <span class="tax" [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+								 *ngIf="service.isTaxable">Tax</span> 
+							</div>
+							<div class="quantity">{{qty_cap}} {{service.quantity}}</div>
+							<div class="price">{{service.rowtotal |
+								currency:'INR':'symbol':'.2-2'}}</div>
+						</div>
+						<!-- <div class="c-row two" *ngIf="service.discountValue > 0 || service.couponValue > 0">
                             <div class="discount-row" *ngIf="service.discountValue > 0">
                                 <div class="name">{{discount_cap}}</div>
                                 <div class="price">(-){{service.discountValue | currency:'INR':'symbol':'.2-2'}}</div>
@@ -48,36 +46,44 @@
                                 <div class="price">(-){{service.couponValue | currency:'INR':'symbol':'.2-2'}}</div>
                             </div>
                         </div> -->
-                        <div class="c-row two" *ngIf="service.discount.length > 0">
-                            <div class="discount-row" *ngIf="service.discount[0].discountValue > 0">
-                                <div class="name">{{discount_cap}}</div>
-                                <div class="price">(-){{service.discount[0].discountValue | currency:'INR':'symbol':'.2-2'}}</div>
-                            </div>
-                            <!-- <div class="coupon-row" *ngIf="service.couponValue > 0">
+						<div class="c-row two" *ngIf="service.discount && service.discount.length > 0">
+							<div class="discount-row" *ngIf="service.discount[0].discountValue > 0">
+								<div class="name">{{discount_cap}}</div>
+								<div class="price">(-){{service.discount[0].discountValue |
+									currency:'INR':'symbol':'.2-2'}}</div>
+							</div>
+							<!-- <div class="coupon-row" *ngIf="service.couponValue > 0">
                                 <div class="name">{{coupon_cap}}</div>
                                 <div class="price">(-){{service.couponValue | currency:'INR':'symbol':'.2-2'}}</div>
                             </div> -->
-                        </div>
-                        <!-- <div class="c-row three" *ngIf="service.discountValue > 0 || service.couponValue > 0">
+						</div>
+						<!-- <div class="c-row three" *ngIf="service.discountValue > 0 || service.couponValue > 0">
                             <div class="name">{{sub_tot_cap}}</div>
                             <div class="price">{{((service.price * service.quantity) - service.discountValue -
                                 service.couponValue) | currency:'INR':'symbol':'.2-2'}}</div>
                         </div> -->
-                        <div class="c-row three" *ngIf="service.discount.length > 0">
-                            <div class="name">{{sub_tot_cap}}</div>
-                            <div class="price">{{((service.price * service.quantity) - service.discount[0].discountValue) | currency:'INR':'symbol':'.2-2'}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list" *ngFor="let item of bill_data.items; let i = index">
-                    <div class="list-content">
-                        <div class="c-row one">
-                            <div class="name">{{item.itemName}} @ {{item.price | currency:'INR':'symbol':'.2-2'}} <i class="icon-tax" [matTooltipClass] = "tooltipcls" [matTooltip]="'Taxable'" *ngIf="item.isTaxable"></i></div>
-                            <div class="quantity">{{qty_cap}} {{item.quantity}}</div>
-                            <div class="price">{{item.rowtotal | currency:'INR':'symbol':'.2-2'}}</div>
-                        </div>
+						<div class="c-row three" *ngIf="service.discount && service.discount.length > 0">
+							<div class="name">{{sub_tot_cap}}</div>
+							<div class="price">{{((service.price * service.quantity) -
+								service.discount[0].discountValue) |
+								currency:'INR':'symbol':'.2-2'}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="list" *ngFor="let item of bill_data.items; let i = index">
+					<div class="list-content">
+						<div class="c-row one">
+							<div class="name">
+								{{item.itemName}} @ {{item.price |
+								currency:'INR':'symbol':'.2-2'}} <span class="tax" [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+								 *ngIf="item.isTaxable">Tax</span>
+							</div>
+							<div class="quantity">{{qty_cap}} {{item.quantity}}</div>
+							<div class="price">{{item.rowtotal |
+								currency:'INR':'symbol':'.2-2'}}</div>
+						</div>
 
-                        <!-- <div class="c-row two" *ngIf="item.discountValue > 0 || item.couponValue > 0">
+						<!-- <div class="c-row two" *ngIf="item.discountValue > 0 || item.couponValue > 0">
                             <div class="discount-row" *ngIf="item.discountValue > 0">
                                 <div class="name">{{discount_cap}}</div>
                                 <div class="price">-{{item.discountValue | currency:'INR':'symbol':'.2-2'}}</div>
@@ -92,122 +98,170 @@
                             <div class="price">{{ ((item.price * item.quantity) - item.discountValue -
                                 item.couponValue) | currency:'INR':'symbol':'.2-2'}}</div>
                         </div> -->
-                        <div class="c-row two" *ngIf="item.discount[0].length > 0">
-                            <div class="discount-row" *ngIf="item.discount[0].discountValue > 0">
-                                <div class="name">{{discount_cap}}</div>
-                                <div class="price">-{{item.discount[0].discountValue | currency:'INR':'symbol':'.2-2'}}</div>
-                            </div>
-                        </div>
-                        <div class="c-row three" *ngIf="item.discount.length > 0">
-                            <div class="name">{{sub_tot_cap}}</div>
-                            <div class="price">{{ ((item.price * item.quantity) - item.discount[0].discountValue) | currency:'INR':'symbol':'.2-2'}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+						<div class="c-row two" *ngIf="item.discount.length > 0">
+							<div class="discount-row" *ngIf="item.discount[0].discountValue > 0">
+								<div class="name">{{discount_cap}}</div>
+								<div class="price">-{{item.discount[0].discountValue |
+									currency:'INR':'symbol':'.2-2'}}</div>
+							</div>
+						</div>
+						<div class="c-row three" *ngIf="item.discount.length > 0">
+							<div class="name">{{sub_tot_cap}}</div>
+							<div class="price">{{ ((item.price * item.quantity) -
+								item.discount[0].discountValue) |
+								currency:'INR':'symbol':'.2-2'}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <div class="amount-table">
-                <div class="amt-content">
+			<div class="amount-table">
+
+				<table class="amt-content">
+					<tbody>
+						<tr class="amt gross">
+							<td class="name">{{gross_amnt_cap}}
+								<!--<span class="bill-discount"><span>Bill Discount</span></span>-->
+							</td>
+							<td class="price">{{subtotalwithouttax |
+								currency:'INR':'symbol':'.2-2'}}</td>
+						</tr>
+						<tr class="amt discount" *ngIf="bill_data.discount && bill_data.discount.length > 0">
+							<td class="name">{{bill_data.discount[0].discountName}}</td>
+							<td class="price">(-){{bill_data.discount[0].discountValue |
+								currency:'INR':'symbol':'.2-2'}}</td>
+						</tr>
+						<!--  <tr class="amt discount" *ngIf="bill_data.discountValue>0">
+                                        <td class="name">{{bill_data.discountName}}</td>
+                                        <td class="price">(-){{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</td>
+                                    </tr> -->
+						<tr class="amt coupon" *ngIf="bill_data.providerCoupon && bill_data.providerCoupon.length > 0">
+							<td class="name">{{bill_data.providerCoupon[0].couponName}}</td>
+							<td class="price">(-){{bill_data.providerCoupon[0].couponValue
+								| currency:'INR':'symbol':'.2-2'}}</td>
+						</tr>
+						<tr class="amt tax" *ngIf="taxabletotal && taxabletotal != 0">
+							<td class="name"><span class="tax-top">{{tax_cap}}
+									{{taxpercentage}}% of {{taxabletotal |
+									currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{taxpercentage/2}}%,
+									SGST-{{taxpercentage/2}}%)</span></td>
+							<td class="price">(+){{taxabletotal*taxpercentage/100 |
+								currency:'INR':'symbol':'.2-2'}}</td>
+						</tr>
+						<tr class="amt paid" *ngIf="bill_data.totalAmountPaid && bill_data.totalAmountPaid != 0">
+							<td class="name"><span class="link" (click)="showpaidSection()">{{amount_paid_cap}}</span></td>
+							<td class="price">{{bill_data.totalAmountPaid |
+								currency:'INR':'symbol':'.2-2'}}</td>
+						</tr>
+						<tr class="amt total" *ngIf="bill_data.amount_to_pay != 0">
+							<td class="name">{{tot_amnt_to_pay_cap}}</td>
+							<td class="price">{{bill_data.amount_to_pay |
+								currency:'INR':'symbol':'.2-2'}}</td>
+						</tr>
+					</tbody>
+				</table>
+
+
+				<!-- <div class="amt-content">
                     <div class="amt gross">
                         <div class="name">{{gross_amnt_cap}}</div>
                         <div class="price">{{subtotalwithouttax | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div>
-                    <!-- <div class="amt discount" *ngIf="bill_data.discountValue>0">
+                    </div> -->
+				<!-- <div class="amt discount" *ngIf="bill_data.discountValue>0">
                         <div class="name">{{bill_data.discountName}}</div>
                         <div class="price">(-){{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</div>
                     </div> -->
-                    <div class="amt discount" *ngIf="bill_data.discount.length > 0">
+				<!-- <div class="amt discount" *ngIf="bill_data.discount.length > 0">
                         <div class="name">{{bill_data.discount[0].discountName}}</div>
                         <div class="price">(-){{bill_data.discount[0].discountValue | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div>
-                    <!-- <div class="amt coupon" *ngIf="bill_data.couponValue>0">
+                    </div> -->
+				<!-- <div class="amt coupon" *ngIf="bill_data.couponValue>0">
                         <div class="name">{{bill_data.couponName}}</div>
                         <div class="price">(-){{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</div>
                     </div> -->
-                    <div class="amt coupon" *ngIf="bill_data.providerCoupon.length > 0">
+				<!-- <div class="amt coupon" *ngIf="bill_data.providerCoupon.length > 0">
                         <div class="name">{{bill_data.providerCoupon[0].couponName}}</div>
                         <div class="price">(-){{bill_data.providerCoupon[0].couponValue | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div>
-                    <div class="amt tax" *ngIf="taxabletotal != 0">
-                        <div class="name"><span class="tax-top">{{tax_cap}} {{taxpercentage}}% of {{taxabletotal |
-                                currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{taxpercentage/2}}%,
-                                SGST-{{taxpercentage/2}}%)</span></div>
-                        <div class="price">(+){{taxabletotal*taxpercentage/100 | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div>
-                    <div class="amt paid" *ngIf="bill_data.totalAmountPaid != 0">
-                        <div class="name"><span class="link" (click)="showpaidSection()">{{amount_paid_cap}}</span></div>
-                        <div class="price">{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div>
-                    <div class="amt total" *ngIf="bill_data.amount_to_pay != 0" >
-                        <div class="name">{{tot_amnt_to_pay_cap}}</div>
-                        <div class="price">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+	              </div>
+	              <div class="amt tax" *ngIf="taxabletotal != 0">
+	                  <div class="name"><span class="tax-top">{{tax_cap}} {{taxpercentage}}% of {{taxabletotal |
+	                          currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{taxpercentage/2}}%,
+	                          SGST-{{taxpercentage/2}}%)</span></div>
+	                  <div class="price">(+){{taxabletotal*taxpercentage/100 | currency:'INR':'symbol':'.2-2'}}</div>
+	              </div>
+	              <div class="amt paid" *ngIf="bill_data.totalAmountPaid != 0">
+	                  <div class="name"><span class="link" (click)="showpaidSection()">{{amount_paid_cap}}</span></div>
+	                  <div class="price">{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</div>
+	              </div>
+	              <div class="amt total" *ngIf="bill_data.amount_to_pay != 0" >
+	                  <div class="name">{{tot_amnt_to_pay_cap}}</div>
+	                  <div class="price">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</div>
+	              </div> -->
+			</div>
+		</div>
+	</div>
 
-        <div class="section-four" *ngIf="pre_payment_log.length > 0 && showPaidlist">
-            <div class="heading">
-                <span class="back" (click)="showpaidSection()">{{back_to_bill_cap}}</span>
-                <h4>{{payment_logs_cap}}</h4>
-            </div>
+	<div class="section-four" *ngIf="pre_payment_log.length > 0 && showPaidlist">
+		<div class="heading">
+			<span class="back" (click)="showpaidSection()">{{back_to_bill_cap}}</span>
+			<h4>{{payment_logs_cap}}</h4>
+		</div>
 
-            <div class="list-outer">
-                <div class="table-th">
-                    <div class="th one">{{date_cap}} &amp; {{time_cap}}</div>
-                    <div class="th two">{{amount_cap}}</div>
-                    <div class="th three">{{refundable_cap}}</div>
-                </div>
+		<div class="list-outer">
+			<div class="table-th">
+				<div class="th one">{{date_cap}} &amp; {{time_cap}}</div>
+				<div class="th two">{{amount_cap}}</div>
+				<div class="th three">{{refundable_cap}}</div>
+			</div>
 
-                <div class="listing" *ngFor="let payment of pre_payment_log; let i = index">
-                    <div class="wrap">
-                        <div class="td one">
-                            <span class="date">{{stringtoDate(payment.paymentOn, 'date')}}</span>
-                            <span class="time">{{stringtoDate(payment.paymentOn, 'time')}}</span>
-                        </div>
-                        <div class="td two">
-                            <span class="amt">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</span>
-                            <span class="others">
-                                <span class="status">
-                                    <span class="title">{{status_cap}}</span>
-                                    <span><span [class]="payment.status | lowercase">{{payment.status |
-                                            capitalizeFirst}}</span></span>
-                                </span>
-                                <span class="mode">
-                                    <span class="title">{{mode_cap}}</span>
-                                    <span>{{payment.acceptPaymentBy | capitalizeFirst }}</span>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="td three">
-                            <span class="amt" *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount
-                                | currency:'INR':'symbol':'.2-2'}}</span>
-                            <button class="cs-btn bt3" *ngIf="source !== 'consumer_dashboard' && payment.status=='SUCCESS' && payment.refundableAmount > 0"
-                                (click)="showRefund(payment)">{{refund_cap}}</button>
-                        </div>
-                    </div>
-                    <div class="refunds-table" *ngIf="payment.refundDetails.length">
-                        <div class="table-th">
-                            <h5>{{refunds_cap}}</h5>
-                        </div>
-                        <div class="table-th1">
-                            <div class="th one">{{status_cap}}</div>
-                            <div class="th two">{{mode_cap}}</div>
-                            <div class="th three">{{amount_cap}}</div>
-                        </div>
-                        <div class="tbody" *ngFor="let refund of payment.refundDetails">
-                            <div class="td one"><span [class]="refund.status | lowercase">{{refund.status |
-                                    capitalizeFirst}}</span></div>
-                            <div class="td two">{{refund.refundBy | capitalizeFirst }}</div>
-                            <div class="td three">{{refund.amount | currency:'INR':'symbol':'.2-2' }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+			<div class="listing" *ngFor="let payment of pre_payment_log; let i = index">
+				<div class="wrap">
+					<div class="td one">
+						<span class="date">{{stringtoDate(payment.paymentOn,
+							'date')}}</span> <span class="time">{{stringtoDate(payment.paymentOn,
+							'time')}}</span>
+					</div>
+					<div class="td two">
+						<span class="amt">{{payment.amount |
+							currency:'INR':'symbol':'.2-2' }}</span> <span class="others"> <span class="status"> <span class="title">{{status_cap}}</span>
+								<span><span [class]="payment.status | lowercase">{{payment.status |
+										capitalizeFirst}}</span></span>
+							</span> <span class="mode"> <span class="title">{{mode_cap}}</span>
+								<span>{{payment.acceptPaymentBy | capitalizeFirst }}</span>
+							</span>
+						</span>
+					</div>
+					<div class="td three">
+						<span class="amt" *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount
+							| currency:'INR':'symbol':'.2-2'}}</span>
+						<button class="cs-btn bt3" *ngIf="source !== 'consumer_dashboard' && payment.status=='SUCCESS' && payment.refundableAmount > 0"
+						 (click)="showRefund(payment)">{{refund_cap}}</button>
+					</div>
+				</div>
+				<div class="refunds-table" *ngIf="payment.refundDetails.length">
+					<div class="table-th">
+						<h5>{{refunds_cap}}</h5>
+					</div>
+					<div class="table-th1">
+						<div class="th one">{{status_cap}}</div>
+						<div class="th two">{{mode_cap}}</div>
+						<div class="th three">{{amount_cap}}</div>
+					</div>
+					<div class="tbody" *ngFor="let refund of payment.refundDetails">
+						<div class="td one">
+							<span [class]="refund.status | lowercase">{{refund.status |
+								capitalizeFirst}}</span>
+						</div>
+						<div class="td two">{{refund.refundBy | capitalizeFirst }}</div>
+						<div class="td three">{{refund.amount |
+							currency:'INR':'symbol':'.2-2' }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <!-- <div class="group-outer">
+	<!-- <div class="group-outer">
      <div class="form-group bill-basic">
          <div class="btl"><span class="label">Bill Id / No</span> <span class="label-valu">{{bill_data.id}}</span></div>
          <div class="btl"><span class="label">Gst number</span> <span class="label-valu">{{item_service_gst}}</span></div>
@@ -342,33 +396,27 @@
 
        </div>
  </div> -->
-
 </mat-dialog-content>
 <mat-dialog-actions>
-    <ng-container *ngIf="source !== 'consumer_dashboard'">
+	<ng-container *ngIf="source !== 'consumer_dashboard'">
 
-        <button type="button" mat-button class="cs-btn bt1 update" *ngIf="bill_data.billStatus == 'New'" (click)="updateBill()">{{update_bill_cap}}</button>
-        <button type="button" mat-button class="cs-btn bt1 settle" *ngIf="bill_data.billStatus != 'Settled'" (click)="confirmSettleBill()">{{settle_bill_cap}}</button>
-        <button type="button" mat-button class="cs-btn bt1 print" *ngIf="bill_data.billStatus == 'Settled'" (click)="printMe()">{{print_bill_cap}}</button>
-        <!-- <button  type="button" mat-button class="cs-btn bt1 email"
+		<button type="button" mat-button class="cs-btn bt1 update" *ngIf="bill_data.billStatus == 'New'" (click)="updateBill()">{{update_bill_cap}}</button>
+		<button type="button" mat-button class="cs-btn bt1 settle" *ngIf="bill_data.billStatus != 'Settled'" (click)="confirmSettleBill()">{{settle_bill_cap}}</button>
+		<button type="button" mat-button class="cs-btn bt1 print" *ngIf="bill_data.billStatus == 'Settled'" (click)="printMe()">{{print_bill_cap}}</button>
+		<!-- <button  type="button" mat-button class="cs-btn bt1 email"
       *ngIf="bill_data.billStatus == 'Settled'" (click)="emailBill()">Email Bill</button> -->
 
-    </ng-container>
- <button *ngIf="source == 'consumer_dashboard'" type="button"
-   mat-button [mat-dialog-close]="close_msg" class="cs-btn bt2 billcancel" >
-   {{cancel_btn_cap}}</button>
-    <ng-container *ngIf="source !== 'consumer_dashboard'">
-        <button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
+	</ng-container>
+	<button *ngIf="source == 'consumer_dashboard'" type="button" mat-button [mat-dialog-close]="close_msg" class="cs-btn bt2 billcancel">
+		{{cancel_btn_cap}}</button>
+	<ng-container *ngIf="source !== 'consumer_dashboard'">
+		<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
         && bill_data.billStatus != 'Settled'"
-            (click)="makePayment()">
-            {{accept_payment_cap}}
-        </button>
-    </ng-container>
-    <ng-container *ngIf="source === 'consumer_dashboard'">
-        <button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
+		 (click)="makePayment()">{{accept_payment_cap}}</button>
+	</ng-container>
+	<ng-container *ngIf="source === 'consumer_dashboard'">
+		<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
         && bill_data.billStatus != 'Settled' && (payment_options.length>0)"
-            (click)="makePayment()">
-            {{make_payment_cap}}
-        </button>
-    </ng-container>
+		 (click)="makePayment()">{{make_payment_cap}}</button>
+	</ng-container>
 </mat-dialog-actions>

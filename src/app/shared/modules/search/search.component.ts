@@ -1028,6 +1028,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
    // console.log('seldomain', this.selected_domain);
     this.getSearchlabelsbydomain(domain);
     this.loadkeywordAPIreponsetoArray();
+        if (avoidclear === undefined) {
+      this.handleNormalSearchClick();
+    }
+   // this.handleNormalSearchClick();
   }
   getSearchlabelsbydomain(domain) {
     if ( domain == null || domain === '' || domain === 'All') {
