@@ -42,62 +42,17 @@
                                   <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName | capitalizeFirst}})</span>
 
                                   <div class="clr">
+                                        <div class="pro-desc">
+                                            <span *ngIf="bNameStart!=''" [innerHTML]="bNameStart | nl2br | capitalizeFirst"></span><span *ngIf="bNameEnd!='' && showmoreDesc" [innerHTML]="bNameEnd | nl2br | capitalizeFirst"></span>
+                                            <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">More</span> <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">Less</span>
+                                        </div>
+                                            
                                         <div class="services" *ngIf="specializationslist.length > 0">
-                                            <!-- <span class="sub-title">Specializations</span>
-                                            <ul>
-                                                <ng-container *ngIf="specializationslist.length <=specMaxcnt">
-                                                <li *ngFor="let special of specializationslist">{{special}}</li>
-                                                </ng-container>
-                                                <ng-container *ngIf="specializationslist.length > specMaxcnt">
-                                                    <ng-container *ngFor="let special of specializationslist; let i = index">
-                                                    <li *ngIf="i<specMaxcnt">{{special  | capitalizeFirst}}</li>
-                                                    </ng-container>
-                                                    <li class="viewall" *ngIf="!viewallSpec"><span (click)="showallSpecial()" ><i class="icon-enable"></i></span></li>
-                                                    <ng-container *ngIf="viewallSpec">
-                                                    <ng-container *ngFor="let special of specializationslist; let j = index" >
-                                                        <li *ngIf="j >=specMaxcnt">{{special  | capitalizeFirst}}</li>
-                                                    </ng-container>
-                                                    <li class="viewall" *ngIf="viewallSpec"><span (click)="showallSpecial()" ><i class="icon-disable"></i></span></li>
-                                                    </ng-container>
-                                                </ng-container>
-                                            </ul> -->
                                             <div class="otr-elements">
                                                 <span *ngIf="specializationslist.length > 0">
                                                 <span class="categoryspec" *ngFor="let spec of specializationslist; let i = index"><span *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
                                             </div>
                                         </div>
-                                      <!-- <div class="otr-elements">
-                                          <span class="exp" *ngIf="businessjson.domainVirtualFields?.experience">{{businessjson.domainVirtualFields.experience}}</span>
-                                          <ng-container *ngIf="businessjson.domainVirtualFields?.awardsrecognitions">
-                                            <span class="awards" *ngIf="businessjson.domainVirtualFields?.awardsrecognitions.length > 0">Awards &amp; Recognition</span>
-                                            <div class="table-outer d-tbl">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Year</th>
-                                                            <th>Month</th>
-                                                            <th>Name</th>
-                                                            <th>Issued By</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr *ngFor="let awd of businessjson.domainVirtualFields?.awardsrecognitions">
-                                                            <td data-title="Year" class="awd-year">{{awd.awardYear}}</td>
-                                                            <td data-title="Month" class="awd-month">{{awd.awardMonth}}</td>
-                                                            <td data-title="Name" class="awd-name">{{awd.awardName}}</td>
-                                                            <td data-title="Issued By" class="awd-issuedby">{{awd.awardIssuedBy}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                          </ng-container>
-                                      </div> -->
-
-                                      <div class="pro-desc">
-                                          <span *ngIf="bNameStart!=''" [innerHTML]="bNameStart | nl2br | capitalizeFirst"></span><span *ngIf="bNameEnd!='' && showmoreDesc" [innerHTML]="bNameEnd | nl2br | capitalizeFirst"></span>
-                                          <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">More</span> <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">Less</span>
-                                      </div>
-                                      
                                       <div class="emails-phones-outer" *ngIf="( emaillist.length > 0 || phonelist.length > 0)">
                                           <span class="email-phone-title" (click)="handleEmailPhonediv()"><ng-container>Contact Details</ng-container> <i [class]="(showEmailPhonediv)? 'icon-disable' : 'icon-enable'"></i></span>
                                           <ng-container *ngIf="showEmailPhonediv">

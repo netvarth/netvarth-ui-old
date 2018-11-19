@@ -11,8 +11,9 @@
             <div class="row">
                 <div class="card que p0">
                     <div class="copy locd">
-                            <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <div class="lbl col-sm-12 col-md-12 col-lg-12">
                                 <div class="cl1">
+                                    <span class="editbt" (click)="addEditProviderQueue('edit')" *ngIf="queue_data.queueState=='ENABLED'"></span>
                                     <!-- <span class="editbt" (click)="addEditProviderQueue('edit')"></span> -->
                                     <div class="ot-it que">
                                         <h4>{{queue_data.name | capitalizeFirst}}</h4>
@@ -27,8 +28,12 @@
                                                     <span class="itm">{{service.name | capitalizeFirst}}</span>
                                                 </span>
                                             </div>
-                                        </div>
-                                        <div class="c-ot m0">
+                                            <div class="item schedule">
+                                                <span class="ttle">Schedule</span>
+                                                <span class="it0" *ngFor="let schedule of this.display_schedule">
+                                                    <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
+                                                </span>
+                                            </div>
                                             <div class="item">
                                                 <span class="ttle">Maximum Capacity</span>
                                                 <span class="icon-customer-line">{{queue_data.capacity}}</span>
@@ -52,8 +57,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="lbr col-sm-12 col-md-4 col-lg-4">
-                                <div class="cr1">
+                            <!--  <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                               <div class="cr1">
                                     <h5>Schedule</h5>
 
                                     <div class="sch-ot">
@@ -63,7 +68,7 @@
                                     </div>
                                     <span class="editbt" (click)="addEditProviderQueue('edit')" *ngIf="queue_data.queueState=='ENABLED'"></span>
                                 </div>
-                           </div>
+                           </div> -->
                     </div>
                 </div>
             </div>

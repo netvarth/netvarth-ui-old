@@ -15,7 +15,8 @@ import { ProviderRefundComponent } from '../../../ynw_provider/components/provid
 
 @Component({
   selector: 'app-view-bill',
-  templateUrl: './view-bill.component.html'
+  templateUrl: './view-bill.component.html'/*,
+  styleUrls: ['./view-bill.component.css']*/
 })
 
 export class ViewBillComponent implements OnInit, OnChanges {
@@ -306,7 +307,42 @@ export class ViewBillComponent implements OnInit, OnChanges {
     // this.showHeading = false;
     window.print();
     // this.showHeading = true;
+    // this.printToCart();
+    // this.printElement(document.getElementById('forPrint'));
   }
+  printElement(elem) {
+    const domClone = elem.cloneNode(true);
+    let printSection = document.getElementById('printSection');
+    if (!printSection) {
+        printSection = document.createElement('div');
+        printSection.id = 'printSection';
+        document.body.appendChild(printSection);
+    }
+
+    printSection.innerHTML = '';
+    printSection.appendChild(domClone);
+    window.print();
+}
+  /*private getTagsHtml(tagName: keyof HTMLElementTagNameMap): string {
+      const htmlStr: string[] = [];
+      const elements = document.getElementsByTagName(tagName);
+      for (let idx = 0; idx < elements.length; idx++) {
+          htmlStr.push(elements[idx].outerHTML);
+      }
+
+      return htmlStr.join('\r\n');
+  }
+  printToCart() {
+    let popupWinindow;
+    const innerContents = document.getElementById('forPrint').innerHTML;
+    const stylesHtml = this.getTagsHtml('style');
+    const linksHtml = this.getTagsHtml('link');
+    console.log(stylesHtml);
+    popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+    popupWinindow.document.open();
+    popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" />' + stylesHtml + '</head><body onload="window.print()">' + innerContents + '</html>');
+    popupWinindow.document.close();
+  }*/
 
 }
 

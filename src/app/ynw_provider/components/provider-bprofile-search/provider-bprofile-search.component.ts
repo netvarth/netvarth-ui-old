@@ -762,7 +762,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
             this.mapurl = null;
             if (this.base_loc.lattitude !== '' &&
             this.base_loc.longitude !== '') {
-              this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.base_loc.lattitude + ',' + this.base_loc.longitude + '&key=AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U');
+              this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.base_loc.lattitude + ',' + this.base_loc.longitude + '&key=' + projectConstants.GOOGLEAPIKEY);
             }
 
             // console.log(this. mapurl);

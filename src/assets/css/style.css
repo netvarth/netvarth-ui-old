@@ -11638,22 +11638,38 @@ footer.dashb {
           .content.loc-list .card .copy.locd .lbl .cl1 .ot-it h4 {
             font-size: 1.125rem;
             font-weight: 500 !important; }
-          .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
-            width: 50%; }
+          .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot {
+            flex-wrap: wrap;
+            margin-bottom: 0; }
+            .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
+              width: 33.3333%;
+              margin-bottom: 20px; }
+              @media only screen and (max-width: 575px) {
+                .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
+                  width: 100%; } }
+              .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item .it0 {
+                border: 1px solid #dbdbdb;
+                padding: 3px 8px;
+                margin-right: 10px;
+                font-weight: 500;
+                -webkit-border-radius: 20px;
+                border-radius: 20px;
+                background-clip: padding-box;
+                /* stops bg color from leaking outside the border: */
+                display: inline-block;
+                margin-bottom: 5px; }
+              .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item.schedule .it0 {
+                border: none;
+                padding: 3px 0; }
+            @media only screen and (max-width: 767px) {
+              .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
+                width: 50%; } }
             @media only screen and (max-width: 575px) {
               .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
                 width: 100%; } }
-            .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item .it0 {
-              border: 1px solid #dbdbdb;
-              padding: 3px 8px;
-              margin-right: 10px;
-              font-weight: 500;
-              -webkit-border-radius: 20px;
-              border-radius: 20px;
-              background-clip: padding-box;
-              /* stops bg color from leaking outside the border: */
-              display: inline-block;
-              margin-bottom: 5px; }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .content.loc-list .card .copy.locd .lbl .cl1 .ot-it.que .c-ot .item {
+                width: 50%; } }
         .content.loc-list .card .copy.locd .lbl .cl1 .cop-l {
           flex-grow: 1;
           width: 70%; }

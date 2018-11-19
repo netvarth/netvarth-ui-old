@@ -169,7 +169,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   }
   checktoSetLocationtoDefaultLocation() {
-    console.log('loccheck search start', this.locationholder);
+    // console.log('loccheck search start', this.locationholder);
     if (this.locationholder.autoname === '' || this.locationholder.autoname === undefined || this.locationholder.autoname === null) {
       /* if the location details are saved in the local storage, fetch them and set it as the location */
 
@@ -198,7 +198,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       }
 
     }
-    console.log('loccheck search end', this.locationholder);
+    // console.log('loccheck search end', this.locationholder);
   }
   ngDoCheck() {
     // console.log('ondocheck');

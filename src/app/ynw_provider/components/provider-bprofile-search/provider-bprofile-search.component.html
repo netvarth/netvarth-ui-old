@@ -169,8 +169,6 @@
                                                 </ul>
                                             </div>
                                             <div class="cop-r" *ngIf="loc_list.length>0">
-                                                <!-- <iframe width="100%" height="100%" frameborder="0" style="border:0"
-    src="https://www.google.com/maps/embed/v1/view?zoom=11&center=10.5276,76.2144&key=AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U" allowfullscreen></iframe> -->
     <iframe width="100%" height="100%" frameborder="0" style="border:0"
     [src]="mapurl" allowfullscreen *ngIf="mapurl"></iframe>
                                                 <div class="gps" *ngIf="base_loc.longitude != '' && base_loc.lattitude != ''">

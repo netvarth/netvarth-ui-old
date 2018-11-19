@@ -285,7 +285,7 @@
                                   </td>
                                   <td data-title="Service" class="service">{{checkin.service.name}}</td>
                                   <td data-title="Actions" class="actions" *ngIf="time_type!=2">
-
+                                   
                                     <ng-container *ngIf="time_type == 1">
                                         <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
                                         *ngIf="checkin.waitlistStatus == 'checkedIn'">
@@ -362,7 +362,7 @@
                                      <i class="icon-play" ></i>Accept payment
 
                                     </span> -->
-
+                                    <div class="height-adjuster"></div>
                                     </td>
                                   <td data-title="Payment Status" class="payment">
                                     <ng-container *ngIf="checkin.paymentStatus">
@@ -372,8 +372,8 @@
 
                                     </ng-container>
                                   </td>
-                                  <td data-title="{{checkin_label | capitalizeFirst}} Status" class="checkin_status"
-                                  *ngIf="time_type !=1">
+                                  <td data-title="{{checkin_label}} Status" class="checkin_status"
+                                  *ngIf="time_type !=1 && checkin_label">
                                     <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
                                   </td>
                                   <!-- <td data-title="Message" class="message">

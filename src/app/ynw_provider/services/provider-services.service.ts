@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { projectConstants } from '../../shared/constants/project-constants';
 
 import { ServiceMeta } from '../../shared/services/service-meta';
 
@@ -494,11 +495,11 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getGoogleMapLocationAddress(lat, lon) {
-    const url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false';
+    const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=' + projectConstants.GOOGLEAPIKEY + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
   getGoogleMapLocationGeometry(address) {
-    const url = 'http://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
+    const url = 'https://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
 

@@ -99,7 +99,16 @@ export class AddProviderItemComponent implements OnInit {
     // if (form_data.taxable === '1') {
     taxable = this.holdtaxable;
    // }
-   let imgcaption = '';
+    let imgcaption = '';
+    const iprice = parseFloat(form_data.price);
+    if (!iprice || iprice === 0) {
+          this.api_error = 'Please enter the price';
+          return;
+    }
+    if (iprice < 0) {
+      this.api_error = 'Price should not be a negative value';
+      return;
+}
     if (this.data.type === 'add') {
         /*if (!this.selitem_pic) {
           this.api_error = 'Please select the file';

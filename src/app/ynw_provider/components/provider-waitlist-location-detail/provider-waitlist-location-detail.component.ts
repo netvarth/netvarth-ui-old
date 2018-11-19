@@ -105,7 +105,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
                 this.breadcrumbs = breadcrumbs;
 
                 if (this.location_data.lattitude !== '' && this.location_data.longitude !== '') {
-                  this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.location_data.lattitude + ',' + this.location_data.longitude + '&key=AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U');
+                  this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.location_data.lattitude + ',' + this.location_data.longitude + '&key=' + projectConstants.GOOGLEAPIKEY);
                 }
             },
             error => {

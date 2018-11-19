@@ -3634,8 +3634,12 @@ footer {
 
                                 &.que {
                                     .c-ot {
+                                        flex-wrap: wrap;
+                                        margin-bottom: 0;
+                                        
                                         .item {
-                                            width: 50%;
+                                            width: 33.3333%;
+                                            margin-bottom: 20px;
 
                                             @include respond-to(ynw-575) {
                                                 width: 100%;
@@ -3649,6 +3653,29 @@ footer {
                                                 @include border-radius(20px);
                                                 display: inline-block;
                                                 margin-bottom: 5px;
+                                            }
+                                            
+                                            &.schedule {
+                                                .it0 {
+                                                    border: none;
+                                                    padding: 3px 0;
+                                                }
+                                            }
+                                        }
+                                        
+                                        @include respond-to(ynw-767) {
+                                            .item{
+                                                width: 50%;
+                                            }
+                                        }
+                                        @include respond-to(ynw-575) {
+                                            .item{
+                                                width: 100%;
+                                            }
+                                        }
+                                        @include respond-to(ynw-768-991) {
+                                            .item{
+                                                width: 50%;
                                             }
                                         }
                                     }
