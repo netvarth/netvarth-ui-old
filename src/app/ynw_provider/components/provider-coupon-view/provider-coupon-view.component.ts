@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 @Component({
   selector: 'app-provider-coupon-view',
   templateUrl: './provider-coupon-view.component.html',
@@ -13,7 +14,7 @@ export class ProviderCouponViewComponent implements OnInit {
   name_cap = Messages.PRO_NAME_CAP;
   descr_cap = Messages.DESCRIPTION_CAP;
   start_date_cap = Messages.START_DATE_CAP;
-  coupon_code = Messages.CODE_CAP;
+  jCouponCode_Cap = Messages.JCOUPON_CODE;
   percentage_amount = Messages.COUPON_PERCENT_CAP;
   expiry_date = Messages.COUPON_EXPIRY_CAP;
   rules_cap = Messages.COUPON_RULES_CAP;
@@ -33,7 +34,9 @@ export class ProviderCouponViewComponent implements OnInit {
   term_condition = Messages.TERM_CONDITION;
   provider_desc = Messages.PRO_DESCR;
   chart_cap = Messages.CHART_CAP;
-  jCouponInfo;
+  enable_cap = Messages.ENABLE_CAP;
+  disbale_cap = Messages.DISABLE_CAP;
+  jCoupon;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -47,6 +50,7 @@ export class ProviderCouponViewComponent implements OnInit {
   breadcrumbs = this.breadcrumbs_init;
   jc_code;
   constructor(private provider_servicesobj: ProviderServices,
+    private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute, private route: Router) { }
   ngOnInit() {
     this.router.params
@@ -58,7 +62,7 @@ export class ProviderCouponViewComponent implements OnInit {
   getCouponview() {
     this.provider_servicesobj.getJaldeeCoupon(this.jc_code).subscribe(
       data => {
-        this.jCouponInfo = data;
+        this.jCoupon = data;
       }
     );
     const breadcrumbs = [];
@@ -69,5 +73,16 @@ export class ProviderCouponViewComponent implements OnInit {
       title: this.jc_code
     });
     this.breadcrumbs = breadcrumbs;
+  }
+  formatDateDisplay(dateStr) {
+    return this.sharedfunctionObj.formatDateDisplay(dateStr);
+  }
+  changecouponStatus(jcCoupon) {
+    const jc_coupon_status = (jcCoupon.couponStatus === 'ENABLED') ? 'Disable' : 'Enable';
+    this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status).subscribe(
+      data => {
+        this.getCouponview();
+      }
+    );
   }
 }

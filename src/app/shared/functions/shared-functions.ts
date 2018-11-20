@@ -1189,5 +1189,9 @@ getProjectErrorMesssages(error) {
 roundToTwoDecimel(amt) {
   return Math.round(amt * 100) / 100; // for only two decimal
 }
-
+formatDateDisplay(dateStr) {
+  const pubDate = new Date(dateStr);
+  const obtshowdate = this.addZero(pubDate.getDate()) + '/' + this.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
+  return obtshowdate;
+}
 }
