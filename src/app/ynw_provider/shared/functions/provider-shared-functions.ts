@@ -42,18 +42,18 @@ export class ProviderSharedFuctions {
         });
   }
 
-//  changecouponStatus(ob, obj) {
-//       let chgstatus = '';
-//       let chstatusmsg = '';
-//       if (obj.couponStatus === 'Active') {
-//         chgstatus = 'Inactive';
-//         chstatusmsg = 'disabled';
-//       } else {
-//         chgstatus = 'Active';
-//         chstatusmsg = 'enabled';
-//       }
-//      this.jaldeecoupon_list = ob.provider_services.changecouponStatus(obj.id, chgstatus);
-//      }
+  //  changecouponStatus(ob, obj) {
+  //       let chgstatus = '';
+  //       let chstatusmsg = '';
+  //       if (obj.couponStatus === 'Active') {
+  //         chgstatus = 'Inactive';
+  //         chstatusmsg = 'disabled';
+  //       } else {
+  //         chgstatus = 'Active';
+  //         chstatusmsg = 'enabled';
+  //       }
+  //      this.jaldeecoupon_list = ob.provider_services.changecouponStatus(obj.id, chgstatus);
+  //      }
   addEditQueuePopup(ob, type, source, obj = null, schedules = null) {
 
     ob.queuedialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {

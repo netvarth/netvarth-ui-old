@@ -784,7 +784,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-coupon_view
   'COUPON_DETAILS_CAP': 'Coupon Deatils',
-  'CODE_CAP': 'Code',
+  'JCOUPON_CODE': 'Coupon Code',
   'COUPON_PERCENT_CAP': 'Percent/Amount',
   'COUPON_EXPIRY_CAP': 'Expiry Date',
   'COUPON_RULES_CAP': 'Rules',

@@ -203,107 +203,15 @@ export class ProviderServices {
   }
   // Jaldee Coupons
   getJaldeeCoupons() {
-    // let a;
-    // a = [{
-    //   'jaldeeCouponCode': 'CPN01',
-    //   'couponName': '10% Off',
-    //   'couponDescription': 'Get 10% off for your first 5 check-ins',
-    //   'couponStatus': 'Active',
-    //   'startDate': '31/10/2018',
-    //   'endDate': '31/11/2018',
-    //   'couponRules': {
-    //     'discountValue': 10,
-    //     'maxDiscountValue': 100,
-    //     'maxReimbursePercentage': 100,
-    //     'maxProviderUseLimit': 5000,
-    //     'maxConsumerUseLimit': 5000,
-    //     'usageMaxLimitPerProvider': 5000,
-    //     'consumerFirstCheckInUsageOnly': false,
-    //     'providerFirstCheckInUseOnly': true,
-    //     'selfPaymentRequired': true,
-    //     'onlineCheckinRequired': true,
-    //     'combineWithOtherCoupon': false,
-    //     'defaultEnable': true,
-    //     'alwaysEnabled': true,
-    //     // tslint:disable-next-line:max-line-length
-    //     'consumerTermsAndcondition': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word',
-    //     // tslint:disable-next-line:max-line-length
-    // tslint:disable-next-line:max-line-length
-    //     'providerDescription': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying.'
-    //   },
-    //   'target': null
-    // },
-    // {
-    //   'jaldeeCouponCode': 'CPN02',
-    //   'couponName': '20% Off',
-    //   'couponDescription': 'Get 20% off for your first 5 check-ins',
-    //   'couponStatus': 'Active',
-    //   'startDate': '1/11/2018',
-    //   'endDate': '31/11/2018',
-    //   'couponRules': {
-    //     'discountValue': 20,
-    //     'maxDiscountValue': 100,
-    //     'maxReimbursePercentage': 100,
-    //     'maxProviderUseLimit': 5000,
-    //     'maxConsumerUseLimit': 5000,
-    //     'usageMaxLimitPerProvider': 5000,
-    //     'consumerFirstCheckInUsageOnly': false,
-    //     'providerFirstCheckInUseOnly': true,
-    //     'selfPaymentRequired': true,
-    //     'onlineCheckinRequired': true,
-    //     'combineWithOtherCoupon': false,
-    //     'defaultEnable': true,
-    //     'alwaysEnabled': true,
-    //     // tslint:disable-next-line:max-line-length
-    //     'consumerTermsAndcondition': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word',
-    //     // tslint:disable-next-line:max-line-length
-    // tslint:disable-next-line:max-line-length
-    //     'providerDescription': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying.'
-    //   },
-    //   'target': null
-    // }];
-    // return a;
     return this.servicemeta.httpGet('provider/jaldee/coupons');
   }
   getJaldeeCoupon(jc_code) {
     const url = 'provider/jaldee/coupons/' + jc_code;
-    // let a;
-    // a = {
-    //   'jaldeeCouponCode': 'CPN01',
-    //   'couponName': '10% Off',
-    //   'couponDescription': 'Get 10% off for your first 5 check-ins',
-    //   'couponStatus': 'Active',
-    //   'startDate': '31/10/2018',
-    //   'endDate': '31/11/2018',
-    //   'couponRules': {
-    //     'discountValue': 10,
-    //     'maxDiscountValue': 100,
-    //     'maxReimbursePercentage': 100,
-    //     'maxProviderUseLimit': 5000,
-    //     'maxConsumerUseLimit': 5000,
-    //     'usageMaxLimitPerProvider': 5000,
-    //     'consumerFirstCheckInUsageOnly': false,
-    //     'providerFirstCheckInUseOnly': true,
-    //     'selfPaymentRequired': true,
-    //     'onlineCheckinRequired': true,
-    //     'combineWithOtherCoupon': false,
-    //     'defaultEnable': true,
-    //     'alwaysEnabled': true,
-    //     // tslint:disable-next-line:max-line-length
-    //     'consumerTermsAndcondition': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word',
-    //     // tslint:disable-next-line:max-line-length
-    // tslint:disable-next-line:max-line-length
-    //     'providerDescription': 'People always like to get more for less. The buy one, get… offer allows for this. Additionally, you can use it to unload overstocked inventory in a way that helps you still have a profit margin. Especially enticing is buy one, get one free, as people have a hard time saying no to that word. People who utilize Ahava products will want to take advantage of this deal and stock up. The design is clean, and the CTA is clear. The offer to get free shipping also encourages bulk buying.'
-    //   },
-    //   'target': null
-    // };
-    // return a;
     return this.servicemeta.httpGet(url);
   }
   applyJaldeeCoupon(jc_code, checkin_id) {
     const url = 'provider/jaldee/coupons/' + jc_code + '/' + checkin_id;
-    return true;
-    // return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url);
   }
   applyStatusJaldeeCoupon(jc_code, status) {
     const url = 'provider/jaldee/coupons/' + jc_code + '/' + status;

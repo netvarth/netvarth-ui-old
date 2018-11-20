@@ -7,16 +7,13 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { post } from 'selenium-webdriver/http';
-import {Messages} from '../../constants/project-messages';
+import { Messages } from '../../constants/project-messages';
 import { DOCUMENT } from '@angular/common';
-
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  // styleUrls: ['./home.component.scss']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
   mobile_no_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   password_cap = Messages.PASSWORD_CAP;
@@ -24,17 +21,15 @@ export class LoginComponent implements OnInit {
   forgot_password_cap = Messages.FORGOT_PASS_CAP;
   new_user_cap = Messages.NEW_USER_CAP;
   sign_up_here_cap = Messages.SIGNUP_HERE_CAP;
-
   loginForm: FormGroup;
   api_error = null;
   is_provider = 'true';
   step = 1;
   moreParams = [];
   api_loading = true;
-// show_error = false;
+  show_error = false;
   test_provider = null;
   heading = '';
-
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -50,9 +45,7 @@ export class LoginComponent implements OnInit {
     }
     this.test_provider = data.test_account;
     this.is_provider = data.is_provider || 'true';
-    // console.log('login data', data);
   }
-
   ngOnInit() {
     this.moreParams = this.data.moreparams;
     this.createForm();
@@ -63,7 +56,6 @@ export class LoginComponent implements OnInit {
       this.heading = 'Consumer Login';
     }
   }
-
   createForm() {
     this.loginForm = this.fb.group({
       phonenumber: ['', Validators.compose(
@@ -75,7 +67,6 @@ export class LoginComponent implements OnInit {
 
     });
   }
-
   showError() {
     this.show_error = true;
     const pN = this.document.getElementById('phonenumber').value.trim();
@@ -93,13 +84,10 @@ export class LoginComponent implements OnInit {
       }
     }
   }
-
   onSubmit(data) {
-
     this.resetApiErrors();
     const pN = data.phonenumber.trim();
     const pW = data.password.trim();
-    // console.log('data', pN, pW);
     if (pN === '') {
       if (this.document.getElementById('phonenumber')) {
         this.document.getElementById('phonenumber').focus();
@@ -107,7 +95,6 @@ export class LoginComponent implements OnInit {
       }
     }
     if (pW === '') {
-      // console.log('here', this.document.getElementById('password'));
       if (this.document.getElementById('password')) {
         this.document.getElementById('password').focus();
         return;
@@ -142,23 +129,18 @@ export class LoginComponent implements OnInit {
           this.api_loading = false;
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
-        // setTimeout(function () {
-          console.log('Key:' + localStorage.getItem('mUniqueId'));
-          post_data.mUniqueId = localStorage.getItem('mUniqueId');
-          console.log(JSON.stringify(post_data));
-          this.shared_functions.consumerLogin(post_data, this.moreParams)
-            .then(
-              success => { this.dialogRef.close('success'); },
-              error => {
-                ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
-                this.api_loading = false;
-              }
-            );
-       // }, 2000);
+        console.log(JSON.stringify(post_data));
+        this.shared_functions.consumerLogin(post_data, this.moreParams)
+          .then(
+            success => { this.dialogRef.close('success'); },
+            error => {
+              ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+              this.api_loading = false;
+            }
+          );
       }
     }
   }
-
   doForgotPassword() {
     this.resetApiErrors();
     this.api_loading = false;
@@ -200,7 +182,6 @@ export class LoginComponent implements OnInit {
       // this.animal = result;
     });
   }
-
   /*doSignup() {
     const cClass = 'consumerpopupmainclass';
     // console.log('prov', this.is_provider);
@@ -226,11 +207,9 @@ export class LoginComponent implements OnInit {
       });
     }
   }*/
-
   resetApiErrors() {
     this.api_error = null;
   }
-
   onChangePassword(data) {
     this.step = 1;
   }

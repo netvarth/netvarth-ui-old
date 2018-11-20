@@ -13,58 +13,52 @@
                     </div>
                     <div class="w-dta" *ngIf="jaldeeCoupons.length>0">
                         <div class="row">
-                            <div class="card">
-                                <div class="n-loc">
-                                    <span class="add-nloc cs-btn bt3" (click)="reports()">{{reports_cap}}</span>
-                                </div>
+                            <div class="n-loc col-md-12 col-sm-12 col-xs-12 reportbtn">
+                                <span class="add-nloc cs-btn bt3 " (click)="reports()">{{reports_cap}}</span>
+                            </div>
+                            <div class="card coupon-card">
                                 <div class="copy">
                                     <div class="table-outer q-tbl">
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>{{name_cap}}</th>
-                                                    <th>{{code_cap}}</th>
+                                                    <th>{{jCouponCode_Cap}}</th>
+                                                    <th>{{name_cap}}</th> 
                                                     <th>{{valid_from_cap}}</th>
                                                     <th>{{valid_to_cap}}</th>
-                                                    <th>{{consumers_apply_cap}}</th>
-                                                    <th>{{provid_apply_cap}}</th>
                                                     <th>{{status_cap}}</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let jaldeecoupon of jaldeeCoupons">
-                                                    <td data-title="name" id="Id" class="td1" class="pointer-cursor"
-                                                        (click)="couponView(jaldeecoupon.jaldeeCouponCode)">{{jaldeecoupon.couponName}}</td>
-                                                    <td data-title="code" class="pointer-cursor" class="td1">{{jaldeecoupon.jaldeeCouponCode}}</td>
-                                                    <td data-title="Valid From" class="pointer-cursor" class="td1">{{jaldeecoupon.couponRules.startDate}}</td>
-                                                    <td data-title="Valid To" class="pointer-cursor" class="td1">{{jaldeecoupon.couponRules.endDate}}</td>
-                                                    <td data-title="consumers# applied" class="pointer-cursor" class="td1"></td>
-                                                    <td data-title="providers# applied" class="pointer-cursor" class="td1"></td>
+                                                <tr *ngFor="let jCoupon of jaldeeCoupons">
+                                                    <td data-title="code"  class="td1" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">{{jCoupon.jaldeeCouponCode}}</td>
+                                                    <td data-title="name" id="Id" class="pointer-cursor" class="td1"
+                                                        >{{jCoupon.couponName}}</td>
+                                                    <td data-title="Valid From" class="pointer-cursor" class="td1">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
+                                                    <td data-title="Valid To" class="pointer-cursor" class="td1">{{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>
                                                     <td data-title="coupon Status" class="pointer-cursor" class="td1">
-                                                        <span class="icon-enable" *ngIf="jaldeecoupon.couponState=='ENABLED'">
+                                                        <span class="icon-enable" *ngIf="jCoupon.couponState=='ENABLED'">
                                                             {{enable_cap}}</span>
-                                                        <span class="icon-disable" *ngIf="jaldeecoupon.couponState=='DISABLED'">
+                                                        <span class="icon-disable" *ngIf="jCoupon.couponState=='DISABLED'">
                                                             {{disable_cap}}</span>
                                                     </td>
-                                                    <td data-title="Status icon" class="pointer-cursor" class="td1">
-                                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu"
-                                                            *ngIf="jaldeecoupon.couponRules.alwaysEnabled!=true">
-                                                            <mat-icon>more_vert</mat-icon>
-                                                        </button>
-                                                        <mat-menu #menu="matMenu">
-                                                            <button type="button" (click)="changecouponStatus(jaldeecoupon)"
-                                                                mat-menu-item>
-                                                                <i *ngIf="jaldeecoupon.couponState=='DISABLED'" class="icon-enable"></i>
-                                                                <i *ngIf="jaldeecoupon.couponState=='ENABLED'" class="icon-disable"></i>
-                                                                <span> {{(jaldeecoupon.couponState=='ENABLED') ?
-                                                                    'Disable'
-                                                                    :' Enable'}}</span>
+                                                    <td data-title="Status icon" class="action">
+                                                        <span class="mbt" *ngIf="jCoupon.couponRules.alwaysEnabled!=true">
+                                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                <mat-icon>more_vert</mat-icon>
                                                             </button>
-                                                        </mat-menu>
-                                                        <!-- <span class="mbt-mobile-show">
-                                                            <button [class.enableicon]="jaldeecoupon.couponStatus=='DISABLED'" [class.disableicon]="jaldeecoupon.couponStatus=='Active'" type="button" (click)="changecouponStatus(jaldeecoupon)">{{(jaldeecoupon.couponStatus=='Active') ? 'Disable' :' Enable'}}</button>
-                                                        </span> -->
+                                                            <mat-menu #menu="matMenu">
+                                                                <button type="button" (click)="changecouponStatus(jCoupon)"
+                                                                    mat-menu-item>
+                                                                    <i *ngIf="jCoupon.couponState=='DISABLED'" class="icon-enable"></i>
+                                                                    <i *ngIf="jCoupon.couponState=='ENABLED'" class="icon-disable"></i>
+                                                                    <span> {{(jCoupon.couponState=='ENABLED') ?
+                                                                        'Disable'
+                                                                        :' Enable'}}</span>
+                                                                </button>
+                                                            </mat-menu>
+                                                        </span>
                                                     </td>
                                                 </tr>
                                             </tbody>

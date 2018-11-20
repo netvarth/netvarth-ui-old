@@ -18,7 +18,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 export class ProviderCouponsComponent implements OnInit, OnDestroy {
 
   name_cap = Messages.PRO_NAME_CAP;
-  code_cap = Messages.CODE_CAP;
+  jCouponCode_Cap = Messages.JCOUPON_CODE;
   edit_btn = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
   reports_cap = Messages.REPORTS_CAP;
@@ -57,7 +57,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.getCoupons(); // Call function to get the list of discount lists
-    this.getProviderJaldeeCoupon();
+    this.getJaldeeCoupons();
 
   }
   ngOnDestroy() {
@@ -78,13 +78,13 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
         this.query_executed = true;
       });
   }
-  getProviderJaldeeCoupon() {
+  getJaldeeCoupons() {
     this.jaldeeCoupons = this.provider_servicesobj.getJaldeeCoupons()
-    .subscribe(data => {
-      console.log(data);
-    this.jaldeeCoupons = data;
-    this.query_executed = true;
-    });
+      .subscribe(data => {
+        console.log(data);
+        this.jaldeeCoupons = data;
+        this.query_executed = true;
+      });
   }
   addCoupons() {
     this.addcoupdialogRef = this.dialog.open(AddProviderCouponsComponent, {
@@ -165,8 +165,11 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     const jc_coupon_status = (jcCoupon.couponStatus === 'ENABLED') ? 'Disable' : 'Enable';
     this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status).subscribe(
       data => {
-        console.log(data);
+        this.getJaldeeCoupons();
       }
     );
+  }
+  formatDateDisplay(dateStr) {
+    return this.sharedfunctionObj.formatDateDisplay(dateStr);
   }
 }
