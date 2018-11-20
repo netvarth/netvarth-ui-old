@@ -17,7 +17,7 @@
                           <th>{{status_cap}}</th>
                       </tr>
                       <tr *ngFor="let auditlog of auditlog_details">
-                          <td>{{auditlog.name}}</td>
+                          <td>{{auditlog.displayName}}</td>
                           <td>{{auditlog.dateApplied | date: dateFormat }}</td>
                           <td>{{auditlog.expiryDate | date: dateFormat }}</td>
                           <td>{{auditlog.status}}</td>

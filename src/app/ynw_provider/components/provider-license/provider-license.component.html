@@ -15,7 +15,7 @@
                                         <div class="lc-box">
                                             <div class="tp">
                                                 <span class="ttle" *ngIf="currentlicense_details.accountLicense">
-                                                    {{current_license}} <span class="pkg">{{currentlicense_details.accountLicense.name}}
+                                                    {{current_license}} <span class="pkg"><br>{{currentlicense_details.accountLicense.displayName}}
                                                         <span class="icon-question" [matTooltip]="license_tooltip"></span></span>
                                                     <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span>
                                             </div>
