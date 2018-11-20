@@ -160,43 +160,6 @@
 						</tr>
 					</tbody>
 				</table>
-
-
-				<!-- <div class="amt-content">
-                    <div class="amt gross">
-                        <div class="name">{{gross_amnt_cap}}</div>
-                        <div class="price">{{subtotalwithouttax | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div> -->
-				<!-- <div class="amt discount" *ngIf="bill_data.discountValue>0">
-                        <div class="name">{{bill_data.discountName}}</div>
-                        <div class="price">(-){{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div> -->
-				<!-- <div class="amt discount" *ngIf="bill_data.discount.length > 0">
-                        <div class="name">{{bill_data.discount[0].discountName}}</div>
-                        <div class="price">(-){{bill_data.discount[0].discountValue | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div> -->
-				<!-- <div class="amt coupon" *ngIf="bill_data.couponValue>0">
-                        <div class="name">{{bill_data.couponName}}</div>
-                        <div class="price">(-){{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</div>
-                    </div> -->
-				<!-- <div class="amt coupon" *ngIf="bill_data.providerCoupon.length > 0">
-                        <div class="name">{{bill_data.providerCoupon[0].couponName}}</div>
-                        <div class="price">(-){{bill_data.providerCoupon[0].couponValue | currency:'INR':'symbol':'.2-2'}}</div>
-	              </div>
-	              <div class="amt tax" *ngIf="taxabletotal != 0">
-	                  <div class="name"><span class="tax-top">{{tax_cap}} {{taxpercentage}}% of {{taxabletotal |
-	                          currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{taxpercentage/2}}%,
-	                          SGST-{{taxpercentage/2}}%)</span></div>
-	                  <div class="price">(+){{taxabletotal*taxpercentage/100 | currency:'INR':'symbol':'.2-2'}}</div>
-	              </div>
-	              <div class="amt paid" *ngIf="bill_data.totalAmountPaid != 0">
-	                  <div class="name"><span class="link" (click)="showpaidSection()">{{amount_paid_cap}}</span></div>
-	                  <div class="price">{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</div>
-	              </div>
-	              <div class="amt total" *ngIf="bill_data.amount_to_pay != 0" >
-	                  <div class="name">{{tot_amnt_to_pay_cap}}</div>
-	                  <div class="price">{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</div>
-	              </div> -->
 			</div>
 		</div>
 	</div>
@@ -260,142 +223,6 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- <div class="group-outer">
-     <div class="form-group bill-basic">
-         <div class="btl"><span class="label">Bill Id / No</span> <span class="label-valu">{{bill_data.id}}</span></div>
-         <div class="btl"><span class="label">Gst number</span> <span class="label-valu">{{item_service_gst}}</span></div>
-         <div class="btl"><span class="label">Customer Name</span> <span class="label-valu">{{checkin.consumer.userProfile.firstName}} {{checkin.consumer.userProfile.lastName}}</span></div>
-         <div class="btl"><span class="label">Date</span> <span class="label-valu">{{billdate}}</span></div>
-         <div class="btl"><span class="label">Time</span> <span class="label-valu">{{billtime}}</span></div>
-      </div>
-
-
-
-        <div class="table-outer bill-tbl">
-         <table class="table">
-             <thead>
-               <tr>
-                   <th>Service/Item</th>
-                   <th>Quantity</th>
-                   <th>StdRate</th>
-                   <th>Discount</th>
-                   <th>Coupon</th>
-                   <th>Tax-SGST</th>
-                   <th>Tax-CGST</th>
-                   <th>Net-Rate</th>
-               </tr>
-             </thead>
-             <tbody>
-               <tr *ngFor="let service of bill_data.service; let i = index">
-                 <td data-title="Service/Item">{{service.serviceName}}</td>
-                 <td data-title="Quantity">{{service.quantity}}</td>
-                 <td data-title="StdRate">{{service.price | currency:'INR':'symbol':'.2-2'}}</td>
-                 <td data-title="Discount">
-                   {{service.discountValue | currency:'INR':'symbol':'.2-2'}}
-                 </td>
-                 <td data-title="Coupon">
-                   {{service.couponValue | currency:'INR':'symbol':'.2-2'}}
-                 </td>
-                 <td data-title="Tax-SGST">{{service.GSTpercentage/2}} %</td>
-                 <td data-title="Tax-CGST">{{service.GSTpercentage/2 }} %</td>
-                 <td data-title="Net-Rate">{{service.netRate | currency:'INR':'symbol':'.2-2'}}</td>
-               </tr>
-               <tr *ngFor="let item of bill_data.items; let i = index">
-                   <td  data-title="Service/Item">{{item.itemName}}</td>
-                   <td  data-title="Quantity">{{item.quantity}}</td>
-                   <td  data-title="StdRate">{{item.price | currency:'INR':'symbol':'.2-2'}}</td>
-                   <td  data-title="Discount">
-                       {{item.discountValue | currency:'INR':'symbol':'.2-2'}}
-                   </td>
-                   <td data-title="Coupon">
-                       {{item.couponValue | currency:'INR':'symbol':'.2-2'}}
-                   </td>
-                   <td  data-title="Tax-SGST">{{item.GSTpercentage/2}} %</td>
-                   <td  data-title="Tax-CGST">{{item.GSTpercentage/2 }} %</td>
-                   <td data-title="Net-Rate">{{item.netRate | currency:'INR':'symbol':'.2-2'}}</td>
-                 </tr>
-             </tbody>
-         </table>
-
-       
-         <div class="form-group bill-total">
-             <div class="table-outer pay-tbl">
-                 <table class="table">
-                     <tbody>
-                         <tr class="total">
-                             <th>Total</th>
-                             <td> {{bill_data.netRate | currency:'INR':'symbol':'.2-2'}} </td>
-                         </tr>
-                         <tr class="discount">
-                             <th>Discount</th>
-                             <td>{{bill_data.discountValue | currency:'INR':'symbol':'.2-2'}}</td>
-                         </tr>
-                         <tr class="coupon">
-                             <th>Coupon</th>
-                             <td>{{bill_data.couponValue | currency:'INR':'symbol':'.2-2'}}</td>
-                         </tr>
-                         <tr class="prepaid">
-                             <th>Paid amount</th>
-                             <td>{{bill_data.totalAmountPaid | currency:'INR':'symbol':'.2-2'}}</td>
-                         </tr>
-                         <tr class="topay">
-                             <th>Amount to pay</th>
-                             <td>{{bill_data.amount_to_pay | currency:'INR':'symbol':'.2-2'}}</td>
-                         </tr>
-                     </tbody>
-                 </table>
-            </div>
-
-         </div>
-
-         <div class="table-outer log-tbl">
-            <p class="paymentlogs">Payment Logs</p>
-            <p *ngIf="pre_payment_log.length == 0">
-              No  payments found
-            </p>
- 
-            <table class="table" *ngIf="pre_payment_log.length > 0">
-              <thead>
-                <tr>
-                    <th>Date and Time</th>
-                    <th>Status</th>
-                    <th>Mode</th>
-                    <th>Amount</th>
-                    <th>Refunded</th>
-                    <th>Refundable</th>
-                </tr>
-              </thead>
-              <tbody>
-                <ng-container *ngFor="let payment of pre_payment_log; let i = index">
-                    <tr>
-                    <td data-title="Date and Time">{{stringtoDate(payment.paymentOn)}}</td>
-                    <td data-title="Status"><span [class]="payment.status | lowercase">{{payment.status | capitalizeFirst}}</span></td>
-                    <td data-title="Mode">{{payment.acceptPaymentBy | capitalizeFirst }}</td>
-                    <td data-title="Amount">{{payment.amount | currency:'INR':'symbol':'.2-2' }}</td>
-                    <td data-title="Refunded">-</td>
-                    <td data-title="Refundable">
-                       <span *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount | currency:'INR':'symbol':'.2-2'}}</span> <button  type="button" mat-button class="cs-btn bt1 update" *ngIf="source !== 'consumer_dashboard' && payment.status=='SUCCESS' && payment.refundableAmount > 0" (click)="showRefund(payment)">Refund</button>
-                    </td>
-                    </tr>
-
-                    <tr *ngFor="let refund of payment.refundDetails" class="refundtr">
-                            <td data-title="Date and Time">{{stringtoDate(refund.paymentOn) | date:Pipe_disp_date}}</td>
-                            <td data-title="Status"><span [class]="refund.status | lowercase">{{refund.status | capitalizeFirst}}</span></td>
-                            <td data-title="Mode">{{refund.refundBy | capitalizeFirst }}</td>
-                            <td data-title="Amount">-</td>
-                            <td data-title="Refunded">{{refund.amount | currency:'INR':'symbol':'.2-2' }}</td>
-                            <td></td>
-                    </tr>
-
-                </ng-container>
-                
-              </tbody>
-            </table>
-          </div>
-
-       </div>
- </div> -->
 </mat-dialog-content>
 <mat-dialog-actions>
 	<ng-container *ngIf="source !== 'consumer_dashboard'">
@@ -409,6 +236,8 @@
 	</ng-container>
 	<button *ngIf="source == 'consumer_dashboard'" type="button" mat-button [mat-dialog-close]="close_msg" class="cs-btn bt2 billcancel">
 		{{cancel_btn_cap}}</button>
+	 <button  type="button" mat-button class="cs-btn bt1 print"
+      *ngIf="source == 'consumer_dashboard' && bill_data.billStatus == 'Settled'" (click)="printMe()" >Print Bill</button>	
 	<ng-container *ngIf="source !== 'consumer_dashboard'">
 		<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
         && bill_data.billStatus != 'Settled'"

@@ -1,4 +1,5 @@
 export const projectConstants = {
+  GOOGLEAPIKEY: 'AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U',
   PERPAGING_LIMIT: 10,
   CONSUMER_DASHBOARD_REFRESH_TIME: 120, // seconds
   INBOX_REFRESH_TIME: 30, // seconds

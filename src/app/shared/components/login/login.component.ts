@@ -8,7 +8,7 @@ import { SignUpComponent } from '../../components/signup/signup.component';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { post } from 'selenium-webdriver/http';
 import {Messages} from '../../constants/project-messages';
-
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   step = 1;
   moreParams = [];
   api_loading = true;
-  show_error = false;
+// show_error = false;
   test_provider = null;
   heading = '';
 
@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) public document
   ) {
     if (this.shared_functions.checkLogin()) {
       this.shared_functions.logout();
@@ -77,12 +78,41 @@ export class LoginComponent implements OnInit {
 
   showError() {
     this.show_error = true;
+    const pN = this.document.getElementById('phonenumber').value.trim();
+    const pW = this.document.getElementById('password').value.trim();
+    if (pN === '') {
+      if (this.document.getElementById('phonenumber')) {
+        this.document.getElementById('phonenumber').focus();
+        return;
+      }
+    }
+    if (pW === '') {
+      if (this.document.getElementById('password')) {
+        this.document.getElementById('password').focus();
+        return;
+      }
+    }
   }
 
   onSubmit(data) {
 
     this.resetApiErrors();
-
+    const pN = data.phonenumber.trim();
+    const pW = data.password.trim();
+    // console.log('data', pN, pW);
+    if (pN === '') {
+      if (this.document.getElementById('phonenumber')) {
+        this.document.getElementById('phonenumber').focus();
+        return;
+      }
+    }
+    if (pW === '') {
+      // console.log('here', this.document.getElementById('password'));
+      if (this.document.getElementById('password')) {
+        this.document.getElementById('password').focus();
+        return;
+      }
+    }
     const ob = this;
     const post_data = {
       'countryCode': '+91',

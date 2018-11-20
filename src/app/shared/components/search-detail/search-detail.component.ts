@@ -288,7 +288,7 @@ doScroll(event) {
         }
       }
       if (fetchsubdom) {
-        this.getlistofSubdomains(this.domain);
+        this.getlistofSubdomains(this.domain, 'setenv');
       }
     }
     this.showsearchsection = true;
@@ -429,7 +429,7 @@ doScroll(event) {
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;
       this.checklocationExistsinStorage();
-      this.getlistofSubdomains(this.domain);
+      this.getlistofSubdomains(this.domain, 'setsearchfields1');
       // console.log('kwtyp', this.kwtyp);
       // console.log('obj', obj);
       if (this.kwtyp === 'subdom') {
@@ -445,7 +445,7 @@ doScroll(event) {
             this.domain = 'All';
           }
         }
-        this.getlistofSubdomains(this.domain);
+        this.getlistofSubdomains(this.domain, 'searchfields2');
       }
 
       if (this.kwtyp === 'special') {
@@ -1563,7 +1563,7 @@ doScroll(event) {
      this.getlistofSubdomains();
      // this.loadkeywordAPIreponsetoArray();
    }*/
-  getlistofSubdomains(curdomain) {
+  getlistofSubdomains(curdomain, src?) {
     // const curdomain = this.refined_domain;
     // console.log('psubdomain', curdomain, this.domainlist_data);
     this.subdomainlist_data = [];
@@ -1573,6 +1573,10 @@ doScroll(event) {
           this.subdomainlist_data = domains.subDomains;
         }
       }
+            // if (this.subdomainlist_data.length === 1) {
+      //  console.log('subdom', this.subdomainlist_data[0].subDomain, src);
+        // this.handlerefinedsubdomainchange(this.subdomainlist_data[0].subDomain);
+      // }
     }
     // console.log('subdomains', this.subdomainlist_data);
   }
@@ -1778,8 +1782,13 @@ doScroll(event) {
     // console.log('refineddomain', val);
     this.refined_domain = val;
     this.refined_subdomain = '';
-    this.getlistofSubdomains(val);
-    this.getRefinedSearch(true, 1);
+    this.getlistofSubdomains(val, 'domainchange');
+    if (this.subdomainlist_data.length === 1) { // case if there is only one subdomain
+      console.log('subdom', this.subdomainlist_data[0].subDomain);
+      this.handlerefinedsubdomainchange(this.subdomainlist_data[0].subDomain);
+    } else {
+      this.getRefinedSearch(true, 1);
+    }
   }
 
   handlerefinedsubdomainchange(val) {

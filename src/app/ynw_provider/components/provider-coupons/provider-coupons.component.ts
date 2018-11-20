@@ -32,7 +32,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   enable_cap = Messages.ENABLE_CAP;
   disable_cap = Messages.DISABLE_CAP;
   coupon_list: any = [];
-  jaldeecoupon_list: any = [];
+  jaldeeCoupons: any = [];
   query_executed = false;
   emptyMsg = '';
   couponStatus: boolean;
@@ -79,10 +79,10 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       });
   }
   getProviderJaldeeCoupon() {
-    this.jaldeecoupon_list = this.provider_servicesobj.getJaldeeCoupons()
+    this.jaldeeCoupons = this.provider_servicesobj.getJaldeeCoupons()
     .subscribe(data => {
       console.log(data);
-    this.jaldeecoupon_list = data;
+    this.jaldeeCoupons = data;
     this.query_executed = true;
     });
   }

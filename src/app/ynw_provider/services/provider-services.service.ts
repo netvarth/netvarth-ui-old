@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { projectConstants } from '../../shared/constants/project-constants';
 
 // Import RxJs required methods
 
@@ -609,7 +610,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getGoogleMapLocationAddress(lat, lon) {
-    const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false';
+    const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=' + projectConstants.GOOGLEAPIKEY + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
   getGoogleMapLocationGeometry(address) {
