@@ -716,9 +716,6 @@
 .icon-history:before {
   content: "\28"; }
 
-.icon-inbox:before {
-  content: "\48"; }
-
 .icon-reply:before {
   content: "\29"; }
 
@@ -787,6 +784,15 @@
 
 .icon-tax:before {
   content: "\5d"; }
+
+.icon-inbox:before {
+  content: "\48"; }
+
+.icon-inbox-in:before {
+  content: "\5e"; }
+
+.icon-inbox-out:before {
+  content: "\5f"; }
 
 html {
   font-size: 16px; }
@@ -7144,11 +7150,11 @@ header {
             margin-right: 50px;
             padding: 5px 0; }
             .billpopup .mat-dialog-content .bill-wrapper .section-three .amount-table .amt-content .amt .name {
-              width: 80%;
+              width: 73%;
               text-align: right; }
             .billpopup .mat-dialog-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
               vertical-align: text-top;
-              width: 20%;
+              width: 27%;
               text-align: right;
               padding: 0 50px 0 15px; }
             .billpopup .mat-dialog-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name {
@@ -12755,6 +12761,8 @@ footer.dashb {
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
             display: flex;
             flex-wrap: wrap; }
+            .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions .height-adjuster {
+              min-height: 23px; }
             @media only screen and (max-width: 767px) {
               .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.actions {
                 padding-left: 45%; } }
@@ -14485,24 +14493,22 @@ footer.dashb {
             @media only screen and (max-width: 767px) {
               .content .card .copy .inbox-table li .outer .td.td0 {
                 text-align: left; } }
-            .content .card .copy .inbox-table li .outer .td.td0 .icon-received,
-            .content .card .copy .inbox-table li .outer .td.td0 .icon-sent {
+            .content .card .copy .inbox-table li .outer .td.td0 .icon-inbox-in,
+            .content .card .copy .inbox-table li .outer .td.td0 .icon-inbox-out {
               color: #00cc96;
               width: 40px;
               height: 24px;
               display: flex;
               align-items: center;
               justify-content: center;
-              border: 2px solid #00cc96;
               -webkit-border-radius: 30px;
               border-radius: 30px;
               background-clip: padding-box;
               /* stops bg color from leaking outside the border: */
               opacity: .9;
-              font-size: 1.2rem; }
-            .content .card .copy .inbox-table li .outer .td.td0 .icon-sent {
-              color: #00aef2;
-              border-color: #00aef2; }
+              font-size: 1.6rem; }
+            .content .card .copy .inbox-table li .outer .td.td0 .icon-inbox-out {
+              color: #00aef2; }
       .content .card .copy .inbox-table li .details,
       .content .card .copy .inbox-table li .actions {
         padding: 15px; }
@@ -15698,9 +15704,9 @@ header.consumer {
                   display: flex; } }
               @media (min-width: 768px) and (max-width: 991px) {
                 .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 {
-                  order: 2;
-                  margin-right: 0;
-                  width: 25%; } }
+                  /*order: 2;
+                  margin-right: 0;*/
+                  flex-basis: 25%; } }
               .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img {
                 margin-bottom: 10px;
                 background-color: #f8f8f8;
@@ -15928,6 +15934,12 @@ header.consumer {
                       left: 0;
                       position: absolute;
                   }*/ }
+              @media only screen and (max-width: 767px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 {
+                  flex-basis: 75%; } }
+              @media (min-width: 768px) and (max-width: 991px) {
+                .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 {
+                  flex-basis: 75%; } }
           .content .c-outer .c-body .srlst .top-sect .tp-r {
             flex-grow: 1;
             text-align: right; }
@@ -16263,7 +16275,8 @@ header.consumer {
                 .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp1 {
                   margin-left: 0;
                   display: flex;
-                  width: 100%; }
+                  width: 100%;
+                  margin-top: 20px; }
                   .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp1 .pro-img {
                     margin-bottom: 0; }
                   .content .c-outer .c-body .srlst.details .top-sect .tp-l .tp1 .gal {
@@ -17597,7 +17610,6 @@ header.consumer {
               font-size: .65rem;
               top: 4px; }
         .consumer-dash .card.favourites .outer .list .header .rt {
-          padding-right: 10px;
           display: flex;
           align-items: center;
           -moz-transition: all 300ms;

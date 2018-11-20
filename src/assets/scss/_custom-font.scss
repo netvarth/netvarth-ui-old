@@ -230,9 +230,6 @@
 .icon-history:before {
   content: "\28";
 }
-.icon-inbox:before {
-  content: "\48";
-}
 .icon-reply:before {
   content: "\29";
 }
@@ -301,4 +298,13 @@
 }
 .icon-tax:before {
   content: "\5d";
+}
+.icon-inbox:before {
+  content: "\48";
+}
+.icon-inbox-in:before {
+  content: "\5e";
+}
+.icon-inbox-out:before {
+  content: "\5f";
 }

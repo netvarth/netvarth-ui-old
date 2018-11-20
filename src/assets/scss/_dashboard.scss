@@ -5178,6 +5178,10 @@ footer {
                                     &.actions {
                                         display: flex;
                                         flex-wrap: wrap;
+                                        
+                                        .height-adjuster {
+                                            min-height: 23px;
+                                        }
 
                                         @include respond-to(ynw-767) {
                                             padding-left: 45%;
@@ -7795,23 +7799,21 @@ footer {
                                     text-align: left;
                                 }
 
-                                .icon-received,
-                                .icon-sent {
+                                .icon-inbox-in,
+                                .icon-inbox-out {
                                     color: $green;
                                     width: 40px;
                                     height: 24px;
                                     display: flex;
                                     align-items: center;
                                     justify-content: center;
-                                    border: 2px solid $green;
                                     @include border-radius(30px);
                                     opacity: .9;
-                                    font-size: 1.2rem;
+                                    font-size: 1.6rem;
                                 }
 
-                                .icon-sent {
+                                .icon-inbox-out {
                                     color: $linkblue;
-                                    border-color: $linkblue;
                                 }
                             }
                         }

@@ -1655,6 +1655,8 @@ setEnvironment(bypassotherfunction?) {
             this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
             this.showProviderDetails(passParam['providerId']);
+        } else if (passParam['callback'] === 'servicedetail') {
+            this.serviceClicked(passParam['mname'], passParam['mobj']);
         } else {
             this.showCheckin('consumer');
         }
@@ -1695,6 +1697,8 @@ setEnvironment(bypassotherfunction?) {
             this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
             this.showProviderDetails(passParam['providerId']);
+        } else if (passParam['callback'] === 'servicedetail') {
+            this.serviceClicked(passParam['mname'], passParam['mobj']);
         } else {
             this.showCheckin('consumer');
         }
@@ -1884,6 +1888,18 @@ setEnvironment(bypassotherfunction?) {
     * name  Service Name
     * obj Search Result
     */
+  checkserviceClicked(name, obj) {
+    console.log('here', name, obj);
+    if (this.shared_functions.checkLogin()) {
+      const ctype = this.shared_functions.isBusinessOwner('returntyp');
+     // if (ctype === 'consumer') {
+        this.serviceClicked(name, obj);
+     // }
+    } else { // show consumer login
+      const passParam = {callback: 'servicedetail', mname: name, mobj: obj };
+      this.doLogin('consumer', passParam);
+    }
+  }
   serviceClicked(name, obj) {
     const s3id = obj.fields.unique_id;
     const busname = obj.fields.title;
@@ -1909,7 +1925,9 @@ setEnvironment(bypassotherfunction?) {
              if (selected_service !== null) {
               this.showServiceDetail(selected_service, busname);
              }
-            });
+            }/*, error => {
+              this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+            }*/);
         });
   }
   showServiceDetail(serv, busname) {
