@@ -217,53 +217,16 @@ export class ProviderServices {
     const url = 'provider/jaldee/coupons/' + jc_code + '/' + status;
     return this.servicemeta.httpPut(url);
   }
-  getJaldeeCouponReports(filter = {}) {
-    return [{
-      'invoiceId': '1',
-      'providerId': '1',
-      'jaldeeAccountAmount': 2000,
-      'jaldeeCouponAmount': 1000,
-      'paidate': '30-10-2018',
-      'PaidAmount': 3000,
-      'invoiceStatus': 'paid',
-      'paidMode': 'cash'
-    },
-    {
-      'invoiceId': '2',
-      'providerId': '1',
-      'jaldeeAccountAmount': 1000,
-      'jaldeeCouponAmount': 500,
-      'paidate': '30-10-2018',
-      'PaidAmount': 1500,
-      'invoiceStatus': 'paid',
-      'paidMode': 'cash'
-    },
-    {
-      'invoiceId': '3',
-      'providerId': '2',
-      'jaldeeAccountAmount': 2000,
-      'jaldeeCouponAmount': 1000,
-      'PaidAmount': 3000,
-      'invoiceStatus': 'notpaid'
-    }
-    ];
-    // return this.servicemeta.httpGet('provider/jaldee/coupons/jcreports', null, filter);
+  getJaldeeCouponStat(jc_code) {
+    const url = 'provider/jaldee/coupons/' + jc_code + '/stat';
+    return this.servicemeta.httpGet(url);
   }
-  getJaldeeCouponReportsbyId(id?) {
-    const url = 'provider/jaldee/coupons/jcreports/' + id;
-    let a;
-    a = {
-      'invoiceId': '1',
-      'providerId': '1',
-      'jaldeeAccountAmount': 2000,
-      'jaldeeCouponAmount': 1000,
-      'paidate': '30-10-2018',
-      'PaidAmount': 3000,
-      'invoiceStatus': 'paid',
-      'paidMode': 'cash'
-    };
-    return a;
-    // return this.servicemeta.httpGet(url);
+  getJaldeeCouponReports(filter = {}) {
+    return this.servicemeta.httpGet('provider/jaldee/coupons/jcreports', null, filter);
+  }
+  getJaldeeCouponReportsbyId(invoice_id) {
+    const url = 'provider/jaldee/coupons/jcreports/' + invoice_id;
+    return this.servicemeta.httpGet(url);
   }
   requestforPaymentJC(id?) {
     const url = 'provider/jaldee/coupons/jcreports/' + id + '/requestPayment';

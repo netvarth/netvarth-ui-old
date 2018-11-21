@@ -1,5 +1,5 @@
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader>
+  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
@@ -86,7 +86,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let report of couponreport">
-                    <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView(report.id)">{{report.invoiceId}}</td>
+                    <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView(report.invoiceId)">{{report.invoiceId}}</td>
                     <td data-title="Period" class="pointer-cursor" class="td1">{{report.paidate}}</td>
                     <td data-title="coupons Used" class="pointer-cursor" class="td1"></td>
                     <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.jaldeeAccountAmount}}</td>

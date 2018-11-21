@@ -21,7 +21,8 @@ export class ProviderReimburseReportComponent implements OnInit {
   j_acc_cap = Messages.J_ACC_CAP;
   reimburse_amt_cap = Messages.REIMBURSE_AMT_CAP;
   req_payment_cap = Messages.REQ_PAYMENT_CAP;
-  couponreport: any[];
+  couponreport: any = [];
+  query_executed = false;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -58,9 +59,13 @@ export class ProviderReimburseReportComponent implements OnInit {
     });
   }
   getCouponReport() {
-    this.couponreport = this.provider_servicesobj.getJaldeeCouponReports();
+    this.couponreport = this.provider_servicesobj.getJaldeeCouponReports()
+      .subscribe(data => {
+        this.couponreport = data;
+        this.query_executed = true;
+      });
   }
-  reportView() {
-    this.router.navigate(['provider', 'settings', 'coupons', 'report', 'report_view']);
+  reportView(invoiceId) {
+    this.router.navigate(['provider', 'settings', 'coupons', 'report', invoiceId]);
   }
 }

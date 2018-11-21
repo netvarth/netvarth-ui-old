@@ -82,14 +82,10 @@ const routes: Routes = [
               {
                 path: 'report',
                 component: ProviderReimburseReportComponent
-              }, {
-                path: 'report',
-                children: [
-                  {
-                    path: 'report_view',
-                    component: ViewReportComponent
-                  }
-                ]
+              },
+              {
+                path: 'report/:id',
+                component: ViewReportComponent
               }
             ]
           },

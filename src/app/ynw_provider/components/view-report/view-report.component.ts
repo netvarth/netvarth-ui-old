@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-view-report',
@@ -25,6 +26,7 @@ export class ViewReportComponent implements OnInit {
   reimburse_amt_cap = Messages.REPORT_REIMBURSE_AMT_CAP;
   j_acct_cap = Messages.REPORT_JALDEE_ACCT_CAP;
   consumer_cap = Messages.REPORT_CONSUMER_CAP;
+  viewreport;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -40,23 +42,31 @@ export class ViewReportComponent implements OnInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-  viewreport: any = [];
-  public id;
-
-  constructor(private router: Router, private provider_servicesobj: ProviderServices) { }
-
+  invoice_id;
+  constructor(private provider_servicesobj: ProviderServices,
+    private sharedfunctionObj: SharedFunctions,
+    private router: ActivatedRoute, private route: Router) { }
   ngOnInit() {
-    this.getjaldeeReport();
+    this.router.params
+      .subscribe(params => {
+        this.invoice_id = params.id;
+        this.getjaldeeReport();
+      });
+
   }
 
   getjaldeeReport() {
-    this.viewreport = this.provider_servicesobj.getJaldeeCouponReportsbyId(this.id);
+    this.provider_servicesobj.getJaldeeCouponReportsbyId(this.invoice_id).subscribe(
+      data => {
+        this.viewreport = data;
+      }
+    );
     const breadcrumbs = [];
     this.breadcrumbs_init.map((e) => {
       breadcrumbs.push(e);
     });
     breadcrumbs.push({
-      title: this.viewreport.invoiceId
+      title: this.invoice_id
     });
     this.breadcrumbs = breadcrumbs;
   }

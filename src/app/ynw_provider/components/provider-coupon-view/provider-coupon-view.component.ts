@@ -37,6 +37,7 @@ export class ProviderCouponViewComponent implements OnInit {
   enable_cap = Messages.ENABLE_CAP;
   disbale_cap = Messages.DISABLE_CAP;
   jCoupon;
+  jCouponStat;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -57,6 +58,7 @@ export class ProviderCouponViewComponent implements OnInit {
       .subscribe(params => {
         this.jc_code = params.id;
         this.getCouponview();
+        this.getJaldeeCouponStatistic();
       });
   }
   getCouponview() {
@@ -73,6 +75,13 @@ export class ProviderCouponViewComponent implements OnInit {
       title: this.jc_code
     });
     this.breadcrumbs = breadcrumbs;
+  }
+  getJaldeeCouponStatistic() {
+    this.provider_servicesobj.getJaldeeCouponStat(this.jc_code).subscribe(
+      data => {
+        this.jCouponStat = data;
+      }
+    );
   }
   formatDateDisplay(dateStr) {
     return this.sharedfunctionObj.formatDateDisplay(dateStr);
