@@ -29,6 +29,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     waitlist_data;
     waitlist_notes: any = [];
     waitlist_history: any = [];
+    settings: any = [];
     communication_history: any = [];
     est_tooltip = Messages.ESTDATE;
     breadcrumbs_init: any = [
@@ -85,7 +86,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     ngOnInit() {
       this.userDet = this.shared_Functionsobj.getitemfromLocalStorage('ynw-user');
         if (this.waitlist_id) {
-          this.getWaitlistDetail();
+          // this.getWaitlistDetail();
+          this.getProviderSettings();
 
         } else {
             this.goBack();
@@ -101,7 +103,14 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         this.notedialogRef.close();
       }
     }
-
+    getProviderSettings() {
+      this.provider_services.getWaitlistMgr()
+        .subscribe (data => {
+          this.settings = data;
+          this.getWaitlistDetail();
+        }, error => {
+        });
+    }
     getWaitlistDetail() {
       this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
       .subscribe(
@@ -264,7 +273,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
                 // const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
                 // return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
                 if (retcap) {
-                  return 'Date/Est Wait Time'; // this.minCaption;
+                  if (this.settings['calculationMode'] !== 'NoCalc') {
+                    return 'Date/Est Wait Time'; // this.minCaption;
+                  } else {
+                    return 'Date'; // this.minCaption;
+                  }
                 } else {
                   return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
                 }

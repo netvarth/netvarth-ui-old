@@ -44,7 +44,7 @@ export class AddManagePrivacyComponent implements OnInit {
 
   providerManagePrivacy() {
 
-    const status =  this.manage_privacy_values.revealPhoneNumber;
+    const status =  this.manage_privacy_values.revealPhoneNumber || false;
     this.consumer_services.managePrivacy(this.provider.id, status)
     .subscribe(
       data => {

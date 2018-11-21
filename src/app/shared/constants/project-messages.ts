@@ -73,6 +73,8 @@ export const Messages = {
   'BPROFILE_PRIVACY_PHONE_INVALID' : 'Please enter a valid mobile phone number',
   'BPROFILE_PRIVACY_PHONE_10DIGITS' : 'Mobile number should have 10 digits',
   'BPROFILE_PRIVACY_EMAILLABEL_REQ' : 'Email label should not be blank',
+  'BPROFILE_PRIVACY_PHONE_DELETE' : 'Do you really want to remove the Phone no "[DATA]" and its details?',
+  'BPROFILE_PRIVACY_EMAIL_DELETE' : 'Do you really want to remove the Email id "[DATA]" and its details?',
   'BPROFILE_PRIVACY_EMAIL_INVALID' : 'Please enter a valid email id',
   'BPROFILE_SOCIAL_URL_VALID' : 'Please enter a valid URL',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
@@ -86,7 +88,7 @@ export const Messages = {
   // Adwords
   'ADWORD_LISTEMPTY' : 'No adwords exists',
   'ADWORD_CREATED' : 'Adword created successfully',
-  'ADWORD_DELETE'  : 'Do you really want to remove the Adword "[adword]"?',
+  'ADWORD_DELETE'  : 'Do you really want to remove the Adword [adword]?',
   'ADWORD_DELETE_SUCCESS'  : 'Adword deleted successfully',
   'ADWORD_EXCEED_LIMIT' : 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/addon for more benefits',
 
