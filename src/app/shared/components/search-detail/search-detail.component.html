@@ -348,7 +348,7 @@
 
                                         <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
-                                                <li *ngFor="let serv of search_result.fields.services" (click)="serviceClicked(serv,search_result)">{{serv
+                                                <li *ngFor="let serv of search_result.fields.services" (click)="checkserviceClicked(serv,search_result)">{{serv
                                                     | capitalizeFirst}}</li>
                                             </ul>
                                         </div>

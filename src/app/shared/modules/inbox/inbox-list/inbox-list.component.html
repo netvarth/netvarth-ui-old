@@ -17,8 +17,8 @@
                   *ngFor="let message of messages; let i = index">
                       <div class="outer" (click)="showMsg(i)">
                           <div class="td td0">
-                              <span class="icon-received" *ngIf="user_id != message.owner.id"></span>
-                              <span class="icon-sent" *ngIf="user_id == message.owner.id"></span>
+                              <span class="icon-inbox-in" *ngIf="user_id != message.owner.id"></span>
+                              <span class="icon-inbox-out" *ngIf="user_id == message.owner.id"></span>
                           </div>
 
                           <div class="td td3">

@@ -1683,6 +1683,8 @@ doScroll(event) {
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
+        } else if (passParam['callback'] === 'servicedetail') {
+            this.serviceClicked(passParam['mname'], passParam['mobj']);
         } else {
           this.showCheckin('consumer');
         }
@@ -1723,6 +1725,8 @@ doScroll(event) {
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
+        } else if (passParam['callback'] === 'servicedetail') {
+            this.serviceClicked(passParam['mname'], passParam['mobj']);
         } else {
           this.showCheckin('consumer');
         }
@@ -1907,6 +1911,18 @@ doScroll(event) {
     }
   }
 
+  checkserviceClicked(name, obj) {
+    console.log('here', name, obj);
+    if (this.shared_functions.checkLogin()) {
+      const ctype = this.shared_functions.isBusinessOwner('returntyp');
+     // if (ctype === 'consumer') {
+        this.serviceClicked(name, obj);
+     // }
+    } else { // show consumer login
+      const passParam = {callback: 'servicedetail', mname: name, mobj: obj };
+      this.doLogin('consumer', passParam);
+    }
+  }
   /* Service Clicked
     * name  Service Name
     * obj Search Result

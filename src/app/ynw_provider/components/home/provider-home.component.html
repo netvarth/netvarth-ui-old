@@ -373,7 +373,7 @@
 
                                     </ng-container>
                                   </td>
-                                  <td data-title="{{checkin_label}} Status" class="checkin_status"
+                                  <td data-title="{{checkin_label + ' Status'}}" class="checkin_status"
                                   *ngIf="time_type !=1  && checkin_label">
                                     <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
                                   </td>
