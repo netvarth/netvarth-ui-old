@@ -84,6 +84,15 @@
                             }
                         }
                         
+                        &.nodatafound {
+                            text-align: center;
+                            justify-content: center;
+                            
+                            &:before {
+                                display: none;
+                            }
+                        }
+                        
                         &:last-child {
                             border-bottom: none;
                         }

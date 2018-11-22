@@ -2788,6 +2788,11 @@ header {
         @media only screen and (min-width: 1200px) {
           .table-outer table tbody tr td.action .mbt-mobile-show {
             display: none; } }
+      .table-outer table tbody tr td.nodatafound {
+        text-align: center;
+        justify-content: center; }
+        .table-outer table tbody tr td.nodatafound:before {
+          display: none; }
       .table-outer table tbody tr td:last-child {
         border-bottom: none; }
     .table-outer table tbody tr:nth-of-type(odd) {
@@ -9214,7 +9219,7 @@ header.dashb {
           opacity: 0; }
           header.dashb .mobile-menu .row .menu-outer .outer .close {
             position: absolute;
-            left: 20px;
+            right: 20px;
             top: 20px;
             display: flex;
             align-items: center;
@@ -14704,13 +14709,6 @@ footer.dashb {
     .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
       width: 25%;
       padding: 10px; }
-      @media only screen and (max-width: 767px) {
-        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
-          width: 50%; } }
-      @media only screen and (max-width: 400px) {
-        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
-          width: 100%;
-          padding: 0; } }
       .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .col-form-label {
         padding: 0px;
         margin-bottom: 5px; }
@@ -14742,22 +14740,21 @@ footer.dashb {
             background: #00aef2; }
             .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button svg {
               fill: #fff; }
-      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
-        padding-left: 0; }
-        @media only screen and (max-width: 767px) {
-          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
-            padding-left: 10px; } }
-        @media only screen and (max-width: 400px) {
-          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:first-child {
-            padding: 0; } }
-      .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
-        padding-right: 0; }
-        @media only screen and (max-width: 767px) {
-          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
-            padding-right: 10px; } }
-        @media only screen and (max-width: 400px) {
-          .content.comn-cls .card .logfil-outer .formgroup-outer .form-group:last-child {
-            padding: 0; } }
+      @media only screen and (max-width: 767px) {
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
+          width: 50%; } }
+      @media (min-width: 768px) and (max-width: 991px) {
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
+          width: 50%; } }
+      @media only screen and (max-width: 400px) {
+        .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
+          width: 100%;
+          padding: 0; } }
+    .content.comn-cls .card .logfil-outer .formgroup-outer .actions-div {
+      padding-left: 10px; }
+    @media only screen and (max-width: 400px) {
+      .content.comn-cls .card .logfil-outer .formgroup-outer .actions-div {
+        padding-left: 0px; } }
 .content.comn-cls .card .audit .search_paging .container {
   padding: 0; }
   .content.comn-cls .card .audit .search_paging .container .text-center {
