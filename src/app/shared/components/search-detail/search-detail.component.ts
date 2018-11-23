@@ -154,6 +154,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   servicedialogRef;
   commdialogRef;
   coupondialogRef;
+  isfirstCheckinOffer = false;
   constructor(private routerobj: Router,
     private location: Location,
     private activaterouterobj: ActivatedRoute,
@@ -181,6 +182,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             // this.do_search();
           });
       });
+      const activeUser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+      if (activeUser) {
+        this.isfirstCheckinOffer = activeUser.firstCheckIn;
+      }
     // this.sortfieldsels = 'distanceasc';
     this.nosearch_results = false;
     this.retscrolltop = this.shared_functions.getitemfromLocalStorage('sctop') || 0;

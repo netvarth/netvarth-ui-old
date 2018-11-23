@@ -148,10 +148,17 @@
 
 
             <ng-container *ngIf="page_source != 'provider_checkin'">
+                <div class="coupon-outer" *ngIf="coupon_status">
+                    <div class="form-group">
+                        <span *ngIf="coupon_status=='success'" class="success">Coupon Code(s) applied successfully</span>
+                        <span *ngIf="coupon_status=='error'" class="error">Coupon Code(s) not valid</span>
+                    </div>
+                </div>
                 <div class="coupon-outer">
                     <div class="form-group">
                         <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons">
-                        <span class="cs-btn bt8" (click)="applyCoupon(selected_coupons)">{{apply_cap}}</span>
+                        <span class="cs-btn bt8" (click)="applyCoupons(selected_coupons)">{{apply_cap}}</span>
+                        <span class="cs-btn bt8" *ngIf="couponsList.length>0" (click)="removeCoupons()">CANCEL</span>
                     </div>
                 </div>
             </ng-container>
@@ -219,7 +226,7 @@
             </div>
             <div class="queue-waitingdiv">
                 <div class="queue-head" *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                    <strong>{{today_cap}} {{estimateCaption}}:</strong> <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
+                    <strong>{{today_cap}} {{estimateCaption}}: </strong> <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
                 </div>
                 <div class="queue-head" *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc'">
                     <strong>{{persons_ahead_cap}}</strong> <span class="queue-avail-date">{{sel_queue_personaahead}}</span>

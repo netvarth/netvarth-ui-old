@@ -25,7 +25,7 @@ export class CheckInInnerComponent implements OnInit {
   serv_time_window_cap = Messages.SERV_TIME_WINDOW_CAP;
   enter_party_size_cap = Messages.ENTER_PARTY_SIZE;
   have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
-  not_accepted_for_this_date =Messages.NOT_ACCEPTED_THIS_DATE_CAP;
+  not_accepted_for_this_date = Messages.NOT_ACCEPTED_THIS_DATE_CAP;
   service_needs_prepayment = Messages.NEEDS_PREPAYMENT_FOR_CAP;
   prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
   no_pay_modes_avail_cap = Messages.NO_PAY_MODES_AVAIL_CAP;
@@ -58,6 +58,7 @@ export class CheckInInnerComponent implements OnInit {
   businessjson: any = [];
   familymembers: any = [];
   partysizejson: any = [];
+  s3CouponsList: any = [];
   sel_loc;
   sel_ser;
   sel_ser_det: any = [];
@@ -123,6 +124,7 @@ export class CheckInInnerComponent implements OnInit {
   CheckedinLabel;
   ddate;
   selected_coupons;
+  coupon_status = null;
   couponsList: any = [];
   @Input() data: any = [];
   @Output() returntoParent = new EventEmitter<any>();
@@ -363,6 +365,7 @@ export class CheckInInnerComponent implements OnInit {
           this.s3url = res;
           this.getbusinessprofiledetails_json('businessProfile', true);
           this.getbusinessprofiledetails_json('settings', true);
+          this.getbusinessprofiledetails_json('coupon', true);
           // console.log('terminologies ext', this.terminologiesjson);
           if (!this.terminologiesjson) {
             this.getbusinessprofiledetails_json('terminologies', true);
@@ -411,6 +414,9 @@ export class CheckInInnerComponent implements OnInit {
           case 'businessProfile':
             this.businessjson = res;
             this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
+            break;
+          case 'coupon':
+            this.s3CouponsList = res;
             break;
         }
       },
@@ -612,14 +618,7 @@ export class CheckInInnerComponent implements OnInit {
     // if (this.step === 1) {
     //  this.step = 2;
     // } else
-    let couponListTemp = [];
     if (this.step === 1) {
-      if (this.selected_coupons) {
-        couponListTemp = this.selected_coupons.trim().split(',');
-        if (couponListTemp && couponListTemp.length > 0 ) {
-         this.couponsList = couponListTemp;
-        }
-      }
       if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin') {
         /*if (this.paytype === '') {
           error = 'Please select the payment mode';
@@ -738,9 +737,6 @@ export class CheckInInnerComponent implements OnInit {
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         });
-  }
-  applyCoupon() {
-    this.couponsList = this.selected_coupons;
   }
   handleGoBack(cstep) {
     if (this.page_source !== 'provider_checkin') {
@@ -1057,5 +1053,33 @@ export class CheckInInnerComponent implements OnInit {
 
   clearerrorParty() {
     this.partyapi_error = '';
+  }
+  removeCoupons() {
+    this.selected_coupons = null;
+    this.couponsList = [];
+    this.coupon_status = null;
+  }
+  applyCoupons(jCoupons) {
+    this.couponsList = [];
+    let couponListTemp = [];
+    if (jCoupons) {
+      couponListTemp = jCoupons.trim().split(',');
+      if (couponListTemp && couponListTemp.length > 0) {
+        for (let i = 0; i < couponListTemp.length; i++) {
+          for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
+            if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === couponListTemp[i].trim()) {
+              this.couponsList.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+              break;
+            }
+          }
+        }
+        if (this.couponsList.length === couponListTemp.length) {
+          this.coupon_status = 'success';
+        } else {
+          this.coupon_status = 'error';
+          this.couponsList = [];
+        }
+      }
+    }
   }
 }
