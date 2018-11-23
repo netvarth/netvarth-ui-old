@@ -2378,7 +2378,9 @@ app-footer {
         @media only screen and (max-width: 400px) {
           .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
             font-size: 1rem;
-            align-items: center !important; } }
+            align-items: center !important; }
+            .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-panel-header-title {
+              align-items: center; } }
       .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
         padding-left: 0px;
         padding-right: 0px;
@@ -3111,6 +3113,30 @@ header {
           width: 20px;
           height: 20px;
           font-weight: 600; }
+    @media only screen and (max-width: 575px) {
+      .signupmainclass .mat-dialog-title,
+      .loginmainclass .mat-dialog-title,
+      .moreoptionsmainclass .mat-dialog-title,
+      .forgotpasswordmainclass .mat-dialog-title,
+      .commonpopupmainclass .mat-dialog-title,
+      .googlemainmappopup .mat-dialog-title, .outer-card .mat-dialog-title, .consumerpopupmainclass .mat-dialog-title, .specialclass .mat-dialog-title {
+        font-size: 1.1rem;
+        padding: 10px 15px; }
+        .signupmainclass .mat-dialog-title .modal_close,
+        .loginmainclass .mat-dialog-title .modal_close,
+        .moreoptionsmainclass .mat-dialog-title .modal_close,
+        .forgotpasswordmainclass .mat-dialog-title .modal_close,
+        .commonpopupmainclass .mat-dialog-title .modal_close,
+        .googlemainmappopup .mat-dialog-title .modal_close, .outer-card .mat-dialog-title .modal_close, .consumerpopupmainclass .mat-dialog-title .modal_close, .specialclass .mat-dialog-title .modal_close {
+          margin-top: -24px;
+          height: 51px; }
+          .signupmainclass .mat-dialog-title .modal_close i,
+          .loginmainclass .mat-dialog-title .modal_close i,
+          .moreoptionsmainclass .mat-dialog-title .modal_close i,
+          .forgotpasswordmainclass .mat-dialog-title .modal_close i,
+          .commonpopupmainclass .mat-dialog-title .modal_close i,
+          .googlemainmappopup .mat-dialog-title .modal_close i, .outer-card .mat-dialog-title .modal_close i, .consumerpopupmainclass .mat-dialog-title .modal_close i, .specialclass .mat-dialog-title .modal_close i {
+            margin-top: 4px; } }
   .signupmainclass .mat-dialog-content,
   .loginmainclass .mat-dialog-content,
   .moreoptionsmainclass .mat-dialog-content,
@@ -4691,6 +4717,14 @@ header {
       .commonpopupmainclass .mat-dialog-content .audit_outer .table,
       .googlemainmappopup .mat-dialog-content .audit_outer .table, .outer-card .mat-dialog-content .audit_outer .table, .consumerpopupmainclass .mat-dialog-content .audit_outer .table, .specialclass .mat-dialog-content .audit_outer .table {
         margin-bottom: 0; }
+      @media only screen and (max-width: 575px) {
+        .signupmainclass .mat-dialog-content .audit_outer,
+        .loginmainclass .mat-dialog-content .audit_outer,
+        .moreoptionsmainclass .mat-dialog-content .audit_outer,
+        .forgotpasswordmainclass .mat-dialog-content .audit_outer,
+        .commonpopupmainclass .mat-dialog-content .audit_outer,
+        .googlemainmappopup .mat-dialog-content .audit_outer, .outer-card .mat-dialog-content .audit_outer, .consumerpopupmainclass .mat-dialog-content .audit_outer, .specialclass .mat-dialog-content .audit_outer {
+          overflow-x: scroll; } }
     .signupmainclass .mat-dialog-content > .ng-star-inserted,
     .loginmainclass .mat-dialog-content > .ng-star-inserted,
     .moreoptionsmainclass .mat-dialog-content > .ng-star-inserted,
@@ -5663,7 +5697,7 @@ header {
     .forgotpasswordmainclass .mat-dialog-content .message-two,
     .commonpopupmainclass .mat-dialog-content .message-two,
     .googlemainmappopup .mat-dialog-content .message-two, .outer-card .mat-dialog-content .message-two, .consumerpopupmainclass .mat-dialog-content .message-two, .specialclass .mat-dialog-content .message-two {
-      height: 30px;
+      height: auto;
       background: transparent;
       border: 1px solid #00aef2;
       padding: 6px 15px;
@@ -5929,6 +5963,14 @@ header {
   .commonpopupmainclass.width-100,
   .googlemainmappopup.width-100, .outer-card.width-100, .consumerpopupmainclass.width-100, .specialclass.width-100 {
     width: 100% !important; }
+  @media only screen and (max-width: 575px) {
+    .signupmainclass,
+    .loginmainclass,
+    .moreoptionsmainclass,
+    .forgotpasswordmainclass,
+    .commonpopupmainclass,
+    .googlemainmappopup, .outer-card, .consumerpopupmainclass, .specialclass {
+      max-width: 92vw !important; } }
 
 .loginmainclass .mat-dialog-actions {
   display: block;
@@ -9897,7 +9939,9 @@ footer.dashb {
   @media only screen and (max-width: 575px) {
     .bcrumb {
       border: none;
-      font-size: .75rem; } }
+      font-size: .75rem;
+      padding-left: 10px;
+      padding-right: 10px; } }
   .bcrumb a,
   .bcrumb span {
     color: #222223;
@@ -11538,7 +11582,7 @@ footer.dashb {
     .content.loc-list .card .copy .mbt {
       right: 0;
       position: absolute;
-      top: 0px;
+      top: -12px;
       z-index: 51; }
       .content.loc-list .card .copy .mbt:before {
         display: none; }
@@ -14750,11 +14794,11 @@ footer.dashb {
         .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
           width: 100%;
           padding: 0; } }
-    .content.comn-cls .card .logfil-outer .formgroup-outer .actions-div {
-      padding-left: 10px; }
-    @media only screen and (max-width: 400px) {
-      .content.comn-cls .card .logfil-outer .formgroup-outer .actions-div {
-        padding-left: 0px; } }
+  .content.comn-cls .card .logfil-outer .actions-div {
+    padding-left: 10px; }
+  @media only screen and (max-width: 400px) {
+    .content.comn-cls .card .logfil-outer .actions-div {
+      padding-left: 0px; } }
 .content.comn-cls .card .audit .search_paging .container {
   padding: 0; }
   .content.comn-cls .card .audit .search_paging .container .text-center {
@@ -18287,6 +18331,13 @@ header.consumer {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 0px; }
+      .consumer-dash .card.history.one .noprevhist {
+        padding: 15px;
+        text-align: center; }
+        .consumer-dash .card.history.one .noprevhist p {
+          margin: 0;
+          font-weight: 500;
+          color: #999999; }
   .consumer-dash .c-outer {
     margin-top: 0; }
 

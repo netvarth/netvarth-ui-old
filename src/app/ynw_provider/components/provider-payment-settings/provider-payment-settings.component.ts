@@ -113,9 +113,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     panelclass = 'snackbarnormal';
                     params = {'duration': duration, 'panelClass': panelclass};
                 }
-                console.log('params', params);
+                // console.log('params', params);
                 this.shared_Functionsobj.openSnackBar (showmsgs, params);
                 this.tabid = 1;
+                if (document.getElementById('gstno')) {
+                    document.getElementById('gstno').focus();
+                }
             }
     }
     getTaxpercentage() {

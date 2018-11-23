@@ -464,12 +464,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         this.cart.items[foundid].quantity = Number(this.cart.items[foundid].quantity) + Number(this.curSelItm.qty);
       }
     } else {
+      let cqty = Number(this.curSelItm.qty);
+      if (cqty < 0) {
+        cqty = cqty * -1;
+      }
       switch (type) {
         case 'Services' :  selected_item = {
                                   'name' : item.name,
                                   'itemId': item.id,
                                   // 'quantity': 1,
-                                  'quantity': Number(this.curSelItm.qty),
+                                  'quantity': cqty, // Number(this.curSelItm.qty),
                                   'price': item.totalAmount,
                                   'rowtotal': item.totalAmount,
                                   'subtotal': item.totalAmount,
@@ -490,7 +494,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
                                   'name' : item.displayName,
                                   'itemId': item.itemId,
                                   // 'quantity': 1,
-                                  'quantity': Number(this.curSelItm.qty),
+                                  'quantity': cqty, // Number(this.curSelItm.qty),
                                   'price': item.price,
                                   'rowtotal': item.price,
                                   'subtotal': item.price,

@@ -178,6 +178,20 @@
                 }
             }
         }
+        
+        @include respond-to(ynw-575) {
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            
+            .modal_close {
+                margin-top: -24px;
+                height: 51px;
+                
+                i {
+                    margin-top: 4px;
+                }
+            }
+        }
     }
     
     // Popup body section
@@ -791,6 +805,10 @@
             .table {
                 margin-bottom: 0;
             }
+            
+            @include respond-to(ynw-575) {
+                overflow-x: scroll;
+            }
         }
 
         > .ng-star-inserted {
@@ -1318,7 +1336,7 @@
             }
         }
         .message-two {
-            height: 30px;
+            height: auto;
             background: transparent;
             border: 1px solid $linkblue;
             padding: 6px 15px;
@@ -1497,6 +1515,10 @@
     
     &.width-100 {
         width: 100% !important;
+    }
+    
+    @include respond-to(ynw-575) {
+        max-width: 92vw !important;
     }
 }
 

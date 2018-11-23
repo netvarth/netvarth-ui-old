@@ -1166,6 +1166,8 @@ footer {
     @include respond-to(ynw-575) {
         border: none;
         font-size: .75rem;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     a,
@@ -3464,7 +3466,7 @@ footer {
                 .mbt {
                     right: 0;
                     position: absolute;
-                    top: 0px;
+                    top: -12px;
                     z-index: 51;
 
                     &:before {
@@ -8172,15 +8174,15 @@ footer {
                             padding: 0;
                         }
                     }
-                    
+                }
+                
+                .actions-div {
+                    padding-left: 10px;
+                }
+
+                @include respond-to(ynw-400) {
                     .actions-div {
-                        padding-left: 10px;
-                    }
-                    
-                    @include respond-to(ynw-400) {
-                        .actions-div {
-                            padding-left: 0px;
-                        }
+                        padding-left: 0px;
                     }
                 }
             }

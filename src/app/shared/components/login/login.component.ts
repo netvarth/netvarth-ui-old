@@ -212,7 +212,12 @@ export class LoginComponent implements OnInit {
       });
     }
   }*/
-
+  handlekeyup(ev) {
+    // console.log(ev);
+    if (ev.keyCode !== 13) {
+      this.resetApiErrors();
+    }
+  }
   resetApiErrors() {
     this.api_error = null;
   }

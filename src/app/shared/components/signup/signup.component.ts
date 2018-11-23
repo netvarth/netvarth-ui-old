@@ -288,6 +288,22 @@ export class SignUpComponent implements OnInit {
         };
     }
 
+      const fname = userProfile.firstName.trim();
+      const lname = userProfile.lastName.trim();
+      if (fname === '') {
+        this.api_error = 'First name is required';
+        if (document.getElementById('first_name')) {
+          document.getElementById('first_name').focus();
+        }
+        return;
+      }
+      if (lname === '') {
+        this.api_error = 'Last name is required';
+        if (document.getElementById('last_name')) {
+          document.getElementById('last_name').focus();
+        }
+        return;
+      }
 
 
       const isAdmin = (this.signupForm.get('is_provider').value === 'true') ? true : false;
