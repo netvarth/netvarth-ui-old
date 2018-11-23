@@ -1,127 +1,132 @@
+<section>
+  <app-provider-subheader [activeTab]="'dashboard'"></app-provider-subheader> <!-- Subheader section -->
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
 
-
-    <section>
-        <app-provider-subheader [activeTab]="'dashboard'"></app-provider-subheader> <!-- Subheader section -->
-        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-    </section>
-
-  <section>
-      <div class="content comn-cls">
-          <div class="container">
-              <div class="row">
-                  <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                      <div class="card">
-                          <div class="c-details">
-                              <div class="bk-ctrl">
-                                  <span class="backtodashboard" (click)="gotoPrev()"><span class="strong">{{go_back_cap}}</span></span>
-                              </div>
-                              <!-- <button (click)="gotoPrev()">Back</button> -->
-                              <h2>{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
-                              
-                              <div class="tp" *ngIf="waitlist_data">
-                            <div class="item"><span class="ttle">{{name_cap}}</span> <span> {{waitlist_data.consumer.userProfile.firstName | capitalizeFirst}} {{waitlist_data.consumer.userProfile.lastName | capitalizeFirst}}</span></div>
-                                  <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
-                                  <div class="item">
-                                      <!-- <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">Date/Est Service time:</span> -->
-                                      <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">{{getAppxTime(waitlist_data, true)}}</span>
-                                      <span class="ttle" *ngIf="!checkTimedisplayAllowed(waitlist_data)">{{date_cap}}</span>
-                                    <span>
-                                        <!-- {{waitlist_data.date | date:dateFormatSp}} {{getAppxTime(waitlist_data)| date: timeFormat}} -->
-                                        {{waitlist_data.date | date:dateFormatSp}}
-                                        <!-- {{waitlist_data.date | date:dateFormatSp}}  --></span>
-                                        <span *ngIf="getAppxTime(waitlist_data) != -1" && settings['calculationMode']!='NoCalc'">: {{getAppxTime(waitlist_data)}}</span>
-                                        <!-- <span *ngIf="getAppxTime(waitlist_data) != -1">{{getAppxTime(waitlist_data)}}</span> -->
-                                    </div>
-                                  <div class="item"><span class="ttle">{{location_cap}}</span><span>{{waitlist_data.queue.location.place | capitalizeFirst}}</span></div>
-                                  <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
-                                    <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
-                                        {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}} ({{user.primaryMobileNo}}) 
-                                    </span>
-                                  </div>
-
-                                  <div class="item"><span class="ttle">{{service_cap}}</span><span> {{waitlist_data.service.name | capitalizeFirst}}</span></div>
-                                  <div class="item"><span class="ttle">{{queue_cap}}</span><span> {{waitlist_data.queue.name | capitalizeFirst}}</span>
-                                <br/>{{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}</div>
-                                  <div class="item"><span class="ttle">{{pay_status_cap}}</span>
-                                    <ng-container *ngIf="waitlist_data && waitlist_data.paymentStatus">
-                                        <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span class="text">{{not_paid_cap}}</span></span>
-                                        <span class="paid-h" *ngIf="waitlist_data.paymentStatus == 'PartiallyPaid'"><span class="text">{{partially_paid_cap}}</span></span>
-                                        <span class="paid-f" *ngIf="waitlist_data.paymentStatus == 'FullyPaid'"><span class="text">{{paid_cap}}</span></span>
-
-                                    </ng-container>
-                                  </div>
-                                  <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span class="ttle">{{party_size_cap}}</span><span> {{waitlist_data.partySize}}</span></div>
-                              </div>
-                              <div class="btm" *ngIf="waitlist_data">
-                                  <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">{{send_msg_cap}}</button>
-                                  <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)" >{{add_pvt_note_cap}}</button>
-                                  <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()"
-                                  *ngIf="!waitlist_data.history &&
-                                  ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">{{cancel_cap}} {{checkin_label |capitalizeFirst}}</button>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="card p0">
-                          <mat-accordion class="communication-history">
-                            <mat-expansion-panel>
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                  {{communication_history_cap}}
-                                </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-                               (reloadApi)= "getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
-
-                            </mat-expansion-panel>
-                          </mat-accordion>
-
-                      </div>
-                      <div class="card p0">
-                          <mat-accordion class="provider-notes">
-                            <mat-expansion-panel>
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                  <!-- {{provider_label |capitalizeFirst}} Notes -->
-                                 {{pvt_notes_cap}}
-                                </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <div  class="pnotes" *ngFor="let note of waitlist_notes">
-                                <p [innerHTML]="note.note | nl2br"></p>
-                                <p>{{note.timeStamp | date: dateTimeFormat}}</p>
-                              </div>
-                              <div *ngIf="waitlist_notes.length == 0">
-                                <p>{{no_pvt_notes_cap}}</p>
-                              </div>
-                            </mat-expansion-panel>
-                          </mat-accordion>
-                      </div>
-
-
-                  </div>
-                  <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                      <div class="card">
-                          <h2>{{checkin_label |capitalizeFirst}} History</h2>
-                          <div class="c-history-outer">
-                            <ul class="c-history">
-                              <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
-                                  <div class="time">{{ history.time }}</div>
-                                  <div class="action">{{ history.waitlistStatus  | capitalizeFirst}}</div>
-                              </li>
-                            </ul>
-
-                            <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
-                          </div>
-
-                      </div>
-                  </div>
+<section>
+  <div class="content comn-cls">
+    <div class="container">
+      <div class="row">
+        <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
+          <div class="card">
+            <div class="c-details">
+              <div class="bk-ctrl">
+                <span class="backtodashboard" (click)="gotoPrev()"><span class="strong">{{go_back_cap}}</span></span>
               </div>
+              <!-- <button (click)="gotoPrev()">Back</button> -->
+              <h2>{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
+
+              <div class="tp" *ngIf="waitlist_data">
+                <div class="item"><span class="ttle">{{name_cap}}</span> <span>
+                    {{waitlist_data.consumer.userProfile.firstName | capitalizeFirst}}
+                    {{waitlist_data.consumer.userProfile.lastName | capitalizeFirst}}</span></div>
+                <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
+                <div class="item">
+                  <!-- <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">Date/Est Service time:</span> -->
+                  <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">{{getAppxTime(waitlist_data,
+                    true)}}</span>
+                  <span class="ttle" *ngIf="!checkTimedisplayAllowed(waitlist_data)">{{date_cap}}</span>
+                  <span>
+                    <!-- {{waitlist_data.date | date:dateFormatSp}} {{getAppxTime(waitlist_data)| date: timeFormat}} -->
+                    {{waitlist_data.date | date:dateFormatSp}}
+                    <!-- {{waitlist_data.date | date:dateFormatSp}}  --></span>
+                  <span *ngIf="getAppxTime(waitlist_data) != -1 && settings['calculationMode']!='NoCalc'">: {{getAppxTime(waitlist_data)}}</span>
+                                        <!-- <span *ngIf="
+                    getAppxTime(waitlist_data) !=-1">{{getAppxTime(waitlist_data)}}</span> -->
+                </div>
+                <div class="item"><span class="ttle">{{location_cap}}</span><span>{{waitlist_data.queue.location.place
+                    | capitalizeFirst}}</span></div>
+                <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
+                  <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
+                    {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}} ({{user.primaryMobileNo}})
+                  </span>
+                </div>
+
+                <div class="item"><span class="ttle">{{service_cap}}</span><span> {{waitlist_data.service.name |
+                    capitalizeFirst}}</span></div>
+                <div class="item"><span class="ttle">{{queue_cap}}</span><span> {{waitlist_data.queue.name |
+                    capitalizeFirst}}</span>
+                  <br />{{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}</div>
+                <div class="item"><span class="ttle">{{pay_status_cap}}</span>
+                  <ng-container *ngIf="waitlist_data && waitlist_data.paymentStatus">
+                    <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span class="text">{{not_paid_cap}}</span></span>
+                    <span class="paid-h" *ngIf="waitlist_data.paymentStatus == 'PartiallyPaid'"><span class="text">{{partially_paid_cap}}</span></span>
+                    <span class="paid-f" *ngIf="waitlist_data.paymentStatus == 'FullyPaid'"><span class="text">{{paid_cap}}</span></span>
+
+                  </ng-container>
+                </div>
+                <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span class="ttle">{{party_size_cap}}</span><span>
+                    {{waitlist_data.partySize}}</span></div>
+              </div>
+              <div class="btm" *ngIf="waitlist_data">
+                <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">{{send_msg_cap}}</button>
+                <button class="cs-btn bt3 addprovider" (click)="addProviderNote(waitlist_data)">{{add_pvt_note_cap}}</button>
+                <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()" *ngIf="!waitlist_data.history &&
+                                  ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">{{cancel_cap}}
+                  {{checkin_label |capitalizeFirst}}</button>
+              </div>
+            </div>
+          </div>
+          <div class="card p0">
+            <mat-accordion class="communication-history">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{communication_history_cap}}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'" (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
+
+              </mat-expansion-panel>
+            </mat-accordion>
 
           </div>
+          <div class="card p0">
+            <mat-accordion class="provider-notes">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <!-- {{provider_label |capitalizeFirst}} Notes -->
+                    {{pvt_notes_cap}}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="pnotes" *ngFor="let note of waitlist_notes">
+                  <p [innerHTML]="note.note | nl2br"></p>
+                  <p>{{note.timeStamp | date: dateTimeFormat}}</p>
+                </div>
+                <div *ngIf="waitlist_notes.length == 0">
+                  <p>{{no_pvt_notes_cap}}</p>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+
+
+        </div>
+        <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="card">
+            <h2>{{checkin_label |capitalizeFirst}} History</h2>
+            <div class="c-history-outer">
+              <ul class="c-history">
+                <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
+                  <div class="time">{{ history.time }}</div>
+                  <div class="action">{{ history.waitlistStatus | capitalizeFirst}}</div>
+                </li>
+              </ul>
+
+              <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
+            </div>
+
+          </div>
+        </div>
       </div>
-  </section>
+
+    </div>
+  </div>
+</section>
 
 
-    <!-- <section>
+<!-- <section>
         <div class="content loc-list">
             <div class="container" *ngIf="waitlist_data">
               <div class="row">
