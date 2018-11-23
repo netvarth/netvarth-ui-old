@@ -190,6 +190,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
   }
 
   makePayment(checkin, bill_data) {
+    alert('in history');
     this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],

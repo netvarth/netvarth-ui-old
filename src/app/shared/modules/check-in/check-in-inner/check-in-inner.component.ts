@@ -122,7 +122,8 @@ export class CheckInInnerComponent implements OnInit {
   checkinLabel;
   CheckedinLabel;
   ddate;
-
+  selected_coupons;
+  couponsList: any = [];
   @Input() data: any = [];
   @Output() returntoParent = new EventEmitter<any>();
 
@@ -611,7 +612,14 @@ export class CheckInInnerComponent implements OnInit {
     // if (this.step === 1) {
     //  this.step = 2;
     // } else
+    let couponListTemp = [];
     if (this.step === 1) {
+      if (this.selected_coupons) {
+        couponListTemp = this.selected_coupons.trim().split(',');
+        if (couponListTemp && couponListTemp.length > 0 ) {
+         this.couponsList = couponListTemp;
+        }
+      }
       if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin') {
         /*if (this.paytype === '') {
           error = 'Please select the payment mode';
@@ -643,7 +651,9 @@ export class CheckInInnerComponent implements OnInit {
         'id': this.sel_ser
       },
       'consumerNote': this.consumerNote,
-      'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))/*,
+      'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
+      'coupons': this.couponsList
+      /*,
         'revealPhone': this.revealphonenumber*/
     };
     if (this.partySizeRequired) {
@@ -678,7 +688,7 @@ export class CheckInInnerComponent implements OnInit {
         //  console.log('uuid', retUUID);
         if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
           if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
-            //this.sel_ser_det.minPrePaymentAmount
+            // this.sel_ser_det.minPrePaymentAmount
             const payData = {
               'amount': this.prepaymentAmount,
               'paymentMode': this.paytype,
@@ -730,13 +740,13 @@ export class CheckInInnerComponent implements OnInit {
         });
   }
   applyCoupon() {
-
+    this.couponsList = this.selected_coupons;
   }
   handleGoBack(cstep) {
     if (this.page_source !== 'provider_checkin') {
       if (this.sel_ser_det.isPrePayment) {
         let len = this.waitlist_for.length;
-        if (this.waitlist_for.length == 0) {
+        if (this.waitlist_for.length === 0) {
           len = 1;
         }
         this.prepaymentAmount = len * this.sel_ser_det.minPrePaymentAmount;

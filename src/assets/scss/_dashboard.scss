@@ -366,7 +366,7 @@ header {
 
                         .close {
                             position: absolute;
-                            left: 20px;
+                            right: 20px;
                             top: 20px;
                             display: flex;
                             align-items: center;
@@ -8102,15 +8102,6 @@ footer {
                         width: 25%;
                         padding: 10px;
 
-                        @include respond-to(ynw-767) {
-                            width: 50%;
-                        }
-
-                        @include respond-to(ynw-400) {
-                            width: 100%;
-                            padding: 0;
-                        }
-
                         .col-form-label {
                             padding: 0px;
                             margin-bottom: 5px;
@@ -8167,29 +8158,28 @@ footer {
                                 }
                             }
                         }
-
-                        &:first-child {
-                            padding-left: 0;
-
-                            @include respond-to(ynw-767) {
-                                padding-left: 10px;
-                            }
-
-                            @include respond-to(ynw-400) {
-                                padding: 0;
-                            }
+                        
+  						@include respond-to(ynw-767) {
+                            width: 50%;
                         }
-
-                        &:last-child {
-                            padding-right: 0;
-
-                            @include respond-to(ynw-767) {
-                                padding-right: 10px;
-                            }
-
-                            @include respond-to(ynw-400) {
-                                padding: 0;
-                            }
+                        
+                        @include respond-to(ynw-768-991) {
+                            width: 50%;
+                        }
+                        
+                        @include respond-to(ynw-400) {
+                            width: 100%;
+                            padding: 0;
+                        }
+                       }
+                       
+                       .actions-div {
+                        padding-left: 10px;
+                    	}
+                    	
+						@include respond-to(ynw-400) {
+                        .actions-div {
+                            padding-left: 0px;
                         }
                     }
                 }

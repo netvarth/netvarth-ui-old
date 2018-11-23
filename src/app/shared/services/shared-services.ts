@@ -11,7 +11,6 @@ import { ServiceMeta } from './service-meta';
 @Injectable()
 
 export class SharedServices {
-
     constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
 
     }
@@ -217,18 +216,6 @@ export class SharedServices {
         gurl = s3url + '/' + id + '/' + section + '?modifiedDate=' + UTCstring;
       } else {
         gurl = s3url + '/' + id + '/' + section;
-      }
-      // console.log('url'+url);
-      return this.servicemeta.httpGet(gurl);
-    }
-    getjaldeecoupons_json(id, s3url, coupon, UTCstring) {
-
-      let gurl = '';
-      coupon = coupon + '.json';
-      if (UTCstring !== null) {
-        gurl = s3url + '/' + id + '/' + coupon + '?modifiedDate=' + UTCstring;
-      } else {
-        gurl = s3url + '/' + id + '/' + coupon;
       }
       // console.log('url'+url);
       return this.servicemeta.httpGet(gurl);
@@ -519,4 +506,9 @@ export class SharedServices {
       const url = 'ynwConf/settings/' + domain + '/' + subdomain;
       return this.servicemeta.httpGet(url);
     }
+    applyCoupon(jCouponCode, checkinId) {
+      const url = 'consumer/jaldee/coupons/' + jCouponCode + '/' + checkinId;
+      return this.servicemeta.httpPost(url);
+    }
+  
 }

@@ -68,7 +68,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   basic_plus_cap = Messages.BASIC_PLUS_CAP;
   premium_cap = Messages.PREMIUM_CAP;
   send_message_cap = Messages.SEND_MSG_CAP;
-  claim_my_business_cap =Messages.CLAIM_BUSINESS_CAP;
+  claim_my_business_cap = Messages.CLAIM_BUSINESS_CAP;
   open_now_cap = Messages.OPEN_NOW_CAP;
   sorry_cap = Messages.SORRY_CAP;
   not_allowed_cap = Messages.NOT_ALLOWED_CAP;
@@ -183,7 +183,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       });
     // this.sortfieldsels = 'distanceasc';
     this.nosearch_results = false;
-        this.retscrolltop = this.shared_functions.getitemfromLocalStorage('sctop') || 0;
+    this.retscrolltop = this.shared_functions.getitemfromLocalStorage('sctop') || 0;
     this.shared_functions.setitemonLocalStorage('sctop', 0);
     // setTimeout(() => {
     //   console.log('i am here', scrolltop);
@@ -215,10 +215,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // console.log('here', this.screenWidth, this.screenHeight);
   }
   @HostListener('window:scroll', ['$event'])
-doScroll(event) {
-  this.scrolltop = window.pageYOffset;
-  // console.log('scroll', this.scrolltop);
-}
+  doScroll(event) {
+    this.scrolltop = window.pageYOffset;
+    // console.log('scroll', this.scrolltop);
+  }
   checkRefineSpecial() {
     const ynwsrchbuttonClicked = this.shared_functions.getitemfromLocalStorage('ynw_srchb');
     // console.log('test', ynwsrchbuttonClicked);
@@ -1002,10 +1002,10 @@ doScroll(event) {
                 this.hideRefineifOneresultchk = false;
                 this.showrefinedsection = false; // this is done to override all conditions and to hide the refined filter section by default
               }
-               setTimeout(() => {
-              // console.log('i am here', this.retscrolltop);
-               window.scrollTo(0, this.retscrolltop);
-               this.retscrolltop = 0;
+              setTimeout(() => {
+                // console.log('i am here', this.retscrolltop);
+                window.scrollTo(0, this.retscrolltop);
+                this.retscrolltop = 0;
               }, 1000);
             });
         });
@@ -1573,9 +1573,9 @@ doScroll(event) {
           this.subdomainlist_data = domains.subDomains;
         }
       }
-            // if (this.subdomainlist_data.length === 1) {
+      // if (this.subdomainlist_data.length === 1) {
       //  console.log('subdom', this.subdomainlist_data[0].subDomain, src);
-        // this.handlerefinedsubdomainchange(this.subdomainlist_data[0].subDomain);
+      // this.handlerefinedsubdomainchange(this.subdomainlist_data[0].subDomain);
       // }
     }
     // console.log('subdomains', this.subdomainlist_data);
@@ -1684,7 +1684,7 @@ doScroll(event) {
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
         } else if (passParam['callback'] === 'servicedetail') {
-            this.serviceClicked(passParam['mname'], passParam['mobj']);
+          this.serviceClicked(passParam['mname'], passParam['mobj']);
         } else {
           this.showCheckin('consumer');
         }
@@ -1726,7 +1726,7 @@ doScroll(event) {
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
         } else if (passParam['callback'] === 'servicedetail') {
-            this.serviceClicked(passParam['mname'], passParam['mobj']);
+          this.serviceClicked(passParam['mname'], passParam['mobj']);
         } else {
           this.showCheckin('consumer');
         }
@@ -1915,11 +1915,11 @@ doScroll(event) {
     console.log('here', name, obj);
     if (this.shared_functions.checkLogin()) {
       const ctype = this.shared_functions.isBusinessOwner('returntyp');
-     // if (ctype === 'consumer') {
-        this.serviceClicked(name, obj);
-     // }
+      // if (ctype === 'consumer') {
+      this.serviceClicked(name, obj);
+      // }
     } else { // show consumer login
-      const passParam = {callback: 'servicedetail', mname: name, mobj: obj };
+      const passParam = { callback: 'servicedetail', mname: name, mobj: obj };
       this.doLogin('consumer', passParam);
     }
   }
@@ -1969,16 +1969,28 @@ doScroll(event) {
     this.servicedialogRef.afterClosed().subscribe(result => {
     });
   }
-  openCoupons() {
-    // alert('Clicked coupon');
-    this.coupondialogRef = this.dialog.open(CouponsComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
-      disableClose: true,
-      data: {
-      }
-    });
-    this.coupondialogRef.afterClosed().subscribe(result => {
-    });
+  openCoupons(obj) {
+    const s3id = obj.fields.unique_id;
+    const busname = obj.fields.title;
+    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    this.shared_functions.getS3Url('provider')
+      .then(
+        res => {
+          const s3url = res;
+          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
+            .subscribe(couponsList => {
+              console.log(couponsList);
+              this.coupondialogRef = this.dialog.open(CouponsComponent, {
+                width: '60%',
+                panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
+                disableClose: true,
+                data: {
+                  couponsList: couponsList
+                }
+              });
+              this.coupondialogRef.afterClosed().subscribe(result => {
+              });
+            });
+        });
   }
 }

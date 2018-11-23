@@ -271,15 +271,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'coupons':
         this.routerobj.navigate(['provider', 'settings', 'coupons']);
         break;
-      case 'report':
-        this.routerobj.navigate(['provider', 'settings', 'coupons', 'report']);
-        break;
-      case 'coupon':
-        this.routerobj.navigate(['provider', 'settings', 'coupons', 'coupon']);
-        break;
-      case 'report_view':
-        this.routerobj.navigate(['provider', 'settings', 'coupons', 'report', 'report_view']);
-        break;
       case 'nonworking':
         this.routerobj.navigate(['provider', 'settings', 'holidays']);
         break;

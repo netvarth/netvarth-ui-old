@@ -1,3 +1,4 @@
+import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -1207,7 +1208,31 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   objectKeys(obj) {
     return Object.keys(obj);
   }
+  deletePrivacysettingsConfirm(mod, indx) {
+    let msg = '';
+    if (mod === 'phone') {
+      msg = Messages.BPROFILE_PRIVACY_PHONE_DELETE;
+      msg = msg.replace('[DATA]', this.phonearr[indx].number);
+    } else if (mod === 'email') {
+      msg = Messages.BPROFILE_PRIVACY_EMAIL_DELETE;
+      msg = msg.replace('[DATA]', this.emailarr[indx].emailid);
+    }
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message' : msg,
+        'heading' : 'Delete Confirmation'
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deletePrivacysettings(mod, indx);
+      }
+    });
+  }
   deletePrivacysettings(mod, indx) {
     const temparr = [];
     let post_itemdata: any = [];

@@ -77,7 +77,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   open_now_cap = Messages.OPEN_NOW_CAP;
   do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
   for_cap = Messages.FOR_CAP;
-  different_date_cap = Messages.DIFFERENT_DATE_CAP
+  different_date_cap = Messages.DIFFERENT_DATE_CAP;
 
   s3url;
   retval;

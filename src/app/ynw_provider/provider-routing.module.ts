@@ -73,10 +73,6 @@ const routes: Routes = [
             component: ProviderCouponsComponent
           },
           {
-            path: 'coupons/:id',
-            component: ProviderCouponViewComponent
-          },
-          {
             path: 'coupons',
             children: [
               {
@@ -88,6 +84,10 @@ const routes: Routes = [
                 component: ViewReportComponent
               }
             ]
+          },
+          {
+            path: 'coupons/:id',
+            component: ProviderCouponViewComponent
           },
           {
             path: 'holidays',

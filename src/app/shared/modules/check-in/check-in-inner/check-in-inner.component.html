@@ -150,8 +150,8 @@
             <ng-container *ngIf="page_source != 'provider_checkin'">
                 <div class="coupon-outer">
                     <div class="form-group">
-                        <input type="text" id="coupon_code" placeholder="Enter your Coupon code">
-                        <span class="cs-btn bt8" (click)="applyCoupon()">{{apply_cap}}</span>
+                        <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons">
+                        <span class="cs-btn bt8" (click)="applyCoupon(selected_coupons)">{{apply_cap}}</span>
                     </div>
                 </div>
             </ng-container>

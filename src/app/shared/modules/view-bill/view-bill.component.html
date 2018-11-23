@@ -244,8 +244,7 @@
 		 (click)="makePayment()">{{accept_payment_cap}}</button>
 	</ng-container>
 	<ng-container *ngIf="source === 'consumer_dashboard'">
-		<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
-        && bill_data.billStatus != 'Settled' && (payment_options.length>0)"
+		<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0)"
 		 (click)="makePayment()">{{make_payment_cap}}</button>
 	</ng-container>
 </mat-dialog-actions>

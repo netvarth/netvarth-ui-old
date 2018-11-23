@@ -33,12 +33,10 @@ export class ViewReportComponent implements OnInit {
       title: 'Settings'
     },
     {
-      title: 'Coupons',
-      url: '/provider/settings/coupons'
+      title: 'Coupons'
     },
     {
-      title: 'Report',
-      url: '/provider/settings/coupons/report'
+      title: 'Report'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -47,6 +45,7 @@ export class ViewReportComponent implements OnInit {
     private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute, private route: Router) { }
   ngOnInit() {
+    console.log('In View Report Component');
     this.router.params
       .subscribe(params => {
         this.invoice_id = params.id;

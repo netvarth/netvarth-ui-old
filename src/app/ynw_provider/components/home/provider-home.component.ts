@@ -607,6 +607,7 @@ no_cap = Messages.NO_CAP;
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
+        this.check_in_list  = this.check_in_filtered_list = [];
     this.getQueueList();
     /*this.getTodayCheckinCount()
     .then(

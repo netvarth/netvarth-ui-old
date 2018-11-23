@@ -23,26 +23,26 @@ export class ProviderReimburseReportComponent implements OnInit {
   req_payment_cap = Messages.REQ_PAYMENT_CAP;
   couponreport: any = [];
   query_executed = false;
-  breadcrumbs_init = [
+  breadcrumbs = [
     {
-      url: '/provider/settings',
-      title: 'Settings'
+      title: 'Settings',
+      url: '/provider/settings'
     },
     {
       title: 'Coupons',
       url: '/provider/settings/coupons'
     },
     {
-      title: 'Report'
+      title: 'Reports'
     }
   ];
-  breadcrumbs = this.breadcrumbs_init;
   open_filter = false;
   requestdialogRef;
   constructor(private dialog: MatDialog, private router: Router, private provider_servicesobj: ProviderServices) {
   }
   ngOnInit() {
-    this.getCouponReport();
+    console.log('I am Here');
+     this.getCouponReport();
   }
   toggleFilter() {
     this.open_filter = !this.open_filter;
@@ -66,6 +66,6 @@ export class ProviderReimburseReportComponent implements OnInit {
       });
   }
   reportView(invoiceId) {
-    this.router.navigate(['provider', 'settings', 'coupons', 'report', invoiceId]);
+    // this.router.navigate(['provider', 'settings', 'coupons', 'report', invoiceId]);
   }
 }

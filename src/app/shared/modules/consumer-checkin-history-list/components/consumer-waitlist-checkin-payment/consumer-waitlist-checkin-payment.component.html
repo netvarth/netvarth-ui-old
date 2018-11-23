@@ -12,8 +12,8 @@
       <div class="coupon-code">
         <div class="form-group">
             <label>{{coupon_code_cap}}</label>                       
-            <input type="text" id="coupon_code" placeholder="Enter your Coupon code" style="height:30px;">
-            <button mat-button class="cs-btn bt1 makepayment">{{apply_cap}}</button>
+            <input type="text" placeholder="Enter your Coupon code" #coupon_code [(ngModel)]="jCoupons" style="height:30px;">
+            <button mat-button class="cs-btn bt1 makepayment" (click)="applyCoupon(jCoupons,bill_data.uuid)">{{apply_cap}}</button>
         </div>                            
     </div>
     

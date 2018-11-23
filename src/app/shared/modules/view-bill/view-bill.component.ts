@@ -139,17 +139,18 @@ export class ViewBillComponent implements OnInit, OnChanges {
     if (this.bill_data.service.length) {
       for (let i = 0; i < this.bill_data.service.length; i++) {
         let service_discount_amount = 0;
-        if (this.bill_data.service[i].discount && this.bill_data.service[i].discount.length !== 0)
+        if (this.bill_data.service[i].discount && this.bill_data.service[i].discount.length !== 0) {
           service_discount_amount = this.bill_data.service[i].discount[0].discountValue;
+        }
         this.bill_data.service[i]['rowtotal'] = (this.bill_data.service[i].price * this.bill_data.service[i].quantity);
-        //const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - this.bill_data.service[i].discountValue - this.bill_data.service[i].couponValue;
+        // const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - this.bill_data.service[i].discountValue - this.bill_data.service[i].couponValue;
         const rtotal = (this.bill_data.service[i].price * this.bill_data.service[i].quantity) - service_discount_amount;
         this.subtotalwithouttax += rtotal;
         this.bill_data.service[i].isTaxable = false;
         if (this.bill_data.service[i].GSTpercentage > 0) {
           this.bill_data.service[i].isTaxable = true;
           this.taxpercentage = this.bill_data.service[i].GSTpercentage;
-          //this.taxtotal += ((this.bill_data.service[i].price * this.bill_data.service[i].quantity) - (this.bill_data.service[i].discountValue + this.bill_data.service[i].couponValue) * this.bill_data.service[i].GSTpercentage / 100);
+          // this.taxtotal += ((this.bill_data.service[i].price * this.bill_data.service[i].quantity) - (this.bill_data.service[i].discountValue + this.bill_data.service[i].couponValue) * this.bill_data.service[i].GSTpercentage / 100);
           this.taxtotal += ((this.bill_data.service[i].price * this.bill_data.service[i].quantity) - service_discount_amount * this.bill_data.service[i].GSTpercentage / 100);
           this.taxabletotal += rtotal;
         }
@@ -159,8 +160,9 @@ export class ViewBillComponent implements OnInit, OnChanges {
     if (this.bill_data.items.length) {
       for (let i = 0; i < this.bill_data.items.length; i++) {
         let item_discount_amount = 0;
-        if (this.bill_data.items[i].discount.length !== 0)
+        if (this.bill_data.items[i].discount.length !== 0) {
           item_discount_amount = this.bill_data.items[i].discount[0].discountValue;
+        }
         this.bill_data.items[i]['rowtotal'] = (this.bill_data.items[i].price * this.bill_data.items[i].quantity);
         // const rtotal = (this.bill_data.items[i].price * this.bill_data.items[i].quantity) - this.bill_data.items[i].discountValue - this.bill_data.items[i].couponValue;
         const rtotal = (this.bill_data.items[i].price * this.bill_data.items[i].quantity) - item_discount_amount;
@@ -186,7 +188,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
 
     this.getPaymentModes();
     this.bill_load_complete = 1;
-
+console.log(this.bill_data);
     /*this.dialogRef.backdropClick().subscribe(result => {
       this.dialogRef.close(this.close_msg);
     });*/

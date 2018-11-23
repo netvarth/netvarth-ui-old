@@ -21,8 +21,6 @@ export class AddproviderAddonComponent implements OnInit {
   no_upgrade_addons_found = Messages.NO_UPGRADE_ADDONS_FOUND_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
-  
-
   amForm: FormGroup;
   api_error = null;
   api_success = null;
