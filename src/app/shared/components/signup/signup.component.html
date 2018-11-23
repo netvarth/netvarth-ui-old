@@ -5,8 +5,8 @@ onSubmit()" (keyup)="resetApiErrors()">
 
 <div class="mat-dialog-content" *ngIf="step==1">
   <div class="form-group mobilecont" *ngIf="!data.moreOptions.isCreateProv">
-    <label class="col-form-label" for="phonenumber">Mobile Number *</label>
-    <span class="phoneprefix">+91</span><input type="text" class="form-control" id="phonenumber"
+    <label class="col-form-label" for="phonenumber">{{mobile_no_cap}}</label>
+    <span class="phoneprefix">{{mob_prefix_cap}}</span><input type="text" class="form-control" id="phonenumber"
     formControlName="phonenumber" autocomplete="off" placeholder="Enter your 10 digit mobile number">
     <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')"
     [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
@@ -20,7 +20,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   </div>
   <div class="form-group-inline" *ngIf="!data.moreOptions.isCreateProv">
   <div class="form-group">
-    <label class="col-form-label" for="first_name">First Name *</label>
+    <label class="col-form-label" for="first_name">{{first_name_cap}}</label>
     <input type="text" class="form-control" id="first_name"
     formControlName="first_name"  autocomplete="off" (blur)="onFieldBlur('first_name')">
     <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')"
@@ -33,7 +33,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   </div>
 
   <div class="form-group">
-    <label class="col-form-label" for="last_name">Last Name *</label>
+    <label class="col-form-label" for="last_name">{{last_name_cap}}</label>
     <input type="text" class="form-control" id="last_name"
     formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
     <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')"
@@ -48,7 +48,7 @@ onSubmit()" (keyup)="resetApiErrors()">
 
   <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true'">
     <mat-form-field>
-        <label class="col-form-label" for="last_name">Select Domain *</label>
+        <label class="col-form-label" for="last_name">{{select_domain_cap}}</label>
       <mat-select formControlName="selectedDomainIndex" #seldom (selectionChange)="setDomain(seldom.value)">
         <mat-option *ngFor="let domain of business_domains; let i = index" [value]="i">
             {{domain.displayName}}
@@ -65,7 +65,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   <div class="form-group"  *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere && subDomainList.length >1">
 
     <mat-form-field>
-      <label class="col-form-label" for="last_name">Select Subdomain *</label>
+      <label class="col-form-label" for="last_name">{{select_subdomain_cap}}</label>
       <mat-select subdom formControlName="selectedSubDomains" #subdom (selectionChange)="onItemSelect(subdom.value)">
         <mat-option *ngFor="let subdomain of subDomainList; let i = index" [value]="i">
             {{subdomain.itemName}}
@@ -81,7 +81,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   </div>
 
   <div class="form-group-packages"  *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
-    <label class="col-form-label" for="sub_sector">License Package *</label>
+    <label class="col-form-label" for="sub_sector">{{lic_package_cap}}</label>
 
 
     <mat-radio-group formControlName="package_id">
@@ -94,12 +94,12 @@ onSubmit()" (keyup)="resetApiErrors()">
   </div>
 
   <div class="form-group agree" >
-      <mat-checkbox class="terms-margin" formControlName="terms_condition"></mat-checkbox> <span class="terms-link">I Agree <a [routerLink]="['/terms']" target="_blank">Terms & Conditions</a></span>
+      <mat-checkbox class="terms-margin" formControlName="terms_condition"></mat-checkbox> <span class="terms-link">{{i_agree_cap}} <a [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
   </div>
 </div>
 <div class="mat-dialog-actions" *ngIf="step==1">
   <button  type="submit" mat-button
-  [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">Sign Up</button>
+  [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">{{sign_up_cap}}</button>
   </div>
 </form>
 <div class="example-container otpouter" *ngIf="step==2">

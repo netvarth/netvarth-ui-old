@@ -221,6 +221,18 @@ export class SharedServices {
       // console.log('url'+url);
       return this.servicemeta.httpGet(gurl);
     }
+    getjaldeecoupons_json(id, s3url, coupon, UTCstring) {
+
+      let gurl = '';
+      coupon = coupon + '.json';
+      if (UTCstring !== null) {
+        gurl = s3url + '/' + id + '/' + coupon + '?modifiedDate=' + UTCstring;
+      } else {
+        gurl = s3url + '/' + id + '/' + coupon;
+      }
+      // console.log('url'+url);
+      return this.servicemeta.httpGet(gurl);
+    }
 
     getAllSearchlabels() {
       const path = 'ynwConf/searchLabels';
