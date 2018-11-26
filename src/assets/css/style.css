@@ -9595,6 +9595,15 @@ footer.dashb {
         margin-bottom: 10px;
         display: inline-block;
         cursor: pointer; }
+      @media only screen and (max-width: 767px) {
+        footer.dashb .stp-box .audit .stp-tbl .table td,
+        footer.dashb .stp-box .alerts .stp-tbl .table td,
+        footer.dashb .stp-box .o-checkin .stp-tbl .table td {
+          padding-left: 45%; }
+          footer.dashb .stp-box .audit .stp-tbl .table td:before,
+          footer.dashb .stp-box .alerts .stp-tbl .table td:before,
+          footer.dashb .stp-box .o-checkin .stp-tbl .table td:before {
+            position: absolute; } }
     footer.dashb .stp-box .audit .table-body .copy,
     footer.dashb .stp-box .alerts .table-body .copy,
     footer.dashb .stp-box .o-checkin .table-body .copy {
@@ -9662,6 +9671,21 @@ footer.dashb {
         color: #f24949; }
       footer.dashb .stp-box .alerts .stp-tbl .table tr.error td {
         color: #f24949; }
+    footer.dashb .stp-box .alerts.tray .stp-tbl .table td.td1 {
+      display: flex; }
+      footer.dashb .stp-box .alerts.tray .stp-tbl .table td.td1 .span1 {
+        flex-grow: 1; }
+      footer.dashb .stp-box .alerts.tray .stp-tbl .table td.td1 .span2 {
+        margin-left: 10px;
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+    @media only screen and (max-width: 767px) {
+      footer.dashb .stp-box .alerts.tray .stp-tbl .table td {
+        padding-left: 15px; }
+        footer.dashb .stp-box .alerts.tray .stp-tbl .table td:before {
+          display: none; } }
   footer.dashb.show .stp-box {
     margin-bottom: 0;
     visibility: visible;
@@ -11464,16 +11488,25 @@ footer.dashb {
   .content.w-manager .card app-provider-waitlist-online-checkin .bt2 {
     background-color: #dbdbdb !important;
     color: #666 !important;
-    margin-left: 10px !important; }
+    margin-left: 50px;
+    margin-bottom: 20px; }
+    @media only screen and (max-width: 575px) {
+      .content.w-manager .card app-provider-waitlist-online-checkin .bt2 {
+        margin-left: 20px; } }
+  .content.w-manager .card app-provider-waitlist-online-checkin .bt1 {
+    margin-left: 10px;
+    margin-bottom: 20px; }
   .content.w-manager .card .copy {
     padding: 20px 40px; }
     @media only screen and (max-width: 575px) {
       .content.w-manager .card .copy {
-        padding: 20px 10px; } }
+        padding: 20px; } }
     .content.w-manager .card .copy .row {
       margin-bottom: 20px;
       margin-left: 0;
       margin-right: 0; }
+      .content.w-manager .card .copy .row:last-child {
+        margin-bottom: 0; }
     @media only screen and (max-width: 767px) {
       .content.w-manager .card .copy .lbl {
         margin-bottom: 15px; } }
@@ -11488,9 +11521,11 @@ footer.dashb {
       .content.w-manager .card .copy .lbr {
         padding-left: 0;
         padding-right: 0; } }
-    .content.w-manager .card .copy .lbr .rw label {
-      margin-left: 10px;
-      margin-bottom: 0; }
+    .content.w-manager .card .copy .lbr .rw .form-group {
+      display: flex; }
+      .content.w-manager .card .copy .lbr .rw .form-group label {
+        margin-left: 10px;
+        margin-bottom: 0; }
     .content.w-manager .card .copy .lbr .rw.fxd .form-group {
       display: flex;
       height: 40px;
@@ -11544,9 +11579,6 @@ footer.dashb {
         .content.w-manager .card .b-link:hover h2 span {
           background: #fff;
           color: #00aef2; }
-  .content.w-manager .card .mat-button {
-    margin-left: 50px;
-    margin-bottom: 20px; }
   .content.w-manager .card app-form-success-display .sts-msg {
     -webkit-border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -12117,6 +12149,19 @@ footer.dashb {
               position: absolute;
               left: 0;
               font-size: .875rem; }
+            @media only screen and (max-width: 767px) {
+              .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .enableicon,
+              .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon {
+                color: #00aef2;
+                padding-left: 22px;
+                border: 1px solid #00aef2;
+                -webkit-border-radius: 30px;
+                border-radius: 30px;
+                background-clip: padding-box;
+                /* stops bg color from leaking outside the border: */ }
+                .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .enableicon:before,
+                .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon:before {
+                  left: 4px; } }
           .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon {
             margin-right: 0; }
             .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon:before {
@@ -14387,6 +14432,10 @@ footer.dashb {
           flex-direction: column; } }
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .pan-outer {
         order: 2; }
+        .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .pan-outer .form-group {
+          margin-bottom: 1.3rem; }
+          .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .pan-outer .form-group .sts-msg {
+            position: absolute; }
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer {
         flex-grow: 1;
         order: 1;
@@ -14402,7 +14451,8 @@ footer.dashb {
           .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer {
             flex-direction: column; } }
         .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer .form-group {
-          width: 49%; }
+          width: 49%;
+          margin-bottom: 1.3rem; }
           @media only screen and (max-width: 767px) {
             .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer .form-group {
               width: 100%; } }
@@ -14417,6 +14467,8 @@ footer.dashb {
             @media only screen and (max-width: 575px) {
               .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer .form-group mat-form-field {
                 width: 100%; } }
+          .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer .form-group .sts-msg {
+            position: absolute; }
     .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter {
       padding-left: 0px; }
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field {
@@ -14799,6 +14851,16 @@ footer.dashb {
   @media only screen and (max-width: 400px) {
     .content.comn-cls .card .logfil-outer .actions-div {
       padding-left: 0px; } }
+@media only screen and (max-width: 767px) {
+  .content.comn-cls .card .audit .table-outer .table td {
+    padding-left: 45%; }
+    .content.comn-cls .card .audit .table-outer .table td:before {
+      position: absolute; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .content.comn-cls .card .audit .table-outer .table td {
+    padding-left: 45%; }
+    .content.comn-cls .card .audit .table-outer .table td:before {
+      position: absolute; } }
 .content.comn-cls .card .audit .search_paging .container {
   padding: 0; }
   .content.comn-cls .card .audit .search_paging .container .text-center {

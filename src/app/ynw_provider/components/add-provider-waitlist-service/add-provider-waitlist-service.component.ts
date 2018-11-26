@@ -51,6 +51,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   disable_price = true;
   taxDetails: any = [];
   taxpercentage = 0;
+  savedisabled = false;
+  canceldisabled = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
@@ -103,7 +105,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         .subscribe (data => {
             this.taxDetails = data;
             this.taxpercentage = this.taxDetails.taxPercentage;
-            console.log('tax percentage', this.taxpercentage);
+            // console.log('tax percentage', this.taxpercentage);
         },
     error => {
 
@@ -203,10 +205,14 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   createService(post_data) {
-
+    this.savedisabled = true;
+    const holdstat = this.button_title;
+    this.button_title = 'Please wait ...';
     this.provider_services.createService(post_data)
     .subscribe(
       data => {
+        this.savedisabled = false;
+        this.button_title = holdstat;
         const service_id = data;
         this.service = [];
         this.service['id'] = service_id;
@@ -220,6 +226,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       },
       error => {
         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+        this.savedisabled = false;
+        this.button_title = holdstat;
       }
     );
   }
@@ -326,10 +334,17 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   uploadApi(submit_data, from) {
+    this.savedisabled = true;
+    const holdstat = this.button_title;
+    this.button_title = 'Uploading ...';
+    this.canceldisabled = true;
 
     this.provider_services.uploadServiceGallery(this.service.id, submit_data)
     .subscribe(
       data => {
+        this.savedisabled = false;
+        this.canceldisabled = false;
+        this.button_title = holdstat;
         this.getGalleryImages();
         this.resetVariables();
         if (from === 'add') {
@@ -340,7 +355,10 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         }
       },
       error => {
-
+        this.savedisabled = false;
+        this.canceldisabled = false;
+        this.button_title = holdstat;
+        this.api_error =  this.shared_functions.getProjectErrorMesssages(error);
       }
     );
 

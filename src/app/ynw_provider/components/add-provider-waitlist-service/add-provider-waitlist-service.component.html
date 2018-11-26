@@ -5,7 +5,7 @@
 onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
 <h1 class="mat-dialog-title">Service
-    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1" [disabled]="canceldisabled">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
@@ -123,7 +123,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="galimg_outer">
         <div class="gal_img" *ngIf="file.thumbUrl"><img [src]="file.thumbUrl"></div>
         <div class="gal_caption">{{file.caption}}</div>
-        <div class="gal_action">
+        <div class="gal_action" *ngIf="!canceldisabled">
             <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
                 <mat-icon>more_vert</mat-icon>
             </button>
@@ -148,7 +148,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="gal_caption"><input matInput type="text" [(ngModel)]="item_pic.caption[i]"
           [ngModelOptions]="{standalone: true}"
           placeholder="Caption" autocomplete="off"></div>
-        <div class="gal_action">
+        <div class="gal_action" *ngIf="!canceldisabled">
             <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
                 <mat-icon>more_vert</mat-icon>
             </button>
@@ -165,7 +165,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
       </ul>
     </div>
 
-    <div class="upload-doc" (click)="file.click()">
+    <div class="upload-doc" (click)="file.click()" *ngIf="!canceldisabled">
       <label class="col-form-label">Click here to select the image files</label>
       <span class="select-wrapper ">
         <input type="file"  multiple name="image_src" id="image_src" accept="image/*"
@@ -189,8 +189,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button *ngIf="mode=='normal'" type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-    <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{button_title}}</button>
+    <button *ngIf="mode=='normal'" type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled">Cancel</button>
+    <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid || savedisabled" class="cs-btn bt1">{{button_title}}</button>
 
     <span class="service-tooltip" *ngIf="type == 'add' && mode=='normal'">
         <i class="icon-bell"></i>

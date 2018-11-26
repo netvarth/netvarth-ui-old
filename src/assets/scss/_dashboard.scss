@@ -780,6 +780,27 @@ footer {
                         display: inline-block;
                         cursor: pointer;
                     }
+                    
+                    .table {
+                        @include respond-to(ynw-767) {
+                            td {
+                                padding-left: 45%;
+
+                                &:before {
+                                    position: absolute;
+                                }
+                            }
+                        }
+                        @include respond-to(ynw-767-991) {
+                            td {
+                                padding-left: 45%;
+
+                                &:before {
+                                    position: absolute;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 .table-body {
@@ -814,6 +835,8 @@ footer {
                         }
                     }
                 }
+                
+                
             }
 
             .alerts {
@@ -858,6 +881,47 @@ footer {
                             &.error {
                                 td {
                                     color: $cc-red;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                &.tray {
+                    .stp-tbl {
+                        .table {
+                            td {
+                                &.td1 {
+                                    display: flex;
+                                    
+                                    .span1 {
+                                        flex-grow: 1;
+                                    }
+                                    .span2 {
+                                        margin-left: 10px;
+                                        font-size: 1.2rem;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                    }
+                                }
+                            }
+                            @include respond-to(ynw-767) {
+                                td {
+                                    padding-left: 15px;
+
+                                    &:before {
+                                        display: none;
+                                    }
+                                }
+                            }
+                            @include respond-to(ynw-767-991) {
+                                td {
+                                    padding-left: 15px;
+
+                                    &:before {
+                                        display: none;
+                                    }
                                 }
                             }
                         }
@@ -3295,7 +3359,16 @@ footer {
                 .bt2 {
                     background-color: $cc-ash !important;
                     color: $cc-gray !important;
-                    margin-left: 10px !important;
+                    margin-left: 50px;
+                    margin-bottom: 20px;
+                    
+                    @include respond-to(ynw-575) {
+                        margin-left: 20px;
+                    }
+                }
+                .bt1 {
+                    margin-left: 10px;
+                    margin-bottom: 20px;
                 }
             }
 
@@ -3303,13 +3376,17 @@ footer {
                 padding: 20px 40px;
 
                 @include respond-to(ynw-575) {
-                    padding: 20px 10px;
+                    padding: 20px;
                 }
 
                 .row {
                     margin-bottom: 20px;
                     margin-left: 0;
                     margin-right: 0;
+                    
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
                 }
 
                 .lbl {
@@ -3336,9 +3413,13 @@ footer {
                     }
 
                     .rw {
-                        label {
-                            margin-left: 10px;
-                            margin-bottom: 0;
+                        .form-group {
+                            display: flex;
+                            
+                            label {
+                                margin-left: 10px;
+                                margin-bottom: 0;
+                            }
                         }
 
                         &.fxd {
@@ -3407,11 +3488,6 @@ footer {
                         }
                     }
                 }
-            }
-
-            .mat-button {
-                margin-left: 50px;
-                margin-bottom: 20px;
             }
 
             app-form-success-display {
@@ -4253,6 +4329,17 @@ footer {
                                             position: absolute;
                                             left: 0;
                                             font-size: .875rem;
+                                        }
+                                        
+                                        @include respond-to(ynw-767){
+                                            color: $linkblue;
+                                            padding-left: 22px;
+                                            border: 1px solid $linkblue;
+                                            @include border-radius(30px);
+                                            
+                                            &:before {
+                                                left: 4px;
+                                            }
                                         }
                                     }
 
@@ -7554,6 +7641,14 @@ footer {
 
                         .pan-outer {
                             order: 2;
+                            
+                            .form-group {
+                                margin-bottom: 1.3rem;
+                                
+                                .sts-msg {
+                                    position: absolute;
+                                }
+                            }
                         }
 
                         .bank-outer {
@@ -7575,6 +7670,7 @@ footer {
 
                             .form-group {
                                 width: 49%;
+                                margin-bottom: 1.3rem;
 
                                 @include respond-to(ynw-767) {
                                     width: 100%;
@@ -7594,6 +7690,10 @@ footer {
                                     @include respond-to(ynw-575) {
                                         width: 100%;
                                     }
+                                }
+                                
+                                .sts-msg {
+                                    position: absolute;
                                 }
                             }
                         }
@@ -8188,6 +8288,28 @@ footer {
             }
 
             .audit {
+                .table-outer {
+                    .table {
+                        @include respond-to(ynw-767) {
+                            td {
+                                padding-left: 45%;
+
+                                &:before {
+                                    position: absolute;
+                                }
+                            }
+                        }
+                        @include respond-to(ynw-768-991) {
+                            td {
+                                padding-left: 45%;
+
+                                &:before {
+                                    position: absolute;
+                                }
+                            }
+                        }
+                    }
+                }
                 .search_paging {
                     .container {
                         padding: 0;

@@ -1004,7 +1004,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (isNaN(val)) {
       itm.qty = 1;
     } else {
-      const vv = parseInt(val, 10);
+      let vv = parseInt(val, 10);
+      if (vv === 0) {
+        vv = 1;
+      } else if ( vv < 0) {
+        vv = vv * -1;
+      }
       itm.qty = vv;
     }
   }

@@ -120,50 +120,10 @@
                     </div>
                 </div>
 
-
-            <!-- <div class="audit" *ngIf="showAuditDiv">
-                <div class="table-header">
-                    <div class="container">
-                        <div class="row">
-                            <div class="action-head">
-                                <div class="th th1">Date</div>
-                                <div class="th th2">Text</div>
-                                <div class="th th3">Subject</div>
-                                <div class="th th4">User Name</div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="copy" *ngIf="auditStatus==1">
-                            <div class="pubs">
-                                    <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
-                            </div>
-                            </div>
-                            <div class="notfound" *ngIf="auditStatus==2">
-                                   Sorry! No logs found
-                            </div>
-                            <ul class="stp-list" *ngIf="auditStatus==3">
-                                <ng-container *ngFor="let log of auditlog; let i=index">
-                                <li>
-                                    <div class="td td1">{{log.date | date:dateFormat}} {{log.time}}</div>
-                                    <div class="td td2">{{log.text}}</div>
-                                    <div class="td td3">{{log.subject}}</div>
-                                    <div class="td td4">{{log.userName}}</div>
-                                </li>
-                                </ng-container>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
             <!-- // Audit Log-->
 
             <!--Alerts-->
-            <div class="alerts" *ngIf="showAlertDiv">
+            <div class="alerts tray" *ngIf="showAlertDiv">
                     <div class="container">
                         <div class="row">
                             <div class="table-outer stp-tbl">
@@ -176,8 +136,7 @@
                                             [class.high]="alert.severity.name=='High'"
                                             [class.error]="alert.severity.name=='Critical'"
                                                          *ngFor="let alert of alerts">
-                                            <td class="td1">{{alert.text}}</td>
-                                            <td class="td2"><span class="fa fa-thumbs-o-up" [matTooltip]="'Acknowledge'" *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></span></td>
+                                            <td class="td1"><span class="span1">{{alert.text}}</span><span class="span2 fa fa-thumbs-o-up" [matTooltip]="'Acknowledge'"  (click)="alertAcknowlege(alert)"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -191,35 +150,7 @@
                     </div>
                 </div>
 
-            <!-- <div class="alerts" *ngIf="showAlertDiv">
-                <div class="table-body">
-                    <div class="container">
-                        <div class="row">
-                                <div class="copy" *ngIf="alertStatus==1">
-                                <div class="pubs" >
-                                        <app-common-innerloading-spinner spinnerParams="loadingParams"></app-common-innerloading-spinner>
-                                </div>
-                                </div>
-                                <div class="notfound" *ngIf="alertStatus==2">
-                                    No alerts to show
-                                </div>
-                                <ul class="stp-list" *ngIf="alertStatus==3">
-                                    <ng-container *ngFor="let alert of alerts">
-                                    <li>
-                                        <div class="td td1"
-                                        [class.info]="alert.severity.name=='Info'"
-                                        [class.warning]="alert.severity.name=='Warning'"
-                                        [class.high]="alert.severity.name=='High'"
-                                        [class.error]="alert.severity.name=='Critical'">{{alert.text}}</div>
-                                        <div class="td td2"><span class="icon-delete" *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></span></div>
-                                    </li>
-                                    </ng-container>
-                                </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- // Alerts-->
+           <!-- // Alerts-->
 
             <!--Online Chekin-->
             <div class="o-checkin" *ngIf="showCheckinDiv">
@@ -248,15 +179,6 @@
             <!-- // Online Checkin-->
         </div>
 
-
-
-    <!-- <section class="sect3" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
-        <div class="container">
-                <div class="row">
-                        <span (click)="showAuditlog()">Audit log</span> || <span (click)="showAlert()">Alerts</span> ||  <span (click)="showCheckinED()">Check in Enable/Disable</span> || <span (click)="showLicense()">License</span>
-                </div>
-         </div>
-     </section> -->
      <section class="sect3" *ngIf="ctype=='provider' && show_prov_bottomicons">
              <div class="container">
                  <div class="row">
