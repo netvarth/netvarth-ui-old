@@ -148,19 +148,34 @@
 
 
             <ng-container *ngIf="page_source != 'provider_checkin'">
-                <div class="coupon-outer" *ngIf="coupon_status">
-                    <div class="form-group">
-                        <span *ngIf="coupon_status=='success'" class="success">Coupon Code(s) applied successfully</span>
-                        <span *ngIf="coupon_status=='error'" class="error">Coupon Code(s) not valid</span>
-                    </div>
-                </div>
+                
                 <div class="coupon-outer">
                     <div class="form-group">
-                        <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons">
-                        <span class="cs-btn bt8" (click)="applyCoupons(selected_coupons)">{{apply_cap}}</span>
-                        <span class="cs-btn bt8" *ngIf="couponsList.length>0" (click)="removeCoupons()">CANCEL</span>
+                            <!-- <p>
+                                    <mat-form-field appearance="outline">
+                                      <mat-label>Outline form field</mat-label>
+                                      <input matInput placeholder="Placeholder">
+                                      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                                      <mat-hint>Hint</mat-hint>
+                                    </mat-form-field>
+                                  </p> -->
+                                  
+                       
+                        <div>Coupon Codes</div>                        
+                            <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons">
+                        <div>
+                            <span class="cs-btn bt8" (click)="applyCoupons(selected_coupons)">{{apply_cap}}</span>                           
+                            <span class="cd-btn coupon_cancel" *ngIf="couponsList.length>0" (click)="removeCoupons()">CANCEL</span>
+                        </div>
+                        
                     </div>
                 </div>
+                <div class="coupon-outer" *ngIf="coupon_status">
+                        <div class="form-group">
+                            <span *ngIf="coupon_status=='success'" class="success">Coupon Code(s) applied successfully</span>
+                            <span *ngIf="coupon_status=='error'" class="couponerror">Coupon Code(s) not valid</span>
+                        </div>
+                    </div>
             </ng-container>
 
 
