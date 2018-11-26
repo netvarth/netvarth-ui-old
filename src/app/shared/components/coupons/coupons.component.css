@@ -8,7 +8,7 @@
     margin-bottom: 10px;
 }
 .coupon-container {
-    padding: 2px 16px;
+    padding: 3px 16px;
     background-color: #f1f1f1;
 }
 .promo {
@@ -18,4 +18,9 @@
 
 .expire {
     color: red;
+}
+
+.code{
+    margin-left: 40%;
+   
 }

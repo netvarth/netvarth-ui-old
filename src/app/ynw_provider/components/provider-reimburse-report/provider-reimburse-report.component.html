@@ -2,70 +2,90 @@
   <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
-<!-- 
-<section>
-  <div class="content comn-cls">
-    <div class="container">
-      <div class="row">
+
+<section class="dashboard">
+  <div class="container">
+    <div class="row">
+      <div *ngIf="couponreport.length != 0">
         <div class="card">
-          <div class="copy">
-            <div class="n-loc">
-              <h5>{{reimburse_report_cap}}</h5>
-              <mat-accordion>
-                <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
-                  <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                    <span *ngIf="open_filter === true" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
-                    <span *ngIf="open_filter === false" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
-                  </mat-expansion-panel-header>
+          <div class="dash-list">
+            <h5>{{reimburse_report_cap}}</h5>
+            <mat-accordion>
+              <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
+                <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                  <span *ngIf="open_filter === true" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                  <span *ngIf="open_filter === false" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                </mat-expansion-panel-header>
 
-                  <div class="form-group first_name">
-                    <mat-form-field class="example-full-width">
-                      <label class="col-form-label">{{report_id_cap}}</label>
-                      <input matInput autocomplete="off">
-                    </mat-form-field>
-                  </div>
+                <div class="form-group first_name">
+                  <mat-form-field class="example-full-width">
+                    <label class="col-form-label">{{report_id_cap}}</label>
+                    <input matInput autocomplete="off">
+                  </mat-form-field>
+                </div>
 
-                  <div class="form-group last_name">
-                    <mat-form-field class="example-full-width">
-                      <label class="col-form-label">{{time_period_cap}}</label>
-                      <input matInput autocomplete="off">
-                    </mat-form-field>
-                  </div>
+                <div class="form-group last_name">
+                  <mat-form-field class="example-full-width">
+                    <label class="col-form-label">{{time_period_cap}}</label>
+                    <input matInput autocomplete="off">
+                  </mat-form-field>
+                </div>
 
-                  <div class="form-group last_name">
-                    <mat-form-field class="example-full-width">
-                      <label class="col-form-label">{{coup_use_cap}}</label>
-                      <input matInput autocomplete="off">
-                    </mat-form-field>
-                  </div>
+                <div class="form-group last_name">
+                  <mat-form-field class="example-full-width">
+                    <label class="col-form-label">{{coup_use_cap}}</label>
+                    <input matInput autocomplete="off">
+                  </mat-form-field>
+                </div>
 
-                  <div class="form-group last_name">
-                    <mat-form-field class="example-full-width">
-                      <label class="col-form-label" for="displayName">{{j_acc_cap}}</label>
-                      <input matInput #Flname autocomplete="off">
-                    </mat-form-field>
-                  </div>
+                <div class="form-group last_name">
+                  <mat-form-field class="example-full-width">
+                    <label class="col-form-label" for="displayName">{{j_acc_cap}}</label>
+                    <input matInput #Flname autocomplete="off">
+                  </mat-form-field>
+                </div>
 
-                  <div class="form-group services">
-                    <mat-form-field class="example-full-width">
-                      <label class="col-form-label" for="displayName">{{reimburse_amt_cap}}</label>
-                      <input matInput autocomplete="off">
-                    </mat-form-field>
-                  </div>
+                <div class="form-group services">
+                  <mat-form-field class="example-full-width">
+                    <label class="col-form-label" for="displayName">{{reimburse_amt_cap}}</label>
+                    <input matInput autocomplete="off">
+                  </mat-form-field>
+                </div>
 
-                  <div class="form-group waitlist_status">
-                    <label class="col-form-label" for="displayName">{{status_cap}}</label>
-                    <mat-form-field>
-                      <mat-select>
-                        <mat-option [value]="'all'">
-                          {{all_cap}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
+                <div class="form-group services">
+                  <mat-form-field class="example-full-width">
+                    <label class="col-form-label" for="displayName">Grant Total</label>
+                    <input matInput autocomplete="off">
+                  </mat-form-field>
+                </div>
+
+                <div class="form-group waitlist_status">
+                  <label class="col-form-label" for="displayName">{{status_cap}}</label>
+                  <mat-form-field>
+                    <mat-select>
+                      <mat-option [value]="'all'">
+                        {{all_cap}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <!-- <mat-form-field>
+                            <mat-select [(value)]="filter.queue" #Fqueue>
+                              <mat-option
+                              (click)="setFilterData('queue', 'all')" [value]="'all'">
+                              {{all_cap}}
+                              </mat-option>
+                              <mat-option *ngFor="let queue of all_queues"
+                              (click)="setFilterData('queue', queue.id)" [value]="queue.id">
+                                <span class="day_label">{{queue.displayschedule.dstr}}</span>
+                                <span class="time_label">{{queue.displayschedule.time}}</span>
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field> -->
+
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
 
             <div class="table-outer q-tbl">
               <table class="table">
@@ -76,16 +96,19 @@
                     <th>{{coup_use_cap}}</th>
                     <th>{{j_acc_cap}}</th>
                     <th>{{reimburse_amt_cap}}</th>
+                    <th>Grant Total</th>
                     <th>{{status_cap}}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let report of couponreport">
                     <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView(report.invoiceId)">{{report.invoiceId}}</td>
-                    <td data-title="Period" class="pointer-cursor" class="td1">{{report.paidate}}</td>
+                    <td data-title="Period" class="pointer-cursor" class="td1">{{formatDateDisplay(report.reportFromDate)}}
+                      - {{formatDateDisplay(report.reportEndDate)}}</td>
                     <td data-title="coupons Used" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.jaldeeAccountAmount}}</td>
+                    <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.subTotalJaldeeBank}}</td>
                     <td data-title="Amount" class="pointer-cursor" class="td1">{{report.PaidAmount}}</td>
+                    <td data-title="Amount" class="pointer-cursor" class="td1">{{report.grantTotal}}</td>
                     <td data-title="Status" class="pointer-cursor" class="td1">{{report.invoiceStatus}}</td>
                     <td>
                       <div *ngIf="report.invoiceStatus=='notpaid'">
@@ -99,6 +122,9 @@
           </div>
         </div>
       </div>
+      <div *ngIf="couponreport.length == 0">
+        <div class="card">No reports</div>
+      </div>
     </div>
   </div>
-</section> -->
+</section>

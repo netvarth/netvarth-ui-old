@@ -11,6 +11,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 })
 export class CouponsComponent implements OnInit {
   couponsList: any = [];
+  adwordshowmore = false;
   constructor(private activaterouterobj: ActivatedRoute,
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
@@ -22,5 +23,13 @@ export class CouponsComponent implements OnInit {
 
   formatDateDisplay(dateStr) {
     return this.shared_functions.formatDateDisplay(dateStr);
+  }
+
+  toggle_adwordshowmore() {
+    if (this.adwordshowmore) {
+      this.adwordshowmore = false;
+    } else {
+      this.adwordshowmore = true;
+    }
   }
 }

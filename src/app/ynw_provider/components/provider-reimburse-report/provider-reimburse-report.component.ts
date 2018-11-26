@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-provider-reimburse-report',
@@ -22,6 +23,7 @@ export class ProviderReimburseReportComponent implements OnInit {
   reimburse_amt_cap = Messages.REIMBURSE_AMT_CAP;
   req_payment_cap = Messages.REQ_PAYMENT_CAP;
   couponreport: any = [];
+
   query_executed = false;
   breadcrumbs = [
     {
@@ -38,7 +40,8 @@ export class ProviderReimburseReportComponent implements OnInit {
   ];
   open_filter = false;
   requestdialogRef;
-  constructor(private dialog: MatDialog, private router: Router, private provider_servicesobj: ProviderServices) {
+  constructor(private dialog: MatDialog, private router: Router, 
+    private sharedfunctionObj: SharedFunctions,private provider_servicesobj: ProviderServices) {
   }
   ngOnInit() {
     console.log('I am Here');
@@ -58,6 +61,26 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.requestdialogRef.afterClosed().subscribe(result => {
     });
   }
+
+
+  // doDeleteFavProvider(invoiceId) {
+  //   if (!invoiceId.id) {
+  //     return false;
+  //   }
+
+  //   this.shared_functions.doDeleteFavProvider(invoiceId, this)
+  //     .then(
+  //       data => {
+  //         if (data === 'reloadlist') {
+  //           this.requestforPaymentJC();
+  //         }
+  //       },
+  //       error => {
+  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       });
+  // }
+
+
   getCouponReport() {
     this.couponreport = this.provider_servicesobj.getJaldeeCouponReports()
       .subscribe(data => {
@@ -66,6 +89,10 @@ export class ProviderReimburseReportComponent implements OnInit {
       });
   }
   reportView(invoiceId) {
-    // this.router.navigate(['provider', 'settings', 'coupons', 'report', invoiceId]);
+    this.router.navigate(['provider', 'settings', 'coupons', 'report', invoiceId]);
+  }
+
+  formatDateDisplay(dateStr) {
+    return this.sharedfunctionObj.formatDateDisplay(dateStr);
   }
 }

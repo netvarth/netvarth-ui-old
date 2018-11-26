@@ -218,7 +218,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
   getJaldeeCouponStat(jc_code) {
-    const url = 'provider/jaldee/coupons/' + jc_code + '/stat';
+    const url = 'provider/jaldee/coupons/' + jc_code + '/stats';
     return this.servicemeta.httpGet(url);
   }
   getJaldeeCouponReports(filter = {}) {

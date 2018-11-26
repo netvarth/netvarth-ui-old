@@ -7,12 +7,35 @@
 <mat-dialog-content>
   <div class="coupon" *ngFor="let coupon of couponsList">
     <div class="coupon-container" style="background-color:white">
-      <h6><b>{{coupon.couponName}}</b></h6>
-      <div>{{coupon.couponDescription}}</div>
-    </div>
-    <div class="coupon-container">
-      <div>Coupon Code: <span class="promo">{{coupon.jaldeeCouponCode}}</span></div>
-      <div class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} - {{formatDateDisplay(coupon.endDate)}}</div>
+      <div class="servicedet_outer">
+        <div class="outer">
+          <div class="outer1">
+            <div class="name">
+              <h6><b>{{coupon.couponName}}</b></h6>
+            </div>
+            <div class="code">
+              #{{coupon.jaldeeCouponCode}}
+            </div>
+          </div>
+          <div>{{coupon.couponDescription}}</div>
+          <div class="outer1">
+            <div class="name">
+              <span class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} -
+                {{formatDateDisplay(coupon.endDate)}}</span>
+            </div>
+            <div class="code">
+              <ng-container>
+                <div class="lc3-2 lcd">
+                  <div class="cs-btn bt10" (click)="toggle_adwordshowmore()">T & C</div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="card" *ngIf="adwordshowmore">
+            {{coupon.consumerTermsAndconditions}}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </mat-dialog-content>

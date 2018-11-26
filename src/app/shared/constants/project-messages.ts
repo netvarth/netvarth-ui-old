@@ -880,8 +880,8 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-reimburse-report
   'REIMBUSE_REPORT_CAP': 'Reimbursement Report',
-  'REPORT_ID_CAP': 'Report Id',
-  'TIME_PERIOD_CAP': 'Time Period',
+  'REPORT_ID_CAP': 'Invoice Id',
+  'TIME_PERIOD_CAP': 'Period',
   'COUP_USE_CAP': 'Coupons Used',
   'J_ACC_CAP': 'Jaldee Account',
   'REIMBURSE_AMT_CAP': 'Reimbursable Amount',

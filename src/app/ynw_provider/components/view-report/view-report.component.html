@@ -4,133 +4,142 @@
 </section>
 
 <section>
-  <div class="content comn-cls">
+  <div class="content loc-list">
     <div class="container">
       <div class="row">
-        <div class="card">
-          <div class="copy">
-            <ng-container>
-              <span style="padding-right: 30px">{{report_id_cap}} : {{viewreport.invoiceId}}</span>
-              <span style="padding-right: 30px">{{period_date_cap}} : {{viewreport.paidate}}</span>
-              <span style="padding-right: 30px">{{coupon_use_cap}} : </span>
-              <span style="padding-right: 30px">{{j_acc_cap}} : {{viewreport.jaldeeAccountAmount}}</span>
-              <span style="padding-right: 30px">{{coupon_amt_cap}} : {{viewreport.jaldeeCouponAmount}}</span>
-              <span style="padding-right: 30px">{{reimburse_amt_cap}} : {{viewreport.PaidAmount}}</span>
-              <span style="padding-right: 30px">{{status_cap}} : {{viewreport.invoiceStatus}}</span>
-            </ng-container>
-            <div class="n-loc">
-              <h5>{{j_acct_cap}}</h5>
-              <div class="table-outer q-tbl">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>{{date_cap}}</th>
-                      <th>{{bill_cap}} {{id_cap}}</th>
-                      <th>{{bill_cap}} {{amt_cap}}</th>
-                      <th>{{consumer_cap}} {{id_cap}}</th>
-                      <th>{{consumer_cap}} {{name_cap}}</th>
-                      <th>{{service_cap}}</th>
-                      <th>{{check_in_cap}} {{id_cap}}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td data-title="Date" class="td1" class="pointer-cursor">11/11/2018</td>
-                      <td data-title="Bill Id" class="pointer-cursor" class="td1">122</td>
-                      <td data-title="Bill Amount" class="pointer-cursor" class="td1">1000</td>
-                      <td data-title="Consumer Id" class="pointer-cursor" class="td1">522</td>
-                      <td data-title="Consumer Name" class="pointer-cursor" class="td1">Layana</td>
-                      <td data-title="Service" class="pointer-cursor" class="td1">Consultation</td>
-                      <td data-title="Check-in Id" class="pointer-cursor" class="td1">155</td>
-                    </tr>
-                    <tr>
-                      <td data-title="Date" class="td1" class="pointer-cursor">11/11/2018</td>
-                      <td data-title="Bill Id" class="pointer-cursor" class="td1">122</td>
-                      <td data-title="Bill Amount" class="pointer-cursor" class="td1">1000</td>
-                      <td data-title="Consumer Id" class="pointer-cursor" class="td1">522</td>
-                      <td data-title="Consumer Name" class="pointer-cursor" class="td1">Layana</td>
-                      <td data-title="Service" class="pointer-cursor" class="td1">Consultation</td>
-                      <td data-title="Check-in Id" class="pointer-cursor" class="td1">155</td>
-                    </tr>
-                  </tbody>
-                </table>
+        <div class="card p0">
+          <div class="copy locd">
+            <div class="lbl col-sm-12 col-md-8 col-lg-8">
+              <div class="cl1">
+                <div class="ot-it" *ngIf="viewreport">
+                  <div class="c-ot">
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                      <span class="ttle">{{report_id_cap}}:</span>
+                      <span>{{viewreport.invoiceId}}</span>
+                    </div>
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                      <span class="ttle">{{period_date_cap}}:</span>
+                      <span>{{formatDateDisplay(viewreport.reportFromDate)}} -
+                        {{formatDateDisplay(viewreport.reportEndDate)}}</span>
+                    </div>
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                      <span class="ttle">{{coupon_use_cap}}:</span>
+                      <span>0</span>
+                    </div>
+                  </div>
+                  <div class="c-ot">
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                      <span class="ttle">{{j_acc_cap}}:</span>
+                      <span>{{viewreport.subTotalJaldeeBank}}</span>
+                    </div>
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                      <span class="ttle">{{coupon_amt_cap}}:</span>
+                      <span>{{viewreport.jaldeeCouponAmount}}0</span>
+                    </div>
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                      <span class="ttle">{{reimburse_amt_cap}}:</span>
+                      <span>{{viewreport.PaidAmount}}0</span>
+                    </div>
+                  </div>
+                  <div class="c-ot">
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                      <span class="ttle">Grant Total:</span>
+                      <span>{{viewreport.grantTotal}}</span>
+                    </div>
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                      <span class="ttle">{{status_cap}}:</span>
+                      <span>{{viewreport.invoiceStatus}}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="n-loc">
-              <h5>Jaldee Coupon1-details</h5>
-              <div class="table-outer q-tbl">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>{{date_cap}}</th>
-                      <th>{{bill_cap}} {{id_cap}}</th>
-                      <th>{{bill_cap}} {{amt_cap}}</th>
-                      <th>{{consumer_cap}} {{id_cap}}</th>
-                      <th>{{consumer_cap}} {{name_cap}}</th>
-                      <th>{{service_cap}}</th>
-                      <th>{{check_in_cap}} {{id_cap}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td data-title="Date" class="td1" class="pointer-cursor">11/11/2018</td>
-                      <td data-title="Bill Id" class="pointer-cursor" class="td1">122</td>
-                      <td data-title="Bill Amount" class="pointer-cursor" class="td1">1000</td>
-                      <td data-title="Consumer Id" class="pointer-cursor" class="td1">522</td>
-                      <td data-title="Consumer Name" class="pointer-cursor" class="td1">Layana</td>
-                      <td data-title="Service" class="pointer-cursor" class="td1">Consultation</td>
-                      <td data-title="Check-in Id" class="pointer-cursor" class="td1">155</td>
-                    </tr>
-                    <tr>
-                      <td data-title="Date" class="td1" class="pointer-cursor">11/11/2018</td>
-                      <td data-title="Bill Id" class="pointer-cursor" class="td1">122</td>
-                      <td data-title="Bill Amount" class="pointer-cursor" class="td1">1000</td>
-                      <td data-title="Consumer Id" class="pointer-cursor" class="td1">522</td>
-                      <td data-title="Consumer Name" class="pointer-cursor" class="td1">Layana</td>
-                      <td data-title="Service" class="pointer-cursor" class="td1">Consultation</td>
-                      <td data-title="Check-in Id" class="pointer-cursor" class="td1">155</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </div>
+          <div class="n-loc table">
+            <h5>{{j_acct_cap}}</h5>
+            <div class="table-outer q-tbl">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>{{date_cap}}</th>
+                    <th>{{bill_cap}} {{id_cap}}</th>
+                    <th>{{bill_cap}} {{amt_cap}}</th>
+                    <th>{{consumer_cap}} {{id_cap}}</th>
+                    <th>{{consumer_cap}} {{name_cap}}</th>
+                    <th>{{service_cap}}</th>
+                    <th>{{check_in_cap}} {{id_cap}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-title="Date" class="td1" class="pointer-cursor"></td>
+                    <td data-title="Bill Id" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Bill Amount" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Consumer Id" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Consumer Name" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Service" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Check-in Id" class="pointer-cursor" class="td1"></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="n-loc">
-              <h5>Jaldee Coupon2-details</h5>
-              <div class="table-outer q-tbl">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>{{date_cap}}</th>
-                      <th>{{bill_cap}} {{id_cap}}</th>
-                      <th>{{bill_cap}} {{amt_cap}}</th>
-                      <th>{{consumer_cap}} {{id_cap}}</th>
-                      <th>{{consumer_cap}} {{name_cap}}</th>
-                      <th>{{service_cap}}</th>
-                      <th>{{check_in_cap}} {{id_cap}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td data-title="Date" class="td1" class="pointer-cursor">11/11/2018</td>
-                      <td data-title="Bill Id" class="pointer-cursor" class="td1">122</td>
-                      <td data-title="Bill Amount" class="pointer-cursor" class="td1">1000</td>
-                      <td data-title="Consumer Id" class="pointer-cursor" class="td1">522</td>
-                      <td data-title="Consumer Name" class="pointer-cursor" class="td1">Layana</td>
-                      <td data-title="Service" class="pointer-cursor" class="td1">Consultation</td>
-                      <td data-title="Check-in Id" class="pointer-cursor" class="td1">155</td>
-                    </tr>
-                    <tr>
-                      <td data-title="Date" class="td1" class="pointer-cursor">11/11/2018</td>
-                      <td data-title="Bill Id" class="pointer-cursor" class="td1">122</td>
-                      <td data-title="Bill Amount" class="pointer-cursor" class="td1">1000</td>
-                      <td data-title="Consumer Id" class="pointer-cursor" class="td1">522</td>
-                      <td data-title="Consumer Name" class="pointer-cursor" class="td1">Layana</td>
-                      <td data-title="Service" class="pointer-cursor" class="td1">Consultation</td>
-                      <td data-title="Check-in Id" class="pointer-cursor" class="td1">155</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </div>
+          <div class="n-loc table">
+            <h5>Jaldee Coupon1-details</h5>
+            <div class="table-outer q-tbl">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>{{date_cap}}</th>
+                    <th>{{bill_cap}} {{id_cap}}</th>
+                    <th>{{bill_cap}} {{amt_cap}}</th>
+                    <th>{{consumer_cap}} {{id_cap}}</th>
+                    <th>{{consumer_cap}} {{name_cap}}</th>
+                    <th>{{service_cap}}</th>
+                    <th>{{check_in_cap}} {{id_cap}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-title="Date" class="td1" class="pointer-cursor"></td>
+                    <td data-title="Bill Id" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Bill Amount" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Consumer Id" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Consumer Name" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Service" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Check-in Id" class="pointer-cursor" class="td1"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="n-loc table">
+            <h5>Jaldee Coupon2-details</h5>
+            <div class="table-outer q-tbl">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>{{date_cap}}</th>
+                    <th>{{bill_cap}} {{id_cap}}</th>
+                    <th>{{bill_cap}} {{amt_cap}}</th>
+                    <th>{{consumer_cap}} {{id_cap}}</th>
+                    <th>{{consumer_cap}} {{name_cap}}</th>
+                    <th>{{service_cap}}</th>
+                    <th>{{check_in_cap}} {{id_cap}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-title="Date" class="td1" class="pointer-cursor"></td>
+                    <td data-title="Bill Id" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Bill Amount" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Consumer Id" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Consumer Name" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Service" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Check-in Id" class="pointer-cursor" class="td1"></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

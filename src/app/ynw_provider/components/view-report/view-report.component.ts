@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { SharedServices } from '../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-view-report',
@@ -26,6 +27,8 @@ export class ViewReportComponent implements OnInit {
   reimburse_amt_cap = Messages.REPORT_REIMBURSE_AMT_CAP;
   j_acct_cap = Messages.REPORT_JALDEE_ACCT_CAP;
   consumer_cap = Messages.REPORT_CONSUMER_CAP;
+  s3url;
+  retval;
   viewreport;
   breadcrumbs_init = [
     {
@@ -33,26 +36,60 @@ export class ViewReportComponent implements OnInit {
       title: 'Settings'
     },
     {
-      title: 'Coupons'
+      title: 'Coupons',
+      url: '/provider/settings/coupons'
     },
     {
-      title: 'Report'
+      title: 'Report',
+      url: '/provider/settings/coupons/report'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
   invoice_id;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
-    private router: ActivatedRoute, private route: Router) { }
+    private router: ActivatedRoute, private route: Router,
+    private shared_services: SharedServices,) { }
   ngOnInit() {
     console.log('In View Report Component');
     this.router.params
       .subscribe(params => {
         this.invoice_id = params.id;
         this.getjaldeeReport();
+        this.gets3curl();
       });
 
   }
+
+  gets3curl() {
+    this.retval = this.sharedfunctionObj.getS3Url('provider')
+      .then(
+        res => {
+          this.s3url = res;
+          // console.log('s3', this.s3url);
+          this.getbusinessprofiledetails_json('report', true);
+        },
+        error => {
+          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+        }
+      );
+  }
+
+  getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getbusinessprofiledetails_json(this.invoice_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+     
+      
+             
+         
+        error => {
+        }
+  });
+}
 
   getjaldeeReport() {
     this.provider_servicesobj.getJaldeeCouponReportsbyId(this.invoice_id).subscribe(
@@ -69,4 +106,9 @@ export class ViewReportComponent implements OnInit {
     });
     this.breadcrumbs = breadcrumbs;
   }
+
+  formatDateDisplay(dateStr) {
+    return this.sharedfunctionObj.formatDateDisplay(dateStr);
+  }
+
 }
