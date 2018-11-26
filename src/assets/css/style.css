@@ -19466,32 +19466,27 @@ footer {
       margin-top: 5px;
     }
     .coupon_cancel {
+      padding-top: 100px;
       margin-left: 15px;
-      
+      font-family: 'Montserrat';
+      font-size: 5px;
+      font-weight: 500;
       color: #00aef2;
       cursor: pointer;
       font-size: inherit;
-      /* stops bg color from leaking outside the border: */
-      /* height: 40px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 500; */
       text-transform: uppercase;
       font-size: .875rem;
       
+      
     }
-    /* body { 
-      font-family: Roboto, Arial, sans-serif;
-      margin: 0;
+    .apply_coup_input {
+    margin-top: 10px;
+    width: 230px;
+    padding: 4px;
+    /* margin: 8px 0; */
+    box-sizing: border-box;
+    border: 1px solid #000000;
+    outline: none;
     }
-    
-    .basic-container {
-      padding: 30px;
-    }
-    
-    .version-info {
-      font-size: 8pt;
-      float: right;
-    }
-     */
 
 /*# sourceMappingURL=style.css.map */
