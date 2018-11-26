@@ -863,6 +863,7 @@ export const Messages = {
   // App-ynw_provider-components-provider-payment-history
   'NO_TRANSACTION': 'No transactions done yet',
 
+  
   // App-ynw_provider-components-provider-profile
   'PROFILE_CAP': 'Profile',
   'BUS_NAME_CAP': 'Business Name',
