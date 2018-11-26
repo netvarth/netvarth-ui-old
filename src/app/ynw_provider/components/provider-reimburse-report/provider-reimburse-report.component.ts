@@ -60,27 +60,8 @@ export class ProviderReimburseReportComponent implements OnInit {
     });
     this.requestdialogRef.afterClosed().subscribe(result => {
     });
-  }
-
-
-  // doDeleteFavProvider(invoiceId) {
-  //   if (!invoiceId.id) {
-  //     return false;
-  //   }
-
-  //   this.shared_functions.doDeleteFavProvider(invoiceId, this)
-  //     .then(
-  //       data => {
-  //         if (data === 'reloadlist') {
-  //           this.requestforPaymentJC();
-  //         }
-  //       },
-  //       error => {
-  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       });
-  // }
-
-
+  } 
+  
   getCouponReport() {
     this.couponreport = this.provider_servicesobj.getJaldeeCouponReports()
       .subscribe(data => {

@@ -75,16 +75,14 @@ export class ViewReportComponent implements OnInit {
       );
   }
 
+  
   getbusinessprofiledetails_json(section, modDateReq: boolean) {
     let UTCstring = null;
     if (modDateReq) {
       UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json(this.invoice_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-     
-      
-             
+      .subscribe(res => {   
          
         error => {
         }
