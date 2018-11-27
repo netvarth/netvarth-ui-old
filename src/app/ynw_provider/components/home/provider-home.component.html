@@ -1,123 +1,128 @@
-
 <section>
-  <app-provider-subheader [activeTab]="'dashboard'" (reloadActionSubheader)="reloadActionSubheader($event)"></app-provider-subheader> <!-- Subheader section -->
+  <app-provider-subheader [activeTab]="'dashboard'" (reloadActionSubheader)="reloadActionSubheader($event)"></app-provider-subheader>
+  <!-- Subheader section -->
 </section>
 <section class="dashboard">
   <div class="container">
-      <div class="row">
-          <div class="card p0 w-dta">
-              <div class="head">
-                  <div class="locn" *ngIf="selected_location">
-                      <span class="loc-name" *ngIf="!edit_location"><span class="icon-location"></span> {{selected_location.place | capitalizeFirst}}</span>
-                      <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
-                        <mat-form-field class="example-full-width" *ngIf="edit_location">
+    <div class="row">
+      <div class="card p0 w-dta">
+        <div class="head">
+          <div class="locn" *ngIf="selected_location">
+            <span class="loc-name" *ngIf="!edit_location"><span class="icon-location"></span> {{selected_location.place
+              | capitalizeFirst}}</span>
+            <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
+            <mat-form-field class="example-full-width" *ngIf="edit_location">
 
-                          <mat-select placeholder="Locations" [(value)]="selected_location_index" (selectionChange)="onChangeLocationSelect($event)">
-                            <mat-option *ngFor="let location of locations;let i = index" [value]="i">
-                              {{ location.place | capitalizeFirst }}
-                            </mat-option>
-                          </mat-select>
+              <mat-select placeholder="Locations" [(value)]="selected_location_index" (selectionChange)="onChangeLocationSelect($event)">
+                <mat-option *ngFor="let location of locations;let i = index" [value]="i">
+                  {{ location.place | capitalizeFirst }}
+                </mat-option>
+              </mat-select>
 
-                        </mat-form-field>
-                        <span class="icon-close" (click)="cancellocationChange()" *ngIf="edit_location"></span>
+            </mat-form-field>
+            <span class="icon-close" (click)="cancellocationChange()" *ngIf="edit_location"></span>
 
-                  </div>
-                  <div class="links"  *ngIf="selected_location">
-                      <span class="lnk" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
-                        {{today_cap}} ({{today_waitlist_count}}) <!--<span class="count">{{today_waitlist_count}}</span>-->
-                      </span>
-                      <span class="lnk" (click)="setTimeType(2)" [ngClass]="{'active': time_type==2}">
-                        {{future_cap}} ({{future_waitlist_count}}) <!--<span class="count">{{future_waitlist_count}}</span>-->
-                      </span>
-                      <span class="lnk" (click)="setTimeType(0)" [ngClass]="{'active': time_type==0}">
-                        {{history_cap}}</span>
-                  </div>
-              </div>
+          </div>
+          <div class="links" *ngIf="selected_location">
+            <span class="lnk" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
+              {{today_cap}} ({{today_waitlist_count}})
+              <!--<span class="count">{{today_waitlist_count}}</span>-->
+            </span>
+            <span class="lnk" (click)="setTimeType(2)" [ngClass]="{'active': time_type==2}">
+              {{future_cap}} ({{future_waitlist_count}})
+              <!--<span class="count">{{future_waitlist_count}}</span>-->
+            </span>
+            <span class="lnk" (click)="setTimeType(0)" [ngClass]="{'active': time_type==0}">
+              {{history_cap}}</span>
+          </div>
+        </div>
 
-              <div class="qlst" *ngIf="time_type ==1 && queues.length > 1">
-                  <ul *ngIf = "!show_small_device_queue_display">
-                      <li
-                      [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
-                      *ngFor="let queue of queues">
-                        <div class="qname"  (click)="selectedQueue(queue)">
-                          <span class="qtitle"> {{queue.name}}</span>
-                          <!-- <span class="qtitle" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
+        <div class="qlst" *ngIf="time_type ==1 && queues.length > 1">
+          <ul *ngIf="!show_small_device_queue_display">
+            <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}" *ngFor="let queue of queues">
+              <div class="qname" (click)="selectedQueue(queue)">
+                <span class="qtitle"> {{queue.name}}</span>
+                <!-- <span class="qtitle" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
                             {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
                           </span> -->
-                        </div>
-                      </li>
-                  </ul>
-                  <div class="queue-body" *ngIf = "show_small_device_queue_display">
-                    <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i class="fa fa-angle-left"></i></span>
-                    <span class="leftarrow" *ngIf="sel_queue_indx <= 0"><i class="fa fa-angle-left disable"></i></span>
-                    <span class="sel-queue" *ngIf="selected_queue">{{selected_queue.name}}</span>
-                    <span class="rightarrow" (click)="handleQueueSel('next')" *ngIf="(queues.length -1) > sel_queue_indx"> <i class="fa fa-angle-right"></i> </span>
-                    <span class="rightarrow"  *ngIf="(queues.length -1) == sel_queue_indx"> <i class="fa fa-angle-right disable"></i> </span>
-                </div>
               </div>
+            </li>
+          </ul>
+          <div class="queue-body" *ngIf="show_small_device_queue_display">
+            <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i class="fa fa-angle-left"></i></span>
+            <span class="leftarrow" *ngIf="sel_queue_indx <= 0"><i class="fa fa-angle-left disable"></i></span>
+            <span class="sel-queue" *ngIf="selected_queue">{{selected_queue.name}}</span>
+            <span class="rightarrow" (click)="handleQueueSel('next')" *ngIf="(queues.length -1) > sel_queue_indx"> <i
+                class="fa fa-angle-right"></i> </span>
+            <span class="rightarrow" *ngIf="(queues.length -1) == sel_queue_indx"> <i class="fa fa-angle-right disable"></i>
+            </span>
+          </div>
+        </div>
 
-              <div class="dash-list">
-                  <div class="ctrls">
-                      <ul>
-                          <li [ngClass]="{'active': status_type =='all'}"  (click)="changeStatusType('all')"
-                          *ngIf="(time_type ==1 && selected_queue!=null && selected_queue.id)">
-                          <span>{{checkin_label |capitalizeFirst}}s</span>
-                          </li>
-                          <li class="active"  
-                          *ngIf="time_type != 1">
-                          <span>{{checkin_label |capitalizeFirst}}s</span>
-                          </li>
-                          <ng-container  *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
-                            <li [ngClass]="{'active': status_type =='started'}"  (click)="changeStatusType('started')">
-                              <span>{{started_upper}}</span></li>
-                            <li [ngClass]="{'active': status_type =='done'}"  (click)="changeStatusType('done')">
-                              <span>{{done_upper}}</span></li>
-                            <li [ngClass]="{'active': status_type =='cancelled'}"  (click)="changeStatusType('cancelled')">
-                              <span>{{cancelled_upper}}</span></li>
-                          </ng-container>
-                      </ul>
+        <div class="dash-list">
+          <div class="ctrls">
+            <ul>
+              <li [ngClass]="{'active': status_type =='all'}" (click)="changeStatusType('all')" *ngIf="(time_type ==1 && selected_queue!=null && selected_queue.id)">
+                <span>{{checkin_label |capitalizeFirst}}s</span>
+              </li>
+              <li class="active" *ngIf="time_type != 1">
+                <span>{{checkin_label |capitalizeFirst}}s</span>
+              </li>
+              <ng-container *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+                <li [ngClass]="{'active': status_type =='started'}" (click)="changeStatusType('started')">
+                  <span>{{started_upper}}</span></li>
+                <li [ngClass]="{'active': status_type =='done'}" (click)="changeStatusType('done')">
+                  <span>{{done_upper}}</span></li>
+                <li [ngClass]="{'active': status_type =='cancelled'}" (click)="changeStatusType('cancelled')">
+                  <span>{{cancelled_upper}}</span></li>
+              </ng-container>
+            </ul>
 
-                      <span class="adjust-delay-button" *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
-                        <span class="ml-auto cs-btn bt5" (click)="showAdjustDelay()" [matTooltipClass] = "tooltipcls" [matTooltip]="delayTooltip">
-                          {{adjust_delay}}
-                      </span>
-                      <i data-icon="B" (click)="learnmore_clicked('adjustdelay')"></i>
-                      </span>
-                  </div>
+            <span class="adjust-delay-button" *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+              <span class="ml-auto cs-btn bt5" (click)="showAdjustDelay()" [matTooltipClass]="tooltipcls" [matTooltip]="delayTooltip">
+                {{adjust_delay}}
+              </span>
+              <i data-icon="B" (click)="learnmore_clicked('adjustdelay')"></i>
+            </span>
+          </div>
 
-                  <!-- <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
+          <!-- <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
                       <span><i class="icon-filter-one"></i></span>
                   </div> -->
-                  <mat-accordion >
-                    <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
-                      <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                          <span *ngIf="open_filter === true" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
-                          <span *ngIf="open_filter === false" (click)="toggleFilter()"><i class="icon-filter-one"  [matTooltipClass] = "tooltipcls" [matTooltip]="filtericonTooltip"></i></span>
-                      </mat-expansion-panel-header>
+          <mat-accordion>
+            <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
+              <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                <span *ngIf="open_filter === true" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+                <span *ngIf="open_filter === false" (click)="toggleFilter()"><i class="icon-filter-one"
+                    [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"></i></span>
+              </mat-expansion-panel-header>
 
-                      <div class="form-group first_name">
-                        <mat-form-field class="example-full-width">
-                          <label class="col-form-label">{{first_name}}</label>
-                          <input matInput [(ngModel)]="filter.first_name"  (blur)="doSearch()" #Ffname (keyup)="focusInput($event, Flname)" autocomplete="off">
-                        </mat-form-field>
-                      </div>
+              <div class="form-group first_name">
+                <mat-form-field class="example-full-width">
+                  <label class="col-form-label">{{first_name}}</label>
+                  <input matInput [(ngModel)]="filter.first_name" (blur)="doSearch()" #Ffname (keyup)="focusInput($event, Flname)"
+                    autocomplete="off">
+                </mat-form-field>
+              </div>
 
-                      <div class="form-group last_name">
-                          <mat-form-field class="example-full-width">
-                            <label class="col-form-label">{{last_name}}</label>
-                            <input matInput [(ngModel)]="filter.last_name"  (blur)="doSearch()" #Flname (keyup)="focusInputSp($event)" autocomplete="off">
-                          </mat-form-field>
-                      </div>
-                      <div class="form-group last_name" *ngIf="time_type == 0">
-                        <mat-form-field class="example-full-width">
-                          <label class="col-form-label">{{phone_no_cap}}</label>
-                          <input matInput [(ngModel)]="filter.phone_number"  (blur)="doSearch()" #Flname (keyup)="focusInputSp($event)" autocomplete="off">
-                        </mat-form-field>
-                    </div>
+              <div class="form-group last_name">
+                <mat-form-field class="example-full-width">
+                  <label class="col-form-label">{{last_name}}</label>
+                  <input matInput [(ngModel)]="filter.last_name" (blur)="doSearch()" #Flname (keyup)="focusInputSp($event)"
+                    autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div class="form-group last_name" *ngIf="time_type == 0">
+                <mat-form-field class="example-full-width">
+                  <label class="col-form-label">{{phone_no_cap}}</label>
+                  <input matInput [(ngModel)]="filter.phone_number" (blur)="doSearch()" #Flname (keyup)="focusInputSp($event)"
+                    autocomplete="off">
+                </mat-form-field>
+              </div>
 
-                      <div class="form-group queues" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">{{service_window_cap}}</label>
-                        <!-- <mat-chip-list>
+              <div class="form-group queues" *ngIf="time_type !== 1">
+                <label class="col-form-label" for="displayName">{{service_window_cap}}</label>
+                <!-- <mat-chip-list>
                           <mat-chip
                           color="{{(filter.queue === 'all') ? 'primary' : ''}}"
                           selected="{{(filter.queue === 'all' )? true : false}}"
@@ -132,25 +137,23 @@
 
                         </mat-chip-list> -->
 
-                        <mat-form-field>
-                          <mat-select [(value)]="filter.queue" #Fqueue>
-                            <mat-option
-                            (click)="setFilterData('queue', 'all')" [value]="'all'">
-                            {{all_cap}}
-                            </mat-option>
-                            <mat-option *ngFor="let queue of all_queues"
-                            (click)="setFilterData('queue', queue.id)" [value]="queue.id">
-                              <span class="day_label">{{queue.displayschedule.dstr}}</span>
-                              <span class="time_label">{{queue.displayschedule.time}}</span>
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
+                <mat-form-field>
+                  <mat-select [(value)]="filter.queue" #Fqueue>
+                    <mat-option (click)="setFilterData('queue', 'all')" [value]="'all'">
+                      {{all_cap}}
+                    </mat-option>
+                    <mat-option *ngFor="let queue of all_queues" (click)="setFilterData('queue', queue.id)" [value]="queue.id">
+                      <span class="day_label">{{queue.displayschedule.dstr}}</span>
+                      <span class="time_label">{{queue.displayschedule.time}}</span>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-                      </div>
+              </div>
 
-                      <div class="form-group services">
-                        <label class="col-form-label" for="displayName">{{services_cap}}</label>
-                        <!-- <mat-chip-list>
+              <div class="form-group services">
+                <label class="col-form-label" for="displayName">{{services_cap}}</label>
+                <!-- <mat-chip-list>
                           <mat-chip
                           color="{{(filter.service === 'all') ? 'primary' : ''}}"
                           selected="{{(filter.service === 'all' )? true : false}}"
@@ -164,24 +167,22 @@
                           </mat-chip>
                         </mat-chip-list> -->
 
-                        <mat-form-field>
-                          <mat-select [(value)]="filter.service">
-                            <mat-option
-                            (click)="setFilterData('service', 'all')" [value]="'all'">
-                            {{all_cap}}
-                            </mat-option>
-                            <mat-option *ngFor="let service of services"
-                            (click)="setFilterData('service', service.id)" [value]="service.id">
-                            {{service.name}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
+                <mat-form-field>
+                  <mat-select [(value)]="filter.service">
+                    <mat-option (click)="setFilterData('service', 'all')" [value]="'all'">
+                      {{all_cap}}
+                    </mat-option>
+                    <mat-option *ngFor="let service of services" (click)="setFilterData('service', service.id)" [value]="service.id">
+                      {{service.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-                      </div>
+              </div>
 
-                      <div class="form-group waitlist_status" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">{{check_in_status}}</label>
-                        <!-- <mat-chip-list>
+              <div class="form-group waitlist_status" *ngIf="time_type !== 1">
+                <label class="col-form-label" for="displayName">{{check_in_status}}</label>
+                <!-- <mat-chip-list>
                           <mat-chip
                           color="{{(filter.waitlist_status === 'all') ? 'primary' : ''}}"
                           selected="{{(filter.waitlist_status === 'all' )? true : false}}"
@@ -194,315 +195,259 @@
                               {{status.name}}
                           </mat-chip>
                         </mat-chip-list> -->
-                        <mat-form-field>
-                          <mat-select [(value)]="filter.waitlist_status">
-                            <mat-option
-                            (click)="setFilterData('waitlist_status', 'all')" [value]="'all'">
-                            {{all_cap}}
-                            </mat-option>
-                            <mat-option  *ngFor="let status of waitlist_status"
-                            (click)="setFilterData('waitlist_status', status.value)" [value]="status.value">
-                            {{status.name}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
+                <mat-form-field>
+                  <mat-select [(value)]="filter.waitlist_status">
+                    <mat-option (click)="setFilterData('waitlist_status', 'all')" [value]="'all'">
+                      {{all_cap}}
+                    </mat-option>
+                    <mat-option *ngFor="let status of waitlist_status" (click)="setFilterData('waitlist_status', status.value)"
+                      [value]="status.value">
+                      {{status.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-                      </div>
+              </div>
 
-                      <div class="form-group waitlist_status" *ngIf="time_type == 0">
-                        <label class="col-form-label" for="displayName">{{payment_status}}</label>
-                        <mat-form-field>
-                          <mat-select [(value)]="filter.payment_status">
-                            <mat-option
-                            (click)="setFilterData('payment_status', 'all')" [value]="'all'">
-                            {{all_cap}}
-                            </mat-option>
-                            <mat-option  *ngFor="let pstat of payStatusList"
-                            (click)="setFilterData('payment_status', pstat.pk)" [value]="pstat.pk">
-                            {{pstat.value}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
+              <div class="form-group waitlist_status" *ngIf="time_type == 0">
+                <label class="col-form-label" for="displayName">{{payment_status}}</label>
+                <mat-form-field>
+                  <mat-select [(value)]="filter.payment_status">
+                    <mat-option (click)="setFilterData('payment_status', 'all')" [value]="'all'">
+                      {{all_cap}}
+                    </mat-option>
+                    <mat-option *ngFor="let pstat of payStatusList" (click)="setFilterData('payment_status', pstat.pk)"
+                      [value]="pstat.pk">
+                      {{pstat.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-                      </div>
+              </div>
 
-                      <div class="check_in_date start_date" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}} {{start_date}}</label>
-                        <mat-form-field>
-                            <input matInput [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker"
-                            (dateChange)="checkFilterDateMaxMin('check_in_start_date')" [min]="filter_date_start_min" [max]="filter_date_start_max" autocomplete="off">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                          </mat-form-field>
-                      </div>
+              <div class="check_in_date start_date" *ngIf="time_type !== 1">
+                <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}} {{start_date}}</label>
+                <mat-form-field>
+                  <input matInput [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker" (dateChange)="checkFilterDateMaxMin('check_in_start_date')"
+                    [min]="filter_date_start_min" [max]="filter_date_start_max" autocomplete="off">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
 
-                      <div class="check_in_date end_date" *ngIf="time_type !== 1">
-                        <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}} {{end_date}}</label>
-                        <mat-form-field>
-                            <input matInput [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker"
-                            (dateChange)="checkFilterDateMaxMin('check_in_end_date')" [min]="filter_date_end_min" [max]="filter_date_end_max" autocomplete="off">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                          </mat-form-field>
-                      </div>
+              <div class="check_in_date end_date" *ngIf="time_type !== 1">
+                <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}} {{end_date}}</label>
+                <mat-form-field>
+                  <input matInput [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker" (dateChange)="checkFilterDateMaxMin('check_in_end_date')"
+                    [min]="filter_date_end_min" [max]="filter_date_end_max" autocomplete="off">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
 
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                  <div class="table-outer d-tbl" *ngIf="check_in_filtered_list.length != 0">
-                      <table class="table">
-                          <thead>
-                              <tr>
-                                  <th></th>
-                                  <th *ngIf="time_type == 1 && settings.showTokenId">{{token_no}}</th>
-                                  <th *ngIf="time_type != 1">{{date_cap}}</th>
-                                  <th>{{name_cap}}</th>
-                                  <th>{{service_cap}}</th>
-                                  <th *ngIf="time_type!=2">{{actions_cap}}</th>
-                                  <th>{{payment_status}}</th>
-                                  <th *ngIf="time_type != 1">{{checkin_label |capitalizeFirst}} {{status_cap}}</th>
-                                  <!-- <th>Message</th> -->
-                                  <th *ngIf="time_type == 1">{{customer_label |capitalizeFirst}} {{note_cap}}</th>
-                                  <th></th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr  *ngFor="let checkin of check_in_filtered_list">
-                                  <td class="online" *ngIf="!small_device_display">
-                                    <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'" [matTooltipClass] = "tooltipcls" [matTooltip]="cloudTooltip"></span>
-                                  </td>
-                                  <td data-title="Seq No" class="seq pointer-cursor"
-                                  *ngIf="time_type ==1 && settings.showTokenId" (click)="goCheckinDetail(checkin)">
-                                    <ng-container  *ngIf="checkin.token">{{checkin.token}}</ng-container>
-                                  </td>
-                                  <td data-title="Date" class="date pointer-cursor"
-                                  *ngIf="time_type !=1" (click)="goCheckinDetail(checkin)">
-                                  {{checkin.date | date:dateFormat}}
-                                  </td>
-                                  <td data-title="Name" class="name pointer-cursor" *ngIf="checkin.consumer" (click)="goCheckinDetail(checkin)">
-                                    {{checkin.waitlistingFor[0].firstName}}  {{checkin.waitlistingFor[0].lastName}}
-                                    <span class="icon-arrived" title="{{arrived_upper}}"  *ngIf="checkin.waitlistStatus == 'arrived'">
-                                      <span class="arrived" *ngIf="time_type==1">{{arrived_upper}}</span>
-                                    </span>
-                                  </td>
-                                  <td data-title="Service" class="service">{{checkin.service.name}}</td>
-                                  <td data-title="Actions" class="actions" *ngIf="time_type!=2">
+            </mat-expansion-panel>
+          </mat-accordion>
+          <div class="table-outer d-tbl" *ngIf="check_in_filtered_list.length != 0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th *ngIf="time_type == 1 && settings.showTokenId">{{token_no}}</th>
+                  <th *ngIf="time_type != 1">{{date_cap}}</th>
+                  <th>{{name_cap}}</th>
+                  <th>{{service_cap}}</th>
+                  <th *ngIf="time_type!=2">{{actions_cap}}</th>
+                  <th>{{payment_status}}</th>
+                  <th *ngIf="time_type != 1">{{checkin_label |capitalizeFirst}} {{status_cap}}</th>
+                  <!-- <th>Message</th> -->
+                  <th *ngIf="time_type == 1">{{customer_label |capitalizeFirst}} {{note_cap}}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let checkin of check_in_filtered_list">
+                  <td class="online" *ngIf="!small_device_display">
+                    <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="cloudTooltip"></span>
+                  </td>
+                  <td data-title="Seq No" class="seq pointer-cursor" *ngIf="time_type ==1 && settings.showTokenId"
+                    (click)="goCheckinDetail(checkin)">
+                    <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
+                  </td>
+                  <td data-title="Date" class="date pointer-cursor" *ngIf="time_type !=1" (click)="goCheckinDetail(checkin)">
+                    {{checkin.date | date:dateFormat}}
+                  </td>
+                  <td data-title="Name" class="name pointer-cursor" *ngIf="checkin.consumer" (click)="goCheckinDetail(checkin)">
+                    {{checkin.waitlistingFor[0].firstName}} {{checkin.waitlistingFor[0].lastName}}
+                    <span class="icon-arrived" title="{{arrived_upper}}" *ngIf="checkin.waitlistStatus == 'arrived'">
+                      <span class="arrived" *ngIf="time_type==1">{{arrived_upper}}</span>
+                    </span>
+                  </td>
+                  <td data-title="Service" class="service">{{checkin.service.name}}</td>
+                  <td data-title="Actions" class="actions" *ngIf="time_type!=2">
 
-                                    <ng-container *ngIf="time_type == 1">
-                                        <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
-                                        *ngIf="checkin.waitlistStatus == 'checkedIn'">
-                                          <i class="icon-arrived"></i> {{arrived_upper}}
-                                        </span>
+                    <ng-container *ngIf="time_type == 1">
+                      <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')" *ngIf="checkin.waitlistStatus == 'checkedIn'">
+                        <i class="icon-arrived"></i> {{arrived_upper}}
+                      </span>
 
-                                        <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
-                                        *ngIf="(checkin.waitlistStatus == 'checkedIn'
+                      <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                         || checkin.waitlistStatus == 'arrived')">
-                                          <i class="icon-play"></i>{{start_label |capitalizeFirst}}
-                                        </span>
+                        <i class="icon-play"></i>{{start_label |capitalizeFirst}}
+                      </span>
 
-                                        <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
-                                        *ngIf="checkin.waitlistStatus == 'started'">
-                                          <i class="icon-play"></i>{{done_cap}}
-                                        </span>
+                      <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')" *ngIf="checkin.waitlistStatus == 'started'">
+                        <i class="icon-play"></i>{{done_cap}}
+                      </span>
 
-                                    </ng-container>
+                    </ng-container>
 
-                                    <ng-container *ngIf="time_type == 0"> <!-- case of history-->
-                                        <!-- <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
+                    <ng-container *ngIf="time_type == 0">
+                      <!-- case of history-->
+                      <!-- <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
                                         *ngIf="checkin.waitlistStatus == 'checkedIn'">
                                           <i class="icon-arrived"></i> {{arrived_upper}}
                                         </span> -->
 
-                                        <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
-                                        *ngIf="(checkin.waitlistStatus == 'checkedIn'
+                      <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                         || checkin.waitlistStatus == 'arrived')">
-                                          <i class="icon-play"></i>{{start_label |capitalizeFirst}}
-                                        </span>
+                        <i class="icon-play"></i>{{start_label |capitalizeFirst}}
+                      </span>
 
-                                        <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
-                                        *ngIf="checkin.waitlistStatus == 'started'">
-                                          <i class="icon-play"></i>{{done_cap}}
-                                        </span>
+                      <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')" *ngIf="checkin.waitlistStatus == 'started'">
+                        <i class="icon-play"></i>{{done_cap}}
+                      </span>
 
-                                    </ng-container>
+                    </ng-container>
 
-                                    <!-- <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
+                    <!-- <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
                                     *ngIf="checkin.waitlistStatus != 'checkedIn' &&
                                     checkin.waitlistStatus != 'cancelled' && time_type !== 2
                                     && ((time_type === 0 && checkin.billStatus) || time_type != 0)"
                                     [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }"> -->
 
-                                    <span class="cs-btn bt7" (click)="getWaitlistBill(checkin, 'bill')"
-                                    *ngIf="checkin.waitlistStatus != 'checkedIn' &&
-                                    checkin.waitlistStatus != 'cancelled' && time_type !== 2 && checkin.waitlistStatus != 'prepaymentPending'"
-                                    [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }">
+                    <span class="cs-btn bt7 viewbill" (click)="getWaitlistBill(checkin, 'bill')" *ngIf="checkin.waitlistStatus != 'checkedIn' &&
+                                    checkin.waitlistStatus != 'cancelled' && time_type !== 2 && checkin.waitlistStatus != 'prepaymentPending'">
 
-                                     <!-- <ng-container *ngIf="!checkin.billStatus">
-                                        <i class="icon-play" ></i>New Bill
-                                     </ng-container>
-                                     <ng-container *ngIf="checkin.billStatus== 'Settled' || checkin.billStatus== 'New'">
-                                        <i class="icon-play" ></i>View Bill
-                                     </ng-container> -->
+                      <ng-container *ngIf="checkin.waitlistStatus != 'prepaymentPending'">
+                        <i class="icon-play"></i>{{bill_cap}}
+                      </ng-container>
 
-                                     <ng-container *ngIf="!checkin.billStatus && checkin.waitlistStatus != 'prepaymentPending'">
-                                        <i class="icon-play" ></i>{{bill_cap}}
-                                     </ng-container>
-                                     <ng-container *ngIf="checkin.billStatus== 'Settled' || checkin.billStatus== 'New'">
-                                        <i class="icon-play" ></i>{{bill_cap}}
-                                     </ng-container>
+                    </span>
 
-                                    </span>
+                    <span class="acceptbill cs-btn bt7" *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'"
+                      (click)="getWaitlistBill(checkin, 'payment')">
+                      <i class="icon-play"></i>{{accept_cap}}
 
-                                    <span class="acceptbill cs-btn bt7"
-                                    *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'" (click)="getWaitlistBill(checkin, 'payment')">
-                                     <i class="icon-play" ></i>{{accept_cap}}
+                    </span>
 
-                                    </span>
-
-                                    <!-- <span class="acceptbill cs-btn bt7"
+                    <!-- <span class="acceptbill cs-btn bt7"
                                     *ngIf="checkin.billStatus== 'New' && checkin.billPaymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'" (click)="getWaitlistBill(checkin, 'payment')">
                                      <i class="icon-play" ></i>Accept payment
 
                                     </span> -->
-<div class="height-adjuster"></div>
-                                    </td>
-                                  <td data-title="Payment Status" class="payment">
-                                    <ng-container *ngIf="checkin.paymentStatus">
-                                        <span class="paid-n" *ngIf="checkin.paymentStatus == 'NotPaid'"><span class="text">{{not_paid_cap}}</span></span>
-                                        <span class="paid-h" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span class="text">{{partially_paid_cap}}</span></span>
-                                        <span class="paid-f" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span class="text">{{paid_cap}}</span></span>
+                    <div class="height-adjuster"></div>
+                  </td>
+                  <td data-title="Payment Status" class="payment">
+                    <ng-container *ngIf="checkin.paymentStatus">
+                      <span class="paid-n" *ngIf="checkin.paymentStatus == 'NotPaid'"><span class="text">{{not_paid_cap}}</span></span>
+                      <span class="paid-h" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span class="text">{{partially_paid_cap}}</span></span>
+                      <span class="paid-f" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span class="text">{{paid_cap}}</span></span>
 
-                                    </ng-container>
-                                  </td>
-                                  <td data-title="{{checkin_label + ' Status'}}" class="checkin_status"
-                                  *ngIf="time_type !=1  && checkin_label">
-                                    <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
-                                  </td>
-                                  <!-- <td data-title="Message" class="message">
+                    </ng-container>
+                  </td>
+                  <td data-title="{{checkin_label + ' Status'}}" class="checkin_status" *ngIf="time_type !=1  && checkin_label">
+                    <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
+                  </td>
+                  <!-- <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td> -->
-                                  <td class="cnote" *ngIf="time_type ==1 && !small_device_display">
-                                    <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
-                                      <i class="icon-note"></i>
-                                    </span>
-                                  </td>
-                                  <td class="mre">
-                                    <span class="mbt">
-                                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                          <mat-icon>more_vert</mat-icon>
-                                      </button>
-                                      <mat-menu #menu="matMenu">
-                                          <!-- <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span> -->
-                                          <button type="button" mat-menu-item
-                                          (click)="addConsumerInboxMessage(checkin)">
-                                            <!-- Add {{provider_label  | capitalizeFirst}} Note -->
-                                            {{send_message_cap}}
-                                          </button>
-                                          <button type="button" mat-menu-item
-                                          (click)="addProviderNote(checkin)">
-                                            <!-- Add {{provider_label  | capitalizeFirst}} Note -->
-                                            {{add_private_note}}
-                                          </button>
-                                          <button type="button" mat-menu-item
-                                          (click)="changeWaitlistStatus(checkin, 'CANCEL')"
-                                          *ngIf="(time_type!=0 &&
+                  <td class="cnote" *ngIf="time_type ==1 && !small_device_display">
+                    <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
+                      <i class="icon-note"></i>
+                    </span>
+                  </td>
+                  <td class="mre">
+                    <span class="mbt">
+                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <!-- <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span> -->
+                        <button type="button" mat-menu-item (click)="addConsumerInboxMessage(checkin)">
+                          <!-- Add {{provider_label  | capitalizeFirst}} Note -->
+                          {{send_message_cap}}
+                        </button>
+                        <button type="button" mat-menu-item (click)="addProviderNote(checkin)">
+                          <!-- Add {{provider_label  | capitalizeFirst}} Note -->
+                          {{add_private_note}}
+                        </button>
+                        <button type="button" mat-menu-item (click)="changeWaitlistStatus(checkin, 'CANCEL')" *ngIf="(time_type!=0 &&
                                           ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')) || (time_type==0 &&
                                           ( checkin.waitlistStatus == 'checkedIn'))">
-                                            {{cancel_cap}} {{checkin_label}}
-                                          </button>
-                                          <button type="button" mat-menu-item
-                                          (click)="changeWaitlistStatus(checkin, 'CANCEL')"
-                                          *ngIf="time_type==0 && 
+                          {{cancel_cap}} {{checkin_label}}
+                        </button>
+                        <button type="button" mat-menu-item (click)="changeWaitlistStatus(checkin, 'CANCEL')" *ngIf="time_type==0 && 
                                           ( checkin.waitlistStatus == 'arrived')">
-                                            {{cancel_cap}} {{checkin_label}}
-                                          </button>
-                                          <!-- <button type="button" mat-menu-item
-                                          (click)="changeWaitlistStatus(checkin, 'REPORT')"
-                                          *ngIf="time_type!=0 &&
-                                          (checkin.waitlistStatus == 'started')">
-                                            Change Status to {{arrived_upper}}
-                                          </button> -->
-                                          <button type="button" mat-menu-item
-                                          (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                                          *ngIf="time_type!=0 && (checkin.billStatus != 'Settled') && 
+                          {{cancel_cap}} {{checkin_label}}
+                        </button>
+                        <button type="button" mat-menu-item (click)="changeWaitlistStatus(checkin, 'CHECK_IN')" *ngIf="time_type!=0 && (checkin.billStatus != 'Settled') && 
                                           (checkin.waitlistStatus == 'cancelled' || checkin.waitlistStatus == 'arrived' ||
                                           checkin.waitlistStatus == 'started')">
-                                            {{change_status}} {{checkin_label}}
-                                          </button>
-                                          <button type="button"  mat-menu-item
-                                          *ngIf="time_type!=1 && checkin.consumerNote"
-                                          (click)="showConsumerNote(checkin)">
-                                           {{view_cap}} {{customer_label |capitalizeFirst}} {{note_cap}}
-                                          </button>
-                                      </mat-menu>
-                                  </span>
-                                  
-                                  <span class="mbt-mobile-show">
-                                    <button type="button" class="sendmsg_cls"
-                                          (click)="addConsumerInboxMessage(checkin)">
-                                            <!-- Add {{provider_label  | capitalizeFirst}} Note -->
-                                            {{send_message_cap}}
-                                          </button>
-                                          <button type="button" class="cancel_cls"
-                                          (click)="changeWaitlistStatus(checkin, 'CANCEL')"
-                                          *ngIf="time_type!=0 &&
+                          {{change_status}} {{checkin_label}}
+                        </button>
+                        <button type="button" mat-menu-item *ngIf="time_type!=1 && checkin.consumerNote" (click)="showConsumerNote(checkin)">
+                          {{view_cap}} {{customer_label |capitalizeFirst}} {{note_cap}}
+                        </button>
+                      </mat-menu>
+                    </span>
+                    <span class="mbt-mobile-show">
+                      <button type="button" class="sendmsg_cls" (click)="addConsumerInboxMessage(checkin)">
+                        {{send_message_cap}}
+                      </button>
+                      <button type="button" class="cancel_cls" (click)="changeWaitlistStatus(checkin, 'CANCEL')" *ngIf="time_type!=0 &&
                                           ( checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
-                                          {{cancel_cap}} {{checkin_label}}
-                                          </button>
-                                          <button type="button" class="cancel_cls"
-                                          (click)="changeWaitlistStatus(checkin, 'CANCEL')"
-                                          *ngIf="time_type==0 && 
+                        {{cancel_cap}} {{checkin_label}}
+                      </button>
+                      <button type="button" class="cancel_cls" (click)="changeWaitlistStatus(checkin, 'CANCEL')" *ngIf="time_type==0 && 
                                          ( checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn')">
-                                         {{cancel_cap}} {{checkin_label}}
-                                          </button>
-                                          <button type="button" class="provnote_cls"
-                                          (click)="addProviderNote(checkin)">
-                                            <!-- Add {{provider_label  | capitalizeFirst}} Note -->
-                                            {{add_note_cap}}
-                                          </button>
-                                          <button type="button" class="checkin_cls"
-                                          (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                                          *ngIf="time_type!=0 && (checkin.billStatus != 'Settled') && 
+                        {{cancel_cap}} {{checkin_label}}
+                      </button>
+                      <button type="button" class="provnote_cls" (click)="addProviderNote(checkin)">
+                        {{add_note_cap}}
+                      </button>
+                      <button type="button" class="checkin_cls" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                        *ngIf="time_type!=0 && (checkin.billStatus != 'Settled') && 
                                           (checkin.waitlistStatus == 'cancelled' || checkin.waitlistStatus == 'arrived' ||
                                           checkin.waitlistStatus == 'started')">
-                                          {{change_status}} {{checkin_label}}
-                                          </button>
-                                          <button type="button"  class="viewnote_cls"
-                                          *ngIf="time_type!=1 && checkin.consumerNote"
-                                          (click)="showConsumerNote(checkin)">
-                                          {{view_cap}} {{customer_label |capitalizeFirst}} {{note_cap}}
-                                          </button>
-
-                                    
-
-                                  </span>
-
-                                </td>
-                              </tr>
-                          </tbody>
-                      </table>
-
-
-                    <div class="search_paging">
-                      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
-                    </div>
-
-                  </div>
-                  <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
-                    <div class="qlst no-dta" *ngIf="time_type !=2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
-                      {{no_cap}} {{checkin_label |capitalizeFirst}}s {{available_cap}}
-                    </div>
-                    <div class="qlst no-dta" *ngIf="time_type==2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
-                        {{no_future_checkins}}
-                      </div>
-                  </ng-container>
-
-              </div>
-
-              <div class="qlst no-dta"
-              *ngIf="time_type ==1 && load_queue == 1 &&
-              queues.length ==0">
-                <p>{{no_service_cap}}</p>
-              </div>
+                        {{change_status}} {{checkin_label}}
+                      </button>
+                      <button type="button" class="viewnote_cls" *ngIf="time_type!=1 && checkin.consumerNote" (click)="showConsumerNote(checkin)">
+                        {{view_cap}} {{customer_label |capitalizeFirst}} {{note_cap}}
+                      </button>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="search_paging">
+              <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
+                [curpage]="pagination.startpageval"></app-pager>
+            </div>
           </div>
+          <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
+            <div class="qlst no-dta" *ngIf="time_type !=2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
+              {{no_cap}} {{checkin_label |capitalizeFirst}}s {{available_cap}}
+            </div>
+            <div class="qlst no-dta" *ngIf="time_type==2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
+              {{no_future_checkins}}
+            </div>
+          </ng-container>
+        </div>
+        <div class="qlst no-dta" *ngIf="time_type ==1 && load_queue == 1 &&
+              queues.length ==0">
+          <p>{{no_service_cap}}</p>
+        </div>
       </div>
+    </div>
   </div>
 </section>

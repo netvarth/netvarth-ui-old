@@ -1163,7 +1163,16 @@ no_cap = Messages.NO_CAP;
 
   viewBill(checkin, bill_data) {
     // console.log('billdata', bill_data);
-    this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
+    // this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'billpopup'],
+    //   disableClose: true,
+    //   data: {
+    //     checkin: checkin,
+    //     bill_data: bill_data
+    //   }
+    // });
+    this.viewbilldialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'billpopup'],
       disableClose: true,
@@ -1205,33 +1214,25 @@ no_cap = Messages.NO_CAP;
     this.filter.page = 1;
     this.pagination.startpageval = 1;
   }
-
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
     // console.log('page', pg);
     this.doSearch();
   }
-
-  addConsumerInboxMessage(waitlist) {
-    
+  addConsumerInboxMessage(waitlist) { 
     const uuid = waitlist.ynwUuid || null;
-
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
     .then(
       result => {
-
       },
       error => {
-
       }
     );
   }
-
   reloadActionSubheader(data) {
     this.reloadAPIs();
   }
-
   getStatusLabel(status) {
     const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
     return label_status;

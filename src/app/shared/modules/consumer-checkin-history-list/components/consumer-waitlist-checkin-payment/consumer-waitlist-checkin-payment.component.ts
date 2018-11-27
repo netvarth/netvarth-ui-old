@@ -40,7 +40,9 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   gateway_redirection = false;
   payModesExists = false;
   payModesQueried = false;
-
+  selected_coupons;
+  coupon_status = null;
+  couponsList: any = [];
   api_success = null;
 
   constructor(
@@ -129,7 +131,6 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
           }
         );
     }
-
   }
   applyCoupon(jCoupon, uuid) {
     console.log(jCoupon);

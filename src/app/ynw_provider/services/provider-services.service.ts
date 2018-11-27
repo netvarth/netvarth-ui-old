@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { projectConstants } from '../../shared/constants/project-constants';
 
@@ -568,6 +568,10 @@ export class ProviderServices {
   getWaitlistBill(uuid) {
     const url = 'provider/bill/' + uuid;
     return this.servicemeta.httpGet(url);
+  }
+  setWaitlistBill(action, uuid, data, header) {
+    const url = 'provider/bill/' + action + '/' + uuid;
+    return this.servicemeta.httpPut(url, data, header);
   }
   createWaitlistBill(data) {
     const url = 'provider/bill/';

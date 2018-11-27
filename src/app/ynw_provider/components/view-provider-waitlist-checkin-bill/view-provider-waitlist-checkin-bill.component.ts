@@ -114,7 +114,7 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   updateBill(e) {
-    this.dialogRef.close('updateBill');
+    // this.dialogRef.close('updateBill');
   }
 
   makePayment(e) {

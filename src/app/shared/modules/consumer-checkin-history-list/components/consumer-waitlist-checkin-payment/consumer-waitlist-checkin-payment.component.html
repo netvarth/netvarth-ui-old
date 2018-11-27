@@ -9,14 +9,26 @@
 
    
 
-      <div class="coupon-code">
+      <!-- <div class="coupon-code">
         <div class="form-group">
             <label>{{coupon_code_cap}}</label>                       
             <input type="text" placeholder="Enter your Coupon code" #coupon_code [(ngModel)]="jCoupons" style="height:30px;">
             <button mat-button class="cs-btn bt1 makepayment" (click)="applyCoupon(jCoupons,bill_data.uuid)">{{apply_cap}}</button>
         </div>                            
-    </div>
-    
+    </div> -->
+    <div class="coupon-outer" *ngIf="coupon_status">
+        <div class="form-group">
+          <span *ngIf="coupon_status=='success'" class="success">Coupon Code(s) applied successfully</span>
+          <span *ngIf="coupon_status=='error'" class="error">Coupon Code(s) not valid</span>
+        </div>
+      </div>
+      <div class="coupon-outer">
+        <div class="form-group">
+          <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons"/>
+          <span class="cs-btn bt8" #coupon_code (click)="applyCoupon(selected_coupons,bill_data.uuid)">{{apply_cap}}</span>
+          <span class="cs-btn bt8" *ngIf="couponsList.length>0" (click)="removeCoupons()">CANCEL</span>
+        </div>
+      </div>
     
 
       <div class="topay">

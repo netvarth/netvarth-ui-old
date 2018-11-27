@@ -30,7 +30,7 @@
 							<div class="name">
 								{{service.serviceName}} @ {{service.price |
 								currency:'INR':'symbol':'.2-2'}} <span class="tax" [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
-								 *ngIf="service.isTaxable">Tax</span> 
+								 *ngIf="service.isTaxable">Tax</span>
 							</div>
 							<div class="quantity">{{qty_cap}} {{service.quantity}}</div>
 							<div class="price">{{service.rowtotal |
@@ -162,62 +162,62 @@
 				</table>
 			</div>
 		</div>
-	</div>
-
-	<div class="section-four" *ngIf="pre_payment_log.length > 0 && showPaidlist">
-		<div class="heading">
-			<span class="back" (click)="showpaidSection()">{{back_to_bill_cap}}</span>
-			<h4>{{payment_logs_cap}}</h4>
-		</div>
-
-		<div class="list-outer">
-			<div class="table-th">
-				<div class="th one">{{date_cap}} &amp; {{time_cap}}</div>
-				<div class="th two">{{amount_cap}}</div>
-				<div class="th three">{{refundable_cap}}</div>
+		<div class="section-four" *ngIf="pre_payment_log.length > 0 && showPaidlist">
+			<div class="heading">
+				<span class="back" (click)="showpaidSection()">{{back_to_bill_cap}}</span>
+				<h4>{{payment_logs_cap}}</h4>
 			</div>
 
-			<div class="listing" *ngFor="let payment of pre_payment_log; let i = index">
-				<div class="wrap">
-					<div class="td one">
-						<span class="date">{{stringtoDate(payment.paymentOn,
-							'date')}}</span> <span class="time">{{stringtoDate(payment.paymentOn,
-							'time')}}</span>
-					</div>
-					<div class="td two">
-						<span class="amt">{{payment.amount |
-							currency:'INR':'symbol':'.2-2' }}</span> <span class="others"> <span class="status"> <span class="title">{{status_cap}}</span>
-								<span><span [class]="payment.status | lowercase">{{payment.status |
-										capitalizeFirst}}</span></span>
-							</span> <span class="mode"> <span class="title">{{mode_cap}}</span>
-								<span>{{payment.acceptPaymentBy | capitalizeFirst }}</span>
-							</span>
-						</span>
-					</div>
-					<div class="td three">
-						<span class="amt" *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount
-							| currency:'INR':'symbol':'.2-2'}}</span>
-						<button class="cs-btn bt3" *ngIf="source !== 'consumer_dashboard' && payment.status=='SUCCESS' && payment.refundableAmount > 0"
-						 (click)="showRefund(payment)">{{refund_cap}}</button>
-					</div>
+			<div class="list-outer">
+				<div class="table-th">
+					<div class="th one">{{date_cap}} &amp; {{time_cap}}</div>
+					<div class="th two">{{amount_cap}}</div>
+					<div class="th three">{{refundable_cap}}</div>
 				</div>
-				<div class="refunds-table" *ngIf="payment.refundDetails.length">
-					<div class="table-th">
-						<h5>{{refunds_cap}}</h5>
-					</div>
-					<div class="table-th1">
-						<div class="th one">{{status_cap}}</div>
-						<div class="th two">{{mode_cap}}</div>
-						<div class="th three">{{amount_cap}}</div>
-					</div>
-					<div class="tbody" *ngFor="let refund of payment.refundDetails">
+
+				<div class="listing" *ngFor="let payment of pre_payment_log; let i = index">
+					<div class="wrap">
 						<div class="td one">
-							<span [class]="refund.status | lowercase">{{refund.status |
-								capitalizeFirst}}</span>
+							<span class="date">{{stringtoDate(payment.paymentOn,
+								'date')}}</span> 
+								<!-- <span class="time">{{stringtoDate(payment.paymentOn,
+								'time')}}</span> -->
 						</div>
-						<div class="td two">{{refund.refundBy | capitalizeFirst }}</div>
-						<div class="td three">{{refund.amount |
-							currency:'INR':'symbol':'.2-2' }}</div>
+						<div class="td two">
+							<span class="amt">{{payment.amount |
+								currency:'INR':'symbol':'.2-2' }}</span> <span class="others"> <span class="status"> <span class="title">{{status_cap}}</span>
+									<span><span [class]="payment.status | lowercase">{{payment.status |
+											capitalizeFirst}}</span></span>
+								</span> <span class="mode"> <span class="title">{{mode_cap}}</span>
+									<span>{{payment.acceptPaymentBy | capitalizeFirst }}</span>
+								</span>
+							</span>
+						</div>
+						<div class="td three">
+							<span class="amt" *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">{{payment.refundableAmount
+								| currency:'INR':'symbol':'.2-2'}}</span>
+							<button class="cs-btn bt3" *ngIf="source !== 'consumer_dashboard' && payment.status=='SUCCESS' && payment.refundableAmount > 0"
+							 (click)="showRefund(payment)">{{refund_cap}}</button>
+						</div>
+					</div>
+					<div class="refunds-table" *ngIf="payment.refundDetails.length">
+						<div class="table-th">
+							<h5>{{refunds_cap}}</h5>
+						</div>
+						<div class="table-th1">
+							<div class="th one">{{status_cap}}</div>
+							<div class="th two">{{mode_cap}}</div>
+							<div class="th three">{{amount_cap}}</div>
+						</div>
+						<div class="tbody" *ngFor="let refund of payment.refundDetails">
+							<div class="td one">
+								<span [class]="refund.status | lowercase">{{refund.status |
+									capitalizeFirst}}</span>
+							</div>
+							<div class="td two">{{refund.refundBy | capitalizeFirst }}</div>
+							<div class="td three">{{refund.amount |
+								currency:'INR':'symbol':'.2-2' }}</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -236,8 +236,8 @@
 	</ng-container>
 	<button *ngIf="source == 'consumer_dashboard'" type="button" mat-button [mat-dialog-close]="close_msg" class="cs-btn bt2 billcancel">
 		{{cancel_btn_cap}}</button>
-	 <button  type="button" mat-button class="cs-btn bt1 print"
-      *ngIf="source == 'consumer_dashboard' && bill_data.billStatus == 'Settled'" (click)="printMe()" >Print Bill</button>	
+	<button type="button" mat-button class="cs-btn bt1 print" *ngIf="source == 'consumer_dashboard' && bill_data.billStatus == 'Settled'"
+	 (click)="printMe()">Print Bill</button>
 	<ng-container *ngIf="source !== 'consumer_dashboard'">
 		<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
         && bill_data.billStatus != 'Settled'"

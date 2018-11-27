@@ -134,6 +134,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     }
     this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
+    console.log(this.pre_payment_log);
     this.bill_data.amount_to_pay = this.bill_data.netRate - this.bill_data.totalAmountPaid;
 
     if (this.bill_data.service.length) {
@@ -211,6 +212,8 @@ console.log(this.bill_data);
     this.bill_data = this.billdata || null;
     this.getGstandDate();
     this.pre_payment_log = this.prepaymentlog || null;
+    console.log('ngOnChanges');
+    console.log(this.pre_payment_log);
   }
 
   getPaymentModes() {
