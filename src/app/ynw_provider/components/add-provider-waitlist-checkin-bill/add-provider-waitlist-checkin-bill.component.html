@@ -126,8 +126,8 @@
 											</div>
 										</div>
 										<div class="spr">
-											<button *ngIf="discounts.length >0 && showDiscountSection" class="cs-btn bt1" (click)="applyOrderDiscount()">{{done_btn_cap}}</button>
-											<button *ngIf="coupons.length >0 && showPCouponSection" class="cs-btn bt1" (click)="applyOrderCoupon()">{{done_btn_cap}}</button>
+											<button *ngIf="discounts.length >0 && showDiscountSection" class="cs-btn bt1" [disabled]="selOrderDiscount===''" (click)="applyOrderDiscount()">Apply</button>
+											<button *ngIf="coupons.length >0 && showPCouponSection" class="cs-btn bt1" [disabled]="selOrderProviderCoupon===''" (click)="applyOrderCoupon()">Apply</button>
 											<button style="margin-left:5px;"  class="cs-btn bt1" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 										</div>
 									</div>
