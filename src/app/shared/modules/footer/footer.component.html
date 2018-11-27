@@ -136,7 +136,7 @@
                                             [class.high]="alert.severity.name=='High'"
                                             [class.error]="alert.severity.name=='Critical'"
                                                          *ngFor="let alert of alerts">
-                                            <td class="td1"><span class="span1">{{alert.text}}</span><span class="span2 fa fa-thumbs-o-up" [matTooltip]="'Acknowledge'"  (click)="alertAcknowlege(alert)"></span></td>
+                                            <td class="td1"><span class="span1">{{alert.text}}</span><span class="span2 fa fa-thumbs-o-up" [matTooltip]="'Acknowledge'" *ngIf="alert.ackStatus==false && alert.ackRequired==true"  (click)="alertAcknowlege(alert)"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>

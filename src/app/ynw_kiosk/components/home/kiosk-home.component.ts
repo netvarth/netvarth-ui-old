@@ -109,7 +109,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     // this.shared_functions.checkLogin()
   }
   checkloggedIn() {
-    console.log('checkedIn check');
+    // console.log('checkedIn check');
     if (!this.shared_functions.checkLogin()) {
       this.router.navigate(['/']);
     }
@@ -375,7 +375,6 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     this.show_customernotfoundmsg = false;
     this.show_customerRegister = false;
     this.showsearch_now = false;
-    // console.log('cmod', this.cMod);
     if (this.cMod !== 'main') {
       if (!this.customer_found) {
         this.showsearch_now = true;
@@ -392,7 +391,14 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     }
   }
   do_operation() {
-   // console.log('reached here');
+   console.log('reached here', this.cMod);
+   if (this.cMod === 'checkin') {
+    this.shared_functions.sendMessage({ttype: 'checkin', action: false});
+   } else if (this.cMod === 'arrived') {
+    this.shared_functions.sendMessage({ttype: 'checkstat', action: false});
+   } else {
+    this.shared_functions.sendMessage({ttype: '', action: false});
+   }
     switch (this.cMod) {
       case 'status':
         this.getwaitlistForToday(); // get the waitlist entry for today for current consumer
@@ -429,6 +435,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     return passedData;
   }
   logOff() {
+    this.shared_functions.sendMessage({ttype: '', action: false});
     this.showregmobile = false;
     this.customer_found = false;
     this.show_customernotfoundmsg = false;

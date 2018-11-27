@@ -259,6 +259,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
         });*/
+        console.log('here');
         const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
         this.shared_functions.sendMessage(pdata);
   }
@@ -272,6 +273,9 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       break;
       case 'kiosk':
          this.moreOptions = {'show_learnmore': true , 'scrollKey': 'kiosk'};
+      break;
+      case 'help':
+        this.moreOptions = {'show_learnmore': true , 'scrollKey': 'help'};
       break;
     }
     return this.moreOptions;

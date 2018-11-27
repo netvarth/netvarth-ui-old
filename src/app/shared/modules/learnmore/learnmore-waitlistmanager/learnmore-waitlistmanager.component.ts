@@ -24,7 +24,10 @@ export class LearnmoreWaitlistManagerComponent implements OnInit {
 
   public triggerScrollTo(destination) {
     const config: ScrollToConfigOptions = {
-      target: destination
+      target: destination,
+      duration: 150,
+      easing: 'easeOutElastic',
+      offset: 0
     };
     // console.log('destination', destination, 'config', config);
     this._scrollToService.scrollTo(config);

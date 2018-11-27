@@ -54,11 +54,11 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH:mm');
     // this.dend_time =  moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH:mm');
     // Get the provider locations
+    this.createForm();
     this.getProviderLocations();
     // Get the provider services
     this.getProviderServices();
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
-    this.createForm();
   }
 
   // creates the form
@@ -77,11 +77,11 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     //     this.updateForm();
     // }
 
-    if (this.data.source === 'location_detail' &&
-    this.data.type === 'add' &&
-    this.data.queue.location.id) {
-      this.amForm.get('qlocation').setValue(this.data.queue.location.id );
-    }
+    // if (this.data.source === 'location_detail' &&
+    // this.data.type === 'add' &&
+    // this.data.queue.location.id) {
+    //   this.amForm.get('qlocation').setValue(this.data.queue.location.id );
+    // }
   }
 
   // sets up the form with the values filled in
@@ -143,6 +143,15 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
             this.loc_list.push(this.holdloc_list[i]);
           }
         }
+
+        if (this.data.source === 'location_detail' &&
+        this.data.type === 'add' &&
+        this.data.queue.location.id) {
+          this.amForm.get('qlocation').setValue(this.data.queue.location.id );
+        } else if (this.data.type === 'add' && this.loc_list.length === 1) {
+          this.amForm.get('qlocation').setValue(this.loc_list[0].id);
+        }
+
       });
   }
 

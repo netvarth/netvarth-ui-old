@@ -73,7 +73,7 @@ export class ReportasArrivedComponent implements OnInit {
 
   getStatus(stat, mod) {
     const retval = { class: '', caption: '', waitingtimecaption: '', waitingtimemins: ''};
-    console.log('service time', stat.serviceTime);
+    // console.log('service time', stat.serviceTime);
     switch (stat.waitlistStatus) {
       case 'checkedIn':
         retval.class = 'checkedin-class';
@@ -119,7 +119,7 @@ export class ReportasArrivedComponent implements OnInit {
         retval.waitingtimemins = '';
       break;
     }
-    console.log('mod', mod);
+    // console.log('mod', mod);
     if (mod === 'class') {
       return retval.class;
     } else if (mod === 'caption') {

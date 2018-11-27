@@ -799,7 +799,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-      console.log('more clicks');
+      // console.log('more clicks');
     }
   }
 

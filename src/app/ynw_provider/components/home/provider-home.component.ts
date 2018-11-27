@@ -420,13 +420,15 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         // console.log('cqueue', Cqueues);
         this.all_queues = [];
         let indx = 0;
-
         for ( const que of Cqueues) {
           if (que.queueState === 'ENABLED') {
             que.qindx = indx;
             this.all_queues.push(que);
             indx += 1;
           }
+        }
+        if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
+          return;
         }
         const getsavedqueueid = this.shared_functions.getitemfromLocalStorage('pdq');
         let selqid = 0;
@@ -577,7 +579,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
     this.check_in_list  = this.check_in_filtered_list = [];
+    // console.log('here');
     this.getQueueList();
+    // console.log('here1');
     /*this.getTodayCheckinCount()
     .then(
       (result) => {
@@ -1132,18 +1136,25 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
   viewBill(checkin, bill_data) {
     // console.log('billdata', bill_data);
-    this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'billpopup'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
+    if (!this.viewbilldialogRef) {
+      this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'billpopup'],
+        disableClose: true,
+        data: {
+          checkin: checkin,
+          bill_data: bill_data
+        }
+      });
+  } else {
+    console.log('more clicks');
+  }
 
     this.viewbilldialogRef.afterClosed().subscribe(result => {
       // console.log(result);
+      if (this.viewbilldialogRef) {
+        this.viewbilldialogRef = null;
+      }
       if (result === 'updateBill') {
         this.addEditBill(checkin, bill_data);
       } else if (result === 'reloadlist') {
@@ -1155,17 +1166,24 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   makePayment(checkin, bill_data) {
-    this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
+    if (!this.makPaydialogRef) {
+      this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          checkin: checkin,
+          bill_data: bill_data
+        }
+      });
+    } else {
+      console.log('more clicks');
+    }
 
     this.makPaydialogRef.afterClosed().subscribe(result => {
+      if (this.makPaydialogRef) {
+        this.makPaydialogRef = null;
+      }
       this.reloadAPIs();
     });
   }
