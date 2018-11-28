@@ -1,0 +1,8 @@
+.bill-more-mat-menu {
+    right: 0;
+    top: 0;
+    float: right;
+}
+.bill-more-mat-menu mat-icon{
+    vertical-align: top!important;
+}
