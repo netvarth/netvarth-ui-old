@@ -1,6 +1,6 @@
-import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {HeaderComponent} from '../../../shared/modules/header/header.component';
+import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { HeaderComponent } from '../../../shared/modules/header/header.component';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
@@ -8,7 +8,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -23,15 +23,15 @@ import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-ch
 import { SharedServices } from '../../../shared/services/shared-services';
 
 import * as moment from 'moment';
-import {startWith, map} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
 
 @Component({
-    selector: 'app-provider-home',
-    templateUrl: './provider-home.component.html',
-    styleUrls: ['./provider-home.component.scss']
+  selector: 'app-provider-home',
+  templateUrl: './provider-home.component.html',
+  styleUrls: ['./provider-home.component.scss']
 })
 
 export class ProviderHomeComponent implements OnInit, OnDestroy {
@@ -58,20 +58,20 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   first_name = Messages.FIRST_NAME_CAP;
   last_name = Messages.LAST_NAME_CAP;
   phone_no_cap = Messages.PHONE_NO_CAP;
-all_cap = Messages.ALL_CAP;
-date_cap = Messages.DATE_COL_CAP;
-actions_cap = Messages.ACTIONS_CAP;
-done_cap = Messages.DONE_BTN;
-bill_cap = Messages.BILL_CAPTION;
-accept_cap = Messages.ACCEPT_PAY_CAP;
-not_paid_cap = Messages.NOT_PAID_CAP;
-partially_paid_cap = Messages.PARTIALLY_PAID_CAP;
-paid_cap = Messages.PAID_CAP;
-send_message_cap = Messages.SEND_MSG_CAP;
-add_private_note = Messages.ADD_PROVIDER_NOTE_CAP;
-cancel_cap = Messages.CANCEL_BTN;
-view_cap = Messages.VIEW_CAP;
-no_cap = Messages.NO_CAP;
+  all_cap = Messages.ALL_CAP;
+  date_cap = Messages.DATE_COL_CAP;
+  actions_cap = Messages.ACTIONS_CAP;
+  done_cap = Messages.DONE_BTN;
+  bill_cap = Messages.BILL_CAPTION;
+  accept_cap = Messages.ACCEPT_PAY_CAP;
+  not_paid_cap = Messages.NOT_PAID_CAP;
+  partially_paid_cap = Messages.PARTIALLY_PAID_CAP;
+  paid_cap = Messages.PAID_CAP;
+  send_message_cap = Messages.SEND_MSG_CAP;
+  add_private_note = Messages.ADD_PROVIDER_NOTE_CAP;
+  cancel_cap = Messages.CANCEL_BTN;
+  view_cap = Messages.VIEW_CAP;
+  no_cap = Messages.NO_CAP;
 
   locations: any = [];
   queues: any = [];
@@ -93,7 +93,7 @@ no_cap = Messages.NO_CAP;
 
   load_locations = 0;
   load_queue = 0;
-  load_waitlist = 0 ;
+  load_waitlist = 0;
   tooltipcls = projectConstants.TOOLTIP_CLS;
   open_filter = false;
   waitlist_status = [];
@@ -134,13 +134,13 @@ no_cap = Messages.NO_CAP;
   started_upper = '';
   cancelled_label = '';
   cancelled_upper = '';
-  checkin_label  = '';
+  checkin_label = '';
   start_label = '';
   no_future_checkins = '';
-  pagination: any  = {
+  pagination: any = {
     startpageval: 1,
-    totalCnt : 0,
-    perPage : this.filter.page_count
+    totalCnt: 0,
+    perPage: this.filter.page_count
   };
 
   cronHandle: Subscription;
@@ -171,43 +171,43 @@ no_cap = Messages.NO_CAP;
     private dialog: MatDialog,
     private shared_services: SharedServices) {
 
-      this.onResize();
+    this.onResize();
 
-      this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-      this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
 
-      this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
-      this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
+    this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
+    this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
 
-      this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
-      this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
+    this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+    this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
 
-      this.done_label = this.shared_functions.getTerminologyTerm('done');
-      this.done_upper = this.shared_functions.firstToUpper(this.done_label);
+    this.done_label = this.shared_functions.getTerminologyTerm('done');
+    this.done_upper = this.shared_functions.firstToUpper(this.done_label);
 
-      this.started_label = this.shared_functions.getTerminologyTerm('started');
-      this.started_upper = this.shared_functions.firstToUpper(this.started_label);
+    this.started_label = this.shared_functions.getTerminologyTerm('started');
+    this.started_upper = this.shared_functions.firstToUpper(this.started_label);
 
-      this.start_label = this.shared_functions.getTerminologyTerm('start');
+    this.start_label = this.shared_functions.getTerminologyTerm('start');
 
-      this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
-      this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
+    this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
+    this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
 
-      this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-      this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
-      this.waitlist_status = [
-        {name :  this.checkedin_upper, value: 'checkedIn'},
-        {name : this.cancelled_upper, value: 'cancelled'},
-        {name : this.started_upper, value: 'started'},
-        {name : this.arrived_upper, value: 'arrived'},
-        {name : this.done_upper, value: 'done'}];
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
+    this.waitlist_status = [
+      { name: this.checkedin_upper, value: 'checkedIn' },
+      { name: this.cancelled_upper, value: 'cancelled' },
+      { name: this.started_upper, value: 'started' },
+      { name: this.arrived_upper, value: 'arrived' },
+      { name: this.done_upper, value: 'done' }];
 
-    }
-    payStatusList = [
-          { pk: 'NotPaid', value: 'Not Paid'},
-          { pk: 'PartiallyPaid', value: 'Partially Paid'},
-          { pk: 'FullyPaid', value: 'Fully Paid'}
-    ];
+  }
+  payStatusList = [
+    { pk: 'NotPaid', value: 'Not Paid' },
+    { pk: 'PartiallyPaid', value: 'Partially Paid' },
+    { pk: 'FullyPaid', value: 'Fully Paid' }
+  ];
 
   ngOnInit() {
 
@@ -216,14 +216,14 @@ no_cap = Messages.NO_CAP;
       // console.log('exists', savedtype);
       this.time_type = savedtype;
     } else {
-     // console.log('NOT');
+      // console.log('NOT');
     }
     const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp');
     if (stattype !== undefined && stattype !== null && stattype !== '') {
       // console.log('exists', savedtype);
       this.status_type = stattype;
     }
-     if (stattype === null || stattype === '') {
+    if (stattype === null || stattype === '') {
       this.status_type = 'all';
     }
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
@@ -232,7 +232,7 @@ no_cap = Messages.NO_CAP;
     // console.log('bdata', bprof);
     if (bprof === null || bprof === undefined) {
       this.shared_services.bussinessDomains()
-        .subscribe (
+        .subscribe(
           res => {
             this.holdbdata = res;
             const today = new Date();
@@ -255,7 +255,7 @@ no_cap = Messages.NO_CAP;
     }
 
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
-        this.reloadAPIs();
+      this.reloadAPIs();
     });
   }
 
@@ -299,34 +299,34 @@ no_cap = Messages.NO_CAP;
     } else {
       this.small_device_display = false;
     }
-  // console.log('resized', this.screenWidth,  this.small_device_display);
-}
+    // console.log('resized', this.screenWidth,  this.small_device_display);
+  }
 
   getBusinessProfile() {
     let bProfile: any = [];
 
     this.getBussinessProfileApi()
-    .then(
-      data => {
-        bProfile = data;
-        if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
-          // calling function which saves the business related details to show in the header
-          // this.shared_functions.retSubSectorNameifRequired();
+      .then(
+        data => {
+          bProfile = data;
+          if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
+            // calling function which saves the business related details to show in the header
+            // this.shared_functions.retSubSectorNameifRequired();
 
-          const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
-          // console.log('subsector home', subsectorname);
-          this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-           || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
-           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
+            const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
+            // console.log('subsector home', subsectorname);
+            this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
+              || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+            this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
 
-           const pdata = { 'ttype': 'updateuserdetails' };
-           this.shared_functions.sendMessage(pdata);
+            const pdata = { 'ttype': 'updateuserdetails' };
+            this.shared_functions.sendMessage(pdata);
           }
-      },
-      error => {
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
   }
 
@@ -335,44 +335,44 @@ no_cap = Messages.NO_CAP;
     return new Promise(function (resolve, reject) {
 
       _this.provider_services.getBussinessProfile()
-      .subscribe(
-        data => {
-          resolve(data);
-        },
-        error => {
-          reject();
-        }
-      );
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          error => {
+            reject();
+          }
+        );
 
     });
   }
-   // get the logo url for the provider
-   getProviderLogo(bname = '', bsector = '', bsubsector = '') {
+  // get the logo url for the provider
+  getProviderLogo(bname = '', bsector = '', bsubsector = '') {
     let blogo;
     this.provider_services.getProviderLogo()
       .subscribe(
-      data => {
-        blogo = data;
-        // console.log('here logo', this.blogo);
-        let logo = '';
-        if (blogo[0]) {
-          logo = blogo[0].url;
-        } else {
-          logo = '';
-        }
-        // calling function which saves the business related details to show in the header
-        this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo );
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.shared_functions.sendMessage(pdata);
-      },
-      error => {
+        data => {
+          blogo = data;
+          // console.log('here logo', this.blogo);
+          let logo = '';
+          if (blogo[0]) {
+            logo = blogo[0].url;
+          } else {
+            logo = '';
+          }
+          // calling function which saves the business related details to show in the header
+          this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo);
+          const pdata = { 'ttype': 'updateuserdetails' };
+          this.shared_functions.sendMessage(pdata);
+        },
+        error => {
 
-      }
+        }
       );
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe (data => {
+      .subscribe(data => {
         this.settings = data;
         // console.log('prov settings', this.settings);
       }, error => {
@@ -385,38 +385,38 @@ no_cap = Messages.NO_CAP;
     this.load_locations = 0;
     this.selected_location = null;
     this.provider_services.getProviderLocations()
-    .subscribe(
-      (data: any) => {
-        const locations = data;
-        this.locations = [];
+      .subscribe(
+        (data: any) => {
+          const locations = data;
+          this.locations = [];
 
-        for ( const loc of locations) {
-          if (loc.status === 'ACTIVE') {
-            this.locations.push(loc);
+          for (const loc of locations) {
+            if (loc.status === 'ACTIVE') {
+              this.locations.push(loc);
+            }
           }
-        }
 
-        const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider checkin button page
-        if ( cookie_location_id === '') {
-          if (this.locations[0]) {
-            this.changeLocation(this.locations[0]);
+          const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider checkin button page
+          if (cookie_location_id === '') {
+            if (this.locations[0]) {
+              this.changeLocation(this.locations[0]);
+            }
+          } else {
+            this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
+            this.getQueueList();
           }
-        } else {
-          this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
-          this.getQueueList();
-        }
 
-      },
-      error => {
-        this.load_locations = 1;
-      },
-      () => {
-        this.load_locations = 1;
-      }
-    );
+        },
+        error => {
+          this.load_locations = 1;
+        },
+        () => {
+          this.load_locations = 1;
+        }
+      );
   }
 
-  selectLocationFromCookie (cookie_location_id) {
+  selectLocationFromCookie(cookie_location_id) {
     let selected_location = null;
     for (const location of this.locations) {
       if (location.id === cookie_location_id) {
@@ -425,79 +425,79 @@ no_cap = Messages.NO_CAP;
     }
 
     (selected_location !== null) ? this.changeLocation(selected_location) :
-    this.changeLocation(this.locations[0]);
+      this.changeLocation(this.locations[0]);
 
   }
 
   getServiceList() {
     this.provider_services.getServicesList()
-    .subscribe(
-      data => {
-        this.services = data;
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.services = data;
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
 
   getQueueList() {
     // console.log('reached quelist');
     this.provider_services.getProviderLocationQueues(this.selected_location.id)
-    .subscribe(
-      (data: any) => {
-        // this.all_queues = data;
+      .subscribe(
+        (data: any) => {
+          // this.all_queues = data;
 
-        const Cqueues = data;
-        // console.log('cqueue', Cqueues);
-        this.all_queues = [];
-        let indx = 0;
+          const Cqueues = data;
+          // console.log('cqueue', Cqueues);
+          this.all_queues = [];
+          let indx = 0;
 
-        for ( const que of Cqueues) {
-          if (que.queueState === 'ENABLED') {
-            que.qindx = indx;
-            this.all_queues.push(que);
-            indx += 1;
-          }
-        }
-         if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
-          return;
-        }
- const getsavedqueueid = this.shared_functions.getitemfromLocalStorage('pdq');
-        let selqid = 0;
-        for (let ii = 0; ii < this.all_queues.length; ii++) {
-          let schedule_arr = [];
-          // extracting the schedule intervals
-          if (this.all_queues[ii].queueSchedule) {
-           schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
-          }
-          let display_schedule = [];
-          display_schedule =  this.shared_functions.arrageScheduleforDisplay(schedule_arr);
-          this.all_queues[ii]['displayschedule'] = display_schedule[0];
-           if (this.all_queues[ii].id === getsavedqueueid) {
-            selqid = ii;
-          }
-        }
-        // console.log('all queues', this.all_queues);
-        if (this.queues.length === 0 ) {
-          this.queues = this.all_queues;
-        }
-        this.selected_queue = this.all_queues[selqid];
-        if (this.time_type === 1) {
-          this.getTodayCheckIn();
-        }
-        this.getTodayCheckinCount()
-          .then(
-            (result) => {
-              this.today_waitlist_count = result;
+          for (const que of Cqueues) {
+            if (que.queueState === 'ENABLED') {
+              que.qindx = indx;
+              this.all_queues.push(que);
+              indx += 1;
             }
-        );
-      },
-      error => {
-      },
-      () => {
-      }
-    );
+          }
+          if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
+            return;
+          }
+          const getsavedqueueid = this.shared_functions.getitemfromLocalStorage('pdq');
+          let selqid = 0;
+          for (let ii = 0; ii < this.all_queues.length; ii++) {
+            let schedule_arr = [];
+            // extracting the schedule intervals
+            if (this.all_queues[ii].queueSchedule) {
+              schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
+            }
+            let display_schedule = [];
+            display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+            this.all_queues[ii]['displayschedule'] = display_schedule[0];
+            if (this.all_queues[ii].id === getsavedqueueid) {
+              selqid = ii;
+            }
+          }
+          // console.log('all queues', this.all_queues);
+          if (this.queues.length === 0) {
+            this.queues = this.all_queues;
+          }
+          this.selected_queue = this.all_queues[selqid];
+          if (this.time_type === 1) {
+            this.getTodayCheckIn();
+          }
+          this.getTodayCheckinCount()
+            .then(
+              (result) => {
+                this.today_waitlist_count = result;
+              }
+            );
+        },
+        error => {
+        },
+        () => {
+        }
+      );
   }
 
   getQueueListByDate() {
@@ -508,45 +508,45 @@ no_cap = Messages.NO_CAP;
       if (this.selected_location.id) {
         this.provider_services.getProviderLocationQueuesByDate(
           this.selected_location.id, this.queue_date)
-        .subscribe(
-          (data: any) => {
-            // this.queues = data;
-            const Cqueues = data;
-            this.queues = [];
-            const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
-            const savedQok = [];
-            let indx = 0;
-            for ( const que of Cqueues) {
-              if (que.queueState === 'ENABLED') {
-                // console.log('que', que);
-                if (que.id === savedQ) {
-                  savedQok.push(que);
+          .subscribe(
+            (data: any) => {
+              // this.queues = data;
+              const Cqueues = data;
+              this.queues = [];
+              const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
+              const savedQok = [];
+              let indx = 0;
+              for (const que of Cqueues) {
+                if (que.queueState === 'ENABLED') {
+                  // console.log('que', que);
+                  if (que.id === savedQ) {
+                    savedQok.push(que);
+                  }
+                  que.qindx = indx;
+                  this.queues.push(que);
+                  indx += 1;
                 }
-                que.qindx = indx;
-                this.queues.push(que);
-                indx += 1;
               }
-            }
-            // console.log('queues', this.queues);
-            if (savedQok.length > 0) {
-              this.selectedQueue(savedQok[0]);
-            } else {
-              if (this.queues[0] && this.selected_queue == null) {
-                const selectedQindx = this.findCurrentActiveQueue(this.queues);
-                // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
+              // console.log('queues', this.queues);
+              if (savedQok.length > 0) {
+                this.selectedQueue(savedQok[0]);
+              } else {
+                if (this.queues[0] && this.selected_queue == null) {
+                  const selectedQindx = this.findCurrentActiveQueue(this.queues);
+                  // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
 
-                this.selectedQueue(this.queues[selectedQindx]);
+                  this.selectedQueue(this.queues[selectedQindx]);
+                }
               }
-          }
-          },
-          error => {
-            this.queues = [];
-            this.load_queue = 1;
-          },
-          () => {
-            this.load_queue = 1;
-          }
-        );
+            },
+            error => {
+              this.queues = [];
+              this.load_queue = 1;
+            },
+            () => {
+              this.load_queue = 1;
+            }
+          );
       }
     } else {
       this.selectedQueue(this.selected_queue);
@@ -563,7 +563,7 @@ no_cap = Messages.NO_CAP;
     const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
     const curtimeforchk = new Date(tday + ' ' + curtime);
     // console.log('curtimestr', curtime, curtimeforchk);
-    for (let i = 0; i < ques.length ; i++) {
+    for (let i = 0; i < ques.length; i++) {
       for (let j = 0; j < ques[i].queueSchedule.repeatIntervals.length; j++) {
         const pday = Number(ques[i].queueSchedule.repeatIntervals[j]);
         if (currentday === pday) {
@@ -594,8 +594,8 @@ no_cap = Messages.NO_CAP;
     if (minutes < 10) {
       sMinutes = '0' + sMinutes;
     }
-   // alert(sHours + ':::' + sMinutes);
-   const time24 = sHours + ':' + sMinutes + ':00';
+    // alert(sHours + ':::' + sMinutes);
+    const time24 = sHours + ':' + sMinutes + ':00';
     /*const mom_date = moment(date);
     mom_date.set('hour', sHours);
     mom_date.set('minute', sMinutes);*/
@@ -610,7 +610,7 @@ no_cap = Messages.NO_CAP;
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
-        this.check_in_list  = this.check_in_filtered_list = [];
+    this.check_in_list = this.check_in_filtered_list = [];
     this.getQueueList();
     /*this.getTodayCheckinCount()
     .then(
@@ -619,11 +619,11 @@ no_cap = Messages.NO_CAP;
       }
     );*/
     this.getFutureCheckinCount()
-    .then(
-      (result) => {
-        this.future_waitlist_count = result;
-      }
-    );
+      .then(
+        (result) => {
+          this.future_waitlist_count = result;
+        }
+      );
 
     // this.getTodayCheckinCount()
     // .then(
@@ -635,7 +635,7 @@ no_cap = Messages.NO_CAP;
   }
 
   selectedQueue(selected_queue, qclick?) {
-   // console.log('selected q', selected_queue.id);
+    // console.log('selected q', selected_queue.id);
     if (selected_queue.id) {
       this.sel_queue_indx = selected_queue.qindx;
       this.shared_functions.setitemonLocalStorage('pdq', selected_queue.id);
@@ -651,7 +651,7 @@ no_cap = Messages.NO_CAP;
       );
   }
   handleQueueSel(mod) {
-   // console.log('mod', mod, this.sel_queue_indx);
+    // console.log('mod', mod, this.sel_queue_indx);
     let selqindx;
     if (mod === 'next') {
       if ((this.queues.length - 1) > this.sel_queue_indx) {
@@ -671,21 +671,21 @@ no_cap = Messages.NO_CAP;
     let no_filter = false;
     if (!filter) {
       filter = {
-        'location-eq' : this.selected_location.id,
+        'location-eq': this.selected_location.id,
       };
       no_filter = true;
     }
 
     return new Promise((resolve, reject) => {
       this.provider_services.getWaitlistFutureCount(filter)
-      .subscribe(
-        data => {
-          resolve(data);
-          if (no_filter) { this.future_waitlist_count = data; }
-        },
-        error => {
+        .subscribe(
+          data => {
+            resolve(data);
+            if (no_filter) { this.future_waitlist_count = data; }
+          },
+          error => {
 
-        });
+          });
     });
 
 
@@ -696,22 +696,22 @@ no_cap = Messages.NO_CAP;
     let no_filter = false;
     if (!filter) {
       filter = {
-        'location-eq' : this.selected_location.id
+        'location-eq': this.selected_location.id
       };
       no_filter = true;
     }
     // console.log(filter);
     return new Promise((resolve, reject) => {
 
-    this.provider_services.getwaitlistHistoryCount(filter)
-    .subscribe(
-      data => {
-        resolve(data);
-        if (no_filter) { this.histroy_waitlist_count = data; }
-      },
-      error => {
+      this.provider_services.getwaitlistHistoryCount(filter)
+        .subscribe(
+          data => {
+            resolve(data);
+            if (no_filter) { this.histroy_waitlist_count = data; }
+          },
+          error => {
 
-      });
+          });
 
     });
   }
@@ -722,8 +722,8 @@ no_cap = Messages.NO_CAP;
 
     if (!filter) {
       filter = {
-        'location-eq' : this.selected_location.id,
-        'queue-eq' : this.selected_queue.id
+        'location-eq': this.selected_location.id,
+        'queue-eq': this.selected_queue.id
       };
 
       no_filter = true;
@@ -732,14 +732,14 @@ no_cap = Messages.NO_CAP;
     return new Promise((resolve, reject) => {
 
       this.provider_services.getwaitlistTodayCount(filter)
-      .subscribe(
-        data => {
-          if (no_filter) { this.today_waitlist_count = data; }
-          resolve(data);
-        },
-        error => {
+        .subscribe(
+          data => {
+            if (no_filter) { this.today_waitlist_count = data; }
+            resolve(data);
+          },
+          error => {
 
-        });
+          });
 
     });
   }
@@ -749,25 +749,25 @@ no_cap = Messages.NO_CAP;
     const filter = this.setFilterForApi();
     this.resetPaginationData();
 
-    this.pagination.startpageval =  1;
+    this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
 
     this.provider_services.getTodayWaitlist(filter)
-    .subscribe(
-      data => {
-        this.check_in_list = data;
-        if (this.status_type) {
+      .subscribe(
+        data => {
+          this.check_in_list = data;
+          if (this.status_type) {
             this.changeStatusType(this.status_type);
-        } else {
-          this.changeStatusType('all');
-        }
-      },
-      error => {
-        this.load_waitlist = 1;
-      },
-      () => {
-        this.load_waitlist = 1;
-      });
+          } else {
+            this.changeStatusType('all');
+          }
+        },
+        error => {
+          this.load_waitlist = 1;
+        },
+        () => {
+          this.load_waitlist = 1;
+        });
   }
 
   getFutureCheckIn() {
@@ -783,17 +783,17 @@ no_cap = Messages.NO_CAP;
         filter = this.setPaginationFilter(filter);
 
         this.provider_services.getFutureWaitlist(filter)
-        .subscribe(
-          data => {
-            this.check_in_list = this.check_in_filtered_list = data;
-            // this.future_waitlist_count = this.check_in_list.length || 0;
-          },
-          error => {
-            this.load_waitlist = 1;
-          },
-          () => {
-            this.load_waitlist = 1;
-          });
+          .subscribe(
+            data => {
+              this.check_in_list = this.check_in_filtered_list = data;
+              // this.future_waitlist_count = this.check_in_list.length || 0;
+            },
+            error => {
+              this.load_waitlist = 1;
+            },
+            () => {
+              this.load_waitlist = 1;
+            });
 
       });
 
@@ -811,16 +811,16 @@ no_cap = Messages.NO_CAP;
         filter = this.setPaginationFilter(filter);
 
         this.provider_services.getHistroryWaitlist(filter)
-        .subscribe(
-          data => {
-            this.check_in_list = this.check_in_filtered_list = data;
-          },
-          error => {
-            this.load_waitlist = 1;
-          },
-          () => {
-            this.load_waitlist = 1;
-          });
+          .subscribe(
+            data => {
+              this.check_in_list = this.check_in_filtered_list = data;
+            },
+            error => {
+              this.load_waitlist = 1;
+            },
+            () => {
+              this.load_waitlist = 1;
+            });
 
       }
     );
@@ -830,7 +830,7 @@ no_cap = Messages.NO_CAP;
   }
 
   setTimeType(time_type) {
-    this.check_in_list  = this.check_in_filtered_list = [];
+    this.check_in_list = this.check_in_filtered_list = [];
     this.time_type = time_type;
     this.shared_functions.setitemonLocalStorage('pdtyp', this.time_type);
     const stype = this.shared_functions.getitemfromLocalStorage('pdStyp');
@@ -841,7 +841,7 @@ no_cap = Messages.NO_CAP;
     }
     this.setFilterDateMaxMin();
     // this.queues = [];
-      // console.log('ttype', this.time_type, this.queues.length);
+    // console.log('ttype', this.time_type, this.queues.length);
     if (this.time_type === 1 && this.queues.length === 0) {
       this.getQueueListByDate();
     }
@@ -890,9 +890,9 @@ no_cap = Messages.NO_CAP;
 
     switch (this.time_type) {
 
-      case 0 : this.getHistoryCheckIn(); break;
-      case 1 : this.getQueueListByDate(); break;
-      case 2 : this.getFutureCheckIn(); break;
+      case 0: this.getHistoryCheckIn(); break;
+      case 1: this.getQueueListByDate(); break;
+      case 2: this.getFutureCheckIn(); break;
     }
   }
 
@@ -921,7 +921,7 @@ no_cap = Messages.NO_CAP;
 
 
   editLocation() {
-     this.locations.forEach((loc, index) => {
+    this.locations.forEach((loc, index) => {
       if (this.selected_location.id === loc.id) {
         this.selected_location_index = index;
       }
@@ -955,43 +955,43 @@ no_cap = Messages.NO_CAP;
 
     this.status_type = type;
     this.shared_functions.setitemonLocalStorage('pdStyp', this.status_type);
-    let status: any = this.status_type ;
+    let status: any = this.status_type;
 
     switch (type) {
-      case 'all' : status = ['checkedIn', 'arrived', 'prepaymentPending'];
+      case 'all': status = ['checkedIn', 'arrived', 'prepaymentPending'];
     }
 
     this.check_in_filtered_list = this.check_in_list.filter(
-        check_in => {
-          if (typeof(status) === 'string' &&
+      check_in => {
+        if (typeof (status) === 'string' &&
           check_in.waitlistStatus === status) {
+          return check_in;
+        } else if (typeof (status) === 'object') {
+
+          const index = status.indexOf(check_in.waitlistStatus);
+          if (index !== -1) {
             return check_in;
-          } else if (typeof(status) === 'object') {
-
-            const index = status.indexOf(check_in.waitlistStatus);
-            if (index !== -1) {
-              return check_in;
-            }
-
           }
 
-        });
+        }
+
+      });
   }
 
   changeWaitlistStatus(waitlist, action) {
-  this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
+    this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
     this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
-    .then(
-      result => {
-        this.loadApiSwitch(result);
-      }
-    );
+      .then(
+        result => {
+          this.loadApiSwitch(result);
+        }
+      );
   }
 
-  showConsumerNote (checkin) {
+  showConsumerNote(checkin) {
     this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
@@ -1043,7 +1043,7 @@ no_cap = Messages.NO_CAP;
       api_filter['service-eq'] = this.filter.service;
     }
 
-    if (this.time_type !== 1 ) {
+    if (this.time_type !== 1) {
       if (this.filter.waitlist_status !== 'all') {
         api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
       }
@@ -1061,7 +1061,7 @@ no_cap = Messages.NO_CAP;
       }
 
     }
-    if (this.time_type === 0 ) {
+    if (this.time_type === 0) {
       if (this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
@@ -1128,25 +1128,25 @@ no_cap = Messages.NO_CAP;
 
   getWaitlistBill(checkin, type = 'bill') {
     this.provider_services.getWaitlistBill(checkin.ynwUuid)
-    .subscribe(
-      data => {
-        if (type === 'bill') {
-          this.viewBill(checkin , data);
-        } else {
-          this.makePayment(checkin , data);
+      .subscribe(
+        data => {
+          if (type === 'bill') {
+            this.viewBill(checkin, data);
+          } else {
+            this.makePayment(checkin, data);
+          }
+        },
+        error => {
+          // console.log(error);
+          if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
+            // this.addEditBill(checkin , null);
+          } else {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        },
+        () => {
         }
-      },
-      error => {
-        // console.log(error);
-        if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
-         // this.addEditBill(checkin , null);
-        } else {
-          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
-        }
-      },
-      () => {
-      }
-    );
+      );
   }
 
   addEditBill(checkin) {
@@ -1180,51 +1180,51 @@ no_cap = Messages.NO_CAP;
     //   }
     // });
     if (!this.viewbilldialogRef) {
-    this.viewbilldialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'billpopup'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
-	} else {
-	    console.log('more clicks');
-	  }
+      this.viewbilldialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'billpopup'],
+        disableClose: true,
+        data: {
+          checkin: checkin,
+          bill_data: bill_data
+        }
+      });
+    } else {
+      console.log('more clicks');
+    }
     this.viewbilldialogRef.afterClosed().subscribe(result => {
       // console.log(result);
       if (this.viewbilldialogRef) {
-      this.viewbilldialogRef = null;
+        this.viewbilldialogRef = null;
       }
-   //   if (result === 'updateBill') {
-        // this.addEditBill(checkin, bill_data);
-     // } else
-       if (result === 'reloadlist') {
+      //   if (result === 'updateBill') {
+      // this.addEditBill(checkin, bill_data);
+      // } else
+      if (result === 'reloadlist') {
         this.reloadAPIs();
-      } else if ( result === 'makePayment') {
+      } else if (result === 'makePayment') {
         this.makePayment(checkin, bill_data);
       }
     });
   }
 
   makePayment(checkin, bill_data) {
-  if (!this.makPaydialogRef) {
-    this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
-} else {
+    if (!this.makPaydialogRef) {
+      this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          checkin: checkin,
+          bill_data: bill_data
+        }
+      });
+    } else {
       console.log('more clicks');
     }
     this.makPaydialogRef.afterClosed().subscribe(result => {
-     if (this.makPaydialogRef) {
-      this.makPaydialogRef = null;
+      if (this.makPaydialogRef) {
+        this.makPaydialogRef = null;
       }
       this.reloadAPIs();
     });
@@ -1240,15 +1240,15 @@ no_cap = Messages.NO_CAP;
     // console.log('page', pg);
     this.doSearch();
   }
-  addConsumerInboxMessage(waitlist) { 
+  addConsumerInboxMessage(waitlist) {
     const uuid = waitlist.ynwUuid || null;
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
-    .then(
-      result => {
-      },
-      error => {
-      }
-    );
+      .then(
+        result => {
+        },
+        error => {
+        }
+      );
   }
   reloadActionSubheader(data) {
     this.reloadAPIs();
@@ -1272,8 +1272,8 @@ no_cap = Messages.NO_CAP;
   }
 
   learnmore_clicked(mod) {
-    const moreOptions = {'show_learnmore': true , 'scrollKey': 'adjustdelay'};
+    const moreOptions = { 'show_learnmore': true, 'scrollKey': 'adjustdelay' };
     const pdata = { 'ttype': 'learn_more', 'target': moreOptions };
     this.shared_functions.sendMessage(pdata);
-   }
+  }
 }
