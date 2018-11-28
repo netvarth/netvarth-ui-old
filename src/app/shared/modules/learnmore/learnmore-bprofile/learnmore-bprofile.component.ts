@@ -6,19 +6,22 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 import { SharedFunctions } from '../../../functions/shared-functions';
 import { Messages } from '../../../constants/project-messages';
 
-
 @Component({
   selector: 'app-bprofile-learnmore',
   templateUrl: './learnmore-bprofile.component.html'
 })
 export class LearnmoreBprofileComponent implements OnInit, OnDestroy {
   @Input() target: string;
+  curtype = '';
   constructor(
     // @Inject(MAT_DIALOG_DATA) public data: any,
-    private _scrollToService: ScrollToService
+    private _scrollToService: ScrollToService,
+    public shared_function: SharedFunctions
   ) {}
 
   ngOnInit() {
+    const userdet = this.shared_function.getitemfromLocalStorage('ynw-user');
+    this.curtype = userdet.sector;
     if (this.target) {
       this.triggerScrollTo(this.target);
     }

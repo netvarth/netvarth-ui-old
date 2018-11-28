@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -27,6 +27,10 @@ export class KioskComponent {
                 this.additionalCheckstatClass = false;
             }
         });
+    }
+    @HostListener('window:beforeunload', ['$event'])
+    beforeunloadHandler(event) {
+        // event.returnValue = false;
     }
 
 }

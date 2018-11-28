@@ -13,12 +13,16 @@ import { Messages } from '../../../constants/project-messages';
 })
 export class LearnmoreCheckinComponent implements OnInit {
   @Input() target: string;
+  curtype = '';
   constructor(
    // @Inject(MAT_DIALOG_DATA) public data: any,
-    private _scrollToService: ScrollToService
+    private _scrollToService: ScrollToService,
+    public shared_function: SharedFunctions
   ) {}
 
   ngOnInit() {
+    const userdet = this.shared_function.getitemfromLocalStorage('ynw-user');
+    this.curtype = userdet.sector;
       // console.log('target', this.target);
   }
 

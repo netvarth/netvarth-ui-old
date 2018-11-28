@@ -466,7 +466,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       let cqty = Number(this.curSelItm.qty);
       if (cqty < 0) {
-        cqty = cqty * -1;
+        // cqty = cqty * -1;
+        cqty = 1;
       }
       switch (type) {
         case 'Services' :  selected_item = {
@@ -1008,7 +1009,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (vv === 0) {
         vv = 1;
       } else if ( vv < 0) {
-        vv = vv * -1;
+        // vv = vv * -1;
+        vv = 1;
       }
       itm.qty = vv;
     }

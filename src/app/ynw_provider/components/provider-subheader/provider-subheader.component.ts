@@ -259,7 +259,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
         });*/
-        console.log('here');
+       // console.log('here');
         const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
         this.shared_functions.sendMessage(pdata);
   }

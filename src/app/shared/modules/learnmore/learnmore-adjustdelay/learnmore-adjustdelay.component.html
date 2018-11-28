@@ -1,6 +1,13 @@
-<div class="lm-outer w-manager">
-   
-    <h3>Adjust Delay</h3>
-    
-    
-</div>
+<app-healthcare-adjustdelay-learnmore [target]="target" *ngIf="curtype=='healthCare'"></app-healthcare-adjustdelay-learnmore>
+
+<app-personalcare-adjustdelay-learnmore [target]="target" *ngIf="curtype=='personalCare'"></app-personalcare-adjustdelay-learnmore>
+
+<app-foodjoint-adjustdelay-learnmore [target]="target" *ngIf="curtype=='foodJoints'"></app-foodjoint-adjustdelay-learnmore>
+
+<app-professional-adjustdelay-learnmore [target]="target" *ngIf="curtype=='professionalConsulting'"></app-professional-adjustdelay-learnmore>
+
+<app-vastu-adjustdelay-learnmore [target]="target" *ngIf="curtype=='vastuAstrology'"></app-vastu-adjustdelay-learnmore>
+
+<app-religious-adjustdelay-learnmore [target]="target" *ngIf="curtype=='religiousPriests'"></app-religious-adjustdelay-learnmore>
+
+<app-automobile-adjustdelay-learnmore [target]="target" *ngIf="curtype=='autoMobile'"></app-automobile-adjustdelay-learnmore>

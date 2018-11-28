@@ -1,6 +1,14 @@
-<div class="lm-outer w-manager">
-   
-    <h3>Check In</h3>
-    
-    <!-- <span class="backTotop" (click)="handleScroll('main-top')"><span class="icon-angle-up"></span>Top</span> -->
-</div>
+<app-healthcare-checkin-learnmore [target]="target" *ngIf="curtype=='healthCare'"></app-healthcare-checkin-learnmore>
+
+<app-personalcare-checkin-learnmore [target]="target" *ngIf="curtype=='personalCare'"></app-personalcare-checkin-learnmore>
+
+<app-foodjoint-checkin-learnmore [target]="target" *ngIf="curtype=='foodJoints'"></app-foodjoint-checkin-learnmore>
+
+<app-professional-checkin-learnmore [target]="target" *ngIf="curtype=='professionalConsulting'"></app-professional-checkin-learnmore>
+
+<app-vastu-checkin-learnmore [target]="target" *ngIf="curtype=='vastuAstrology'"></app-vastu-checkin-learnmore>
+
+<app-religious-checkin-learnmore [target]="target" *ngIf="curtype=='religiousPriests'"></app-religious-checkin-learnmore>
+
+<app-automobile-checkin-learnmore [target]="target" *ngIf="curtype=='autoMobile'"></app-automobile-checkin-learnmore>
+

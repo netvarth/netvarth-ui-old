@@ -13,13 +13,20 @@ import { Messages } from '../../../constants/project-messages';
 })
 export class LearnmoreAdjustDelayComponent implements OnInit {
   @Input() target: string;
+  curtype = '';
   constructor(
-   // @Inject(MAT_DIALOG_DATA) public data: any,
-    private _scrollToService: ScrollToService
+    // @Inject(MAT_DIALOG_DATA) public data: any,
+    private _scrollToService: ScrollToService,
+    public shared_function: SharedFunctions
   ) {}
 
   ngOnInit() {
-      // console.log('target', this.target);
+    const userdet = this.shared_function.getitemfromLocalStorage('ynw-user');
+    this.curtype = userdet.sector;
+    if (this.target) {
+      this.triggerScrollTo(this.target);
+    }
+    // window.addEventListener('scroll', this.scroll, true); // third parameter
   }
 
   public triggerScrollTo(destination) {
