@@ -15,6 +15,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 export class LearnmoreComponent implements OnInit {
     destination = '';
     subKey = '';
+    helpSub = '';
     @Input ()  passedDet;
     constructor(
       // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,5 +34,8 @@ export class LearnmoreComponent implements OnInit {
           this.triggerScrollTo(this.data.moreOptions.scrollKey);
           }, 200);
       }*/
+    }
+    sethelpSub(mod) {
+      this.helpSub = mod;
     }
 }

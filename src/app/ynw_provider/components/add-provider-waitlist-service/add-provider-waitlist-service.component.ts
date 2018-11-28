@@ -69,7 +69,8 @@ cancel_btn = Messages.CANCEL_BTN;
   disable_price = true;
   taxDetails: any = [];
   taxpercentage = 0;
-
+ savedisabled = false;
+  canceldisabled = false;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -221,10 +222,14 @@ cancel_btn = Messages.CANCEL_BTN;
   }
 
   createService(post_data) {
-
+    this.savedisabled = true;
+    const holdstat = this.button_title;
+    this.button_title = 'Please wait ...';
     this.provider_services.createService(post_data)
     .subscribe(
       data => {
+       this.savedisabled = false;
+        this.button_title = holdstat;
         const service_id = data;
         this.service = [];
         this.service['id'] = service_id;
@@ -238,6 +243,8 @@ cancel_btn = Messages.CANCEL_BTN;
       },
       error => {
         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+         this.savedisabled = false;
+        this.button_title = holdstat;
       }
     );
   }
@@ -344,10 +351,16 @@ cancel_btn = Messages.CANCEL_BTN;
   }
 
   uploadApi(submit_data, from) {
-
+ this.savedisabled = true;
+    const holdstat = this.button_title;
+    this.button_title = 'Uploading ...';
+    this.canceldisabled = true;
     this.provider_services.uploadServiceGallery(this.service.id, submit_data)
     .subscribe(
       data => {
+       this.savedisabled = false;
+        this.canceldisabled = false;
+        this.button_title = holdstat;
         this.getGalleryImages();
         this.resetVariables();
         if (from === 'add') {
@@ -358,7 +371,10 @@ cancel_btn = Messages.CANCEL_BTN;
         }
       },
       error => {
-
+this.savedisabled = false;
+        this.canceldisabled = false;
+        this.button_title = holdstat;
+        this.api_error =  this.shared_functions.getProjectErrorMesssages(error);
       }
     );
 

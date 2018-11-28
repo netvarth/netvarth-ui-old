@@ -6,7 +6,7 @@
                 <span class="top-help-icon"><button class="cs-btn bt4" (click)="searchCustomer('createCustomer')"><i data-icon="u"></i> {{create_cap}} {{customer_label  | capitalizeFirst}}</button><i data-icon="B" id="customer-help" (click)="learnmore_clicked('customer')"></i></span>
                 <span class="top-help-icon"><a routerLink="/kiosk" target="_blank"><div class="cs-btn bt4"><i data-icon="A"></i> {{kiosk_cap}}</div></a><i data-icon="B" id="kiosk-help" (click)="learnmore_clicked('kiosk')"></i></span>
                 <!-- <span class="top-help-icon"><a routerLink="/kiosk" ><div class="cs-btn bt4"><i data-icon="A"></i> Kiosk</div></a><i data-icon="B" id="kiosk-help" (click)="learnmore_clicked('kiosk')"></i></span> -->
-                <span class="top-help-button"><button class="cs-btn bt5"><i data-icon="B"></i> {{help_cap}}</button></span>
+                <span class="top-help-button"><button class="cs-btn bt5" (click)="learnmore_clicked('help')"><i data-icon="B"></i> {{help_cap}}</button></span>
             </div>
         </div>
         <div class="row m-nav">

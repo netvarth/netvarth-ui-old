@@ -6,13 +6,6 @@
     position: relative;
     justify-content: center;
     
-    @include respond-to(ynw-767) {
-        display: block;
-    }
-    @include respond-to(ynw-575) {
-        height: auto;
-    }
-    
     app-kioskheader {
         position: absolute;
         width: 100%;
@@ -66,6 +59,20 @@
                     @include border-radius(100%);
                     overflow: hidden;
                     @include box-shadow(2px, 3px, 0px, rgba(0,0,0,.08) !important);
+                    border: 1px solid $cc-ash;
+                    position: relative;
+                    
+                    &:after {
+                        content: "";
+                        background: url(../images/img-null.svg) no-repeat scroll 0 0;
+                        position: absolute;
+                        width: 100px;
+                        height: 100px;
+                        opacity: .3;
+                        z-index: 10;
+                        left: 0;
+                        top: 0;
+                    }
                     
                     img {
                         width: 100%;
@@ -551,7 +558,7 @@
                         font-weight: 500;
                         font-size: 1rem;
                         color: $linkblack;
-                        width: 500px;
+                        width: 580px;
                         
                         @include respond-to(ynw-767){
                             width: 100%;
@@ -1324,7 +1331,7 @@
             
             //Sticky Navigation at Bottom on Inner Pages
             &.navigation {
-                position: absolute;
+                position: fixed;
                 width: 20%;
                 height: auto;
                 bottom: 15%;
@@ -1439,6 +1446,7 @@
                 height: 100px;
                 margin-left: auto;
                 margin-right: auto;
+                margin-bottom: 1rem;
                 border: none;
                 padding: 20px;
                 background: $cc-red;
@@ -1488,18 +1496,66 @@
             }
         }
     }
-
-    /*&:before {
-        background: url(../images/clouds.svg) no-repeat scroll center bottom/cover;
-        position: absolute;
-        content: "";
-        width: 100%;
-        height: 20vh;
-        top: 0;
-        left: 0;
+    
+    &.checkinspecial {
+        height: 100%;
         
-        @include respond-to(ynw-575) {
-            height: 28vh;
+        app-kiosk-home {
+            margin-top: 150px;
         }
-    }*/
+    }
+    
+    &.checkstatspecial {
+        app-kiosk-home {
+            height: 75vh;
+            
+            .ksk-cpy {
+                &.arrived {
+                    width: 580px;
+                    overflow-y: auto;
+                }
+            }
+        }
+    }
+    
+    @include respond-to(ynw-767) {
+        display: block;
+        
+        &.checkstatspecial {
+            app-kiosk-home {
+                .ksk-cpy {
+                    &.arrived {
+                        width: 80%;
+                    }
+                }
+            }
+        }
+    }
+    @include respond-to(ynw-575) {
+        height: auto;
+    }
+    @include respond-to(ynw-768-991) {
+        &.checkinspecial {
+            app-kiosk-home {
+                .ksk-cpy {
+                    &.checkin {
+                        .kioskcontent {
+                            .mainouter {
+                                width: 420px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.checkstatspecial {
+            app-kiosk-home {
+                .ksk-cpy {
+                    &.arrived {
+                        width: 540px;
+                    }
+                }
+            }
+        }
+    }
 }

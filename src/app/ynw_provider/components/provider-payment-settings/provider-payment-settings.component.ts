@@ -167,6 +167,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             console.log('params', params);
             this.shared_Functionsobj.openSnackBar(showmsgs, params);
             this.tabid = 1;
+                            if (document.getElementById('gstno')) {
+                    document.getElementById('gstno').focus();
+                }
         }
     }
     getTaxpercentage() {

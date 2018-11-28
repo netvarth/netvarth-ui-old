@@ -515,6 +515,10 @@ app-footer {
                     @include respond-to(ynw-400) {
                         font-size: 1rem;
                         align-items: center !important;
+                                                
+                        .mat-expansion-panel-header-title {
+                            align-items: center;
+                        }
                     }
                 }
                 

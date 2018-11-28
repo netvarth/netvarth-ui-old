@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Roboto+Slab:400,700");
-/* @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; */
 /*test*/
 .cs-btn {
   position: relative;
@@ -883,26 +882,7 @@ select:-webkit-autofill:focus {
   align-items: center;
   flex-direction: column;
   position: relative;
-  justify-content: center;
-  /*&:before {
-      background: url(../images/clouds.svg) no-repeat scroll center bottom/cover;
-      position: absolute;
-      content: "";
-      width: 100%;
-      height: 20vh;
-      top: 0;
-      left: 0;
-      
-      @include respond-to(ynw-575) {
-          height: 28vh;
-      }
-  }*/ }
-  @media only screen and (max-width: 767px) {
-    .ksk {
-      display: block; } }
-  @media only screen and (max-width: 575px) {
-    .ksk {
-      height: auto; } }
+  justify-content: center; }
   .ksk app-kioskheader {
     position: absolute;
     width: 100%;
@@ -952,7 +932,19 @@ select:-webkit-autofill:focus {
           overflow: hidden;
           -webkit-box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important ;
           -moz-box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important ;
-          box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important ; }
+          box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important ;
+          border: 1px solid #dbdbdb;
+          position: relative; }
+          .ksk app-kioskheader .ksk-hd .ksk-company-logo .logo:after {
+            content: "";
+            background: url(../images/img-null.svg) no-repeat scroll 0 0;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: .3;
+            z-index: 10;
+            left: 0;
+            top: 0; }
           .ksk app-kioskheader .ksk-hd .ksk-company-logo .logo img {
             width: 100%;
             height: 100%; }
@@ -1307,7 +1299,7 @@ select:-webkit-autofill:focus {
           font-weight: 500;
           font-size: 1rem;
           color: #222223;
-          width: 500px; }
+          width: 580px; }
           @media only screen and (max-width: 767px) {
             .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter {
               width: 100%; } }
@@ -1814,7 +1806,7 @@ select:-webkit-autofill:focus {
                   border: none;
                   margin-bottom: 0; }
       .ksk app-kiosk-home .ksk-cpy.navigation {
-        position: absolute;
+        position: fixed;
         width: 20%;
         height: auto;
         bottom: 15%;
@@ -1902,6 +1894,7 @@ select:-webkit-autofill:focus {
         height: 100px;
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 1rem;
         border: none;
         padding: 20px;
         background: #f24949;
@@ -1948,6 +1941,28 @@ select:-webkit-autofill:focus {
           transform-origin: 50% 50%; }
       .ksk app-kiosk-home .ksk-exit .exit:focus:not(:active)::after {
         animation: ripple 1s ease-out; }
+  .ksk.checkinspecial {
+    height: 100%; }
+    .ksk.checkinspecial app-kiosk-home {
+      margin-top: 150px; }
+  .ksk.checkstatspecial app-kiosk-home {
+    height: 75vh; }
+    .ksk.checkstatspecial app-kiosk-home .ksk-cpy.arrived {
+      width: 580px;
+      overflow-y: auto; }
+  @media only screen and (max-width: 767px) {
+    .ksk {
+      display: block; }
+      .ksk.checkstatspecial app-kiosk-home .ksk-cpy.arrived {
+        width: 80%; } }
+  @media only screen and (max-width: 575px) {
+    .ksk {
+      height: auto; } }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .ksk.checkinspecial app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter {
+      width: 420px; }
+    .ksk.checkstatspecial app-kiosk-home .ksk-cpy.arrived {
+      width: 540px; } }
 
 /* #### Start Sticky Footer ####*/
 /*
@@ -2379,7 +2394,9 @@ app-footer {
         @media only screen and (max-width: 400px) {
           .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
             font-size: 1rem;
-            align-items: center !important; } }
+            align-items: center !important; }
+            .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-panel-header-title {
+              align-items: center; } }
       .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
         padding-left: 0px;
         padding-right: 0px;
@@ -2789,7 +2806,7 @@ header {
         @media only screen and (min-width: 1200px) {
           .table-outer table tbody tr td.action .mbt-mobile-show {
             display: none; } }
-             .table-outer table tbody tr td.nodatafound {
+      .table-outer table tbody tr td.nodatafound {
         text-align: center;
         justify-content: center; }
         .table-outer table tbody tr td.nodatafound:before {
@@ -3112,6 +3129,30 @@ header {
           width: 20px;
           height: 20px;
           font-weight: 600; }
+    @media only screen and (max-width: 575px) {
+      .signupmainclass .mat-dialog-title,
+      .loginmainclass .mat-dialog-title,
+      .moreoptionsmainclass .mat-dialog-title,
+      .forgotpasswordmainclass .mat-dialog-title,
+      .commonpopupmainclass .mat-dialog-title,
+      .googlemainmappopup .mat-dialog-title, .outer-card .mat-dialog-title, .consumerpopupmainclass .mat-dialog-title, .specialclass .mat-dialog-title {
+        font-size: 1.1rem;
+        padding: 10px 15px; }
+        .signupmainclass .mat-dialog-title .modal_close,
+        .loginmainclass .mat-dialog-title .modal_close,
+        .moreoptionsmainclass .mat-dialog-title .modal_close,
+        .forgotpasswordmainclass .mat-dialog-title .modal_close,
+        .commonpopupmainclass .mat-dialog-title .modal_close,
+        .googlemainmappopup .mat-dialog-title .modal_close, .outer-card .mat-dialog-title .modal_close, .consumerpopupmainclass .mat-dialog-title .modal_close, .specialclass .mat-dialog-title .modal_close {
+          margin-top: -24px;
+          height: 51px; }
+          .signupmainclass .mat-dialog-title .modal_close i,
+          .loginmainclass .mat-dialog-title .modal_close i,
+          .moreoptionsmainclass .mat-dialog-title .modal_close i,
+          .forgotpasswordmainclass .mat-dialog-title .modal_close i,
+          .commonpopupmainclass .mat-dialog-title .modal_close i,
+          .googlemainmappopup .mat-dialog-title .modal_close i, .outer-card .mat-dialog-title .modal_close i, .consumerpopupmainclass .mat-dialog-title .modal_close i, .specialclass .mat-dialog-title .modal_close i {
+            margin-top: 4px; } }
   .signupmainclass .mat-dialog-content,
   .loginmainclass .mat-dialog-content,
   .moreoptionsmainclass .mat-dialog-content,
@@ -3154,19 +3195,19 @@ header {
       .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper, .specialclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper {
         padding: 0;
         margin: 0; }
-        .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix,
-        .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix,
-        .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix,
-        .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix,
-        .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix,
-        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix, .specialclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix {
+        .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix,
+        .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix,
+        .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix,
+        .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix,
+        .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix,
+        .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix, .specialclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix {
           align-self: center; }
-          .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee,
-          .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee,
-          .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee,
-          .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee,
-          .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee,
-          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee, .specialclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-input-prefix .rupee {
+          .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee,
+          .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee,
+          .moreoptionsmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee,
+          .forgotpasswordmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee,
+          .commonpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee,
+          .googlemainmappopup .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee, .outer-card .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee, .consumerpopupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee, .specialclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-prefix .rupee {
             font-size: 1.5rem; }
         .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-infix,
         .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-infix,
@@ -4692,6 +4733,14 @@ header {
       .commonpopupmainclass .mat-dialog-content .audit_outer .table,
       .googlemainmappopup .mat-dialog-content .audit_outer .table, .outer-card .mat-dialog-content .audit_outer .table, .consumerpopupmainclass .mat-dialog-content .audit_outer .table, .specialclass .mat-dialog-content .audit_outer .table {
         margin-bottom: 0; }
+      @media only screen and (max-width: 575px) {
+        .signupmainclass .mat-dialog-content .audit_outer,
+        .loginmainclass .mat-dialog-content .audit_outer,
+        .moreoptionsmainclass .mat-dialog-content .audit_outer,
+        .forgotpasswordmainclass .mat-dialog-content .audit_outer,
+        .commonpopupmainclass .mat-dialog-content .audit_outer,
+        .googlemainmappopup .mat-dialog-content .audit_outer, .outer-card .mat-dialog-content .audit_outer, .consumerpopupmainclass .mat-dialog-content .audit_outer, .specialclass .mat-dialog-content .audit_outer {
+          overflow-x: scroll; } }
     .signupmainclass .mat-dialog-content > .ng-star-inserted,
     .loginmainclass .mat-dialog-content > .ng-star-inserted,
     .moreoptionsmainclass .mat-dialog-content > .ng-star-inserted,
@@ -5664,7 +5713,7 @@ header {
     .forgotpasswordmainclass .mat-dialog-content .message-two,
     .commonpopupmainclass .mat-dialog-content .message-two,
     .googlemainmappopup .mat-dialog-content .message-two, .outer-card .mat-dialog-content .message-two, .consumerpopupmainclass .mat-dialog-content .message-two, .specialclass .mat-dialog-content .message-two {
-      height: 30px;
+      height: auto;
       background: transparent;
       border: 1px solid #00aef2;
       padding: 6px 15px;
@@ -5930,6 +5979,14 @@ header {
   .commonpopupmainclass.width-100,
   .googlemainmappopup.width-100, .outer-card.width-100, .consumerpopupmainclass.width-100, .specialclass.width-100 {
     width: 100% !important; }
+  @media only screen and (max-width: 575px) {
+    .signupmainclass,
+    .loginmainclass,
+    .moreoptionsmainclass,
+    .forgotpasswordmainclass,
+    .commonpopupmainclass,
+    .googlemainmappopup, .outer-card, .consumerpopupmainclass, .specialclass {
+      max-width: 92vw !important; } }
 
 .loginmainclass .mat-dialog-actions {
   display: block;
@@ -7384,482 +7441,7 @@ header {
         margin-right: 0px; }
     .billpopup .mat-dialog-content .bill-wrapper.viewbill .section-three .amount-table .amt-content .amt {
       margin-right: 50px; }
-
-/*New Style for Bill*/
-.bill-section .bill-section-content {
-  padding: 0px; }
-  .bill-section .bill-section-content .bill-wrapper {
-    background: #fff;
-    width: 100%;
-    margin: 0 auto; }
-    .bill-section .bill-section-content .bill-wrapper .section-one, .bill-section .bill-section-content .bill-wrapper .section-two, .bill-section .bill-section-content .bill-wrapper .section-three, .bill-section .bill-section-content .bill-wrapper .section-four {
-      padding: 20px;
-      border-bottom: 1px solid #dbdbdb; }
-    .bill-section .bill-section-content .bill-wrapper .section-one h3 {
-      font-size: 1rem;
-      margin-bottom: 15px;
-      text-align: center; }
-    .bill-section .bill-section-content .bill-wrapper .section-one .details {
-      display: flex;
-      flex-wrap: wrap;
-      font-size: .875rem;
-      font-weight: 500; }
-      .bill-section .bill-section-content .bill-wrapper .section-one .details .columns {
-        flex-basis: 50%; }
-        .bill-section .bill-section-content .bill-wrapper .section-one .details .columns .title {
-          font-weight: 600;
-          position: relative;
-          margin-right: 10px; }
-          .bill-section .bill-section-content .bill-wrapper .section-one .details .columns .title:after {
-            position: absolute;
-            content: ":";
-            right: -5px; }
-        .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:nth-child(1), .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:nth-child(2) {
-          margin-bottom: 10px; }
-      @media only screen and (max-width: 500px) {
-        .bill-section .bill-section-content .bill-wrapper .section-one .details {
-          flex-direction: column; }
-          .bill-section .bill-section-content .bill-wrapper .section-one .details .columns {
-            margin-bottom: 10px; }
-            .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:last-child {
-              margin-bottom: 0; } }
-    .bill-section .bill-section-content .bill-wrapper .section-two .add-button .bt3 {
-      text-transform: none;
-      letter-spacing: .2px; }
-    .bill-section .bill-section-content .bill-wrapper .section-two .edit-row {
-      font-size: .875rem;
-      font-weight: 500; }
-      .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service {
-        display: flex; }
-        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl {
-          display: flex;
-          flex-grow: 1;
-          align-items: center;
-          justify-content: space-between; }
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox {
-            flex-grow: 1; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
-              width: auto; }
-              .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
-                height: 30px;
-                width: 100%;
-                padding: 5px 10px; }
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty {
-            display: flex;
-            align-items: center;
-            margin-left: 15px; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .label {
-              font-weight: 600;
-              margin-right: 10px; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
-              width: auto; }
-              .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
-                height: 30px;
-                width: 80px;
-                padding: 5px 5px 5px 10px; }
-        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
-          margin-left: 15px; }
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr .cs-btn {
-            height: 30px;
-            line-height: 12px;
-            padding: 6px 10px;
-            text-transform: none;
-            float: left;
-            font-size: .75rem; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr .cs-btn.bt2 {
-              margin-left: 10px; }
-        @media only screen and (max-width: 400px) {
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service {
-            flex-direction: column; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl {
-              margin-bottom: 10px; } }
-      @media only screen and (max-width: 575px) {
-        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row {
-          flex-direction: column; }
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
-            margin-left: 0;
-            margin-top: 5px; } }
-    .bill-section .bill-section-content .bill-wrapper .section-three {
-      border: none; }
-      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup {
-        font-size: .875rem;
-        font-weight: 500; }
-        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list {
-          position: relative;
-          border-bottom: 1px solid #dbdbdb;
-          margin-bottom: 15px;
-          padding-bottom: 15px; }
-          .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
-            display: flex;
-            padding: 5px 0;
-            margin-right: 50px;
-            text-align: right; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one {
-              display: flex; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name {
-                font-weight: 600;
-                flex-basis: 60%;
-                padding-right: 15px;
-                position: relative; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .tax {
-                  font-size: .60rem;
-                  font-weight: 600;
-                  position: absolute;
-                  top: -2px;
-                  right: -4px;
-                  color: #fda60d; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .quantity {
-                flex-basis: 20%; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
-                flex-basis: 20%; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two {
-              display: block;
-              margin-right: 0;
-              padding: 0; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row {
-                padding: 10px 0; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
-                  display: flex; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl {
-                    display: flex;
-                    flex-grow: 1;
-                    margin-right: 20px;
-                    justify-content: flex-end; }
-                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item {
-                      flex-basis: 48%; }
-                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
-                        width: auto; }
-                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
-                          height: 30px;
-                          width: 100%;
-                          padding: 5px 10px; }
-                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item.selectbox2 {
-                        margin-left: 20px; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spr .cs-btn {
-                    height: 30px;
-                    line-height: 12px;
-                    padding: 6px 10px;
-                    text-transform: none;
-                    float: left;
-                    font-size: .75rem; }
-                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spr .cs-btn.bt2 {
-                      margin-left: 10px; }
-                  @media only screen and (max-width: 500px) {
-                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
-                      flex-direction: column; }
-                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl {
-                        margin-right: 0;
-                        flex-direction: column; }
-                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .selectbox1 {
-                          margin-bottom: 10px; }
-                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item.selectbox2 {
-                          margin-left: 0; } }
-                  @media only screen and (max-width: 575px) {
-                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
-                      flex-direction: column; }
-                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup.discoup .spr {
-                        margin-top: 5px; } }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
-                margin-right: 50px;
-                display: flex;
-                padding: 5px 0;
-                color: #999999; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .name, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .name {
-                  flex-grow: 1;
-                  flex-basis: 60%;
-                  padding-right: 15px; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price {
-                  flex-basis: 40%; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three {
-              padding: 0; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three .name {
-                flex-basis: 60%;
-                font-weight: 600;
-                padding: 5px 0;
-                padding-right: 15px; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three .price {
-                flex-basis: 40%;
-                padding: 5px 0;
-                border-top: dashed 1px #dbdbdb; }
-            @media only screen and (max-width: 500px) {
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
-                margin-right: 40px; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
-                  flex-basis: 30%; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
-                  margin-right: 40px; } }
-          .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .more {
-            position: absolute;
-            right: 0;
-            top: 0; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .more .mat-icon-button {
-              height: 30px;
-              width: 30px;
-              line-height: 30px; }
-      .bill-section .bill-section-content .bill-wrapper .section-three .amount-table {
-        position: relative; }
-        .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content {
-          font-size: 1rem;
-          font-weight: 500;
-          width: 100%; }
-          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
-            text-align: right;
-            margin-right: 50px;
-            padding: 5px 0; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .name {
-              width: 73%;
-              text-align: right; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-              vertical-align: text-top;
-              width: 27%;
-              text-align: right;
-              padding: 0 50px 0 15px; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name {
-              font-weight: 600;
-              font-size: 1rem; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount {
-                color: #00aef2;
-                font-size: .875rem;
-                display: block; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount span {
-                  text-decoration: underline;
-                  cursor: pointer; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price {
-              font-weight: 600;
-              font-size: 1rem; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price {
-              color: #999999;
-              font-size: .875rem;
-              font-weight: 600; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price {
-              font-size: .875rem;
-              font-weight: 600; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name span, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price span {
-                display: block; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name span.txn, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price span.txn {
-                  font-weight: 500;
-                  font-size: .69rem; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .price {
-              font-weight: 600;
-              font-size: .875rem; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .name .link, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .price .link {
-                color: #00aef2;
-                text-decoration: underline;
-                cursor: pointer; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price {
-              font-size: 1.1rem;
-              font-weight: 700; }
-            @media only screen and (max-width: 500px) {
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
-                margin-right: 40px; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-                  flex-basis: 30%; } }
-            @media only screen and (max-width: 400px) {
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-                flex-basis: 40%; } }
-          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row {
-            padding: 10px 0; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup {
-              display: flex; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl {
-                display: flex;
-                flex-grow: 1;
-                margin-right: 20px;
-                justify-content: flex-end; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item {
-                  flex-basis: 48%; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
-                    height: 30px;
-                    width: 100%;
-                    padding: 5px 10px; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item.selectbox2 {
-                    margin-left: 20px; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spr .cs-btn {
-                height: 30px;
-                line-height: 12px;
-                padding: 6px 10px;
-                text-transform: none;
-                float: left;
-                font-size: .75rem; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spr .cs-btn.bt2 {
-                  margin-left: 10px; }
-              @media only screen and (max-width: 500px) {
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup {
-                  flex-direction: column; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl {
-                    margin-right: 0;
-                    margin-bottom: 10px;
-                    flex-direction: column; }
-                    .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .selectbox1 {
-                      margin-bottom: 10px; }
-                    .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item.selectbox2 {
-                      margin-left: 0; } }
-        .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn {
-          position: absolute;
-          top: 0;
-          right: 0;
-          display: none; }
-          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn .cs-btn {
-            text-transform: none;
-            padding-left: 5px;
-            padding-right: 5px; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn .cs-btn.active {
-              background: #00aef2;
-              color: #fff; }
-          @media only screen and (max-width: 500px) {
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn {
-              display: none; } }
-    .bill-section .bill-section-content .bill-wrapper .section-four {
-      border-bottom: none; }
-      .bill-section .bill-section-content .bill-wrapper .section-four .heading .back {
-        font-size: .75rem;
-        color: #00aef2;
-        display: table;
-        font-weight: 600;
-        position: relative;
-        padding-left: 20px;
-        margin-bottom: 20px;
-        cursor: pointer; }
-        .bill-section .bill-section-content .bill-wrapper .section-four .heading .back:before {
-          font-family: "custom-ynw" !important;
-          content: "\2e";
-          position: absolute;
-          left: 0;
-          top: 0; }
-      .bill-section .bill-section-content .bill-wrapper .section-four .heading h4 {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 10px; }
-      .bill-section .bill-section-content .bill-wrapper .section-four .list-outer {
-        border: 1px solid #dbdbdb;
-        font-size: .875rem;
-        font-weight: 500; }
-        .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th {
-          display: flex;
-          border-bottom: 1px solid #dbdbdb;
-          background: #dbdbdb; }
-          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th {
-            flex-basis: 33.3333%;
-            padding: 10px;
-            font-weight: 600;
-            text-align: center;
-            border-right: 1px solid #fff; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th:last-child {
-              border: none; }
-        .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing {
-          border-bottom: 1px solid #dbdbdb; }
-          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap {
-            display: flex;
-            align-items: center; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td {
-              flex-basis: 33.3333%;
-              padding: 10px;
-              text-align: center;
-              position: relative; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.one .date {
-                display: block;
-                font-weight: 600; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.one .time {
-                display: block; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .amt {
-                display: block;
-                font-weight: 600; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others {
-                font-size: .75rem; }
-                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode {
-                  display: block; }
-                  .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status .title, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode .title {
-                    position: relative;
-                    margin-right: 5px; }
-                    .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status .title:after, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode .title:after {
-                      position: absolute;
-                      content: ":";
-                      right: -5px; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.three .amt {
-                display: block;
-                font-weight: 600;
-                margin-bottom: 3px; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.three .cs-btn {
-                height: 24px;
-                line-height: 12px;
-                padding: 6px 10px;
-                text-transform: none;
-                font-size: .75rem; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td:after {
-                border-right: 1px solid #dbdbdb;
-                height: 30px;
-                width: 1px;
-                position: absolute;
-                content: "";
-                right: 0;
-                top: 50%;
-                margin-top: -15px; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td:last-child:after {
-                display: none; }
-          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table {
-            margin: 10px;
-            border: 1px solid #dbdbdb; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th {
-              text-align: center;
-              padding: 5px;
-              background: transparent; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th h5 {
-                font-size: .875rem;
-                margin: 0 auto; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 {
-              display: flex;
-              border-bottom: 1px solid #dbdbdb; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 .th {
-                flex-basis: 33.3333%;
-                padding: 5px;
-                text-align: center;
-                border-right: 1px solid #dbdbdb;
-                font-weight: 600; }
-                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 .th:last-child {
-                  border: none; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody {
-              display: flex; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody .td {
-                flex-basis: 33.3333%;
-                padding: 5px;
-                text-align: center;
-                border-right: 1px solid #dbdbdb;
-                font-size: .75rem; }
-                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody .td:last-child {
-                  border: none; }
-          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing:last-child {
-            border: none; }
-    .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row {
-      margin-right: 50px; }
-      .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row .discount-row, .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row .coupon-row {
-        margin-right: 0px; }
-    .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .amount-table .amt-content .amt {
-      margin-right: 50px; }
-
-    .bill-section .mat-form-field-infix {    
-      margin: 0;
-      padding: 0 ;
-      border: none;
-    }
-      .bill-section .mat-form-field {width:100%}
-      .bill-section .mat-form-field-wrapper {
-        padding: 0;
-        margin: 0;
-      }
-      .bill-section .mat-form-field-underline  {background-color: rgba(0, 0, 0, 0);
-        display: none; }
-      .bill-section .mat-form-field-appearance-legacy{background-color: rgba(0, 0, 0, 0)}
-      .bill-section .mat-input-element::-webkit-input-placeholder{color:rgba(0,0,0,0)}
-      .bill-section .mat-input-element {
-        padding: 10px;
-        background: white;
-        border: 1px solid #b6cdd8;
-        height: 40px;
-      }
-      .bill-section .add-item .mat-button-wrapper {padding-left:10px !important;}
-      .bill-section .bill-section-content .bill-wrapper .section-one .details {font-size:.800rem}
-      .bill-section .actiondiv { border-top:1px solid #ccc;padding-top:15px;}
-    @media only screen and (max-width: 767px) {
+@media only screen and (max-width: 767px) {
   .billpopup {
     width: 100% !important;
     max-width: 94vw !important; } }
@@ -10029,6 +9611,15 @@ footer.dashb {
         margin-bottom: 10px;
         display: inline-block;
         cursor: pointer; }
+      @media only screen and (max-width: 767px) {
+        footer.dashb .stp-box .audit .stp-tbl .table td,
+        footer.dashb .stp-box .alerts .stp-tbl .table td,
+        footer.dashb .stp-box .o-checkin .stp-tbl .table td {
+          padding-left: 45%; }
+          footer.dashb .stp-box .audit .stp-tbl .table td:before,
+          footer.dashb .stp-box .alerts .stp-tbl .table td:before,
+          footer.dashb .stp-box .o-checkin .stp-tbl .table td:before {
+            position: absolute; } }
     footer.dashb .stp-box .audit .table-body .copy,
     footer.dashb .stp-box .alerts .table-body .copy,
     footer.dashb .stp-box .o-checkin .table-body .copy {
@@ -10096,6 +9687,21 @@ footer.dashb {
         color: #f24949; }
       footer.dashb .stp-box .alerts .stp-tbl .table tr.error td {
         color: #f24949; }
+    footer.dashb .stp-box .alerts.tray .stp-tbl .table td.td1 {
+      display: flex; }
+      footer.dashb .stp-box .alerts.tray .stp-tbl .table td.td1 .span1 {
+        flex-grow: 1; }
+      footer.dashb .stp-box .alerts.tray .stp-tbl .table td.td1 .span2 {
+        margin-left: 10px;
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+    @media only screen and (max-width: 767px) {
+      footer.dashb .stp-box .alerts.tray .stp-tbl .table td {
+        padding-left: 15px; }
+        footer.dashb .stp-box .alerts.tray .stp-tbl .table td:before {
+          display: none; } }
   footer.dashb.show .stp-box {
     margin-bottom: 0;
     visibility: visible;
@@ -10373,7 +9979,9 @@ footer.dashb {
   @media only screen and (max-width: 575px) {
     .bcrumb {
       border: none;
-      font-size: .75rem; } }
+      font-size: .75rem;
+      padding-left: 10px;
+      padding-right: 10px; } }
   .bcrumb a,
   .bcrumb span {
     color: #222223;
@@ -11896,16 +11504,25 @@ footer.dashb {
   .content.w-manager .card app-provider-waitlist-online-checkin .bt2 {
     background-color: #dbdbdb !important;
     color: #666 !important;
-    margin-left: 10px !important; }
+    margin-left: 50px;
+    margin-bottom: 20px; }
+    @media only screen and (max-width: 575px) {
+      .content.w-manager .card app-provider-waitlist-online-checkin .bt2 {
+        margin-left: 20px; } }
+  .content.w-manager .card app-provider-waitlist-online-checkin .bt1 {
+    margin-left: 10px;
+    margin-bottom: 20px; }
   .content.w-manager .card .copy {
     padding: 20px 40px; }
     @media only screen and (max-width: 575px) {
       .content.w-manager .card .copy {
-        padding: 20px 10px; } }
+        padding: 20px; } }
     .content.w-manager .card .copy .row {
       margin-bottom: 20px;
       margin-left: 0;
       margin-right: 0; }
+      .content.w-manager .card .copy .row:last-child {
+        margin-bottom: 0; }
     @media only screen and (max-width: 767px) {
       .content.w-manager .card .copy .lbl {
         margin-bottom: 15px; } }
@@ -11920,9 +11537,11 @@ footer.dashb {
       .content.w-manager .card .copy .lbr {
         padding-left: 0;
         padding-right: 0; } }
-    .content.w-manager .card .copy .lbr .rw label {
-      margin-left: 10px;
-      margin-bottom: 0; }
+    .content.w-manager .card .copy .lbr .rw .form-group {
+      display: flex; }
+      .content.w-manager .card .copy .lbr .rw .form-group label {
+        margin-left: 10px;
+        margin-bottom: 0; }
     .content.w-manager .card .copy .lbr .rw.fxd .form-group {
       display: flex;
       height: 40px;
@@ -11976,9 +11595,6 @@ footer.dashb {
         .content.w-manager .card .b-link:hover h2 span {
           background: #fff;
           color: #00aef2; }
-  .content.w-manager .card .mat-button {
-    margin-left: 50px;
-    margin-bottom: 20px; }
   .content.w-manager .card app-form-success-display .sts-msg {
     -webkit-border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -12014,7 +11630,7 @@ footer.dashb {
     .content.loc-list .card .copy .mbt {
       right: 0;
       position: absolute;
-      top: 0px;
+      top: -12px;
       z-index: 51; }
       .content.loc-list .card .copy .mbt:before {
         display: none; }
@@ -12549,6 +12165,19 @@ footer.dashb {
               position: absolute;
               left: 0;
               font-size: .875rem; }
+            @media only screen and (max-width: 767px) {
+              .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .enableicon,
+              .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon {
+                color: #00aef2;
+                padding-left: 22px;
+                border: 1px solid #00aef2;
+                -webkit-border-radius: 30px;
+                border-radius: 30px;
+                background-clip: padding-box;
+                /* stops bg color from leaking outside the border: */ }
+                .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .enableicon:before,
+                .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon:before {
+                  left: 4px; } }
           .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon {
             margin-right: 0; }
             .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon:before {
@@ -14819,6 +14448,10 @@ footer.dashb {
           flex-direction: column; } }
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .pan-outer {
         order: 2; }
+        .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .pan-outer .form-group {
+          margin-bottom: 1.3rem; }
+          .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .pan-outer .form-group .sts-msg {
+            position: absolute; }
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer {
         flex-grow: 1;
         order: 1;
@@ -14834,7 +14467,8 @@ footer.dashb {
           .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer {
             flex-direction: column; } }
         .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer .form-group {
-          width: 49%; }
+          width: 49%;
+          margin-bottom: 1.3rem; }
           @media only screen and (max-width: 767px) {
             .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer .form-group {
               width: 100%; } }
@@ -14849,6 +14483,8 @@ footer.dashb {
             @media only screen and (max-width: 575px) {
               .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer .form-group mat-form-field {
                 width: 100%; } }
+          .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .bank-outer .form-group .sts-msg {
+            position: absolute; }
     .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter {
       padding-left: 0px; }
       .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field {
@@ -15216,7 +14852,7 @@ footer.dashb {
             background: #00aef2; }
             .content.comn-cls .card .logfil-outer .formgroup-outer .form-group .pickerouter .mat-datepicker-toggle button svg {
               fill: #fff; }
-       @media only screen and (max-width: 767px) {
+      @media only screen and (max-width: 767px) {
         .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
           width: 50%; } }
       @media (min-width: 768px) and (max-width: 991px) {
@@ -15226,11 +14862,21 @@ footer.dashb {
         .content.comn-cls .card .logfil-outer .formgroup-outer .form-group {
           width: 100%;
           padding: 0; } }
-    .content.comn-cls .card .logfil-outer .formgroup-outer .actions-div {
-      padding-left: 10px; }
-    @media only screen and (max-width: 400px) {
-      .content.comn-cls .card .logfil-outer .formgroup-outer .actions-div {
-        padding-left: 0px; } }
+  .content.comn-cls .card .logfil-outer .actions-div {
+    padding-left: 10px; }
+  @media only screen and (max-width: 400px) {
+    .content.comn-cls .card .logfil-outer .actions-div {
+      padding-left: 0px; } }
+@media only screen and (max-width: 767px) {
+  .content.comn-cls .card .audit .table-outer .table td {
+    padding-left: 45%; }
+    .content.comn-cls .card .audit .table-outer .table td:before {
+      position: absolute; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .content.comn-cls .card .audit .table-outer .table td {
+    padding-left: 45%; }
+    .content.comn-cls .card .audit .table-outer .table td:before {
+      position: absolute; } }
 .content.comn-cls .card .audit .search_paging .container {
   padding: 0; }
   .content.comn-cls .card .audit .search_paging .container .text-center {
@@ -18763,6 +18409,13 @@ header.consumer {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 0px; }
+      .consumer-dash .card.history.one .noprevhist {
+        padding: 15px;
+        text-align: center; }
+        .consumer-dash .card.history.one .noprevhist p {
+          margin: 0;
+          font-weight: 500;
+          color: #999999; }
   .consumer-dash .c-outer {
     margin-top: 0; }
 
@@ -19930,38 +19583,5 @@ footer {
   .btn-xl .badge {
     color: #f24949;
     background-color: white; }
-    .success {
-      color: green;
-      font-size: 10px;
-      margin-top: 5px;
-    }
-    .couponerror {
-      color: red;
-      font-size: 10px;
-      margin-top: 5px;
-    }
-    .coupon_cancel {
-      padding-top: 100px;
-      margin-left: 15px;
-      font-family: 'Montserrat';
-      font-size: 5px;
-      font-weight: 500;
-      color: #00aef2;
-      cursor: pointer;
-      font-size: inherit;
-      text-transform: uppercase;
-      font-size: .875rem;
-      
-      
-    }
-    .apply_coup_input {
-    margin-top: 10px;
-    width: 230px;
-    padding: 4px;
-    /* margin: 8px 0; */
-    box-sizing: border-box;
-    border: 1px solid #000000;
-    outline: none;
-    }
 
 /*# sourceMappingURL=style.css.map */

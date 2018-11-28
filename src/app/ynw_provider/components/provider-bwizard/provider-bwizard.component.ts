@@ -465,6 +465,9 @@ export class ProviderbWizardComponent implements OnInit {
         // this.wizard_data_holder.pincode =  obj.baseLocation.pinCode || '';
         this.wizard_data_holder.location = obj.baseLocation.place || '';
         this.wizard_data_holder.mapurl =  obj.baseLocation.googleMapUrl || '';
+        if (this.wizard_data_holder.mapurl === '' && this.wizard_data_holder.lat.trim() !== '' && this.wizard_data_holder.lon.trim !== '') {
+          this.wizard_data_holder.mapurl = projectConstants.MAP_BASE_URL + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + '/@' + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + ',15z';
+        }
 
         if (obj.baseLocation.bSchedule.timespec) {
           if (obj.baseLocation.bSchedule.timespec.length > 0) {

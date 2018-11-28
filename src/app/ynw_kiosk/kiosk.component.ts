@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
+import { SharedFunctions } from '../shared/functions/shared-functions';
+
 
 @Component({
     selector: 'app-kiosk',
@@ -7,7 +10,23 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 
 export class KioskComponent {
-
-    constructor(router: Router) {}
+    subscription: Subscription;
+    additionalCheckinClass = false;
+    additionalCheckstatClass = false;
+    constructor( public shared_functions: SharedFunctions) {
+        this.subscription = this.shared_functions.getMessage().subscribe(message => {
+            // console.log('message', message);
+            if (message.ttype === 'checkin') {
+                this.additionalCheckinClass = true;
+                this.additionalCheckstatClass = false;
+            } else if (message.ttype === 'checkstat') {
+                this.additionalCheckstatClass = true;
+                this.additionalCheckinClass = false;
+            } else {
+                this.additionalCheckinClass = false;
+                this.additionalCheckstatClass = false;
+            }
+        });
+    }
 
 }

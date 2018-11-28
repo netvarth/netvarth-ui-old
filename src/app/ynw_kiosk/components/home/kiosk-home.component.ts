@@ -418,7 +418,14 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     }
   }
   do_operation() {
-   // console.log('reached here');
+     console.log('reached here', this.cMod);
+   if (this.cMod === 'checkin') {
+    this.shared_functions.sendMessage({ttype: 'checkin', action: false});
+   } else if (this.cMod === 'arrived') {
+    this.shared_functions.sendMessage({ttype: 'checkstat', action: false});
+   } else {
+    this.shared_functions.sendMessage({ttype: '', action: false});
+   }
     switch (this.cMod) {
       case 'status':
         this.getwaitlistForToday(); // get the waitlist entry for today for current consumer
@@ -455,6 +462,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     return passedData;
   }
   logOff() {
+  this.shared_functions.sendMessage({ttype: '', action: false});
     this.showregmobile = false;
     this.customer_found = false;
     this.show_customernotfoundmsg = false;

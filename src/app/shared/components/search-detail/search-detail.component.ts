@@ -170,6 +170,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.commTooltip = this.shared_functions.getProjectMesssages('COMM_TOOPTIP');
     this.refTooltip = this.shared_functions.getProjectMesssages('REF_TOOPTIP');
     this.bNameTooltip = this.shared_functions.getProjectMesssages('BUSSNAME_TOOPTIP');
+    this.showrefinedsection = false; // this is done to override all conditions and to hide the refined filter section by default
     // this.activaterouterobj.queryParams
     this.getDomainListMain()
       .then(data => {

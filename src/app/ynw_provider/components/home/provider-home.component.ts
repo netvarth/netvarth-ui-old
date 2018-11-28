@@ -460,6 +460,9 @@ no_cap = Messages.NO_CAP;
             indx += 1;
           }
         }
+         if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
+          return;
+        }
  const getsavedqueueid = this.shared_functions.getitemfromLocalStorage('pdq');
         let selqid = 0;
         for (let ii = 0; ii < this.all_queues.length; ii++) {
@@ -1176,6 +1179,7 @@ no_cap = Messages.NO_CAP;
     //     bill_data: bill_data
     //   }
     // });
+    if (!this.viewbilldialogRef) {
     this.viewbilldialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'billpopup'],
@@ -1185,9 +1189,14 @@ no_cap = Messages.NO_CAP;
         bill_data: bill_data
       }
     });
-
+	} else {
+	    console.log('more clicks');
+	  }
     this.viewbilldialogRef.afterClosed().subscribe(result => {
       // console.log(result);
+      if (this.viewbilldialogRef) {
+      this.viewbilldialogRef = null;
+      }
    //   if (result === 'updateBill') {
         // this.addEditBill(checkin, bill_data);
      // } else
@@ -1200,6 +1209,7 @@ no_cap = Messages.NO_CAP;
   }
 
   makePayment(checkin, bill_data) {
+  if (!this.makPaydialogRef) {
     this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
@@ -1209,8 +1219,13 @@ no_cap = Messages.NO_CAP;
         bill_data: bill_data
       }
     });
-
+} else {
+      console.log('more clicks');
+    }
     this.makPaydialogRef.afterClosed().subscribe(result => {
+     if (this.makPaydialogRef) {
+      this.makPaydialogRef = null;
+      }
       this.reloadAPIs();
     });
   }

@@ -4,26 +4,39 @@
         </button>
       </h1>
       <mat-dialog-content> -->
-       
+       <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub==''">
+         <ul class='index-ul'>
+            <li (click)="sethelpSub('bprofile')">Profile & Search</li>
+            <li (click)="sethelpSub('waitlistmanager')">Waitlist Manager</li>
+            <li (click)="sethelpSub('checkin')">Checkin</li>
+            <li (click)="sethelpSub('customer')">Customer</li>
+            <li (click)="sethelpSub('kiosk')">Kiosk</li>
+            <li (click)="sethelpSub('license')">License</li>
+            <li (click)="sethelpSub('adjustdelay')">Adjust Delay</li>
+         </ul>
+       </div>
+       <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub !=''" (click)="sethelpSub('')">Back to Index</div>
+
+
         <!-- Bprofile -->
-        <app-bprofile-learnmore [target]="subKey" *ngIf="destination=='bprofile'"></app-bprofile-learnmore>
+        <app-bprofile-learnmore [target]="subKey" *ngIf="destination=='bprofile' || helpSub =='bprofile'"></app-bprofile-learnmore>
         
         <!-- Waitlist Manager -->
-        <app-waitlistmanager-learnmore [target]="destination" *ngIf="destination=='waitlistmanager'"></app-waitlistmanager-learnmore>
+        <app-waitlistmanager-learnmore [target]="'waitlistmanager'" *ngIf="destination=='waitlistmanager' || helpSub =='waitlistmanager'"></app-waitlistmanager-learnmore>
 
         <!-- Checkins -->
-        <app-checkin-learnmore [target]="destination" *ngIf="destination=='checkin'"></app-checkin-learnmore>
+        <app-checkin-learnmore [target]="'checkin'" *ngIf="destination=='checkin' || helpSub =='checkin'"></app-checkin-learnmore>
 
         <!-- Customer -->
-        <app-customer-learnmore [target]="destination" *ngIf="destination=='customer'"></app-customer-learnmore>
+        <app-customer-learnmore [target]="'customer'" *ngIf="destination=='customer' || helpSub =='customer'"></app-customer-learnmore>
 
         <!-- Kiosk -->
-        <app-kiosk-learnmore [target]="destination" *ngIf="destination=='kiosk'"></app-kiosk-learnmore>
+        <app-kiosk-learnmore [target]="'kiosk'" *ngIf="destination=='kiosk' || helpSub =='kiosk'"></app-kiosk-learnmore>
 
         <!-- License -->
-        <app-license-learnmore [target]="destination" *ngIf="destination=='license'"></app-license-learnmore>
+        <app-license-learnmore [target]="'license'" *ngIf="destination=='license' || helpSub =='license'"></app-license-learnmore>
         <!-- License -->
-        <app-adjustdelay-learnmore [target]="destination" *ngIf="destination=='adjustdelay'"></app-adjustdelay-learnmore>
+        <app-adjustdelay-learnmore [target]="'adjustdelay'" *ngIf="destination=='adjustdelay' || helpSub =='adjustdelay'"></app-adjustdelay-learnmore>
       <!-- </mat-dialog-content>
 
       <mat-dialog-actions>

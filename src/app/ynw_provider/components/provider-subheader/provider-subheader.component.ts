@@ -280,6 +280,9 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       case 'kiosk':
          this.moreOptions = {'show_learnmore': true , 'scrollKey': 'kiosk'};
       break;
+      case 'help':
+        this.moreOptions = {'show_learnmore': true , 'scrollKey': 'help'};
+      break;
     }
     return this.moreOptions;
   }
