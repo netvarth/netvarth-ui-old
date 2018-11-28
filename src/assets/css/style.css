@@ -7384,7 +7384,482 @@ header {
         margin-right: 0px; }
     .billpopup .mat-dialog-content .bill-wrapper.viewbill .section-three .amount-table .amt-content .amt {
       margin-right: 50px; }
-@media only screen and (max-width: 767px) {
+
+/*New Style for Bill*/
+.bill-section .bill-section-content {
+  padding: 0px; }
+  .bill-section .bill-section-content .bill-wrapper {
+    background: #fff;
+    width: 100%;
+    margin: 0 auto; }
+    .bill-section .bill-section-content .bill-wrapper .section-one, .bill-section .bill-section-content .bill-wrapper .section-two, .bill-section .bill-section-content .bill-wrapper .section-three, .bill-section .bill-section-content .bill-wrapper .section-four {
+      padding: 20px;
+      border-bottom: 1px solid #dbdbdb; }
+    .bill-section .bill-section-content .bill-wrapper .section-one h3 {
+      font-size: 1rem;
+      margin-bottom: 15px;
+      text-align: center; }
+    .bill-section .bill-section-content .bill-wrapper .section-one .details {
+      display: flex;
+      flex-wrap: wrap;
+      font-size: .875rem;
+      font-weight: 500; }
+      .bill-section .bill-section-content .bill-wrapper .section-one .details .columns {
+        flex-basis: 50%; }
+        .bill-section .bill-section-content .bill-wrapper .section-one .details .columns .title {
+          font-weight: 600;
+          position: relative;
+          margin-right: 10px; }
+          .bill-section .bill-section-content .bill-wrapper .section-one .details .columns .title:after {
+            position: absolute;
+            content: ":";
+            right: -5px; }
+        .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:nth-child(1), .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:nth-child(2) {
+          margin-bottom: 10px; }
+      @media only screen and (max-width: 500px) {
+        .bill-section .bill-section-content .bill-wrapper .section-one .details {
+          flex-direction: column; }
+          .bill-section .bill-section-content .bill-wrapper .section-one .details .columns {
+            margin-bottom: 10px; }
+            .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:last-child {
+              margin-bottom: 0; } }
+    .bill-section .bill-section-content .bill-wrapper .section-two .add-button .bt3 {
+      text-transform: none;
+      letter-spacing: .2px; }
+    .bill-section .bill-section-content .bill-wrapper .section-two .edit-row {
+      font-size: .875rem;
+      font-weight: 500; }
+      .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service {
+        display: flex; }
+        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+          justify-content: space-between; }
+          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox {
+            flex-grow: 1; }
+            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+              width: auto; }
+              .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
+                height: 30px;
+                width: 100%;
+                padding: 5px 10px; }
+          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty {
+            display: flex;
+            align-items: center;
+            margin-left: 15px; }
+            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .label {
+              font-weight: 600;
+              margin-right: 10px; }
+            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+              width: auto; }
+              .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
+                height: 30px;
+                width: 80px;
+                padding: 5px 5px 5px 10px; }
+        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
+          margin-left: 15px; }
+          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr .cs-btn {
+            height: 30px;
+            line-height: 12px;
+            padding: 6px 10px;
+            text-transform: none;
+            float: left;
+            font-size: .75rem; }
+            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr .cs-btn.bt2 {
+              margin-left: 10px; }
+        @media only screen and (max-width: 400px) {
+          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service {
+            flex-direction: column; }
+            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl {
+              margin-bottom: 10px; } }
+      @media only screen and (max-width: 575px) {
+        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row {
+          flex-direction: column; }
+          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
+            margin-left: 0;
+            margin-top: 5px; } }
+    .bill-section .bill-section-content .bill-wrapper .section-three {
+      border: none; }
+      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup {
+        font-size: .875rem;
+        font-weight: 500; }
+        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list {
+          position: relative;
+          border-bottom: 1px solid #dbdbdb;
+          margin-bottom: 15px;
+          padding-bottom: 15px; }
+          .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
+            display: flex;
+            padding: 5px 0;
+            margin-right: 50px;
+            text-align: right; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one {
+              display: flex; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name {
+                font-weight: 600;
+                flex-basis: 60%;
+                padding-right: 15px;
+                position: relative; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .tax {
+                  font-size: .60rem;
+                  font-weight: 600;
+                  position: absolute;
+                  top: -2px;
+                  right: -4px;
+                  color: #fda60d; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .quantity {
+                flex-basis: 20%; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
+                flex-basis: 20%; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two {
+              display: block;
+              margin-right: 0;
+              padding: 0; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row {
+                padding: 10px 0; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
+                  display: flex; }
+                  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl {
+                    display: flex;
+                    flex-grow: 1;
+                    margin-right: 20px;
+                    justify-content: flex-end; }
+                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item {
+                      flex-basis: 48%; }
+                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+                        width: auto; }
+                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
+                          height: 30px;
+                          width: 100%;
+                          padding: 5px 10px; }
+                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item.selectbox2 {
+                        margin-left: 20px; }
+                  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spr .cs-btn {
+                    height: 30px;
+                    line-height: 12px;
+                    padding: 6px 10px;
+                    text-transform: none;
+                    float: left;
+                    font-size: .75rem; }
+                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spr .cs-btn.bt2 {
+                      margin-left: 10px; }
+                  @media only screen and (max-width: 500px) {
+                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
+                      flex-direction: column; }
+                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl {
+                        margin-right: 0;
+                        flex-direction: column; }
+                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .selectbox1 {
+                          margin-bottom: 10px; }
+                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item.selectbox2 {
+                          margin-left: 0; } }
+                  @media only screen and (max-width: 575px) {
+                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
+                      flex-direction: column; }
+                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup.discoup .spr {
+                        margin-top: 5px; } }
+              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
+                margin-right: 50px;
+                display: flex;
+                padding: 5px 0;
+                color: #999999; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .name, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .name {
+                  flex-grow: 1;
+                  flex-basis: 60%;
+                  padding-right: 15px; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price {
+                  flex-basis: 40%; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three {
+              padding: 0; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three .name {
+                flex-basis: 60%;
+                font-weight: 600;
+                padding: 5px 0;
+                padding-right: 15px; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three .price {
+                flex-basis: 40%;
+                padding: 5px 0;
+                border-top: dashed 1px #dbdbdb; }
+            @media only screen and (max-width: 500px) {
+              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
+                margin-right: 40px; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
+                  flex-basis: 30%; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
+                  margin-right: 40px; } }
+          .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .more {
+            position: absolute;
+            right: 0;
+            top: 0; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .more .mat-icon-button {
+              height: 30px;
+              width: 30px;
+              line-height: 30px; }
+      .bill-section .bill-section-content .bill-wrapper .section-three .amount-table {
+        position: relative; }
+        .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content {
+          font-size: 1rem;
+          font-weight: 500;
+          width: 100%; }
+          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
+            text-align: right;
+            margin-right: 50px;
+            padding: 5px 0; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .name {
+              width: 73%;
+              text-align: right; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
+              vertical-align: text-top;
+              width: 27%;
+              text-align: right;
+              padding: 0 50px 0 15px; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name {
+              font-weight: 600;
+              font-size: 1rem; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount {
+                color: #00aef2;
+                font-size: .875rem;
+                display: block; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount span {
+                  text-decoration: underline;
+                  cursor: pointer; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price {
+              font-weight: 600;
+              font-size: 1rem; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price {
+              color: #999999;
+              font-size: .875rem;
+              font-weight: 600; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price {
+              font-size: .875rem;
+              font-weight: 600; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name span, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price span {
+                display: block; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name span.txn, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price span.txn {
+                  font-weight: 500;
+                  font-size: .69rem; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .price {
+              font-weight: 600;
+              font-size: .875rem; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .name .link, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .price .link {
+                color: #00aef2;
+                text-decoration: underline;
+                cursor: pointer; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price {
+              font-size: 1.1rem;
+              font-weight: 700; }
+            @media only screen and (max-width: 500px) {
+              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
+                margin-right: 40px; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
+                  flex-basis: 30%; } }
+            @media only screen and (max-width: 400px) {
+              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
+                flex-basis: 40%; } }
+          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row {
+            padding: 10px 0; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup {
+              display: flex; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl {
+                display: flex;
+                flex-grow: 1;
+                margin-right: 20px;
+                justify-content: flex-end; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item {
+                  flex-basis: 48%; }
+                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
+                    height: 30px;
+                    width: 100%;
+                    padding: 5px 10px; }
+                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item.selectbox2 {
+                    margin-left: 20px; }
+              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spr .cs-btn {
+                height: 30px;
+                line-height: 12px;
+                padding: 6px 10px;
+                text-transform: none;
+                float: left;
+                font-size: .75rem; }
+                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spr .cs-btn.bt2 {
+                  margin-left: 10px; }
+              @media only screen and (max-width: 500px) {
+                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup {
+                  flex-direction: column; }
+                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl {
+                    margin-right: 0;
+                    margin-bottom: 10px;
+                    flex-direction: column; }
+                    .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .selectbox1 {
+                      margin-bottom: 10px; }
+                    .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item.selectbox2 {
+                      margin-left: 0; } }
+        .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn {
+          position: absolute;
+          top: 0;
+          right: 0;
+          display: none; }
+          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn .cs-btn {
+            text-transform: none;
+            padding-left: 5px;
+            padding-right: 5px; }
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn .cs-btn.active {
+              background: #00aef2;
+              color: #fff; }
+          @media only screen and (max-width: 500px) {
+            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn {
+              display: none; } }
+    .bill-section .bill-section-content .bill-wrapper .section-four {
+      border-bottom: none; }
+      .bill-section .bill-section-content .bill-wrapper .section-four .heading .back {
+        font-size: .75rem;
+        color: #00aef2;
+        display: table;
+        font-weight: 600;
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 20px;
+        cursor: pointer; }
+        .bill-section .bill-section-content .bill-wrapper .section-four .heading .back:before {
+          font-family: "custom-ynw" !important;
+          content: "\2e";
+          position: absolute;
+          left: 0;
+          top: 0; }
+      .bill-section .bill-section-content .bill-wrapper .section-four .heading h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 10px; }
+      .bill-section .bill-section-content .bill-wrapper .section-four .list-outer {
+        border: 1px solid #dbdbdb;
+        font-size: .875rem;
+        font-weight: 500; }
+        .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th {
+          display: flex;
+          border-bottom: 1px solid #dbdbdb;
+          background: #dbdbdb; }
+          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th {
+            flex-basis: 33.3333%;
+            padding: 10px;
+            font-weight: 600;
+            text-align: center;
+            border-right: 1px solid #fff; }
+            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th:last-child {
+              border: none; }
+        .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing {
+          border-bottom: 1px solid #dbdbdb; }
+          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap {
+            display: flex;
+            align-items: center; }
+            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td {
+              flex-basis: 33.3333%;
+              padding: 10px;
+              text-align: center;
+              position: relative; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.one .date {
+                display: block;
+                font-weight: 600; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.one .time {
+                display: block; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .amt {
+                display: block;
+                font-weight: 600; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others {
+                font-size: .75rem; }
+                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode {
+                  display: block; }
+                  .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status .title, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode .title {
+                    position: relative;
+                    margin-right: 5px; }
+                    .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status .title:after, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode .title:after {
+                      position: absolute;
+                      content: ":";
+                      right: -5px; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.three .amt {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 3px; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.three .cs-btn {
+                height: 24px;
+                line-height: 12px;
+                padding: 6px 10px;
+                text-transform: none;
+                font-size: .75rem; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td:after {
+                border-right: 1px solid #dbdbdb;
+                height: 30px;
+                width: 1px;
+                position: absolute;
+                content: "";
+                right: 0;
+                top: 50%;
+                margin-top: -15px; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td:last-child:after {
+                display: none; }
+          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table {
+            margin: 10px;
+            border: 1px solid #dbdbdb; }
+            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th {
+              text-align: center;
+              padding: 5px;
+              background: transparent; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th h5 {
+                font-size: .875rem;
+                margin: 0 auto; }
+            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 {
+              display: flex;
+              border-bottom: 1px solid #dbdbdb; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 .th {
+                flex-basis: 33.3333%;
+                padding: 5px;
+                text-align: center;
+                border-right: 1px solid #dbdbdb;
+                font-weight: 600; }
+                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 .th:last-child {
+                  border: none; }
+            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody {
+              display: flex; }
+              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody .td {
+                flex-basis: 33.3333%;
+                padding: 5px;
+                text-align: center;
+                border-right: 1px solid #dbdbdb;
+                font-size: .75rem; }
+                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody .td:last-child {
+                  border: none; }
+          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing:last-child {
+            border: none; }
+    .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row {
+      margin-right: 50px; }
+      .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row .discount-row, .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row .coupon-row {
+        margin-right: 0px; }
+    .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .amount-table .amt-content .amt {
+      margin-right: 50px; }
+
+    .bill-section .mat-form-field-infix {    
+      margin: 0;
+      padding: 0 ;
+      border: none;
+    }
+      .bill-section .mat-form-field {width:100%}
+      .bill-section .mat-form-field-wrapper {
+        padding: 0;
+        margin: 0;
+      }
+      .bill-section .mat-form-field-underline  {background-color: rgba(0, 0, 0, 0);
+        display: none; }
+      .bill-section .mat-form-field-appearance-legacy{background-color: rgba(0, 0, 0, 0)}
+      .bill-section .mat-input-element::-webkit-input-placeholder{color:rgba(0,0,0,0)}
+      .bill-section .mat-input-element {
+        padding: 10px;
+        background: white;
+        border: 1px solid #b6cdd8;
+        height: 40px;
+      }
+      .bill-section .add-item .mat-button-wrapper {padding-left:10px !important;}
+      .bill-section .bill-section-content .bill-wrapper .section-one .details {font-size:.800rem}
+      .bill-section .actiondiv { border-top:1px solid #ccc;padding-top:15px;}
+    @media only screen and (max-width: 767px) {
   .billpopup {
     width: 100% !important;
     max-width: 94vw !important; } }

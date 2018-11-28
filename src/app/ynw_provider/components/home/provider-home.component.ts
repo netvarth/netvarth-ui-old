@@ -194,7 +194,7 @@ no_cap = Messages.NO_CAP;
       this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
 
       this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-      this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist',Messages.FUTURE_NO_CHECKINS);
+      this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
       this.waitlist_status = [
         {name :  this.checkedin_upper, value: 'checkedIn'},
         {name : this.cancelled_upper, value: 'cancelled'},
@@ -1119,6 +1119,10 @@ no_cap = Messages.NO_CAP;
     });
   }
 
+  viewBillPage(checkin) {
+    this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
+  }
+
   getWaitlistBill(checkin, type = 'bill') {
     this.provider_services.getWaitlistBill(checkin.ynwUuid)
     .subscribe(
@@ -1132,7 +1136,7 @@ no_cap = Messages.NO_CAP;
       error => {
         // console.log(error);
         if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
-          this.addEditBill(checkin , null);
+         // this.addEditBill(checkin , null);
         } else {
           this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
@@ -1142,23 +1146,23 @@ no_cap = Messages.NO_CAP;
     );
   }
 
-  addEditBill(checkin, bill_data) {
+  addEditBill(checkin) {
     // console.log('add bill', bill_data);
-    this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'billpopup'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
+    // this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'billpopup'],
+    //   disableClose: true,
+    //   data: {
+    //     checkin: checkin,
+    //     bill_data: bill_data
+    //   }
+    // });
 
-    this.billdialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.reloadAPIs();
-      }
-    });
+    // this.billdialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'reloadlist') {
+    //     this.reloadAPIs();
+    //   }
+    // });
   }
 
   viewBill(checkin, bill_data) {
@@ -1184,9 +1188,10 @@ no_cap = Messages.NO_CAP;
 
     this.viewbilldialogRef.afterClosed().subscribe(result => {
       // console.log(result);
-      if (result === 'updateBill') {
-        this.addEditBill(checkin, bill_data);
-      } else if (result === 'reloadlist') {
+   //   if (result === 'updateBill') {
+        // this.addEditBill(checkin, bill_data);
+     // } else
+       if (result === 'reloadlist') {
         this.reloadAPIs();
       } else if ( result === 'makePayment') {
         this.makePayment(checkin, bill_data);

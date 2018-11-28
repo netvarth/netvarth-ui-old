@@ -326,7 +326,7 @@
                                     && ((time_type === 0 && checkin.billStatus) || time_type != 0)"
                                     [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }"> -->
 
-                    <span class="cs-btn bt7 viewbill" (click)="getWaitlistBill(checkin, 'bill')" *ngIf="checkin.waitlistStatus != 'checkedIn' &&
+                    <span class="cs-btn bt7 viewbill" (click)="viewBillPage(checkin)" *ngIf="checkin.waitlistStatus != 'checkedIn' &&
                                     checkin.waitlistStatus != 'cancelled' && time_type !== 2 && checkin.waitlistStatus != 'prepaymentPending'">
 
                       <ng-container *ngIf="checkin.waitlistStatus != 'prepaymentPending'">
