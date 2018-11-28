@@ -39,6 +39,7 @@ import { ProviderResolver } from './services/provider-resolver.service';
 import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
 import { ViewReportComponent } from './components/view-report/view-report.component';
 import { ProviderCouponViewComponent } from './components/provider-coupon-view/provider-coupon-view.component';
+import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 const routes: Routes = [
   {
     path: '', component: ProviderComponent,
@@ -52,6 +53,7 @@ const routes: Routes = [
         canActivate: [AuthGuardProviderHome]
       },
       { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
+      {path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent},
       { path: 'settings', component: ProviderSettingsComponent },
       {
         path: 'settings',

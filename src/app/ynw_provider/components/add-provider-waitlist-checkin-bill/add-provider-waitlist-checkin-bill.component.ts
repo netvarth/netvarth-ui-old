@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, Output } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -10,6 +10,10 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
+import { EventEmitter } from 'protractor';
+import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
+import { ActivatedRoute } from '@angular/router';
+import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
 
 export interface ItemServiceGroup {
   type: string;
@@ -23,7 +27,6 @@ export interface ItemServiceGroup {
 })
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {
-
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
   date_cap = Messages.DATE_CAP;
@@ -58,9 +61,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
   save_btn_cap = Messages.SAVE_BTN;
-
+  settle_bill_cap = Messages.SETTLE_BILL_CAP;
+  print_bill_cap = Messages.PRINT_BILL_CAP;
+  accept_payment_cap = Messages.ACCEPT_PAY_CAP;
+  make_payment_cap = Messages.MAKE_PAYMENT_CAP;
   @ViewChild('itemservicesearch') item_service_search;
-
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -114,51 +119,59 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   jCoupon;
   selOrderProviderCoupon: any = '';
   selOrderDiscount: any = '';
+  uuid;
+  makPaydialogRef;
+  breadcrumbs = [
+    {
+      title: 'Dashboard',
+      url: '/provider'
+    },
+    {
+      title: 'Bill'
+    }
+  ];
   constructor(
-    public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    //  public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
+    //  @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
+    private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+    private activated_route: ActivatedRoute,
     @Inject(DOCUMENT) public document
 
   ) {
-    this.checkin = this.data.checkin || null;
-    this.bill_data = this.data.bill_data || [];
-    // console.log('data' , this.bill_data);
-    if (!this.checkin) {
-      setTimeout(() => {
-        this.dialogRef.close('error');
-      }, projectConstants.TIMEOUT_DELAY);
+    this.activated_route.params.subscribe(params => {
+      this.uuid = params.id;
+    });
+    this.getCheckinDetails();
+  }
+  ngOnInit() {
+    const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
+    if (bdetails) {
+      this.bname = bdetails.bn || '';
     }
-    this.getBillDateandTime();
-    this.getPrePaymentDetails()
+    this.getCoupons()
       .then(
-        (result) => {
-          this.getCoupons()
+        () => {
+          this.getDiscounts()
             .then(
               () => {
-                this.getDiscounts()
+                this.getTaxDetails()
                   .then(
                     () => {
-                      this.getTaxDetails()
+                      this.getDomainSubdomainSettings()
                         .then(
                           () => {
-                            this.getDomainSubdomainSettings()
-                              .then(
-                                () => {
-                                  this.getServiceList();
-                                },
-                                error => {
-                                }
-                              );
-                            this.getItemsList();
-                            this.bill_load_complete = 1;
+                            this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                            this.getServiceList();
                           },
-                          (error) => {
-                            this.bill_load_complete = 0;
-                          });
+                          error => {
+                          }
+                        );
+                      this.getItemsList();
+                      this.bill_load_complete = 1;
                     },
                     (error) => {
                       this.bill_load_complete = 0;
@@ -170,15 +183,27 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         },
         (error) => {
           this.bill_load_complete = 0;
+        });
+  }
+  getCheckinDetails() {
+    this.provider_services.getProviderWaitlistDetailById(this.uuid)
+      .subscribe(
+        data => {
+          this.checkin = data;
+          this.getWaitlistBill();
+          this.getPrePaymentDetails()
+            .then(
+              (result) => {
+                this.bill_load_complete = 1;
+              },
+              (error) => {
+                this.bill_load_complete = 0;
+              }
+            );
+        }, error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-  }
-  ngOnInit() {
-    const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
-    if (bdetails) {
-      this.bname = bdetails.bn || '';
-    }
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
@@ -231,10 +256,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.api_success = null;
   }
   getWaitlistBill() {
-    this.provider_services.getWaitlistBill(this.checkin.ynwUuid)
+    this.provider_services.getWaitlistBill(this.uuid)
       .subscribe(
         data => {
           this.bill_data = data;
+          this.getBillDateandTime();
         },
         error => {
           if (error.status === 422) {
@@ -710,7 +736,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showJCouponSection = false;
     this.showDiscountSection = false;
     this.showPCouponSection = false;
+    this.showAddItemsec = false;
     this.showAddItemMenuSection = true;
+
   }
   applyOrderDiscount() {
     const action = 'addBillLevelDiscount';
@@ -732,4 +760,63 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['couponIds'] = coupons;
     this.applyAction(action, this.bill_data.uuid, data);
   }
+  initPayment() {
+    this.makePayment(this.checkin, this.bill_data);
+  }
+  makePayment(checkin, bill_data) {
+    this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin: checkin,
+        bill_data: bill_data
+      }
+    });
+
+    this.makPaydialogRef.afterClosed().subscribe(result => {
+      this.getCheckinDetails();
+    });
+  }
+  settleBill() {
+    this.provider_services.settleWaitlistBill(this.uuid)
+      .subscribe(
+        data => {
+          this.getWaitlistBill();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
+
+  confirmSettleBill() {
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+        this.settleBill();
+      }
+    });
+  }
+
+  emailBill(e) {
+    this.provider_services.emailWaitlistBill(this.uuid)
+    .subscribe(
+      data => {
+        this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_EMAIL);
+      },
+      error => {
+        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+      }
+    );
+  }
+
 }
