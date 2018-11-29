@@ -472,3 +472,64 @@
       .bill-section .add-item .mat-button-wrapper {padding-left:10px !important;}
       .bill-section .bill-section-content .bill-wrapper .section-one .details {font-size:.800rem}
       .bill-section .actiondiv { border-top:1px solid #ccc;padding-top:15px;}
+
+      /* coupon styles */
+      /* .coupon_cancel {   
+        color: #00aef2;
+        border: none;
+        outline: 0;
+        padding-left: 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: .75rem;
+        font-weight: 600;
+        line-height: 1.4;
+        -moz-user-select: none;
+        z-index: 2;
+        }
+      .coupon_cancel:hover {
+        cursor: pointer;
+      } */
+
+      .coupon_success{
+        font-size: 10px;
+        color : #008000;
+        padding-left: 5px;
+      }
+      .coupon-error{
+        font-size: 10px;
+        color : #ee1919;
+      }
+      .coupon-code{
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        border: 1px solid #D4D5D9;
+        -webkit-box-shadow: 0px;
+        -moz-box-shadow: 0px;
+        box-shadow: 0px;
+        padding: 10px;
+        font-size: 16px;
+        min-width: 160px;
+        outline: 0;
+        width: 250px;
+      }
+      .couponcode-apply {
+        position: relative;
+        left: -60px;
+        background-color: transparent;
+    }
+    .couponcode-apply1 {
+      outline: 0px;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      background-color: #FFFFFF;
+      border: 0px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: .75rem;
+      color: #00aef2;
+      text-transform: uppercase;
+      cursor: pointer;
+
+    }

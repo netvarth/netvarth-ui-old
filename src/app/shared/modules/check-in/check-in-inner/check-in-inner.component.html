@@ -161,23 +161,29 @@
                                   </p> -->
                                   
                        
-                        <div>Coupon Codes</div>  
-                        <input class="apply_coup_input" [(ngModel)]="selected_coupons">                    
+                        <!-- <div>Coupon Codes</div>  -->
+                        <div style="padding-top: 8px">
+                            <input placeholder="Enter coupon code(s)" class="coupon-code" [(ngModel)]="selected_coupons">  
+                            <input type="submit" class="couponcode-apply couponcode-apply1" (click)="applyCoupons(selected_coupons)"value="Apply">
+                            <input type="submit" class="couponcode-apply couponcode-apply1" (click)="removeCoupons()"value="Cancel">
+                        </div> 
+                                          
                             <!-- <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons"> -->
-                        <div style = "padding-top: 5px">
+                        <!-- <div style = "padding-top: 8px">
                             
                             <span class="cs-btn bt8" (click)="applyCoupons(selected_coupons)">{{apply_cap}}</span>                           
-                            <span class="cd-btn coupon_cancel" *ngIf="couponsList.length>0" (click)="removeCoupons()">CANCEL</span>
-                        </div>
+                            <span class="coupon_cancel" *ngIf="couponsList.length>0" (click)="removeCoupons()">CANCEL</span>
+                        </div> -->
                         
                     </div>
                 </div>
                 <div class="coupon-outer" *ngIf="coupon_status">
                         <div class="form-group">
-                            <span *ngIf="coupon_status=='success'" class="success">Coupon Code(s) applied successfully</span>
-                            <span *ngIf="coupon_status=='error'" class="couponerror">Coupon Code(s) not valid</span>
+                            <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s) applied successfully</span>
+                            <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not valid</span>
                         </div>
                     </div>
+
             </ng-container>
 
 

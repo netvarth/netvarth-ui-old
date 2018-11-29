@@ -431,10 +431,12 @@ export class CheckInInnerComponent implements OnInit {
     this.shared_services.getServicesByLocationId(locid)
       .subscribe(data => {
         this.servicesjson = data;
+       // console.log(this.servicesjson)
         this.sel_ser_det = [];
         if (this.servicesjson.length > 0) {
           this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
           // this.setServiceDetails(this.servicesjson[0]); // setting the details of the first service to the holding variable
+         // console.log(this.sel_ser)
           this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
           this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
         }
@@ -465,6 +467,7 @@ export class CheckInInnerComponent implements OnInit {
       status: serv.status,
       taxable: serv.taxable
     };
+   // console.log(this.sel_ser_det)
     if (this.page_source !== 'provider_checkin') {
       if (serv.isPrePayment) {
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
