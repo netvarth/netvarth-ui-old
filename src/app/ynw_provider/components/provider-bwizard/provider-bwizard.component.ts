@@ -540,6 +540,16 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   handle_searchstatus(status) {
+    const prevstat = this.search_status;
+    if (status === 'ENABLE') {
+      if (this.search_status === 1) {
+        return;
+      }
+    } else if (status === 'DISABLE') {
+      if (this.search_status === 2) {
+        return;
+      }
+    }
     this.provider_services.updatePublicSearch(status)
       .subscribe (data => {
           if (status === 'ENABLE') {
@@ -553,7 +563,7 @@ export class ProviderbWizardComponent implements OnInit {
         if (status === 'ENABLE') {
           this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
-        this.search_status = 2;
+        this.search_status = prevstat;
       });
   }
 

@@ -47,9 +47,9 @@
                             <label for="reason" class="col-form-label">Select Date</label>
                             <div class="pickerouter">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                             <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" matInput
-                            [matDatepicker]="picker" autocomplete="off">
+                            [matDatepicker]="picker" autocomplete="off" disabled [max]="tday">
                             </div>
                     </div>
                 </div>

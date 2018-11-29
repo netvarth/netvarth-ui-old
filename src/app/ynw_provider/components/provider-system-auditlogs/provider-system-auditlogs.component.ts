@@ -39,6 +39,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     startpageval;
     totalCnt;
     perPage = projectConstants.PERPAGING_LIMIT;
+    tday = new Date();
     breadcrumbs = [
         {
           title: 'Dashboard',
