@@ -234,10 +234,10 @@
       *ngIf="bill_data.billStatus == 'Settled'" (click)="emailBill()">Email Bill</button> -->
 
 	</ng-container>
-	<button *ngIf="source == 'consumer_dashboard'" type="button" mat-button [mat-dialog-close]="close_msg" class="cs-btn bt2 billcancel">
+	<!-- <button *ngIf="source == 'consumer_dashboard'" type="button" mat-button [mat-dialog-close]="close_msg" class="cs-btn bt2 billcancel">
 		{{cancel_btn_cap}}</button>
 	<button type="button" mat-button class="cs-btn bt1 print" *ngIf="source == 'consumer_dashboard' && bill_data.billStatus == 'Settled'"
-	 (click)="printMe()">Print Bill</button>
+	 (click)="printMe()">Print Bill</button> -->
 	<ng-container *ngIf="source !== 'consumer_dashboard'">
 		<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New'
         && bill_data.billStatus != 'Settled'"
@@ -245,6 +245,12 @@
 	</ng-container>
 	<ng-container *ngIf="source === 'consumer_dashboard'">
 		<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0)"
-		 (click)="makePayment()">{{make_payment_cap}}</button>
+		 (click)="makePayment()">Cash</button>
+		 <button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0)"
+			(click)="makePayment()">PayTm</button>
+			<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0)"
+				(click)="payuPayment()">CC/DC/Net Banking</button>
+				
+
 	</ng-container>
 </mat-dialog-actions>

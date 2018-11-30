@@ -10,7 +10,8 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { ProviderRefundComponent } from '../../../ynw_provider/components/provider-refund/provider-refund.component';
 // import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -88,6 +89,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     'coupon': null,
     'total': 0
   };
+  
   bill_load_complete = 0;
   item_service_tax: any = 0;
   item_service_gst = '';
@@ -99,6 +101,15 @@ export class ViewBillComponent implements OnInit, OnChanges {
   taxabletotal = 0;
   taxpercentage = 0;
   billDatedisp;
+  gateway_redirection = false;
+  payModesExists = false;
+  payModesQueried = false;
+  pay_data = {
+    'uuid': null,
+    'paymentMode': null,
+    'amount': 0
+  };
+  payment_popup = null;
   constructor(
     public dialogRef: MatDialogRef<ViewBillComponent>,
     public dialogrefundRef: MatDialogRef<ProviderRefundComponent>,
@@ -106,8 +117,12 @@ export class ViewBillComponent implements OnInit, OnChanges {
     // public provider_services: ProviderServices,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
+    //public shared_services: SharedServices,
+    public _sanitizer: DomSanitizer,
+    
     public sharedfunctionObj: SharedFunctions,
-    public shareServicesobj: SharedServices
+    public shareServicesobj: SharedServices,
+    @Inject(DOCUMENT) public document
 
   ) {
 
@@ -119,6 +134,9 @@ export class ViewBillComponent implements OnInit, OnChanges {
     // this.getTaxDetails();
     this.checkin = this.checkin || null;
     this.bill_data = this.billdata || null;
+    this.pay_data.uuid = this.bill_data.uuid;
+    this.pay_data.amount = this.bill_data.amount_to_pay;
+    console.log(this.billdata);
     const bildatesarr = this.bill_data.createdDate.split(' ');
     const billdatearr = bildatesarr[0].split('-');
     this.billDatedisp = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0] + ' ' + bildatesarr[1] + ' ' + bildatesarr[2];
@@ -221,8 +239,23 @@ console.log(this.bill_data);
       .subscribe(
         data => {
           this.payment_options = data;
+          this.payModesQueried = true;
+          /*
+          if (this.payment_options.length > 0) {
+            // console.log('test', this.payment_options[0].name);
+            this.pay_data.paymentMode = this.payment_options[0].name;
+          }*/
+
+          if (this.payment_options.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
+            this.payModesExists = false;
+          } else {
+            this.payModesExists = true;
+            this.pay_data.paymentMode = 'DC'; // deleberately giving this value as per request from Manikandan.
+          }
+          // console.log(this.payment_options);
         },
         error => {
+          this.payModesQueried = true;
           // this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
@@ -385,4 +418,38 @@ console.log(this.bill_data);
     popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" />' + stylesHtml + '</head><body onload="window.print()">' + innerContents + '</html>');
     popupWinindow.document.close();
   }*/
+  payuPayment() {
+    this.pay_data.paymentMode = 'DC'; 
+alert('payuclicked')
+    this.resetApiError();
+
+    if (this.pay_data.uuid != null &&
+      this.pay_data.paymentMode != null &&
+      this.pay_data.amount !== 0) {
+
+      this.api_success = Messages.PAYMENT_REDIRECT;
+
+      this.gateway_redirection = true;
+      this.shareServicesobj.consumerPayment(this.pay_data)
+        .subscribe(
+          data => {
+            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+            setTimeout(() => {
+              // console.log(this.document.getElementById('payuform'));
+              this.document.getElementById('payuform').submit();
+            }, 2000);
+
+          },
+          error => {
+            this.resetApiError();
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    }
+  }
+  resetApiError() {
+    this.api_success = null;
+  }
+  
+
 }
