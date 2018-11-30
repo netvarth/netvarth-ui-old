@@ -30,6 +30,7 @@ export class ViewReportComponent implements OnInit {
   s3url;
   retval;
   viewreport;
+  invoiceFromS3;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -49,50 +50,38 @@ export class ViewReportComponent implements OnInit {
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute, private route: Router,
-    private shared_services: SharedServices,) { }
+    private shared_services: SharedServices, ) { }
   ngOnInit() {
     console.log('In View Report Component');
     this.router.params
       .subscribe(params => {
         this.invoice_id = params.id;
         this.getjaldeeReport();
-        this.gets3curl();
       });
 
   }
-
-  gets3curl() {
-    this.retval = this.sharedfunctionObj.getS3Url('provider')
-      .then(
-        res => {
-          this.s3url = res;
-          // console.log('s3', this.s3url);
-          this.getbusinessprofiledetails_json('report', true);
-        },
-        error => {
-          this.sharedfunctionObj.apiErrorAutoHide(this, error);
-        }
-      );
-  }
-
-  
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.invoice_id, this.s3url, section, UTCstring)
-      .subscribe(res => {   
-         
-        error => {
-        }
-  });
-}
-
   getjaldeeReport() {
     this.provider_servicesobj.getJaldeeCouponReportsbyId(this.invoice_id).subscribe(
       data => {
         this.viewreport = data;
+        this.sharedfunctionObj.getS3Url('provider')
+          .then(
+            res => {
+              this.s3url = res;
+              const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+              const section = 'invoice/' + this.invoice_id + '/jaldeeinvoice';
+              this.shared_services.getbusinessprofiledetails_json(this.viewreport.uId, this.s3url, section, UTCstring)
+                .subscribe(s3Result => {
+                  this.invoiceFromS3 = s3Result;
+                },
+                error => {
+                  this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                });
+            },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            }
+          );
       }
     );
     const breadcrumbs = [];
@@ -108,5 +97,4 @@ export class ViewReportComponent implements OnInit {
   formatDateDisplay(dateStr) {
     return this.sharedfunctionObj.formatDateDisplay(dateStr);
   }
-
 }

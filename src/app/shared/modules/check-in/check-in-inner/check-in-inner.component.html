@@ -144,11 +144,7 @@
                     </div>
                 </div>
             </ng-container>
-
-
-
             <ng-container *ngIf="page_source != 'provider_checkin'">
-                
                 <div class="coupon-outer">
                     <div class="form-group">
                             <!-- <p>
@@ -159,13 +155,15 @@
                                       <mat-hint>Hint</mat-hint>
                                     </mat-form-field>
                                   </p> -->
-                                  
-                       
                         <!-- <div>Coupon Codes</div>  -->
-                        <div style="padding-top: 8px">
-                            <input placeholder="Enter coupon code(s)" class="coupon-code" [(ngModel)]="selected_coupons">  
-                            <input type="submit" class="couponcode-apply couponcode-apply1" (click)="applyCoupons(selected_coupons)"value="Apply">
-                            <input type="submit" class="couponcode-apply couponcode-apply1" (click)="removeCoupons()"value="Cancel">
+                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 no-padding">
+                            <div class="input-group">
+                                <input placeholder="Enter coupon code(s)" type="text" class="form-control" [(ngModel)]="selected_coupons">
+                                <span class="input-group-btn">
+                                     <button class="btn bt8 btn-default coupon-apply-btn" *ngIf="!coupon_status || coupon_status=='error'" (click)="applyCoupons(selected_coupons)" type="button">APPLY</button>
+                                     <button class="btn bt8 btn-default coupon-apply-btn" *ngIf="coupon_status=='success'" (click)="removeCoupons()" type="button">CANCEL</button>
+                                </span>
+                             </div>
                         </div> 
                                           
                             <!-- <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons"> -->
@@ -183,15 +181,8 @@
                             <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not valid</span>
                         </div>
                     </div>
-
             </ng-container>
-
-
-
-
-
         </ng-container>
-
         <ng-container *ngIf="step==3">
             <div class="member-outer">
                 <div class="member-head">

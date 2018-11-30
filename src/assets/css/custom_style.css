@@ -60,7 +60,8 @@
           .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty {
             display: flex;
             align-items: center;
-            margin-left: 15px; }
+            margin-left: 15px;
+          width:90% !important }
             .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .label {
               font-weight: 600;
               margin-right: 10px; }
@@ -68,7 +69,8 @@
               width: auto; }
               .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
                 height: 30px;
-                width: 80px;
+                max-width: 80px;
+                min-width: 55px;
                 padding: 5px 5px 5px 10px; }
         .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
           margin-left: 15px; }
@@ -139,7 +141,7 @@
                     margin-right: 20px;
                     justify-content: flex-end; }
                     .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item {
-                      flex-basis: 48%; }
+                      flex-basis: 100%; }
                       .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
                         width: auto; }
                         .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
@@ -500,23 +502,37 @@
         color : #ee1919;
       }
       .coupon-code{
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        border: 1px solid #D4D5D9;
-        -webkit-box-shadow: 0px;
-        -moz-box-shadow: 0px;
-        box-shadow: 0px;
-        padding: 10px;
+        padding: 0px !important;
         font-size: 16px;
         min-width: 160px;
         outline: 0;
-        width: 250px;
+        width: 280px;
+        max-width: 100%;
       }
       .couponcode-apply {
         position: relative;
         left: -60px;
+        font-size:.75rem !important;
         background-color: transparent;
+    }
+    .no-padding {
+      padding: 0px !important;
+    }
+    .coupon-apply-btn {
+      height: 40px !important;
+      border-radius: 0px;
+      background-color: #fff;
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+    .coupon-text {
+      border-right: none !important;
+      border: 1px solid #b6cdd8 !important;
+      border-right: none !important;
+    }
+    .coupon::selection{
+      border-right: none !important;
+      border: 1px solid #b6cdd8 !important;
     }
     .couponcode-apply1 {
       outline: 0px;

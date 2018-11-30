@@ -15,8 +15,8 @@
 			<div class="w-dta">
 				<div class="row">
 					<div class="copy one">
-						<div class="left card">
-							<div class="bill-section">
+						<div class="col-a pl0 col-md-12 col-lg-8 col-xl-8">
+							<div class="card bill-section">
 								<div class="bill-section-content ">
 									<div class="bill-wrapper ">
 										<div class="bill-header">
@@ -62,9 +62,9 @@
 															</span>
 														</div>
 														<ng-container *ngIf="showAddItemsec">
-															<div class="add-serv-item edit-row service">
-																<div class="spl">
-																	<div class="item selectbox">
+															<div class="add-serv-item edit-row service no-padding">
+																<div class="spl col-md-8 col-sm-8 col-lg-8 no-padding">
+																	<div class="item selectbox col-md-9 col-sm-8 col-lg-9 no-padding">
 																		<mat-form-field class="example-full-width"> <input type="text" #itemservicesearch aria-label="Number"
 																			 matInput [formControl]="itemServiceSearch" [matAutocomplete]="auto">
 																			<mat-autocomplete #auto="matAutocomplete">
@@ -83,7 +83,7 @@
 																			</mat-autocomplete>
 																		</mat-form-field>
 																	</div>
-																	<div class="item qty">
+																	<div class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
 																		<span class="label">{{qty_cap}}</span> <span class="number">
 																			<mat-form-field class="example-full-width"> <input type="number" matInput #itemserviceqty aria-label="Number"
 																				 matInput value="1" size="3" [(ngModel)]="curSelItm.qty" (blur)="blurQty($event.target.value, curSelItm)">
@@ -91,7 +91,7 @@
 																		</span>
 																	</div>
 																</div>
-																<div class="spr">
+																<div class="spr col-md-4 col-sm-4">
 																	<button class="cs-btn bt1" (click)="addService_Item()">{{add_btn_cap}}</button>
 																	<button class="cs-btn bt2" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 																</div>
@@ -99,13 +99,13 @@
 														</ng-container>
 														<ng-container *ngIf="showJCouponSection">
 															<div class="add-j-coupon edit-row service">
-																<div class="spl">
+																<div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
 																	<div class="item selectbox">
 																		<mat-form-field class="example-full-width"> <input type="text" #jcoupon matInput [(ngModel)]="jCoupon">
 																		</mat-form-field>
 																	</div>
 																</div>
-																<div class="spr">
+																<div class="spr col-md-5 col-sm-5 col-lg-5 no-padding">
 																	<button class="cs-btn bt1" (click)="applyJCoupon(jCoupon)">APPLY</button>
 																	<button class="cs-btn bt2" (click)="hideWorkBench()">CANCEL</button>
 																</div>
@@ -120,7 +120,7 @@
 																<div class="list-content">
 																	<div class="c-row two">
 																		<div class=" edit-row discoup">
-																			<div class="spl">
+																			<div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
 																				<div class="item selectbox1" *ngIf="discounts.length >0 && showDiscountSection">
 																					<mat-form-field>
 																						<mat-select [(ngModel)]="selOrderDiscount" [ngModelOptions]="{standalone: true}">
@@ -142,7 +142,7 @@
 																					</mat-form-field>
 																				</div>
 																			</div>
-																			<div class="spr">
+																			<div class="spr col-md-5 col-lg-5 col-sm-5 no-padding">
 																				<button *ngIf="discounts.length >0 && showDiscountSection" class="cs-btn bt1" [disabled]="selOrderDiscount===''"
 																				 (click)="applyOrderDiscount()">Apply</button>
 																				<button *ngIf="coupons.length >0 && showPCouponSection" class="cs-btn bt1" [disabled]="selOrderProviderCoupon===''"
@@ -176,7 +176,7 @@
 															<div class="c-row two">
 																<!--When click MENU this section shows-->
 																<div class="edit-row discoup" *ngIf="bill_data.service[i].showservicedisccoup">
-																	<div class="spl">
+																	<div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
 																		<div class="item selectbox1" *ngIf="discounts.length > 0">
 																			<mat-form-field>
 																				<mat-select [(ngModel)]="bill_data.service[i].serviceDiscount" [ngModelOptions]="{standalone: true}">
@@ -187,7 +187,7 @@
 																			</mat-form-field>
 																		</div>
 																	</div>
-																	<div class="spr">
+																	<div class="spr col-md-5 col-sm-5 col-lg-5 no-padding">
 																		<button class="cs-btn bt1" [disabled]="bill_data.service[i].serviceDiscount===''" (click)="applyServiceDiscount(bill_data.service[i])">{{done_btn_cap}}</button>
 																		<button style="margin-left:5px;" class="cs-btn bt1" (click)="serviceDiscCoupSec(i)">{{cancel_btn_cap}}</button>
 																	</div>

@@ -22,9 +22,9 @@
                       <span>{{formatDateDisplay(viewreport.reportFromDate)}} -
                         {{formatDateDisplay(viewreport.reportEndDate)}}</span>
                     </div>
-                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="viewreport.listOfJaldeeCoupons">
                       <span class="ttle">{{coupon_use_cap}}:</span>
-                      <span>0</span>
+                      <span>{{viewreport.listOfJaldeeCoupons}}</span>
                     </div>
                   </div>
                   <div class="c-ot">
@@ -34,11 +34,11 @@
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                       <span class="ttle">{{coupon_amt_cap}}:</span>
-                      <span>{{viewreport.jaldeeCouponAmount}}0</span>
+                      <span>{{viewreport.jaldeeCouponAmount || 0}}</span>
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                       <span class="ttle">{{reimburse_amt_cap}}:</span>
-                      <span>{{viewreport.PaidAmount}}0</span>
+                      <span>{{viewreport.PaidAmount || 0}}</span>
                     </div>
                   </div>
                   <div class="c-ot">
@@ -55,7 +55,7 @@
               </div>
             </div>
           </div>
-          <div class="n-loc table">
+          <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeBankStatement">
             <h5>{{j_acct_cap}}</h5>
             <div class="table-outer q-tbl">
               <table class="table">
@@ -71,22 +71,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td data-title="Date" class="td1" class="pointer-cursor"></td>
-                    <td data-title="Bill Id" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Bill Amount" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Consumer Id" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Consumer Name" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Service" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Check-in Id" class="pointer-cursor" class="td1"></td>
+                  <tr *ngFor="let jbank of invoiceFromS3.jaldeeBankStatement.entries">
+                    <td data-title="Date" class="td1" class="pointer-cursor">{{formatDateDisplay(jbank.date)}}</td>
+                    <td data-title="Bill Id" class="pointer-cursor" class="td1">{{jbank.billId}}</td>
+                    <td data-title="Bill Amount" class="pointer-cursor" class="td1">{{jbank.billAmount}}</td>
+                    <td data-title="Consumer Id" class="pointer-cursor" class="td1">{{jbank.consumerId}}</td>
+                    <td data-title="Consumer Name" class="pointer-cursor" class="td1">{{jbank.consumerName}}</td>
+                    <td data-title="Service" class="pointer-cursor" class="td1">{{jbank.service}}</td>
+                    <td data-title="Check-in Id" class="pointer-cursor" class="td1">{{jbank.checkinId}}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="n-loc table">
-            <h5>Jaldee Coupon1-details</h5>
-            <div class="table-outer q-tbl">
+          <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeCouponReimbursableExpense && invoiceFromS3.jaldeeCouponReimbursableExpense.couponList.length>0">
+            <div *ngFor = "let couponList of invoiceFromS3.jaldeeCouponReimbursableExpense.couponList"></div>
+            <h5>Jaldee Coupon - {{couponList.couponCode}}</h5>
+            <div class="table-outer q-tbl" *ngFor="let coupon of couponList.billDetails">
               <table class="table">
                 <thead>
                   <tr>
@@ -97,46 +98,19 @@
                     <th>{{consumer_cap}} {{name_cap}}</th>
                     <th>{{service_cap}}</th>
                     <th>{{check_in_cap}} {{id_cap}}</th>
+                    <th>Coupon Discount</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td data-title="Date" class="td1" class="pointer-cursor"></td>
-                    <td data-title="Bill Id" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Bill Amount" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Consumer Id" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Consumer Name" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Service" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Check-in Id" class="pointer-cursor" class="td1"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="n-loc table">
-            <h5>Jaldee Coupon2-details</h5>
-            <div class="table-outer q-tbl">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>{{date_cap}}</th>
-                    <th>{{bill_cap}} {{id_cap}}</th>
-                    <th>{{bill_cap}} {{amt_cap}}</th>
-                    <th>{{consumer_cap}} {{id_cap}}</th>
-                    <th>{{consumer_cap}} {{name_cap}}</th>
-                    <th>{{service_cap}}</th>
-                    <th>{{check_in_cap}} {{id_cap}}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td data-title="Date" class="td1" class="pointer-cursor"></td>
-                    <td data-title="Bill Id" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Bill Amount" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Consumer Id" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Consumer Name" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Service" class="pointer-cursor" class="td1"></td>
-                    <td data-title="Check-in Id" class="pointer-cursor" class="td1"></td>
+                    <td data-title="Date" class="td1" class="pointer-cursor">{{formatDateDisplay(coupon.date)}}</td>
+                    <td data-title="Bill Id" class="pointer-cursor" class="td1">{{coupon.billId}}</td>
+                    <td data-title="Bill Amount" class="pointer-cursor" class="td1">{{coupon.billAmount}}</td>
+                    <td data-title="Consumer Id" class="pointer-cursor" class="td1">{{coupon.consumerId}}</td>
+                    <td data-title="Consumer Name" class="pointer-cursor" class="td1">{{coupon.consumerName}}</td>
+                    <td data-title="Service" class="pointer-cursor" class="td1">{{coupon.service}}</td>
+                    <td data-title="Check-in Id" class="pointer-cursor" class="td1">{{coupon.checkinId}}</td>
+                    <td data-title="Coupon Discount" class="pointer-cursor" class="td1">{{coupon.discount}}</td>
                   </tr>
                 </tbody>
               </table>

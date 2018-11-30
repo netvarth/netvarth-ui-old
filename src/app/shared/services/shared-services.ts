@@ -510,5 +510,4 @@ export class SharedServices {
       const url = 'consumer/jaldee/coupons/' + jCouponCode + '/' + checkinId;
       return this.servicemeta.httpPost(url);
     }
-  
 }

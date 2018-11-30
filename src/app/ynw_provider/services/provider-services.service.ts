@@ -221,8 +221,12 @@ export class ProviderServices {
     const url = 'provider/jaldee/coupons/' + jc_code + '/stats';
     return this.servicemeta.httpGet(url);
   }
-  getJaldeeCouponReports(filter = {}) {
-    return this.servicemeta.httpGet('provider/jaldee/coupons/jcreports', null, filter);
+  getJaldeeCouponReports(filter) {
+    const url = 'provider/jaldee/coupons/jcreports';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getJaldeeCouponReportsCount(filter = {}) {
+    return this.servicemeta.httpGet('provider/jaldee/coupons/jcreports/count', null, filter);
   }
   getJaldeeCouponReportsbyId(invoice_id) {
     const url = 'provider/jaldee/coupons/jcreports/' + invoice_id;
@@ -230,8 +234,7 @@ export class ProviderServices {
   }
   requestforPaymentJC(id?) {
     const url = 'provider/jaldee/coupons/jcreports/' + id + '/requestPayment';
-    return true;
-    // return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url);
   }
   // Non working days
   getProviderNonworkingdays(id?) {
