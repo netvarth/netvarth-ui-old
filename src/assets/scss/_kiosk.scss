@@ -857,6 +857,15 @@
                                     .sel-queue {
                                         color: $linkblack;
                                         font-weight: 600;
+                                        
+                                        .name {
+                                            color: $linkblack;
+                                            font-weight: 600;
+                                            
+                                            @include respond-to(ynw-768-991) {
+                                                display: block;
+                                            }
+                                        }
                                     }
 
                                     .leftarrow, .rightarrow {

@@ -8308,6 +8308,12 @@ footer {
                                 }
                             }
                         }
+                        
+                        td {
+                            &.nodatafound{
+                                padding-left: 15px;
+                            }
+                        }
                     }
                 }
                 .search_paging {
