@@ -19,7 +19,8 @@
                                     <div class="c-ot">
                                         <div class="item">
                                             <span class="ttle">Valid Through</span>
-                                            <span>{{formatDateDisplay(jCoupon.couponRules.startDate)}} - {{formatDateDisplay(jCoupon.couponRules.endDate)}}
+                                            <span>{{formatDateDisplay(jCoupon.couponRules.startDate)}} -
+                                                {{formatDateDisplay(jCoupon.couponRules.endDate)}}
                                             </span>
                                         </div>
                                     </div>
@@ -56,20 +57,20 @@
                                             <span> {{jCoupon.couponRules.usageMaxLimitPerProvider}}</span>
                                         </div>
                                     </div>
-                                    <div class="c-ot" *ngIf="jCoupon.couponRules.defaultEnable || jCoupon.couponRules.alwaysEnabled">
-                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.defaultEnable">
+                                    <div class="c-ot">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                                             <span class="ttle">{{default_enable}}</span>
-                                            <span> {{jCoupon.couponRules.defaultEnable}}</span>
+                                            <span> {{jCoupon.couponRules.defaultEnabled}}</span>
                                         </div>
-                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.alwaysEnabled">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                                             <span class="ttle">{{always_enable}}</span>
                                             <span> {{jCoupon.couponRules.alwaysEnabled}}</span>
                                         </div>
                                     </div>
-                                    <div class="c-ot" *ngIf="jCoupon.couponRules.combineWithOtherjCoupon || jCoupon.couponRules.maxReimbursePercentage">
-                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.combineWithOtherjCoupon">
+                                    <div class="c-ot" *ngIf="jCoupon.couponRules.combineWithOtherCoupon || jCoupon.couponRules.maxReimbursePercentage">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.combineWithOtherCoupon">
                                             <span class="ttle">{{combine_j_coupon}}</span>
-                                            <span> {{jCoupon.couponRules.combineWithOtherjCoupon}}</span>
+                                            <span> {{jCoupon.couponRules.combineWithOtherCoupon}}</span>
                                         </div>
                                         <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.maxReimbursePercentage">
                                             <span class="ttle">{{reimburse_perc}}</span>
@@ -86,26 +87,28 @@
                                             <span> {{jCoupon.couponRules.maxProviderUseLimit}}</span>
                                         </div>
                                     </div>
-                                    <div class="c-ot" *ngIf="jCoupon.couponRules.consumerTermsAndcondition && jCoupon.couponRules.consumerTermsAndcondition.trim()!=''">
+                                    <div class="c-ot" *ngIf="jCoupon.consumerTermsAndconditions && jCoupon.consumerTermsAndconditions.trim()!=''">
                                         <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12">
                                             <span class="ttle">{{term_condition}}</span>
-                                            <span> {{jCoupon.couponRules.consumerTermsAndcondition}}</span>
+                                            <span> {{jCoupon.consumerTermsAndconditions}}</span>
                                         </div>
                                     </div>
-                                    <div class="c-ot" *ngIf="jCoupon.couponRules.providerDescription && jCoupon.couponRules.providerDescription.trim()!=''">
+                                    <div class="c-ot" *ngIf="jCoupon.providerDescription && jCoupon.providerDescription.trim()!=''">
                                         <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12">
                                             <span class="ttle">{{provider_desc}}</span>
-                                            <span> {{jCoupon.couponRules.providerDescription}}</span>
+                                            <span> {{jCoupon.providerDescription}}</span>
                                         </div>
                                     </div>
                                     <div class="btm-ctrl">
                                         <div class="ctrl enable-disable">
-                                            <span class="ttle">Coupon Status</span>
-                                            <span *ngIf="jCoupon.couponRules.alwaysEnabled!=true">
-                                                <mat-slide-toggle [checked]="jCoupon.couponstate=='ENABLED'" (change)="changeCouponStatus(jCoupon)"></mat-slide-toggle>
+                                            <span class="ttle">Coupon Status :</span>
+                                            <span *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='ARCHIVED'">
+                                                <mat-slide-toggle [checked]="jCoupon.couponState=='ENABLED'" (change)="changecouponStatus(jCoupon)"></mat-slide-toggle>
                                             </span>
                                             <span class='enabled' *ngIf="jCoupon.couponState=='ENABLED'">{{enable_cap}}</span>
-                                            <span class='disabled' *ngIf="jCoupon.couponState=='DISABLED' || !jCoupon.couponState">{{disbale_cap}}</span>
+                                            <span class='disabled' *ngIf="jCoupon.couponState=='DISABLED'">{{disbale_cap}}</span>
+                                            <span class='disabled' *ngIf="jCoupon.couponState=='ARCHIVED'">Archived</span>
+                                            <span class='enabled' *ngIf="jCoupon.couponState=='ACTIVE'">Active</span>
                                         </div>
                                     </div>
                                 </div>

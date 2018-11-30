@@ -23,7 +23,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>{{jCouponCode_Cap}}</th>
-                                                    <th>{{name_cap}}</th> 
+                                                    <th>{{name_cap}}</th>
                                                     <th>{{valid_from_cap}}</th>
                                                     <th>{{valid_to_cap}}</th>
                                                     <th>{{status_cap}}</th>
@@ -32,9 +32,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let jCoupon of jaldeeCoupons">
-                                                    <td data-title="code"  class="td1" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">{{jCoupon.jaldeeCouponCode}}</td>
-                                                    <td data-title="name" id="Id" class="pointer-cursor" class="td1"
-                                                        >{{jCoupon.couponName}}</td>
+                                                    <td data-title="code" class="td1" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">{{jCoupon.jaldeeCouponCode}}</td>
+                                                    <td data-title="name" id="Id" class="pointer-cursor" class="td1">{{jCoupon.couponName}}</td>
                                                     <td data-title="Valid From" class="pointer-cursor" class="td1">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
                                                     <td data-title="Valid To" class="pointer-cursor" class="td1">{{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>
                                                     <td data-title="coupon Status" class="pointer-cursor" class="td1">
@@ -42,9 +41,14 @@
                                                             {{enable_cap}}</span>
                                                         <span class="icon-disable" *ngIf="jCoupon.couponState=='DISABLED'">
                                                             {{disable_cap}}</span>
+                                                        <span *ngIf="jCoupon.couponState=='ACTIVE'">
+                                                            Active</span>
+                                                        <span *ngIf="jCoupon.couponState=='ARCHIVED'">
+                                                            Archived</span>
+
                                                     </td>
                                                     <td data-title="Status icon" class="action">
-                                                        <span class="mbt" *ngIf="jCoupon.couponRules.alwaysEnabled!=true">
+                                                        <span class="mbt" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='ARCHIVED'">
                                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                 <mat-icon>more_vert</mat-icon>
                                                             </button>
@@ -53,9 +57,10 @@
                                                                     mat-menu-item>
                                                                     <i *ngIf="jCoupon.couponState=='DISABLED'" class="icon-enable"></i>
                                                                     <i *ngIf="jCoupon.couponState=='ENABLED'" class="icon-disable"></i>
-                                                                    <span> {{(jCoupon.couponState=='ENABLED') ?
-                                                                        'Disable'
-                                                                        :' Enable'}}</span>
+                                                                    <i *ngIf="jCoupon.couponState=='ACTIVE'" class="icon-enable"></i>
+                                                                    <span> {{(jCoupon.couponState=='DISABLED' ||
+                                                                        jCoupon.couponState=='ACTIVE') ?
+                                                                        'Enable':' Disable'}}</span>
                                                                 </button>
                                                             </mat-menu>
                                                         </span>

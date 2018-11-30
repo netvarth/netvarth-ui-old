@@ -22,9 +22,9 @@
                       <span>{{formatDateDisplay(viewreport.reportFromDate)}} -
                         {{formatDateDisplay(viewreport.reportEndDate)}}</span>
                     </div>
-                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="viewreport.listOfJaldeeCoupons">
+                    <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                       <span class="ttle">{{coupon_use_cap}}:</span>
-                      <span>{{viewreport.listOfJaldeeCoupons}}</span>
+                      <span>{{viewreport.listOfJaldeeCoupons || 0}}</span>
                     </div>
                   </div>
                   <div class="c-ot">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                       <span class="ttle">{{status_cap}}:</span>
-                      <span>{{viewreport.invoiceStatus}}</span>
+                      <span>{{viewreport.status}}</span>
                     </div>
                   </div>
                 </div>

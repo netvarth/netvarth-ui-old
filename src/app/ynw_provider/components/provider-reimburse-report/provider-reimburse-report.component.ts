@@ -23,8 +23,9 @@ export class ProviderReimburseReportComponent implements OnInit {
   reimburse_amt_cap = Messages.REIMBURSE_AMT_CAP;
   req_payment_cap = Messages.REQ_PAYMENT_CAP;
   couponreport: any = [];
-
   query_executed = false;
+  api_error = null;
+  api_success = null;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -61,6 +62,12 @@ export class ProviderReimburseReportComponent implements OnInit {
   constructor(private dialog: MatDialog, private router: Router,
     private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices) {
   }
+  report_status = [
+    { pk: 'PAYMENTPENDING', value: 'Payment Pending' },
+    { pk: 'REQUESTED', value: 'Requested' },
+    { pk: 'PAID', value: 'Paid' },
+    { pk: 'INDISPUTE', value: 'In-Dispute' }
+  ];
   ngOnInit() {
     this.setFilterDateMaxMin();
     this.resetFilter();
@@ -83,6 +90,10 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.requestdialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
         this.getCouponReport();
+        this.api_success = Messages.SCCESS_MSG;
+      }
+      else {
+        this.api_error = Messages.ERROR_MSG;
       }
     });
   }

@@ -87,7 +87,7 @@ export class ProviderCouponViewComponent implements OnInit {
     return this.sharedfunctionObj.formatDateDisplay(dateStr);
   }
   changecouponStatus(jcCoupon) {
-    const jc_coupon_status = (jcCoupon.couponStatus === 'ENABLED') ? 'Disable' : 'Enable';
+    const jc_coupon_status = (jcCoupon.couponState === 'ENABLED') ? 'disable' : 'enable';
     this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status).subscribe(
       data => {
         this.getCouponview();

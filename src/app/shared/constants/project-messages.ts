@@ -796,15 +796,15 @@ export const Messages = {
   'MAX_PRO_USE_LIMIT': 'Maximum Provider Use Limit',
   'MAX_CONSU_USE_LIMIT': 'Maximium Consumer Use Limit',
   'LIMIT_PER_PRO': 'usageMaxLimitPerProvider',
-  'CONSUM_FIRST_HECK': 'consumerFirstCheckInUsageOnly',
-  'PRO_FIRST_CHECK': 'providerFirstCheckInUseOnly',
-  'SELF_PAYMENT': 'selfPaymentRequired',
+  'CONSUM_FIRST_HECK': 'Consumer First CheckIn Usage Only',
+  'PRO_FIRST_CHECK': 'Provider First CheckIn Use Only',
+  'SELF_PAYMENT': 'SelfPayment Required',
   'ONLINE_CHECK': 'onlineCheckinRequired',
   'COMBIN_COUPON_LIST': 'combineWithOtherjaldeecoupon_list',
-  'DEFAULT_ENABLE': 'defaultEnable',
-  'ALWAYS_ENABLE': 'alwaysEnabled',
-  'TERM_CONDITION': 'consumerTermsAndcondition',
-  'PRO_DESCR': 'providerDescription',
+  'DEFAULT_ENABLE': 'Default Enabled',
+  'ALWAYS_ENABLE': 'Always Enabled',
+  'TERM_CONDITION': 'Terms and Conditions',
+  'PRO_DESCR': 'Provider Description',
   'CHART_CAP': 'chart',
 
   // App-ynw_provider-components-provider-coupons
@@ -886,6 +886,8 @@ export const Messages = {
   'J_ACC_CAP': 'Jaldee Account',
   'REIMBURSE_AMT_CAP': 'Reimbursable Amount',
   'REQ_PAYMENT_CAP': 'Request for payment',
+  'SCCESS_MSG' : 'Requested Successfully',
+  'ERROR_MSG' : 'Failed',
 
   // App-ynw_provider-components-provider-settings
   'WAITLIST_MANAGE_CAP': 'Waitlist Manager',
@@ -1152,7 +1154,6 @@ export const Messages = {
   'UP_LIC_PACK_CAP' : 'License Package *',
   'UP_SELECT_ONE_CAP' : '- Select One -',
   'UP_NO_UPGRADE_PACK_FOUND' : 'Sorry No upgradable packages found.',
-
 
 };
 
