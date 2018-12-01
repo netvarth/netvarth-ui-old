@@ -73,7 +73,7 @@
 																					<ng-container *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
 																						<mat-option *ngFor="let value of group.values; let i = index" [value]="value" (keyup)="itemServiceSelected(group.type,value)"
 																						 (onSelectionChange)="itemServiceSelected(group.type,value)">
-																							{{ value }} {{(group.type=='Items')? ' - [Item]' : ' - [Service]'}}
+																							{{ value }} <span class="bill_item_service">{{(group.type=='Items')? 'Item' : 'Service'}}</span>
 																						</mat-option>
 																					</ng-container>
 																					<mat-option *ngIf="group.values.length==0" [disabled]="true">

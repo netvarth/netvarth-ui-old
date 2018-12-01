@@ -553,3 +553,12 @@
     .report .card.w-dta{margin:0px !important;padding: 0px !important}
     .report .dash-list h6 {padding:5px 5px 5px 20px!important;}
     .coupon-outer {padding-top: 10px;}
+    .bill_item_service {
+      width: 50px;
+      color: #999999;
+      font-size: .60rem;
+      /* padding-right: 5px; */
+      float: right;
+      text-align: right;
+      text-transform:uppercase;
+    }
