@@ -984,7 +984,7 @@ export const Messages = {
   // App-ynw_provider-components-provider-bprofile-search-adwords
   'SEARCH_ADWORDS_CAP' : 'Adwords',
   'SEARCH_SORRY_CAP' : 'Sorry!',
-  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG' : 'Currently you did not have any adwords. Please upgrade your Licence Package/Add-On',
+  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG' : 'Currently you do not have any adwords. Please upgrade your Licence Package/Add-On',
 
   // App-ynw_provider-components-provider-bprofile-search-gallery
   'SEARCH_GALLERY_CAP' : 'Gallery',

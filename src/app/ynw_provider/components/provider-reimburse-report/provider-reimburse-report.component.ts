@@ -7,6 +7,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import * as moment from 'moment';
+import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 @Component({
   selector: 'app-provider-reimburse-report',
   templateUrl: './provider-reimburse-report.component.html',
@@ -78,6 +79,7 @@ export class ProviderReimburseReportComponent implements OnInit {
    * Open Modal for Request for Payment
    * @param reportId Report Id
    */
+
   openrequestModal(reportId) {
     this.requestdialogRef = this.dialog.open(RequestForComponent, {
       width: '50%',
@@ -89,14 +91,46 @@ export class ProviderReimburseReportComponent implements OnInit {
     });
     this.requestdialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
+       // this.sharedfunctionObj.openSnackBar(Messages.SCCESS_MSG);
         this.getCouponReport();
-        this.api_success = Messages.SCCESS_MSG;
-      }
-      else {
-        this.api_error = Messages.ERROR_MSG;
       }
     });
   }
+
+  // openrequestModal(report) {
+  //   const id = report.invoiceId;
+  //   if (!id) {
+  //     return false;
+  //   }
+  //   this.requestdialogRef = this.dialog.open(RequestForComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       'message': this.sharedfunctionObj.getProjectMesssages('REQUEST_CONFIRM_CAP'),
+  //       'heading': 'Delete Confirmation'
+  //     }
+  //   });
+  //   this.requestdialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.request(id);
+  //     }
+  //   });
+  // }
+
+  // request(id) {
+  //   this.provider_servicesobj.requestforPaymentJC(id)
+  //     .subscribe(
+  //       data => {
+  //         this.sharedfunctionObj.openSnackBar(Messages.SCCESS_MSG);
+  //         this.getCouponReport();
+  //       },
+  //       error => {
+  //         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       }
+  //     );
+  // }
+
   /** Filter Related Functions*/
   /**
    * Toggle Filter

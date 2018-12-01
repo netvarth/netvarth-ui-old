@@ -33,7 +33,7 @@
                 </mat-form-field>
               </div>
 
-              
+
               <div class="form-group pay_status">
                 <label class="col-form-label" for="displayName">{{status_cap}}</label>
                 <mat-form-field>
@@ -41,9 +41,10 @@
                     <mat-option (click)="setFilterData('status', 'all')" [value]="'all'">
                       {{all_cap}}
                     </mat-option>
-                    <mat-option *ngFor="let status of report_status" (click)="setFilterData('status', status.pk)" [value]="status.pk">
+                    <mat-option *ngFor="let status of report_status" (click)="setFilterData('status', status.pk)"
+                      [value]="status.pk">
                       <!-- <span class="day_label">{{queue.displayschedule.dstr}}</span> -->
-                     {{status.value}}
+                      {{status.value}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -83,7 +84,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let report of couponreport">
-                  <td data-title="Id" class="td1" class="pointer-cursor" (click)="reportView(report.invoiceId)">{{report.invoiceId}}</td>
+                  <td data-title="Name" class="td2" class="pointer-cursor" (click)="reportView(report.invoiceId)">{{report.invoiceId}}</td>
                   <td data-title="Period" class="pointer-cursor" class="td1">{{formatDateDisplay(report.reportFromDate)}}
                     - {{formatDateDisplay(report.reportEndDate)}}</td>
                   <td data-title="coupons Used" class="pointer-cursor" class="td1">{{report.listOfJaldeeCoupons}}</td>
@@ -107,9 +108,11 @@
             </div>
           </div>
         </div>
-        <div *ngIf="couponreport.length == 0">
-          No reports
-        </div>
+        <ng-container>
+          <div class="qlst no-dta" *ngIf="couponreport.length == 0">
+            No reports
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

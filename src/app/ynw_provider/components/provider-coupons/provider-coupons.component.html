@@ -32,7 +32,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let jCoupon of jaldeeCoupons">
-                                                    <td data-title="code" class="td1" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">{{jCoupon.jaldeeCouponCode}}</td>
+                                                    <td data-title="Name" class="td2" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">{{jCoupon.jaldeeCouponCode}}</td>
                                                     <td data-title="name" id="Id" class="pointer-cursor" class="td1">{{jCoupon.couponName}}</td>
                                                     <td data-title="Valid From" class="pointer-cursor" class="td1">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
                                                     <td data-title="Valid To" class="pointer-cursor" class="td1">{{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>

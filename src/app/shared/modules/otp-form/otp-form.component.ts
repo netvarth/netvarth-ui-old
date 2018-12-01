@@ -20,7 +20,7 @@ export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
   ok_btn_cap = Messages.OK_BTN;
   resend_otp_to_cap = Messages.RESEND_OTP_TO_CAP;
   email_id_cap = Messages.EMAIL_ID_CAP;
-  mobile_cap = Messages.MOBILE_CAP;
+  mobile_cap = Messages.CUSTOMER_MOBILE_CAP;
   resend_otp_email = Messages.RESEND_OTP_EMAIL_CAP;
   resend_otp_opt_active_cap = Messages.RESEND_OTP_OPT_ACTIVE_IN_CAP;
   seconds_cap = Messages.SECONDS_CAP;
