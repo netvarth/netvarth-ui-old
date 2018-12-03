@@ -558,7 +558,7 @@ export const Messages = {
   // App-shared-modules-search-moreoptiions
   'CUSTOMER_CAP': 'Customer',
   'TIME_CAP': 'Time',
-  'BILL_NO_CAP': 'Bill Number',
+  'BILL_NO_CAP': 'Bill #',
   'GSTIN_CAP': 'GSTIN',
   'QTY_CAP': 'Qty',
   'DISCOUNT_CAP': 'Discount',

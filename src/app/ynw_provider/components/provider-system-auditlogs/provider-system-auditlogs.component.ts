@@ -51,6 +51,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   startpageval;
   totalCnt;
   perPage = projectConstants.PERPAGING_LIMIT;
+  tday = new Date()
   breadcrumbs = [
     {
       title: 'Dashboard',
@@ -59,7 +60,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     {
       title: 'System Audit Logs'
     }
-  ];
+  ];;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions,

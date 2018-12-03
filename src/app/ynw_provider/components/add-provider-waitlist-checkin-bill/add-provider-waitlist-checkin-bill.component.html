@@ -17,7 +17,7 @@
 					<div class="copy one">
 						<div class="col-a pl0 col-md-12 col-lg-8 col-xl-8">
 							<div class="card bill-section">
-								<div class="bill-section-content ">
+								<div class="bill-section-content">
 									<div class="bill-wrapper ">
 										<div class="bill-header">
 											<div class="section-one">
@@ -50,13 +50,13 @@
 																</button>
 																<mat-menu #menu="matMenu">
 																	<button mat-menu-item (click)="orderDiscountSelected()" *ngIf="(discounts.length > 0)">
-																		<span>Add Order Discount</span>
+																		<span>Apply Order Discount</span>
 																	</button>
 																	<button mat-menu-item (click)="orderPCouponSelected()" *ngIf="(coupons.length >0)">
-																		<span>Add Provider Coupon</span>
+																		<span>Apply Coupon</span>
 																	</button>
 																	<button mat-menu-item (click)="jCouponSelected()">
-																		<span>Add Jaldee Coupon(s)</span>
+																		<span>Apply Jaldee Coupon</span>
 																	</button>
 																</mat-menu>
 															</span>
@@ -114,40 +114,74 @@
 													</div>
 												</ng-container>
 												<ng-container *ngIf="(showPCouponSection || showDiscountSection)">
-													<div class="section-three">
+													<div class="section-two">
 														<div class="bill-breakup">
 															<div class="list">
 																<div class="list-content">
 																	<div class="c-row two">
-																		<div class=" edit-row discoup">
-																			<div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
-																				<div class="item selectbox1" *ngIf="discounts.length >0 && showDiscountSection">
-																					<mat-form-field>
-																						<mat-select [(ngModel)]="selOrderDiscount" [ngModelOptions]="{standalone: true}">
-																							<mat-option [value]="''">{{select_discount_cap}}</mat-option>
-																							<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount"> {{
-																								discount.name
-																								}}
-																							</mat-option>
-																						</mat-select>
-																					</mat-form-field>
+																		<div class="add-serv-item edit-row service discoup">
+																			<div class="spr col-sm-12 col-md-12 col-lg-12 no-padding">
+																				<div class="spl col-md-12 col-sm-12 col-lg-12">
+																					<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding">
+																						<div class="item selectbox1" *ngIf="discounts.length >0 && showDiscountSection">
+																							<mat-form-field>
+																								<mat-select [(ngModel)]="selOrderDiscount" [ngModelOptions]="{standalone: true}">
+																									<mat-option [value]="''">{{select_discount_cap}}</mat-option>
+																									<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount"> {{
+																										discount.name
+																										}}
+																									</mat-option>
+																								</mat-select>
+																							</mat-form-field>
+																						</div>
+																						<div class="item selectbox1" *ngIf="coupons.length >0 && showPCouponSection">
+																							<mat-form-field>
+																								<mat-select [(ngModel)]="selOrderProviderCoupon" [ngModelOptions]="{standalone: true}">
+																									<mat-option [value]="''">{{select_coupon_cap}}</mat-option>
+																									<mat-option *ngFor="let coupon of coupons; let i = index" [value]="coupon">
+																										{{ coupon.name }} </mat-option>
+																								</mat-select>
+																							</mat-form-field>
+																						</div>
+																					</div>
+																					<div class="item qty col-md-4 col-sm-4 col-lg-4 no-padding">
+																						<ng-container *ngIf="showDiscountSection && selOrderDiscount.discType=='OnDemand'">
+																							<span class="label">Value</span> <span class="number">
+																								<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue
+																									 aria-label="Number" matInput value="1" size="3" [(ngModel)]="discAmount" (blur)="blurQty($event.target.value, discAmount)">
+																								</mat-form-field>
+																							</span>
+
+																						</ng-container>
+																					</div>
 																				</div>
-																				<div class="item selectbox1" *ngIf="coupons.length >0 && showPCouponSection">
-																					<mat-form-field>
-																						<mat-select [(ngModel)]="selOrderProviderCoupon" [ngModelOptions]="{standalone: true}">
-																							<mat-option [value]="''">{{select_coupon_cap}}</mat-option>
-																							<mat-option *ngFor="let coupon of coupons; let i = index" [value]="coupon">
-																								{{ coupon.name }} </mat-option>
-																						</mat-select>
-																					</mat-form-field>
+																				<div class="col-md-12 col-sm-12 col-lg-12 notes" *ngIf="showDiscountSection">
+																					<div class="col-md-12 col-lg-12 col-sm-12 no-padding">
+																						<div class="form-group ">
+																							<mat-checkbox [(ngModel)]="isProvNote">Provider Note</mat-checkbox>
+																						</div>
+																						<div class="form-group" *ngIf="isProvNote">
+																							<textarea class="form-control" id="message" placeholder="Message" [(ngModel)]="discProvNote">
+																													</textarea>
+																						</div>
+																					</div>
+																					<div class="col-md-12 col-lg-12 col-sm-12 no-padding">
+																						<div class="form-group ">
+																							<mat-checkbox [(ngModel)]="isConsNote">Consumer Note</mat-checkbox>
+																						</div>
+																						<div class="form-group" *ngIf="isConsNote">
+																							<textarea class="form-control" id="message" placeholder="Message" [(ngModel)]="discConsNote">
+																													</textarea>
+																						</div>
+																					</div>
 																				</div>
-																			</div>
-																			<div class="spr col-md-5 col-lg-5 col-sm-5 no-padding">
-																				<button *ngIf="discounts.length >0 && showDiscountSection" class="cs-btn bt1" [disabled]="selOrderDiscount===''"
-																				 (click)="applyOrderDiscount()">Apply</button>
-																				<button *ngIf="coupons.length >0 && showPCouponSection" class="cs-btn bt1" [disabled]="selOrderProviderCoupon===''"
-																				 (click)="applyOrderCoupon()">Apply</button>
-																				<button style="margin-left:5px;" class="cs-btn bt1" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
+																				<div class="col-md-12 col-sm-12 col-lg-12 notes">
+																					<button *ngIf="discounts.length >0 && showDiscountSection" class="cs-btn bt1" [disabled]="selOrderDiscount===''"
+																					 (click)="applyOrderDiscount()">Apply</button>
+																					<button *ngIf="coupons.length >0 && showPCouponSection" class="cs-btn bt1" [disabled]="selOrderProviderCoupon===''"
+																					 (click)="applyOrderCoupon()">Apply</button>
+																					<button style="margin-left:5px;" class="cs-btn bt2" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
+																				</div>
 																			</div>
 																		</div>
 																	</div>
@@ -173,23 +207,37 @@
 																<div class="price">{{service.price |
 																	currency:'INR':'symbol':'.2-2'}}</div>
 															</div>
-															<div class="c-row two">
+															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
-																<div class="edit-row discoup" *ngIf="bill_data.service[i].showservicedisccoup">
-																	<div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
-																		<div class="item selectbox1" *ngIf="discounts.length > 0">
-																			<mat-form-field>
-																				<mat-select [(ngModel)]="bill_data.service[i].serviceDiscount" [ngModelOptions]="{standalone: true}">
-																					<mat-option [value]="''">{{select_discount_cap}} </mat-option>
-																					<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount">
-																						{{ discount.name }} </mat-option>
-																				</mat-select>
-																			</mat-form-field>
+																<div class="add-serv-item edit-row service edit-row discoup" *ngIf="bill_data.service[i].showservicedisccoup">
+																	<div class="spr col-sm-12 col-md-12 col-lg-12 no-padding">
+																		<div class="spl col-md-12 col-sm-12 col-lg-12 notes">
+																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding" *ngIf="discounts.length > 0">
+																				<div class="item selectbox1">
+																					<mat-form-field>
+																						<mat-select [(ngModel)]="bill_data.service[i].serviceDiscount" [ngModelOptions]="{standalone: true}">
+																							<mat-option [value]="''">{{select_discount_cap}} </mat-option>
+																							<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount">
+																								{{ discount.name }} </mat-option>
+																						</mat-select>
+																					</mat-form-field>
+																				</div>
+																			</div>
+																			<div class="item qty col-md-4 col-sm-4 col-lg-4 no-padding">
+																				<ng-container *ngIf="bill_data.service[i].serviceDiscount.discType=='OnDemand'">
+																					<span class="label">Value</span> <span class="number">
+																						<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue aria-label="Number"
+																							 matInput value="1" size="3" [(ngModel)]="bill_data.service[i].serviceDiscount.discAmount"
+																							 (blur)="blurQty($event.target.value, bill_data.service[i].serviceDiscount.discAmount)">
+																						</mat-form-field>
+																					</span>
+																				</ng-container>
+																			</div>
 																		</div>
-																	</div>
-																	<div class="spr col-md-5 col-sm-5 col-lg-5 no-padding">
-																		<button class="cs-btn bt1" [disabled]="bill_data.service[i].serviceDiscount===''" (click)="applyServiceDiscount(bill_data.service[i])">{{done_btn_cap}}</button>
-																		<button style="margin-left:5px;" class="cs-btn bt1" (click)="serviceDiscCoupSec(i)">{{cancel_btn_cap}}</button>
+																		<div class="col-md-12 col-sm-12 col-lg-12 notes">
+																			<button class="cs-btn bt1" [disabled]="bill_data.service[i].serviceDiscount===''" (click)="applyServiceDiscount(bill_data.service[i])">Apply</button>
+																			<button style="margin-left:5px;" class="cs-btn bt2" (click)="serviceDiscCoupSec(i)">{{cancel_btn_cap}}</button>
+																		</div>
 																	</div>
 																</div>
 																<!--ENDS-->
@@ -213,7 +261,7 @@
 															</button>
 															<mat-menu #menu="matMenu">
 																<button mat-menu-item (click)="serviceDiscCoupSec(i)" *ngIf="discounts.length > 0">
-																	<span>Add Service Discount</span>
+																	<span>Apply Discount</span>
 																</button>
 																<button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
 																	<span>Remove Service</span>
@@ -233,23 +281,36 @@
 																<div class="price">{{item.price |
 																	currency:'INR':'symbol':'.2-2'}}</div>
 															</div>
-															<div class="c-row two">
+															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
-																<div class="edit-row discoup" *ngIf="bill_data.items[i].showitemdisccoup">
-																	<div class="spl">
-																		<div class="item selectbox1" *ngIf="discounts.length >0">
-																			<mat-form-field>
-																				<mat-select [(ngModel)]="bill_data.items[i].itemDiscount" [ngModelOptions]="{standalone: true}">
-																					<mat-option [value]="''">{{select_discount_cap}} </mat-option>
-																					<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount">
-																						{{ discount.name }} </mat-option>
-																				</mat-select>
-																			</mat-form-field>
+																<div class="add-serv-item edit-row service edit-row discoup" *ngIf="bill_data.items[i].showitemdisccoup">
+																	<div class="spr  col-sm-12 col-md-12 col-lg-12 no-padding">
+																		<div class="spl col-md-12 col-sm-12 col-lg-12 notes">
+																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding" *ngIf="discounts.length > 0">
+																				<div class="item selectbox1">
+																					<mat-form-field>
+																						<mat-select [(ngModel)]="bill_data.items[i].itemDiscount" [ngModelOptions]="{standalone: true}">
+																							<mat-option [value]="''">{{select_discount_cap}} </mat-option>
+																							<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount">
+																								{{ discount.name }} </mat-option>
+																						</mat-select>
+																					</mat-form-field>
+																				</div>
+																			</div>
+																			<div class="item qty col-md-4 col-sm-4 col-lg-4 no-padding">
+																				<ng-container *ngIf="bill_data.items[i].itemDiscount.discType=='OnDemand'">
+																					<span class="label">Value</span> <span class="number">
+																						<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue aria-label="Number"
+																							 matInput value="1" size="3" [(ngModel)]="bill_data.items[i].itemDiscount.discAmount" (blur)="blurQty($event.target.value, bill_data.items[i].itemDiscount.discAmount)">
+																						</mat-form-field>
+																					</span>
+																				</ng-container>
+																			</div>
 																		</div>
-																	</div>
-																	<div class="spr">
-																		<button class="cs-btn bt1" [disabled]="bill_data.items[i].itemDiscount===''" (click)="applyItemDiscount(bill_data.items[i])">{{done_btn_cap}}</button>
-																		<button style="margin-left:5px;" class="cs-btn bt1" (click)="itemDiscCoupSec(i)">{{cancel_btn_cap}}</button>
+																		<div class="col-md-12 col-sm-12 col-lg-12 notes">
+																			<button class="cs-btn bt1" [disabled]="bill_data.items[i].itemDiscount===''" (click)="applyItemDiscount(bill_data.items[i])">Apply</button>
+																			<button style="margin-left:5px;" class="cs-btn bt2" (click)="itemDiscCoupSec(i)">{{cancel_btn_cap}}</button>
+																		</div>
 																	</div>
 																</div>
 																<!--ENDS-->
@@ -273,7 +334,7 @@
 															</button>
 															<mat-menu #menu="matMenu">
 																<button mat-menu-item (click)="itemDiscCoupSec(i)" *ngIf="discounts.length > 0">
-																	<span>Add Item Discount</span>
+																	<span>Apply Discount</span>
 																</button>
 																<button mat-menu-item (click)="removeItem(item.itemId, item.quantity)">
 																	<span>Remove Item</span>
@@ -292,7 +353,7 @@
 																</tr>
 																<tr class="amt discount" *ngFor="let discount of bill_data.discount">
 																	<td class="name">{{discount.name}}</td>
-																	<td class="price">(-){{discount.discountValue |
+																	<td class="price">(-){{discount.discValue |
 																		currency:'INR':'symbol':'.2-2'}}</td>
 																	<td *ngIf="bill_data.billStatus!='Settled'"><i (click)="removeOrderDiscount(discount)" class="fa fa-window-close"
 																		 aria-hidden="true"></i></td>

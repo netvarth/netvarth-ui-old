@@ -88,7 +88,7 @@
                                 <div class="rt">
                                     <ul class="controls">
                                         <li *ngIf="waitlist.billViewStatus == 'Show'"> 
-                                            <span class="view-bill" (click)="getWaitlistBill(waitlist)">{{bill_cap}}</span>
+                                            <span class="view-bill" (click)="viewBill(waitlist)">{{bill_cap}}</span>
                                             </li>
                                       <!--   <li (click)="makeFailedPayment(waitlist)" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
                                             <span class="payment">{{make_pay_cap}}</span>

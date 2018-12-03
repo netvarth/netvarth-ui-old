@@ -52,6 +52,7 @@ export class ProviderSystemAlertComponent implements OnInit {
         title: 'System Alerts'
         }
     ];
+    tday = new Date();
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions,

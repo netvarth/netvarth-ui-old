@@ -1,6 +1,6 @@
 
 import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription ,  Observable } from 'rxjs';
-import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
@@ -145,6 +145,10 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
      if (this.subscription) {
       this.subscription.unsubscribe();
      }
+  }
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event) {
+    // event.returnValue = false;
   }
   getTerminologies() {
     this.kiosk_services.getTerminoligies(this.userdet.sector, this.userdet.subSector)

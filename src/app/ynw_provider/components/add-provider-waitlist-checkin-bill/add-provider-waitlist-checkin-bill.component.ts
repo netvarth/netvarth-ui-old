@@ -119,6 +119,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   jCoupon;
   selOrderProviderCoupon: any = '';
   selOrderDiscount: any = '';
+  discAmount = '';
+  discProvNote = '';
+  discConsNote = '';
+  isConsNote = false;
+  isProvNote = false;
   uuid;
   makPaydialogRef;
   breadcrumbs = [
@@ -712,10 +717,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const action = 'removeBillLevelDiscount';
     const discountIds = [];
     console.log(discount);
-    discountIds.push(discount.id);
+    const discountObj = {};
+    discountObj['id'] = discount.id;
+    discountIds.push(discountObj);
     const data = {};
     data['id'] = this.bill_data.id;
-    data['discountIds'] = discountIds;
+    data['discounts'] = discountIds;
     this.applyAction(action, this.bill_data.uuid, data);
   }
   /**
@@ -738,6 +745,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPCouponSection = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = true;
+    this.discAmount = '';
+    this.discProvNote = '';
+    this.discConsNote = '';
+
 
   }
   applyOrderDiscount() {
@@ -745,9 +756,20 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const data = {};
     data['id'] = this.bill_data.id;
     const discounts = [];
+    const discount = {};
+    discount['id'] = this.selOrderDiscount.id;
+    if (this.selOrderDiscount.discType === 'OnDemand') {
+      discount['discValue'] = this.discAmount;
+    }
+    if (this.discProvNote) {
+      discount['privateNote'] = this.discProvNote;
+    }
+    if (this.discConsNote) {
+      discount['displayNote'] = this.discConsNote;
+    }
     console.log(this.selOrderDiscount);
-    discounts.push(this.selOrderDiscount.id);
-    data['discountIds'] = discounts;
+    discounts.push(discount);
+    data['discounts'] = discounts;
     this.applyAction(action, this.bill_data.uuid, data);
   }
   applyOrderCoupon() {

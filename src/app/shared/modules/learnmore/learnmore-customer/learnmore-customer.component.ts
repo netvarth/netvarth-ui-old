@@ -15,13 +15,16 @@ export class LearnmoreCustomerComponent implements OnInit {
 
   customers_cap = Messages.CUSTOMERS_CAP;
   @Input() target: string;
+  curtype = '';
   constructor(
     // @Inject(MAT_DIALOG_DATA) public data: any,
-    private _scrollToService: ScrollToService
+    private _scrollToService: ScrollToService,
+    public shared_function: SharedFunctions
   ) {}
 
   ngOnInit() {
-      // console.log('target', this.target);
+    const userdet = this.shared_function.getitemfromLocalStorage('ynw-user');
+    this.curtype = userdet.sector;
   }
 
   public triggerScrollTo(destination) {

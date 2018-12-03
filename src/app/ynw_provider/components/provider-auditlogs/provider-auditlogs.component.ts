@@ -27,6 +27,7 @@ export class ProviderAuditLogComponent implements OnInit {
   
     auditlog_details: any = [] ;
     load_complete = 0;
+    tday = new Date();
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,

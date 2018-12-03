@@ -474,7 +474,37 @@
       .bill-section .add-item .mat-button-wrapper {padding-left:10px !important;}
       .bill-section .bill-section-content .bill-wrapper .section-one .details {font-size:.800rem}
       .bill-section .actiondiv { border-top:1px solid #ccc;padding-top:15px;}
-
+      .bill-section-content .mat-select {height: 30px !important; padding: 7px !important;}
+      .bill-section-content .notes {padding-top:15px!important}
+      .bill-section-content .discoup .border-tp {border-top:1px solid #ccc;}
+      .bill-section-content .discoup .spr .spl {padding-top:10px}
+      .bill-section-content .list .section-two {border-bottom: none !important}
+      .bill-section-content {min-width: 375px;}
+      .commonpopupmainclass .bill-section-content div {font-size:0.75rem!important}
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, 
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name,
+      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price
+      {font-size:0.80rem!important}
+      .coupon-section .coupon-outer .ig{float: right!important;}
+      .cpn-input{max-width: 300px!important;float: right;}
+      .cpn-input input {height:30px!important;}
+      @media only screen and (max-width: 500px){
+      .billpopup .mat-dialog-content .bill-wrapper .section-one .details {
+        flex-direction:row !important; 
+        font-size:.65rem!important
+      }}
+      
+.billpopup .mat-dialog-content .bill-wrapper .section-one {padding-bottom: 5px!important;}
+.billpopup .mat-dialog-content .bill-wrapper .section-three{padding-top: 5px!important;}
+.billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list {margin-bottom: 5px!important;padding-bottom: 5px!important}
       /* coupon styles */
       /* .coupon_cancel {   
         color: #00aef2;
@@ -517,6 +547,9 @@
     }
     .no-padding {
       padding: 0px !important;
+    }
+    .no-margin {
+      margin: 0px !important;
     }
     .coupon-apply-btn {
       height: 40px !important;

@@ -13,7 +13,8 @@
           <mat-accordion>
             <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
               <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                <span (click)="toggleFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"><i class="icon-filter-one"></i></span>
+                <span (click)="toggleFilter()"  [matTooltipClass] = "tooltipcls" [matTooltip]="filtericonTooltip" *ngIf="!open_filter"><i class="icon-filter-one"></i></span>
+                        <span (click)="toggleFilter()"  *ngIf="open_filter"><i class="icon-filter-one"></i></span>
               </mat-expansion-panel-header>
 
               <div class="form-group first_name">

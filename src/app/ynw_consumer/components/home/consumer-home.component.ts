@@ -786,37 +786,34 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     }
   }
-  getWaitlistBill(waitlist) {
-    // console.log('waitlist', waitlist);
-    this.consumer_services.getWaitlistBill(waitlist.ynwUuid)
-      .subscribe(
-        data => {
-          const bill_data = data;
-          this.viewBill(waitlist, bill_data);
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-  }
- 
-  viewBill(checkin, bill_data) {
+  // getWaitlistBill(waitlist) {
+  //   // console.log('waitlist', waitlist);
+  //   this.consumer_services.getWaitlistBill(waitlist.ynwUuid)
+  //     .subscribe(
+  //       data => {
+  //         const bill_data = data;
+  //         this.viewBill(waitlist, bill_data);
+  //       },
+  //       error => {
+  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       }
+  //     );
+  // }
+  viewBill(checkin) {
     if (!this.billdialogRef) {
-      bill_data['passedProvname'] = checkin['provider']['businessName'];
+      // bill_data['passedProvname'] = checkin['provider']['businessName'];
       this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
         width: '50%',
         panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'billpopup'],
         disableClose: true,
         data: {
-          checkin: checkin,
-          bill_data: bill_data
+          checkin: checkin
         }
       });
-
       this.billdialogRef.afterClosed().subscribe(result => {
-        if ( result === 'makePayment') {
-          this.makePayment(checkin, bill_data);
-        }
+        // if ( result === 'makePayment') {
+        //   // this.makePayment(checkin, bill_data);
+        // }
         if (this.billdialogRef) {
           this.billdialogRef = null;
         }
@@ -825,20 +822,20 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       // console.log('more clicks');
     }
   }
-  makePayment(checkin, bill_data) {
-    this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
-    this.paydialogRef.afterClosed().subscribe(result => {
-      this.reloadAPIs();
-    });
-  }
+  // makePayment(checkin, bill_data) {
+  //   this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       checkin: checkin,
+  //       bill_data: bill_data
+  //     }
+  //   });
+  //   this.paydialogRef.afterClosed().subscribe(result => {
+  //     this.reloadAPIs();
+  //   });
+  // }
   rateService(waitlist) {
     this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
