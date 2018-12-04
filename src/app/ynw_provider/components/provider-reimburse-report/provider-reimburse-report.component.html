@@ -80,6 +80,7 @@
                   <th>{{reimburse_amt_cap}}</th>
                   <th>Grant Total</th>
                   <th>{{status_cap}}</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -92,12 +93,29 @@
                   <td data-title="Amount" class="pointer-cursor" class="td1">{{report.subTotalJaldeeCoupons}}</td>
                   <td data-title="Amount" class="pointer-cursor" class="td1">{{report.grantTotal}}</td>
                   <td>
-                    <div *ngIf="report.status=='PAYMENTPENDING'">
+                    <!-- <div *ngIf="report.status=='PAYMENTPENDING'">
                       <span class="add-nloc cs-btn bt3" (click)="openrequestModal(report.invoiceId)">{{req_payment_cap}}</span>
                     </div>
                     <div *ngIf="report.status!='PAYMENTPENDING'">
                       {{report.status}}
-                    </div>
+                    </div> -->
+                    {{report.status | capitalizeFirst}}
+                  </td>
+                  <td *ngIf="report.status=='PAYMENTPENDING'">
+                    <span class="mbt">
+                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button type="button" (click)="openrequestModal(report.invoiceId)" mat-menu-item>
+                          <!-- <i class="icon-edit"></i> -->
+                          {{req_payment_cap}}
+                        </button>
+                      </mat-menu>
+                    </span>
+                    <span class="mbt-mobile-show">
+                      <button class="editcls" type="button" (click)="openrequestModal(report.invoiceId)">{{req_payment_cap}}</button>
+                    </span>
                   </td>
                 </tr>
               </tbody>

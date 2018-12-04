@@ -5,41 +5,39 @@
 </h1>
 
 <mat-dialog-content>
-  <div class="coupon" *ngFor="let coupon of couponsList let i=index">
-    <div class="coupon-container">
-      <div class="servicedet_outer">
-        <div class="outer">
-          <div class="outer4">
-            <div class="name">
-              <h6><b>{{coupon.couponName}}</b></h6>
+  <ng-container *ngFor="let coupon of couponsList let i=index">
+    <div class="coupon">
+      <div class="coupon-container">
+        <div class="servicedet_outer">
+          <div class="outer">
+            <div class="outer4">
+              <div class="name">
+                <h6><b>{{coupon.couponName}}</b></h6>
+              </div>
+              <div class="code">
+                #{{coupon.jaldeeCouponCode}}
+              </div>
             </div>
-            <div class="code">
-              #{{coupon.jaldeeCouponCode}}
-            </div>
-          </div>
-          <div>{{coupon.couponDescription}}</div>
-          <div class="outer4">
-            <div class="name">
-              <span class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} -
-                {{formatDateDisplay(coupon.endDate)}}</span>
-            </div>
-            <div class="code" *ngIf="coupon.consumerTermsAndconditions">
-              <ng-container>
-                <div class="lc3-2 lcd">
-                  <div class="cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C</div>
-                </div>
-              </ng-container>
+            <div>{{coupon.couponDescription}}</div>
+            <div class="outer4">
+              <div class="name">
+                <span class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} -
+                  {{formatDateDisplay(coupon.endDate)}}</span>
+              </div>
+              <div class="code" *ngIf="coupon.consumerTermsAndconditions">
+                <ng-container>
+                  <div class="lc3-2 lcd">
+                    <div class="cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C</div>
+                  </div>
+                </ng-container>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card" *ngIf="couponsList[i].adwordshowmore">
-        {{coupon.consumerTermsAndconditions}} If you use a Windows computer you may end up with different results. This
-        is possibly due to the way Windows handles newlines. Essentially, if you have just newline characters (\n) in
-        your JSON and paste it into JSONLint from a Windows computer, it may validate it as valid erroneously since
-        Windows may need a carriage return (\r) as well to detect newlines properly. As a solution, either use direct
-        URL input, or make sure your content's newlines match the architecture your system expects!
+        <div class="card" *ngIf="couponsList[i].adwordshowmore">
+          {{coupon.consumerTermsAndconditions}}
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </mat-dialog-content>
