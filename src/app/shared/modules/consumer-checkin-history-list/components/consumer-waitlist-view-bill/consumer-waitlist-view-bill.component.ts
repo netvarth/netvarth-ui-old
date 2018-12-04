@@ -1,22 +1,17 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
 import { SharedServices } from '../../../../../shared/services/shared-services';
-
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './consumer-waitlist-view-bill.component.html'
 })
-
 export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
-
   @ViewChild('itemservicesearch') item_service_search;
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
@@ -80,6 +75,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   payment_popup = null;
   showPaidlist = false;
   showJCouponSection = false;
+  jCoupon = '';
   constructor(
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -171,13 +167,9 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-  showpaidSection() {
-    if (this.showPaidlist) {
-      this.showPaidlist = false;
-    } else {
-      this.showPaidlist = true;
-    }
-  }
+  /**
+   * To Get Payment Modes
+   */
   getPaymentModes() {
     this.sharedServices.getPaymentModesofProvider(this.checkin.provider.id)
       .subscribe(
@@ -197,6 +189,9 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
+  /**
+   * Perform PayU Payment
+   */
   payuPayment() {
     console.log(this.bill_data);
     this.pay_data.uuid = this.checkin.ynwUuid;
@@ -212,6 +207,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
               this.document.getElementById('payuform').submit();
             }, 2000);
@@ -225,5 +221,58 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   }
   resetApiError() {
     this.api_success = null;
+  }
+  /**
+ * Apply Jaldee Coupon
+ */
+  applyJCoupon() {
+    console.log();
+    let jaldeeCoupon: string;
+    jaldeeCoupon = '"' + this.jCoupon + '"';
+    this.applyAction(jaldeeCoupon, this.bill_data.uuid);
+  }
+  /**
+   * Remove Jaldee Coupon
+   * @param jCouponCode Coupon Code
+   */
+  // removeJCoupon(jCouponCode) {
+  //   const action = 'removeJaldeeCoupons';
+  //   let jaldeeCoupon: string;
+  //   jaldeeCoupon = '"' + jCouponCode + '"';
+  // }
+  clearJCoupon() {
+    this.jCoupon = '';
+  }
+  /**
+   * Perform Bill Actions
+   * @param action Action Type
+   * @param uuid Bill Id
+   * @param data Data to be sent as request body
+   */
+  applyAction(action, uuid) {
+    return new Promise((resolve, reject) => {
+      this.sharedServices.applyCoupon(action, uuid).subscribe
+        (billInfo => {
+          this.bill_data = billInfo;
+          this.clearJCoupon();
+          resolve();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          reject(error);
+        });
+    });
+  }
+  /**
+   * To Print Receipt
+   */
+  printMe() {
+    window.print();
+  }
+  /**
+   * Cash Button Pressed
+   */
+  cashPayment() {
+    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CASH_PAYMENT'));
   }
 }

@@ -803,7 +803,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (!this.billdialogRef) {
       // bill_data['passedProvname'] = checkin['provider']['businessName'];
       this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
-        width: '50%',
+        width: '40%',
         panelClass:  ['commonpopupmainclass', 'consumerpopupmainclass', 'billpopup'],
         disableClose: true,
         data: {

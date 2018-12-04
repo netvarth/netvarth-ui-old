@@ -499,13 +499,22 @@
       @media only screen and (max-width: 500px){
       .billpopup .mat-dialog-content .bill-wrapper .section-one .details {
         flex-direction:row !important; 
-        font-size:.65rem!important
+        /* font-size:.65rem!important */
       }}
       
 .billpopup .mat-dialog-content .bill-wrapper .section-one {padding-bottom: 5px!important;}
 .billpopup .mat-dialog-content .bill-wrapper .section-three{padding-top: 5px!important;}
 .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list {margin-bottom: 5px!important;padding-bottom: 5px!important}
-      /* coupon styles */
+.billpopup .mat-dialog-content .bill-wrapper .section-three .mat-button.update, .mat-button.settle, .mat-button.accept {margin-top: 10px;} 
+.billpopup .mat-dialog-content {max-height:80vh !important;overflow:scroll}
+.billpopup .mat-dialog-content .bill-section-content .bill-wrapper {min-width: 375px; max-width:500px; margin: none !important;float: left;}
+.billpopup .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
+  text-align: left !important; }
+  .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .tax{right:auto !important}
+  .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price,
+  .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price,
+  .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price{text-align: right}
+/* coupon styles */
       /* .coupon_cancel {   
         color: #00aef2;
         border: none;
@@ -594,6 +603,46 @@
       float: right;
       text-align: right;
       text-transform:uppercase;
+    }
+    sup {color: #fda60d;}
+    .billpopup .mat-dialog-container {width: auto;max-width:500px !important}
+    .billpopup .mat-dialog-content .bill-wrapper .section-one .details .columns .title:after {content:none!important}
+    .billpopup .mat-dialog-content .bill-wrapper .section-one .details .columns .title {font-weight: 500 !important}
+    .rightalign {text-align: right!important;}
+    .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {text-align: right}
+    .billpopup .mat-dialog-container .two-col .name {flex-basis:75%!important;text-align: right!important;}
+    .billpopup .mat-dialog-container .two-col .price {flex-basis:25%!important;text-align: right!important;};
+    .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price,
+    .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price{flex-basis:20%!important;}
+    .cust-btn {text-transform: none!important;margin-right: 10px;}
+     .billpopup .bill-section-content .title-sec {
+      height: auto;
+      font-weight: 600;
+      font-size: 0.875rem!important;
+      margin: 0px 0 5px 0px;
+      padding: 5px !important;
+     }
+     .jc-sec-bill .section-two{padding: 5px 0 15px 0!important;
+    border:none!important}
+    .bill-section-content .global-icons button {float: right;}
+    .bill-section-content .global-icons {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #ccc;
+    }
+    .receipt .bill-content .section-three .bill-summary{border-bottom: none !important}
+    .other-section {border-top:1px solid #ccc!important}
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #receipt, #receipt * {
+        visibility: visible;
+      }
+      #receipt {
+        position:relative;
+        left: 0;
+        top: 0;
+      }
     }
     .adjust-delay-heading {
       font-size: 1.575rem;
