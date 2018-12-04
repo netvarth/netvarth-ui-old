@@ -1,6 +1,102 @@
 <div class="lm-outer w-manager">
    
     <h3>Check In - automobile</h3>
-    
-    <!-- <span class="backTotop" (click)="handleScroll('main-top')"><span class="icon-angle-up"></span>Top</span> -->
+    Provider Dashboard
+
+You can monitor the current and future check-ins and also history of check-ins here.On the left side of the dashboard select the location and the queue available. 
+Today () - Here the present day’s online, walk-in, and kiosk check-ins are listed.In the brackets appended to “Today” the total number of check-ins is displayed.
+Future() - Here the check-ins for future dates are listed. In the brackets appended to “Future” the total number of check-ins is displayed.
+History - Here you can see all those check-ins done till the day before. Present day’s check-in will be seen in the history only next day. You can also complete one customers service from here.
+
+Check-ins
+
+A detailed view of customers who have already checked in online and also walk-in customers created and checked-in at your desk is displayed.
+Prefix to sequence number if you see a “cloud” symbol, remember that particular customer was checked in online themself.
+When you click on sequence number or on the customer name, you can view complete check-in details of the customer. Check-in history, Communication History and Private Notes history are listed here. In addition to that a provision to cancel customer check-in ,communicate with customer and add private note are available.
+The three dots menu in the right side of a particular check-in has the following options.
+
+	
+Send Message : Write to your customer from here.
+Cancel check-in : 
+If you want to cancel a customer check-in for any reason, you can click ”Cancel Check-In”.
+Customers are notified with push message/email, when their check-in is cancelled.
+When you click”Cancel Check-In”, a pop up window appears which shows few reasons listed with tick box . You can tick any valid reason from the list and click “Save”.
+If you want to inform your customer about the delay caused,tick the Send Message button and a text box appears with a default message for particular reason. You can edit the message and can type your own message.
+Add private  note :  If you want to keep a note about a particular customer, you can write the note here. This record will be seen anytime this customer checks-in future.
+Change Status to Check-in : This option appears only if  the status is marked to “Arrived”. You can change the status back to “Check-in” with this option.
+
+Following sequence number, Name and Service selected is displayed.
+Next focus is on “Actions” , where you have two actions “Arrived” and “Start”  to perform.
+When the customer who checked in online, arrives at the premise to avail his/her service you can mark “Arrived”. By that time “Arrived” label is appended to the name of the customer. And also “ Bill” button comes adjacent to “Start” button with  which new bill can be generated before getting service done. When the service starts click the button “Start” following which a message will be send to customer informing the service has begun.
+Payment Status: Shows any payment status of the customer, whether it is not paid, partially paid or fully paid. 
+Customer Note: The notes (if any) added by the customer while Check-in will be displayed here. 
+
+
+Started
+
+Under this tab, the provider can view the list of customers who have already started their service.
+Sequence number, Name and Service is the same as in check-ins tab.
+Mainly, two actions are performed here.
+Done: When the service is finished click “Done” button, and this customer entry will proceed to “Done” tab. If you have enabled Notification button, either Push Message or Email in the “Add New Service” message will be sent to customer informing the service has finished.
+Bill
+When you click the button Bill a window appears with name, date, time and the service customer availed along with the quantity and  price.  
+ You can add new services or items to the bill with “Add service/Item” option.
+Delete option is given to remove the service from the bill.
+Gross amount and the tax amount(if any) is summed up to get the total amount to be paid by the customer. 
+If active discounts/coupons are available that can be applied from here. 
+Click the Bill Discounts/Bill Coupons, select the discount or coupons or both from the dropdown menus displayed here and click Done to apply and redeem from total amount.
+When you have all the information click “Save” to save the bill.
+“Accept Payment” option comes adjacent to the “Bill” button to settle the payment. 
+When you click Accept Payment a window appears with the total amount to be paid by the customer. 
+Click “Make Payment & Settle” button to settle the payment and also select the mode of payment, either by “cash” or “others”.
+ Accept Payment button disappears once this action is done.
+Bill button shows the final bill and can proceed with printing the bill.
+In addition, Add private note ,Cancel check-in and Send Message options are also given.
+Add a provider note: If you want to keep a note about a particular customer, you can write the note here.
+Cancel check-in: 
+If you want to cancel  a customer check-in for any reason, you can click on Cancel check-in .
+customers are notified with push message/email, if check-in is cancelled.
+When you click”Cancel Check-In”, a pop up window appears which shows few reasons listed with tick box. You can tick any valid reason from the list and click “Save”.
+If you want to inform your customer about the delay caused,tick the Send Message button and a text box appears with a default message for particular reason. You can edit the message and can type your own message.
+
+Payment Status: Shows any payment status of the customer, whether it is not paid, partially paid or fully paid.
+Customer Note: The notes (if any) added by the customer while Check-in will be displayed here. 
+
+Done
+
+Once the service is completed, that particular customer entry comes under this tab. Bill can be generated from here also. Please “New Bill” description under “Started” heading.
+
+Cancelled
+
+Here you can see the list of cancelled customer check-ins.
+
+
+
+
+AUDIT LOG
+
+Audit logs are the centralized stream of all user activity within a system. 
+This system monitoring provides the details of both what has happened and what is happening to the system. 
+Jaldee audit logs records all user activities like login, functions performed after logged on, configuration changes, transactions etc.
+You can filter the log records with Category, Sub category, Action and Date.
+Category includes Settings, Waitlist, License and Signup.
+Sub category includes Location, Service Time Window, Service, Holiday, Waitlist, Payment, Coupon, Item, Adword, Tax, Discount, Account, Cancel, Wait, Delay, Waitlist, Rating, Bill, Addon, Invoice, License, Provider, Consumer
+Action includes Add, Delete, Edit, Copy, View.
+
+
+
+
+ALERTS
+
+System alerts inform you of a special circumstance during system operation. License alerts, license modification alerts, connectivity issues, maintenance alerts etc are received here.
+
+ENABLE/DISABLE CHECK-IN
+ 
+Providers can directly enable or disable “Accept Online Check-in” with this option. You can go to Waitlist Manager page under settings from here.
+
+LICENSE DETAILS
+
+License page can be directly accessed without going to Settings page. License can be upgraded, addons and adwords can be purchased from License page.
+
+
 </div>
