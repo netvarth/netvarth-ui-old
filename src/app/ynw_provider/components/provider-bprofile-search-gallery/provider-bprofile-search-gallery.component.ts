@@ -10,10 +10,9 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/delay';
+import { Observable ,  Subscription } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-provider-bprofile-search-gallery',

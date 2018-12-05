@@ -100,7 +100,7 @@
                                             <div class="form-group">
                                                 <label class="caption">Business Filing Status *</label>
                                                 <mat-form-field>
-                                                    <mat-select [(ngModel)]="bankfiling" (change)="resetApi('bankfiling')" [disabled]="!ineditMode"  tabindex="9">
+                                                    <mat-select [(ngModel)]="bankfiling" (selectionChange)="resetApi('bankfiling')" [disabled]="!ineditMode"  tabindex="9">
                                                         <mat-option value="">-- Select --</mat-option>
                                                         <mat-option value="Proprietorship">Proprietorship</mat-option>
                                                         <mat-option value="Individual">Individual</mat-option>
@@ -117,7 +117,7 @@
                                             <div class="form-group">
                                                 <label class="caption">Account Type *</label>
                                                 <mat-form-field>
-                                                <mat-select [(ngModel)]="bankactype" (change)="resetApi('bankactype')" [disabled]="!ineditMode" tabindex="10">
+                                                <mat-select [(ngModel)]="bankactype" (selectionChange)="resetApi('bankactype')" [disabled]="!ineditMode" tabindex="10">
                                                     <mat-option value="">-- Select --</mat-option>
                                                     <mat-option value="Current">Current</mat-option>
                                                     <mat-option value="Saving">Savings</mat-option>

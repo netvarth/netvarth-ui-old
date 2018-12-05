@@ -77,8 +77,6 @@
             }
             .mr5 {margin-right: 5px;}
 
-
-
             .sa-lc {
                 width: 300px;
                 cursor: pointer;
@@ -115,7 +113,7 @@
                             height: $input-h;
                         }
                         
-                        .mat-input-infix {
+                        .mat-input-infix, .mat-form-field-infix {
                             padding: 0;
                             border-top: none;
                             
@@ -183,10 +181,10 @@
                 .mat-form-field {
                     display: block;
                     
-                    .mat-input-wrapper {
+                    .mat-form-field-wrapper {
                         padding-bottom: 0;
                         
-                        .mat-input-infix {
+                        .mat-form-field-infix {
                             padding: 0;
                             border-top: none;
 
@@ -263,28 +261,33 @@
                     border: none;
                     width: 100%;
                     
-                    .mat-input-infix {
+                    .mat-input-infix, .mat-form-field-wrapper {
                         padding: 0;
                         border-top: none;
                         
-                        .mat-input-element {
-                            height: 90px;
-                            padding: 15px;
-                            @include font-regular;
-                            font-weight: 500;
-                            font-size: 0.875rem;
-                            color: $cc-black;
-                            background: $cc-formbg;
-                            border: 1px solid transparent;
-                            margin-top: 0;
+                        .mat-form-field-infix{
+                            padding: 0;
+                            border-top: none;
                             
-                            @include respond-to(ynw-767) {
-                                height: $input-h;
+                            .mat-input-element {
+                                height: 90px;
+                                padding: 15px;
+                                @include font-regular;
+                                font-weight: 500;
+                                font-size: 0.875rem;
+                                color: $cc-black;
+                                background: $cc-formbg;
+                                border: 1px solid transparent;
+                                margin-top: 0;
+
+                                @include respond-to(ynw-767) {
+                                    height: $input-h;
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    height: $input-h;
+                                }
+
                             }
-                            @include respond-to(ynw-768-991) {
-                                height: $input-h;
-                            }
-                            
                         }
                         
                        .mat-form-field-label-wrapper {

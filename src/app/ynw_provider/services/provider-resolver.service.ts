@@ -1,8 +1,10 @@
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
+import {map, catchError} from 'rxjs/operators';
+
+
+
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Router, Resolve, RouterStateSnapshot,
          ActivatedRouteSnapshot } from '@angular/router';
 
@@ -24,18 +26,34 @@ export class ProviderResolver implements Resolve<{}> {
     const domain = user_data.sector || null;
     const sub_domain =  user_data.subSector || null;
 
-    if (domain && sub_domain) {
-        return this.provider_services.getIdTerminologies(domain, sub_domain)
-        .map(term => {
-          return term;
-        })
-      .catch(error => {
-          return Observable.of(null);
-      });
+    // if (domain && sub_domain) {
+    //     return this.provider_services.getIdTerminologies(domain, sub_domain).pipe(
+    //     map(term => {
+    //       return term;
+    //     }))
+    //   .catch(error => {
+    //       return Observable.of(null);
+    //   });
 
-    } else {
-      return null;
-    }
+    // } else {
+    //   return null;
+    // }
+    if (domain && sub_domain) {
+      return this.provider_services.getIdTerminologies(domain, sub_domain).pipe(
+      map(term => {
+        return term;
+      }),
+      catchError(error => {
+        return null;
+      }));
+
+    /*.catch(error => {
+        return Observable.of(null);
+    });*/
+
+  } else {
+    return null;
+  }
 
 
   }

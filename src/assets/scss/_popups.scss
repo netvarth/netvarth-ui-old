@@ -219,7 +219,7 @@
             .mat-form-field {
                 width: 100%;
 
-                .mat-input-wrapper {
+                .mat-input-wrapper, .mat-form-field-wrapper {
                     padding: 0;
                     margin: 0;
                     
@@ -231,7 +231,7 @@
                         }
                     }
 
-                    .mat-input-infix {
+                    .mat-input-infix, .mat-form-field-infix {
                         margin: 0;
                         padding: 0;
                         border: none;
@@ -258,7 +258,7 @@
                         }
                     }
 
-                    .mat-input-underline {
+                    .mat-input-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
                         display: none;
                     }
                 }
@@ -470,7 +470,7 @@
         .mat-form-field {
             width: 100%;
 
-            .mat-input-wrapper {
+            .mat-input-wrapper, .mat-form-field-wrapper {
                 padding: 0;
                 margin: 0;
 
@@ -478,7 +478,7 @@
                     color: $cc-red;
                 }
 
-                .mat-input-infix {
+                .mat-input-infix, .mat-form-field-infix {
                     margin: 0;
                     padding: 0;
                     border: none;
@@ -509,6 +509,13 @@
                         padding: 10px;
                         height: 40px;
                         background: $cc-inputbg;
+                        border: 1px solid $cc-formborder;
+
+                        &:focus {
+                            @include box-shadow(0, 0, 1px, $linkblue, inset);
+                            border: 1px solid $linkblue;
+                            background: $white;
+                        }
                         
                         .mat-select-trigger {
                             margin-top: 2px;
@@ -536,7 +543,7 @@
                     }
                 }
 
-                .mat-input-underline {
+                .mat-input-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
                     display: none;
                 }
             }
@@ -1414,6 +1421,7 @@
                     .selsername {
                         font-weight: 600;
                         color: $hover-blue;
+                        margin-left: 5px;
                     }
                 }
                 .queue-waitingdiv {
@@ -1433,6 +1441,7 @@
                         .queue-avail-date {
                             color: $hover-blue;
                             font-weight: 600;
+                            margin-left: 5px;
                         }
                     }
                 }

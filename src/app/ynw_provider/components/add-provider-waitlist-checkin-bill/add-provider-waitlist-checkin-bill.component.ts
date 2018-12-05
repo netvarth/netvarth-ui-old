@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
 
 import { Messages } from '../../../shared/constants/project-messages';
@@ -18,7 +18,8 @@ export interface ItemServiceGroup {
 
 @Component({
   selector: 'app-provider-waitlist-checkin-bill',
-  templateUrl: './add-provider-waitlist-checkin-bill.component.html'
+  templateUrl: './add-provider-waitlist-checkin-bill.component.html',
+  styleUrls: ['./add-provider-waitlist-checkin-bill.component.css']
 })
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {

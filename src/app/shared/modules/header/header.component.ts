@@ -1,6 +1,7 @@
+
+import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription ,  Observable } from 'rxjs';
 import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy, HostListener, OnChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -12,9 +13,6 @@ import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
 
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
 import { projectConstants } from '../../constants/project-constants';
 
 // import { ViewChild } from '@angular/core';
@@ -155,7 +153,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     // Section which handles the periodic reload
     if (this.ctype === 'consumer' || this.ctype === 'provider') {
-      this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+      this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
         this.reloadHandler();
       });
     } else {

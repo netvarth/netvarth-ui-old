@@ -9,9 +9,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
+import { Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 
 
 @Component({

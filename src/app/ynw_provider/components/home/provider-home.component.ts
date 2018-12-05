@@ -1,6 +1,7 @@
+
+import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
 import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HeaderComponent} from '../../../shared/modules/header/header.component';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
@@ -23,13 +24,10 @@ import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-ch
 import { SharedServices } from '../../../shared/services/shared-services';
 
 import * as moment from 'moment';
-
-import {Observable} from 'rxjs/Observable';
-import {startWith} from 'rxjs/operators/startWith';
-import {map} from 'rxjs/operators/map';
+import {startWith, map} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import 'rxjs/add/observable/interval';
+
 
 @Component({
     selector: 'app-provider-home',
@@ -222,7 +220,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.getProviderSettings();
     }
 
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
         this.reloadAPIs();
     });
   }

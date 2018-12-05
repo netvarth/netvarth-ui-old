@@ -9,8 +9,8 @@
   <div class="form-group" *ngIf="obtainedUpgradable && upgradablepackages.length>0">
     <label class="col-form-label" for="displayName">License Package *</label>
     <mat-form-field>
-      <mat-select #license_selpackage formControlName="license_selpackage" *ngIf="upgradablepackages"
-      (change)="licensepackage_Select(license_selpackage.value)">
+      <mat-select #license_selpackage2 formControlName="license_selpackage" *ngIf="upgradablepackages"
+      (selectionChange)="licensepackage_Select(license_selpackage2.value)">
       <mat-option [value]="''">- Select One -</mat-option>
         <mat-option *ngFor="let package of upgradablepackages"
         [value]="package.pkgId">

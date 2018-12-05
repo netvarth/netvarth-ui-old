@@ -821,3 +821,10 @@ app-footer {
 .ripple:focus:not(:active)::after {
     animation: ripple 1s ease-out;
 }
+
+//Auto Complete
+
+.bill-autocomplete {
+    background-color: red;
+    max-height: 242px;
+}

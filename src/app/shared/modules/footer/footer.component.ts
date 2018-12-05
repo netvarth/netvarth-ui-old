@@ -1,3 +1,5 @@
+
+import {interval as observableInterval,  Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, Inject, Input, OnDestroy, DoCheck } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -6,10 +8,6 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-footer',
@@ -72,7 +70,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
       this.getAlertCount();
     }
     if (this.ctype === 'provider') {
-      this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+      this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
         this.reloadHandler();
       });
     } else {

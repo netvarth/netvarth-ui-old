@@ -921,7 +921,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         ret_arr['subdom_dispname'] = ret['subdom_dispname'] || ret_arr['subsector'];
         if (ret_arr['sector'] === '') { // sector not mentioned in the search label condition
           if (ret['dom'] === '') {
-            ret['dom'] = 'All';
+            // ret['dom'] = 'All';
+            ret.dom = 'All';
           }
           ret_arr['dom'] = ret['dom'];
           this.searchfields.domain = ret['dom'];

@@ -43,8 +43,9 @@
                   <div class="item selectbox">
                       <mat-form-field class="example-full-width">
                           <input type="text" #itemservicesearch aria-label="Number" matInput
-                          [formControl]="itemServiceSearch" [matAutocomplete]="auto">
-                          <mat-autocomplete #auto="matAutocomplete">
+                          [formControl]="itemServiceSearch" [matAutocomplete]="auto" >
+                          <!-- <mat-autocomplete #auto="matAutocomplete" class="bill-autocomplete"> -->
+                          <mat-autocomplete #auto="matAutocomplete">                              
                             <ng-container *ngFor="let group of ItemServiceGroupOptions | async">
                             <!-- <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)"> -->
                                 <ng-container *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">

@@ -105,7 +105,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     }
     @HostListener('window:resize', ['$event'])
     onResize(event?) {
-      console.log('innerwidth', window.innerWidth);
+      // console.log('innerwidth', window.innerWidth);
       if (window.innerWidth <= 400) {
         this.hide_invoiceperiod = true;
       } else {

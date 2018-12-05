@@ -1,6 +1,6 @@
 import {Component, HostListener} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
+import { Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 
 

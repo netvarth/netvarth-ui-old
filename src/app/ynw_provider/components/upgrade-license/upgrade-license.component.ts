@@ -55,6 +55,7 @@ export class UpgradeLicenseComponent implements OnInit {
       });
   }
   onSubmit (form_data) {
+    console.log('reached here', this.selected_pac);
     if (this.selected_pac) {
       this.provider_services.upgradeLicensePackage(this.selected_pac)
         .subscribe (data => {
@@ -74,6 +75,7 @@ export class UpgradeLicenseComponent implements OnInit {
 
   licensepackage_Select(val) {
     this.selected_pac = val;
+    // console.log('val', this.selected_pac);
   }
   resetApiErrors () {
     this.api_error = null;

@@ -11,7 +11,7 @@ onSubmit(amForm.value)">
         <div class="form-group" *ngIf="queues.length>1">
           <mat-form-field>
               <label class="col-form-label">Service Time Window</label>
-              <mat-select placeholder="Service Time Window" [(ngModel)] = "selected_queue" [ngModelOptions]="{standalone: true}" #selQueue (change)="handle_queue_sel(selQueue.value)">
+              <mat-select placeholder="Service Time Window" [(ngModel)] = "selected_queue" [ngModelOptions]="{standalone: true}" #selQueue (selectionChange)="handle_queue_sel(selQueue.value)">
                 <mat-option *ngFor="let queue of queues" [value]="queue.id">
                   {{queue.name}}
                 </mat-option>

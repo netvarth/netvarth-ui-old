@@ -286,7 +286,7 @@ header {
                                     height: $input-h;
                                 }
 
-                                .mat-input-infix {
+                                .mat-input-infix, .mat-form-field-infix {
                                     padding: 0;
                                     border-top: none;
 
@@ -362,10 +362,10 @@ header {
                         .mat-form-field {
                             display: block;
 
-                            .mat-input-wrapper {
+                            .mat-form-field-wrapper {
                                 padding-bottom: 0;
 
-                                .mat-input-infix {
+                                .mat-form-field-infix {
                                     padding: 0;
                                     border-top: none;
 
@@ -442,29 +442,34 @@ header {
                             border: none;
                             width: 100%;
 
-                            .mat-input-infix {
+                            .mat-input-infix, .mat-form-field-wrapper {
                                 padding: 0;
                                 border-top: none;
+                                
+                                .mat-form-field-infix {
+                                    padding: 0;
+                                    border-top: none;
+                                    
+                                    .mat-input-element {
+                                        height: 50px;
+                                        padding: 15px;
+                                        @include font-regular;
+                                        font-weight: 500;
+                                        font-size: 0.875rem;
+                                        color: $cc-black;
+                                        background: $cc-formbg;
+                                        border: 1px solid transparent;
+                                        margin-top: 0px;
 
-                                .mat-input-element {
-                                    height: 50px;
-                                    padding: 15px;
-                                    @include font-regular;
-                                    font-weight: 500;
-                                    font-size: 0.875rem;
-                                    color: $cc-black;
-                                    background: $cc-formbg;
-                                    border: 1px solid transparent;
-                                    margin-top: 0px;
+                                        @include respond-to(ynw-767) {
+                                            height: $input-h;
+                                        }
 
-                                    @include respond-to(ynw-767) {
-                                        height: $input-h;
+                                        @include respond-to(ynw-768-991) {
+                                            height: $input-h;
+                                        }
+
                                     }
-
-                                    @include respond-to(ynw-768-991) {
-                                        height: $input-h;
-                                    }
-
                                 }
 
                                 .mat-form-field-label-wrapper {
@@ -1050,28 +1055,27 @@ header {
                                 .mat-form-field-wrapper {
                                     padding: 0;
 
-                                    .mat-input-flex {
-                                        .mat-input-infix {
-                                            padding: 0;
-                                            border: 1px solid $cc-mediumgray;
+                                    .mat-input-infix, .mat-form-field-infix {
+                                        padding: 0;
+                                        border: 1px solid $cc-mediumgray;
 
-                                            .mat-select {
-                                                @include font-medium;
-                                                border: none;
-                                                background: transparent;
+                                        .mat-select {
+                                            padding: 10px;
+                                            @include font-medium;
+                                            border: none;
+                                            background: transparent;
 
-                                                .mat-select-value {
-                                                    overflow: unset;
-                                                }
+                                            .mat-select-value {
+                                                overflow: unset;
                                             }
                                         }
                                     }
 
-                                    .mat-input-underline {
+                                    .mat-input-underline, .mat-form-field-underline {
                                         display: none;
                                     }
 
-                                    .mat-input-subscript-wrapper {
+                                    .mat-input-subscript-wrapper, .mat-form-field-subscript-wrapper {
                                         display: none;
                                     }
                                 }
