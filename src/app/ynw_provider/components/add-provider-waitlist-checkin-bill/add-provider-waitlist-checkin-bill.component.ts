@@ -568,6 +568,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.provider_services.setWaitlistBill(action, uuid, data, { 'Content-Type': 'application/json' }).subscribe
         (billInfo => {
           this.bill_data = billInfo;
+          console.log(this.bill_data);
           this.hideWorkBench();
           resolve();
         },

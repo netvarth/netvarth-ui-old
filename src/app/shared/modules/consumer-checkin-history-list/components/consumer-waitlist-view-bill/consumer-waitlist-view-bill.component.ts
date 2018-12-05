@@ -228,7 +228,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   applyJCoupon() {
     console.log();
     let jaldeeCoupon: string;
-    jaldeeCoupon = '"' + this.jCoupon + '"';
+    jaldeeCoupon = this.jCoupon;
     this.applyAction(jaldeeCoupon, this.bill_data.uuid);
   }
   /**
