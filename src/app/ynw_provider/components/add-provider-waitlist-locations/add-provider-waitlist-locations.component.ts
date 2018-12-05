@@ -18,6 +18,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 export class AddProviderWaitlistLocationsComponent implements OnInit {
   @ViewChild('loc') private elementRef: ElementRef;
 
+  select_cap = Messages.PAY_SET_SELECT_CAP;
   location_cap = Messages.LOCATION_CAP;
   amenities_cap = Messages.AMENITIES_CAP;
   location_map_cap = Messages.LOCATION_MAP_CAP;
@@ -74,6 +75,15 @@ save_btn=Messages.SAVE_BTN;
       }
        this.checked_sel_badges = true;
      }
+
+     park_type = [
+      { displayName: 'None', value: 'none' },
+      { displayName: 'Free', value: 'free' },
+      { displayName: 'Street', value: 'street' },
+      { displayName: 'Privatelot', value: 'privatelot' },
+      { displayName: 'Valet', value: 'valet' },
+      { displayName: 'Paid', value: 'paid' }
+    ];
 
   ngOnInit() {
     this.bProfile = this.provider_datastorageobj.get('bProfile');
