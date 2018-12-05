@@ -354,23 +354,20 @@
 																<tr class="amt discount" *ngFor="let discount of bill_data.discount">
 																	<td class="name">{{discount.name}}</td>
 																	<td class="price">(-){{discount.discValue |
-																		currency:'INR':'symbol':'.2-2'}}</td>
-																	<td *ngIf="bill_data.billStatus!='Settled'"><i (click)="removeOrderDiscount(discount)" class="fa fa-window-close"
-																		 aria-hidden="true"></i></td>
+																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeOrderDiscount(discount)" class="fa fa-window-close"
+																		aria-hidden="true"></i></td>
 																</tr>
 																<tr class="amt coupon" *ngFor="let coupon of bill_data.providerCoupon">
 																	<td class="name">{{coupon.name}}</td>
 																	<td class="price">(-){{coupon.couponValue |
-																		currency:'INR':'symbol':'.2-2'}} </td>
-																	<td *ngIf="bill_data.billStatus!='Settled'"><i (click)="removeProviderCoupon(coupon)" class="fa fa-window-close"
-																		 aria-hidden="true"></i></td>
+																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeProviderCoupon(coupon)" class="fa fa-window-close"
+																		aria-hidden="true"></i></td>
 																</tr>
 																<tr class="amt discount" *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
 																	<td class="name">{{jcoupon.key}}</td>
 																	<td class="price">(-){{jcoupon.value.value |
-																		currency:'INR':'symbol':'.2-2'}} </td>
-																	<td *ngIf="bill_data.billStatus!='Settled'"><i (click)="removeJCoupon(jcoupon.key)" class="fa fa-window-close"
-																		 aria-hidden="true"></i></td>
+																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeJCoupon(jcoupon.key)" class="fa fa-window-close"
+																		aria-hidden="true"></i></td>
 																</tr>
 																<tr class="amt tax" *ngIf="bill_data.taxableTotal">
 																	<td class="name"><span class="tax-top">Tax
