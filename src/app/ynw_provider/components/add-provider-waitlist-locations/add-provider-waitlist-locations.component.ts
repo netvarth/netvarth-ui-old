@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -31,8 +31,8 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   schedule_cap = Messages.SCHEULDE_CAP;
   open_cap = Messages.OPEN_CAP;
   parking_type_cap = Messages.PARKING_TYPE_CAP;
-cancel_btn = Messages.CANCEL_BTN;
-save_btn=Messages.SAVE_BTN;
+  cancel_btn = Messages.CANCEL_BTN;
+  save_btn = Messages.SAVE_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -49,6 +49,7 @@ save_btn=Messages.SAVE_BTN;
   data_source = 'location';
   forbadge = false;
   proceedwithschedule = false;
+  parking_types = projectConstants.PARKING_TYPES;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistLocationsComponent>,
@@ -59,45 +60,36 @@ save_btn=Messages.SAVE_BTN;
     private provider_datastorageobj: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private dialog: MatDialog
-    ) {
-     // console.log('received data', data);
-      this.data_source = data.source;
-      this.loc_badges = data.badges;
-       if (data.type === 'edit') {
-        this.forbadge = data.forbadge;
-        if (data.location.locationVirtualFields) {
-          for (const curbadge in data.location.locationVirtualFields) {
-            if (curbadge) {
-              this.sel_badges.push(curbadge);
-            }
+  ) {
+    // console.log('received data', data);
+    this.data_source = data.source;
+    this.loc_badges = data.badges;
+    if (data.type === 'edit') {
+      this.forbadge = data.forbadge;
+      if (data.location.locationVirtualFields) {
+        for (const curbadge in data.location.locationVirtualFields) {
+          if (curbadge) {
+            this.sel_badges.push(curbadge);
           }
         }
       }
-       this.checked_sel_badges = true;
-     }
-
-     park_type = [
-      { displayName: 'None', value: 'none' },
-      { displayName: 'Free', value: 'free' },
-      { displayName: 'Street', value: 'street' },
-      { displayName: 'Privatelot', value: 'privatelot' },
-      { displayName: 'Valet', value: 'valet' },
-      { displayName: 'Paid', value: 'paid' }
-    ];
+    }
+    this.checked_sel_badges = true;
+  }
 
   ngOnInit() {
     this.bProfile = this.provider_datastorageobj.get('bProfile');
     // Get the parking types
-    this.getParkingtypes();
+    // this.getParkingtypes();
     // get location badges
     // this.getLocationBadges();
     // if (this.data_source !== 'bprofile') {
-     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+    // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     // }
     if (this.data_source === 'bprofile') {
       console.log('i am here', this.data_source);
-       // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
-       this.getgeneralBusinessSchedules();
+      // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+      this.getgeneralBusinessSchedules();
     } else {
       this.proceedwithschedule = true;
     }
@@ -107,22 +99,22 @@ save_btn=Messages.SAVE_BTN;
   }
   getgeneralBusinessSchedules() {
     this.provider_services.getgeneralBusinessSchedules()
-      .subscribe (data => {
+      .subscribe(data => {
         this.general_scheduleholder = data;
         this.general_schedule = [];
         for (let j = 0; j < this.general_scheduleholder.length; j++) {
           const obt_sch = this.general_scheduleholder[j];
-         // console.log('business', obt_sch[0].repeatIntervals);
-            for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
-              // pushing the schedule details to the respective array to show it in the page
-              for (let l = 0; l < obt_sch.timeSlots.length; l++) {
-                this.general_schedule.push({
-                    day: obt_sch.repeatIntervals[k],
-                    sTime: obt_sch.timeSlots[l].sTime,
-                    eTime: obt_sch.timeSlots[l].eTime
-                });
-              }
+          // console.log('business', obt_sch[0].repeatIntervals);
+          for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+            // pushing the schedule details to the respective array to show it in the page
+            for (let l = 0; l < obt_sch.timeSlots.length; l++) {
+              this.general_schedule.push({
+                day: obt_sch.repeatIntervals[k],
+                sTime: obt_sch.timeSlots[l].sTime,
+                eTime: obt_sch.timeSlots[l].eTime
+              });
             }
+          }
         }
         if (this.general_schedule.length > 0) {
           this.schedule_arr = this.general_schedule;
@@ -130,12 +122,12 @@ save_btn=Messages.SAVE_BTN;
           this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
         }
         this.proceedwithschedule = true;
-       // console.log('genschedule', this.general_schedule);
+        // console.log('genschedule', this.general_schedule);
         // console.log('arranged Schedule', this.shared_functions.arrageScheduleforDisplay(this.general_schedule));
       },
-      error => {
+        error => {
 
-      });
+        });
   }
   createForm() {
     if (this.data.type === 'add') {
@@ -144,10 +136,10 @@ save_btn=Messages.SAVE_BTN;
         locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
         loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
         loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-        locmapurl: [{value: '', disabled: true}],
-       /* locparkingtype: [''],*/
-       /* locpincode: [''] ,
-        loct24hour: ['']*/
+        locmapurl: [{ value: '', disabled: true }],
+        /* locparkingtype: [''],*/
+        /* locpincode: [''] ,
+         loct24hour: ['']*/
       });
     } else {
       if (this.forbadge === true) {
@@ -161,15 +153,15 @@ save_btn=Messages.SAVE_BTN;
           locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
           loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
           loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-          locmapurl: [{value: '', disabled: true}]/*,
+          locmapurl: [{ value: '', disabled: true }]/*,
           locpincode: ['']*/
         });
       }
     }
 
 
- if (this.data.type === 'edit') {
-     this.updateForm();
+    if (this.data.type === 'edit') {
+      this.updateForm();
     }
   }
   updateForm() {
@@ -189,39 +181,39 @@ save_btn=Messages.SAVE_BTN;
         locpincode: this.data.location.pinCode || null,*/
       });
       this.schedule_arr = [];
-        // extracting the schedule intervals
-        if (this.data.location.bSchedule.timespec) {
-          for (let i = 0; i < this.data.location.bSchedule.timespec.length; i++) {
-            for (let j = 0; j < this.data.location.bSchedule.timespec[i].repeatIntervals.length; j++) {
-              // pushing the schedule details to the respective array to show it in the page
-              this.schedule_arr.push({
-                day: this.data.location.bSchedule.timespec[i].repeatIntervals[j],
-                sTime: this.data.location.bSchedule.timespec[i].timeSlots[0].sTime,
-                eTime: this.data.location.bSchedule.timespec[i].timeSlots[0].eTime
-              });
-            }
+      // extracting the schedule intervals
+      if (this.data.location.bSchedule.timespec) {
+        for (let i = 0; i < this.data.location.bSchedule.timespec.length; i++) {
+          for (let j = 0; j < this.data.location.bSchedule.timespec[i].repeatIntervals.length; j++) {
+            // pushing the schedule details to the respective array to show it in the page
+            this.schedule_arr.push({
+              day: this.data.location.bSchedule.timespec[i].repeatIntervals[j],
+              sTime: this.data.location.bSchedule.timespec[i].timeSlots[0].sTime,
+              eTime: this.data.location.bSchedule.timespec[i].timeSlots[0].eTime
+            });
           }
         }
-        if (this.data.source !== 'bprofile') {
-          if (this.schedule_arr.length > 0) {
-            this.schedule_arr = [];
-            this.schedule_alreadyexists_for_location = true; // this field decided whether schedule already exists for the location being edited
-          } else {
-            if (this.data.type !== 'edit') {
-              this.schedule_arr = projectConstants.BASE_SCHEDULE;
-            }
+      }
+      if (this.data.source !== 'bprofile') {
+        if (this.schedule_arr.length > 0) {
+          this.schedule_arr = [];
+          this.schedule_alreadyexists_for_location = true; // this field decided whether schedule already exists for the location being edited
+        } else {
+          if (this.data.type !== 'edit') {
+            this.schedule_arr = projectConstants.BASE_SCHEDULE;
           }
         }
+      }
     }
   }
 
-   // gets the parking types
-   getParkingtypes() {
-    this.provider_services.getParkingtypes()
-      .subscribe(data => {
-        this.parking_list = data;
-      });
-  }
+  // gets the parking types
+  // getParkingtypes() {
+  //   this.provider_services.getParkingtypes()
+  //     .subscribe(data => {
+  //       this.parking_list = data;
+  //     });
+  // }
 
   // Save schedule to arr
   handlesSaveschedule(obj) {
@@ -233,7 +225,7 @@ save_btn=Messages.SAVE_BTN;
 
     let post_itemdata2;
     if (this.schedule_alreadyexists_for_location === false) {
-       // Check whether atleast one schedule is added
+      // Check whether atleast one schedule is added
       if (this.schedule_arr.length === 0) {
         this.schedule_json = [];
       } else {
@@ -246,7 +238,7 @@ save_btn=Messages.SAVE_BTN;
         }
         const today = cdate.getFullYear() + '-' + month + '-' + cdate.getDate();
         const save_schedule = this.sharedfunctionobj.prepareScheduleforSaving(this.schedule_arr);
-       // console.log('sch for save', save_schedule);
+        // console.log('sch for save', save_schedule);
 
         for (const schedule of save_schedule) {
           // const savstr = schedule.daystr.split(',');
@@ -290,12 +282,12 @@ save_btn=Messages.SAVE_BTN;
         return;
       }
       post_itemdata2 = {
-                            'place': form_data.locname || '',
-                            'longitude': form_data.loclongitude || '',
-                            'lattitude': form_data.loclattitude || '',
-                            'googleMapUrl': form_data.locmapurl || '',
-                            // 'pinCode': form_data.locpincode || '',
-                            'address': form_data.locaddress || ''
+        'place': form_data.locname || '',
+        'longitude': form_data.loclongitude || '',
+        'lattitude': form_data.loclattitude || '',
+        'googleMapUrl': form_data.locmapurl || '',
+        // 'pinCode': form_data.locpincode || '',
+        'address': form_data.locaddress || ''
       };
       if (this.schedule_json.length > 0) {
         post_itemdata2.bSchedule = {};
@@ -304,7 +296,7 @@ save_btn=Messages.SAVE_BTN;
     }
     // console.log('submitted loc', JSON.stringify(post_itemdata2));
     if (this.data.location && this.data.location.id) {
-      post_itemdata2.id =  this.data.location.id;
+      post_itemdata2.id = this.data.location.id;
       this.provider_services.editProviderLocation(post_itemdata2)
         .subscribe(
           data => {
@@ -322,8 +314,8 @@ save_btn=Messages.SAVE_BTN;
           }
         );
     } else {
-       // console.log('submitted loc', JSON.stringify(post_data));
-        this.provider_services.addProviderLocation(post_itemdata2)
+      // console.log('submitted loc', JSON.stringify(post_data));
+      this.provider_services.addProviderLocation(post_itemdata2)
         .subscribe(
           data => {
             this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED');
@@ -342,7 +334,7 @@ save_btn=Messages.SAVE_BTN;
 
     let post_itemdata2;
     if (this.schedule_alreadyexists_for_location === false) {
-       // Check whether atleast one schedule is added
+      // Check whether atleast one schedule is added
       if (this.schedule_arr.length === 0) {
         this.schedule_json = [];
       } else {
@@ -377,8 +369,8 @@ save_btn=Messages.SAVE_BTN;
     if (this.forbadge === true) {
       post_itemdata2 = {
         'baseLocation': {
-                          'open24hours': (form_data.loct24hour) ? true : false
-                        }
+          'open24hours': (form_data.loct24hour) ? true : false
+        }
       };
       if (form_data.locparkingtype) {
         post_itemdata2.baseLocation.parkingType = form_data.locparkingtype;
@@ -398,14 +390,14 @@ save_btn=Messages.SAVE_BTN;
         return;
       }
       post_itemdata2 = {
-          'baseLocation': {
-                            'place': form_data.locname || '',
-                            'longitude': form_data.loclongitude || '',
-                            'lattitude': form_data.loclattitude || '',
-                            'googleMapUrl': form_data.locmapurl || '',
-                           // 'pinCode': form_data.locpincode || '',
-                            'address': form_data.locaddress || ''
-                          }
+        'baseLocation': {
+          'place': form_data.locname || '',
+          'longitude': form_data.loclongitude || '',
+          'lattitude': form_data.loclattitude || '',
+          'googleMapUrl': form_data.locmapurl || '',
+          // 'pinCode': form_data.locpincode || '',
+          'address': form_data.locaddress || ''
+        }
       };
       if (this.schedule_json.length > 0) {
         post_itemdata2.baseLocation.bSchedule = {};
@@ -413,29 +405,29 @@ save_btn=Messages.SAVE_BTN;
       }
     }
     if (this.data.location && this.data.location.id) {
-      post_itemdata2.baseLocation.id =  this.data.location.id;
+      post_itemdata2.baseLocation.id = this.data.location.id;
     }
 
     // console.log('submited', post_itemdata2);
     this.provider_services.patchbProfile(post_itemdata2)
-    .subscribe(
-      data => {
-        if (this.forbadge === true) {
-          this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
-        } else {
-          this.api_success = (this.data.type === 'add') ? this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED') : this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
+      .subscribe(
+        data => {
+          if (this.forbadge === true) {
+            this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
+          } else {
+            this.api_success = (this.data.type === 'add') ? this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED') : this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
+          }
+          setTimeout(() => {
+            this.dialogRef.close('reloadlist');
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          // this.loading_active = false;
         }
-        setTimeout(() => {
-          this.dialogRef.close('reloadlist');
-        }, projectConstants.TIMEOUT_DELAY);
-      },
-      error => {
-        // this.loading_active = false;
-      }
-    );
+      );
   }
 
-  onSubmit (form_data) {
+  onSubmit(form_data) {
     // let post_data;
     if (this.data_source === 'bprofile') {
       this.savelocation_fromBprofile(form_data);
@@ -447,20 +439,20 @@ save_btn=Messages.SAVE_BTN;
   // Created new provider location
   addProviderLocation(post_data) {
     this.provider_services.addProviderLocation(post_data)
-        .subscribe(
-          data => {
-           this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED');
-           setTimeout(() => {
+      .subscribe(
+        data => {
+          this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED');
+          setTimeout(() => {
             this.dialogRef.close('reloadlist');
-           }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
-          }
-        );
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+        }
+      );
   }
   editProviderLocation(post_data) {
-    post_data.id =  this.data.location.id;
+    post_data.id = this.data.location.id;
     if (this.sel_badges.length > 0) {
       post_data.locationVirtualFields = {};
       for (let i = 0; i < this.sel_badges.length; i++) {
@@ -469,31 +461,31 @@ save_btn=Messages.SAVE_BTN;
     }
     // console.log('submitted loc', JSON.stringify(post_data));
     this.provider_services.editProviderLocation(post_data)
-        .subscribe(
-          data => {
-            this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
-            setTimeout(() => {
+      .subscribe(
+        data => {
+          this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
+          setTimeout(() => {
             this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
-          }
-    );
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+        }
+      );
   }
 
   getBusinessProfile() {
 
     this.provider_services.getBussinessProfile()
-    .subscribe(
-      data => {
-        this.bProfile = data;
-        this.provider_datastorageobj.set('bProfile', data);
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.bProfile = data;
+          this.provider_datastorageobj.set('bProfile', data);
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
   }
   handle_badge_click(obj) {
@@ -518,8 +510,8 @@ save_btn=Messages.SAVE_BTN;
       panelClass: 'googlemainmappopup',
       disableClose: true,
       data: {
-        type : 'add',
-        passloc: {'lat': this.GetControl(this.amForm , 'loclattitude').value, 'lon': this.GetControl(this.amForm , 'loclongitude').value}
+        type: 'add',
+        passloc: { 'lat': this.GetControl(this.amForm, 'loclattitude').value, 'lon': this.GetControl(this.amForm, 'loclongitude').value }
       }
     });
 
@@ -527,19 +519,19 @@ save_btn=Messages.SAVE_BTN;
       if (result) {
         if (result['status'] === 'selectedonmap') {
           if (result['map_point'].latitude) {
-          const mapurl = projectConstants.MAP_BASE_URL + result['map_point'].latitude + ',' + result['map_point'].longitude + '/@' + result['map_point'].latitude + ',' + result['map_point'].longitude + ',15z';
+            const mapurl = projectConstants.MAP_BASE_URL + result['map_point'].latitude + ',' + result['map_point'].longitude + '/@' + result['map_point'].latitude + ',' + result['map_point'].longitude + ',15z';
+            this.amForm.patchValue({
+              loclattitude: result['map_point'].latitude || null,
+              loclongitude: result['map_point'].longitude || null,
+              locmapurl: mapurl || null
+            });
+          }
           this.amForm.patchValue({
-            loclattitude: result['map_point'].latitude || null,
-            loclongitude: result['map_point'].longitude || null,
-            locmapurl: mapurl || null
+            locaddress: result['address'] || null/*,
+          locpincode: result['pincode'] || null*/
           });
         }
-        this.amForm.patchValue({
-          locaddress: result['address'] || null/*,
-          locpincode: result['pincode'] || null*/
-        });
       }
-    }
     });
   }
   public GetControl(form: FormGroup, field: string) {
@@ -549,27 +541,27 @@ save_btn=Messages.SAVE_BTN;
 
   getCoordinatesFromAddress() {
     this.resetApiErrors();
-    const address = this.GetControl(this.amForm , 'locaddress').value || '';
+    const address = this.GetControl(this.amForm, 'locaddress').value || '';
     if (address !== '' && address !== null) {
-    this.provider_services.getGoogleMapLocationGeometry(address)
-            .subscribe (mapdata => {
-              if (mapdata['status'] === 'OK') {
-                if (mapdata['results'][0]['geometry']['location']) {
-                  const mapurl = projectConstants.MAP_BASE_URL + mapdata['results'][0]['geometry']['location']['lat'] + ',' + mapdata['results'][0]['geometry']['location']['lng'] + '/@' + mapdata['results'][0]['geometry']['location']['lat'] + ',' + mapdata['results'][0]['geometry']['location']['lng'] + ',15z';
-                  this.amForm.patchValue({
-                    loclattitude: mapdata['results'][0]['geometry']['location']['lat'] || null,
-                    loclongitude: mapdata['results'][0]['geometry']['location']['lng'] || null,
-                    locmapurl: mapurl || null
-                  });
-                }
-              } else {
-                this.api_error = 'Sorry.. not able to get the map coordinates';
-              }
-     });
+      this.provider_services.getGoogleMapLocationGeometry(address)
+        .subscribe(mapdata => {
+          if (mapdata['status'] === 'OK') {
+            if (mapdata['results'][0]['geometry']['location']) {
+              const mapurl = projectConstants.MAP_BASE_URL + mapdata['results'][0]['geometry']['location']['lat'] + ',' + mapdata['results'][0]['geometry']['location']['lng'] + '/@' + mapdata['results'][0]['geometry']['location']['lat'] + ',' + mapdata['results'][0]['geometry']['location']['lng'] + ',15z';
+              this.amForm.patchValue({
+                loclattitude: mapdata['results'][0]['geometry']['location']['lat'] || null,
+                loclongitude: mapdata['results'][0]['geometry']['location']['lng'] || null,
+                locmapurl: mapurl || null
+              });
+            }
+          } else {
+            this.api_error = 'Sorry.. not able to get the map coordinates';
+          }
+        });
     }
   }
   checkAddressExists() {
-    const address = this.GetControl(this.amForm , 'locaddress').value || '';
+    const address = this.GetControl(this.amForm, 'locaddress').value || '';
     const chkaddress = address.replace(/ /g, '');
     if (chkaddress.length >= 4) {
       return false;
@@ -577,7 +569,7 @@ save_btn=Messages.SAVE_BTN;
       return true;
     }
   }
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }

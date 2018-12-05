@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderServices } from '../../services/provider-services.service';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-request-for',
@@ -17,19 +18,24 @@ export class RequestForComponent {
   invoiceId;
   constructor(public dialogRef: MatDialogRef<RequestForComponent>,
     private provider_servicesobj: ProviderServices,
-   // public sharedfunctionObj: SharedFunctions,
+    public sharedfunctionObj: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) { this.invoiceId = data.id; }
 
   onClick(data) {
-    this.api_error = null;
-    this.provider_servicesobj.requestforPaymentJC(this.invoiceId).subscribe(
-      () => {
-        this.dialogRef.close('success');
-      },
-      error => {
-        this.api_error = 'error';
-        // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      }
-    );
+    if (data == 1) {
+      this.api_error = null;
+      this.provider_servicesobj.requestforPaymentJC(this.invoiceId).subscribe(
+        () => {
+          this.dialogRef.close('success');
+        },
+        error => {
+          this.api_error = 'error';
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+    }
+    else {
+      this.dialogRef.close();
+    }
   }
 }

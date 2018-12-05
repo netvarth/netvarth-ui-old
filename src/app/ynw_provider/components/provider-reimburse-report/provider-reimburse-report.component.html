@@ -32,8 +32,6 @@
                   <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
               </div>
-
-
               <div class="form-group pay_status">
                 <label class="col-form-label" for="displayName">{{status_cap}}</label>
                 <mat-form-field>
@@ -41,34 +39,15 @@
                     <mat-option (click)="setFilterData('status', 'all')" [value]="'all'">
                       {{all_cap}}
                     </mat-option>
-                    <mat-option *ngFor="let status of report_status" (click)="setFilterData('status', status.pk)"
-                      [value]="status.pk">
-                      <!-- <span class="day_label">{{queue.displayschedule.dstr}}</span> -->
-                      {{status.value}}
+                    <mat-option *ngFor="let status of report_status_filter" (click)="setFilterData('status', status.value)"
+                      [value]="status.value">
+                      {{status.displayName}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
-
-              <!-- <div class="form-group waitlist_status" *ngIf="time_type == 0">
-                <label class="col-form-label" for="displayName">{{payment_status}}</label>
-                <mat-form-field>
-                  <mat-select [(value)]="filter.payment_status">
-                    <mat-option (click)="setFilterData('payment_status', 'all')" [value]="'all'">
-                      {{all_cap}}
-                    </mat-option>
-                    <mat-option *ngFor="let pstat of payStatusList" (click)="setFilterData('payment_status', pstat.pk)"
-                      [value]="pstat.pk">
-                      {{pstat.value}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div> -->
-
-
             </mat-expansion-panel>
           </mat-accordion>
-
           <div class="table-outer d-tbl q-tbl" *ngIf="couponreport.length != 0">
             <table class="table">
               <thead>
@@ -91,30 +70,20 @@
                   <td data-title="coupons Used" class="pointer-cursor" class="td1">{{report.listOfJaldeeCoupons}}</td>
                   <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.subTotalJaldeeBank}}</td>
                   <td data-title="Amount" class="pointer-cursor" class="td1">{{report.subTotalJaldeeCoupons}}</td>
-                  <td data-title="Amount" class="pointer-cursor" class="td1">{{report.grantTotal}}</td>
-                  <td>
-                    <!-- <div *ngIf="report.status=='PAYMENTPENDING'">
-                      <span class="add-nloc cs-btn bt3" (click)="openrequestModal(report.invoiceId)">{{req_payment_cap}}</span>
-                    </div>
-                    <div *ngIf="report.status!='PAYMENTPENDING'">
-                      {{report.status}}
-                    </div> -->
-                    {{report.status | capitalizeFirst}}
+                  <td data-title="total" class="pointer-cursor" class="td1">{{report.grantTotal}}</td>
+                  <td data-title="status" class="pointer-cursor" class="td1">
+                    {{report_statuses[report.status]}}
                   </td>
-                  <td *ngIf="report.status=='PAYMENTPENDING'">
-                    <span class="mbt">
+                  <td class="action">
+                    <span class="mbt" *ngIf="report.status=='PAYMENTPENDING'">
                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>
                       </button>
                       <mat-menu #menu="matMenu">
                         <button type="button" (click)="openrequestModal(report.invoiceId)" mat-menu-item>
-                          <!-- <i class="icon-edit"></i> -->
-                          {{req_payment_cap}}
+                          <span>{{req_payment_cap}}</span>
                         </button>
                       </mat-menu>
-                    </span>
-                    <span class="mbt-mobile-show">
-                      <button class="editcls" type="button" (click)="openrequestModal(report.invoiceId)">{{req_payment_cap}}</button>
                     </span>
                   </td>
                 </tr>

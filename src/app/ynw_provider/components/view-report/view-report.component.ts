@@ -4,6 +4,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-view-report',
@@ -27,6 +28,7 @@ export class ViewReportComponent implements OnInit {
   reimburse_amt_cap = Messages.REPORT_REIMBURSE_AMT_CAP;
   j_acct_cap = Messages.REPORT_JALDEE_ACCT_CAP;
   consumer_cap = Messages.REPORT_CONSUMER_CAP;
+  report_status = projectConstants.REPORT_STATUSES;
   s3url;
   retval;
   viewreport;
@@ -58,8 +60,8 @@ export class ViewReportComponent implements OnInit {
         this.invoice_id = params.id;
         this.getjaldeeReport();
       });
-
   }
+
   getjaldeeReport() {
     this.provider_servicesobj.getJaldeeCouponReportsbyId(this.invoice_id).subscribe(
       data => {
@@ -74,9 +76,9 @@ export class ViewReportComponent implements OnInit {
                 .subscribe(s3Result => {
                   this.invoiceFromS3 = s3Result;
                 },
-                error => {
-                  this.sharedfunctionObj.apiErrorAutoHide(this, error);
-                });
+                  error => {
+                    this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                  });
             },
             error => {
               this.sharedfunctionObj.apiErrorAutoHide(this, error);

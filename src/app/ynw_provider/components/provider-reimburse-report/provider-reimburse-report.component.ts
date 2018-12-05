@@ -8,6 +8,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
+import { from } from 'rxjs';
 @Component({
   selector: 'app-provider-reimburse-report',
   templateUrl: './provider-reimburse-report.component.html',
@@ -25,6 +26,8 @@ export class ProviderReimburseReportComponent implements OnInit {
   req_payment_cap = Messages.REQ_PAYMENT_CAP;
   couponreport: any = [];
   query_executed = false;
+  report_statuses = projectConstants.REPORT_STATUSES;
+  report_status_filter = projectConstants.REPORT_STATUS_FILTER;
   api_error = null;
   api_success = null;
   breadcrumbs = [
@@ -63,12 +66,7 @@ export class ProviderReimburseReportComponent implements OnInit {
   constructor(private dialog: MatDialog, private router: Router,
     private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices) {
   }
-  report_status = [
-    { pk: 'PAYMENTPENDING', value: 'Payment Pending' },
-    { pk: 'REQUESTED', value: 'Requested' },
-    { pk: 'PAID', value: 'Paid' },
-    { pk: 'INDISPUTE', value: 'In-Dispute' }
-  ];
+
   ngOnInit() {
     this.setFilterDateMaxMin();
     this.resetFilter();
@@ -91,45 +89,11 @@ export class ProviderReimburseReportComponent implements OnInit {
     });
     this.requestdialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
-       // this.sharedfunctionObj.openSnackBar(Messages.SCCESS_MSG);
+        // this.sharedfunctionObj.openSnackBar(Messages.SCCESS_MSG);
         this.getCouponReport();
       }
     });
   }
-
-  // openrequestModal(report) {
-  //   const id = report.invoiceId;
-  //   if (!id) {
-  //     return false;
-  //   }
-  //   this.requestdialogRef = this.dialog.open(RequestForComponent, {
-  //     width: '50%',
-  //     panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       'message': this.sharedfunctionObj.getProjectMesssages('REQUEST_CONFIRM_CAP'),
-  //       'heading': 'Delete Confirmation'
-  //     }
-  //   });
-  //   this.requestdialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       this.request(id);
-  //     }
-  //   });
-  // }
-
-  // request(id) {
-  //   this.provider_servicesobj.requestforPaymentJC(id)
-  //     .subscribe(
-  //       data => {
-  //         this.sharedfunctionObj.openSnackBar(Messages.SCCESS_MSG);
-  //         this.getCouponReport();
-  //       },
-  //       error => {
-  //         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       }
-  //     );
-  // }
 
   /** Filter Related Functions*/
   /**

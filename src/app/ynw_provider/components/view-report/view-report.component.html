@@ -48,7 +48,7 @@
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                       <span class="ttle">{{status_cap}}:</span>
-                      <span>{{viewreport.status}}</span>
+                      <span>{{report_status[viewreport.status]}}</span>
                     </div>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
             </div>
           </div>
           <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeCouponReimbursableExpense && invoiceFromS3.jaldeeCouponReimbursableExpense.couponList.length>0">
-            <div *ngFor = "let couponList of invoiceFromS3.jaldeeCouponReimbursableExpense.couponList"></div>
+            <div *ngFor="let couponList of invoiceFromS3.jaldeeCouponReimbursableExpense.couponList"></div>
             <h5>Jaldee Coupon - {{couponList.couponCode}}</h5>
             <div class="table-outer q-tbl" *ngFor="let coupon of couponList.billDetails">
               <table class="table">

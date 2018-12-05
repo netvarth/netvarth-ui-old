@@ -98,27 +98,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
                 <mat-form-field>
                     <label>{{parking_type_cap}}</label>
                     <mat-select placeholder="Select Parking Type*" formControlName="locparkingtype">
-                        <mat-option *ngFor="let ptype of park_type" [value]="ptype.value">
-                            {{ ptype.displayName }}
+                        <mat-option *ngFor="let ptype of parking_types" [value]="ptype.value">
+                            {{ptype.displayName }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-
-
-
-                <!-- <mat-form-field>
-                        <label>{{parking_type_cap}}</label>
-                    <mat-select placeholder="Select Parking Type*" formControlName="locparkingtype">
-                        <mat-option value="None">None</mat-option>
-                        <mat-option value="Free">Free</mat-option>
-                        <mat-option value="Street">Street</mat-option>
-                        <mat-option value="Privatelot">Privatelot</mat-option>
-                        <mat-option value="Valet">Valet</mat-option>
-                        <mat-option value="Paid">Paid</mat-option>
-                    </mat-select>
-                </mat-form-field> -->
-
-
             </div>
         </ng-container>
 
