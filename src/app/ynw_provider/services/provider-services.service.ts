@@ -222,18 +222,18 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getJaldeeCouponReports(filter) {
-    const url = 'provider/jaldee/coupons/jcreports';
+    const url = 'provider/jaldee/coupons/jcreports/reimburse';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getJaldeeCouponReportsCount(filter = {}) {
-    return this.servicemeta.httpGet('provider/jaldee/coupons/jcreports/count', null, filter);
+    return this.servicemeta.httpGet('provider/jaldee/coupons/jcreports/reimburse/count', null, filter);
   }
   getJaldeeCouponReportsbyId(invoice_id) {
-    const url = 'provider/jaldee/coupons/jcreports/' + invoice_id;
+    const url = 'provider/jaldee/coupons/jcreports/reimburse/' + invoice_id;
     return this.servicemeta.httpGet(url);
   }
   requestforPaymentJC(id?) {
-    const url = 'provider/jaldee/coupons/jcreports/' + id + '/requestPayment';
+    const url = 'provider/jaldee/coupons/jcreports/reimburse/' + id + '/requestPayment';
     return this.servicemeta.httpGet(url);
   }
   // Non working days

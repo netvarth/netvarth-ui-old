@@ -5,7 +5,7 @@
 </h1> -->
 
 <section>
-	<app-provider-subheader [activeTab]="'dashboard'" (reloadActionSubheader)="reloadActionSubheader($event)"></app-provider-subheader>
+	<app-provider-subheader [activeTab]="'dashboard'"></app-provider-subheader>
 	<!-- Subheader section -->
 	<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
@@ -371,10 +371,15 @@
 																</tr>
 																<tr class="amt tax" *ngIf="bill_data.taxableTotal">
 																	<td class="name"><span class="tax-top">Tax
-																			{{item_service_tax}}% of {{bill_data.taxableTotal |
+																			{{bill_data.taxPercentage}}% of {{bill_data.taxableTotal |
 																			currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{item_service_tax/2}}%,
 																			SGST-{{item_service_tax/2}}%)</span></td>
 																	<td class="price">(+){{bill_data.totalTaxAmount |
+																		currency:'INR':'symbol':'.2-2'}}</td>
+																</tr>
+																<tr class="amt gross" *ngIf="bill_data.netRate > 0">
+																	<td class="name">Net Total</td>
+																	<td class="price">{{bill_data.netRate |
 																		currency:'INR':'symbol':'.2-2'}}</td>
 																</tr>
 																<tr class="amt paid" *ngIf="bill_data.totalAmountPaid > 0">
@@ -383,7 +388,7 @@
 																		currency:'INR':'symbol':'.2-2'}}</td>
 																</tr>
 																<tr class="amt total" *ngIf="bill_data.amountDue > 0">
-																	<td class="name">{{amount_to_pay_cap}}</td>
+																	<td class="name">Amount Due</td>
 																	<td class="price">{{bill_data.amountDue |
 																		currency:'INR':'symbol':'.2-2'}}</td>
 																</tr>

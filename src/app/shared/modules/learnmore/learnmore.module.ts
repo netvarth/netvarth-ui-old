@@ -68,6 +68,7 @@ import { LearnmoreCustomerComponent } from './learnmore-customer/learnmore-custo
 import { LearnmoreKioskComponent } from './learnmore-kiosk/learnmore-kiosk.component';
 import { LearnmoreLicenseComponent } from './learnmore-license/learnmore-license.component';
 import { LearnmoreAdjustDelayComponent } from './learnmore-adjustdelay/learnmore-adjustdelay.component';
+import { LearnmoreMiscellaneousComponent } from './learnmore-miscellaneous/learnmore-miscellaneous.component';
 
 @NgModule({
     imports: [
@@ -140,7 +141,8 @@ import { LearnmoreAdjustDelayComponent } from './learnmore-adjustdelay/learnmore
         LearnmoreCustomerComponent,
         LearnmoreKioskComponent,
         LearnmoreLicenseComponent,
-        LearnmoreAdjustDelayComponent
+        LearnmoreAdjustDelayComponent,
+        LearnmoreMiscellaneousComponent
     ],
     entryComponents: [
         LearnmoreComponent
