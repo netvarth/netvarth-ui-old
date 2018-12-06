@@ -14,46 +14,53 @@
                 <div class="ot-it" *ngIf="viewreport">
                   <div class="c-ot">
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
-                      <span class="ttle">{{report_id_cap}}:</span>
+                      <span class="ttle">{{report_id_cap}}</span>
                       <span>{{viewreport.invoiceId}}</span>
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
-                      <span class="ttle">{{period_date_cap}}:</span>
+                      <span class="ttle">{{period_date_cap}}</span>
                       <span>{{formatDateDisplay(viewreport.reportFromDate)}} -
                         {{formatDateDisplay(viewreport.reportEndDate)}}</span>
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
-                      <span class="ttle">{{coupon_use_cap}}:</span>
-                      <span>{{viewreport.listOfJaldeeCoupons || 0}}</span>
+                      <span class="ttle">{{coupon_use_cap}}</span>
+                      <span>{{viewreport.listOfJaldeeCoupons}}</span>
                     </div>
                   </div>
                   <div class="c-ot">
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
-                      <span class="ttle">{{j_acc_cap}}:</span>
+                      <span class="ttle">{{j_acc_cap}}</span>
                       <span>{{viewreport.subTotalJaldeeBank}}</span>
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
-                      <span class="ttle">{{coupon_amt_cap}}:</span>
+                      <span class="ttle">{{coupon_amt_cap}}</span>
                       <span>{{viewreport.jaldeeCouponAmount || 0}}</span>
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
-                      <span class="ttle">{{reimburse_amt_cap}}:</span>
-                      <span>{{viewreport.PaidAmount || 0}}</span>
+                      <span class="ttle">{{reimburse_amt_cap}}</span>
+                      <span>{{viewreport.subTotalJaldeeCoupons}}</span>
                     </div>
                   </div>
                   <div class="c-ot">
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
-                      <span class="ttle">Grant Total:</span>
+                      <span class="ttle">Grant Total</span>
                       <span>{{viewreport.grantTotal}}</span>
                     </div>
                     <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
-                      <span class="ttle">{{status_cap}}:</span>
+                      <span class="ttle">{{status_cap}}</span>
                       <span>{{report_status[viewreport.status]}}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+
+            <!-- providerId
+            invoiceDate
+            subTotalJaldeeCoupons
+            uId -->
+
           </div>
           <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeBankStatement">
             <h5>{{j_acct_cap}}</h5>

@@ -799,14 +799,14 @@ export const Messages = {
   'LIMIT_PER_PRO': 'usageMaxLimitPerProvider',
   'CONSUM_FIRST_HECK': 'Consumer First CheckIn Usage Only',
   'PRO_FIRST_CHECK': 'Provider First CheckIn Use Only',
-  'SELF_PAYMENT': 'SelfPayment Required',
-  'ONLINE_CHECK': 'onlineCheckinRequired',
-  'COMBIN_COUPON_LIST': 'combineWithOtherjaldeecoupon_list',
+  'SELF_PAYMENT': 'Self Payment Required',
+  'ONLINE_CHECK': 'Online Checkin Required',
+  'COMBIN_COUPON_LIST': 'Combine with Other Coupon',
   'DEFAULT_ENABLE': 'Default Enabled',
   'ALWAYS_ENABLE': 'Always Enabled',
   'TERM_CONDITION': 'Terms and Conditions',
   'PRO_DESCR': 'Provider Description',
-  'CHART_CAP': 'chart',
+  'CHART_CAP': 'Chart',
 
   // App-ynw_provider-components-provider-coupons
   'REPORTS_CAP': 'Reports',

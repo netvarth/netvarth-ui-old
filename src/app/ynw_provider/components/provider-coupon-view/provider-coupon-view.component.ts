@@ -76,6 +76,11 @@ export class ProviderCouponViewComponent implements OnInit {
     });
     this.breadcrumbs = breadcrumbs;
   }
+
+  formatPrice(price) {
+    return this.sharedfunctionObj.print_PricewithCurrency(price);
+  }
+  
   getJaldeeCouponStatistic() {
     this.provider_servicesobj.getJaldeeCouponStat(this.jc_code).subscribe(
       data => {
