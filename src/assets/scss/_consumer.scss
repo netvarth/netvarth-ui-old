@@ -286,7 +286,7 @@ header {
                                     height: $input-h;
                                 }
 
-                                .mat-form-field-infix {
+                                .mat-input-infix, .mat-form-field-infix {
                                     padding: 0;
                                     border-top: none;
 
@@ -442,29 +442,34 @@ header {
                             border: none;
                             width: 100%;
 
-                            .mat-form-field-infix {
+                            .mat-input-infix, .mat-form-field-wrapper {
                                 padding: 0;
                                 border-top: none;
+                                
+                                .mat-form-field-infix {
+                                    padding: 0;
+                                    border-top: none;
+                                    
+                                    .mat-input-element {
+                                        height: 50px;
+                                        padding: 15px;
+                                        @include font-regular;
+                                        font-weight: 500;
+                                        font-size: 0.875rem;
+                                        color: $cc-black;
+                                        background: $cc-formbg;
+                                        border: 1px solid transparent;
+                                        margin-top: 0px;
 
-                                .mat-input-element {
-                                    height: 50px;
-                                    padding: 15px;
-                                    @include font-regular;
-                                    font-weight: 500;
-                                    font-size: 0.875rem;
-                                    color: $cc-black;
-                                    background: $cc-formbg;
-                                    border: 1px solid transparent;
-                                    margin-top: 0px;
+                                        @include respond-to(ynw-767) {
+                                            height: $input-h;
+                                        }
 
-                                    @include respond-to(ynw-767) {
-                                        height: $input-h;
+                                        @include respond-to(ynw-768-991) {
+                                            height: $input-h;
+                                        }
+
                                     }
-
-                                    @include respond-to(ynw-768-991) {
-                                        height: $input-h;
-                                    }
-
                                 }
 
                                 .mat-form-field-label-wrapper {
@@ -840,9 +845,9 @@ header {
                                         display: block;
                                         @include font-regular;
 
-                                        .mat-form-field-wrapper {
-                                            .mat-form-field-flex {
-                                                .mat-form-field-infix {
+                                        .mat-input-wrapper {
+                                            .mat-input-flex {
+                                                .mat-input-infix {
                                                     padding: 0px;
 
                                                     .mat-select {
@@ -852,7 +857,7 @@ header {
                                                 }
                                             }
 
-                                            .mat-form-field-underline {
+                                            .mat-input-underline {
                                                 display: none;
                                             }
                                         }
@@ -1050,28 +1055,27 @@ header {
                                 .mat-form-field-wrapper {
                                     padding: 0;
 
-                                    .mat-form-field-flex {
-                                        .mat-form-field-infix {
-                                            padding: 0;
-                                            border: 1px solid $cc-mediumgray;
+                                    .mat-input-infix, .mat-form-field-infix {
+                                        padding: 0;
+                                        border: 1px solid $cc-mediumgray;
 
-                                            .mat-select {
-                                                @include font-medium;
-                                                border: none;
-                                                background: transparent;
+                                        .mat-select {
+                                            padding: 10px;
+                                            @include font-medium;
+                                            border: none;
+                                            background: transparent;
 
-                                                .mat-select-value {
-                                                    overflow: unset;
-                                                }
+                                            .mat-select-value {
+                                                overflow: unset;
                                             }
                                         }
                                     }
 
-                                    .mat-form-field-underline {
+                                    .mat-input-underline, .mat-form-field-underline {
                                         display: none;
                                     }
 
-                                    .mat-form-field-subscript-wrapper {
+                                    .mat-input-subscript-wrapper, .mat-form-field-subscript-wrapper {
                                         display: none;
                                     }
                                 }

@@ -26,7 +26,7 @@ export class LearnmoreAdjustDelayComponent implements OnInit {
     const userdet = this.shared_function.getitemfromLocalStorage('ynw-user');
     this.curtype = userdet.sector;
     if (this.target) {
-      this.triggerScrollTo(this.target);
+     // this.triggerScrollTo(this.target);
     }
     // window.addEventListener('scroll', this.scroll, true); // third parameter
   }

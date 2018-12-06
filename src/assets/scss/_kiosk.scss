@@ -857,7 +857,7 @@
                                     .sel-queue {
                                         color: $linkblack;
                                         font-weight: 600;
-                                                                                
+                                        
                                         .name {
                                             color: $linkblack;
                                             font-weight: 600;
@@ -1084,7 +1084,7 @@
                         .mat-form-field {
                             width: 100%;
 
-                            .mat-form-field-wrapper {
+                            .mat-input-wrapper, .mat-form-field-wrapper {
                                 padding: 0;
                                 margin: 0;
 
@@ -1092,7 +1092,7 @@
                                     color: $cc-red;
                                 }
 
-                                .mat-form-field-infix {
+                                .mat-input-infix, .mat-form-field-infix {
                                     margin: 0;
                                     padding: 0;
                                     border: none;
@@ -1117,8 +1117,13 @@
                                         height: 50px;
                                         background: $cc-inputbg;
                                         @include font-medium;
-                                        /*display: flex;
-                                        align-items: center;*/
+                                        border: 1px solid $cc-formborder;
+
+                                        &:focus {
+                                            @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                            border: 1px solid $linkblue;
+                                            background: $white;
+                                        }
 
                                         .mat-select-arrow {
                                             color: $cc-black;
@@ -1142,7 +1147,7 @@
                                     }
                                 }
 
-                                .mat-form-field-underline {
+                                .mat-input-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
                                     display: none;
                                 }
                             }

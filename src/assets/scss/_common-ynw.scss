@@ -208,9 +208,9 @@ app-footer {
 .mat-form-field {
     @include font-medium;
     
-    .mat-form-field-wrapper {
-        .mat-form-field-flex {
-            .mat-form-field-infix {
+    .mat-input-wrapper {
+        .mat-input-flex {
+            .mat-input-infix {
                 .mat-input-element {
                     background: $cc-inputbg;
                     border: 1px solid $cc-formborder;
@@ -515,7 +515,7 @@ app-footer {
                     @include respond-to(ynw-400) {
                         font-size: 1rem;
                         align-items: center !important;
-                                                
+                        
                         .mat-expansion-panel-header-title {
                             align-items: center;
                         }
@@ -820,4 +820,11 @@ app-footer {
 }
 .ripple:focus:not(:active)::after {
     animation: ripple 1s ease-out;
+}
+
+//Auto Complete
+
+.bill-autocomplete {
+    background-color: red;
+    max-height: 242px;
 }
