@@ -319,7 +319,7 @@ export const Messages = {
   'FIR_LAS_NAME_CAP': 'First/Last Name',
   'SEARCH_CAP': 'Search',
   'OOPS_CAP': 'Oops!!',
-  'LOOKS_NOT_REG_CUS_CAP': 'Looks like youre not a registered customer.',
+  'LOOKS_NOT_REG_CUS_CAP': 'Looks like you\'re not a registered customer.',
   'FILL_YOUR_DET_CAP': 'Please fll in your details to Register',
   'REGISTER_CAP': 'Register',
   'BACK_TO_SEARCH_CAP': 'Back to Search',

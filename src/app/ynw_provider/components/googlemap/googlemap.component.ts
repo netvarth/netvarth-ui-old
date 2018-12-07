@@ -23,7 +23,7 @@ export class GoogleMapComponent implements OnInit {
   choose_location_cap = Messages.LOCATION_MAP_CAP;
   mark_map_cap = Messages.MARK_MAP_CAP;
   select_address_cap = Messages.SELECT_ADDRESS_CAP;
-  yes_done_cap = Messages.YES_DONE_CAP
+  yes_done_cap = Messages.YES_DONE_CAP;
   map: google.maps.Map;
   lat_lng = {
     latitude: 12.9715987,

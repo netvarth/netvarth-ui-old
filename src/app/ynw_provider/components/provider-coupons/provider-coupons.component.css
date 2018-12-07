@@ -6,3 +6,18 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0) !important;
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0) !important;
 }
+
+.comn-cls .w-dta .table-outer.q-itm table tbody tr td:nth-child(2),
+.comn-cls .w-dta .table-outer.q-itm table tbody tr td:nth-child(1) {
+    font-weight: normal;
+}
+
+.coupon_status {
+    color: #00aef2;
+    /* padding-left: 22px; */
+    border: 1px solid #00aef2;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    background: transparent;
+    font-weight: 500;
+}
