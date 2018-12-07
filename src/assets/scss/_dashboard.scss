@@ -6466,7 +6466,7 @@ footer {
                         .lc1-1 {
                             
                             .outer {
-                                
+            
                                 .lc-box {
                                     width: 100%;
                                     padding: 0px;
@@ -6476,13 +6476,12 @@ footer {
                                     margin-bottom: 20px;
 
                                     .tp {
-                                        flex-grow: 1;
-
                                         .ttle {
                                             font-weight: 500;
 
                                             .pkg {
                                                 font-weight: 600;
+                                                margin-right: 10px;
 
                                                 .icon-question {
                                                     font-size: .75rem;
@@ -6494,21 +6493,12 @@ footer {
                                                 display: block;
                                             }
                                         }
-                                    }
-
-                                    .bt {
-                                        margin-left: 10px;
-                                        text-align: right;
-                                        display: flex;
-
-
                                         .bt1 {
                                             padding: 5px 15px;
                                             height: auto;
                                             text-transform: none;
                                             font-size: .875rem;
                                             align-self: flex-start;
-                                            margin-right: 40px;
                                         }
                                     }
                                 }
@@ -6615,7 +6605,6 @@ footer {
                                     flex-grow: 1;
 
                                     span {
-                                        display: table;
                                         font-weight: 500;
 
                                         &.amount {
@@ -6640,6 +6629,8 @@ footer {
                                             background: $linkblue;
                                             color: $white;
                                             text-transform: none;
+                                            margin-left: 10px;
+                                            margin-bottom: 5px;
 
                                             &:hover {
                                                 background: $hover-blue;
@@ -6754,12 +6745,13 @@ footer {
                         .lc11 {
                             .lc1-1 {
                                 .outer {
-                                    .lc-box {
-                                        flex-direction: column;
-
-                                        .bt {
-                                            margin-top: 5px;
-                                            margin-left: 0;
+                                    .lc-box {                                        
+                                        .tp {
+                                            .ttle {
+                                                .bt1 {
+                                                    margin-left: 0;
+                                                }
+                                            }
                                         }
                                     }
                                 }

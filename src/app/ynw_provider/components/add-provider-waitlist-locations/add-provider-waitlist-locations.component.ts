@@ -204,7 +204,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
 
   // this method is used to save the location details, if the save is being done from the bprofile page
   savelocation_fromWaitlistmanager(form_data) {
-
+    // console.log('save data', form_data);
     let post_itemdata2;
     if (this.schedule_alreadyexists_for_location === false) {
        // Check whether atleast one schedule is added
@@ -263,6 +263,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
         return;
       }
+      form_data.locmapurl = this.amForm.controls['locmapurl'].value;
       post_itemdata2 = {
                             'place': form_data.locname || '',
                             'longitude': form_data.loclongitude || '',
@@ -371,6 +372,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
         return;
       }
+      form_data.locmapurl = this.amForm.controls['locmapurl'].value;
       post_itemdata2 = {
           'baseLocation': {
                             'place': form_data.locname || '',

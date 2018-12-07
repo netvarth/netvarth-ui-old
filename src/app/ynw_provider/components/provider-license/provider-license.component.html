@@ -30,12 +30,12 @@
                                         <div class="lc1-1">
                                             <div class="outer">
                                                 <div class="lc-box" *ngIf="currentlicense_details.accountLicense">
-                                                    <div class="tp"><span class="ttle">Your current License Package is <span class="pkg">{{currentlicense_details.accountLicense.name}} <span class="icon-question" [matTooltip]="license_tooltip"></span></span> 
+                                                    <div class="tp"><span class="ttle">Your current License Package is <span class="pkg">{{currentlicense_details.accountLicense.name}} <span class="icon-question" [matTooltip]="license_tooltip"></span> <span class="cs-btn bt1" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">Upgrade License</span></span> 
                                                     <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span></div>
     
-                                                    <div class="bt" *ngIf="upgradablepackages.length > 0">
-                                                        <span class="cs-btn bt1" (click)="showupgradeLicense()">Upgrade License</span>
-                                                    </div>
+                                                    <!-- <div class="bt" *ngIf="upgradablepackages.length > 0">
+                                                        <span class="cs-btn bt1" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">Upgrade License</span>
+                                                    </div> -->
                                                 </div>
                                             </div>
     
@@ -70,14 +70,17 @@
                                         <div class="lc44">
                                             <div class="lc4-1">
                                                 <div class="lt">
+                                                    <div>
                                                     <span class="amount">Due Amount : <strong>{{currentlicense_details.dueAmount | currency:'INR':'symbol':'.2-2'}}</strong>
                                                     </span>
+                                                    <span class="cs-btn bt3" (click)="showUnpaidInvoice()"  *ngIf="invoices.length != 0">Pay</span>
+                                                    </div>
                                                     <span class="amount"*ngIf="invoices.length != 0">Next Payment On : <strong>{{currentlicense_details.nextPaymentOn | date: dateFormat }}</strong>
                                                     </span>
                                                 </div>
-                                                <div class="rt" *ngIf="invoices.length != 0">
-                                                    <span class="cs-btn bt3 ml-auto" (click)="showUnpaidInvoice()">Pay</span>
-                                                </div>
+                                                <!-- <div class="rt" *ngIf="invoices.length != 0">
+                                                    <span class="cs-btn bt3 ml-auto" (click)="showUnpaidInvoice()"  *ngIf="invoices.length != 0">Pay</span>
+                                                </div> -->
                                             </div>
                                             <div class="lc4-2">
                                                 <div class="pay-tbl">

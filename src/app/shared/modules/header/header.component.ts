@@ -34,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() passedkwdet: any =  [];
   @Input() passedRefine: any =  [];
   @Output() searchclick = new EventEmitter<any>();
+  @Output() scrollhideclass = new EventEmitter<any>();
   userdet: any = [];
   headercls = '';
   provider_loggedin = false;
@@ -120,6 +121,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         break;
         case 'learn_more':
           this.showLearnMore = true;
+          this.scrollhideclass.emit(true);
           this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey};
         break;
       }
@@ -134,6 +136,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   hideLearnmore() {
    // console.log('reached here');
     this.showLearnMore = false;
+    this.scrollhideclass.emit(false);
   }
 
   ngOnInit() {
