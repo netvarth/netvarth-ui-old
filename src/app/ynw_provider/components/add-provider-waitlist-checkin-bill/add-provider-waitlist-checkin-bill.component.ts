@@ -65,7 +65,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   print_bill_cap = Messages.PRINT_BILL_CAP;
   accept_payment_cap = Messages.ACCEPT_PAY_CAP;
   make_payment_cap = Messages.MAKE_PAYMENT_CAP;
-  couponNotes = projectConstants.COUPON_NOTES;
+  coupon_notes = projectConstants.COUPON_NOTES;
   @ViewChild('itemservicesearch') item_service_search;
   amForm: FormGroup;
   api_error = null;

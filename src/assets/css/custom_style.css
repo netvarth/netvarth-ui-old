@@ -686,3 +686,7 @@
       .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .paytext{
         color: darkorange !important;
       }
+      .btm-pad {padding-bottom:5px !important;}
+      @media(max-width:500px) {
+        .cdk-overlay-container .mat-autocomplete-panel .mat-option{line-height: 15px!important; }
+      }

@@ -23,13 +23,13 @@
 											<div class="section-one">
 												<h3>{{bname | capitalizeFirst}}</h3>
 												<div class="details" *ngIf="bill_load_complete==1">
-													<div class="col-md-12 col-sm-12 col-lg-12">
+													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
 														<span class="dynamic">{{checkin.consumer.userProfile.firstName
 															| capitalizeFirst}} {{checkin.consumer.userProfile.lastName}}</span>
 														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>
 													</div>
-													<div class="col-md-12 col-sm-12 col-lg-12">
+													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
 														<span *ngIf="billnumber">
 																<span class="title">{{bill_no_cap}} </span>
 																<span class="dynamic">{{billnumber}}</span>
