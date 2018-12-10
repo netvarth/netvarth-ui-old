@@ -11,7 +11,6 @@ import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/conf
   templateUrl: './provider-waitlist-checkin-payment.component.html'
 })
 export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
-
   bill_pay_cap = Messages.BILL_PAYMENT_CAP;
   amt_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
   make_pay_cap = Messages.MAKE_PAYMENT_CAP;
