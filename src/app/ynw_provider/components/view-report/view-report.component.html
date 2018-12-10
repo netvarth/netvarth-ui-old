@@ -52,7 +52,7 @@
             </div>
           </div>
           <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeBankStatement">
-            <h5>{{j_acct_cap}}</h5>
+            <h6>{{j_acct_cap}}</h6>
             <div class="table-outer q-tbl">
               <table class="table">
                 <thead>
@@ -82,7 +82,7 @@
           </div>
           <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeCouponReimbursableExpense && invoiceFromS3.jaldeeCouponReimbursableExpense.couponList.length>0">
             <div *ngFor="let couponList of invoiceFromS3.jaldeeCouponReimbursableExpense.couponList">
-              <h5>Jaldee Coupon - {{couponList.couponCode}}</h5>
+              <h6>Jaldee Coupon - {{couponList.couponCode}}</h6>
               <div class="table-outer q-tbl" *ngFor="let coupon of couponList.billDetails">
                 <table class="table">
                   <thead>

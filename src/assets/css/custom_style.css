@@ -618,7 +618,7 @@
     .fl-right{float: right;}
     .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {text-align: right}
     .billpopup .mat-dialog-container .two-col .name {flex-basis:75%!important;text-align: right!important;}
-    .billpopup .mat-dialog-container .two-col .price {flex-basis:25%!important;text-align: right!important;};
+    .billpopup .mat-dialog-container .two-col .price {flex-basis:25%!important;text-align: right!important;}
     .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price,
     .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price{flex-basis:20%!important;}
     .cust-btn {text-transform: none!important;margin-right: 10px;}
