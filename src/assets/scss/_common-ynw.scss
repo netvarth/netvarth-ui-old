@@ -90,6 +90,12 @@ app-footer {
     font-style: normal;
 }
 
+//Scroll Hide
+.scroll-hide {
+    overflow: hidden;
+    height: 100vh;
+}
+
 // Form Related #### 
 .form-group, .form-check {
     font-size: .875rem;

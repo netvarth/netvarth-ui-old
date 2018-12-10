@@ -4512,16 +4512,16 @@ footer {
                     font-size: .875rem;
 
                     .mat-form-field {
-                        .mat-form-field-wrapper {
+                        .mat-input-wrapper {
                             padding-bottom: 0px;
 
-                            .mat-form-field-underline,
-                            .mat-form-field-subscript-wrapper,
+                            .mat-input-underline,
+                            .mat-input-subscript-wrapper,
                             .mat-form-field-label-wrapper {
                                 display: none;
                             }
 
-                            .mat-form-field-flex {
+                            .mat-input-flex {
                                 height: 40px;
 
                                 .mat-form-field-infix {
@@ -5048,16 +5048,16 @@ footer {
                                             width: 100%;
                                         }
 
-                                        .mat-form-field-wrapper, .mat-form-field-wrapper {
+                                        .mat-input-wrapper, .mat-form-field-wrapper {
                                             margin-bottom: 0px;
                                             padding-bottom: 0px;
 
-                                            .mat-form-field-underline,
-                                            .mat-form-field-subscript-wrapper, .mat-form-field-underline {
+                                            .mat-input-underline,
+                                            .mat-input-subscript-wrapper, .mat-form-field-underline {
                                                 display: none;
                                             }
 
-                                            .mat-form-field-flex, .mat-form-field-flex {
+                                            .mat-input-flex, .mat-form-field-flex {
 
                                                 .mat-form-field-infix {
                                                     padding: 0;
@@ -5132,21 +5132,21 @@ footer {
                                     margin: 0;
 
                                     mat-form-field {
-                                        .mat-form-field-wrapper {
+                                        .mat-input-wrapper {
 
-                                            .mat-form-field-underline,
-                                            .mat-form-field-subscript-wrapper {
+                                            .mat-input-underline,
+                                            .mat-input-subscript-wrapper {
                                                 display: block;
                                                 margin-bottom: -15px;
                                                 opacity: 0;
                                             }
 
-                                            .mat-form-field-flex {
+                                            .mat-input-flex {
                                                 align-items: center;
                                                 height: 28px;
                                                 width: 150px;
 
-                                                .mat-form-field-suffix {
+                                                .mat-input-suffix {
                                                     width: 40px;
                                                     height: 40px;
 
@@ -6466,7 +6466,7 @@ footer {
                         .lc1-1 {
                             
                             .outer {
-                                
+            
                                 .lc-box {
                                     width: 100%;
                                     padding: 0px;
@@ -6476,13 +6476,12 @@ footer {
                                     margin-bottom: 20px;
 
                                     .tp {
-                                        flex-grow: 1;
-
                                         .ttle {
                                             font-weight: 500;
 
                                             .pkg {
                                                 font-weight: 600;
+                                                margin-right: 10px;
 
                                                 .icon-question {
                                                     font-size: .75rem;
@@ -6494,21 +6493,12 @@ footer {
                                                 display: block;
                                             }
                                         }
-                                    }
-
-                                    .bt {
-                                        margin-left: 10px;
-                                        text-align: right;
-                                        display: flex;
-
-
                                         .bt1 {
                                             padding: 5px 15px;
                                             height: auto;
                                             text-transform: none;
                                             font-size: .875rem;
                                             align-self: flex-start;
-                                            margin-right: 40px;
                                         }
                                     }
                                 }
@@ -6615,7 +6605,6 @@ footer {
                                     flex-grow: 1;
 
                                     span {
-                                        display: table;
                                         font-weight: 500;
 
                                         &.amount {
@@ -6640,6 +6629,8 @@ footer {
                                             background: $linkblue;
                                             color: $white;
                                             text-transform: none;
+                                            margin-left: 10px;
+                                            margin-bottom: 5px;
 
                                             &:hover {
                                                 background: $hover-blue;
@@ -6754,12 +6745,13 @@ footer {
                         .lc11 {
                             .lc1-1 {
                                 .outer {
-                                    .lc-box {
-                                        flex-direction: column;
-
-                                        .bt {
-                                            margin-top: 5px;
-                                            margin-left: 0;
+                                    .lc-box {                                        
+                                        .tp {
+                                            .ttle {
+                                                .bt1 {
+                                                    margin-left: 0;
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -7626,16 +7618,16 @@ footer {
                                     width: 100%;
                                 }
 
-                                .mat-form-field-wrapper {
+                                .mat-input-wrapper {
                                     /*margin-bottom: 5px;*/
                                     padding-bottom: 0px;
 
-                                    .mat-form-field-underline,
-                                    .mat-form-field-subscript-wrapper {
+                                    .mat-input-underline,
+                                    .mat-input-subscript-wrapper {
                                         display: none;
                                     }
 
-                                    .mat-form-field-flex {
+                                    .mat-input-flex {
                                         height: 40px;
 
                                         .mat-form-field-infix {
@@ -7756,7 +7748,7 @@ footer {
                                     display: flex;
                                     align-items: center;
 
-                                    .mat-form-field-suffix {
+                                    .mat-input-suffix {
                                         margin-left: 5px;
                                     }
                                 }
@@ -8259,11 +8251,11 @@ footer {
                         .mat-form-field {
                             width: 100%;
 
-                            .mat-form-field-wrapper {
+                            .mat-input-wrapper {
                                 padding: 0;
                                 margin: 0;
 
-                                .mat-form-field-infix {
+                                .mat-input-infix {
                                     margin: 0;
                                     padding: 0;
                                     border: none;
@@ -8279,7 +8271,7 @@ footer {
                                     }
                                 }
 
-                                .mat-form-field-underline {
+                                .mat-input-underline {
                                     display: none;
                                 }
                             }

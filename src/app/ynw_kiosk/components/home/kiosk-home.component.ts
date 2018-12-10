@@ -485,6 +485,15 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
 
     let curmobile = '';
     if (this.showregmobile) {
+          // alert('ddd');
+     // console.log('src', this.numberpattern.test(this.reg_mobile));
+      if (!this.numberpattern.test(this.reg_mobile)) {
+        this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
+        if (this.regmobile.nativeElement) {
+          this.regmobile.nativeElement.focus();
+        }
+        return false;
+      }
       if (!this.phonePattern.test(this.reg_mobile)) {
         this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
         if (this.regmobile.nativeElement) {

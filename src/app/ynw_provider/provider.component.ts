@@ -12,7 +12,7 @@ import { CommonDataStorageService } from '../shared/services/common-datastorage.
 export class ProviderComponent {
 
     evnt;
-
+    outerscroller = false;
     constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -41,5 +41,9 @@ export class ProviderComponent {
 
           this.shared_functions.sendMessage({ttype: 'main_loading', action: false});
 
+    }
+        handleScrollhide(ev) {
+        this.outerscroller = ev;
+       // console.log('outer scrol', ev);
     }
 }

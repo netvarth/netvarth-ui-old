@@ -281,6 +281,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
         return;
       }
+      form_data.locmapurl = this.amForm.controls['locmapurl'].value;
       post_itemdata2 = {
         'place': form_data.locname || '',
         'longitude': form_data.loclongitude || '',
@@ -389,6 +390,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
         return;
       }
+      form_data.locmapurl = this.amForm.controls['locmapurl'].value;
       post_itemdata2 = {
         'baseLocation': {
           'place': form_data.locname || '',

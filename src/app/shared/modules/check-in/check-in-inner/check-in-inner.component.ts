@@ -611,6 +611,7 @@ export class CheckInInnerComponent implements OnInit {
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
   handleServiceForWhom() {
+  this.resetApi();
     this.holdwaitlist_for = this.waitlist_for;
     this.step = 3;
     this.main_heading = 'Family Members';

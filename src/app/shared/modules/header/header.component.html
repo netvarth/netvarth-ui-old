@@ -2,7 +2,7 @@
 <div class="outer-loader-div" *ngIf="main_loading">
     <mat-spinner class="outer-load-spinner"></mat-spinner>
 </div>
-<div class="overlay" [class.show]="showLearnMore" (click)="hideLearnmore()"></div>
+<div class="overlay" [class.show]="showLearnMore" [class.learnmore]="showLearnMore" (click)="hideLearnmore()"></div>
 <div class="lm-popup" *ngIf="showLearnMore">
         <span (click)="hideLearnmore()" class="close"></span>    
         <!-- <span class="backTotop" (click)="handleScroll('learnmore-begining')">Back To Top</span> -->

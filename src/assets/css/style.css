@@ -1894,7 +1894,7 @@ select:-webkit-autofill:focus {
     .ksk app-kiosk-home .ksk-exit {
       margin-top: 20px;
       top: 50%;
-      margin-top: -50px;
+      margin-top: 8px;
       right: 30px; }
       @media only screen and (max-width: 767px) {
         .ksk app-kiosk-home .ksk-exit {
@@ -1957,7 +1957,7 @@ select:-webkit-autofill:focus {
     .ksk.checkinspecial app-kiosk-home {
       margin-top: 150px; }
   .ksk.checkstatspecial app-kiosk-home {
-    height: 75vh; }
+    height: 60vh; }
     .ksk.checkstatspecial app-kiosk-home .ksk-cpy.arrived {
       width: 580px;
       overflow-y: auto; }
@@ -2038,6 +2038,10 @@ app-footer {
   src: url("../fonts/Montserrat-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat-Regular.woff") format("woff"), url("../fonts/Montserrat-Regular.ttf") format("truetype"), url("../fonts/Montserrat-Regular.svg#Montserrat-Regular") format("svg");
   font-weight: normal;
   font-style: normal; }
+.scroll-hide {
+  overflow: hidden;
+  height: 100vh; }
+
 .form-group, .form-check {
   font-size: .875rem;
   font-weight: 500; }
@@ -14002,28 +14006,22 @@ footer.dashb {
       position: relative;
       display: flex;
       margin-bottom: 20px; }
-      .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp {
-        flex-grow: 1; }
-        .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle {
-          font-weight: 500; }
-          .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle .pkg {
-            font-weight: 600; }
-            .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle .pkg .icon-question {
-              font-size: .75rem; }
-          .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle .warning {
-            color: #f24949;
-            display: block; }
-      .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .bt {
-        margin-left: 10px;
-        text-align: right;
-        display: flex; }
-        .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .bt .bt1 {
-          padding: 5px 15px;
-          height: auto;
-          text-transform: none;
-          font-size: .875rem;
-          align-self: flex-start;
-          margin-right: 40px; }
+      .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle {
+        font-weight: 500; }
+        .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle .pkg {
+          font-weight: 600;
+          margin-right: 10px; }
+          .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle .pkg .icon-question {
+            font-size: .75rem; }
+        .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle .warning {
+          color: #f24949;
+          display: block; }
+      .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .bt1 {
+        padding: 5px 15px;
+        height: auto;
+        text-transform: none;
+        font-size: .875rem;
+        align-self: flex-start; }
     .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .subs {
       padding-bottom: 15px;
       margin-top: 15px;
@@ -14096,7 +14094,6 @@ footer.dashb {
           flex-grow: 1; }
           .comn-cls .w-dta .copy .pay-section.card .colum .lc44 .lc4-1 .lt span,
           .comn-cls .w-dta .copy .pay-section.card .colum .lc44 .lc4-1 .rt span {
-            display: table;
             font-weight: 500; }
             .comn-cls .w-dta .copy .pay-section.card .colum .lc44 .lc4-1 .lt span.amount,
             .comn-cls .w-dta .copy .pay-section.card .colum .lc44 .lc4-1 .rt span.amount {
@@ -14116,7 +14113,9 @@ footer.dashb {
             .comn-cls .w-dta .copy .pay-section.card .colum .lc44 .lc4-1 .rt span.bt3 {
               background: #00aef2;
               color: #fff;
-              text-transform: none; }
+              text-transform: none;
+              margin-left: 10px;
+              margin-bottom: 5px; }
               .comn-cls .w-dta .copy .pay-section.card .colum .lc44 .lc4-1 .lt span.bt3:hover,
               .comn-cls .w-dta .copy .pay-section.card .colum .lc44 .lc4-1 .rt span.bt3:hover {
                 background: #1873f2;
@@ -14173,11 +14172,8 @@ footer.dashb {
         margin: 0 0 20px 0;
         display: block; } }
   @media only screen and (max-width: 575px) {
-    .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box {
-      flex-direction: column; }
-      .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .bt {
-        margin-top: 5px;
-        margin-left: 0; }
+    .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .outer .lc-box .tp .ttle .bt1 {
+      margin-left: 0; }
     .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .subs .ttle .pack .price {
       font-size: 1rem; }
     .comn-cls .w-dta .copy .pay-section.card .lc11 .lc1-1 .subs .subs-box .pack .price {
@@ -19045,6 +19041,12 @@ header.consumer {
   font-size: .875rem;
   color: #999999;
   text-align: center; }
+
+.overlay.learnmore {
+  z-index: 955; }
+  @media only screen and (max-width: 767px) {
+    .overlay.learnmore {
+      background: black; } }
 
 .lm-popup {
   background: #fff;

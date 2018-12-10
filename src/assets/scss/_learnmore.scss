@@ -1,3 +1,14 @@
+//Overlay 
+.overlay {
+    &.learnmore {
+        z-index: 955;
+        
+        @include respond-to(ynw-767) {
+            background: rgba(0, 0, 0, 1);
+        }
+    }
+}
+
 // Learn More Popup
 .lm-popup {
     background: $white;
