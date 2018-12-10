@@ -46,6 +46,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   status_cap = Messages.STATUS_CAP;
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
+  coupon_notes = projectConstants.COUPON_NOTES;
   api_error = null;
   api_success = null;
   checkin = null;
@@ -76,6 +77,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   showPaidlist = false;
   showJCouponSection = false;
   jCoupon = '';
+  couponList: any = [];
   constructor(
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -96,6 +98,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.bill_load_complete = 1;
   }
   ngOnInit() {
+    this.getCouponList();
     this.getWaitlistBill(this.checkin);
     this.getPrePaymentDetails();
     this.getPaymentModes();
@@ -147,6 +150,8 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+          console.log(this.checkin);
+          console.log(this.bill_data);
           this.getBillDateandTime();
         },
         error => {
@@ -226,10 +231,11 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
  * Apply Jaldee Coupon
  */
   applyJCoupon() {
-    console.log();
-    let jaldeeCoupon: string;
-    jaldeeCoupon = this.jCoupon;
-    this.applyAction(jaldeeCoupon, this.bill_data.uuid);
+    if (this.checkCouponValid(this.jCoupon)) {
+      this.applyAction(this.jCoupon, this.bill_data.uuid);
+    } else {
+      this.sharedfunctionObj.openSnackBar('Coupon Invalid', { 'panelClass': 'snackbarerror' });
+    }
   }
   /**
    * Remove Jaldee Coupon
@@ -251,7 +257,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
    */
   applyAction(action, uuid) {
     return new Promise((resolve, reject) => {
-      this.sharedServices.applyCoupon(action, uuid).subscribe
+      this.sharedServices.applyCoupon(action, uuid, this.checkin.provider.id).subscribe
         (billInfo => {
           this.bill_data = billInfo;
           this.clearJCoupon();
@@ -274,5 +280,30 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
    */
   cashPayment() {
     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CASH_PAYMENT'));
+  }
+  getCouponList() {
+    const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+    this.sharedfunctionObj.getS3Url()
+      .then(
+        s3Url => {
+          this.sharedServices.getbusinessprofiledetails_json(this.checkin.provider.uniqueId, s3Url, 'coupon', UTCstring)
+            .subscribe(res => {
+              this.couponList = res;
+            });
+        });
+  }
+  checkCouponValid(couponCode) {
+    let found = false;
+    for (let couponIndex = 0; couponIndex < this.couponList.length; couponIndex++) {
+      if (this.couponList[couponIndex].jaldeeCouponCode.trim() === couponCode.trim()) {
+        found = true;
+        break;
+      }
+    }
+    if (found) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

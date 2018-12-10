@@ -28,10 +28,6 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
     {
       label: 'Other',
       value: 'other'
-    },
-    {
-      label: 'Self Pay',
-      value: 'self_pay'
     }
   ];
   pay_data = {
@@ -62,11 +58,15 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
     this.pay_data.amount = this.sharedfunctionObj.roundToTwoDecimel(this.pay_data.amount); // for only two decimal
     this.pay_data.amount = (this.pay_data.amount > 0) ? this.pay_data.amount : 0;
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-    // this.getPaymentSettings();
+    this.getPaymentSettings();
     this.org_amt = this.sharedfunctionObj.roundToTwoDecimel(this.pay_data.amount);
     // console.log(Math.round(this.pay_data.amount * 100) / 100);
   }
   ngOnInit() {
+    this.provider_services.getPaymentSettings().subscribe(
+      (settings) => {
+        console.log(settings);
+    });
   }
   makePayment() {
     if (this.pay_data.uuid != null &&
@@ -96,21 +96,23 @@ export class ProviderWaitlistCheckInPaymentComponent implements OnInit {
       evt.preventDefault();
     }
   }
-  // getPaymentSettings() {
-  //   this.provider_services.getPaymentSettings()
-  //     .subscribe(
-  //       (data: any) => {
-  //         if (data.payUVerified || data.payTmVerified) {
-  //           this.payment_options.push(
-  //             {
-  //               label: 'Self Pay',
-  //               value: 'self_pay'
-  //             });
-  //         }
-  //       },
-  //       error => {
-  //       });
-  // }
+  getPaymentSettings() {
+    this.provider_services.getPaymentSettings()
+      .subscribe(
+        (data: any) => {
+          // if (data.payUVerified || data.payTmVerified) {
+            console.log(data);
+            if (data.onlinePayment) {
+            this.payment_options.push(
+              {
+                label: 'Jaldee Pay',
+                value: 'self_pay'
+              });
+          }
+        },
+        error => {
+        });
+  }
   selpay() {
     if (this.pay_data.acceptPaymentBy === 'self_pay') {
       this.pay_data.amount = this.org_amt;

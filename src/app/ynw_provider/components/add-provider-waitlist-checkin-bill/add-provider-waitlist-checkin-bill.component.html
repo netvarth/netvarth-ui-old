@@ -23,17 +23,22 @@
 											<div class="section-one">
 												<h3>{{bname | capitalizeFirst}}</h3>
 												<div class="details" *ngIf="bill_load_complete==1">
-													<span class="columns"> <span class="title">{{customer_label
-															| capitalizeFirst}}</span> <span class="dynamic">{{checkin.consumer.userProfile.firstName
+													<div class="col-md-12 col-sm-12 col-lg-12">
+														<span class="dynamic">{{checkin.consumer.userProfile.firstName
 															| capitalizeFirst}} {{checkin.consumer.userProfile.lastName}}</span>
-													</span> <span class="columns"> <span class="title">{{date_cap}}
-															&amp; {{time_cap}}</span> <span class="dynamic">{{billdate}}
+														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>
-													</span> <span class="columns" *ngIf="billnumber"> <span class="title">{{bill_no_cap}}</span>
-														<span class="dynamic">{{billnumber}}</span>
-													</span> <span class="columns" *ngIf="gstnumber"> <span class="title">{{gstin_cap}}</span>
-														<span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
-													</span>
+													</div>
+													<div class="col-md-12 col-sm-12 col-lg-12">
+														<span *ngIf="billnumber">
+																<span class="title">{{bill_no_cap}} </span>
+																<span class="dynamic">{{billnumber}}</span>
+														</span>
+														<span class="dynamic fl-right" *ngIf="gstnumber">
+															<span class="title">{{gstin_cap}} </span>
+															<span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
+														</span>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -55,7 +60,7 @@
 																	<button mat-menu-item (click)="orderPCouponSelected()" *ngIf="(coupons.length >0)">
 																		<span>Apply Coupon</span>
 																	</button>
-																	<button mat-menu-item (click)="jCouponSelected()">
+																	<button *ngIf="(jCouponsList.length>0)" mat-menu-item (click)="jCouponSelected()">
 																		<span>Apply Jaldee Coupon</span>
 																	</button>
 																</mat-menu>
@@ -97,7 +102,7 @@
 																</div>
 															</div>
 														</ng-container>
-														<ng-container *ngIf="showJCouponSection">
+														<ng-container *ngIf="(jCouponsList.length>0) && showJCouponSection">
 															<div class="add-j-coupon edit-row service">
 																<div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
 																	<div class="item selectbox">
@@ -127,7 +132,7 @@
 																							<mat-form-field>
 																								<mat-select [(ngModel)]="selOrderDiscount" [ngModelOptions]="{standalone: true}">
 																									<mat-option [value]="''">{{select_discount_cap}}</mat-option>
-																									<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount"> {{
+																									<mat-option *ngFor="let discount of itemdiscounts; let i = index" [value]="discount"> {{
 																										discount.name
 																										}}
 																									</mat-option>
@@ -148,7 +153,7 @@
 																						<ng-container *ngIf="showDiscountSection && selOrderDiscount.discType=='OnDemand'">
 																							<span class="label">Value</span> <span class="number">
 																								<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue
-																									 aria-label="Number" matInput value="1" size="3" [(ngModel)]="discAmount" (blur)="blurQty($event.target.value, discAmount)">
+																									 aria-label="Number" matInput value="1" size="3" [(ngModel)]="discAmount">
 																								</mat-form-field>
 																							</span>
 
@@ -158,7 +163,7 @@
 																				<div class="col-md-12 col-sm-12 col-lg-12 notes" *ngIf="showDiscountSection">
 																					<div class="col-md-12 col-lg-12 col-sm-12 no-padding">
 																						<div class="form-group ">
-																							<mat-checkbox [(ngModel)]="isProvNote">Provider Note</mat-checkbox>
+																							<mat-checkbox [(ngModel)]="isProvNote">Private Note</mat-checkbox>
 																						</div>
 																						<div class="form-group" *ngIf="isProvNote">
 																							<textarea class="form-control" id="message" placeholder="Message" [(ngModel)]="discProvNote">
@@ -167,7 +172,7 @@
 																					</div>
 																					<div class="col-md-12 col-lg-12 col-sm-12 no-padding">
 																						<div class="form-group ">
-																							<mat-checkbox [(ngModel)]="isConsNote">Consumer Note</mat-checkbox>
+																							<mat-checkbox [(ngModel)]="isConsNote">Notes for Consumer</mat-checkbox>
 																						</div>
 																						<div class="form-group" *ngIf="isConsNote">
 																							<textarea class="form-control" id="message" placeholder="Message" [(ngModel)]="discConsNote">
@@ -226,8 +231,8 @@
 																			<div class="item qty col-md-4 col-sm-4 col-lg-4 no-padding">
 																				<ng-container *ngIf="bill_data.service[i].serviceDiscount.discType=='OnDemand'">
 																					<span class="label">Value</span> <span class="number">
-																						<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue aria-label="Number"
-																							 matInput value="1" size="3" [(ngModel)]="bill_data.service[i].serviceDiscount.discAmount"
+																						<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue
+																							 aria-label="Number" matInput value="1" size="3" [(ngModel)]="bill_data.service[i].serviceDiscount.discAmount"
 																							 (blur)="blurQty($event.target.value, bill_data.service[i].serviceDiscount.discAmount)">
 																						</mat-form-field>
 																					</span>
@@ -300,8 +305,9 @@
 																			<div class="item qty col-md-4 col-sm-4 col-lg-4 no-padding">
 																				<ng-container *ngIf="bill_data.items[i].itemDiscount.discType=='OnDemand'">
 																					<span class="label">Value</span> <span class="number">
-																						<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue aria-label="Number"
-																							 matInput value="1" size="3" [(ngModel)]="bill_data.items[i].itemDiscount.discAmount" (blur)="blurQty($event.target.value, bill_data.items[i].itemDiscount.discAmount)">
+																						<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue
+																							 aria-label="Number" matInput value="1" size="3" [(ngModel)]="bill_data.items[i].itemDiscount.discAmount"
+																							 (blur)="blurQty($event.target.value, bill_data.items[i].itemDiscount.discAmount)">
 																						</mat-form-field>
 																					</span>
 																				</ng-container>
@@ -354,20 +360,20 @@
 																<tr class="amt discount" *ngFor="let discount of bill_data.discount">
 																	<td class="name">{{discount.name}}</td>
 																	<td class="price">(-){{discount.discValue |
-																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeOrderDiscount(discount)" class="fa fa-window-close"
-																		aria-hidden="true"></i></td>
+																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeOrderDiscount(discount)"
+																		 class="fa fa-window-close" aria-hidden="true"></i></td>
 																</tr>
 																<tr class="amt coupon" *ngFor="let coupon of bill_data.providerCoupon">
 																	<td class="name">{{coupon.name}}</td>
 																	<td class="price">(-){{coupon.couponValue |
-																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeProviderCoupon(coupon)" class="fa fa-window-close"
-																		aria-hidden="true"></i></td>
+																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeProviderCoupon(coupon)"
+																		 class="fa fa-window-close" aria-hidden="true"></i></td>
 																</tr>
 																<tr class="amt discount" *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
 																	<td class="name">{{jcoupon.key}}</td>
 																	<td class="price">(-){{jcoupon.value.value |
-																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeJCoupon(jcoupon.key)" class="fa fa-window-close"
-																		aria-hidden="true"></i></td>
+																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeJCoupon(jcoupon.key)"
+																		 class="fa fa-window-close" aria-hidden="true"></i></td>
 																</tr>
 																<tr class="amt tax" *ngIf="bill_data.taxableTotal">
 																	<td class="name"><span class="tax-top">Tax
@@ -394,6 +400,16 @@
 																</tr>
 															</tbody>
 														</table>
+													</div>
+												</div>
+												<div class="section-three" *ngIf="bill_data && bill_data.discount || bill_data.jCoupon">
+													<div class *ngFor="let discount of bill_data.discount">
+														<span *ngIf="discount.privateNote">* {{discount.privateNote}}</span>
+													</div>
+													<div class *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
+														<div class="" *ngFor="let note of jcoupon.value['systemNote']">
+															<span class="red">* {{coupon_notes[note]}}</span>
+														</div>
 													</div>
 												</div>
 												<div class="section-four" *ngIf="showPaidlist">

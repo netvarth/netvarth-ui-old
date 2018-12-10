@@ -65,6 +65,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   print_bill_cap = Messages.PRINT_BILL_CAP;
   accept_payment_cap = Messages.ACCEPT_PAY_CAP;
   make_payment_cap = Messages.MAKE_PAYMENT_CAP;
+  couponNotes = projectConstants.COUPON_NOTES;
   @ViewChild('itemservicesearch') item_service_search;
   amForm: FormGroup;
   api_error = null;
@@ -80,6 +81,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   services: any = [];
   coupons: any = [];
   discounts: any = [];
+  itemdiscounts: any = [];
   items: any = [];
   totdisc_val = 0;
   totcoup_val = 0;
@@ -125,6 +127,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   isConsNote = false;
   isProvNote = false;
   uuid;
+  jCouponsList: any = [];
   makPaydialogRef;
   breadcrumbs = [
     {
@@ -157,30 +160,24 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
+    this.getJaldeeActiveCoupons();
     this.getCoupons()
       .then(
         () => {
           this.getDiscounts()
             .then(
               () => {
-                this.getTaxDetails()
+                this.getDomainSubdomainSettings()
                   .then(
                     () => {
-                      this.getDomainSubdomainSettings()
-                        .then(
-                          () => {
-                            this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-                            this.getServiceList();
-                          },
-                          error => {
-                          }
-                        );
-                      this.getItemsList();
-                      this.bill_load_complete = 1;
+                      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                      this.getServiceList();
                     },
-                    (error) => {
-                      this.bill_load_complete = 0;
-                    });
+                    error => {
+                    }
+                  );
+                this.getItemsList();
+                this.bill_load_complete = 1;
               },
               (error) => {
                 this.bill_load_complete = 0;
@@ -188,6 +185,20 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         },
         (error) => {
           this.bill_load_complete = 0;
+        });
+  }
+  getJaldeeActiveCoupons() {
+    this.jCouponsList = [];
+    let couponList: any = [];
+    this.provider_services.getJaldeeCoupons()
+      .subscribe(
+        (list) => {
+          couponList = list;
+          for (let index = 0; index < couponList.length; index++) {
+            if (couponList[index].couponState === 'ENABLED') {
+              this.jCouponsList.push(couponList[index]);
+            }
+          }
         });
   }
   getCheckinDetails() {
@@ -339,6 +350,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.discounts = data;
+            this.itemdiscounts = Array.from(this.discounts);
+            this.discounts.splice(0, 1);
             resolve();
           },
           error => {
@@ -749,8 +762,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.discAmount = '';
     this.discProvNote = '';
     this.discConsNote = '';
-
-
   }
   applyOrderDiscount() {
     const action = 'addBillLevelDiscount';
@@ -832,14 +843,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   emailBill(e) {
     this.provider_services.emailWaitlistBill(this.uuid)
-    .subscribe(
-      data => {
-        this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_EMAIL);
-      },
-      error => {
-        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-      }
-    );
+      .subscribe(
+        data => {
+          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_EMAIL);
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
 
 }

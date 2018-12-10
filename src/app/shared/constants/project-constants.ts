@@ -298,5 +298,11 @@ export const projectConstants = {
     { displayName: 'Requested', value: 'REQUESTED' },
     { displayName: 'Paid', value: 'PAID' },
     { displayName: 'In-Dispute', value: 'INDISPUTE' }
-  ]
+  ],
+  COUPON_NOTES: {
+    MINIMUM_BILL_AMT_REQUIRED: 'Minimum bill amount required to apply Jaldee Coupon',
+    COUPON_APPLIED: 'Coupon already applied',
+    SELF_PAY_REQUIRED: 'Self pay required',
+    NO_OTHER_COUPONS_ALLOWED: 'No other coupons allowed'
+  }
 };

@@ -8,7 +8,7 @@
     <div class="bill-section-content">
         <div class="col-md-12 col-sm-12 col-lg-12 bill-wrapper viewBill" *ngIf="bill_data">
             <div class="global-icons col-md-12 col-sm-12 col-lg-12">
-                <button  (click)="printMe()"  [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
+                <button (click)="printMe()" [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
                     <i class="fa fa-print" aria-hidden="true"></i>
                 </button>
             </div>
@@ -163,10 +163,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="section-three" *ngIf="bill_data && bill_data.discount || bill_data.jCoupon">
+                        <div class *ngFor="let discount of bill_data.discount">
+                            <span *ngIf="discount.displayNote">* {{discount.displayNote}}</span>
+                        </div>
+                        <div class *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
+                            <div class="" *ngIf="jcoupon.value['systemNote'].indexOf('COUPON_APPLIED')!=-1">
+                                <div class="" *ngFor="let note of jcoupon.value['systemNote']">
+                                    <span class="red">* {{coupon_notes[note]}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="section-three other-section">
-                <div class="col-md-12 col-sm-12 col-xs-12 no-padding" *ngIf="bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
+                <div class="col-md-12 col-sm-12 col-xs-12 no-padding" *ngIf="this.couponList.length > 0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                     <div class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                         <span class="">Jaldee Coupon</span>
                     </div>
@@ -175,8 +187,9 @@
                             <div class="add-j-coupon edit-row service">
                                 <div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
                                     <div class="item selectbox">
-                                        <mat-form-field class="example-full-width"> <input type="text" #jcoupon
-                                                matInput [(ngModel)]="jCoupon">
+                                        <mat-form-field class="example-full-width"> <input class="coupon-text-bill"
+                                                type="text" #jcoupon placeholder="Enter Your Coupon Code" matInput
+                                                [(ngModel)]="jCoupon">
                                         </mat-form-field>
                                     </div>
                                 </div>

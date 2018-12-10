@@ -4512,16 +4512,16 @@ footer {
                     font-size: .875rem;
 
                     .mat-form-field {
-                        .mat-input-wrapper {
+                        .mat-form-field-wrapper {
                             padding-bottom: 0px;
 
-                            .mat-input-underline,
-                            .mat-input-subscript-wrapper,
+                            .mat-form-field-underline,
+                            .mat-form-field-subscript-wrapper,
                             .mat-form-field-label-wrapper {
                                 display: none;
                             }
 
-                            .mat-input-flex {
+                            .mat-form-field-flex {
                                 height: 40px;
 
                                 .mat-form-field-infix {
@@ -5048,16 +5048,16 @@ footer {
                                             width: 100%;
                                         }
 
-                                        .mat-input-wrapper, .mat-form-field-wrapper {
+                                        .mat-form-field-wrapper, .mat-form-field-wrapper {
                                             margin-bottom: 0px;
                                             padding-bottom: 0px;
 
-                                            .mat-input-underline,
-                                            .mat-input-subscript-wrapper, .mat-form-field-underline {
+                                            .mat-form-field-underline,
+                                            .mat-form-field-subscript-wrapper, .mat-form-field-underline {
                                                 display: none;
                                             }
 
-                                            .mat-input-flex, .mat-form-field-flex {
+                                            .mat-form-field-flex, .mat-form-field-flex {
 
                                                 .mat-form-field-infix {
                                                     padding: 0;
@@ -5132,21 +5132,21 @@ footer {
                                     margin: 0;
 
                                     mat-form-field {
-                                        .mat-input-wrapper {
+                                        .mat-form-field-wrapper {
 
-                                            .mat-input-underline,
-                                            .mat-input-subscript-wrapper {
+                                            .mat-form-field-underline,
+                                            .mat-form-field-subscript-wrapper {
                                                 display: block;
                                                 margin-bottom: -15px;
                                                 opacity: 0;
                                             }
 
-                                            .mat-input-flex {
+                                            .mat-form-field-flex {
                                                 align-items: center;
                                                 height: 28px;
                                                 width: 150px;
 
-                                                .mat-input-suffix {
+                                                .mat-form-field-suffix {
                                                     width: 40px;
                                                     height: 40px;
 
@@ -7626,16 +7626,16 @@ footer {
                                     width: 100%;
                                 }
 
-                                .mat-input-wrapper {
+                                .mat-form-field-wrapper {
                                     /*margin-bottom: 5px;*/
                                     padding-bottom: 0px;
 
-                                    .mat-input-underline,
-                                    .mat-input-subscript-wrapper {
+                                    .mat-form-field-underline,
+                                    .mat-form-field-subscript-wrapper {
                                         display: none;
                                     }
 
-                                    .mat-input-flex {
+                                    .mat-form-field-flex {
                                         height: 40px;
 
                                         .mat-form-field-infix {
@@ -7756,7 +7756,7 @@ footer {
                                     display: flex;
                                     align-items: center;
 
-                                    .mat-input-suffix {
+                                    .mat-form-field-suffix {
                                         margin-left: 5px;
                                     }
                                 }
@@ -8259,11 +8259,11 @@ footer {
                         .mat-form-field {
                             width: 100%;
 
-                            .mat-input-wrapper {
+                            .mat-form-field-wrapper {
                                 padding: 0;
                                 margin: 0;
 
-                                .mat-input-infix {
+                                .mat-form-field-infix {
                                     margin: 0;
                                     padding: 0;
                                     border: none;
@@ -8279,7 +8279,7 @@ footer {
                                     }
                                 }
 
-                                .mat-input-underline {
+                                .mat-form-field-underline {
                                     display: none;
                                 }
                             }

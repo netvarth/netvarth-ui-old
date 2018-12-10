@@ -134,7 +134,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   }
   applyCoupon(jCoupon, uuid) {
     console.log(jCoupon);
-    this.shared_services.applyCoupon(jCoupon, uuid).subscribe
+    this.shared_services.applyCoupon(jCoupon, uuid, this.checkin.provider.id).subscribe
     (data => {
       console.log(data);
     });

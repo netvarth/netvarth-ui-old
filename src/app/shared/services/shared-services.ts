@@ -506,8 +506,8 @@ export class SharedServices {
       const url = 'ynwConf/settings/' + domain + '/' + subdomain;
       return this.servicemeta.httpGet(url);
     }
-    applyCoupon(jCouponCode, checkinId) {
-      const url = 'consumer/jaldee/coupons/' + jCouponCode + '/' + checkinId;
+    applyCoupon(jCouponCode, checkinId, accountid) {
+      const url = 'consumer/jaldee/coupons/' + jCouponCode + '/' + checkinId + '?account=' + accountid;
       return this.servicemeta.httpPost(url);
     }
 }
