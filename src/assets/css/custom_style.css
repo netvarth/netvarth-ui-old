@@ -690,3 +690,23 @@
       @media(max-width:500px) {
         .cdk-overlay-container .mat-autocomplete-panel .mat-option{line-height: 15px!important; }
       }
+
+      .content.loc-list .vw-rpt .item .ttle {
+        color: #999999;
+        display: block;
+        font-weight: 500;
+    }
+    .content.loc-list .vw-rpt .item {
+      font-weight: 600;
+      float: left;
+      margin-bottom: 20px;
+  }
+  /* .content.loc-list .card .copy .c-ot {
+    display: flex; */
+    /* font-size: .875rem; */
+    /* margin-bottom: 20px;
+} */
+.content.loc-list .vw-rpt {
+  /* display: flex; */
+  font-size: .875rem;
+}

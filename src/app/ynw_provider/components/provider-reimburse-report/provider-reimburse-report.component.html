@@ -67,7 +67,7 @@
                   <td data-title="Report Id" class="name pointer-cursor" (click)="reportView(report.invoiceId)">{{report.invoiceId}}</td>
                   <td data-title="Time Period">{{formatDateDisplay(report.reportFromDate)}}
                     - {{formatDateDisplay(report.reportEndDate)}}</td>
-                  <td data-title="Coupons Used">{{report.listOfJaldeeCoupons}}</td>
+                  <td data-title="Coupons Used">{{report.listOfJaldeeCoupons || '-'}}</td>
                   <td data-title="Jaldee Account">{{report.subTotalJaldeeBank}}</td>
                   <td data-title="Reimbursable Amount">{{report.subTotalJaldeeCoupons}}</td>
                   <td data-title="Grant Total">{{report.grantTotal}}</td>
