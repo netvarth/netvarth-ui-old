@@ -99,6 +99,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     maxcnt10 = 10;
     maxcnt11 = 11;
     activeLicPkg;
+    breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         {
             title: 'Settings',
@@ -124,6 +125,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.getPaymentSettings(2);
         this.getTaxpercentage();
         this.getProviderProfile();
+        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'bprofile' };
         this.activeLicPkg = this.shared_Functionsobj.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
     getPaymentSettings(showmsg) {
@@ -611,4 +613,24 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     selectedIndexChange(val: number) {
         this.tabid = val;
     }
+    learnmore_clicked(mod, e) {
+        /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+               width: '50%',
+               panelClass: 'commonpopupmainclass',
+               autoFocus: true,
+               data: {
+                   moreOptions : this.getMode(mod)
+               }
+             });
+             dialogRef.afterClosed().subscribe(result => {
+             });*/
+        e.stopPropagation();
+        const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+        this.shared_Functionsobj.sendMessage(pdata);
+            }
+    getMode(mod) {
+        let moreOptions = {};
+        moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
+        return moreOptions;
+      }
 }

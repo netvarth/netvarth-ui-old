@@ -22,11 +22,18 @@
 
                 <div class="form-group">
                         <label for="reason" class="col-form-label">{{select_date_cap}}</label>
-                         <div class="pickerouter">
+                         <!-- <div class="pickerouter">
                          <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                           <input class="form-control1" name="alert-datepicker" [(ngModel)]="alertSeldate" [value]="alertSeldate" type="text"
                           matInput [matDatepicker]="picker" autocomplete="off" disabled [max]="tday">
-                        </div>
+                        </div> -->
+
+                        <div class="pickerouter">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+                            <input class="form-control1" name="alert-datepicker" [(ngModel)]="alertSeldate" [value]="alertSeldate" type="text"
+                          matInput [matDatepicker]="picker" autocomplete="off" disabled [max]="tday">
+                            </div>
                 </div>
                 </div>
                 <div class="actions-div">

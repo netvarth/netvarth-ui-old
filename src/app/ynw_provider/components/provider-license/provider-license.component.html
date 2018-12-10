@@ -30,7 +30,7 @@
                                         <div class="lc1-1">
                                             <div class="outer">
                                                 <div class="lc-box" *ngIf="currentlicense_details.accountLicense">
-                                                    <div class="tp"><span class="ttle">Your current License Package is <span class="pkg">{{currentlicense_details.accountLicense.name}} <span class="icon-question" [matTooltip]="license_tooltip"></span> <span class="cs-btn bt1" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">Upgrade License</span></span> 
+                                                    <div class="tp"><span class="ttle">Your current License Package is <span class="pkg">{{currentlicense_details.accountLicense.displayName}} <span class="icon-question" [matTooltip]="license_tooltip"></span> <span class="cs-btn bt1" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">Upgrade License</span></span> 
                                                     <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span></div>
     
                                                     <!-- <div class="bt" *ngIf="upgradablepackages.length > 0">
