@@ -48,7 +48,7 @@
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-          <div class="table-outer d-tbl q-tbl" *ngIf="couponreport.length != 0">
+          <div class="table-outer d-tbl" *ngIf="couponreport.length != 0">
             <table class="table">
               <thead>
                 <tr>
@@ -64,14 +64,14 @@
               </thead>
               <tbody>
                 <tr *ngFor="let report of couponreport">
-                  <td data-title="Name" class="td2" class="pointer-cursor" (click)="reportView(report.invoiceId)">{{report.invoiceId}}</td>
-                  <td data-title="Period" class="pointer-cursor" class="td1">{{formatDateDisplay(report.reportFromDate)}}
+                  <td data-title="Report Id" class="name pointer-cursor" (click)="reportView(report.invoiceId)">{{report.invoiceId}}</td>
+                  <td data-title="Time Period">{{formatDateDisplay(report.reportFromDate)}}
                     - {{formatDateDisplay(report.reportEndDate)}}</td>
-                  <td data-title="coupons Used" class="pointer-cursor" class="td1">{{report.listOfJaldeeCoupons}}</td>
-                  <td data-title="Jaldee" class="pointer-cursor" class="td1">{{report.subTotalJaldeeBank}}</td>
-                  <td data-title="Amount" class="pointer-cursor" class="td1">{{report.subTotalJaldeeCoupons}}</td>
-                  <td data-title="total" class="pointer-cursor" class="td1">{{report.grantTotal}}</td>
-                  <td data-title="status" class="pointer-cursor" class="td1">
+                  <td data-title="Coupons Used">{{report.listOfJaldeeCoupons}}</td>
+                  <td data-title="Jaldee Account">{{report.subTotalJaldeeBank}}</td>
+                  <td data-title="Reimbursable Amount">{{report.subTotalJaldeeCoupons}}</td>
+                  <td data-title="Grant Total">{{report.grantTotal}}</td>
+                  <td data-title="Status">
                     {{report_statuses[report.status]}}
                   </td>
                   <td class="action">
@@ -84,6 +84,9 @@
                           <span>{{req_payment_cap}}</span>
                         </button>
                       </mat-menu>
+                    </span>
+                    <span class="mbt-mobile-show" *ngIf="report.status=='PAYMENTPENDING'">
+                      <button type="button" (click)="openrequestModal(report.invoiceId)">{{req_payment_cap}}</button>
                     </span>
                   </td>
                 </tr>

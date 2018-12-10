@@ -76,6 +76,11 @@ export class ProviderCouponViewComponent implements OnInit {
     });
     this.breadcrumbs = breadcrumbs;
   }
+
+  formatPrice(price) {
+    return this.sharedfunctionObj.print_PricewithCurrency(price);
+  }
+
   getJaldeeCouponStatistic() {
     this.provider_servicesobj.getJaldeeCouponStat(this.jc_code).subscribe(
       data => {
@@ -91,7 +96,11 @@ export class ProviderCouponViewComponent implements OnInit {
     this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status).subscribe(
       data => {
         this.getCouponview();
+      }, error => {
+        console.log(error);
+        this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }
+
 }

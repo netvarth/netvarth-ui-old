@@ -132,6 +132,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   emaillist: any = [];
   phonelist: any = [];
   showEmailPhonediv = false;
+  coupondialogRef;
   femaleTooltip = projectConstants.TOOLTIP_FEMALE;
   maleTooltip = projectConstants.TOOLTIP_MALE;
   virtualsectionHeader = 'Click here to View More Details';
@@ -988,5 +989,30 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   converNewlinetoBr(value: any): any {
     return value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+  }
+
+  openCoupons(obj) {
+    const s3id = obj.fields.unique_id;
+    const busname = obj.fields.title;
+    const UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    this.sharedFunctionobj.getS3Url('provider')
+      .then(
+        res => {
+          const s3url = res;
+          this.shared_services.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
+            .subscribe(couponsList => {
+              console.log(couponsList);
+              this.coupondialogRef = this.dialog.open(CouponsComponent, {
+                width: '60%',
+                panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
+                disableClose: true,
+                data: {
+                  couponsList: couponsList
+                }
+              });
+              this.coupondialogRef.afterClosed().subscribe(result => {
+              });
+            });
+        });
   }
 }

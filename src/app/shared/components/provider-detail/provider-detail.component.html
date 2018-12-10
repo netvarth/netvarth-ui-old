@@ -45,9 +45,11 @@
                                         capitalizeFirst}})</span>
 
                                     <div class="clr">
-                                    	<div class="pro-desc">
-                                            <span *ngIf="bNameStart!=''" [innerHTML]="bNameStart | nl2br | capitalizeFirst"></span><span *ngIf="bNameEnd!='' && showmoreDesc" [innerHTML]="bNameEnd | nl2br | capitalizeFirst"></span>
-                                            <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">{{more_cap}}</span> <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">{{less_cap}}</span>
+                                        <div class="pro-desc">
+                                            <span *ngIf="bNameStart!=''" [innerHTML]="bNameStart | nl2br | capitalizeFirst"></span><span
+                                                *ngIf="bNameEnd!='' && showmoreDesc" [innerHTML]="bNameEnd | nl2br | capitalizeFirst"></span>
+                                            <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''" (click)="showDesc()">{{more_cap}}</span>
+                                            <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">{{less_cap}}</span>
                                         </div>
                                         <div class="services" *ngIf="specializationslist.length > 0">
                                             <div class="otr-elements">
@@ -114,6 +116,8 @@
                                     <!-- <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li> -->
                                     <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">{{send_msg_cap}}</span></li>
                                     <!-- <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li> -->
+                                    <li><span class="" (click)="openCoupons()">FirstTimeSignup Coupon</span></li>
+                                    <li><span class="" (click)="openCoupons()">Other Jaldee Coupons</span></li>
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
                                     <a [href]="soc.value" target="_blank" *ngFor="let soc of socialMedialist"><i
@@ -169,7 +173,8 @@
                             <div class="top-sect">
                                 <div class="tp-l">
                                     <div class="tp2">
-                                        <span class="ch-title" *ngIf="loc.checkins.length>0" (click)="showExistingCheckin(loc)">{{you_have_cap}} <span class="count">{{loc.checkins.length}}
+                                        <span class="ch-title" *ngIf="loc.checkins.length>0" (click)="showExistingCheckin(loc)">{{you_have_cap}}
+                                            <span class="count">{{loc.checkins.length}}
                                                 {{getTerminologyTerm('waitlist')}}</span> {{at_this_loc_cap}}</span>
                                         <h3>{{loc.place | capitalizeFirst}}</h3>
                                         <a class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
@@ -252,7 +257,8 @@
                                         *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(loc.services.length)">{{getTerminologyTerm('waitlist')}}</span>
                                     <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(loc.services.length)">{{getTerminologyTerm('waitlist')}}</span>
                                     <span class="cs-btn bt10" *ngIf="showcheckInButton(loc.services.length) && loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
-                                        (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}} <span>{{getTerminologyTerm('waitlist')}}</span> {{for_cap}} <span>{{different_date_cap}}</span></span>
+                                        (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                        <span>{{getTerminologyTerm('waitlist')}}</span> {{for_cap}} <span>{{different_date_cap}}</span></span>
                                 </div>
                             </div>
                         </div>

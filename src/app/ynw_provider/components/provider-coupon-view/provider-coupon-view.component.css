@@ -5,3 +5,7 @@
 .rules-cap h5 {
     font-weight: 500px;
 }
+
+.col-md-6 {
+    flex: 0 0 50%;
+}
