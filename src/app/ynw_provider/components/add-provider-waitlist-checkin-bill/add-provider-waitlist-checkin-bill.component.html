@@ -132,7 +132,7 @@
 																							<mat-form-field>
 																								<mat-select [(ngModel)]="selOrderDiscount" [ngModelOptions]="{standalone: true}">
 																									<mat-option [value]="''">{{select_discount_cap}}</mat-option>
-																									<mat-option *ngFor="let discount of itemdiscounts; let i = index" [value]="discount"> {{
+																									<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount"> {{
 																										discount.name
 																										}}
 																									</mat-option>
@@ -217,12 +217,12 @@
 																<div class="add-serv-item edit-row service edit-row discoup" *ngIf="bill_data.service[i].showservicedisccoup">
 																	<div class="spr col-sm-12 col-md-12 col-lg-12 no-padding">
 																		<div class="spl col-md-12 col-sm-12 col-lg-12 notes">
-																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding" *ngIf="discounts.length > 0">
+																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding" *ngIf="itemdiscounts.length > 0">
 																				<div class="item selectbox1">
 																					<mat-form-field>
 																						<mat-select [(ngModel)]="bill_data.service[i].serviceDiscount" [ngModelOptions]="{standalone: true}">
 																							<mat-option [value]="''">{{select_discount_cap}} </mat-option>
-																							<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount">
+																							<mat-option *ngFor="let discount of itemdiscounts; let i = index" [value]="discount">
 																								{{ discount.name }} </mat-option>
 																						</mat-select>
 																					</mat-form-field>
@@ -265,7 +265,7 @@
 																<mat-icon>more_vert</mat-icon>
 															</button>
 															<mat-menu #menu="matMenu">
-																<button mat-menu-item (click)="serviceDiscCoupSec(i)" *ngIf="discounts.length > 0">
+																<button mat-menu-item (click)="serviceDiscCoupSec(i)" *ngIf="itemdiscounts.length > 0">
 																	<span>Apply Discount</span>
 																</button>
 																<button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
@@ -420,7 +420,7 @@
 
 													<div class="list-outer">
 														<div class="table-th">
-															<div class="th one">{{date_cap}} &amp; {{time_cap}}</div>
+															<div class="th one">{{date_cap}}</div>
 															<div class="th two">{{amount_cap}}</div>
 															<div class="th three">{{refundable_cap}}</div>
 														</div>
@@ -429,8 +429,9 @@
 															<div class="wrap">
 																<div class="td one">
 																	<span class="date">{{stringtoDate(payment.paymentOn,
-																		'date')}}</span> <span class="time">{{stringtoDate(payment.paymentOn,
-																		'time')}}</span>
+																		 'date')}}</span> 
+																		<!--	<span class="time">{{stringtoDate(payment.paymentOn,
+																		'time')}}</span> -->
 																</div>
 																<div class="td two">
 																	<span class="amt">{{payment.amount |

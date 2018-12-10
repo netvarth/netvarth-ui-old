@@ -687,6 +687,7 @@
         color: darkorange !important;
       }
       .btm-pad {padding-bottom:5px !important;}
+      .btm-pad-20 {padding-bottom:20px !important;}
       @media(max-width:500px) {
         .cdk-overlay-container .mat-autocomplete-panel .mat-option{line-height: 15px!important; }
       }

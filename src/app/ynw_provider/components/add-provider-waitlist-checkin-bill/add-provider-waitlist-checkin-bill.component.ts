@@ -351,7 +351,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           data => {
             this.discounts = data;
             this.itemdiscounts = Array.from(this.discounts);
-            this.discounts.splice(0, 1);
+            this.itemdiscounts.splice(0, 1);
             resolve();
           },
           error => {

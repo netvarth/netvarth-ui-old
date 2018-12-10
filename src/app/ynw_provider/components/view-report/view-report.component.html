@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeBankStatement">
-            <h5>{{j_acct_cap}}</h5>
+            <h6>{{j_acct_cap}}</h6>
             <div class="table-outer q-tbl">
               <table class="table">
                 <thead>
@@ -58,52 +58,52 @@
                     <th>{{date_cap}}</th>
                     <th>{{bill_cap}} {{id_cap}}</th>
                     <th>{{bill_cap}} {{amt_cap}}</th>
-                    <th>{{consumer_cap}} {{id_cap}}</th>
+                    <!-- <th>{{consumer_cap}} {{id_cap}}</th> -->
                     <th>{{consumer_cap}} {{name_cap}}</th>
                     <th>{{service_cap}}</th>
-                    <th>{{check_in_cap}} {{id_cap}}</th>
+                    <!-- <th>{{check_in_cap}} {{id_cap}}</th> -->
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let jbank of invoiceFromS3.jaldeeBankStatement.entries">
                     <td data-title="Date">{{formatDateDisplay(jbank.date)}}</td>
-                    <td data-title="Bill Id">{{jbank.billId}}</td>
+                    <!-- <td data-title="Bill Id">{{jbank.billId}}</td> -->
                     <td data-title="Bill Amount">{{jbank.billAmount}}</td>
                     <td data-title="Consumer Id">{{jbank.consumerId}}</td>
                     <td data-title="Consumer Name">{{jbank.consumerName}}</td>
                     <td data-title="Service">{{jbank.service}}</td>
-                    <td data-title="Check-in Id">{{jbank.checkinId}}</td>
+                    <!-- <td data-title="Check-in Id">{{jbank.checkinId}}</td> -->
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeCouponReimbursableExpense && invoiceFromS3.jaldeeCouponReimbursableExpense.couponList.length>0">
-            <div *ngFor="let couponList of invoiceFromS3.jaldeeCouponReimbursableExpense.couponList">
-              <h5>Jaldee Coupon - {{couponList.couponCode}}</h5>
-              <div class="table-outer q-tbl" *ngFor="let coupon of couponList.billDetails">
+            <div class="btm-pad-20" *ngFor="let couponList of invoiceFromS3.jaldeeCouponReimbursableExpense.couponList">
+              <h6>Jaldee Coupon - {{couponList.couponCode}}</h6>
+              <div class="table-outer q-tbl" >
                 <table class="table">
                   <thead>
                     <tr>
                       <th>{{date_cap}}</th>
                       <th>{{bill_cap}} {{id_cap}}</th>
                       <th>{{bill_cap}} {{amt_cap}}</th>
-                      <th>{{consumer_cap}} {{id_cap}}</th>
+                      <!-- <th>{{consumer_cap}} {{id_cap}}</th> -->
                       <th>{{consumer_cap}} {{name_cap}}</th>
                       <th>{{service_cap}}</th>
-                      <th>{{check_in_cap}} {{id_cap}}</th>
+                      <!-- <th>{{check_in_cap}} {{id_cap}}</th> -->
                       <th>Coupon Discount</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
+                  <tbody >
+                    <tr *ngFor="let coupon of couponList.billDetails">
                       <td data-title="Date">{{formatDateDisplay(coupon.date)}}</td>
                       <td data-title="Bill Id">{{coupon.billId}}</td>
                       <td data-title="Bill Amount">{{coupon.billAmount}}</td>
-                      <td data-title="Consumer Id">{{coupon.consumerId}}</td>
+                      <!-- <td data-title="Consumer Id">{{coupon.consumerId}}</td> -->
                       <td data-title="Consumer Name">{{coupon.consumerName}}</td>
                       <td data-title="Service">{{coupon.service}}</td>
-                      <td data-title="Check-in Id">{{coupon.checkinId}}</td>
+                      <!-- <td data-title="Check-in Id">{{coupon.checkinId}}</td> -->
                       <td data-title="Coupon Discount">{{coupon.discount}}</td>
                     </tr>
                   </tbody>

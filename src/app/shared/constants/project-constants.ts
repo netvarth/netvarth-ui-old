@@ -303,6 +303,7 @@ export const projectConstants = {
     MINIMUM_BILL_AMT_REQUIRED: 'Minimum bill amount required to apply Jaldee Coupon',
     COUPON_APPLIED: 'Coupon already applied',
     SELF_PAY_REQUIRED: 'Self pay required',
-    NO_OTHER_COUPONS_ALLOWED: 'No other coupons allowed'
+    NO_OTHER_COUPONS_ALLOWED: 'No other coupons allowed',
+    EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit'
   }
 };
