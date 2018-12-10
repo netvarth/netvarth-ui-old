@@ -636,7 +636,7 @@ export const Messages = {
   'LATITUDE_CAP': 'Latitude *',
   'LONGITUDE_CAP': 'Longitude *',
   'LOCATION_ADDRESS_CAP': 'Address *',
-  'MAP_URL_CAP': 'Google Map URL1',
+  'MAP_URL_CAP': 'Google Map URL',
   'SCHEULDE_CAP': 'Business Schedules',
   'OPEN_CAP': '24 hours Open',
   'PARKING_TYPE_CAP': 'Select Parking Type',
@@ -960,7 +960,7 @@ export const Messages = {
   'REPORT_PERIOD_DATE_CAP': 'Period/Date',
   'REPORT_COUPON_AMT_CAP': 'Coupon Amount',
   'REPORT_REIMBURSE_AMT_CAP': 'Reimbursable Amount from Jaldee',
-  'REPORT_JALDEE_ACCT_CAP': 'Jaldee financial Account',
+  'REPORT_JALDEE_ACCT_CAP': 'Jaldee Financial Account',
   'REPORT_CONSUMER_CAP': 'Consumer',
 
   // App-ynw_provider-components-provider-items-details
