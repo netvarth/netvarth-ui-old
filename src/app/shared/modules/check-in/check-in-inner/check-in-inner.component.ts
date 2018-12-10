@@ -561,14 +561,14 @@ export class CheckInInnerComponent implements OnInit {
     this.consumerNote = vale;
   }
   handleFutureDateChange(e) {
-    console.log('future', e);
-    const obtmonth = (e._i.month + 1);
+   // console.log('future', e.value);
+    const obtmonth = (e.value._i.month + 1);
     let cmonth = '' + obtmonth;
     if ( obtmonth < 10) {
       cmonth = '0' + obtmonth;
     }
-    const seldate = e._i.year + '-' + cmonth + '-' + e._i.date;
-    console.log('date changed', seldate, e);
+    const seldate = e.value._i.year + '-' + cmonth + '-' + e.value._i.date;
+    // console.log('date changed', seldate, e.value);
     this.sel_checkindate = seldate;
     this.handleFuturetoggle();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
