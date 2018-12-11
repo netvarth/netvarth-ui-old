@@ -78,7 +78,7 @@ export const Messages = {
   'BPROFILE_SOCIAL_URL_VALID': 'Please enter a valid URL',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
   // 'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
-  'BPROFILE_LANGUAGE_SAVED': 'Languages saved successfully',
+  'BPROFILE_LANGUAGE_SAVED': 'Saved successfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations saved successfully',
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 400 characters',
