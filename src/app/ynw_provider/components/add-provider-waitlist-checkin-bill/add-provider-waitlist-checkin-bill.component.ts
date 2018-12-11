@@ -375,22 +375,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-  getTaxDetails() {
-    return new Promise((resolve, reject) => {
-      this.provider_services.getProviderTax()
-        .subscribe(
-          data => {
-            this.item_service_tax = data['taxPercentage'];
-            resolve();
-          },
-          error => {
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-
-            reject(error);
-          }
-        );
-    });
-  }
   getPrePaymentDetails() {
     return new Promise((resolve, reject) => {
       this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
@@ -618,6 +602,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       (billInfo => {
         this.bill_data = billInfo;
         this.hideAddItem();
+      }, error => {
+        this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     this.itemServiceSearch.reset();
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
