@@ -29,7 +29,7 @@ export interface ItemServiceGroup {
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
-  date_cap = Messages.DATE_CAP;
+  date_cap = Messages.SYS_ALERTS_DATE_CAP;
   time_cap = Messages.TIME_CAP;
   bill_no_cap = Messages.BILL_NO_CAP;
   gstin_cap = Messages.GSTIN_CAP;

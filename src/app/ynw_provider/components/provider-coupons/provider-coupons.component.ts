@@ -9,6 +9,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provider-coupons.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
+import { error } from 'util';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -166,6 +167,9 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status).subscribe(
       data => {
         this.getJaldeeCoupons();
+      },
+      error => {
+        this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }
