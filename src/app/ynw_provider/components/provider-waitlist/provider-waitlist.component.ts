@@ -29,6 +29,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   queues_count: any = 0;
 
   checkin_label = '';
+  prevcheckstatus;
 
   breadcrumbs = [
     {
@@ -116,6 +117,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
 
   changAcceptOnlineCheckin(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
+    this.prevcheckstatus = (this.online_checkin) ? false : true;
     this.online_checkin = event.checked;
     this.setAcceptOnlineCheckin(is_check);
   }
@@ -125,9 +127,11 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.provider_services.setAcceptOnlineCheckin(is_check)
     .subscribe(
       data => {
+        this.getWaitlistMgr();
       },
       error => {
-
+        const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
+       this.online_checkin = this.prevcheckstatus;
       }
     );
   }

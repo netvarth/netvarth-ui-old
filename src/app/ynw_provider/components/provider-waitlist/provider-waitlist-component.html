@@ -12,10 +12,15 @@
                   <div class="hd-t">
                       <h2>Accept Online {{checkin_label | capitalizeFirst}}</h2>
                       <div class="ctrl">
+                          <!-- <mat-slide-toggle
+                          class="example-margin"
+                          (change)="changAcceptOnlineCheckin($event)"
+                          [checked]="online_checkin"></mat-slide-toggle> -->
                           <mat-slide-toggle
                           class="example-margin"
                           (change)="changAcceptOnlineCheckin($event)"
-                          [checked]="online_checkin"></mat-slide-toggle>
+                          [(ngModel)]="online_checkin"></mat-slide-toggle>
+                          
                       </div>
                       <!-- <div class="info ml-auto"><i data-icon="B"></i></div> -->
                   </div>
