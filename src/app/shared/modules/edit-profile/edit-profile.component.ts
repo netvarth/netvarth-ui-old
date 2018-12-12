@@ -33,7 +33,7 @@ export class EditProfileComponent implements OnInit {
   related_links_cap = Messages.RELATED_LINKS;
   change_password_cap = Messages.CHANGE_PASSWORD_CAP;
   change_mobile_cap = Messages.CHANGE_MOB_CAP;
-  change_email_cap = Messages.CHANGE_EMAIL_CAP;
+  change_email_cap = Messages.ADD_CHANGE_EMAIL_CAP;
   family_members_cap = Messages.FAMILY_MEMBERS;
   
 
