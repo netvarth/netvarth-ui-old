@@ -204,8 +204,8 @@
 														<div class="list-content">
 															<div class="c-row one">
 																<div class="name">
-																	{{service.serviceName | capitalizeFirst}} @ {{service.price}} <span class="tax" [matTooltipClass]="tooltipcls"
-																	 [matTooltip]="'Taxable'" *ngIf="service.GSTpercentage > 0">Tax</span>
+																	{{service.serviceName | capitalizeFirst}} @ {{service.price}} <sup  [matTooltipClass]="tooltipcls"
+																	 [matTooltip]="'Taxable'" *ngIf="service.GSTpercentage > 0">Tax</sup>
 																</div>
 																<div class="quantity">{{qnty_cap}}
 																	{{service.quantity}}</div>
@@ -278,8 +278,8 @@
 														<div class="list-content">
 															<div class="c-row one">
 																<div class="name">
-																	{{item.itemName | capitalizeFirst}} @ {{item.price}} <span class="tax" [matTooltipClass]="tooltipcls"
-																	 [matTooltip]="'Taxable'" *ngIf="item.GSTpercentage > 0">Tax</span>
+																	{{item.itemName | capitalizeFirst}} @ {{item.price}} <sup [matTooltipClass]="tooltipcls"
+																	 [matTooltip]="'Taxable'" *ngIf="item.GSTpercentage > 0">Tax</sup>
 																</div>
 																<div class="quantity">{{qnty_cap}}
 																	{{item.quantity}}</div>

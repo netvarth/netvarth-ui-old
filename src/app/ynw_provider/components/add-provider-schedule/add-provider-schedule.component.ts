@@ -297,7 +297,9 @@ update_btn = Messages.UPDATE_BTN;
         this.Selall = false;
       }
       // console.log('sel day', this.selday_arr);
+      // tslint:disable-next-line:radix
       this.dstart_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH')), minute: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm'))};
+      // tslint:disable-next-line:radix
       this.dend_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH')), minute: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm'))};
 
       this.show_schedule_selection = true;
@@ -307,7 +309,9 @@ update_btn = Messages.UPDATE_BTN;
       // // console.log('selday', this.selday_arr);
     } else {
 
+      // tslint:disable-next-line:radix
       this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'))};
+      // tslint:disable-next-line:radix
       this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'))};
 
       this.edit_mode = false;

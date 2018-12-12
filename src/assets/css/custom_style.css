@@ -121,7 +121,7 @@
                   font-weight: 600;
                   position: absolute;
                   top: -2px;
-                 
+                  right: -4px;
                   color: #fda60d; }
               .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .quantity {
                 flex-basis: 20%; }
@@ -683,7 +683,7 @@
       padding: 5px 10px;
       text-transform: none;
       font-size: .75rem;}
-      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .paytext{
+      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .paytext span{
         color: darkorange !important;
       }
       .btm-pad {padding-bottom:5px !important;}

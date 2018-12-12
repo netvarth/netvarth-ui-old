@@ -85,12 +85,14 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
      this.document.getElementById('bname').focus();
      return;
    }
-    if (form_data.bdesc !== '' && form_data.bdesc.trim() === '') {
-    this.api_error = 'Please enter the business description';
-    this.document.getElementById('bdesc').focus();
-    return;
-   }
-   form_data.bdesc = form_data.bdesc.trim();
+  //   if (form_data.bdesc !== '' && form_data.bdesc.trim() === '') {
+  //   this.api_error = 'Please enter the business description';
+  //   this.document.getElementById('bdesc').focus();
+  //   return;
+  //  }
+  if (form_data.bdesc) {
+    form_data.bdesc = form_data.bdesc.trim();
+  }
    /*if (blankpatterm.test(form_data.bdesc)) {
     this.api_error = 'Please enter the business description';
     this.document.getElementById('bdesc').focus();
