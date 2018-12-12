@@ -36,7 +36,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
       title: 'Items',
       url: '/provider/settings/items'
     }
-  ];
+  ]
   breadcrumbs = this.breadcrumbs_init;
   itemnameTooltip = Messages.ITEMNAME_TOOLTIP;
   additemdialogRef;
@@ -116,29 +116,26 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   }
 
   dochangeStatus(item) {
-    if (!item) {
-      return false;
+    if (item.status === 'ACTIVE') {
+      this.provider_servicesobj.disableItem(item.itemId).subscribe(
+        data => {
+          this.getitems();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
     }
-    let status_condition = '';
-    switch (item.status) {
-      case 'ACTIVE':
-        status_condition = 'INACTIVE';
-        break;
-      case 'INACTIVE':
-        status_condition = 'ACTIVE';
-        break;
+    else {
+      this.provider_servicesobj.enableItem(item.itemId).subscribe(
+        data => {
+          this.getitems();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
     }
-    this.statuschangedialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('ITEM_ENABLE').replace('[status]', status_condition)
-      }
-    });
-    this.statuschangedialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.changeStatus(item.itemId, status_condition);
-      }
-    });
   }
   changeStatus(itemid, tochstatus) {
     this.provider_servicesobj.enableItem(itemid)
@@ -151,6 +148,34 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  //   disableService(service, msg) {
+  //     this.provider_services.disableService(service.id)
+  //         .subscribe(
+  //             data => {
+  //                 this.getServiceDetail();
+  //                 const snackBarRef = this.shared_Functionsobj.openSnackBar(msg);
+  //             },
+  //             error => {
+  //                 const snackBarRef = this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //                 this.getServiceDetail();
+  //             });
+  // }
+
+  // enableService(service, msg) {
+  //     this.provider_services.enableService(service.id)
+  //         .subscribe(
+  //             data => {
+  //                 this.getServiceDetail();
+  //                 const snackBarRef = this.shared_Functionsobj.openSnackBar(msg);
+  //             },
+  //             error => {
+  //                 const snackBarRef = this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //                 this.getServiceDetail();
+  //             });
+  // }
+
+
   showDetails(id) {
     if (!id) {
       return;

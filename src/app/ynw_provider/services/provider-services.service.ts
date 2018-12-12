@@ -104,6 +104,10 @@ export class ProviderServices {
     const path = 'provider/items/enable/' + id;
     return this.servicemeta.httpPut(path);
   }
+  disableItem(id) {
+    const path = 'provider/items/disable/' + id;
+    return this.servicemeta.httpPut(path);
+  }
   uploadItemImage(id, data) {
     // const path = 'accounts/item/' + id + '/image';
     const path = 'provider/items/' + id + '/image';

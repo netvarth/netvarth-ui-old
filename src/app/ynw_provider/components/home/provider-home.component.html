@@ -327,7 +327,7 @@
                                     [ngClass]="{'newbill': !checkin.billStatus, 'viewbill': checkin.billStatus }"> -->
 
                     <span class="cs-btn bt7 viewbill" (click)="viewBillPage(checkin)" *ngIf="checkin.waitlistStatus != 'checkedIn' &&
-                                    checkin.waitlistStatus != 'cancelled' && time_type !== 2 && checkin.waitlistStatus != 'prepaymentPending'">
+                                    checkin.waitlistStatus != 'cancelled' && time_type !== 2 && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid">
 
                       <ng-container *ngIf="checkin.waitlistStatus != 'prepaymentPending'">
                         <i class="icon-play"></i>{{bill_cap}}

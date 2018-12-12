@@ -12,6 +12,7 @@ import { AddProviderItemComponent } from '../add-provider-item/add-provider-item
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { AddProviderItemImageComponent } from '../add-provider-item-image/add-provider-item-image.component';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-items-details',
@@ -30,6 +31,7 @@ export class ProviderItemsDetailsComponent implements OnInit, OnDestroy {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
+  item_status = projectConstants.ITEM_STATUS;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
