@@ -50,9 +50,9 @@ export class AddProviderSchedulesComponent implements OnInit {
 
   ngOnInit() {
     // console.log('source', this.Isource);
-    this.dstart_time =  {hour: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')};
-    this.dend_time =  {hour: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')};
-
+    this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10)};
+    this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10)};
+    // console.log('starttime', this.dstart_time, this.dend_time);
     this.show_savebutton = (this.showsavebutton === '1') ? true : false;
     this.show_cancelbutton = (this.hidecancelbutton === '1') ? false : true;
     this.schedule_arr = this.existingSchedules;
@@ -280,8 +280,8 @@ export class AddProviderSchedulesComponent implements OnInit {
         }
       }
       // console.log('sel day', this.selday_arr);
-      this.dstart_time =  {hour: moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH'), minute: moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm')};
-      this.dend_time =  {hour: moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH'), minute: moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm')};
+      this.dstart_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm'), 10)};
+      this.dend_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm'), 10)};
 
       this.show_schedule_selection = true;
       if (this.showsavebutton === '1') {
@@ -295,8 +295,8 @@ export class AddProviderSchedulesComponent implements OnInit {
       // // console.log('selday', this.selday_arr);
     } else {
 
-      this.dstart_time =  {hour: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm')};
-      this.dend_time =  {hour: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), minute: moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm')};
+      this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10)};
+      this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10)};
 
       this.edit_mode = false;
       this.api_error = this.api_success = '';

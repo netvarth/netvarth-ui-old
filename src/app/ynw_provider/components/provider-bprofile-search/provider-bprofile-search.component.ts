@@ -111,7 +111,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
+    layout: new AdvancedLayout(-1, false)
   };
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
