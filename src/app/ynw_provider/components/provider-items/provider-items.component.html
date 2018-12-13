@@ -22,6 +22,7 @@
                                             <th>{{name_cap}}</th>
                                             <th>{{price_cap}}</th>
                                             <th>{{taxable_cap}}</th>
+                                            <th>Status</th>
                                             <!-- <th>Status</th> -->
                                             <th><span class="addbt" (click)="addItem()"></span></th>
                                         </tr>
@@ -37,9 +38,10 @@
                                             <td data-title="Name" class="td2" class="pointer-cursor" (click)="showDetails(item.itemId)"><span
                                                     [matTooltipClass]="tooltipcls" [matTooltip]="itemnameTooltip">{{item.displayName}}</span>
                                             </td>
-                                            <td data-title="Status" clas="td4">{{item.price |
+                                            <td data-title="Price" clas="td4">{{item.price |
                                                 currency:'INR':'symbol':'.2-2'}}</td>
                                             <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}</td>
+                                            <td data-title="Status">{{item_status[item.status]}}</td>
                                             <td class="action">
                                                 <span class="mbt">
                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -50,7 +52,8 @@
                                                             <i class="icon-edit"></i>
                                                             {{edit_btn}}
                                                         </button>
-                                                        <button mat-menu-item (click)="dochangeStatus(item)">
+                                                        <button type="button" (click)="dochangeStatus(item)"
+                                                            mat-menu-item>
                                                             <i *ngIf="item.status=='INACTIVE' || !item.status" class="icon-enable"></i>
                                                             <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
                                                             {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
@@ -62,14 +65,12 @@
                                                         </button>
                                                     </mat-menu>
                                                 </span>
-
                                                 <span class="mbt-mobile-show">
                                                     <button class="editcls" type="button" (click)="editItem(item)">{{edit_btn}}</button>
-                                                    <button class="coupon_status" [class.enableicon]="item.status=='INACTIVE'"
-                                                        [class.disableicon]="item.status=='ACTIVE'" type="button"
-                                                        (click)="dochangeStatus(item)">{{(item.status=='INACTIVE') ?
-                                                        'Enable':'
-                                                        Disable'}}</button>
+                                                    <button class="status" type="button" (click)="dochangeStatus(item)">
+                                                        <i *ngIf="item.status=='INACTIVE' || !item.status" class="icon-enable"></i>
+                                                        <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
+                                                        {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}</button>
                                                     <button class="deletecls" type="button" (click)="doRemoveItem(item)">{{delete_btn}}</button>
                                                 </span>
                                             </td>

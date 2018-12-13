@@ -9,6 +9,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderItemComponent } from '../add-provider-item/add-provider-item.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-items',
@@ -37,6 +38,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
       url: '/provider/settings/items'
     }
   ]
+  item_status = projectConstants.ITEM_STATUS;
   breadcrumbs = this.breadcrumbs_init;
   itemnameTooltip = Messages.ITEMNAME_TOOLTIP;
   additemdialogRef;

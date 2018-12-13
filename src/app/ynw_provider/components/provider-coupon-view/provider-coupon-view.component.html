@@ -40,11 +40,11 @@
                                         </div>
                                     </div>
                                     <div class="c-ot" *ngIf="jCoupon.couponRules.selfPaymentRequired || jCoupon.couponRules.onlineCheckinRequired">
-                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.selfPaymentRequired">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                                             <span class="ttle">{{self_payment}}</span>
                                             <span> {{jCoupon.couponRules.selfPaymentRequired}}</span>
                                         </div>
-                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.onlineCheckinRequired">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
                                             <span class="ttle">{{online_check}}</span>
                                             <span> {{jCoupon.couponRules.onlineCheckinRequired}}</span>
                                         </div>
