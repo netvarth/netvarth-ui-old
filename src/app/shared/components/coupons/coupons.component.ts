@@ -11,13 +11,32 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 })
 export class CouponsComponent implements OnInit {
   couponsList: any = [];
+  type;
+  tempCouponList: any = [];
   constructor(private activaterouterobj: ActivatedRoute,
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-     }
+  }
   ngOnInit() {
-    this.couponsList = this.data.couponsList;
+    this.tempCouponList = this.data.couponsList;
+    this.type = this.data.type;
+    this.showCoupons();
+  }
+
+  showCoupons() {
+    this.couponsList = [];
+    for (let index = 0; index < this.tempCouponList.length; index++) {
+      if (this.type) {
+        if (this.tempCouponList[index].firstCheckinOnly === true) {
+          this.couponsList.push(this.tempCouponList[index]);
+        }
+      } else {
+        if (this.tempCouponList[index].firstCheckinOnly === false) {
+          this.couponsList.push(this.tempCouponList[index]);
+        }
+      }
+    }
   }
 
   formatDateDisplay(dateStr) {

@@ -155,6 +155,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   commdialogRef;
   coupondialogRef;
   isfirstCheckinOffer = false;
+  btn_clicked = false;
   constructor(private routerobj: Router,
     private location: Location,
     private activaterouterobj: ActivatedRoute,
@@ -1918,6 +1919,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   checkserviceClicked(name, obj) {
+    this.btn_clicked = true;
     console.log('here', name, obj);
     if (this.shared_functions.checkLogin()) {
       const ctype = this.shared_functions.isBusinessOwner('returntyp');
@@ -1973,9 +1975,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
 
     this.servicedialogRef.afterClosed().subscribe(result => {
+      this.btn_clicked = false;
     });
   }
-  openCoupons(obj) {
+  openCoupons(obj, type) {
+    this.btn_clicked = true;
     const s3id = obj.fields.unique_id;
     const busname = obj.fields.title;
     const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
@@ -1991,10 +1995,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
                 disableClose: true,
                 data: {
-                  couponsList: couponsList
+                  couponsList: couponsList,
+                  type: type
                 }
               });
               this.coupondialogRef.afterClosed().subscribe(result => {
+                this.btn_clicked = false;
               });
             });
         });

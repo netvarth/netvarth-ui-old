@@ -116,7 +116,7 @@
                                     <!-- <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li> -->
                                     <li><span class="icon-message" (click)="communicateHandler()" *ngIf="provider_bussiness_id">{{send_msg_cap}}</span></li>
                                     <!-- <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li> -->
-                                    <li><span class="" (click)="openCoupons()">FirstTimeSignup Coupon</span></li>
+                                    <li *ngIf="isfirstCheckinOffer"><span class=""  (click)="openCoupons('first')">FirstTimeSignup Coupon</span></li>
                                     <li><span class="" (click)="openCoupons()">Other Jaldee Coupons</span></li>
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">

@@ -348,7 +348,7 @@
 
                                         <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
-                                                <li *ngFor="let serv of search_result.fields.services" (click)="checkserviceClicked(serv,search_result)">{{serv
+                                                <li *ngFor="let serv of search_result.fields.services" (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv
                                                     | capitalizeFirst}}</li>
                                             </ul>
                                         </div>
@@ -393,8 +393,8 @@
                                 <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">{{send_message_cap}}</span>
                                 <span class="claim-business" (click)="claimBusiness(search_result)" *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}}</span>
-                                <span class="first-time-jc" *ngIf="search_result.fields.coupon_enabled==1 && isfirstCheckinOffer" (click)="openCoupons(search_result)" >FirstTimeSignup Coupon</span>
-                                <span class="other-jcs" *ngIf="search_result.fields.coupon_enabled==1" (click)="openCoupons(search_result)" >Other Jaldee Coupons</span>
+                                <span class="first-time-jc" *ngIf="search_result.fields.coupon_enabled==1 && isfirstCheckinOffer" (click)="!btn_clicked && openCoupons(search_result,true)" >FirstTimeSignup Coupon</span>
+                                <span class="other-jcs" *ngIf="search_result.fields.coupon_enabled==1" (click)="!btn_clicked && openCoupons(search_result)" >Other Jaldee Coupons</span>
                             </div>
                         </div>
                         <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']">

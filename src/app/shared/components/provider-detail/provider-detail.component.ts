@@ -31,7 +31,6 @@ import { CheckInComponent } from '../../modules/check-in/check-in.component';
 
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { CouponsComponent } from '../coupons/coupons.component';
-import { CouponviewComponent } from '../couponview/couponview.component';
 
 
 
@@ -165,7 +164,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
-  couponviewdialogRef: MatDialogRef<CouponviewComponent, any>;
+  s3CouponList: any = [];
+  isfirstCheckinOffer;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -179,6 +179,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+      if (activeUser) {
+        this.isfirstCheckinOffer = activeUser.firstCheckIn;
+      }
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.getInboxUnreadCnt();
     this.activaterouterobj.paramMap
@@ -225,6 +229,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
           this.getbusinessprofiledetails_json('virtualFields', true);
+          this.getbusinessprofiledetails_json('coupon', true);
         },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -382,6 +387,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }*/
           case 'terminologies': {
             this.terminologiesjson = res;
+            break;
+          }
+          case 'coupon' : {
+            this.s3CouponList = res;
             break;
           }
           case 'virtualFields': {
@@ -960,20 +969,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       return term;
     }
   }
-
-
-  openCouponview() {
-
-    this.couponviewdialogRef = this.dialog.open(CouponviewComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
-      disableClose: true,
-      data: {
-      }
-    });
-    this.couponviewdialogRef.afterClosed().subscribe(result => {
-    });
-  }
   handleEmailPhonediv() {
     if (this.showEmailPhonediv) {
       this.showEmailPhonediv = false;
@@ -990,29 +985,17 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   converNewlinetoBr(value: any): any {
     return value.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
-
-  openCoupons(obj) {
-    const s3id = obj.fields.unique_id;
-    const busname = obj.fields.title;
-    const UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    this.sharedFunctionobj.getS3Url('provider')
-      .then(
-        res => {
-          const s3url = res;
-          this.shared_services.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
-            .subscribe(couponsList => {
-              console.log(couponsList);
-              this.coupondialogRef = this.dialog.open(CouponsComponent, {
-                width: '60%',
-                panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
-                disableClose: true,
-                data: {
-                  couponsList: couponsList
-                }
-              });
-              this.coupondialogRef.afterClosed().subscribe(result => {
-              });
-            });
-        });
+  openCoupons(type) {
+    this.coupondialogRef = this.dialog.open(CouponsComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],
+      disableClose: true,
+      data: {
+        couponsList: this.s3CouponList,
+        type: type
+      }
+    });
+    this.coupondialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

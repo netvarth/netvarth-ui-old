@@ -128,6 +128,7 @@ export class CheckInInnerComponent implements OnInit {
   couponsList: any = [];
   @Input() data: any = [];
   @Output() returntoParent = new EventEmitter<any>();
+  isfirstCheckinOffer;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -142,6 +143,10 @@ export class CheckInInnerComponent implements OnInit {
   ) {
   }
   ngOnInit() {
+    const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    if (activeUser) {
+      this.isfirstCheckinOffer = activeUser.firstCheckIn;
+    }
     // console.log('check-inpassed data', this.data);
     this.customer_data = this.data.customer_data || [];
     if (this.data.moreparams.terminologies) {
@@ -1071,7 +1076,8 @@ export class CheckInInnerComponent implements OnInit {
       if (couponListTemp && couponListTemp.length > 0) {
         for (let i = 0; i < couponListTemp.length; i++) {
           for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
-            if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === couponListTemp[i].trim()) {
+            if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === couponListTemp[i].trim() &&
+            this.s3CouponsList[couponIndex].firstCheckinOnly === this.isfirstCheckinOffer) {
               this.couponsList.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
               break;
             }
