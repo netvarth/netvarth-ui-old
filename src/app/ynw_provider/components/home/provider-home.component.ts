@@ -182,7 +182,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
     this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
 
-    this.done_label = this.shared_functions.getTerminologyTerm('done');
+    this.done_label = this.shared_functions.getTerminologyTerm('completed');
     this.done_upper = this.shared_functions.firstToUpper(this.done_label);
 
     this.started_label = this.shared_functions.getTerminologyTerm('started');

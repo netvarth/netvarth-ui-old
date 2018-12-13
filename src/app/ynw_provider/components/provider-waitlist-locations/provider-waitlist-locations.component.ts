@@ -37,7 +37,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   multipeLocationAllowed = false;
   businessConfig: any = [];
   dialogRef;
-
+  breadcrumb_moreoptions: any = [];
   breadcrumbs = [
     {
       title: 'Settings',
@@ -222,5 +222,25 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.shared_Functionsobj.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
+    return moreOptions;
   }
 }

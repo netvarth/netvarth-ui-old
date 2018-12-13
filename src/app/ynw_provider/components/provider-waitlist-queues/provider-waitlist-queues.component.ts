@@ -36,7 +36,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
 
   api_load_complete = 0;
   tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
-
+  breadcrumb_moreoptions: any = [];
   breadcrumbs = [
     {
       title: 'Settings',
@@ -110,5 +110,25 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   goQueueDetail(queue) {
     this.router.navigate(['provider', 'settings', 'waitlist-manager',
       'queue-detail', queue.id]);
+  }
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.shared_Functionsobj.sendMessage(pdata);
+        }
+getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
+    return moreOptions;
   }
 }
