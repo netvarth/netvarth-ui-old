@@ -103,7 +103,8 @@ export class ChangeEmailComponent implements OnInit {
           // this.api_success = Messages.OTP_SENT_EMAIL;
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          // this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
     }

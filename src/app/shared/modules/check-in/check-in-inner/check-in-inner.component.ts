@@ -599,12 +599,12 @@ export class CheckInInnerComponent implements OnInit {
     this.consumerNote = vale;
   }
   handleFutureDateChange(e) {
-    const obtmonth = (e._i.month + 1);
+    const obtmonth = (e.value._i.month + 1);
     let cmonth = '' + obtmonth;
     if (obtmonth < 10) {
       cmonth = '0' + obtmonth;
     }
-    const seldate = e._i.year + '-' + cmonth + '-' + e._i.date;
+    const seldate = e.value._i.year + '-' + cmonth + '-' + e.value._i.date;
     // console.log('date changed', seldate, e);
     this.sel_checkindate = seldate;
     this.handleFuturetoggle();

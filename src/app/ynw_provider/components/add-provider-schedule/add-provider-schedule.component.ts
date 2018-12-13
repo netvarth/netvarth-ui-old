@@ -202,7 +202,7 @@ update_btn = Messages.UPDATE_BTN;
         // this.api_success = Messages.BPROFILE_SCHADDEDFOR + this.getDay(selday);
       } else { // case if adding the schedule
         this.schedule_arr.push(add_schedule);
-        this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHADDEDFOR') + this.getDay(selday);
+        // this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHADDEDFOR') + this.getDay(selday);
       }
     }
     if (this.edit_mode && this.edit_index !== '') {

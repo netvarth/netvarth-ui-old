@@ -54,9 +54,9 @@
                     <div class="form-group dt" *ngIf="futuredate_allowed && data.datechangereq">
                         <div class="pickerouter">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker (selectedChanged)="handleFutureDateChange($event)" [disabled]="false"></mat-datepicker>
+                            <mat-datepicker #picker></mat-datepicker>
                             <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
-                                [max]="maxDate" disabled [value]="ddate">
+                                [max]="maxDate" disabled [value]="ddate"  (dateChange)="handleFutureDateChange($event)">
                         </div>
                     </div>
                 </div>
