@@ -90,6 +90,9 @@ export class ProviderbWizardComponent implements OnInit {
   search_active = false;
   coord_error = '';
   locname_error = '';
+
+  address_error = '';
+
   gurl_error = '';
   error_Exists = false;
   schedule_exists = false;
@@ -242,6 +245,13 @@ export class ProviderbWizardComponent implements OnInit {
               this.locname_error = 'Please enter the location name';
              // console.log('iamhere');
             }
+
+            const addr_validate = blankpattern.test(this.wizard_data_holder.address);
+            if (addr_validate) {
+              this.error_Exists = true;
+              this.address_error = "Please enter the address";
+            }
+
             const mapurlexists_validate = blankpattern.test(this.wizard_data_holder.mapurl);
             if (!mapurlexists_validate) {
               const mapurl_validate = urlpattern.test(this.wizard_data_holder.mapurl);
@@ -652,6 +662,7 @@ export class ProviderbWizardComponent implements OnInit {
     this.error_Exists = false;
     this.coord_error = '';
     this.locname_error = '';
+    this.address_error = '';
     this.gurl_error = '';
   }
 
@@ -697,6 +708,9 @@ export class ProviderbWizardComponent implements OnInit {
     switch (mod) {
       case 'locname_error':
         this.locname_error = '';
+      break;
+      case 'address_error':
+        this.address_error = '';
       break;
       case 'coord_error':
         this.coord_error = '';
