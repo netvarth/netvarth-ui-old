@@ -62,8 +62,8 @@ update_btn = Messages.UPDATE_BTN;
 
   ngOnInit() {
     // console.log('source', this.Isource);
-    this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'))};
-    this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'))};
+      this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10)};
+    this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10)};
 
     this.show_savebutton = (this.showsavebutton === '1') ? true : false;
     this.show_cancelbutton = (this.hidecancelbutton === '1') ? false : true;
@@ -297,10 +297,8 @@ update_btn = Messages.UPDATE_BTN;
         this.Selall = false;
       }
       // console.log('sel day', this.selday_arr);
-      // tslint:disable-next-line:radix
-      this.dstart_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH')), minute: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm'))};
-      // tslint:disable-next-line:radix
-      this.dend_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH')), minute: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm'))};
+      this.dstart_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm'), 10)};
+      this.dend_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm'), 10)};
 
       this.show_schedule_selection = true;
       if (this.showsavebutton === '1') {
@@ -309,10 +307,8 @@ update_btn = Messages.UPDATE_BTN;
       // // console.log('selday', this.selday_arr);
     } else {
 
-      // tslint:disable-next-line:radix
-      this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'))};
-      // tslint:disable-next-line:radix
-      this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH')), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'))};
+        this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10)};
+      this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10)};
 
       this.edit_mode = false;
       this.api_error = this.api_success = '';

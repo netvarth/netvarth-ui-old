@@ -20,7 +20,9 @@ export class CouponsComponent implements OnInit {
   }
   ngOnInit() {
     this.tempCouponList = this.data.couponsList;
-    this.type = this.data.type;
+    if (this.data.type) {
+      this.type = this.data.type;
+    }
     this.showCoupons();
   }
 
