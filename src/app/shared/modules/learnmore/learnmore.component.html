@@ -22,7 +22,7 @@
         <app-bprofile-learnmore [target]="subKey" *ngIf="destination=='bprofile' || helpSub =='bprofile'"></app-bprofile-learnmore>
         
         <!-- Waitlist Manager -->
-        <app-waitlistmanager-learnmore [target]="'waitlistmanager'" *ngIf="destination=='waitlistmanager' || helpSub =='waitlistmanager'"></app-waitlistmanager-learnmore>
+        <app-waitlistmanager-learnmore [target]="subKey" *ngIf="destination=='waitlistmanager' || helpSub =='waitlistmanager'"></app-waitlistmanager-learnmore>
 
         <!-- Checkins -->
         <app-checkin-learnmore [target]="'checkin'" *ngIf="destination=='checkin' || helpSub =='checkin'"></app-checkin-learnmore>
