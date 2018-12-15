@@ -91,7 +91,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <label class="col-form-label">{{max_capacity_cap}}</label>
+                <label class="col-form-label">{{max_capacity_cap}} *</label>
                 <input matInput type="text" placeholder="Maximum Capacity" formControlName="qcapacity" autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
@@ -104,7 +104,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <label class="col-form-label">{{No_cap}}{{customer_label}}s {{servc_cap}}</label>
+                <label class="col-form-label">{{No_cap}}{{customer_label}}s {{servc_cap}} *</label>
                 <input matInput type="text" placeholder="No of {{customer_label}}s served at a time" formControlName="qserveonce"
                     autocomplete="off">
             </mat-form-field>
