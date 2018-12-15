@@ -309,5 +309,12 @@ export const projectConstants = {
     SELF_PAY_REQUIRED: 'Self pay required',
     NO_OTHER_COUPONS_ALLOWED: 'No other coupons allowed',
     EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit'
+  },
+  CHECK_IN_STATUSES: {
+    Done: 'Completed',
+    Started: 'Started',
+    Arrived: 'Arrived',
+    CheckedIn: 'CheckedIn',
+    Cancelled: 'Cancelled'
   }
 };
