@@ -13,6 +13,7 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 })
 export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   @ViewChild('itemservicesearch') item_service_search;
+  
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
   date_cap = Messages.DATE_CAP;

@@ -361,6 +361,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         );
     });
   }
+  
   getItemsList() {
     this.provider_services.getProviderItems()
       .subscribe(
