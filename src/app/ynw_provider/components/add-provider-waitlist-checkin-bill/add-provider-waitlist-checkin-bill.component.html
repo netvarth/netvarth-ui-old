@@ -24,15 +24,16 @@
 												<h3>{{bname | capitalizeFirst}}</h3>
 												<div class="details" *ngIf="bill_load_complete==1">
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
-														<span class="dynamic">{{checkin.consumer.userProfile.firstName
-															| capitalizeFirst}} {{checkin.consumer.userProfile.lastName}}</span>
+														<span class="dynamic" *ngFor="let user of checkin.waitlistingFor">
+															{{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+														</span>
 														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
 														<span *ngIf="billnumber">
-																<span class="title">{{bill_no_cap}} </span>
-																<span class="dynamic">{{billnumber}}</span>
+															<span class="title">{{bill_no_cap}} </span>
+															<span class="dynamic">{{billnumber}}</span>
 														</span>
 														<span class="dynamic fl-right" *ngIf="gstnumber">
 															<span class="title">{{gstin_cap}} </span>
@@ -204,7 +205,7 @@
 														<div class="list-content">
 															<div class="c-row one">
 																<div class="name">
-																	{{service.serviceName | capitalizeFirst}} @ {{service.price}} <sup  [matTooltipClass]="tooltipcls"
+																	{{service.serviceName | capitalizeFirst}} @ {{service.price}} <sup [matTooltipClass]="tooltipcls"
 																	 [matTooltip]="'Taxable'" *ngIf="service.GSTpercentage > 0">Tax</sup>
 																</div>
 																<div class="quantity">{{qnty_cap}}
@@ -278,8 +279,8 @@
 														<div class="list-content">
 															<div class="c-row one">
 																<div class="name">
-																	{{item.itemName | capitalizeFirst}} @ {{item.price}} <sup [matTooltipClass]="tooltipcls"
-																	 [matTooltip]="'Taxable'" *ngIf="item.GSTpercentage > 0">Tax</sup>
+																	{{item.itemName | capitalizeFirst}} @ {{item.price}} <sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+																	 *ngIf="item.GSTpercentage > 0">Tax</sup>
 																</div>
 																<div class="quantity">{{qnty_cap}}
 																	{{item.quantity}}</div>
@@ -429,8 +430,8 @@
 															<div class="wrap">
 																<div class="td one">
 																	<span class="date">{{stringtoDate(payment.paymentOn,
-																		 'date')}}</span> 
-																		<!--	<span class="time">{{stringtoDate(payment.paymentOn,
+																		'date')}}</span>
+																	<!--	<span class="time">{{stringtoDate(payment.paymentOn,
 																		'time')}}</span> -->
 																</div>
 																<div class="td two">
