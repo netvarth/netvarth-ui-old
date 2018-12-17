@@ -67,7 +67,6 @@ import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angu
 import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
-import { CouponviewComponent } from './shared/components/couponview/couponview.component';
 import { ProviderReimburseReportComponent } from './ynw_provider/components/provider-reimburse-report/provider-reimburse-report.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ViewReportComponent } from './ynw_provider/components/view-report/view-report.component';
@@ -99,7 +98,6 @@ import { ProviderCouponViewComponent } from './ynw_provider/components/provider-
     ConsumerRateServicePopupComponent,
     PieChartComponent,
     CouponsComponent,
-    CouponviewComponent,
     RequestForComponent
   ],
   entryComponents: [
@@ -112,7 +110,6 @@ import { ProviderCouponViewComponent } from './ynw_provider/components/provider-
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
     CouponsComponent,
-    CouponviewComponent,
     RequestForComponent
     /*SearchMoreOptionsComponent*/
   ],
