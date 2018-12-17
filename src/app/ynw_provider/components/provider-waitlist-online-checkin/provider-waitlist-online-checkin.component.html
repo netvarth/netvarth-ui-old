@@ -51,7 +51,7 @@
                       [checked]="waitlist_manager['futureDateWaitlist']"
                       [labelPosition]="'before'"
                       [(ngModel)]="form['futureDateWaitlist']"
-                      (change)="onFormChange()">
+                      (change)="onFormChange()" [disabled]="!waitlist_manager['onlineCheckIns']">
                       </mat-slide-toggle></label>
                   </div>
               </div>

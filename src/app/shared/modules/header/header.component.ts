@@ -121,7 +121,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         break;
         case 'learn_more':
           this.showLearnMore = true;
-          this.scrollhideclass.emit(true);
+          // this.scrollhideclass.emit(true);
+          this.scrollhideclass.emit(false);
           this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey};
         break;
       }

@@ -82,7 +82,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
 
 
   getWaitlistMgr() {
-
+    this.waitlist_manager = null;
     this.provider_services.getWaitlistMgr()
     .subscribe(
       data => {

@@ -42,9 +42,10 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   }
 
   ngOnInit() {
-
+   //  console.log('in init');
     this.waitlist_manager = this.reset_waitlist_manager = this.provider_datastorage.get('waitlistManage') || [];
     this.setValue(this.waitlist_manager);
+   //  console.log('mgr', this.waitlist_manager);
   }
 
   setValue(value) {

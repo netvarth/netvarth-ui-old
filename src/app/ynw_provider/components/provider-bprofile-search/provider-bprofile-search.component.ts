@@ -111,7 +111,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, false)
+    layout: new AdvancedLayout(-1, true)
   };
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
@@ -169,6 +169,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   dynamicdialogRef;
   adworddialogRef;
   delgaldialogRef;
+  cacheavoider = '';
 
   constructor(private provider_services: ProviderServices,
   private provider_datastorage: ProviderDataStorageService,
@@ -990,6 +991,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       .subscribe(
       data => {
         this.blogo = data;
+        const cnow = new Date();
+        const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+        this.cacheavoider = dd;
         // console.log('here logo', this.blogo);
         let logo = '';
         if (this.blogo[0]) {
@@ -1091,7 +1095,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
    // display logo
    showimg() {
     let logourl = '';
-    this.profimg_exists = false;
+     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
       return this.item_pic.base64;
@@ -1101,7 +1105,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         const today = new Date();
         const tday = today.toString().replace(/\s/g, '');
         // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
-        logourl = (this.blogo[0].url) ? this.blogo[0].url : '';
+        logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
       }
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
