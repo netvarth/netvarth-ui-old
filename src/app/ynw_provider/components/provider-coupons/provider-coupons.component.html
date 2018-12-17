@@ -64,7 +64,7 @@
                                                             </mat-menu>
                                                         </span>
                                                         <span class="mbt-mobile-show" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='ARCHIVED'">
-                                                            <button class="coupon_status" [class.enableicon]="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='ACTIVE'"
+                                                            <button class="coupon_status pointer-cursor" [class.enableicon]="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='ACTIVE'"
                                                                 [class.disableicon]="jCoupon.couponState=='ENABLED'" type="button"
                                                                 (click)="changecouponStatus(jCoupon)">{{(jCoupon.couponState=='DISABLED'
                                                                 || jCoupon.couponState=='ACTIVE') ? 'Enable':'

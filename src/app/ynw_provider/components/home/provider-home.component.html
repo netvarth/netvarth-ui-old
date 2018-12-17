@@ -331,24 +331,16 @@
 
                     <span class="cs-btn bt7 viewbill" (click)="viewBillPage(checkin)" *ngIf="checkin.waitlistStatus != 'checkedIn' &&
                                     checkin.waitlistStatus != 'cancelled' && time_type !== 2 && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid">
-
                       <ng-container *ngIf="checkin.waitlistStatus != 'prepaymentPending'">
                         <i class="icon-play"></i>{{bill_cap}}
                       </ng-container>
-
                     </span>
 
-                    <span class="acceptbill cs-btn bt7" *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'"
+                    <span class="acceptbill cs-btn bt7" *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled' && checkin.waitlistStatus != 'checkedIn'"
                       (click)="getWaitlistBill(checkin, 'payment')">
                       <i class="icon-play"></i>{{accept_cap}}
-
                     </span>
 
-                    <!-- <span class="acceptbill cs-btn bt7"
-                                    *ngIf="checkin.billStatus== 'New' && checkin.billPaymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled'" (click)="getWaitlistBill(checkin, 'payment')">
-                                     <i class="icon-play" ></i>Accept payment
-
-                                    </span> -->
                     <div class="height-adjuster"></div>
                   </td>
                   <td data-title="Payment Status" class="payment">

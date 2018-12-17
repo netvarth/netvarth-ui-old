@@ -20,7 +20,6 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-
                     <ng-container *ngIf="servicesjson.length == 0">
                         <span class='no-queue-available'>{{no_services_avail_cap}}</span>
                     </ng-container>
@@ -38,11 +37,8 @@
                             {{waitfor.name | capitalizeFirst}} <span class="cs-btn bt8 changemember" (click)="handleServiceForWhom()"
                                 *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span>
                         </li>
-
                     </ng-container>
-
                 </ul>
-
             </div>
 
             <div class="date-outer" *ngIf="step==1 && data.datechangereq">
@@ -56,14 +52,13 @@
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
-                                [max]="maxDate" disabled [value]="ddate"  (dateChange)="handleFutureDateChange($event)">
+                                [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="queue-outer">
-
                 <ng-container *ngIf="queuejson.length > 0">
                     <!-- <mat-chip-list *ngIf="step==1 && queuejson.length > 1">
                         <mat-chip *ngFor="let que of queuejson" (click)="handleQueueSel(que)" [selected] ="isSelectedQueue(que.id)">
@@ -79,7 +74,8 @@
                                     class="fa fa-angle-left"></i></span>
                             <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx <= 0"><i
                                     class="fa fa-angle-left disable"></i></span>
-                            <span class="sel-queue"><span class="name">{{sel_queue_name}}</span> {{sel_queue_timecaption}}</span>
+                            <span class="sel-queue"><span class="name">{{sel_queue_name}}</span>
+                                {{sel_queue_timecaption}}</span>
                             <span class="rightarrow" (click)="handleQueueSel('next')" *ngIf="(queuejson.length -1) > sel_queue_indx">
                                 <i class="fa fa-angle-right"></i> </span>
                             <span class="rightarrow" (click)="handleQueueSel('next')" *ngIf="(queuejson.length -1) == sel_queue_indx">
@@ -97,7 +93,8 @@
 
                     <div class="consumer-comment" *ngIf="step==1">
                         <div class="form-group">
-                        	<label for="reason" class="col-form-label">{{have_note_click_here}} <span [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote" (click)="handleNote()"></span></label>
+                            <label for="reason" class="col-form-label">{{have_note_click_here}} <span [class.icon-add]="!dispCustomernote"
+                                    [class.icon-minus]="dispCustomernote" (click)="handleNote()"></span></label>
                             <ng-container *ngIf="dispCustomernote">
                                 <textarea matInput #consumernote (change)="handleConsumerNote(consumernote.value)"
                                     maxlength="1000"></textarea>
@@ -119,7 +116,6 @@
                 <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                     <span class='no-queue-available'>{{checkinLabel}}{{not_accepted_for_this_date}}</span>
                 </ng-container>
-
             </div>
 
 
@@ -127,7 +123,8 @@
                 <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
                     <div class="prepay-dur-pr">
                         <div class="prepay-amt">{{service_needs_prepayment}} {{checkinLabel}}</div>
-                        <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls">{{prepaymentAmount |
+                        <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls">{{prepaymentAmount
+                                |
                                 currency:'INR':'symbol':'.2-2'}}</span></div>
                         <div class="prepay-gateway-outer" *ngIf="payModesQueried && !payModesExists">
                             <div class='prepay-head-sorry'> {{no_pay_modes_avail_cap}} </div>
@@ -147,7 +144,7 @@
             <ng-container *ngIf="(s3CouponsList.length > 0) && page_source != 'provider_checkin' && queuejson.length > 0">
                 <div class="coupon-outer">
                     <div class="form-group">
-                            <!-- <p>
+                        <!-- <p>
                                     <mat-form-field appearance="outline">
                                       <mat-label>Outline form field</mat-label>
                                       <input matInput placeholder="Placeholder">
@@ -160,34 +157,38 @@
                             <div class="input-group">
                                 <input placeholder="Enter coupon code(s)" type="text" class="form-control" [(ngModel)]="selected_coupons">
                                 <span class="input-group-btn">
-                                     <button class="btn bt8 btn-default coupon-apply-btn" *ngIf="!coupon_status || coupon_status=='error'" (click)="applyCoupons(selected_coupons)" type="button">APPLY</button>
-                                     <button class="btn bt8 btn-default coupon-apply-btn" *ngIf="coupon_status=='success'" (click)="removeCoupons()" type="button">CANCEL</button>
+                                    <button class="btn bt8 btn-default coupon-apply-btn" *ngIf="!coupon_status || coupon_status=='error'"
+                                        (click)="applyCoupons(selected_coupons)" type="button">APPLY</button>
+                                    <button class="btn bt8 btn-default coupon-apply-btn" *ngIf="coupon_status=='success'"
+                                        (click)="removeCoupons()" type="button">CANCEL</button>
                                 </span>
-                             </div>
-                        </div> 
-                                          
-                            <!-- <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons"> -->
+                            </div>
+                        </div>
+
+                        <!-- <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons"> -->
                         <!-- <div style = "padding-top: 8px">
                             
                             <span class="cs-btn bt8" (click)="applyCoupons(selected_coupons)">{{apply_cap}}</span>                           
                             <span class="coupon_cancel" *ngIf="couponsList.length>0" (click)="removeCoupons()">CANCEL</span>
                         </div> -->
-                        
+
                     </div>
                 </div>
                 <div class="coupon-outer" *ngIf="coupon_status">
-                        <div class="form-group">
-                            <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s) applied successfully</span>
-                            <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not valid</span>
-                        </div>
+                    <div class="form-group">
+                        <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s) applied
+                            successfully</span>
+                        <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not valid</span>
                     </div>
+                </div>
             </ng-container>
         </ng-container>
         <ng-container *ngIf="step==3">
             <div class="member-outer">
                 <div class="member-head">
                     {{select_the_cap}} <ng-container *ngIf="!multipleMembers_allowed">{{member_cap}}</ng-container>
-                    <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}</ng-container> {{for_whom_the_cap}} {{checkinLabel}}
+                    <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}</ng-container> {{for_whom_the_cap}}
+                    {{checkinLabel}}
                     {{is_beingmade_cap}}
                 </div>
                 <div class="member-list">
@@ -213,9 +214,7 @@
                                 </li>
                             </mat-radio-group>
                         </ng-container>
-
                     </ul>
-
                 </div>
             </div>
         </ng-container>
@@ -228,11 +227,9 @@
         </ng-container>
         <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
     </div>
-
 </div>
 
 <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
-
     <div class="waitlist-button-outer">
         <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
             <div class="showDetService" *ngIf="sel_ser_det.name">
@@ -248,7 +245,8 @@
             </div>
             <div class="queue-waitingdiv" *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                 <div class="queue-head">
-                                            <ng-container *ngIf="isFuturedate"><span class="checkin-footer-date"><strong>{{sel_day}} {{sel_checkindate | date: dateFormat}}, </strong></span></ng-container>
+                    <ng-container *ngIf="isFuturedate"><span class="checkin-footer-date"><strong>{{sel_day}}
+                                {{sel_checkindate | date: dateFormat}}, </strong></span></ng-container>
                     <ng-container *ngIf="!isFuturedate"><strong>{{today_cap}} </strong></ng-container>
                     <strong>{{checkinCaption}}: </strong> <span class="queue-avail-date">{{sel_queue_servicetime}}</span>
                 </div>

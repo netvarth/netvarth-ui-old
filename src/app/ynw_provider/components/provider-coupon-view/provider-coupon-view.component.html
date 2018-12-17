@@ -24,20 +24,18 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="c-ot rules-cap">
-                                        <h6>{{rules_cap}}</h6>
-                                    </div>
-                                    <div class="c-ot" *ngIf="jCoupon.couponRules.discountValue || jCoupon.couponRules.maxDiscountValue">
-                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.discountValue">
+                                    <div class="c-ot">
+                                        <div class="item">
                                             <span class="ttle">{{disc_value}}</span>
                                             <span> {{(jCoupon.couponRules.discountType=='PERCENTAGE')?
                                                 jCoupon.couponRules.discountValue+'%':
-                                                formatPrice(jCoupon.couponRules.discountValue)}}</span>
+                                                formatPrice(jCoupon.couponRules.discountValue)}} Upto
+                                                ₹{{jCoupon.couponRules.maxDiscountValue}} (Max)
+                                            </span>
                                         </div>
-                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.maxDiscountValue">
-                                            <span class="ttle">{{max_disc_value}}</span>
-                                            <span> {{jCoupon.couponRules.maxDiscountValue}}</span>
-                                        </div>
+                                    </div>
+                                    <div class="c-ot rules-cap">
+                                        <h6>{{rules_cap}}</h6>
                                     </div>
                                     <div class="c-ot">
                                         <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
@@ -92,7 +90,7 @@
                                     <div class="c-ot" *ngIf="jCoupon.couponRules.minBillAmount || jCoupon.couponRules.maxReimbursePercentage">
                                         <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.minBillAmount">
                                             <span class="ttle">Minimum Bill Amount</span>
-                                            <span> {{jCoupon.couponRules.minBillAmount}}</span>
+                                            <span> ₹{{jCoupon.couponRules.minBillAmount}}</span>
                                         </div>
                                         <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.maxReimbursePercentage">
                                             <span class="ttle">{{reimburse_perc}}</span>
@@ -138,7 +136,7 @@
                         </div>
                         <div class="lbr col-sm-12 col-md-4 col-lg-4">
                             <div class="cr1" *ngIf="jCouponStat">
-                                <h5>{{chart_cap}}</h5>
+                                <h5>Coupon Stat</h5>
                                 <div class="chart">
                                     <p> Coupon Amount : {{jCouponStat.providerUsage.usageAmt}}</p>
                                     <p> Usage Count : {{jCouponStat.providerUsage.usageCount}}</p>
