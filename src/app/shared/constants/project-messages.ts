@@ -168,7 +168,7 @@ export const Messages = {
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
   'PROVIDER_BILL_PAYMENT_SELFPAY': ' An email and push notification will be send to the consumer',
   'PROVIDER_BILL_SETTLE_CONFIRM': 'Do you want to settle this bill?',
-  'PROVIDER_ALERT_ACK_SUCC': 'Acknowledge Successfull',
+  'PROVIDER_ALERT_ACK_SUCC': 'Acknowledged Successfully',
   'CHECKIN_SUCC': 'You have [waitlisted] successfully',
   'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
@@ -994,7 +994,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-bprofile-search-primary
   'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Summary',
-  'SEARCH_PRI_BUISINESS_NAME_CAP' : 'Business Name *',
+  'SEARCH_PRI_BUISINESS_NAME_CAP' : 'Name *',
   'SEARCH_PRI_PROF_SUMMARY_CAP' : 'Profile Summary',
 
   // App-ynw_provider-components-provider-bwizard
