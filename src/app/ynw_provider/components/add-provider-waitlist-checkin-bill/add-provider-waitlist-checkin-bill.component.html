@@ -477,37 +477,41 @@
 											</div>
 										</div>
 										<div class="actiondiv bill_btns">
-											<div class="row" *ngIf="showPayableSection">
-												<div class="col-3">
-													<form class="example-form">
-														<mat-form-field class="example-full-width">
-															<input matInput placeholder="{{amount_to_pay_cap}}" class="form-control" [(ngModel)]="amountPaid"
-															 (keydown)="checkAmount($event)">
-														</mat-form-field>
-													</form>
-													<!-- <div class="form-group">
-																 <input matInput type="number" min="1"  id="amount_to_pay"
-																 autocomplete="off" >
-															</div> -->
-												</div>
-												<div class="spl col-9 no-padding">
-													<button class="cs-btn bt1" (click)="initPayment(amountPaid)">Ok</button>
-													<button class="cs-btn bt2" (click)="hidePayWorkBench(amountPaid)">Cancel</button>
-												</div>
 
-											</div>
-											<div class="col-12">
+											<ng-container *ngIf="showPayWorkBench">
+												<div class="section-two pay-wb">
+													<div class="add-serv-item edit-row service no-padding">
+													
+															<div class="spl no-padding">
+																<div class="item qty no-padding">
+																	<span class="label">Amount</span> <span class="number">
+																		<mat-form-field class="example-full-width"> <input type="text" matInput #payamounttxt aria-label="Number"
+																			 matInput value="1" size="5" [(ngModel)]="amountpay" (keydown)="checkAmount($event)" autocomplete="off">
+																		</mat-form-field>
+																	</span>
+																</div>
+															</div>
+														
+													
+															<div class="spr">
+																<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+																 (click)="initPayment('cash',amountpay)">Pay by Cash</button>
+																<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+																 (click)="initPayment('other',amountpay)">Pay by Others</button>
+																<button class="cs-btn bt2 cancel" (click)="hidePayWorkBench()">Cancel</button>
+															</div>
+													
+													</div>
+												</div>
+											</ng-container>
+											<div class="col-12" *ngIf="!showPayWorkBench">
 												<button type="button" mat-button class="cs-btn bt1 settle" *ngIf="bill_data.billStatus!='Settled'" (click)="confirmSettleBill()">{{settle_bill_cap}}</button>
 												<button type="button" mat-button class="cs-btn bt1 print" *ngIf="bill_data.billStatus=='Settled'" (click)="emailBill()">Email
 													Bill</button>
 												<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
 												 (click)="makePayment('self_pay',bill_data.amountDue)">JaldeePay</button>
 												<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
-												 (click)="showPayment('cash')">Pay by Cash</button>
-												<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
-												 (click)="showPayment('others')">Pay by Other Media</button>
-												<!-- <button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
-											 (click)="initPayment()"></button> -->
+												 (click)="showPayment()">Pay by Cash / Others</button>
 											</div>
 										</div>
 									</div>

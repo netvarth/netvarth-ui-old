@@ -721,3 +721,14 @@
   text-transform: none !important;
 }
 .btn-additem {float: right; margin-top:-3px;}
+
+.txt-pay-amount {
+padding: 5px 5px 5px 10px !important;
+}
+.pay-wb .spl {flex-grow:0 !important;float: right !important;}
+ 
+.pay-wb {border-bottom: none !important;padding:0px !important;}
+ 
+.pay-wb .bt2 {margin-left:0!important}
+
+.pay-wb button {margin-bottom: 5px;}
