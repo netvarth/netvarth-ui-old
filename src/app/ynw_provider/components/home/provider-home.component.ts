@@ -186,7 +186,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
                 pairwise()
             ).subscribe((e: any) => {
                 this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/checkin-detail/'));
-                console.log(e[0].urlAfterRedirects, this.returnedFromCheckDetails); // previous url
+                // console.log(e[0].urlAfterRedirects, this.returnedFromCheckDetails); // previous url
             });
     const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {

@@ -51,6 +51,29 @@ header {
                 }
             }
         }
+        
+        @include respond-to(ynw-575) {
+            padding: 10px 0;
+            
+            .lgo {
+                width: 100%;
+                padding: 0;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            
+            .lg-opt {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                
+                .bnps  {
+                    .mn-title {
+                        margin-right: 0px;
+                    }
+                }
+            }
+        }
     }    
 }
 
@@ -129,6 +152,14 @@ footer {
             width: 100%;
             bottom: -5px;
             left: 0;
+        }
+        
+        @include respond-to(ynw-575) {
+            padding: 1em 2.5em;
+            
+            h1 {
+                font-size: 1.25rem;
+            }
         }
     }
     .pt-btm {

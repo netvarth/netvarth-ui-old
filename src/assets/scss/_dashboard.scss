@@ -1233,6 +1233,9 @@ footer {
         padding-left: 10px;
         padding-right: 10px;
     }
+    @include respond-to(ynw-768-991) {
+        font-size: .875rem;
+    }
 
     a,
     span {
@@ -2043,6 +2046,7 @@ footer {
 
                                             @include respond-to(ynw-767) {
                                                 width: 100%;
+                                                padding: 5px 10px;
                                             }
 
                                             .mbt-mobile-show {
@@ -3520,7 +3524,13 @@ footer {
                 position: absolute;
                 top: -43px;
                 right: 20px;
-
+                
+                @include respond-to(ynw-767) {
+                    position: relative;
+                    margin-bottom: 15px;
+                    top: 0;
+                    right: 0;
+                }
                 @include respond-to(ynw-575) {
                     height: auto;
                     position: static;
@@ -4512,19 +4522,19 @@ footer {
                     font-size: .875rem;
 
                     .mat-form-field {
-                        .mat-input-wrapper {
+                        .mat-input-wrapper, .mat-form-field-wrapper {
                             padding-bottom: 0px;
 
                             .mat-input-underline,
                             .mat-input-subscript-wrapper,
-                            .mat-form-field-label-wrapper {
+                            .mat-form-field-label-wrapper, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
                                 display: none;
                             }
 
-                            .mat-input-flex {
+                            .mat-input-flex, .mat-form-field-flex {
                                 height: 40px;
 
-                                .mat-form-field-infix {
+                                .mat-form-field-infix, .mat-input-infix {
                                     padding: 0;
                                     border: none;
 
@@ -4722,17 +4732,21 @@ footer {
                             color: darken($green, 40%);
                             border: 1px solid rgba(0, 204, 150, .5);
                             text-align: center;
-                            font-weight: 500;
+                            font-weight: 600;
                             cursor: pointer;
                             font-size: .79rem;
                             padding: 10px 15px;
                             min-width: 120px;
                             margin-bottom: 5px;
-
+                            
+                            .qtime {
+                                font-size: .65rem;
+                            }
                             .qtitle,
                             .wlst {
-                                display: block;
                                 line-height: 15px;
+                                margin-bottom: 5px;
+                                margin-right: 5px;
                             }
 
                             .wlst {
@@ -4773,6 +4787,12 @@ footer {
                         color: $white;
                         font-weight: 600;
                         border: 1px solid $green;
+                        
+                        .qtime {
+                            display: block;
+                            font-size: .60rem;
+                            margin-top: 5px;
+                        }
                     }
 
                     .leftarrow,
@@ -6741,6 +6761,8 @@ footer {
             
             @include respond-to(ynw-575) {
                 .pay-section {
+                    padding-right: 50px;
+                    
                     &.card {
                         .lc11 {
                             .lc1-1 {

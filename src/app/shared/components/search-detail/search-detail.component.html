@@ -316,6 +316,12 @@
                                             <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
                                         
                                     </div>
+                                    <!-- <div class="ynw-verified">
+                                        <span class="level basic">Basic</span>
+                                        <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</span>
+                                        <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">Premium</span>
+                                    
+                                </div> -->
                                     <h3 (click)="providerDetClicked(search_result)" [matTooltipClass] = "tooltipcls" [matTooltip]="bNameTooltip">{{search_result.fields.title | capitalizeFirst}}<span class="cert" *ngIf="search_result.fields.qualification">, {{search_result.fields.qualification}}</span></h3>
                                     <span class="address">{{search_result.fields.place1 | capitalizeFirst }}</span>
 
@@ -349,6 +355,7 @@
                             </div>
                             <div class="tp-r">
                                 <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3)" class="ynw-verified">
+                                        
                                     <!-- <mat-chip-list>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==1">Basic</mat-chip>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</mat-chip>

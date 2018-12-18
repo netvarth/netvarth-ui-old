@@ -896,6 +896,45 @@
                                         }
                                     }
                                 }
+                                
+                                @include respond-to(ynw-767) {
+                                    flex-direction: column;
+                                    align-items: flex-start;
+                                    
+                                    .queue-head {
+                                        margin-right: 0;
+                                        margin-bottom: 10px;
+                                        width: 100%;
+                                    }
+                                    .queue-body {
+                                        width: 100%;
+                                        justify-content: space-between;
+                                        
+                                        .sel-queue {
+                                            text-align: center;
+                                            flex-grow: 1;
+                                        }
+                                    }
+                                }
+                                @include respond-to(ynw-768-991) {
+                                    flex-direction: column;
+                                    align-items: flex-start;
+                                    
+                                    .queue-head {
+                                        margin-right: 0;
+                                        margin-bottom: 10px;
+                                        width: 100%;
+                                    }
+                                    .queue-body {
+                                        width: 100%;
+                                        justify-content: space-between;
+                                        
+                                        .sel-queue {
+                                            text-align: center;
+                                            flex-grow: 1;
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -1167,6 +1206,7 @@
                                 .selsername {
                                     font-weight: 600;
                                     color: $hover-blue;
+                                    margin-left: 5px;
                                 }
                             }
                             .queue-waitingdiv {
@@ -1176,6 +1216,7 @@
                                     .queue-avail-date {
                                         color: $hover-blue;
                                         font-weight: 600;
+                                        margin-left: 5px;
                                     }
                                 }
                             }
@@ -1447,7 +1488,7 @@
         .ksk-exit {
             margin-top: 20px;
             top: 50%;
-            margin-top: -50px;
+            margin-top: 8px;
             right: 30px;
             
             @include respond-to(ynw-767) {
@@ -1521,7 +1562,7 @@
     
     &.checkstatspecial {
         app-kiosk-home {
-            height: 75vh;
+            height: 60vh;
             
             .ksk-cpy {
                 &.arrived {
