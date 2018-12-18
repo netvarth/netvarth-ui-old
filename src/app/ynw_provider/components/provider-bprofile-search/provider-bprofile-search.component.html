@@ -185,7 +185,7 @@
                                             <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
                                             <div class="copy">
                                                 <ul class="amt-list">
-                                                    <li [matTooltip]="'Parking Type: ' + bProfile.baseLocation.parkingType" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'"></li>
+                                                    <li [matTooltip]="bProfile.baseLocation.parkingType + ' parking'" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'"></li>
                                                     <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
                                                     <ng-container *ngIf="bProfile.baseLocation.locationVirtualFields">
                                                         <ng-container *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">

@@ -23,7 +23,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 export class AddProviderWaitlistServiceComponent implements OnInit {
 
-  service_cap = Messages.SERVICE_CAP;
+  service_cap = Messages.PRO_SERVICE_CAP;
   description_cap = Messages.DESCRIPTION_CAP;
 price_cap = Messages.PRICE_CAP;
 service_name_cap = Messages.SERVICE_NAME_CAP;

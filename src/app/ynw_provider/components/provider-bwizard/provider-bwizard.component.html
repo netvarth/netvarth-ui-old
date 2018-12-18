@@ -99,19 +99,17 @@
                                     <div class="sts-msg error" *ngIf="coord_error!=''">{{coord_error}}</div>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{address_cap}}*</label>
-                                    
+                                    <label>{{address_cap}}</label>
                                     <span class="expl">{{enter_addr_cap}} {{customer_label}}{{can_find_you_cap}}</span>
-                                    <textarea class="form-control" placeholder="This is what your {{customer_label}}s see when they search online" id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address" #locaddress (keyup)="handlekeyup('address_error')"></textarea>
-                                    <div class='sts-msg error' *ngIf="address_error!=''">{{address_error}}</div>
+                                    <textarea class="form-control" placeholder="This is what your {{customer_label}}s see when they search online" id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address" #locaddress></textarea>
                                 </div>
                                 <!-- <div class="form-group pcde">
                                     <label>Pincode</label>
-                                    <span class="expl">Your business location’s pincode</span>
+                                    <span class="expl">Your business locationâ€™s pincode</span>
                                     <input type="text" class="form-control" id="" placeholder="" [(ngModel)]="wizard_data_holder['pincode']" name="pincode">
                                 </div> -->
                                 <div class="form-group">
-                                    <label>{{loc_name_cap}}</label>
+                                    <label>{{loc_name_cap}} *</label>
                                     <span class="expl">{{disp_name_loc_cap}} {{customer_label}}s.</span>
                                     <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="This is what your {{customer_label}}s see when they search online" autocomplete="off" maxlength="50" (keyup)="handlekeyup('locname_error')">
                                     <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>

@@ -29,8 +29,8 @@
                                             <span class="ttle">{{disc_value}}</span>
                                             <span> {{(jCoupon.couponRules.discountType=='PERCENTAGE')?
                                                 jCoupon.couponRules.discountValue+'%':
-                                                formatPrice(jCoupon.couponRules.discountValue)}} Upto
-                                                ₹{{jCoupon.couponRules.maxDiscountValue}} (Max)
+                                                formatPrice(jCoupon.couponRules.discountValue)}}  <span *ngIf="jCoupon.couponRules.maxDiscountValue">Upto
+                                             {{formatPrice(jCoupon.couponRules.maxDiscountValue)}} (Max)</span> 
                                             </span>
                                         </div>
                                     </div>
@@ -90,11 +90,11 @@
                                     <div class="c-ot" *ngIf="jCoupon.couponRules.minBillAmount || jCoupon.couponRules.maxReimbursePercentage">
                                         <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.minBillAmount">
                                             <span class="ttle">Minimum Bill Amount</span>
-                                            <span> ₹{{jCoupon.couponRules.minBillAmount}}</span>
+                                            <span> {{formatPrice(jCoupon.couponRules.minBillAmount)}}</span>
                                         </div>
                                         <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.maxReimbursePercentage">
                                             <span class="ttle">{{reimburse_perc}}</span>
-                                            <span> {{jCoupon.couponRules.maxReimbursePercentage}}</span>
+                                            <span> {{jCoupon.couponRules.maxReimbursePercentage}}%</span>
                                         </div>
                                     </div>
                                     <div class="c-ot" *ngIf="jCoupon.couponRules.maxConsumerUseLimit || jCoupon.couponRules.maxProviderUseLimit">

@@ -34,6 +34,7 @@ export class AddProviderItemComponent implements OnInit {
     files: [],
     base64: null
   };
+  taxpercentage = 0;
   holdtaxable = false;
   file_error_msg = '';
   img_exists = false;
@@ -52,9 +53,10 @@ export class AddProviderItemComponent implements OnInit {
     ) {
        // console.log(data);
      }
-
+     taxDetails: any = [];
   ngOnInit() {
      this.createForm();
+     this.getTaxpercentage();
   }
   createForm() {
     if (this.data.type === 'add') {
@@ -228,7 +230,28 @@ export class AddProviderItemComponent implements OnInit {
   }
 
   handleTaxablechange() {
-    this.holdtaxable = !this.holdtaxable;
+    // this.holdtaxable = !this.holdtaxable;
+      if (this.taxpercentage <= 0) {
+        this.api_error = this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
+        setTimeout(() => {
+          this.api_error = null;
+        }, projectConstants.TIMEOUT_DELAY_LARGE);
+        this.amForm.get('taxable').setValue(false);
+      } else {
+        this.api_error = null;
+      }
+  }
+
+  getTaxpercentage() {
+    this.provider_services.getTaxpercentage()
+        .subscribe (data => {
+            this.taxDetails = data;
+            this.taxpercentage = this.taxDetails.taxPercentage;
+            console.log('tax percentage', this.taxpercentage);
+        },
+    error => {
+
+    });
   }
 
 }

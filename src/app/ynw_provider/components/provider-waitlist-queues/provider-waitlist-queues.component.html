@@ -46,22 +46,24 @@
                             </div>
                         </div>
 
-                         <mat-menu #appMenu="matMenu">
+                        <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="addEditProviderQueue('edit', queue)" *ngIf="queue.queueState=='ENABLED'">
-                                    <i class="icon-edit"></i>
+                                <i class="icon-edit"></i>
                                 Edit
                             </button>
                             <button mat-menu-item (click)="changeProviderQueueStatus(queue)">
                                 <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
                                 <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
-                            {{(queue.queueState=='ENABLED') ? 'Disable' :'Enable'}}
-                        </button>
+                                {{(queue.queueState=='ENABLED') ? 'Disable' :'Enable'}}
+                            </button>
                         </mat-menu>
 
                     </div>
                 </div>
             </div>
-
+            <div class="card" *ngIf="queue_list.length==0">
+                No Service time window added
+            </div>
             <div class="row" *ngIf="api_load_complete == 1 && queue_list.length == 0">
                 <div class="card">
                     <div class="copy">

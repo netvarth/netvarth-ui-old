@@ -170,10 +170,10 @@ export const Messages = {
   'PROVIDER_BILL_SETTLE_CONFIRM': 'Do you want to settle this bill?',
   'PROVIDER_ALERT_ACK_SUCC': 'Acknowledge Successfull',
   'CHECKIN_SUCC': 'You have [waitlisted] successfully',
-   'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway.',
+  'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
   'CHECKIN_CANCELLED': '[waitlist] [cancelled] successfully',
-  'PAYMENT_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway.',
+  'PAYMENT_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CASH_PAYMENT': 'Visit provider to pay by cash',
 
 
@@ -451,7 +451,7 @@ export const Messages = {
   'SERV_TIME_WINDOW_CAP': 'Service Time Window',
   'ENTER_PARTY_SIZE': 'Enter Party Size',
   'HAVE_NOTE_CLICK_HERE_CAP': 'If you have a note, Click here.',
-  'NOT_ACCEPTED_THIS_DATE_CAP': 's are not accepted for this date.',
+  'NOT_ACCEPTED_THIS_DATE_CAP': ' for this service is not accepted today.',
   'NEEDS_PREPAYMENT_FOR_CAP': 'This service needs prepayment for',
   'PRE_PAYMENT_AMNT_CAP': 'Pre Payment Amount:',
   'NO_PAY_MODES_AVAIL_CAP': 'Sorry no payment modes available',
@@ -482,7 +482,7 @@ export const Messages = {
 
   // App-shared-modules-footer
   'ABOUT_CAP': 'About',
-  'ABOUT_JALDEE_ONE': 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providers’ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
+  'ABOUT_JALDEE_ONE': 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providersâ€™ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
   'ABOUT_JALDEE_TWO': 'Jaldees cloud-based platform is scalable, secure, and ready for any size deployment. Jaldee is owned and operated by Netvarth technologies Pvt Ltd.',
   'CONTACT_CAP': 'Contact',
   'NETVARTH_TECH_PVT_LTD': 'Netvarth Technologies Pvt Ltd',

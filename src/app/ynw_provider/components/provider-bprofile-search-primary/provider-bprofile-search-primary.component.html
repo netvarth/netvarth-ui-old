@@ -21,7 +21,7 @@
 
 <div class="form-group">
     <label class="col-form-label" for="first_name">{{profile_summary_cap}} </label>
-    <textarea class="form-control" id="bdesc"  formControlName="bdesc" row="4"></textarea>
+    <textarea class="form-control" id="bdesc"  formControlName="bdesc" row="4" placeholder="A short one line description about your service"></textarea>
     <!-- <input type="text" class="form-control" id="bdesc"
     formControlName="bdesc"> -->
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')"
