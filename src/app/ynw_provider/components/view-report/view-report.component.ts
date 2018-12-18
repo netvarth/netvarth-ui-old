@@ -61,7 +61,9 @@ export class ViewReportComponent implements OnInit {
         this.getjaldeeReport();
       });
   }
-
+  getJSONfromString(jsonString) {
+      return JSON.parse(jsonString);
+  }
   getjaldeeReport() {
     this.provider_servicesobj.getJaldeeCouponReportsbyId(this.invoice_id).subscribe(
       data => {

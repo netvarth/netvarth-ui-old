@@ -23,7 +23,6 @@ export class ProviderCouponViewComponent implements OnInit {
   reimburse_perc = Messages.MAX_REIMBURSE_PERC;
   pro_use_limit = Messages.MAX_PRO_USE_LIMIT;
   consu_use_limit = Messages.MAX_CONSU_USE_LIMIT;
-  usage_limit = Messages.LIMIT_PER_PRO;
   consu_chek_usage = Messages.CONSUM_FIRST_HECK;
   prov_check_usage = Messages.PRO_FIRST_CHECK;
   self_payment = Messages.SELF_PAYMENT;

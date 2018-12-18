@@ -238,7 +238,7 @@ export class ProviderServices {
   }
   requestforPaymentJC(id?) {
     const url = 'provider/jaldee/coupons/jcreports/reimburse/' + id + '/requestPayment';
-    return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpPut(url);
   }
   // Non working days
   getProviderNonworkingdays(id?) {

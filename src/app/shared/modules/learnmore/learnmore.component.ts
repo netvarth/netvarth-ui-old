@@ -5,7 +5,7 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
-
+import {PreventParentScrollModule} from 'ngx-prevent-parent-scroll';
 
 @Component({
   selector: 'app-learnmore',

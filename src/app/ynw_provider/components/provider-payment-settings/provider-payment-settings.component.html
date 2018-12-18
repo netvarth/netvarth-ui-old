@@ -41,28 +41,58 @@
                                                     <div class='paytm-outer'>
                                                         <div class="form-group">
                                                             <mat-checkbox class="pay-chk" [checked]="paytmenabled"
-                                                                (change)="handleChange('pay')" [disabled]="!ineditMode" tabindex="0">{{pay_tm_cap}}</mat-checkbox>
+                                                                (change)="handleChange('pay')" [disabled]="!ineditMode"
+                                                                tabindex="0">{{pay_tm_cap}}</mat-checkbox>
                                                             <span *ngIf="paytmverified && paytmenabled" class="verified">{{verified_cap}}</span><span
                                                                 *ngIf="!paytmverified && paytmenabled" class="not-verified">{{not_verified_cap}}</span>
                                                         </div>
-                                                        <div class='paytm-det' *ngIf="paytmenabled">
-                                                            <div class="form-group">
-                                                                <label class="caption">{{enter_mob_no_cap}}</label>
-                                                                <mat-form-field>
-                                                                    <input matInput #paymobref [(ngModel)]="paytmmobile"
-                                                                        (keypress)="resetApi('paytmmobile')"
-                                                                        autocomplete="off" [disabled]="!ineditMode"
-                                                                        (blur)="paytmBlur()"  tabindex="1">
-                                                                </mat-form-field>
-                                                                <app-field-error-display [displayError]="showError['paytmmobile']['status']"
-                                                                    [errorMsg]="showError['paytmmobile']['msg']"></app-field-error-display>
+                                                        <div class='paytm-det row' *ngIf="paytmenabled">
+                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                <div class="form-group">
+                                                                    <label class="caption">Mobile #</label>
+                                                                    <mat-form-field>
+                                                                        <input matInput #paymobref [(ngModel)]="paytmmobile"
+                                                                            (keypress)="resetApi('paytmmobile')"
+                                                                            autocomplete="off" [disabled]="!ineditMode"
+                                                                            (blur)="paytmBlur()" tabindex="1">
+                                                                    </mat-form-field>
+                                                                    <app-field-error-display [displayError]="showError['paytmmobile']['status']"
+                                                                        [errorMsg]="showError['paytmmobile']['msg']"></app-field-error-display>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                <div class="form-group">
+                                                                    <label class="caption">Merchant Id</label>
+                                                                    <mat-form-field>
+                                                                        <input matInput #paytmidref [(ngModel)]="paytm_mid"
+                                                                            (keypress)="resetApi('paytm_mid')"
+                                                                            autocomplete="off" [disabled]="!ineditMode"
+                                                                            (blur)="paytmMidBlur()" tabindex="2">
+                                                                    </mat-form-field>
+                                                                    <app-field-error-display [displayError]="showError['paytm_mid']['status']"
+                                                                        [errorMsg]="showError['paytm_mid']['msg']"></app-field-error-display>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                <div class="form-group">
+                                                                    <label class="caption">Merchant Key</label>
+                                                                    <mat-form-field>
+                                                                        <input matInput #paytmmkeyref [(ngModel)]="paytm_mkey"
+                                                                            (keypress)="resetApi('paytm_mkey')"
+                                                                            autocomplete="off" [disabled]="!ineditMode"
+                                                                            (blur)="paytmMkeyBlur()" tabindex="3">
+                                                                    </mat-form-field>
+                                                                    <app-field-error-display [displayError]="showError['paytm_mkey']['status']"
+                                                                        [errorMsg]="showError['paytm_mkey']['msg']"></app-field-error-display>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class='cc-outer'>
                                                         <div class="form-group">
                                                             <mat-checkbox class="pay-chk" [checked]="ccenabled"
-                                                                (change)="handleChange('cc')" [disabled]="!ineditMode"  tabindex="2">{{cc_dc_netbanking_cap}}</mat-checkbox>
+                                                                (change)="handleChange('cc')" [disabled]="!ineditMode"
+                                                                tabindex="2">{{cc_dc_netbanking_cap}}</mat-checkbox>
                                                             <span *ngIf="payuverified  && ccenabled" class="verified">{{verified_cap}}</span><span
                                                                 *ngIf="!payuverified  && ccenabled" class="not-verified">{{not_verified_cap}}</span>
                                                         </div>
@@ -74,7 +104,7 @@
                                                                         <input matInput [(ngModel)]="pannumber"
                                                                             (change)="resetApi('pannumber')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
-                                                                            (blur)="panCardBlur()"  tabindex="4">
+                                                                            (blur)="panCardBlur()" tabindex="4">
                                                                     </mat-form-field>
                                                                     <app-field-error-display [displayError]="showError['pannumber']['status']"
                                                                         [errorMsg]="showError['pannumber']['msg']"></app-field-error-display>
@@ -128,7 +158,7 @@
                                                                     <mat-form-field>
                                                                         <input matInput [(ngModel)]="bankifsc" (change)="resetApi('bankifsc')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
-                                                                            (blur)="ifscBlur()"  tabindex="6">
+                                                                            (blur)="ifscBlur()" tabindex="6">
                                                                     </mat-form-field>
                                                                     <app-field-error-display [displayError]="showError['bankifsc']['status']"
                                                                         [errorMsg]="showError['bankifsc']['msg']"></app-field-error-display>
@@ -139,7 +169,7 @@
                                                                         <input matInput [(ngModel)]="bankbranch"
                                                                             (change)="resetApi('bankbranch')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
-                                                                            (blur)="bankBranchBlur()"  tabindex="8">
+                                                                            (blur)="bankBranchBlur()" tabindex="8">
                                                                     </mat-form-field>
                                                                     <app-field-error-display [displayError]="showError['bankbranch']['status']"
                                                                         [errorMsg]="showError['bankbranch']['msg']"></app-field-error-display>
@@ -149,7 +179,7 @@
                                                                     <mat-form-field>
                                                                         <mat-select [(ngModel)]="bankfiling"
                                                                             (selectionChange)="resetApi('bankfiling')"
-                                                                            [disabled]="!ineditMode"   tabindex="9">
+                                                                            [disabled]="!ineditMode" tabindex="9">
                                                                             <mat-option value="">{{select_cap}}</mat-option>
                                                                             <mat-option value="Proprietorship">{{proprietorship_cap}}</mat-option>
                                                                             <mat-option value="Individual">{{individual_cap}}</mat-option>
@@ -169,7 +199,7 @@
                                                                     <mat-form-field>
                                                                         <mat-select [(ngModel)]="bankactype"
                                                                             (selectionChange)="resetApi('bankactype')"
-                                                                            [disabled]="!ineditMode"  tabindex="10">
+                                                                            [disabled]="!ineditMode" tabindex="10">
                                                                             <mat-option value="">{{select_cap}}</mat-option>
                                                                             <mat-option value="Current">{{current_cap}}</mat-option>
                                                                             <mat-option value="Saving">{{savings_cap}}</mat-option>
@@ -184,11 +214,11 @@
                                                 </div>
                                                 <div class="actiondiv" *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
                                                     <button type="button" class="cs-btn bt2" (click)="handleEditPaySettings(false)"
-                                                        *ngIf="ineditMode"  tabindex="12">{{cancel_edit_cap}}</button>&nbsp;
+                                                        *ngIf="ineditMode" tabindex="12">{{cancel_edit_cap}}</button>&nbsp;
                                                     <button type="button" mat-button class="cs-btn bt1" (click)="savePaySettings(false)"
-                                                        *ngIf="ineditMode"  tabindex="11">{{save_settings_cap}}</button>&nbsp;
+                                                        *ngIf="ineditMode" tabindex="11">{{save_settings_cap}}</button>&nbsp;
                                                     <button type="button" mat-button class="cs-btn bt1" (click)="handleEditPaySettings(true)"
-                                                        *ngIf="!ineditMode"  tabindex="13">{{change_pay_settings_cap}}</button>
+                                                        *ngIf="!ineditMode" tabindex="13">{{change_pay_settings_cap}}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -207,7 +237,8 @@
                                 <div class="form-group gstval">
                                     <label class="caption">{{gst_no_cap}}</label>
                                     <mat-form-field>
-                                        <input matInput [(ngModel)]="gstnumber" id="gstno" (keypress)="resetApi()" autocomplete="off" tabindex="14">
+                                        <input matInput [(ngModel)]="gstnumber" id="gstno" (keypress)="resetApi()"
+                                            autocomplete="off" tabindex="14">
                                     </mat-form-field>
                                     <app-field-error-display [displayError]="showError['gstnumber']['status']"
                                         [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display>
@@ -217,7 +248,7 @@
                                     <label class="caption">{{tax_percentage_cap}}</label>
                                     <mat-form-field>
                                         <input matInput [(ngModel)]="taxpercentage" (keypress)="resetApi()" class="tax-per"
-                                            autocomplete="off"  tabindex="15">
+                                            autocomplete="off" tabindex="15">
                                         <span matSuffix>%</span>
                                     </mat-form-field>
                                     <app-field-error-display [displayError]="showError['taxpercentage']['status']"
@@ -228,7 +259,8 @@
                             </div>
                         </div>
                         <div class="actiondiv" *ngIf="savetaxEnabled">
-                            <button type="button" mat-button class="cs-btn bt1" (click)="saveTaxSettings()" [disabled]="taxfieldValidation(false)"  tabindex="16">{{update_tax_cap}}</button>
+                            <button type="button" mat-button class="cs-btn bt1" (click)="saveTaxSettings()" [disabled]="taxfieldValidation(false)"
+                                tabindex="16">{{update_tax_cap}}</button>
                         </div>
                     </mat-tab>
                 </mat-tab-group>

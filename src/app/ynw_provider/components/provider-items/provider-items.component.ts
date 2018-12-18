@@ -151,33 +151,6 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
       );
   }
 
-  //   disableService(service, msg) {
-  //     this.provider_services.disableService(service.id)
-  //         .subscribe(
-  //             data => {
-  //                 this.getServiceDetail();
-  //                 const snackBarRef = this.shared_Functionsobj.openSnackBar(msg);
-  //             },
-  //             error => {
-  //                 const snackBarRef = this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //                 this.getServiceDetail();
-  //             });
-  // }
-
-  // enableService(service, msg) {
-  //     this.provider_services.enableService(service.id)
-  //         .subscribe(
-  //             data => {
-  //                 this.getServiceDetail();
-  //                 const snackBarRef = this.shared_Functionsobj.openSnackBar(msg);
-  //             },
-  //             error => {
-  //                 const snackBarRef = this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //                 this.getServiceDetail();
-  //             });
-  // }
-
-
   showDetails(id) {
     if (!id) {
       return;
@@ -215,7 +188,5 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-
   }
-
 }

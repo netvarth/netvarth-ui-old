@@ -1,51 +1,55 @@
-
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
-  <div class="content comn-cls">
-      <div class="container">
-          <div class="w-dta">
-              <div class="row">
-                      <div class="copy one">
-                            <div class="pay-section card">
-                                    <span class="mbt">
-                                            <button mat-icon-button [matMenuTriggerFor]="menu">
-                                            <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <mat-menu #menu="matMenu">
-                                            <button mat-menu-item (click)="showLicenceHistory()">
-                                                <span>License Change History</span>
-                                            </button>
-                                            <button mat-menu-item (click)="showLicenseUsage()">
-                                                <span>License Usage</span>
-                                            </button>
-                                            <button mat-menu-item (click)="goPaymentHistory()">
-                                                <span>Payment History</span>
-                                            </button>
-                                            </mat-menu>
-                                    </span>
-                                    <div class="lc11">
-                                        <div class="lc1-1">
-                                            <div class="outer">
-                                                <div class="lc-box" *ngIf="currentlicense_details.accountLicense">
-                                                    <div class="tp"><span class="ttle">Your current License Package is <span class="pkg">{{currentlicense_details.accountLicense.displayName}} </span></span><span class="cs-btn bt1" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">Upgrade License</span>
-                                                    <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></div>
-                                                </div>
-                                            </div>
-    
-                                            <div class="subs" *ngIf="license_upgarde_sub['price'] != 0">
-                                                <h4>Subscription</h4>
-    
-                                                <span class="ttle">
-                                                       You have currently enrolled to
-                                                       <span class="pack active">
-                                                        <span class="price">{{license_upgarde_sub['price'] | currency:'INR':'symbol':'.2-2'}}</span> / {{license_upgarde_sub['current_sub']}}
-                                                        </span>
-                                                </span>
-    
-                                                <!-- <div class="subs-box">
+    <div class="content comn-cls">
+        <div class="container">
+            <div class="w-dta">
+                <div class="row">
+                    <div class="copy one">
+                        <div class="pay-section card">
+                            <span class="mbt">
+                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="showLicenceHistory()">
+                                        <span>License Change History</span>
+                                    </button>
+                                    <button mat-menu-item (click)="showLicenseUsage()">
+                                        <span>License Usage</span>
+                                    </button>
+                                    <button mat-menu-item (click)="goPaymentHistory()">
+                                        <span>Payment History</span>
+                                    </button>
+                                </mat-menu>
+                            </span>
+                            <div class="lc11">
+                                <div class="lc1-1">
+                                    <div class="outer">
+                                        <div class="lc-box" *ngIf="currentlicense_details.accountLicense">
+                                            <div class="tp"><span class="ttle">Your current License Package is <span
+                                                        class="pkg">{{currentlicense_details.accountLicense.displayName}}
+                                                        <span class="cs-btn bt1" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">Upgrade
+                                                            License</span></span>
+                                                    <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="subs" *ngIf="license_upgarde_sub['price'] != 0">
+                                        <h4>Subscription</h4>
+
+                                        <span class="ttle">
+                                            You have currently enrolled to
+                                            <span class="pack active">
+                                                <span class="price">{{license_upgarde_sub['price'] |
+                                                    currency:'INR':'symbol':'.2-2'}}</span> /
+                                                {{license_upgarde_sub['current_sub']}}
+                                            </span>
+                                        </span>
+
+                                        <!-- <div class="subs-box">
                                                     <ng-container *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
                                                     <span class="change">Change plan to</span>
 
@@ -58,61 +62,65 @@
                                                     </div>
                                                     </ng-container>
                                                 </div> -->
-    
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="colum">
-                                        <div class="lc44">
-                                            <div class="lc4-1">
-                                                <div class="lt">
-                                                    <div>
-                                                    <span class="amount">Due Amount : <strong>{{currentlicense_details.dueAmount | currency:'INR':'symbol':'.2-2'}}</strong>
-                                                    </span>
-                                                    <span class="cs-btn bt3" (click)="showUnpaidInvoice()"  *ngIf="invoices.length != 0">Pay</span>
-                                                    </div>
-                                                    <span class="amount"*ngIf="invoices.length != 0">Next Payment On : <strong>{{currentlicense_details.nextPaymentOn | date: dateFormat }}</strong>
-                                                    </span>
-                                                </div>
-                                                <!-- <div class="rt" *ngIf="invoices.length != 0">
-                                                    <span class="cs-btn bt3 ml-auto" (click)="showUnpaidInvoice()"  *ngIf="invoices.length != 0">Pay</span>
-                                                </div> -->
-                                            </div>
-                                            <div class="lc4-2">
-                                                <div class="pay-tbl">
-                                                        <table class="table"  *ngIf="invoices.length != 0 && unpaid_invoice_show == 1">
-                                                            <thead>
-                                                            <tr>
-                                                            <th>Date</th>
-                                                            <th>Amount</th>
-                                                            <th *ngIf="!hide_invoiceperiod">Period</th>
-                                                            <th>Invoice</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr *ngFor="let invoice of invoices">
-                                                            <td data-title="Date">{{invoice.createdDate | date: dateFormat }}</td>
-                                                            <td data-title="Amount">
-                                                            <strong>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</strong>
-                                                            </td>
-                                                            <td data-title="Period" *ngIf="!hide_invoiceperiod">
-                                                            {{invoice.periodFrom | date: dateFormat }} - {{invoice.periodTo | date: dateFormat }}
-                                                            </td>
-                                                            <td data-title="Invoice">
-                                                            <span class="icon-invoice" (click)="getInvoice(invoice)"></span>
-                                                            </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                </div>
-                                            </div>
-                                            <!-- <div class="lc4-3">
-                                                <span class="cs-btn bt8" (click)="goPaymentHistory()">Payment History</span>
-                                            </div> -->
-                                        </div>
+
                                     </div>
                                 </div>
-                          <!-- <div class="left card">
+                            </div>
+                            <div class="colum">
+                                <div class="lc44">
+                                    <div class="lc4-1">
+                                        <div class="lt">
+                                            <div>
+                                                <span class="amount">Due Amount : <strong>{{currentlicense_details.dueAmount
+                                                        | currency:'INR':'symbol':'.2-2'}}</strong>
+                                                </span>
+                                                <span class="cs-btn bt3" (click)="showUnpaidInvoice()" *ngIf="invoices.length != 0">Pay</span>
+                                            </div>
+                                            <span class="amount" *ngIf="invoices.length != 0">Next Payment On : <strong>{{currentlicense_details.nextPaymentOn
+                                                    | date: dateFormat }}</strong>
+                                            </span>
+                                        </div>
+                                        <!-- <div class="rt" *ngIf="invoices.length != 0">
+                                                    <span class="cs-btn bt3 ml-auto" (click)="showUnpaidInvoice()"  *ngIf="invoices.length != 0">Pay</span>
+                                                </div> -->
+                                    </div>
+                                    <div class="lc4-2">
+                                        <div class="pay-tbl">
+                                            <table class="table" *ngIf="invoices.length != 0 && unpaid_invoice_show == 1">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                        <th *ngIf="!hide_invoiceperiod">Period</th>
+                                                        <th>Invoice</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let invoice of invoices">
+                                                        <td data-title="Date">{{invoice.createdDate | date: dateFormat
+                                                            }}</td>
+                                                        <td data-title="Amount">
+                                                            <strong>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</strong>
+                                                        </td>
+                                                        <td data-title="Period" *ngIf="!hide_invoiceperiod">
+                                                            {{invoice.periodFrom | date: dateFormat }} -
+                                                            {{invoice.periodTo | date: dateFormat }}
+                                                        </td>
+                                                        <td data-title="Invoice">
+                                                            <span class="icon-invoice" (click)="getInvoice(invoice)"></span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="lc4-3">
+                                                <span class="cs-btn bt8" (click)="goPaymentHistory()">Payment History</span>
+                                            </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="left card">
                               <div class="lc11">
                                   <div class="lc1-1">
                                     <div class="outer">
@@ -203,38 +211,38 @@
                                   </div>
                               </div>
                           </div> -->
-                      </div>
-                      <div class="copy two">
-                          <div class="left card">
-                              <div class="lc22">
-                                  <div class="lc2-1 lcd">
-                                      <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addonTooltip">Add-on
-                                        <span class="addbt" (click)="showadd_addons()" ></span></div>
-                                  </div>
-                                  <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
+                    </div>
+                    <div class="copy two">
+                        <div class="left card">
+                            <div class="lc22">
+                                <div class="lc2-1 lcd">
+                                    <div class="ttle" [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">Add-on
+                                        <span class="addbt" (click)="showadd_addons()"></span></div>
+                                </div>
+                                <ng-container *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
 
-                                      <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">
-                                          <div class="ttle">{{addon.name}}</div>
-                                          <div class="add-details">{{addon.description}}</div>
-                                      </div>
+                                    <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">
+                                        <div class="ttle">{{addon.name}}</div>
+                                        <div class="add-details">{{addon.description}}</div>
+                                    </div>
 
-                                  </ng-container>
-                                  <ng-container  *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
-                                      <div class="lc2-2 lcd">
-                                          <div class="ttle">No addons exists</div>
-                                      </div>
-                                  </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
+                                    <div class="lc2-2 lcd">
+                                        <div class="ttle">No addons exists</div>
+                                    </div>
+                                </ng-container>
 
-                              </div>
-                          </div>
-                          <div class="right card">
-                              <app-provider-bprofile-search-adwords [reloadadwordapi]="reload_adword_api"></app-provider-bprofile-search-adwords>
-                          </div>
-                      </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                            </div>
+                        </div>
+                        <div class="right card">
+                            <app-provider-bprofile-search-adwords [reloadadwordapi]="reload_adword_api"></app-provider-bprofile-search-adwords>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 

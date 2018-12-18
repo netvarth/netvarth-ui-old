@@ -103,7 +103,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     'type': 'Items',
     'values': []
   }];
-
+  pay_data = {
+    'uuid': null,
+    'acceptPaymentBy': 'cash',
+    'amount': 0
+  };
   selectedItems = [];
   bill_load_complete = 0;
   item_service_tax: any = 0;
@@ -129,6 +133,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   uuid;
   jCouponsList: any = [];
   makPaydialogRef;
+  amount_to_pay = 0;
   breadcrumbs = [
     {
       title: 'Dashboard',
@@ -138,6 +143,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       title: 'Bill'
     }
   ];
+  showPayableSection = false;
   constructor(
     //  public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
     //  @Inject(MAT_DIALOG_DATA) public data: any,
@@ -361,6 +367,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         );
     });
   }
+
   getItemsList() {
     this.provider_services.getProviderItems()
       .subscribe(
@@ -780,23 +787,53 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['couponIds'] = coupons;
     this.applyAction(action, this.bill_data.uuid, data);
   }
-  initPayment() {
-    this.makePayment(this.checkin, this.bill_data);
-  }
-  makePayment(checkin, bill_data) {
-    this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
+  // initPayment() {
+  //   this.makePayment(this.checkin, this.bill_data);
+  // }
+  // makePayment(checkin, bill_data) {
+  //   this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       checkin: checkin,
+  //       bill_data: bill_data
+  //     }
+  //   });
 
-    this.makPaydialogRef.afterClosed().subscribe(result => {
-      this.getCheckinDetails();
-    });
+  //   this.makPaydialogRef.afterClosed().subscribe(result => {
+  //     this.getCheckinDetails();
+  //   });
+  // }
+  showPayment(mode) {
+    this.pay_data.acceptPaymentBy = mode;
+    this.showPayableSection = true;
+  }
+  makePayment(mode, amount) {
+    this.pay_data.uuid = this.checkin.ynwUuid;
+    this.pay_data.acceptPaymentBy = mode;
+    this.pay_data.amount = amount;
+    this.provider_services.acceptPayment(this.pay_data)
+      .subscribe(
+        data => {
+          if (this.pay_data.acceptPaymentBy === 'self_pay') {
+            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
+          } else {
+            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          }
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  checkAmount(evt) {
+    if (evt.which !== 8 && evt.which !== 0 &&
+      ((evt.which < 48 || evt.which > 57) &&
+        (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
+      isNaN(this.amount_to_pay) || this.amount_to_pay < 0) {
+      evt.preventDefault();
+    }
   }
   settleBill() {
     this.provider_services.settleWaitlistBill(this.uuid)

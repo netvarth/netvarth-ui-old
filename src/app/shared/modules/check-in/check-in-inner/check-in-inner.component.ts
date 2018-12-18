@@ -11,6 +11,7 @@ import { SharedFunctions } from '../../../functions/shared-functions';
 import { Messages } from '../../../constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
+import { tryParse } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-check-in-inner',
@@ -146,6 +147,7 @@ export class CheckInInnerComponent implements OnInit {
     const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
+      console.log('User First Checkin' + this.isfirstCheckinOffer);
     }
     // console.log('check-inpassed data', this.data);
     this.customer_data = this.data.customer_data || [];
@@ -436,12 +438,12 @@ export class CheckInInnerComponent implements OnInit {
     this.shared_services.getServicesByLocationId(locid)
       .subscribe(data => {
         this.servicesjson = data;
-       // console.log(this.servicesjson)
+        // console.log(this.servicesjson)
         this.sel_ser_det = [];
         if (this.servicesjson.length > 0) {
           this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
           // this.setServiceDetails(this.servicesjson[0]); // setting the details of the first service to the holding variable
-         // console.log(this.sel_ser)
+          // console.log(this.sel_ser)
           this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
           this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
         }
@@ -472,7 +474,7 @@ export class CheckInInnerComponent implements OnInit {
       status: serv.status,
       taxable: serv.taxable
     };
-   // console.log(this.sel_ser_det)
+    // console.log(this.sel_ser_det)
     if (this.page_source !== 'provider_checkin') {
       if (serv.isPrePayment) {
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
@@ -616,7 +618,7 @@ export class CheckInInnerComponent implements OnInit {
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
   handleServiceForWhom() {
-  this.resetApi();
+    this.resetApi();
     this.holdwaitlist_for = this.waitlist_for;
     this.step = 3;
     this.main_heading = 'Family Members';
@@ -1076,19 +1078,26 @@ export class CheckInInnerComponent implements OnInit {
       if (couponListTemp && couponListTemp.length > 0) {
         for (let i = 0; i < couponListTemp.length; i++) {
           for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
-            if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === couponListTemp[i].trim() &&
-            this.s3CouponsList[couponIndex].firstCheckinOnly === this.isfirstCheckinOffer) {
-              this.couponsList.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
-              break;
+            console.log(this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() + ':' + couponListTemp[i].trim());
+            console.log(this.s3CouponsList[couponIndex].firstCheckinOnly);
+            console.log(this.isfirstCheckinOffer);
+            if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === couponListTemp[i].trim()) {
+              if (this.s3CouponsList[couponIndex].firstCheckinOnly) {
+                if (this.isfirstCheckinOffer === true) {
+                  this.couponsList.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+                }
+              } else {
+                this.couponsList.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+              }
             }
           }
         }
-        if (this.couponsList.length === couponListTemp.length) {
-          this.coupon_status = 'success';
-        } else {
-          this.coupon_status = 'error';
-          this.couponsList = [];
-        }
+      }
+      if (this.couponsList.length === couponListTemp.length) {
+        this.coupon_status = 'success';
+      } else {
+        this.coupon_status = 'error';
+        this.couponsList = [];
       }
     }
   }

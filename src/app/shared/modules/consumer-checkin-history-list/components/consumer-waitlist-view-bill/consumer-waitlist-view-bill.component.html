@@ -17,8 +17,8 @@
                     <div class="section-one">
                         <h3>{{bname | capitalizeFirst}}</h3>
                         <div class="details">
-                            <span class="columns"><span class="dynamic">{{checkin.consumer.userProfile.firstName
-                                    | capitalizeFirst}} {{checkin.consumer.userProfile.lastName}}</span>
+                            <span class="columns" *ngFor="let user of checkin.waitlistingFor">
+                                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                             </span> <span class="columns rightalign"><span class="dynamic">{{billdate}}
                                     {{billtime}}</span>
                             </span> <span class="columns" *ngIf="billnumber"> <span class="title">{{bill_no_cap}}</span>
@@ -29,6 +29,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="bill-content">
                     <div class="section-three">
                         <div class="bill-breakup">
