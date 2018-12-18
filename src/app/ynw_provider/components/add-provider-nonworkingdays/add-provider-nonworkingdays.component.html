@@ -17,7 +17,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     </div>
 </div>
 <div class="form-group">
-   <label for="reason" class="col-form-label">{{reason_cap}}</label>
+   <label for="reason" class="col-form-label">{{reason_cap}} *</label>
    <input type="text" matInput formControlName="reason" class="form-control" autocomplete="off">
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
