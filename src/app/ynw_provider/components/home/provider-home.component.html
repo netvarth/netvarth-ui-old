@@ -337,7 +337,7 @@
                     </span>
 
                     <span class="acceptbill cs-btn bt7" *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled' && checkin.waitlistStatus != 'checkedIn'"
-                      (click)="getWaitlistBill(checkin, 'payment')">
+                      (click)="viewBillPage(checkin)">
                       <i class="icon-play"></i>{{accept_cap}}
                     </span>
 

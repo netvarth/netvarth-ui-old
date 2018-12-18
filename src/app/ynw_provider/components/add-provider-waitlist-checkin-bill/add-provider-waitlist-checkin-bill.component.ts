@@ -144,6 +144,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   ];
   showPayWorkBench = false;
   amountpay;
+  paymentOnline = false;
   constructor(
     //  public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
     //  @Inject(MAT_DIALOG_DATA) public data: any,
@@ -276,6 +277,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+  }
+  getPaymentSettings() {
+    this.provider_services.getPaymentSettings()
+      .subscribe(
+        (data: any) => {
+          // if (data.payUVerified || data.payTmVerified) {
+          console.log(data);
+          this.paymentOnline = data.onlinePayment;
+        },
+        error => {
+        });
   }
   getWaitlistBill() {
     this.provider_services.getWaitlistBill(this.uuid)
@@ -802,10 +814,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   //     this.getCheckinDetails();
   //   });
   // }
- initPayment(mode, amount) {
-   console.log(amount);
+  initPayment(mode, amount) {
+    console.log(amount);
     this.makePayment(mode, amount);
- }
+  }
   showPayment() {
     this.amountpay = this.bill_data.amountDue;
     this.showPayWorkBench = true;

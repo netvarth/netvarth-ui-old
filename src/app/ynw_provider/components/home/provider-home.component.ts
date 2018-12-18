@@ -1158,109 +1158,109 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
   }
 
-  getWaitlistBill(checkin, type = 'bill') {
-    this.provider_services.getWaitlistBill(checkin.ynwUuid)
-      .subscribe(
-        data => {
-          if (type === 'bill') {
-            this.viewBill(checkin, data);
-          } else {
-            this.makePayment(checkin, data);
-          }
-        },
-        error => {
-          // console.log(error);
-          if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
-            // this.addEditBill(checkin , null);
-          } else {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        },
-        () => {
-        }
-      );
-  }
+  // getWaitlistBillgetWaitlistBill(checkin, type = 'bill') {
+  //   this.provider_services.getWaitlistBill(checkin.ynwUuid)
+  //     .subscribe(
+  //       data => {
+  //         if (type === 'bill') {
+  //           this.viewBill(checkin, data);
+  //         } else {
+  //           this.makePayment(checkin, data);
+  //         }
+  //       },
+  //       error => {
+  //         // console.log(error);
+  //         if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
+  //           // this.addEditBill(checkin , null);
+  //         } else {
+  //           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //         }
+  //       },
+  //       () => {
+  //       }
+  //     );
+  // }
 
-  addEditBill(checkin) {
-    // console.log('add bill', bill_data);
-    // this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'billpopup'],
-    //   disableClose: true,
-    //   data: {
-    //     checkin: checkin,
-    //     bill_data: bill_data
-    //   }
-    // });
+  // addEditBill(checkin) {
+  //   // console.log('add bill', bill_data);
+  //   // this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+  //   //   width: '50%',
+  //   //   panelClass: ['commonpopupmainclass', 'billpopup'],
+  //   //   disableClose: true,
+  //   //   data: {
+  //   //     checkin: checkin,
+  //   //     bill_data: bill_data
+  //   //   }
+  //   // });
 
-    // this.billdialogRef.afterClosed().subscribe(result => {
-    //   if (result === 'reloadlist') {
-    //     this.reloadAPIs();
-    //   }
-    // });
-  }
+  //   // this.billdialogRef.afterClosed().subscribe(result => {
+  //   //   if (result === 'reloadlist') {
+  //   //     this.reloadAPIs();
+  //   //   }
+  //   // });
+  // }
 
-  viewBill(checkin, bill_data) {
-    // console.log('billdata', bill_data);
-    // this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'billpopup'],
-    //   disableClose: true,
-    //   data: {
-    //     checkin: checkin,
-    //     bill_data: bill_data
-    //   }
-    // });
-    if (!this.viewbilldialogRef) {
-      this.viewbilldialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'billpopup'],
-        disableClose: true,
-        data: {
-          checkin: checkin,
-          bill_data: bill_data
-        }
-      });
-    } else {
-      console.log('more clicks');
-    }
-    this.viewbilldialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
-      if (this.viewbilldialogRef) {
-        this.viewbilldialogRef = null;
-      }
-      //   if (result === 'updateBill') {
-      // this.addEditBill(checkin, bill_data);
-      // } else
-      if (result === 'reloadlist') {
-        this.reloadAPIs();
-      } else if (result === 'makePayment') {
-        this.makePayment(checkin, bill_data);
-      }
-    });
-  }
+  // viewBill(checkin, bill_data) {
+  //   // console.log('billdata', bill_data);
+  //   // this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
+  //   //   width: '50%',
+  //   //   panelClass: ['commonpopupmainclass', 'billpopup'],
+  //   //   disableClose: true,
+  //   //   data: {
+  //   //     checkin: checkin,
+  //   //     bill_data: bill_data
+  //   //   }
+  //   // });
+  //   if (!this.viewbilldialogRef) {
+  //     this.viewbilldialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+  //       width: '50%',
+  //       panelClass: ['commonpopupmainclass', 'billpopup'],
+  //       disableClose: true,
+  //       data: {
+  //         checkin: checkin,
+  //         bill_data: bill_data
+  //       }
+  //     });
+  //   } else {
+  //     console.log('more clicks');
+  //   }
+  //   this.viewbilldialogRef.afterClosed().subscribe(result => {
+  //     // console.log(result);
+  //     if (this.viewbilldialogRef) {
+  //       this.viewbilldialogRef = null;
+  //     }
+  //     //   if (result === 'updateBill') {
+  //     // this.addEditBill(checkin, bill_data);
+  //     // } else
+  //     if (result === 'reloadlist') {
+  //       this.reloadAPIs();
+  //     } else if (result === 'makePayment') {
+  //       this.makePayment(checkin, bill_data);
+  //     }
+  //   });
+  // }
 
-  makePayment(checkin, bill_data) {
-    if (!this.makPaydialogRef) {
-      this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          checkin: checkin,
-          bill_data: bill_data
-        }
-      });
-    } else {
-      console.log('more clicks');
-    }
-    this.makPaydialogRef.afterClosed().subscribe(result => {
-      if (this.makPaydialogRef) {
-        this.makPaydialogRef = null;
-      }
-      this.reloadAPIs();
-    });
-  }
+  // makePayment(checkin, bill_data) {
+  //   if (!this.makPaydialogRef) {
+  //     this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+  //       width: '50%',
+  //       panelClass: ['commonpopupmainclass'],
+  //       disableClose: true,
+  //       data: {
+  //         checkin: checkin,
+  //         bill_data: bill_data
+  //       }
+  //     });
+  //   } else {
+  //     console.log('more clicks');
+  //   }
+  //   this.makPaydialogRef.afterClosed().subscribe(result => {
+  //     if (this.makPaydialogRef) {
+  //       this.makPaydialogRef = null;
+  //     }
+  //     this.reloadAPIs();
+  //   });
+  // }
 
   resetPaginationData() {
     this.filter.page = 1;
@@ -1273,7 +1273,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.filter.page = pg;
        this.shared_functions.setitemonLocalStorage('hP', pg);
     this.shared_functions.setitemonLocalStorage('hPFil', this.filter);
-    
     // console.log('page', pg);
     this.doSearch();
   }
