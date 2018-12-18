@@ -87,7 +87,7 @@ prevcheckstatus;
 
 
   getWaitlistMgr() {
-
+this.waitlist_manager = null;
     this.provider_services.getWaitlistMgr()
     .subscribe(
       data => {

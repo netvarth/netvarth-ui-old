@@ -73,11 +73,13 @@ export class ProviderReimburseReportComponent implements OnInit {
     console.log('I am Here');
     this.getCouponReport();
   }
+  getJSONfromString(jsonString) {
+      return JSON.parse(jsonString);
+  }
   /**
    * Open Modal for Request for Payment
    * @param reportId Report Id
    */
-
   openrequestModal(reportId) {
     this.requestdialogRef = this.dialog.open(RequestForComponent, {
       width: '50%',

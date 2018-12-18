@@ -987,12 +987,16 @@
                                     (buttonBeforeHook)="onButtonBeforeHook($event)"
                                     (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery> -->
 
-                                    <ks-modal-gallery [modalImages]="image_list_popup"
+                                    <!-- <ks-modal-gallery [modalImages]="image_list_popup"
                                     [plainGalleryConfig]="customPlainGalleryRowConfig"
                                     [buttonsConfig]="customButtonsFontAwesomeConfig"
                                     (buttonBeforeHook)="onButtonBeforeHook($event)"
-                                    (buttonAfterHook)="onButtonAfterHook($event)" [slideConfig]="{infinite: false, sidePreviews: {show: false}}"></ks-modal-gallery>
-
+                                    (buttonAfterHook)="onButtonAfterHook($event)" [slideConfig]="{infinite: false, sidePreviews: {show: false}}"></ks-modal-gallery> -->
+                 <ks-modal-gallery [modalImages]="image_list_popup"
+                                    [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                    [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                    (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>

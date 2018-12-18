@@ -30,7 +30,7 @@
 														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>
 													</div>
-													
+
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
 														<span *ngIf="billnumber">
 															<span class="title">{{bill_no_cap}} </span>
@@ -49,7 +49,6 @@
 												<ng-container *ngIf="(!showAddItemsec && showAddItemMenuSection) || showAddItemsec || showJCouponSection">
 													<div class="section-two">
 														<div class="add-button" *ngIf="!showAddItemsec && showAddItemMenuSection">
-															<button class="cs-btn bt3" (click)="showAddItem()">{{ad_ser_item_cap}}</button>&nbsp;
 															<span class="bill-more-mat-menu add-item">
 																<!-- <span class="icon-vertical-ellipse"></span> -->
 																<button mat-icon-button [matMenuTriggerFor]="menu">
@@ -67,6 +66,8 @@
 																	</button>
 																</mat-menu>
 															</span>
+															<button class="cs-btn bt3 btn-additem" (click)="showAddItem()">{{ad_ser_item_cap}}</button>&nbsp;
+
 														</div>
 														<ng-container *ngIf="showAddItemsec">
 															<div class="add-serv-item edit-row service no-padding">
@@ -372,7 +373,7 @@
 																		 class="fa fa-window-close" aria-hidden="true"></i></td>
 																</tr>
 																<tr class="amt discount" *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
-																	<td class="name">{{jcoupon.key}}</td>
+																	<td class="name">{{jcoupon.key}} (JC)</td>
 																	<td class="price">(-){{jcoupon.value.value |
 																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeJCoupon(jcoupon.key)"
 																		 class="fa fa-window-close" aria-hidden="true"></i></td>
@@ -475,12 +476,39 @@
 												</div>
 											</div>
 										</div>
-										<div class="actiondiv">
-											<button type="button" mat-button class="cs-btn bt1 settle" *ngIf="bill_data.billStatus!='Settled'" (click)="confirmSettleBill()">{{settle_bill_cap}}</button>
-											<button type="button" mat-button class="cs-btn bt1 print" *ngIf="bill_data.billStatus=='Settled'" (click)="emailBill()">Email
-												Bill</button>
-											<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
-											 (click)="initPayment()">{{accept_payment_cap}}</button>
+										<div class="actiondiv bill_btns">
+											<div class="row" *ngIf="showPayableSection">
+												<div class="col-3">
+													<form class="example-form">
+														<mat-form-field class="example-full-width">
+															<input matInput placeholder="{{amount_to_pay_cap}}" class="form-control" [(ngModel)]="amountPaid"
+															 (keydown)="checkAmount($event)">
+														</mat-form-field>
+													</form>
+													<!-- <div class="form-group">
+																 <input matInput type="number" min="1"  id="amount_to_pay"
+																 autocomplete="off" >
+															</div> -->
+												</div>
+												<div class="spl col-9 no-padding">
+													<button class="cs-btn bt1" (click)="initPayment(amountPaid)">Ok</button>
+													<button class="cs-btn bt2" (click)="hidePayWorkBench(amountPaid)">Cancel</button>
+												</div>
+
+											</div>
+											<div class="col-12">
+												<button type="button" mat-button class="cs-btn bt1 settle" *ngIf="bill_data.billStatus!='Settled'" (click)="confirmSettleBill()">{{settle_bill_cap}}</button>
+												<button type="button" mat-button class="cs-btn bt1 print" *ngIf="bill_data.billStatus=='Settled'" (click)="emailBill()">Email
+													Bill</button>
+												<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+												 (click)="makePayment('self_pay',bill_data.amountDue)">JaldeePay</button>
+												<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+												 (click)="showPayment('cash')">Pay by Cash</button>
+												<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+												 (click)="showPayment('others')">Pay by Other Media</button>
+												<!-- <button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+											 (click)="initPayment()"></button> -->
+											</div>
 										</div>
 									</div>
 								</div>

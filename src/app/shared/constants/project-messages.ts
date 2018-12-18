@@ -134,6 +134,8 @@ export const Messages = {
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',
   'PAYSETTING_SAV_PAYSTATUS': 'Payment Status updated successfully',
   'PAYSETTING_BLANKNUM': 'Mobile number required',
+  'PAYSETTING_BLANKMID': 'Merchant Id required',
+  'PAYSETTING_BLANKMKEY': 'Merchant Key required',
   'PAYSETTING_ONLYNUM': 'Only numbers are allowed in mobile field',
   'PAYSETTING_MOB10': 'Mobile number should have 10 digits',
   'PAYSETTING_PAN': 'Pan number is required',

@@ -245,10 +245,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(data => {
         this.getSearchstatus();
+        this.getWaitlistMgr();
       },
         error => {
           const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getSearchstatus();
+          this.getWaitlistMgr();
         });
   }
   redirecTo(mod) {

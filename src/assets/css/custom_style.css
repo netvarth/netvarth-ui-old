@@ -215,7 +215,7 @@
       .bill-section .bill-section-content .bill-wrapper .section-three .amount-table {
         position: relative; }
         .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content {
-          font-size: 1rem;
+          /* font-size: 1rem; */
           font-weight: 500;
           width: 100%; }
           .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
@@ -237,7 +237,8 @@
               }
             .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name {
               font-weight: 600;
-              font-size: 1rem; }
+              /* font-size: 1rem;  */
+            }
               .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount {
                 color: #00aef2;
                 font-size: .875rem;
@@ -247,7 +248,8 @@
                   cursor: pointer; }
             .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price {
               font-weight: 600;
-              font-size: 1rem; }
+              /* font-size: 1rem;  */
+            }
             .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price {
               color: #999999;
               font-size: .75rem;
@@ -268,7 +270,7 @@
                 text-decoration: underline;
                 cursor: pointer; }
             .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price {
-              font-size: 1.1rem;
+              /* font-size: 1.1rem; */
               font-weight: 700; }
             @media only screen and (max-width: 500px) {
               .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
@@ -711,3 +713,11 @@
   /* display: flex; */
   font-size: .875rem;
 }
+
+.paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .paytm-det .form-group mat-form-field, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .form-group mat-form-field, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field {
+  width: auto !important;
+}
+.bill_btns .mat-button {
+  text-transform: none !important;
+}
+.btn-additem {float: right; margin-top:-3px;}

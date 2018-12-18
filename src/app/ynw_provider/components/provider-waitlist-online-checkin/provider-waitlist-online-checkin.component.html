@@ -38,7 +38,7 @@
     <div class="lbl col-sm-12 col-md-12 col-lg-12">
       <label>{{accept_future_cap}} {{checkin_label | capitalizeFirst}}
         <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['futureDateWaitlist']" [labelPosition]="'before'"
-          [(ngModel)]="form['futureDateWaitlist']" (change)="onFormChange()">
+          [(ngModel)]="form['futureDateWaitlist']" (change)="onFormChange()"  [disabled]="!waitlist_manager['onlineCheckIns']">
         </mat-slide-toggle></label>
     </div>
   </div>
