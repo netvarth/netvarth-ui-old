@@ -4,7 +4,6 @@ import { HeaderComponent } from '../../../shared/modules/header/header.component
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
-
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { Router, ActivatedRoute, RoutesRecognized  } from '@angular/router';
