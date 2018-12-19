@@ -10,6 +10,7 @@ import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provide
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { error } from 'util';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -32,6 +33,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   value_cap = Messages.VALUE_CAP;
   enable_cap = Messages.ENABLE_CAP;
   disable_cap = Messages.DISABLE_CAP;
+  jcoupon_states = projectConstants.JCOUPON_STATES;
   coupon_list: any = [];
   jaldeeCoupons: any = [];
   query_executed = false;

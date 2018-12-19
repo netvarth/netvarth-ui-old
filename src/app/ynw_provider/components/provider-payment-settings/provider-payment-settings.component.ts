@@ -69,8 +69,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     @ViewChild('acholdernameref') private acholdernameRef: ElementRef;
     paytmenabled;
     paytmmobile;
-    paytm_mkey;
-    paytm_mid;
+    paytmMerchantKey;
+    paytmMerchantId;
     ccenabled;
     pannumber;
     panname;
@@ -135,13 +135,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.provider_services.getPaymentSettings()
             .subscribe(data => {
                 this.paySettings = data;
-                console.log(JSON.stringify(this.paySettings));
                 this.paystatus = this.paySettings.onlinePayment || false;
                 this.paytmenabled = this.paySettings.payTm || false;
                 this.ccenabled = this.paySettings.dcOrCcOrNb || false;
                 this.paytmmobile = this.paySettings.payTmLinkedPhoneNumber || '';
-                this.paytm_mkey = '';
-                this.paytm_mid = '';
+                this.paytmMerchantKey = this.paySettings.paytmMerchantKey || '';
+                this.paytmMerchantId = this.paySettings.paytmMerchantId || '';
                 this.pannumber = this.paySettings.panCardNumber || '';
                 this.panname = this.paySettings.nameOnPanCard || '';
                 this.bankacname = this.paySettings.accountHolderName || '';
@@ -248,16 +247,16 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     paytmMidBlur () {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
-            if (blankpattern.test(this.paytm_mid)) {
-                this.showError['paytm_mid'] = { status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BLANKMID') };
+            if (blankpattern.test(this.paytmMerchantId)) {
+                this.showError['paytmMerchantId'] = { status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BLANKMID') };
             }
         }
     }
     paytmMkeyBlur () {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
-            if (blankpattern.test(this.paytm_mkey)) {
-                this.showError['paytm_mkey'] = { status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BLANKMKEY') };
+            if (blankpattern.test(this.paytmMerchantKey)) {
+                this.showError['paytmMerchantKey'] = { status: true, msg: this.shared_Functionsobj.getProjectMesssages('PAYSETTING_BLANKMKEY') };
             }
         }
     }
@@ -397,6 +396,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     postData['payTmLinkedPhoneNumber'] = this.paytmmobile;
                 }
             }
+            postData['paytmMerchantId'] = this.paytmMerchantId;
+            postData['paytmMerchantKey'] = this.paytmMerchantKey;
         } else {
             postData.payTm = false;
         }
@@ -595,8 +596,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         } else {
             this.showError = {
                 'paytmmobile': { status: false, msg: '' },
-                'paytm_mid': { status: false, msg: '' },
-                'paytm_mkey': { status: false, msg: '' },
+                'paytmMerchantId': { status: false, msg: '' },
+                'paytmMerchantKey': { status: false, msg: '' },
                 'pannumber': { status: false, msg: '' },
                 'panname': { status: false, msg: '' },
                 'bankacname': { status: false, msg: '' },

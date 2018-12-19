@@ -714,9 +714,9 @@
   font-size: .875rem;
 }
 
-.paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .paytm-det .form-group mat-form-field, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .form-group mat-form-field, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field {
+/* .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .paytm-det .form-group mat-form-field, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .form-group mat-form-field, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field {
   width: auto !important;
-}
+} */
 .bill_btns .mat-button {
   text-transform: none !important;
 }

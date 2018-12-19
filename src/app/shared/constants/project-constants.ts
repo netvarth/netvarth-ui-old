@@ -316,5 +316,9 @@ export const projectConstants = {
     Arrived: 'Arrived',
     CheckedIn: 'CheckedIn',
     Cancelled: 'Cancelled'
+  },
+  JCOUPON_STATES: {
+    DRAFT: 'New - Available for Use',
+    EXPIRED: 'Expired'
   }
 };

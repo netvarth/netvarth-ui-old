@@ -129,8 +129,8 @@
                                             <div class="name">
                                                 <span class="tax-top">Tax
                                                     {{bill_data.taxPercentage}}% of {{bill_data.taxableTotal |
-                                                    currency:'INR':'symbol':'.2-2'}}</span><br /><span class="txn">(CGST-{{item_service_tax/2}}%,
-                                                    SGST-{{item_service_tax/2}}%)</span>
+                                                    currency:'INR':'symbol':'.2-2'}}</span><br /><span class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
+                                                    SGST-{{bill_data.taxPercentage/2}}%)</span>
                                             </div>
                                             <div class="price">(+){{bill_data.totalTaxAmount |
                                                 currency:'INR':'symbol':'.2-2'}}</div>

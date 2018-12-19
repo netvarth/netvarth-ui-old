@@ -38,14 +38,15 @@
                                                     <td data-title="Valid From">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
                                                     <td data-title="Valid To">{{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>
                                                     <td data-title="Status" class="status">
-                                                        <span class="icon-enable" *ngIf="jCoupon.couponState=='ENABLED'">
+                                                        {{jcoupon_states[jCoupon.couponStatus]}}
+                                                        <!-- <span class="icon-enable" *ngIf="jCoupon.couponState=='ENABLED'">
                                                             {{enable_cap}}</span>
                                                         <span class="icon-disable" *ngIf="jCoupon.couponState=='DISABLED'">
                                                             {{disable_cap}}</span>
                                                         <span *ngIf="jCoupon.couponState=='ACTIVE'">
                                                             Active</span>
                                                         <span *ngIf="jCoupon.couponState=='ARCHIVED'">
-                                                            Archived</span>
+                                                            Archived</span> -->
                                                     </td>
                                                     <td class="action">
                                                         <span class="mbt" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='ARCHIVED'">

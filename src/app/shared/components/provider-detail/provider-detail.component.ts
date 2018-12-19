@@ -253,7 +253,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.provider_bussiness_id = this.businessjson.id;
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-                this.bLogo = this.businessjson.logo.url;
+                this.bLogo = this.businessjson.logo.url + '?' + new Date();
               }
             }
             if (this.businessjson.specialization) {
@@ -309,6 +309,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'gallery': {
             this.tempgalleryjson = res;
             let indx = 0;
+            alert(this.bLogo);
             if (this.bLogo !== '') {
               this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
@@ -427,7 +428,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       },
         error => {
-
+          if (this.bLogo !== '') {
+            this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+          }
         }
       );
   }

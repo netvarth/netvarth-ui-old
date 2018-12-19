@@ -64,26 +64,26 @@
                                                                 <div class="form-group">
                                                                     <label class="caption">Merchant Id</label>
                                                                     <mat-form-field>
-                                                                        <input matInput #paytmidref [(ngModel)]="paytm_mid"
-                                                                            (keypress)="resetApi('paytm_mid')"
+                                                                        <input matInput #paytmidref [(ngModel)]="paytmMerchantId"
+                                                                            (keypress)="resetApi('paytmMerchantId')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
                                                                             (blur)="paytmMidBlur()" tabindex="2">
                                                                     </mat-form-field>
-                                                                    <app-field-error-display [displayError]="showError['paytm_mid']['status']"
-                                                                        [errorMsg]="showError['paytm_mid']['msg']"></app-field-error-display>
+                                                                    <app-field-error-display [displayError]="showError['paytmMerchantId']['status']"
+                                                                        [errorMsg]="showError['paytmMerchantId']['msg']"></app-field-error-display>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                 <div class="form-group">
                                                                     <label class="caption">Merchant Key</label>
                                                                     <mat-form-field>
-                                                                        <input matInput #paytmmkeyref [(ngModel)]="paytm_mkey"
-                                                                            (keypress)="resetApi('paytm_mkey')"
+                                                                        <input matInput #paytmmkeyref [(ngModel)]="paytmMerchantKey"
+                                                                            (keypress)="resetApi('paytmMerchantKey')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
                                                                             (blur)="paytmMkeyBlur()" tabindex="3">
                                                                     </mat-form-field>
-                                                                    <app-field-error-display [displayError]="showError['paytm_mkey']['status']"
-                                                                        [errorMsg]="showError['paytm_mkey']['msg']"></app-field-error-display>
+                                                                    <app-field-error-display [displayError]="showError['paytmMerchantKey']['status']"
+                                                                        [errorMsg]="showError['paytmMerchantKey']['msg']"></app-field-error-display>
                                                                 </div>
                                                             </div>
                                                         </div>

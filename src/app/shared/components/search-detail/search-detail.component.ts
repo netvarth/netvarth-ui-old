@@ -924,6 +924,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 // console.log('result terminologies', this.search_data.hits.hit[i].fields.title, JSON.parse(this.search_data.hits.hit[i].fields.terminologies));
                 // this.getTerminologyTerm('waitlist', this.search_data.hits.hit[i].fields);
                 locationcnt = 0;
+                if (this.search_data.hits.hit[i].fields['logo']) {
+                  this.search_data.hits.hit[i].fields['logo'] = this.search_data.hits.hit[i].fields['logo'] + '?' + new Date();
+                }
                 this.search_data.hits.hit[i].fields.rating = this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating);
                 this.search_data.hits.hit[i].fields['checkInsallowed'] = (this.search_data.hits.hit[i].fields.hasOwnProperty('online_checkins')) ? true : false;
                 // console.log('rating', this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating));
