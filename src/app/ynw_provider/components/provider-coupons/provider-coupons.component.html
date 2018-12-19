@@ -38,7 +38,7 @@
                                                     <td data-title="Valid From">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
                                                     <td data-title="Valid To">{{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>
                                                     <td data-title="Status" class="status">
-                                                        {{jcoupon_states[jCoupon.couponStatus]}}
+                                                        {{jcoupon_states[jCoupon.couponState]}}
                                                         <!-- <span class="icon-enable" *ngIf="jCoupon.couponState=='ENABLED'">
                                                             {{enable_cap}}</span>
                                                         <span class="icon-disable" *ngIf="jCoupon.couponState=='DISABLED'">
@@ -49,26 +49,26 @@
                                                             Archived</span> -->
                                                     </td>
                                                     <td class="action">
-                                                        <span class="mbt" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='ARCHIVED'">
+                                                        <span class="mbt" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE'">
                                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                 <mat-icon>more_vert</mat-icon>
                                                             </button>
                                                             <mat-menu #menu="matMenu">
                                                                 <button type="button" (click)="changecouponStatus(jCoupon)"
                                                                     mat-menu-item>
-                                                                    <i *ngIf="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='ACTIVE'" class="icon-enable"></i>
+                                                                    <i *ngIf="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='NEW'" class="icon-enable"></i>
                                                                     <i *ngIf="jCoupon.couponState=='ENABLED'" class="icon-disable"></i>
                                                                     <span> {{(jCoupon.couponState=='DISABLED' ||
-                                                                        jCoupon.couponState=='ACTIVE') ?
+                                                                        jCoupon.couponState=='NEW') ?
                                                                         'Enable':' Disable'}}</span>
                                                                 </button>
                                                             </mat-menu>
                                                         </span>
-                                                        <span class="mbt-mobile-show" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='ARCHIVED'">
-                                                            <button class="coupon_status pointer-cursor" [class.enableicon]="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='ACTIVE'"
+                                                        <span class="mbt-mobile-show" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE'">
+                                                            <button class="coupon_status pointer-cursor" [class.enableicon]="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='NEW'"
                                                                 [class.disableicon]="jCoupon.couponState=='ENABLED'" type="button"
                                                                 (click)="changecouponStatus(jCoupon)">{{(jCoupon.couponState=='DISABLED'
-                                                                || jCoupon.couponState=='ACTIVE') ? 'Enable':'
+                                                                || jCoupon.couponState=='NEW') ? 'Enable':'
                                                                 Disable'}}</button>
                                                         </span>
                                                     </td>
