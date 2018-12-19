@@ -58,7 +58,7 @@ export const Messages = {
   'BPROFILE_ATLEASTONEDAY': 'Please select atleast one day',
   'BPROFILE_SELECTTIME': 'Please select the start and end time',
   'BPROFILE_STIMEERROR': 'End time should be greater than start time',
-  'BPROFILE_SCHOVERLAP': 'Schedule selected for "[day]" overlaps with existing schedule',
+  'BPROFILE_SCHOVERLAP': 'Schedule overlaps with existing schedule',
   'BPROFILE_SCHADDEDFOR': 'Schedule added for',
   'BPROFILE_IMAGE_DELETE': 'Deleted successfully',
   'BPROFILE_IMAGE_UPLOAD': 'Uploaded successfully',
@@ -725,7 +725,7 @@ export const Messages = {
   'BPROFILE_DISABLED_CAP': 'disabled',
   'BPROFILE_ONLINE_VISIBLE_CAP': 'for public search online and will not be visible to',
   'BPROFILE_SET_UP_CAP': 'We recommend you to set up the',
-  'BPROFILE_SUMMARY_CAP': 'Profile Name and Summary',
+  'BPROFILE_SUMMARY_CAP': 'Profile Name and Description',
   'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn ON the Public Search',
   'BPROFILE_CURRENT_STATUS': 'Current Status',
   'BPROFILE_ON_CAP': 'On',
@@ -981,7 +981,7 @@ export const Messages = {
   'PRI_THIS_PHONE_VISIBLE_TO_CAP' : 'This phone number is visible to',
   'PRI_EMAIL_ID_CAP' : 'Email Id *',
   'PRI_EMAIL_LABEL_CAP' : 'Email Label *',
-  'PRI_MAIL_ID_IS_VISIBLE_TO_CAP' : 'This email id is visible to',
+  'PRI_MAIL_ID_IS_VISIBLE_TO_CAP' : 'This email is visible to',
 
   // App-ynw_provider-components-provider-bprofile-search-adwords
   'SEARCH_ADWORDS_CAP' : 'Adwords',
@@ -993,9 +993,9 @@ export const Messages = {
   'SEARCH_GALLERY_SELEC_IMG_FILE_CAP' : 'Click here to select the image files',
 
   // App-ynw_provider-components-provider-bprofile-search-primary
-  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Summary',
+  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Description',
   'SEARCH_PRI_BUISINESS_NAME_CAP' : 'Name *',
-  'SEARCH_PRI_PROF_SUMMARY_CAP' : 'Profile Summary',
+  'SEARCH_PRI_PROF_SUMMARY_CAP' : 'Description',
 
   // App-ynw_provider-components-provider-bwizard
   'WIZ_CONGRATULATIONS_CAP' : 'Congratulations,',

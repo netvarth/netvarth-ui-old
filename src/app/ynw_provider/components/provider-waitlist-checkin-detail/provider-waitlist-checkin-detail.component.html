@@ -105,7 +105,7 @@
               <ul class="c-history">
                 <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
                   <div class="time">{{ history.time }}</div>
-                  <div class="action">{{checkin_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
+                  <div class="action">{{history.waitlistStatus | capitalizeFirst}}</div>
                 </li>
               </ul>
               <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>

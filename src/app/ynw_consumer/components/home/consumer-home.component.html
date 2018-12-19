@@ -58,8 +58,8 @@
                                     </span>
                                 </div>
                                 <ng-container *ngIf="waitlist.calculationMode != 'NoCalc' && waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
-                                        waitlist.waitlistStatus == 'arrived')">
-                                    <div class="lt0" *ngIf="waitlist.estimated_date==''">
+                                        waitlist.waitlistStatus == 'arrived' || waitlist.waitlistStatus == 'cancelled')">
+                                    <div class="lt0" *ngIf="waitlist.estimated_date=='' && waitlist.waitlistStatus != 'cancelled'">
                                         {{waitlist.estimated_caption}} <span class="time now">
                                             {{waitlist.estimated_time}}</span>
                                     </div>
@@ -70,6 +70,9 @@
                                             <span *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}},
                                             </span>
                                             {{waitlist.estimated_time}}</span>
+                                    </div>
+                                    <div class="lt0" *ngIf="waitlist.waitlistStatus == 'cancelled'">
+                                        {{waitlist.date | date: dateFormatSp}} {{waitlist.queue.queueStartTime}}
                                     </div>
                                 </ng-container>
                                 <div class="lt0" *ngIf="showPersonsAhead(waitlist)">
@@ -84,13 +87,13 @@
                                 <div class="lt0 payment" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
                                     <span class="paytext">{{checkindisablemsg}}</span>
                                     <!-- <span class="buttonouter"> -->
-                                        <!-- <span class="amount">Amount to Pay: $1000</span> -->
-                                        <!-- <button class="cs-btn bt3" (click)="makeFailedPayment(waitlist)">Make Payment</button>
+                                    <!-- <span class="amount">Amount to Pay: $1000</span> -->
+                                    <!-- <button class="cs-btn bt3" (click)="makeFailedPayment(waitlist)">Make Payment</button>
                                     </span> -->
                                 </div>
-                                <div class="lt0 payment" *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus== 'Show')" >
+                                <div class="lt0 payment" *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus== 'Show')">
                                     <span class="paytext"><span>Amount Due : {{waitlist.amountDue |
-                                        currency:'INR':'symbol':'.2-2'}}   </span><a class="bt3 cust-btn" (click)="viewBill(waitlist)">Pay</a></span> 
+                                            currency:'INR':'symbol':'.2-2'}} </span><a class="bt3 cust-btn" (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
                             </div>
                             <div class="rt">
