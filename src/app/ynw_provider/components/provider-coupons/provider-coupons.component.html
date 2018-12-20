@@ -31,20 +31,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let jCoupon of jaldeeCoupons">
+                                                <tr *ngFor="let jCoupon of jaldeeCoupons let i=index">
                                                     <td data-title="Coupon Code" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">{{jCoupon.jaldeeCouponCode}}</td>
                                                     <td data-title="Name">{{jCoupon.couponName}}</td>
                                                     <td data-title="Valid From">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
                                                     <td data-title="Valid To">{{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>
                                                     <td data-title="Status" class="status" [ngClass]="{'green-text' :jCoupon.couponState=='ENABLED','red-text' :jCoupon.couponState=='EXPIRED','blue-text' :jCoupon.couponState=='NEW'}">
-                                                      {{jcoupon_states[jCoupon.couponState]}}
+                                                        {{jcoupon_states[jCoupon.couponState]}}
                                                     </td>
                                                     <td class="action">
-                                                        <span [matTooltipClass]="tooltipcls" [matTooltip]="coupon_info">
+                                                        <span data-toggle="tooltip" data-placement="right" title="Always Enabled {{jCoupon.couponRules.alwaysEnabled}}
+Jaldee Reimburse {{jCoupon.couponRules.maxReimbursePercentage}}%">
                                                             <i data-icon="B" id="customer-help"></i>
-
                                                         </span>
-                                                        <span class="mbt" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE'">
+                                                        <span *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE'">
                                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                 <mat-icon>more_vert</mat-icon>
                                                             </button>
