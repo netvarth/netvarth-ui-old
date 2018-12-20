@@ -1,6 +1,6 @@
 <div class="lc33">
-    <div class="lc3-1 lcd">
-        <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addwordTooltip">{{adwords_cap}}
+    <div class="lc3-1 lcd custom-help">
+        <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addwordTooltip">{{adwords_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div>
           <span class="addbt" (click)="addAdwords()"
           *ngIf="adwordsmaxcount > 0"></span>
         </div>

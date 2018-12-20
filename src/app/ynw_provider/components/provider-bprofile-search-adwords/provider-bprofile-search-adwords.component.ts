@@ -165,4 +165,24 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
           this.showadword_list.push(this.adword_list[i]);
         }
       }
+      learnmore_clicked(mod, e) {
+        /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+               width: '50%',
+               panelClass: 'commonpopupmainclass',
+               autoFocus: true,
+               data: {
+                   moreOptions : this.getMode(mod)
+               }
+             });
+             dialogRef.afterClosed().subscribe(result => {
+             });*/
+        e.stopPropagation();
+        const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+        this.sharedfunctionObj.sendMessage(pdata);
+      }
+      getMode(mod) {
+        let moreOptions = {};
+        moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };
+        return moreOptions;
+      }
 }

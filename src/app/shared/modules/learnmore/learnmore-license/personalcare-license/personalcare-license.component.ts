@@ -19,8 +19,9 @@ export class PersonalcareLicenseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log(this.target);
     if (this.target) {
-     // this.triggerScrollTo(this.target);
+     this.triggerScrollTo(this.target);
     }
     // window.addEventListener('scroll', this.scroll, true); // third parameter
   }

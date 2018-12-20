@@ -34,7 +34,7 @@
         <app-kiosk-learnmore [target]="'kiosk'" *ngIf="destination=='kiosk' || helpSub =='kiosk'"></app-kiosk-learnmore>
 
         <!-- License -->
-        <app-license-learnmore [target]="'license'" *ngIf="destination=='license' || helpSub =='license'"></app-license-learnmore>
+        <app-license-learnmore [target]="subKey" *ngIf="destination=='license' || helpSub =='license'"></app-license-learnmore>
         <!-- License -->
         <app-adjustdelay-learnmore [target]="'adjustdelay'" *ngIf="destination=='adjustdelay' || helpSub =='adjustdelay'"></app-adjustdelay-learnmore>
       <!-- </mat-dialog-content>
