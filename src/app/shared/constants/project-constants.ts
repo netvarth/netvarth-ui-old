@@ -321,7 +321,7 @@ export const projectConstants = {
     NEW: 'New - Available for Use',
     EXPIRED: 'Expired',
     ENABLED: 'Enabled',
-    DISABLED: 'DisableD',
+    DISABLED: 'Disabled',
     DISABLED_BY_JALDEE: 'Disabled By Jaldee',
     DISABLED_PROVIDER_LIMIT_REACHED: 'Disabled (Limit Reached)'
   }

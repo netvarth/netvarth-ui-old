@@ -17,7 +17,6 @@ export class PersonalcareLicenseComponent implements OnInit, OnDestroy {
     // @Inject(MAT_DIALOG_DATA) public data: any,
     private _scrollToService: ScrollToService
   ) {}
-
   ngOnInit() {
     console.log(this.target);
     if (this.target) {
