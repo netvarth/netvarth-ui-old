@@ -9,3 +9,11 @@
 .col-md-6 {
     flex: 0 0 50%;
 }
+
+.red-text{
+    color: red;
+}
+
+.blue-text{
+    color: blue;
+}

@@ -21,3 +21,15 @@
     background: transparent;
     font-weight: 500;
 }
+
+.green-text{
+    color: #00cc96;
+}
+   
+.red-text{
+    color: red;
+}
+   
+.blue-text{
+    color: blue;
+}

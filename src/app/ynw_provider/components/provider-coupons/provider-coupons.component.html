@@ -32,23 +32,18 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let jCoupon of jaldeeCoupons">
-                                                    <td data-title="Coupon Code" class="pointer-cursor"
-                                                        (click)="couponView(jCoupon.jaldeeCouponCode)">{{jCoupon.jaldeeCouponCode}}</td>
+                                                    <td data-title="Coupon Code" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">{{jCoupon.jaldeeCouponCode}}</td>
                                                     <td data-title="Name">{{jCoupon.couponName}}</td>
                                                     <td data-title="Valid From">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
                                                     <td data-title="Valid To">{{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>
-                                                    <td data-title="Status" class="status">
-                                                        {{jcoupon_states[jCoupon.couponState]}}
-                                                        <!-- <span class="icon-enable" *ngIf="jCoupon.couponState=='ENABLED'">
-                                                            {{enable_cap}}</span>
-                                                        <span class="icon-disable" *ngIf="jCoupon.couponState=='DISABLED'">
-                                                            {{disable_cap}}</span>
-                                                        <span *ngIf="jCoupon.couponState=='ACTIVE'">
-                                                            Active</span>
-                                                        <span *ngIf="jCoupon.couponState=='ARCHIVED'">
-                                                            Archived</span> -->
+                                                    <td data-title="Status" class="status" [ngClass]="{'green-text' :jCoupon.couponState=='ENABLED','red-text' :jCoupon.couponState=='EXPIRED','blue-text' :jCoupon.couponState=='NEW'}">
+                                                      {{jcoupon_states[jCoupon.couponState]}}
                                                     </td>
                                                     <td class="action">
+                                                        <span [matTooltipClass]="tooltipcls" [matTooltip]="coupon_info">
+                                                            <i data-icon="B" id="customer-help"></i>
+
+                                                        </span>
                                                         <span class="mbt" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE'">
                                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                 <mat-icon>more_vert</mat-icon>
@@ -56,7 +51,8 @@
                                                             <mat-menu #menu="matMenu">
                                                                 <button type="button" (click)="changecouponStatus(jCoupon)"
                                                                     mat-menu-item>
-                                                                    <i *ngIf="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='NEW'" class="icon-enable"></i>
+                                                                    <i *ngIf="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='NEW'"
+                                                                        class="icon-enable"></i>
                                                                     <i *ngIf="jCoupon.couponState=='ENABLED'" class="icon-disable"></i>
                                                                     <span> {{(jCoupon.couponState=='DISABLED' ||
                                                                         jCoupon.couponState=='NEW') ?
@@ -65,9 +61,10 @@
                                                             </mat-menu>
                                                         </span>
                                                         <span class="mbt-mobile-show" *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE'">
-                                                            <button class="coupon_status pointer-cursor" [class.enableicon]="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='NEW'"
-                                                                [class.disableicon]="jCoupon.couponState=='ENABLED'" type="button"
-                                                                (click)="changecouponStatus(jCoupon)">{{(jCoupon.couponState=='DISABLED'
+                                                            <button class="coupon_status pointer-cursor"
+                                                                [class.enableicon]="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='NEW'"
+                                                                [class.disableicon]="jCoupon.couponState=='ENABLED'"
+                                                                type="button" (click)="changecouponStatus(jCoupon)">{{(jCoupon.couponState=='DISABLED'
                                                                 || jCoupon.couponState=='NEW') ? 'Enable':'
                                                                 Disable'}}</button>
                                                         </span>

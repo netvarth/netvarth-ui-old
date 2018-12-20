@@ -49,6 +49,9 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       title: 'Coupons'
     }
   ];
+  coupon_info;
+  jaldee_reimburse;
+  always_enable;
   addcoupdialogRef;
   editcoupdialogRef;
   confirmremdialogRef;
@@ -59,6 +62,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
+    this.coupon_info = this.sharedfunctionObj.getProjectMesssages('MAX_REIMBURSE_PERC');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
 
@@ -88,6 +92,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
         this.jaldeeCoupons = data;
         this.query_executed = true;
       });
+
   }
   addCoupons() {
     this.addcoupdialogRef = this.dialog.open(AddProviderCouponsComponent, {
