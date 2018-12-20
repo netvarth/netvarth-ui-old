@@ -225,7 +225,7 @@ export const Messages = {
   'SEND_BTN': 'Send',
   'OK_BTN': 'Ok',
   'CLOSE_BTN': 'Close',
-  'DONE_BTN': 'Completed',
+  'DONE_BTN': 'Done',
   'SAVE_MEMBER_BTN': 'Save Member',
   'RESEND_BTN': 'Resend',
 

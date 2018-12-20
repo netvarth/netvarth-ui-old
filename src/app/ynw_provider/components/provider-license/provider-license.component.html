@@ -32,7 +32,8 @@
                                             <div class="tp"><span class="ttle">Your current License Package is <span
                                                         class="pkg">{{currentlicense_details.accountLicense.displayName}}
                                                         <span class="cs-btn bt1" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">Upgrade
-                                                            License</span></span>
+                                                            License </span><span class="helprighticon"><i data-icon="B" id="customer-help"
+                                                                (click)="learnmore_clicked('upgradelicense', $event)"></i></span></span>
                                                     <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span></div>
                                         </div>
                                     </div>
@@ -216,7 +217,8 @@
                         <div class="left card">
                             <div class="lc22">
                                 <div class="lc2-1 lcd custom-help">
-                                    <div class="ttle" [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">Add-on <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('addon', $event)"></i></div>
+                                    <div class="ttle" [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">Add-on
+                                        <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('addon', $event)"></i></div>
                                         <span class="addbt" (click)="showadd_addons()"></span></div>
                                 </div>
                                 <ng-container *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">

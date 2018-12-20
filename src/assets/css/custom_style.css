@@ -733,4 +733,6 @@ padding: 5px 5px 5px 10px !important;
 
 .pay-wb button {margin-bottom: 5px;}
 .custom-help .helprighticon { padding: 0px 10px 0px 7px !important;
-  font-size: 1.1rem;}
+  font-size: 1.1rem;
+  cursor: pointer;
+}
