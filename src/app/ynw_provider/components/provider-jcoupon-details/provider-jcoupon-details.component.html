@@ -1,0 +1,187 @@
+<section>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+
+<section>
+    <div class="content loc-list">
+        <div class="container">
+            <div class="row">
+                <div class="card p0">
+                    <div class="copy locd">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <div class="cl1">
+                                <div class="ot-it" *ngIf="jCoupon">
+                                    <h4>{{jCoupon.couponName | capitalizeFirst}}</h4>
+                                    <div class="it-des">
+                                        {{jCoupon.couponDescription | capitalizeFirst}}
+                                    </div>
+                                    <div class="c-ot">
+                                        <div class="item">
+                                            <span class="ttle">Valid Through</span>
+                                            <span>{{formatDateDisplay(jCoupon.couponRules.startDate)}} -
+                                                {{formatDateDisplay(jCoupon.couponRules.endDate)}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot">
+                                        <div class="item">
+                                            <span class="ttle">{{disc_value}}</span>
+                                            <span> {{(jCoupon.discountType=='PERCENTAGE')?
+                                                jCoupon.discountValue+'%':
+                                                formatPrice(jCoupon.discountValue)}} <span *ngIf="jCoupon.maxDiscountValue">
+                                                    (upto
+                                                    {{formatPrice(jCoupon.maxDiscountValue)}} Max)</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot rules-cap">
+                                        <h6>{{rules_cap}}</h6>
+                                    </div>
+                                    <div class="c-ot">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                            <span class="ttle">
+                                                <i *ngIf="jCoupon.couponRules.alwaysEnabled==true" class="fa fa-check"
+                                                    style="color: green"></i>
+                                                <i *ngIf="jCoupon.couponRules.alwaysEnabled==false" class="fa fa-times"
+                                                    style="color: red"></i>
+                                                {{always_enable}}</span>
+                                        </div>
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                            <span class="ttle">
+                                                <i *ngIf="jCoupon.couponRules.onlineCheckinRequired==true" class="fa fa-check"
+                                                    style="color: green"></i>
+                                                <i *ngIf="jCoupon.couponRules.onlineCheckinRequired==false" class="fa fa-times"
+                                                    style="color: red"></i>
+                                                {{online_check}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                            <span class="ttle">
+                                                <i *ngIf="jCoupon.couponRules.selfPaymentRequired==true" class="fa fa-check"
+                                                    style="color: green"></i>
+                                                <i *ngIf="jCoupon.couponRules.selfPaymentRequired==false" class="fa fa-times"
+                                                    style="color: red"></i>
+                                                {{self_payment}}</span>
+                                        </div>
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                            <span class="ttle">
+                                                <i *ngIf="jCoupon.couponRules.combineWithOtherCoupon==true" class="fa fa-check"
+                                                    style="color: green"></i>
+                                                <i *ngIf="jCoupon.couponRules.combineWithOtherCoupon==false" class="fa fa-times"
+                                                    style="color: red"></i>
+                                                {{combine_j_coupon}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                            <span class="ttle">
+                                                <i *ngIf="jCoupon.couponRules.firstCheckinOnly==true" class="fa fa-check"
+                                                    style="color: green"></i>
+                                                <i *ngIf="jCoupon.couponRules.firstCheckinOnly==false" class="fa fa-times"
+                                                    style="color: red"></i>
+                                                First Check-in Only</span>
+                                        </div>
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                            <span class="ttle">
+                                                <i *ngIf="jCoupon.couponRules.firstCheckinPerProviderOnly==true" class="fa fa-check"
+                                                    style="color: green"></i>
+                                                <i *ngIf="jCoupon.couponRules.firstCheckinPerProviderOnly==false" class="fa fa-times"
+                                                    style="color: red"></i>
+                                                First Check-in Per Provider Only</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.alwaysEnabled==true">
+                                            <span class="ttle">
+                                                <i *ngIf="jCoupon.couponRules.defaultEnabled==true" class="fa fa-check"
+                                                    style="color: green"></i>
+                                                <i *ngIf="jCoupon.couponRules.defaultEnabled==false" class="fa fa-times"
+                                                    style="color: red"></i>
+                                                {{default_enable}}</span>
+                                        </div>
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.maxConsumerUseLimitPerProvider">
+                                            <span class="ttle">Maximum Consumer Use Limit Per Provider</span>
+                                            <span> {{jCoupon.couponRules.maxConsumerUseLimitPerProvider}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot" *ngIf="jCoupon.couponRules.providerFirstCheckInUseOnly || jCoupon.couponRules.usageMaxLimitPerProvider">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.providerFirstCheckInUseOnly">
+                                            <span class="ttle">{{prov_check_usage}}</span>
+                                            <span> {{jCoupon.couponRules.providerFirstCheckInUseOnly}}</span>
+                                        </div>
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.usageMaxLimitPerProvider">
+                                            <span class="ttle">{{usage_limit}}</span>
+                                            <span> {{jCoupon.couponRules.usageMaxLimitPerProvider}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot" *ngIf="jCoupon.couponRules.minBillAmount || jCoupon.couponRules.maxReimbursePercentage">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.minBillAmount">
+                                            <span class="ttle">Minimum Bill Amount</span>
+                                            <span> {{formatPrice(jCoupon.couponRules.minBillAmount)}}</span>
+                                        </div>
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.maxReimbursePercentage">
+                                            <span class="ttle">{{reimburse_perc}}</span>
+                                            <span> {{jCoupon.couponRules.maxReimbursePercentage}}%</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot" *ngIf="jCoupon.couponRules.maxConsumerUseLimit || jCoupon.couponRules.maxProviderUseLimit">
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.maxConsumerUseLimit">
+                                            <span class="ttle">{{consu_use_limit}}</span>
+                                            <span> {{jCoupon.couponRules.maxConsumerUseLimit}}</span>
+                                        </div>
+                                        <div class="item col-md-6 col-xs-12 col-lg-6 col-sm-12" *ngIf="jCoupon.couponRules.maxProviderUseLimit">
+                                            <span class="ttle">{{pro_use_limit}}</span>
+                                            <span> {{jCoupon.couponRules.maxProviderUseLimit}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot" *ngIf="jCoupon.consumerTermsAndconditions && jCoupon.consumerTermsAndconditions.trim()!=''">
+                                        <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12">
+                                            <span class="ttle">{{term_condition}}</span>
+                                            <span> {{jCoupon.consumerTermsAndconditions}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot" *ngIf="jCoupon.providerDescription && jCoupon.providerDescription.trim()!=''">
+                                        <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12">
+                                            <span class="ttle">{{provider_desc}}</span>
+                                            <span> {{jCoupon.providerDescription}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="btm-ctrl">
+                                        <div class="ctrl enable-disable">
+                                            <span class="ttle">Coupon Status :</span>
+                                            <span *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED'">
+                                                <mat-slide-toggle [checked]="jCoupon.couponState=='ENABLED'" (change)="changecouponStatus(jCoupon)"></mat-slide-toggle>
+                                            </span>
+                                            <span class='blue-text' *ngIf="jCoupon.couponState=='NEW'">New - Available
+                                                for Use</span>
+                                            <span class='enabled' *ngIf="jCoupon.couponState=='ENABLED'">{{enable_cap}}</span>
+                                            <span class='disabled' *ngIf="jCoupon.couponState=='DISABLED'">{{disbale_cap}}</span>
+                                            <span class='red-text' *ngIf="jCoupon.couponState=='EXPIRED'">Expired</span>
+                                            <span class='disabled' *ngIf="jCoupon.couponState=='DISABLED_BY_JALDEE'">Disabled
+                                                By Jaldee</span>
+                                            <span class='disabled' *ngIf="jCoupon.couponState=='DISABLED_PROVIDER_LIMIT_REACHED'">Disabled
+                                                (Limit Reached)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                            <div class="cr1" *ngIf="jCouponStat">
+                                <h5>Coupon Stat</h5>
+                                <div class="chart">
+                                    <p> #Checkins Applied : {{jCouponStat.providerUsage.usageCount}}</p>
+                                    <p> Total Amount Discounted : {{jCouponStat.providerUsage.usageAmt}}</p>
+                                    <p> Amount Reimbursed by Jaldee.com : {{jCouponStat.providerUsage.reimbursed}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card ends here-->
+            </div>
+        </div>
+    </div>
+</section>

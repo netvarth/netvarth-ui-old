@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { OnInit, Component } from '@angular/core';
 @Component({
-  selector: 'app-provider-coupon-view',
-  templateUrl: './provider-coupon-view.component.html',
-  styleUrls: ['./provider-coupon-view.component.css']
+  selector: 'app-provider-jcoupon-details',
+  templateUrl: './provider-jcoupon-details.component.html',
+  styleUrls: ['./provider-jcoupon-details.component.css']
 })
-export class ProviderCouponViewComponent implements OnInit {
+export class ProviderJcouponDetailsComponent implements OnInit {
 
   coupon_details_cap = Messages.COUPON_DETAILS_CAP;
   name_cap = Messages.PRO_NAME_CAP;

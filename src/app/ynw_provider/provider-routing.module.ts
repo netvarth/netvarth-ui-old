@@ -38,7 +38,7 @@ import { ProviderSystemAlertComponent } from './components/provider-system-alert
 import { ProviderResolver } from './services/provider-resolver.service';
 import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
 import { ViewReportComponent } from './components/view-report/view-report.component';
-import { ProviderCouponViewComponent } from './components/provider-coupon-view/provider-coupon-view.component';
+import { ProviderJcouponDetailsComponent } from './components/provider-jcoupon-details/provider-jcoupon-details.component';
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 const routes: Routes = [
   {
@@ -89,7 +89,7 @@ const routes: Routes = [
           },
           {
             path: 'coupons/:id',
-            component: ProviderCouponViewComponent
+            component: ProviderJcouponDetailsComponent
           },
           {
             path: 'holidays',

@@ -165,7 +165,7 @@
                                                 </span>
 
                                                 <ul class="info-lst" *ngIf="multipeLocationAllowed">
-                                                    <li>{{more_loc_cap}} <a routerLink="/provider/settings/waitlist-manager/locations">{{locations_cap}}</a> {{page_cap}}.</li>
+                                                    <li>You can add more locations under  <a routerLink="/provider/settings/waitlist-manager/locations">settings</a></li>
                                                 </ul>
                                             </div>
                                             <div class="cop-r" *ngIf="loc_list.length>0">
@@ -260,10 +260,10 @@
                                                 <ul class="tbl-list">
                                                     <li class="tth">
                                                         <div class="otr">
-                                                            <div class="cth">{{phone_cap}} <span (click)="handlePrivacysettings('phone')" class="addbt"></span></div>
+                                                            <div class="cth">{{phone_cap}} <span (click)="handlePrivacysettings('phone')" class="addbt" *ngIf="phonearr.length>0"></span></div>
                                                         </div>
                                                     </li>
-                                                    <ng-container *ngIf="phonearr.length>0">
+                                                    <ng-container>
                                                         <li class="ttd" *ngFor="let phone of phonearr; let i = index">
                                                             <div class="otr">
                                                                 <div class="ctd">{{phone.label | capitalizeFirst}}</div>
@@ -295,6 +295,12 @@
                                                             </div>
                                                         </li>
                                                     </ng-container>
+                                                    <ng-container *ngIf="phonearr.length==0">
+                                                        <div class="no-dta">
+                                                            <p>You haven't added any Phone</p>
+                                                            <span class="cs-btn bt3" (click)="handlePrivacysettings('phone')">{{add_it_cap}}</span>
+                                                        </div>
+                                                     </ng-container>
                                                 </ul>
                                             </div>
                                         </div>
@@ -303,10 +309,10 @@
                                                 <ul class="tbl-list">
                                                     <li class="tth">
                                                         <div class="otr">
-                                                            <div class="cth">{{email_cap}} <span (click)="handlePrivacysettings('email')" class="addbt"></span></div>
+                                                            <div class="cth">{{email_cap}} <span (click)="handlePrivacysettings('email')" class="addbt" *ngIf="emailarr.length>0"></span></div>
                                                         </div>
                                                     </li>
-                                                    <ng-container *ngIf="emailarr.length>0">
+                                                    <ng-container>
                                                         <li class="ttd" *ngFor="let email of emailarr; let i = index">
                                                             <div class="otr">
                                                                 <div class="ctd">{{email.label | capitalizeFirst}}</div>
@@ -337,6 +343,12 @@
                                                                 </div>
                                                             </div>
                                                         </li>
+                                                     </ng-container>
+                                                     <ng-container *ngIf="emailarr.length==0">
+                                                        <div class="no-dta">
+                                                            <p>You haven't added any Email</p>
+                                                            <span class="cs-btn bt3" (click)="handlePrivacysettings('email')">{{add_it_cap}}</span>
+                                                        </div>
                                                      </ng-container>
                                                 </ul>
                                             </div>
