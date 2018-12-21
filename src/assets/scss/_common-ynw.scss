@@ -96,6 +96,11 @@ app-footer {
     height: 100vh;
 }
 
+//Photo Gallery Overlay
+.ng-overlay {
+    opacity: 1 !important;
+}
+
 // Form Related #### 
 .form-group, .form-check {
     font-size: .875rem;

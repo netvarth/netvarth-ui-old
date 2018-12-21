@@ -930,6 +930,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               };
               this.shared_services.consumerPayment(payData)
                 .subscribe(pData => {
+                  console.log(pData['response']);
                   if (pData['response']) {
                     this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                     this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));

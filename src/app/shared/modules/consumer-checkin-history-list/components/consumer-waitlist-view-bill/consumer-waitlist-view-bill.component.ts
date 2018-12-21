@@ -13,7 +13,7 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 })
 export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   @ViewChild('itemservicesearch') item_service_search;
-  
+
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
   date_cap = Messages.DATE_CAP;
@@ -212,6 +212,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       this.sharedServices.consumerPayment(this.pay_data)
         .subscribe(
           data => {
+            console.log(data['response']);
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {

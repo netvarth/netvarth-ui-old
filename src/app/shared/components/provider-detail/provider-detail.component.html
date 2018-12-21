@@ -222,8 +222,14 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="bottom-sect">
-                                <div class="bt-l">
+                            <div class="bottom-sect pdetail">
+                                <div class="bt-l" *ngIf="!settingsjson['onlineCheckIns']">
+                                    <div class="wt-tme notallowed padding-tp-10">
+                                        {{sorry_cap}}!!
+                                        {{getTerminologyTerm('waitlist')}} {{not_allowed_cap}}
+                                    </div>
+                                </div>
+                                <div class="bt-l" *ngIf="settingsjson['onlineCheckIns']">
                                     <!-- <div class="c-checkin" *ngIf="loc.checkins.length>0">
                                   <div class="ch-l">
                                       <span class="ch-title">You have <span class="count">{{loc.checkins.length}} Check-ins</span>  at this location</span>
@@ -249,7 +255,7 @@
                                     </div>
 
                                 </div>
-                                <div class="bt-r" *ngIf="loc['estimatedtime_det']">
+                                <div class="bt-r" *ngIf="loc['estimatedtime_det'] && settingsjson['onlineCheckIns']">
                                     <!-- <span class="cs-btn bt10 blk" *ngIf="loc.checkins.length>0" (click)="redirectMe('dashboard')">Would you like to <span>Cancel Check-ins?</span></span> -->
                                     <!-- <span class="cs-btn chk-btn" (click)="checkinClicked(loc.id, loc.place, false)" *ngIf="showcheckInButton()">Check-In</span> -->
                                     <!-- <span class="cs-btn chk-btn cancel" *ngIf="!showcheckInButton()">Check-In</span> -->

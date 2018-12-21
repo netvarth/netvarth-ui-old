@@ -77,7 +77,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
   for_cap = Messages.FOR_CAP;
   different_date_cap = Messages.DIFFERENT_DATE_CAP;
-
+  sorry_cap = Messages.SORRY_CAP;
+  not_allowed_cap = Messages.NOT_ALLOWED_CAP;
   s3url;
   retval;
   kwdet: any = [];
@@ -309,7 +310,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'gallery': {
             this.tempgalleryjson = res;
             let indx = 0;
-            alert(this.bLogo);
             if (this.bLogo !== '') {
               this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
@@ -334,6 +334,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'settings': {
             this.settingsjson = res;
+            console.log(this.settingsjson);
             this.settings_exists = true;
             this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
             this.maxsize = this.settingsjson.maxPartySize;
@@ -344,6 +345,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             break;
           }
           case 'location': {
+            console.log('Location : ');
+            console.log(JSON.stringify(res));
             this.locationjson = res;
             this.location_exists = true;
             let schedule_arr: any = [];
@@ -834,6 +837,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   // Some of functions copied to Consumer Home also.
   private getWaitingTime(provids_locid) {
+    console.log(provids_locid);
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
@@ -844,6 +848,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       // console.log('wtime', post_provids_locid);
       this.providerdetailserviceobj.getEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
+          console.log(JSON.stringify(data));
           // console.log('waitingtime api', data);
           this.waitlisttime_arr = data;
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
@@ -909,6 +914,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[locindx]['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
             }
           }
+    //      console.log('Location Json : ');
+     //     console.log(JSON.stringify(this.locationjson));
           // console.log('loc final', this.locationjson);
         });
     }

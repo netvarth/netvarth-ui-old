@@ -44,7 +44,7 @@
               <div class="qname" (click)="selectedQueue(queue)">
                 <span class="qtitle"> {{queue.name}}</span>
                    <span class="qtime" *ngIf="queue && queue.queueSchedule && queue.queueSchedule.timeSlots">
-                            {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
+                            [{{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}]
                           </span>
               </div>
             </li>
