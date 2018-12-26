@@ -424,7 +424,7 @@
 														<div class="table-th">
 															<div class="th one">{{date_cap}}</div>
 															<div class="th two">{{amount_cap}}</div>
-															<div class="th three">{{refundable_cap}}</div>
+															<!-- <div class="th three">{{refundable_cap}}</div> -->
 														</div>
 
 														<div class="listing" *ngFor="let payment of pre_payment_log; let i = index">
@@ -445,11 +445,11 @@
 																		</span>
 																	</span>
 																</div>
-																<div class="td three">
+																<!-- <div class="td three">
 																	<span class="amt">{{payment.refundableAmount |
 																		currency:'INR':'symbol':'.2-2'}}</span>
-																	<!-- <button class="cs-btn bt3" *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">Refund</button> -->
-																</div>
+																	 <button class="cs-btn bt3" *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">Refund</button>
+																</div> -->
 															</div>
 															<div class="refunds-table" *ngIf="payment.refundDetails.length">
 																<div class="table-th">

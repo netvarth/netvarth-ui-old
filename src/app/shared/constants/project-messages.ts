@@ -14,7 +14,7 @@ export const Messages = {
   'TESTACC_LOGIN_NA': 'Test user cannot view/checkin real providers account details',
 
   // Items
-  'ITEM_CREATED': 'Item created successfully',
+  'ITEM_CREATED': 'Item added successfully',
   'ITEM_UPDATED': 'Item updated successfully',
   'ITEM_DELETE': 'Do you really want to remove the item "[name]"?',
   'ITEM_ENABLE': 'Do you really want to change the status to "[status]"?',
@@ -42,7 +42,7 @@ export const Messages = {
   'HOLIDAY_DELETE': 'Do you really want to remove the Non Working Day "[date]"?',
   'HOLIDAY_STIME': 'Start time should be greater than current time',
   'HOLIDAY_ETIME': 'Closing time should be greater than Start time',
-  'HOLIDAY_LISTEMPTY': 'No non working days scheduled',
+  'HOLIDAY_LISTEMPTY': 'No scheduled holidays',
 
   // Common
   'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
@@ -62,7 +62,7 @@ export const Messages = {
   'BPROFILE_SCHADDEDFOR': 'Schedule added for',
   'BPROFILE_IMAGE_DELETE': 'Deleted successfully',
   'BPROFILE_IMAGE_UPLOAD': 'Uploaded successfully',
-  'BPROFILE_SOCIALMEDIA_SAVED': 'Saved successfully',
+  'BPROFILE_SOCIALMEDIA_SAVED': 'Social media link added successfully',
   'BPROFILE_UPDATED': 'Business Profile updated successfully',
   'BPROFILE_LOGOUPLOADED': 'Profile image uploaded successfully',
   'BPROFILE_LOGODELETE_CONF': 'Remove Profile image?',
@@ -85,13 +85,13 @@ export const Messages = {
 
   // Adwords
   'ADWORD_LISTEMPTY': 'No adwords exists',
-  'ADWORD_CREATED': 'Adword created successfully',
+  'ADWORD_CREATED': 'Adword added successfully',
   'ADWORD_DELETE': 'Do you really want to remove the Adword [adword]?',
   'ADWORD_DELETE_SUCCESS': 'Adword deleted successfully',
   'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/addon for more benefits',
 
   // WaitlistManager
-  'ONLINE_CHECKIN_SAVED': 'Saved successfully',
+  'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
   'SERVICE_ADDED1': 'New service added successfully',
   'SERVICE_ADDED2': 'Please add this service to the relevant service time window by editing it.',
@@ -213,7 +213,7 @@ export const Messages = {
   'APPX_WAIT_TIME_CAPTION': 'Appox Waiting Time',
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
   'CHECKIN_TIME_CAPTION': 'Est Service Time',
-  'PREPAYMENT_ERROR': 'Sorry! an error occured',
+  'PREPAYMENT_ERROR': 'Sorry! Please try again.',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
 
   // General
@@ -505,7 +505,7 @@ export const Messages = {
   'USER_NAME_CAP': 'User Name',
   'NO_AUDIT_LOGS_CAP': 'No Audit Logs so far',
   'VIEW_ALL_CAP': 'View All',
-  'NO_ALERTS_CAP': 'No Alerts so far',
+  'NO_ALERTS_CAP': 'No alerts found',
   'SETTINGS_NOT_FOUND_CAP': 'Sorry! settings not found',
   'ACC_ONLINE_CHECKIN_CAP': 'Accept Online Check-in',
 

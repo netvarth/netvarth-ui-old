@@ -144,7 +144,7 @@
                                   (click)="handleMaximize()"> View All</span> -->
                                   <span *ngIf="alert_count > alertsCnt" class="alert-view-all"
                                         (click)="handleMaximize()"> View All</span>
-                                <span class="no-info" *ngIf="alertStatus==2">No Alerts so far</span>
+                                <span class="no-info" *ngIf="alertStatus==2">{{no_alerts_cap}}</span>
                             </div>
                         </div>
                     </div>
