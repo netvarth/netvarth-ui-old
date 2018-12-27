@@ -762,13 +762,18 @@ padding: 5px 5px 5px 10px !important;
 .invalid {border:1px solid red !important; color : red !important;}
 
 .checkin-consumer .mat-dialog-container {width: auto;max-width:450px !important}
+.checkin-provider .mat-dialog-container {max-width:450px !important}
 
 .checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action {
   width: 100%;
   margin-top:15px;
 }
-.checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action .bt1 {
+.checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action .bt1,
+.checkin-provider .mat-dialog-container .search_provider .create_new .cs-btn {
   margin-left:0px !important;
+}
+.checkin-provider .mat-dialog-container .search_provider .create_new .cs-btn {
+margin-top:10px;
 }
 .checkin-consumer .mat-dialog-container .form-group input[type="text"] {height:35px !important;}
 .checkin-consumer .coupon-add-msg {font-size:0.75rem !important;color:green; padding: 5px !important;}

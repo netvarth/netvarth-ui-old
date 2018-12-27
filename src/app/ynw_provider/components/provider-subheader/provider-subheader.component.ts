@@ -68,7 +68,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass'],
+      panelClass : ['commonpopupmainclass', 'checkin-provider'],
       disableClose: true,
       data: {
         source: source
@@ -89,7 +89,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
     this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass'],
+      panelClass : ['commonpopupmainclass', 'checkin-provider'],
       disableClose: true,
       data: {
         search_data: search_data
@@ -173,7 +173,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
     this.ChkindialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
       disableClose: true,
      data: {
        type : 'provider',

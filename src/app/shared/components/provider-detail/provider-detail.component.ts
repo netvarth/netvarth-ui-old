@@ -798,7 +798,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const curdate = cdate.getFullYear() + '-' + mon + '-' + day;*/
     this.checkindialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
       disableClose: true,
       data: {
         type: origin,

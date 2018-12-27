@@ -1749,7 +1749,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   showCheckin(origin?) {
     this.checkindialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
       disableClose: true,
       data: {
         type: origin,
