@@ -12,6 +12,7 @@ import { Messages } from '../../../constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { tryParse } from 'selenium-webdriver/http';
+import { stat } from 'fs';
 
 @Component({
   selector: 'app-check-in-inner',
@@ -49,6 +50,7 @@ export class CheckInInnerComponent implements OnInit {
   provider_id;
   api_success = null;
   api_error = null;
+  api_cp_error = null;
   partyapi_error = null;
   servicesjson: any = [];
   galleryjson: any = [];
@@ -124,12 +126,15 @@ export class CheckInInnerComponent implements OnInit {
   checkinLabel;
   CheckedinLabel;
   ddate;
-  selected_coupons;
+  selected_coupons: any = [];
+  selected_coupon;
   coupon_status = null;
   couponsList: any = [];
   @Input() data: any = [];
   @Output() returntoParent = new EventEmitter<any>();
   isfirstCheckinOffer;
+  showCouponWB: boolean;
+  couponvalid = true;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -424,6 +429,9 @@ export class CheckInInnerComponent implements OnInit {
             break;
           case 'coupon':
             this.s3CouponsList = res;
+            if (this.s3CouponsList.length > 0) {
+              this.showCouponWB = true;
+            }
             break;
         }
       },
@@ -662,7 +670,7 @@ export class CheckInInnerComponent implements OnInit {
       },
       'consumerNote': this.consumerNote,
       'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
-      'coupons': this.couponsList
+      'coupons': this.selected_coupons
       /*,
         'revealPhone': this.revealphonenumber*/
     };
@@ -1065,39 +1073,66 @@ export class CheckInInnerComponent implements OnInit {
   clearerrorParty() {
     this.partyapi_error = '';
   }
+  checkCouponExists(couponCode) {
+    let found = false;
+    for (let index = 0; index < this.selected_coupons.length; index++) {
+      if (couponCode === this.selected_coupons[index]) {
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+  toggleterms(i) {
+    if (this.couponsList[i].showme) {
+      this.couponsList[i].showme = false;
+    } else {
+      this.couponsList[i].showme = true;
+    }
+  }
+  removeJCoupon(i) {
+    this.selected_coupons.splice(i, 1);
+    this.couponsList.splice(i, 1);
+  }
   removeCoupons() {
-    this.selected_coupons = null;
+    this.selected_coupons = [];
     this.couponsList = [];
     this.coupon_status = null;
   }
-  applyCoupons(jCoupons) {
-    this.couponsList = [];
-    let couponListTemp = [];
-    if (jCoupons) {
-      couponListTemp = jCoupons.trim().split(',');
-      if (couponListTemp && couponListTemp.length > 0) {
-        for (let i = 0; i < couponListTemp.length; i++) {
-          for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
-            console.log(this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() + ':' + couponListTemp[i].trim());
-            console.log(this.s3CouponsList[couponIndex].firstCheckinOnly);
-            console.log(this.isfirstCheckinOffer);
-            if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === couponListTemp[i].trim()) {
-              if (this.s3CouponsList[couponIndex].firstCheckinOnly) {
-                if (this.isfirstCheckinOffer === true) {
-                  this.couponsList.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
-                }
-              } else {
-                this.couponsList.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
-              }
-            }
-          }
+  clearCouponErrors() {
+    this.couponvalid = true;
+    this.api_cp_error = null;
+  }
+  applyCoupons(jCoupon) {
+    this.api_cp_error = null;
+    this.couponvalid = true;
+    const couponInfo = {
+      'couponCode': '',
+      'instructions': ''
+    };
+    if (jCoupon) {
+      if (this.checkCouponExists(jCoupon)) {
+        this.api_cp_error = 'Coupon already applied';
+        this.couponvalid = false;
+        return false;
+      }
+      this.couponvalid = false;
+      let found = false;
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
+        if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jCoupon) {
+          this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+          couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
+          couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
         }
       }
-      if (this.couponsList.length === couponListTemp.length) {
-        this.coupon_status = 'success';
+      if (found) {
+        this.couponvalid = true;
       } else {
-        this.coupon_status = 'error';
-        this.couponsList = [];
+        this.api_cp_error = 'Coupon invalid';
       }
     }
   }

@@ -569,7 +569,7 @@
       margin: 0px !important;
     }
     .coupon-apply-btn {
-      height: 40px !important;
+      height: 35px !important;
       border-radius: 0px;
       background-color: #fff;
       padding-left: 10px !important;
@@ -759,3 +759,20 @@ padding: 5px 5px 5px 10px !important;
 .patm_txtgrp .paytm-det .mat-form-field{
   width: auto !important;
 }
+.invalid {border:1px solid red !important; color : red !important;}
+
+.checkin-consumer .mat-dialog-container {width: auto;max-width:450px !important}
+
+.checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action {
+  width: 100%;
+  margin-top:15px;
+}
+.checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action .bt1 {
+  margin-left:0px !important;
+}
+.checkin-consumer .mat-dialog-container .form-group input[type="text"] {height:35px !important;}
+.checkin-consumer .coupon-add-msg {font-size:0.75rem !important;color:green; padding: 5px !important;}
+.checkin-consumer .read-more-checkin {font-size:0.60rem !important; color:#00aef2; font-weight: 800}
+.checkin-consumer .read-more-checkin:hover {text-decoration: underline;}
+.checkin-consumer .coupon-add-msg .fa-trash {padding-left:10px;}
+.read-more-contents {padding: 10px !important; font-size: 0.60rem !important;}

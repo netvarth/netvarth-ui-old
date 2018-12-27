@@ -153,15 +153,30 @@
                                     </mat-form-field>
                                   </p> -->
                         <!-- <div>Coupon Codes</div>  -->
-                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 no-padding">
-                            <div class="input-group">
-                                <input placeholder="Enter coupon code(s)" type="text" class="form-control" [(ngModel)]="selected_coupons">
-                                <span class="input-group-btn">
-                                    <button class="btn bt8 btn-default coupon-apply-btn" *ngIf="!coupon_status || coupon_status=='error'"
-                                        (click)="applyCoupons(selected_coupons)" type="button">APPLY</button>
-                                    <button class="btn bt8 btn-default coupon-apply-btn" *ngIf="coupon_status=='success'"
-                                        (click)="removeCoupons()" type="button">CANCEL</button>
-                                </span>
+                        <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 no-padding">
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="showCouponWB">
+                                <app-field-error-display [displayError]="true" *ngIf="api_cp_error" errorMsg="{{api_cp_error}}"></app-field-error-display>
+                                <div class="input-group">
+                                    <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
+                                        placeholder="Enter coupon code" type="text" class="form-control" [(ngModel)]="selected_coupon">
+                                    <span class="input-group-btn">
+                                        <button class="btn bt3 btn-default coupon-apply-btn" (click)="applyCoupons(selected_coupon)"
+                                            type="button">Add</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-12">
+                                <div class="coupon-outer">
+                                    <div class="row" *ngFor="let coupon of couponsList let i=index">
+                                        <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
+                                            {{coupon.couponCode}} Added. <span (click)="toggleterms(i)" class="pointer-cursor read-more-checkin">Read
+                                                T & C </span> <i class="fa fa-trash" (click)="removeJCoupon(i)"></i>
+                                        </div>
+                                        <div class="col-md-12 no-padding read-more-contents" *ngIf="coupon.showme">
+                                            {{coupon.instructions}}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -252,12 +267,10 @@
                 </div>
             </div>
         </div>
-
-        <div class="waitlist-action" *ngIf="step==1">
-            <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" *ngIf="isCheckinenable()" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
-            <div class="disable-msg" *ngIf="!isCheckinenable() && checkindisablemsg !=''">{{checkindisablemsg}}</div>
-            <!-- <button  type="button" mat-dialog-close class="cs-btn bt2" *ngIf="!fromKiosk">Cancel</button> -->
-        </div>
+    </div>
+    <div class="waitlist-action" *ngIf="step==1">
+        <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" *ngIf="isCheckinenable()" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
+        <div class="disable-msg" *ngIf="!isCheckinenable() && checkindisablemsg !=''">{{checkindisablemsg}}</div>
     </div>
 
     <ng-container *ngIf="step==3 && !showCreateMember">
