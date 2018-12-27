@@ -781,3 +781,9 @@ margin-top:10px;
 .checkin-consumer .read-more-checkin:hover {text-decoration: underline;}
 .checkin-consumer .coupon-add-msg .fa-trash {padding-left:10px;}
 .read-more-contents {padding: 10px !important; font-size: 0.60rem !important;}
+.checkin-consumer .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body,
+.checkin-provider .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body{margin-top:10px;}
+.checkin-consumer .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button,
+.checkin-provider .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button
+{margin-top:5px;}
+.checkin-provider .bt3{display: block;}
