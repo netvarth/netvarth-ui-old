@@ -1061,9 +1061,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.blogo = data;
-                  const cnow = new Date();
-        const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
-        this.cacheavoider = dd;
+          const cnow = new Date();
+          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+          this.cacheavoider = dd;
           console.log('here logo', this.blogo);
           let logo = '';
           if (this.blogo[0]) {
@@ -1165,7 +1165,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   // display logo
   showimg() {
     let logourl = '';
-this.profimg_exists = false;
+    this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
       return this.item_pic.base64;
@@ -1175,7 +1175,7 @@ this.profimg_exists = false;
         const today = new Date();
         const tday = today.toString().replace(/\s/g, '');
         // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
-         logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
+        logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
       }
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
@@ -1222,11 +1222,11 @@ this.profimg_exists = false;
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message' : msg,
-        'heading' : 'Delete Confirmation'
+        'message': msg,
+        'heading': 'Delete Confirmation'
       }
     });
 
@@ -1677,12 +1677,14 @@ this.profimg_exists = false;
       } else {
         rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
       }
-    } else {
-      rettxt = this.privacypermissiontxt[txt];
+    } else if (txt === 'all') {
+      rettxt = 'Public';
+    }
+    else {
+      rettxt = 'Private';
     }
     return rettxt;
   }
-
   learnmore_clicked(mod, e) {
     /* const dialogRef = this.dialog.open(LearnmoreComponent, {
            width: '50%',

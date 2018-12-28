@@ -71,7 +71,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   cancel_cap = Messages.CANCEL_BTN;
   view_cap = Messages.VIEW_CAP;
   no_cap = Messages.NO_CAP;
-
+  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
   locations: any = [];
   queues: any = [];
   all_queues: any = [];
@@ -199,7 +200,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       { name: this.cancelled_upper, value: 'cancelled' },
       { name: this.started_upper, value: 'started' },
       { name: this.arrived_upper, value: 'arrived' },
-      { name: this.done_upper, value: 'done' }];
+      { name: this.done_upper, value: 'complete' }];
 
   }
   payStatusList = [

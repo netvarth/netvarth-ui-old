@@ -54,8 +54,9 @@
                                 <div class="pickerouter">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
-                                    <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" matInput
-                                    [matDatepicker]="picker" autocomplete="off" disabled [max]="tday">
+                                    <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate"
+                                        [value]="logSeldate" type="text" matInput [matDatepicker]="picker" autocomplete="off"
+                                        disabled [max]="tday">
                                 </div>
                             </div>
                         </div>
@@ -70,8 +71,8 @@
                                 <thead>
                                     <tr>
                                         <th>{{date_time_cap}}</th>
-                                        <th>{{text_cap}}</th>
                                         <th>{{subject_cap}}</th>
+                                        <th>{{text_cap}}</th>
                                         <th>{{user_name_cap}}</th>
                                     </tr>
                                 </thead>
@@ -92,10 +93,9 @@
                                         <tr *ngFor="let log of auditlog_details; let i=index">
                                             <td data-title="Date" class="td1">{{log.date | date:dateFormat}}
                                                 {{log.time}}</td>
-                                            <td data-title="Text" class="td2">{{log.text}}</td>
                                             <td data-title="Subject" class="td3">{{log.subject}}</td>
+                                            <td data-title="Text" class="td2">{{log.text}}</td>
                                             <td data-title="User Name" class="td4">{{log.userName}}</td>
-
                                         </tr>
                                     </ng-container>
                                 </tbody>

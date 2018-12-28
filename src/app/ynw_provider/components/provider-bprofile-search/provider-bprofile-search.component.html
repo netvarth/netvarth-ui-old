@@ -261,6 +261,7 @@
                                                     <li class="tth">
                                                         <div class="otr">
                                                             <div class="cth">{{phone_cap}} <span (click)="handlePrivacysettings('phone')" class="addbt" *ngIf="phonearr.length>0"></span></div>
+                                                            
                                                         </div>
                                                     </li>
                                                     <ng-container>
@@ -268,8 +269,8 @@
                                                             <div class="otr">
                                                                 <div class="ctd">{{phone.label | capitalizeFirst}}</div>
                                                                 <div class="ctd">{{phone.number}}</div>
-                                                                <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[phone.permission]}}</div> -->
-                                                                <div class="ctd"><span>{{visible_cap}}</span> {{show_privacyText(phone.permission)}}</div>
+                                                                <!-- <div class="ctd"><span>{{visible_cap}}</span> {{show_privacyText(phone.permission)}}</div> -->
+                                                                <div class="ctd"> {{show_privacyText(phone.permission)}}</div>
                                                                 <!-- <a href="#" class="mbt"></a> -->
                                                                 <span class="mbt">
                                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -318,7 +319,7 @@
                                                                 <div class="ctd">{{email.label | capitalizeFirst}}</div>
                                                                 <div class="ctd">{{email.emailid}}</div>
                                                                 <!-- <div class="ctd"><span>Visible to</span> {{privacypermissiontxt[email.permission]}}</div> -->
-                                                                <div class="ctd"><span>{{visible_cap}}</span> {{show_privacyText(email.permission)}}</div>
+                                                                <div class="ctd"> {{show_privacyText(email.permission)}}</div>
                                                                 <span class="mbt">
                                                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                             <mat-icon>more_vert</mat-icon>

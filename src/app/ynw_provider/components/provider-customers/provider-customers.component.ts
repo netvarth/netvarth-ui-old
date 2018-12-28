@@ -94,7 +94,6 @@ export class ProviderCustomersComponent implements OnInit {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-
   }
 
   getCustomersListCount(filter) {
@@ -103,6 +102,7 @@ export class ProviderCustomersComponent implements OnInit {
         .subscribe(
           data => {
             this.pagination.totalCnt = data;
+            this.customer_count = this.pagination.totalCnt;
             resolve(data);
           },
           error => {

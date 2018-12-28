@@ -76,7 +76,7 @@
                 <li [ngClass]="{'active': status_type =='started'}" (click)="changeStatusType('started')">
                   <span>{{started_upper}}</span></li>
                 <li [ngClass]="{'active': status_type =='done'}" (click)="changeStatusType('done')">
-                  <span>{{done_upper}}</span></li>
+                  <span>{{done_cap}}</span></li>
                 <li [ngClass]="{'active': status_type =='cancelled'}" (click)="changeStatusType('cancelled')">
                   <span>{{cancelled_upper}}</span></li>
               </ng-container>
@@ -204,9 +204,9 @@
                     <mat-option (click)="setFilterData('waitlist_status', 'all')" [value]="'all'">
                       {{all_cap}}
                     </mat-option>
-                    <mat-option *ngFor="let status of waitlist_status" (click)="setFilterData('waitlist_status', status.value)"
-                      [value]="status.value">
-                      {{status.name}}
+                    <mat-option *ngFor="let status of check_in_statuses_filter" (click)="setFilterData('waitlist_status', status.value)"
+                      [value]="status.value"> 
+                      {{status.displayName}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -353,7 +353,7 @@
                     </ng-container>
                   </td>
                   <td data-title="{{checkin_label + ' Status'}}" class="checkin_status" *ngIf="time_type !=1  && checkin_label">
-                    <span [class]="checkin.waitlistStatus">{{getStatusLabel(checkin.waitlistStatus)}}</span>
+                    <span [class]="checkin.waitlistStatus">{{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</span>
                   </td>
                   <!-- <td data-title="Message" class="message">
                                     <span (click)="addConsumerInboxMessage(checkin)"><i class="icon-message"></i></span></td> -->

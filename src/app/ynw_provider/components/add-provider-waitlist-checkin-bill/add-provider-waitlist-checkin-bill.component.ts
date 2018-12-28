@@ -866,20 +866,24 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
 
-  confirmSettleBill() {
-    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
-      }
-    });
-    dialogrefd.afterClosed().subscribe(result => {
-      if (result) {
-        this.settleBill();
-      }
-    });
+  confirmSettleBill(evt) {   
+    if(this.amountpay>0){
+      const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+        }
+      });
+      dialogrefd.afterClosed().subscribe(result => {
+        if (result) {
+          this.settleBill();
+        }
+      });
+    }else {
+      this.settleBill();
+    }
   }
 
   emailBill(e) {

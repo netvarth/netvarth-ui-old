@@ -1,8 +1,9 @@
 <h1 class="mat-dialog-title">{{priv_settings_cap}} {{curmod | capitalizeFirst}} {{curtype | capitalizeFirst}}   <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
     <div class="phoneouter" *ngIf="curtype=='phone'">
-        <div class="form-group">
-            <label class="col-form-label" for="phone1">{{phone_no_cap}}</label>
+        <div class="form-group mobilecont">
+            <label class="col-form-label" for="phone1">Mobile Phone</label>
+            <span class="phoneprefix">{{mob_prefix_cap}}</span>
             <input type="text" matInput class="form-control" id="phone1" placeholder="Phone#" [(ngModel)]="phonenumber"
             [ngModelOptions]="{standalone: true}" autocomplete="off">
         </div>

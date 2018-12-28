@@ -24,6 +24,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
   email_visible_cap = Messages.PRI_MAIL_ID_IS_VISIBLE_TO_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
+  mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
 
   amForm: FormGroup;
   api_error = null;

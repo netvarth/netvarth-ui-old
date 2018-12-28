@@ -45,7 +45,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   pvt_notes_cap = Messages.CHECK_DET_PRVT_NOTES_CAP;
   no_pvt_notes_cap = Messages.CHECK_DET_NO_PVT_NOTES_FOUND_CAP;
   no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
-
+  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
   waitlist_id = null;
   waitlist_data;
   waitlist_notes: any = [];

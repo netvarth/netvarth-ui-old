@@ -181,9 +181,9 @@ export const projectConstants = {
     { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' }
   ],
   PRIVACY_PERMISSIONS: {
-    'all': 'Public',
+    'all': 'Public(All can see)',
     'customersOnly': 'Customer',
-    'self': 'None'
+    'self': 'Private(None can see)'
   },
   TOOLTIP_CLS: 'ynwtooltipcls',
   TOOLTIP_PRIVACYPHONE: 'Example : Cell Phone,  Mobile, Emergency, Main Line, others etc',
@@ -311,12 +311,19 @@ export const projectConstants = {
     EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit'
   },
   CHECK_IN_STATUSES: {
-    Done: 'Completed',
+    Done: 'Complete',
     Started: 'Started',
     Arrived: 'Arrived',
     CheckedIn: 'CheckedIn',
     Cancelled: 'Cancelled'
   },
+  CHECK_IN_STATUSES_FILTER: [
+    { displayName: 'Complete', value: 'done' },
+    { displayName: 'Started', value: 'started' },
+    { displayName: 'Arrived', value: 'arrived' },
+    { displayName: 'CheckedIn', value: 'checkedIn' },
+    { displayName: 'Cancelled', value: 'cancelled' }
+  ],
   JCOUPON_STATES: {
     NEW: 'New - Available for Use',
     EXPIRED: 'Expired',

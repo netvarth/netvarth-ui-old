@@ -52,8 +52,8 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
     </form>
 
     <div class="create_new" *ngIf="create_new">
-        <span class="create_new_oops">{{oops_cap}}</span>
-        <span>{{not_reg_customer_cap}} {{customer_label}}</span>
+        <!-- <span class="create_new_oops">{{oops_cap}}</span> -->
+        <span>Sorry, We were not able to find "{{form_data.first_last_name}}" in our {{customer_label}}s list.</span>
         <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}} {{customer_label}}</button>
     </div>
 
