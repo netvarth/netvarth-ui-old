@@ -73,7 +73,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
 
   // get the list of locations added for the current provider
   getProviderQueues() {
-    let activeQueues: any = [];
+    const activeQueues: any = [];
     this.provider_services.getProviderQueues()
       .subscribe(data => {
         this.queue_list = data;

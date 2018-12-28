@@ -508,8 +508,8 @@ export class SharedFunctions {
   confirmSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you "Disable" public search, Your profile will not be visible online at Jaldee.com.'
-      //msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
+      msg = 'If you "Disable" public search, Your profile will not be visible online at Jaldee.com.';
+      // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
     } else {
       msg = '"Turn On" the Public Search?';
     }

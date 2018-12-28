@@ -149,9 +149,9 @@ export const projectConstants = {
   IMAGE_MAX_SIZE: 5000000, // byte
   INTERVAL_TIME: 60000, // byte
   AUTOSUGGEST_MIN_CHAR: 3,  // minimum characters required for autosuggest
-  AUTOSUGGEST_LOC_MAX_CNT: 15, // max number of locations that will be displayed in the autosuggestion
+  AUTOSUGGEST_LOC_MAX_CNT: 100000, // max number of locations that will be displayed in the autosuggestion
   SEARCH_DEFAULT_LOCATION: {
-    'autoname': 'All of Bangalore, Karnataka',
+    'autoname': 'Bangalore, Karnataka',
     'name': 'Bangalore',
     'lat': '12.971599',
     'lon': '77.594563',
@@ -178,7 +178,8 @@ export const projectConstants = {
     { key: 'youtube', iconClass: 'fa fa-youtube-square ytb', iconImg: 'youtube.png', displayName: 'Youtube' },
     { key: 'linkedin', iconClass: 'fa fa-linkedin lkd', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
     { key: 'googleplus', iconClass: 'fa fa-google-plus-square gpl', iconImg: 'googleplus.png', displayName: 'Google+' },
-    { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' }
+    { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' },
+    { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
   ],
   PRIVACY_PERMISSIONS: {
     'all': 'Public(All can see)',

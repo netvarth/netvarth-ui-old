@@ -91,7 +91,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
-        // console.log('sector Id', this.bProfile);
+        console.log('sector Id', this.bProfile);
         for (let i = 0; i < this.businessConfig.length; i++) {
           if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
             if (this.businessConfig[i].multipleLocation) {

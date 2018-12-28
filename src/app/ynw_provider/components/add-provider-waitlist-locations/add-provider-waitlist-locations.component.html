@@ -78,6 +78,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             <!-- <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">  -->
             <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">
                 <label class="col-form-label">{{schedule_cap}}</label>
+                <div class="jd_stw" *ngIf="this.activeSchedules.length>0">
+                    <span class="whrs">{{existing_schedule_cap}}
+                        <span class="item" *ngFor="let schedule of this.activeSchedules">
+                            <span class="day">{{schedule.dstr}}</span>&nbsp;<span class="time">{{schedule.time}}</span>
+                        </span>]
+                    </span>
+                </div>
+
             </div>
             <!-- <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule> -->
             <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && proceedwithschedule" [Isource]="'wizard'"

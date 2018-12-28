@@ -23,7 +23,7 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { projectConstants } from '../../constants/project-constants';
 
 export class Locscls {
-  constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string) { }
+  constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string, public rank: number) { }
 }
 export class Keywordsgroupcls {
   constructor(public displayname: string, public name: string) { }
@@ -42,7 +42,7 @@ export class Keywordscls {
 export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   all_cap = Messages.ALL_CAP;
-  more_options_cap =Messages.MORE_OPTIONS_CAP;
+  more_options_cap = Messages.MORE_OPTIONS_CAP;
   @Input() searchfields: SearchFields;
   @Input() showopennow: number;
   @Input() domainpassedfromrefined: string;
@@ -313,18 +313,19 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   // loads the location details in json file to the respective array
   private loadLocationjsontoArray() {
     for (const state of locationjson['states']) {
-        const objstate = {autoname: 'All of ' + state.name + ', India', name: state.name, lat: state.latitude, lon: state.longitude, typ: 'state' };
+        const objstate = {autoname: state.name + ', India', name: state.name, lat: state.latitude, lon: state.longitude, typ: 'state', rank: 2 };
         this.locationList.push(objstate);
         for (const city of state.cities) {
-          const objcity = {autoname: 'All of ' + city.name + ', ' + state.name, name: city.name, lat: city.latitude, lon: city.longitude, typ: 'city' };
+          const objcity = {autoname: city.name + ', ' + state.name, name: city.name, lat: city.latitude, lon: city.longitude, typ: 'city', rank: 1 };
           this.locationList.push(objcity);
           for (const area of city.locations) {
-            const objarea = {autoname: area.name + ', ' + city.name + ', ' + state.name, name: area.name, lat: area.latitude, lon: area.longitude, typ: 'area' };
+            const objarea = {autoname: area.name + ', ' + city.name + ', ' + state.name, name: area.name, lat: area.latitude, lon: area.longitude, typ: 'area', rank: 3 };
             this.locationList.push(objarea);
           }
         }
     }
-    // console.log('loclist', this.locationList);
+     this.locationList.sort((a, b) => a.rank.toString().localeCompare(b.rank.toString()));
+     console.log(this.locationList);
  }
  private filterLocation(criteria: string= '') {
   this.locsearchcriteria = criteria;
@@ -343,7 +344,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           const hold_criteria = criteria.toLowerCase();
           for (const locs of this.locationList) {
               const holdlocname = locs.autoname.toLowerCase();
-              if (holdlocname.includes(hold_criteria)) {
+              if (holdlocname.startsWith(hold_criteria)) {
+                // if (holdlocname.includes(hold_criteria)) {
                 if (curcnt <= maxcnt) {
                   this.displaylocationList.push(locs);
                 }
@@ -408,6 +410,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
    }
  }
  filterKeywords(criteria: string= '') {
+   console.log('Criteria:' + criteria);
   this.keyssearchcriteria = criteria;
     this.displaykeywordList = [];
     this.keywordgroupList = [];
@@ -506,6 +509,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.keywordgroupList = keywordgroup_val;
     // assiging the details to the displayed in the autosuggestion for keywords box
     this.displaykeywordList = this.holdisplaylist;
+    console.log('Display Search Items');
+    console.log(this.displaykeywordList);
  }
  // this method decides how the items are shown in the autosuggestion list
  highlightSelText(curtext, classname, mod?, typ?) {
@@ -675,7 +680,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
                             autoname: loc.autoname,
                             lat: loc.lat,
                             lon: loc.lon,
-                            typ: loc.typ
+                            typ: loc.typ,
+                            rank: loc.rank
                           };
    this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
    this.location_data = undefined;
@@ -687,7 +693,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
                         autoname: loc.autoname || null,
                         lat: loc.lat || null,
                         lon: loc.lon || null,
-                        typ: loc.typ || null
+                        typ: loc.typ || null,
+                        rank: loc.rank || null
     };
     this.location_data = undefined;
   }

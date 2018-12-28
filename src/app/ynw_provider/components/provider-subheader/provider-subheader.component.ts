@@ -27,7 +27,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   help_cap = Messages.SUB_HEADER_HELP;
   kiosk_cap = Messages.SUB_HEADER_KIOSK;
   settings_cap = Messages.SUB_HEADER_SETTINGS;
-  
+
   @Input() activeTab: string;
   @Output() reloadActionSubheader = new EventEmitter<any>();
   userdet: any = [];

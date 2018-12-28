@@ -787,3 +787,13 @@ margin-top:10px;
 .checkin-provider .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button
 {margin-top:5px;}
 .checkin-provider .bt3{display: block;}
+.search-text label{display:none!important;}
+.search-text .item-category {
+  color: #999999;
+  font-size: .60rem;
+  /* padding-right: 5px; */
+  float: right;
+  text-align: right;
+  text-transform:uppercase;
+}
+.search-text .mat-option {height: auto!important;}

@@ -33,6 +33,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   parking_type_cap = Messages.PARKING_TYPE_CAP;
   cancel_btn = Messages.CANCEL_BTN;
   save_btn = Messages.SAVE_BTN;
+  existing_schedule_cap = Messages.EXISTING_SCHEDULE_CAP;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -43,6 +44,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   bProfile: any = [];
   parking_list: any = [];
   schedule_alreadyexists_for_location = false;
+  activeSchedules: any = [];
   loc_badges: any = [];
   sel_badges: any = [];
   checked_sel_badges = false;
@@ -61,7 +63,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     private sharedfunctionobj: SharedFunctions,
     private dialog: MatDialog
   ) {
-    // console.log('received data', data);
     this.data_source = data.source;
     this.loc_badges = data.badges;
     if (data.type === 'edit') {
@@ -78,7 +79,9 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getProviderQueues();
     this.bProfile = this.provider_datastorageobj.get('bProfile');
+    console.log('received data', this.bProfile);
     // Get the parking types
     // this.getParkingtypes();
     // get location badges
@@ -96,6 +99,30 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
 
     this.createForm();
     this.elementRef.nativeElement.focus();
+  }
+  // get the list of locations added for the current provider
+  getProviderQueues() {
+    let queue_list: any = [];
+    this.provider_services.getProviderQueues()
+      .subscribe(data => {
+        queue_list = data;
+        for (let ii = 0; ii < queue_list.length; ii++) {
+          let schedule_arr = [];
+          // extracting the schedule intervals
+          if (queue_list[ii].queueSchedule) {
+            schedule_arr = this.sharedfunctionobj.queueSheduleLoop(queue_list[ii].queueSchedule);
+          }
+          let display_schedule = [];
+          display_schedule = this.sharedfunctionobj.arrageScheduleforDisplay(schedule_arr);
+          queue_list[ii]['displayschedule'] = display_schedule;
+          if (queue_list[ii].queueState === 'ENABLED') {
+            this.activeSchedules.push(display_schedule[0]);
+          }
+        }
+      },
+        complete => {
+         console.log(this.activeSchedules);
+        });
   }
   getgeneralBusinessSchedules() {
     this.provider_services.getgeneralBusinessSchedules()
