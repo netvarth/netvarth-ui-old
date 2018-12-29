@@ -34,11 +34,11 @@ export class ChangeEmailComponent implements OnInit {
   submit_data = {'email' : null};
   breadcrumbs_init = [
     {
-      title: 'Dashboard',
+      title: Messages.DASHBOARD_TITLE,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
-      title: 'Add or Change Email',
+      title: Messages.ADD_CHANGE_EMAIL,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-email'
     }
   ];

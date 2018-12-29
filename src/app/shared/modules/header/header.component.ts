@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   upgrade_cap = Messages.UPGRADE_CAP;
   membership_cap = Messages.MEMBERSHIP_CAP;
   close_btn = Messages.CLOSE_BTN;
-  dashboard_cap = Messages.BREADCRUMBS_DASHBOARD;
+  dashboard_cap = Messages.DASHBOARD_TITLE;
   create_pro_accnt = Messages.CREATE_PRO_ACCNT;
   family_members = Messages.FAMILY_MEMBERS;
 

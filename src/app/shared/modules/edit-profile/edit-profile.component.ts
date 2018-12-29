@@ -27,15 +27,15 @@ export class EditProfileComponent implements OnInit {
   date_of_birth_cap = Messages.DOB_CAP;
   phone_no_cap = Messages.PHONE_NO_CAP;
   edit_phone_no_cap = Messages.EDIT_PHONE_NO_CAP;
-  email_id_cap = Messages.EMAIL_ID_CAP
+  email_id_cap = Messages.EMAIL_ID_CAP;
   edit_email_cap = Messages.CHANGE_EMAIL_CAP;
   update_btn = Messages.UPDATE_BTN;
   related_links_cap = Messages.RELATED_LINKS;
   change_password_cap = Messages.CHANGE_PASSWORD_CAP;
   change_mobile_cap = Messages.CHANGE_MOB_CAP;
-  change_email_cap = Messages.ADD_CHANGE_EMAIL_CAP;
+  change_email_cap = Messages.ADD_CHANGE_EMAIL;
   family_members_cap = Messages.FAMILY_MEMBERS;
-  
+
 
   editProfileForm: FormGroup;
   api_error = null;
@@ -49,11 +49,11 @@ export class EditProfileComponent implements OnInit {
   lnameerror = null;
   breadcrumbs_init = [
     {
-      title: 'Dashboard',
+      title: Messages.DASHBOARD_TITLE,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
-      title: 'User Profile',
+      title: Messages.USER_PROF_CAP,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
     }
   ];

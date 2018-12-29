@@ -818,35 +818,59 @@ margin-top:10px;
 @media only screen and (min-width: 768px) {
   .add-nloc-l {float: right !important;right:140px;top:-45px; }
 }
-@media only screen and (max-width: 990px) {
+@media only screen and (min-width: 768px) and (max-width: 990px) {
   .add-nloc-q {float: right !important;right:140px;top:-15px; }
   .b-queue {top: 30px !important;} 
 }
 @media only screen and (max-width: 767px) {
   .add-nloc-q {float: right !important;right:140px;top:0px; margin-bottom:5px !important;}
   .add-nloc-s {float: right !important;right:140px;top:0px; margin-bottom:5px !important;}
-  .b-queue {top: 45px !important;} 
+  .b-queue {top: 25px !important;} 
+  .b-service {top:45px !important}
 }
-@media only screen and (min-width: 576px) and (max-width:767px) {
-  .b-queue{top: 24px !important;} 
+@media only screen and (max-width:576px) {
+  .b-queue{top: 45px !important;} 
   .b-service {top: 45px !important;}
+  .add-nloc-q {float: right !important;right:125px;top:0px; margin-bottom:5px !important;}
+  /* .add-nloc-q {float: right !important;right:140px;top:-15px; } */
 }
 @media only screen and (max-width: 330px) {
   .add-nloc-q {right: 120px !important;} 
   .b-service {top: 45px !important;}
 }
 @media only screen and (max-width: 575px) {
-  .add-nloc-s { top: -43px;
+  .add-nloc-s {
     right: 125px; }
 }
-@media only screen and (max-width: 524px) {
+ /* @media only screen and (max-width: 524px) {
   .add-nloc-s { top: -3px!important; }
   .add-nloc-s {right: 125px !important;} 
-  .b-service {top: 40px !important;}
-}
+  .b-service {top: 28px !important;}
+} 
 @media only screen and (max-width: 402px) {
   .b-service {top: 28px !important;}
-}
-@media only screen and (max-width: 480px) {
+}  */
+@media only screen and (max-width: 484px) {
   .b-queue {top: 30px !important;} 
+}
+/* @media only screen and (min-width:413px) and (max-width:524px) {
+  .add-nloc-s { top: -3px!important; }
+.add-nloc-s {right: 125px !important;} 
+  .b-service {top: 40px !important;}
+} */
+@media only screen and (max-width:524px) {
+  .add-nloc-s { top: -3px!important; }
+.add-nloc-s {right: 125px !important;} 
+  .b-service {top: 40px !important;}
+}
+@media only screen and (max-width:413px){
+  .b-service {top: 28px !important;}
+}
+.lc-box .helprighticon {
+  padding-left: 5px !important; 
+}
+.lc-box .helprighticon i{ padding: 5px !important; font-size: 1rem !important; }
+
+@media only screen and (max-width: 480px){
+  .col-12.no-padding-small {padding-left: 0px !important;padding-right: 0px !important;}
 }

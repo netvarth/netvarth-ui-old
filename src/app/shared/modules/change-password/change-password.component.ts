@@ -33,7 +33,7 @@ export class ChangePasswordComponent implements OnInit {
   curtype;
   breadcrumbs_init = [
     {
-      title: 'Dashboard',
+      title: Messages.DASHBOARD_TITLE,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {

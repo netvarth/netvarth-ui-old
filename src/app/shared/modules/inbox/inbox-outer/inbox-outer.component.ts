@@ -6,6 +6,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { InboxServices } from '../inbox.service';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -19,7 +20,7 @@ export class InboxOuterComponent implements OnInit {
 
   breadcrumbs = [
     {
-      title: 'Dashboard',
+      title: Messages.DASHBOARD_TITLE,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {

@@ -37,7 +37,7 @@ export class MembersComponent implements OnInit {
   query_executed = false;
   breadcrumbs_init = [
     {
-      title: 'Dashboard',
+      title: Messages.DASHBOARD_TITLE,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {

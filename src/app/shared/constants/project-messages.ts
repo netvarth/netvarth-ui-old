@@ -232,7 +232,6 @@ export const Messages = {
   // Consumer Constants
 
   // Breadcrumbs
-  'BREADCRUMBS_DASHBOARD': 'Dashboard',
   'LEARN_MORE_CAP': 'Learn More',
 
   // Reveal Phone No
@@ -255,10 +254,10 @@ export const Messages = {
 
   // Consumer Account Settings
   'RELATED_LINKS': 'Related Links',
-  'USER_PROF_CAP': 'User Profile',
+  'USER_PROF_CAP': 'My Account',
   'CHANGE_PASSWORD_CAP': 'Change Password',
   'CHANGE_MOB_CAP': 'Change Mobile',
-  'ADD_CHANGE_EMAIL': 'Add or Change Email',
+  'ADD_CHANGE_EMAIL': 'Update Email',
 
   // Dashboard
   // Active Checkins
@@ -439,7 +438,6 @@ export const Messages = {
 
   // App-shared-modules-change-mobile
   'MOBILE_CAP': 'Mobile *',
-  'ADD_CHANGE_EMAIL_CAP': 'Add or Change Email',
 
   // App-shared-modules-change-password
   'OLD_PASSWORD_CAP': 'Old Password *',
@@ -476,7 +474,7 @@ export const Messages = {
 
   // App-shared-modules-edit-profile
   'EDIT_PHONE_NO_CAP': 'Use "Change Mobile" option to edit the Phone number',
-  'CHANGE_EMAIL_CAP': 'Use "Add or Change Email" option to edit the Email Id',
+  'CHANGE_EMAIL_CAP': 'Use "Update Email" option to edit the Email Id',
   'PHONE_NO_CAP': 'Phone Number',
   'EMAIL_ID_CAP': 'Email Id',
 
@@ -517,7 +515,7 @@ export const Messages = {
   'SWITCH_TO_CONSUMER': 'Switch to Consumer',
   'LOGOUT_CAP': 'Logout',
   'UPGRADE_CAP': 'Upgrade',
-  'MEMBERSHIP_CAP': 'Membership',
+  'MEMBERSHIP_CAP': 'License',
   'SWITCH_TO_PROVIDER': 'Switch to Provider',
   'CREATE_PRO_ACCNT': 'Create a Provider Account',
 
@@ -885,7 +883,7 @@ export const Messages = {
   'REPORT_ID_CAP': 'Report Id',
   'TIME_PERIOD_CAP': 'Time Period',
   'COUP_USE_CAP': 'Coupons Used',
-  'J_ACC_CAP': 'Jaldee Account',
+  'J_ACC_CAP': 'Jaldee Bank',
   'REIMBURSE_AMT_CAP': 'Reimbursable Amount',
   'REQ_PAYMENT_CAP': 'Request for payment',
   'SCCESS_MSG' : 'Requested Successfully',
@@ -1046,7 +1044,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-payment-settings
   'PAY_SET_JALDEE_ACCOUNT_CAP' : 'Jaldee Account',
-  'PAY_SET_MY_OWN_ACCOUNT_CAP' : 'My Own Account',
+  'PAY_SET_MY_OWN_ACCOUNT_CAP' : 'My Own Bank Account',
   'PAY_SET_ONLY_IF_MAIL_VERIFIED_CAP' : 'Payment settings can be done only if your email id is verified.Please use the below button to set up your email id.',
   'PAY_SET_GO_TO_EMAIL_SET_CAP' : 'Go to Email Settings',
   'PAY_SET_REVISIT_THIS_PAGE_CAP' : 'Please revisit this page to do the payment settings, once you have verified the email address',
@@ -1085,7 +1083,7 @@ export const Messages = {
   // App-ynw_provider-components-provider-subheader
   'SUB_HEADER_CREATE_CAP' : 'Create',
   'SUB_HEADER_KIOSK' : 'Kiosk',
-  'SUB_HEADER_DASHBOARD' : 'Dashboard',
+  'DASHBOARD_TITLE' : 'Dashboard',
   'SUB_HEADER_SETTINGS' : 'Settings',
   'SUB_HEADER_HELP' : 'Help',
 

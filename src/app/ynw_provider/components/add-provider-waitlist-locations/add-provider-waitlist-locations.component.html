@@ -20,31 +20,42 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             })">
                 </app-field-error-display>
             </div>
-            <div class="form-group">
-                <mat-form-field class="example-full-width">
-                    <label class="col-form-label">{{latitude_cap}}</label>
-                    <input matInput type="text" placeholder="Latitude *" formControlName="loclattitude" autocomplete="off">
-                </mat-form-field>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
-            {
-            'required' : 'Please enter the latitude',
-            'pattern' : 'Please enter a valid lattitude'
-            })">
-                </app-field-error-display>
+            <div class="row">
+                <div class="col-md-6 col-12 no-padding-small">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <label class="col-form-label">{{latitude_cap}}</label>
+                            <input matInput type="text" placeholder="Latitude *" formControlName="loclattitude"
+                                autocomplete="off">
+                        </mat-form-field>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')"
+                            [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
+                    {
+                    'required' : 'Please enter the latitude',
+                    'pattern' : 'Please enter a valid lattitude'
+                    })">
+                        </app-field-error-display>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 no-padding-small">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <label class="col-form-label">{{longitude_cap}}</label>
+                            <input matInput type="text" placeholder="Longitude *" formControlName="loclongitude"
+                                autocomplete="off">
+                        </mat-form-field>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')"
+                            [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
+                    {
+                    'required' : 'Please enter the longitude',
+                    'pattern' : 'Please enter a valid longitude'
+                    })">
+                        </app-field-error-display>
+                        <!-- <button (click)="showGooglemap()" type="button" mat-button>Show Map</button> -->
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <mat-form-field class="example-full-width">
-                    <label class="col-form-label">{{longitude_cap}}</label>
-                    <input matInput type="text" placeholder="Longitude *" formControlName="loclongitude" autocomplete="off">
-                </mat-form-field>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
-            {
-            'required' : 'Please enter the longitude',
-            'pattern' : 'Please enter a valid longitude'
-            })">
-                </app-field-error-display>
-                <!-- <button (click)="showGooglemap()" type="button" mat-button>Show Map</button> -->
-            </div>
+
             <div class="form-group">
                 <mat-form-field class="example-full-width">
                     <label class="col-form-label">{{address_cap}}</label>

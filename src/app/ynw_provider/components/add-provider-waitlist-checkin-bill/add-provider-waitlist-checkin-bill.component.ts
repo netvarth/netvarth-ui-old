@@ -134,7 +134,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   makPaydialogRef;
   breadcrumbs = [
     {
-      title: 'Dashboard',
+      title: Messages.DASHBOARD_TITLE,
       url: '/provider'
     },
     {

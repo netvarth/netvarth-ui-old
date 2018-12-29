@@ -54,7 +54,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   tday = new Date()
   breadcrumbs = [
     {
-      title: 'Dashboard',
+      title: Messages.DASHBOARD_TITLE,
       url: '/provider'
     },
     {

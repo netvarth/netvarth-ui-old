@@ -23,7 +23,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
   create_cap = Messages.SUB_HEADER_CREATE_CAP;
-  dashboard_cap = Messages.SUB_HEADER_DASHBOARD;
+  dashboard_cap = Messages.DASHBOARD_TITLE;
   help_cap = Messages.SUB_HEADER_HELP;
   kiosk_cap = Messages.SUB_HEADER_KIOSK;
   settings_cap = Messages.SUB_HEADER_SETTINGS;
