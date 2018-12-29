@@ -31,7 +31,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   query_executed = false;
   emptyMsg = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-
+  breadcrumb_moreoptions: any = [];
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -54,6 +54,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getNonworkingdays();
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
   }
 
   ngOnDestroy() {

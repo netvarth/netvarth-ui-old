@@ -63,6 +63,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // calling the method to get the list of locations
     this.getProviderQueues();
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'timewindow', 'classname': 'b-queue' };
   }
 
   ngOnDestroy() {

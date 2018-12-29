@@ -14,7 +14,7 @@
             </ng-container>
         </ng-container>
         <ng-container *ngIf="moreOptions.show_learnmore">
-        <span (click)="learnmore_clicked()" class="ml-auto cs-btn bt6"><i data-icon="B"></i> {{lear_more_cap}}</span>
+        <span (click)="learnmore_clicked()" [ngClass]="className" class="ml-auto cs-btn bt6"><i data-icon="B"></i> {{lear_more_cap}}</span>
         </ng-container>
         </div>
 

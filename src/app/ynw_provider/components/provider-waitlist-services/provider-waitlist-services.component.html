@@ -1,6 +1,6 @@
 <section>
   <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section>
@@ -8,7 +8,7 @@
       <div class="container">
           <div class="row">
               <div class="n-loc">
-                  <span class="add-nloc cs-btn bt3" (click)="addService()">{{add_new_serv_cap}}</span>
+                  <span class="add-nloc-s cs-btn bt3" (click)="addService()">{{add_new_serv_cap}}</span>
               </div>
           </div>
 

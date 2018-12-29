@@ -69,7 +69,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
     // this.bProfile = this.provider_datastorage.get('bProfile');
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'locations' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'locations', 'classname': 'b-service' };
   }
   ngOnDestroy() {
     if (this.dialogRef) {
@@ -223,25 +223,5 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }
-  learnmore_clicked(mod, e) {
-    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
-           width: '50%',
-           panelClass: 'commonpopupmainclass',
-           autoFocus: true,
-           data: {
-               moreOptions : this.getMode(mod)
-           }
-         });
-         dialogRef.afterClosed().subscribe(result => {
-         });*/
-    e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.shared_Functionsobj.sendMessage(pdata);
-  }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
-    return moreOptions;
   }
 }

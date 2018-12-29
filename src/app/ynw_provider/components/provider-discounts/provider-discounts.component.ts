@@ -26,6 +26,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   discount_list: any = [];
   query_executed = false;
   emptyMsg = '';
+  breadcrumb_moreoptions: any = [];
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -48,6 +49,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getDiscounts(); // Call function to get the list of discount lists
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
   }
 
   ngOnDestroy() {

@@ -28,6 +28,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   item_list: any = [];
   query_executed = false;
   emptyMsg = '';
+  breadcrumb_moreoptions: any = [];
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -53,6 +54,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getitems();
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
   }
   ngOnDestroy() {
     if (this.additemdialogRef) {

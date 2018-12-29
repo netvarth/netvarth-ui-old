@@ -40,6 +40,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   emptyMsg = '';
   couponStatus: boolean;
   tabid = 0;
+  breadcrumb_moreoptions: any = [];
   breadcrumbs = [
     {
       title: 'Settings',
@@ -65,7 +66,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.coupon_info = this.sharedfunctionObj.getProjectMesssages('MAX_REIMBURSE_PERC');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
-
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
   }
   ngOnDestroy() {
     if (this.addcoupdialogRef) {

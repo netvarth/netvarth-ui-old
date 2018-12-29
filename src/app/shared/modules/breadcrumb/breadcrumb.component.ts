@@ -23,6 +23,7 @@ export class BreadCrumbComponent implements OnInit {
 
     @Input () breadcrumbs;
     @Input () moreOptions: any = [];
+    className = '';
     constructor(
         public router: Router,
         private dialog: MatDialog,
@@ -31,6 +32,10 @@ export class BreadCrumbComponent implements OnInit {
 
     ngOnInit() {
         // console.log('options', this.moreOptions);
+        if (this.moreOptions.classname) {
+            this.className = this.moreOptions.classname;
+        }
+        delete this.moreOptions.className;
     }
 
     goNavigate(breadcrumb) {

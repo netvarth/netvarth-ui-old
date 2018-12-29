@@ -48,6 +48,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
   coupon_notes = projectConstants.COUPON_NOTES;
+ // page_heading = 'Bill';
   api_error = null;
   api_success = null;
   checkin = null;

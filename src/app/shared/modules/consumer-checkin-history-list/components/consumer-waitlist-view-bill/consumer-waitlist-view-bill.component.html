@@ -1,5 +1,5 @@
 <h1 class="mat-dialog-title" *ngIf="!showPaidlist">
-    Receipt
+    <span *ngIf="bill_data">{{bill_data.amountDue === 0 ? 'Receipt' : 'Bill' }}</span>
     <button #queue [mat-dialog-close]="close_msg" class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>

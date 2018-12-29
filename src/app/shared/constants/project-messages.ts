@@ -931,7 +931,7 @@ export const Messages = {
   'WAITLIST_SCHEDULE_CAP': 'Schedule',
 
   // App-ynw_provider-components-provider-waitlist-locations
-  'ADD_NEW_LOC_CAP': 'Add New Location',
+  'ADD_NEW_LOC_CAP': 'Add Location',
 
   // App-ynw_provider-components-provider-waitlist-online-checkin
   'CHECKIN_CALCULATE_CAP': 'Waiting Time Calculation',
@@ -943,7 +943,7 @@ export const Messages = {
   'CHECKIN_FUTURE_CAP': 'Accept Future',
 
   // App-ynw_provider-components-provider-waitlist-queues
-  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add New Service Time Window',
+  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Service Time Window',
   'QUEUE_MAX_CAPACITY_CAP': 'Max. Capacity',
 
   // App-ynw_provider-components-provider-waitlist-service-detail
@@ -1146,7 +1146,7 @@ export const Messages = {
   'Q_DET_SCHEDULE_CAP' : 'Schedule',
 
   // App-ynw_provider-components-provider-waitlist-services
-  'SER_ADD_NEW_SER_CAP' : 'Add New Service',
+  'SER_ADD_NEW_SER_CAP' : 'Add Service',
   'SER_EST_DURATION_CAP' : 'Estimated Duration',
   'SER_PRICE_CAP' : 'Price',
   'SER_MIN_CAP' : 'min',

@@ -30,7 +30,7 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
   api_error = null;
   api_success = null;
   disable_price = true;
-
+  breadcrumb_moreoptions: any = [];
   breadcrumbs = [
     {
       title: 'Settings',
@@ -55,7 +55,7 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getServices();
-
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services', 'classname': 'b-service' };
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
      if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
         this.disable_price = true;
