@@ -1,176 +1,220 @@
 <div class="lm-outer w-manager">
-   
-    <h3 id ="main-top">Waitlist Manager - Healthcare</h3>
-    
+
+    <h3 id="main-top">Waitlist Manager - Healthcare</h3>
+
     <section>
-        <p>Waitlist manager helps the provider to manage the queue and ensure seamless workflow from the point of the check-in, to the waitlist, to the actual appointment.</p>
+        <p>Waitlist manager helps the provider to manage the service time windows and ensure seamless workflow from the
+            point of the check-in to the completion of service.</p>
     </section>
-    
+
     <section>
-        <h4>Accept Online Check-In</h4>
+        <h4>ACCEPT ONLINE CHECK-IN</h4>
 
         <ul class="ul-normal">
-            <li>This gives you full control over online consumer check-in.</li>
-            <li>If this button is enabled, check-in is open for consumers and if this button is disabled, consumers can only view your profile at their dashboard, but cannot check-in online for any service offered.</li>
+            <li>This gives you full control over online patient check-in.</li>
+            <li>First you have to complete “Profile & Summary” section under <strong>Profile & Search(Settings)</strong>
+                and set Public search to <strong>“ON”</strong>.</li>
+            <li>And then you can enable <strong>“Accept Online Check-In”</strong>.</li>
+            <li>If this button is enabled, online check-in is open for patients and if this button is disabled,
+                patients can only view your profile at their dashboard, but cannot check-in online for any services
+                offered.</li>
         </ul>
 
         <div class="box-indent">
             <h5>How is waiting time calculated ?</h5>
+            <p>Waiting time refers to the time patient waits to avail his/her service offered at your enterprise.</p>
 
             <ul class="ul-normal">
-                <li>Waiting time refers to the time consumer waits to avail his/her service offered at your enterprise.</li>
-                <li>Automatic (Machine Learning):</li>
-                <li>Fixed:</li>
-                <li>Do not show waiting time for consumers:</li>
+                <li><strong>Automatic (Machine Learning) :</strong> Our system uses machine learning algorithm which
+                    automatically calculates the turnaround time for each service by analysing provider’s service
+                    history.</li>
+                <li><strong>Fixed :</strong> By selecting this option you can choose a fixed service time which will be
+                    applied for all check-ins.(eg. If you set 10 mins of fixed time, by default all the patients will
+                    get 10 mins of waiting time).
+                    Fixed time can be used only when you guarantee to serve all patients in the given fixed time. You
+                    should have enough resources to do the same.
+                </li>
+                <li><strong>Do not show waiting time for patients(Token Enabled) :</strong> If you enable this option,
+                    no wait time will be shown to your patients, but token number will be shown.</li>
+                <li><strong>Do not show waiting time for patients(Token Disabled) :</strong> If you enable this option,
+                    neither wait time nor token number will be shown to your patients. But persons ahead is shown to
+                    get an idea of your turn for actual appointment.</li>
             </ul>
         </div>
     </section>
-    
+
     <section>
         <h4>Accept Future Check-In</h4>
 
         <ul class="ul-normal">
             <li>This advanced feature helps you to accept check-ins online for a service in future.</li>
-            <li>If you enable this button,at consumer dashboard a link appears beneath the check-in button, “Do you want to check-in for a different Date/Time?”, which permits the consumer to check-in for a different date or time.</li>
+            <li>If you enable this button, online check-in patients can avail services for a future date.</li>
+            <li>If you disable <strong>“Accept Future Check-In”</strong>, patients can only check-in for present day’s
+                service time windows.</li>
         </ul>
     </section>
-    
     <section>
-        <h4>Show Token</h4>
+        <h4>LOCATIONS</h4>
 
         <ul class="ul-normal">
-            <li>When a consumer check-ins for a service,consumer gets a token number according to the order they check-in for a service only if you enable <strong>“Show Token”</strong> button.</li>
-            <li>This token number is displayed in the consumer dashboard with which consumer can have a brief idea about his position in the waitlist for a particular queue.</li>
-        </ul>
-    </section>
-    
-    <section>
-        <h4>Locations</h4>
-
-        <ul class="ul-normal">
-            <li>Your business’s location data comes under this section. Location details you have saved at the time of profile activation process is set by default as the base location of your business. </li>
-            <li>If you want to set a particular location as base location, click the three dots menu in the right corner of the location name and click <strong>“Set as Base Location”</strong>.</li>
-            <li>Also if you don't want to make any added location open to consumers you can click <strong>“Disable”</strong> button from the three dots menu in the right corner of the location name.</li>
-            <li><strong>“Add new location”</strong> allows you to add a different location for your enterprise.
+            <li>Your business location data comes under this section. </li>
+            <li>This page will prompt you to <strong>“Add new location”</strong>, if you have not added any location
+                during the initial profile set up.</li>
+            <li><strong>“Add new location”</strong> allows you to add a new location for your enterprise.
                 <ol class="ol-normal">
                     <li>When you click this button a location window pops up where you can select the location in map.</li>
-                    <li>Click <strong>“Yes I’ am Done”</strong> when you picked the location from map,then enter location name and the rest of the fields are filled automatically. If new location is not available in map all the fields should be entered manually.</li>
-                    <li>Then comes the <strong>Business Schedule</strong> section where you add a new time schedule(working hours) and click save to add the new location details.</li>
+                    <li>Click <strong>“Yes I’ am Done”</strong> when you pick your location from map, then enter
+                        location name and the rest of the fields are filled automatically. If new location is not
+                        available in map all the fields should be entered manually.</li>
+                    <li>Then comes the <strong>Business Schedule</strong> section where you are asked to add time
+                        schedule(Please refer <strong>Service Time window</strong> section below) and click <strong>‘Save
+                            schedule’</strong> to add the new location details.</li>
+                    <li>Click <strong>“Save”</strong> to submit all the information.</li>
                 </ol>
             </li>
-            <li>When you click the location name complete details of location, location amenities,working hours are displayed.</li>
+            <li>Location details you have saved at the time of profile activation process is set by default as the base
+                location of your business.</li>
+            <li>Multiple locations added is displayed here.</li>
+            <li>If you want to set a particular location as base location, click the three dots menu in the right
+                corner of the location name and click <strong>“Set as Base Location”</strong>.</li>
+            <li>Also if you don't want to make any added location open to patients you can click <strong>“Disable”</strong>
+                button from the three dots menu in the right corner of the location name.</li>
+            <li>Here, <strong>“Add new location”</strong> allows you to add a different location for your enterprise.
+                <ol class="ol-normal">
+                    <li>When you click this button a location window pops up where you can select the location in map.</li>
+                    <li>Click <strong>“Yes I’ am Done”</strong>when you pick your location from map, then enter
+                        location name and the rest of the fields are filled automatically. If new location is not
+                        available in map all the fields should be entered manually.</li>
+                    <li>Then comes the <strong>Business Schedule</strong> section where you are asked to add time
+                        schedule(working hours) and click <strong>‘Save schedule’</strong> to add the new location
+                        details.</li>
+                    <li>Click “Save” to submit all the information.</li>
+                </ol>
+            </li>
+            <li>When you click the location name, complete details of your location, location amenities and working hours are displayed.</li>
             <li>Here you can edit the location and location amenities of your enterprise.</li>
-            <li>Working hours(Time window) of selected location is displayed in the bottom of the page.</li>
-            <li>You can edit the queue,add a new queue and also can “Enable/Disable” queue by clicking the three dots menu.</li>
+            <li>Working hours(Please refer <strong>Service Time window </strong>section below) of selected location is displayed in the bottom of the page.</li>
+            <li>You can add, edit and “Enable/Disable” service time window by clicking the three dots menu.</li>
         </ul>
     </section>
-    
-    <section>
-        <h4>Services</h4>
 
-        <p>In the Services section of our system,you will describe clearly all the services your business will provide to your consumers. Keep in mind highly detailed or technical descriptions are definitely not recommended, use simple terms so that your consumers can read easily.</p>
+    <section>
+        <h4>SERVICES</h4>
+
+        <p>This page lists all the services you offer to your patients. Kindly note that service name should be simple and understandable which will help your patient to know more about the services you offer.</p>
 
         <ul class="ul-normal">
-            <li>When you click <strong>“Services”</strong>, a page appears where you can view already added services.</li>
-            <li>You can <strong>“Enable/Disable”</strong> particular service by clicking the three dots menu.</li>
-            <li><strong>“ADD NEW SERVICE”</strong> button enables you to add a new service to your profile. When you click this button a service window pop up where you can input the service details.
-                <table class="table wm-tbl">
-                    <tbody>
-                        <tr>
-                            <td class="td1">1</td>
-                            <td class="td2">Service Name</td>
-                            <td class="td3">Enter the name of the service.</td>
-                        </tr>
-                        <tr>
-                            <td class="td1">2</td>
-                            <td class="td2">Description </td>
-                            <td class="td3">Give a description about the service you are offering to consumers.</td>
-                        </tr>
-                        <tr>
-                            <td class="td1">3</td>
-                            <td class="td2">Estimated Duration</td>
-                            <td class="td3">Enter the minimum duration to complete this service.</td>
-                        </tr>
-                        <tr>
-                            <td class="td1">4</td>
-                            <td class="td2">Price</td>
-                            <td class="td3">Input the price of this service.</td>
-                        </tr>
-                        <tr>
-                            <td class="td1">5</td>
-                            <td class="td2">Enable Prepayment</td>
-                            <td class="td3">You can enable prepayment to accept payment in advance for the service offered. If you enable prepayment, consumers are asked to pay in advance before checking-in for this particular service.</td>
-                        </tr>
-                        <tr>
-                            <td class="td1">6</td>
-                            <td class="td2">Notification</td>
-                            <td class="td3">When you enable the notification button,two options appears, Push Message and Email.Select any of these medium through which a message is passed to consumers informing  their service has been done.</td>
-                        </tr>
-                        <tr>
-                            <td class="td1">7</td>
-                            <td class="td2">Gallery</td>
-                            <td class="td3">Multiple images of the service can be added here.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </li>
-            <li>A newly added service will be displayed to consumers, only if the service has been added to any available queue.</li>
-            <li>When you click the service name complete details of services are displayed and can edit only if the status of queue is set enabled.</li>
-            <li>Click the pencil button to edit the service details.</li>
-        </ul>  
-    </section>
-    
-    <section>
-        <h4>Queues</h4>
-
-        <p>Queue simply means the working hours of your enterprise. Services are rendered to the consumer in the order they checked-in online, walk-in consumers and phone-in consumers who checked-in at your desk.</p>
-
-        <ul class="ul-normal">
-            <li><strong>“ADD NEW QUEUE”</strong>, button enables you to add a new queue. When you click this button a queue window pop up where you can input the queue details.
-
+            <li>When you click <strong>“Services”</strong>,a page appears where you can view a service by default named “Consultation”.  Estimated duration, Price, Tax Applicable, End of service notification fields have values by default. This can be edited clicking pencil button.</li>
+            <li>Tax Applicable field can be set to “Yes”, only if tax settings is completed under the Payments section in Settings.</li>
+            <li>Service status is also enabled by default. Only enabled services are available for patients to proceed with check-in.</li>
+            <li>You can switch the status button of any service either to Enabled or Disabled by clicking the three dots menu.</li>
+            <li>All the services created are displayed here.</li>
+            <li>When you click any service name, complete details of the service is displayed and can edit only if the status of service is set enabled. Also can disable or enable the service’s status from the detailed view.</li>
+            <li>For any default service created, no default price is set. You can input the price in the specified field.</li>
+            <li><strong>“ADD NEW SERVICE”</strong> button enables you to add a new service to your profile. When you click this button a service window pops up where you can input the service details.</li>            
             <table class="table wm-tbl">
                 <tbody>
                     <tr>
                         <td class="td1">1</td>
-                        <td class="td2">Queue Name</td>
-                        <td class="td3">Enter a name for the queue.</td>
+                        <td class="td2">Service Name</td>
+                        <td class="td3">Enter the name of the service.</td>
                     </tr>
                     <tr>
                         <td class="td1">2</td>
-                        <td class="td2">Location</td>
-                        <td class="td3">Choose location from the drop down box.</td>
+                        <td class="td2">Description </td>
+                        <td class="td3">Give a description about the service you are offering to patients.</td>
                     </tr>
                     <tr>
                         <td class="td1">3</td>
-                        <td class="td2">Service</td>
-                        <td class="td3">Tick the services offered in this queue from list of services displayed here.</td>
+                        <td class="td2">Estimated Duration</td>
+                        <td class="td3">Enter the minimum time in minutes to complete this particular service.</td>
                     </tr>
                     <tr>
                         <td class="td1">4</td>
-                        <td class="td2">Schedule</td>
-                        <td class="td3">Tick the dates for the queue.</td>
+                        <td class="td2">Price</td>
+                        <td class="td3">Input the price of this service.</td>
                     </tr>
                     <tr>
                         <td class="td1">5</td>
-                        <td class="td2">Start Time/End Time</td>
-                        <td class="td3">Enter the start time and end time for the queue.</td>
+                        <td class="td2">Enable Prepayment</td>
+                        <td class="td3">You can enable prepayment to accept payment in advance for the service offered. If you enable prepayment, patients are asked to pay in advance before checking-in for this particular service. Prepayment can be enabled only if you have completed the payment settings<strong>(Settings-->Payments)</strong>.</td>
                     </tr>
                     <tr>
                         <td class="td1">6</td>
-                        <td class="td2">Maximum Capacity</td>
-                        <td class="td3">Enter the maximum consumers you can serve in this particular queue.</td>
+                        <td class="td2">Tax Applicable</td>
+                        <td class="td3">If you enable the Tax applicable button you can collect a certain percentage of tax from the patients (The percentage of tax can be set in tax settings). This can be enabled only if Tax settings is already set.</td>
                     </tr>
                     <tr>
                         <td class="td1">7</td>
-                        <td class="td2">Number of consumers served at a time</td>
-                        <td class="td3">Enter the number of consumers served at a time.</td>
+                        <td class="td2">End of Service Notification</td>
+                        <td class="td3">When you enable the notification button, two options appear, Push Message and Email. Select any of these medium through which a message is passed to patients informing  their service has been done.</td>
+                    </tr>
+                    <tr>
+                        <td class="td1">8</td>
+                        <td class="td2">Gallery</td>
+                        <td class="td3">Multiple images of the service can be added here.</td>
                     </tr>
                 </tbody>
             </table>
+            <li>When you have all the information click “Save”, a success window appears informing the service has been added successfully and will ask to add this service to the relevant service time window by editing the service time window.</li>
+            <li>A newly added service will be displayed to patients, only if the service has been added to any existing/new service time window and also service can be edited clicking the pencil button.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h4>SERVICE TIME WINDOW</h4>
+
+        <p>Service Time Window simply means the working hours of your enterprise. You can add multiple service time windows according to your business schedule. Let’s say from Monday to Friday you have 9am to 5pm and for Saturday and Sunday you have 9am to 1pm. In this case you can create two service time windows one for Monday to Friday and another for Saturday and Sunday.</p>
+
+        <ul class="ul-normal">
+            <li>This page will prompt you to <strong>“Add new service time window”</strong>, if you have not added any service time window during the initial profile set up.</li>
+            <li><strong>“ADD NEW SERVICE TIME WINDOW”</strong> , button enables you to add a new service time window.When you click this button a service time window pops up where you can input the service time window details.
+                <table class="table wm-tbl">
+                    <tbody>
+                        <tr>
+                            <td class="td1">1</td>
+                            <td class="td2">Service Time Window Name</td>
+                            <td class="td3">Enter a name for the service time window.</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">2</td>
+                            <td class="td2">Location</td>
+                            <td class="td3">Choose location from the drop down box.</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">3</td>
+                            <td class="td2">Service</td>
+                            <td class="td3">All added services are displayed here. Check the services offered in this service time window from list of services displayed here.</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">4</td>
+                            <td class="td2">Schedule</td>
+                            <td class="td3">Select the days according to your schedule . You can check <strong>“Select all days”</strong> check box if your business is open through the week.</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">5</td>
+                            <td class="td2">Start Time/End Time</td>
+                            <td class="td3">Enter the start time and end time for this service time window.</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">6</td>
+                            <td class="td2">Maximum Capacity</td>
+                            <td class="td3">Enter the maximum number of patients you can serve in this particular service time window.  When the limit exceeds check-ins will not be accepted. And if limit is not set endless check-ins are accepted between the working hours.</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">7</td>
+                            <td class="td2">Number of patients served at a time </td>
+                            <td class="td3">Enter the number of patients served at the same time.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </li>
-            <li>When you click the enabled queue brief outlook of this time schedule is displayed.</li>
-            <li>You can edit the schedule of this particular queue when you click the pencil button in the right corner.</li>
-            <li>When you click to edit the schedule Queue window appears where the input fields are filled with current data which can be edited.When you have all the right information click “Save” button.</li>
+            <li>All added service time windows are displayed here.</li>
+            <li>Service time window’s  status can be switched either to “Enabled” or “Disabled”. Only enabled service time windows are open to patients for checking-in.</li>
+            <li>You can “Enable/Disable” particular service time window by clicking the three dots menu. Also can edit the service time window from here.</li>
+            <li>When you click the enabled service time window brief outlook of this time schedule is displayed.</li>
+            <li>You can edit the timing of this particular service time window when you click the pencil button in the right corner.</li>
+            <li>When you click to edit the schedule, service time window appears where the input fields are filled with current data which can be edited. When you have all the right information click “Save” button.</li>
         </ul>
     </section>
     <span class="backTotop" (click)="handleScroll('main-top')"><span class="icon-angle-up"></span>Top</span>

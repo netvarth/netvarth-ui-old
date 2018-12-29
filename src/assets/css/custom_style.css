@@ -797,3 +797,15 @@ margin-top:10px;
   text-transform:uppercase;
 }
 .search-text .mat-option {height: auto!important;}
+.adwordbronzerow {
+  background: rgba(208, 146, 83, 0.242);
+}
+.brozelicensecol {
+  background: rgba(208, 146, 83, 0.242);
+  font-size: .875rem;
+  font-weight: 500;
+  color: #545457;
+  line-height: 1.75;
+  letter-spacing: .3px;
+  font-family: 'Montserrat', sans-serif;
+}
