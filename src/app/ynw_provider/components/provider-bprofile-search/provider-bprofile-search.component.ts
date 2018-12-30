@@ -117,6 +117,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   social_media_cap = Messages.BPROFILE_SOCIAL_MEDIA_CAP;
   add_social_media = Messages.BPROFILE_ADD_SOCIAL_MEDIA_CAP;
   no_social_media = Messages.NO_SOCIAL_MEDIA;
+  name_cap = Messages.PRO_NAME_CAP;
+  description_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
+
   checked = false;
   bProfile = null;
   serviceSector = null;
@@ -153,6 +156,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   adword_list: any = [];
   license_metadata: any = [];
   adwordsmaxcount = 0;
+  license_details:any = [];
   adwords_maxremaining = 0;
   adwords_remaining = 0;
   adwordshow_list: any = [];
@@ -255,7 +259,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSpokenLanguages();
-    // this.getLicenseDetails();
+   this.getLicenseDetails();
     // this.getLicenseMetadata();
     this.getTotalAllowedAdwordsCnt();
     this.getLocationBadges();
@@ -1309,14 +1313,14 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       }
     }
   }*/
-  /*getLicenseDetails() {
+ getLicenseDetails() {
     this.provider_services.getLicenseDetails()
       .subscribe(data => {
         this.currentlicense_details = data;
-        // console.log('license', this.currentlicense_details);
-        this.getLicenseMetadata();
+        this.license_details = this.currentlicense_details;
+      //  console.log(this.currentlicense_details);
       });
-  }*/
+  }
   getTotalAllowedAdwordsCnt() {
     this.provider_services.getTotalAllowedAdwordsCnt()
       .subscribe(data => {
