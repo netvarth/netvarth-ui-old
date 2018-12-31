@@ -69,6 +69,9 @@ import { LearnmoreKioskComponent } from './learnmore-kiosk/learnmore-kiosk.compo
 import { LearnmoreLicenseComponent } from './learnmore-license/learnmore-license.component';
 import { LearnmoreAdjustDelayComponent } from './learnmore-adjustdelay/learnmore-adjustdelay.component';
 import { LearnmoreMiscellaneousComponent } from './learnmore-miscellaneous/learnmore-miscellaneous.component';
+import { HealthcareMiscellaneousComponent } from './learnmore-miscellaneous/healthcare-miscellaneous/healthcare-miscellaneous.component';
+import { PersonalcareMiscellaneousComponent } from './learnmore-miscellaneous/personalcare-miscellaneous/personalcare-miscellaneous.component';
+import { ProfessionalMiscellaneousComponent } from './learnmore-miscellaneous/professional-miscellaneous/professional-miscellaneous.component';
 
 @NgModule({
     imports: [
@@ -136,6 +139,11 @@ import { LearnmoreMiscellaneousComponent } from './learnmore-miscellaneous/learn
             ReligiousWaitlistmanagerComponent,
             AutomobileWaitlistmanagerComponent,
 
+            HealthcareMiscellaneousComponent,
+            PersonalcareMiscellaneousComponent,
+            ProfessionalMiscellaneousComponent,
+
+
         LearnmoreWaitlistManagerComponent,
         LearnmoreCheckinComponent,
         LearnmoreCustomerComponent,
@@ -143,6 +151,8 @@ import { LearnmoreMiscellaneousComponent } from './learnmore-miscellaneous/learn
         LearnmoreLicenseComponent,
         LearnmoreAdjustDelayComponent,
         LearnmoreMiscellaneousComponent
+
+        
     ],
     entryComponents: [
         LearnmoreComponent

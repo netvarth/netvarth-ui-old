@@ -13,6 +13,7 @@
             <li (click)="sethelpSub('kiosk')">Kiosk</li>
             <li (click)="sethelpSub('license')">License</li>
             <li (click)="sethelpSub('adjustdelay')">Adjust Delay</li>
+            <li (click)="sethelpSub('miscellaneous')">Miscellaneous</li>
          </ul>
        </div>
        <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub !=''" (click)="sethelpSub('')"><span class="back-to-index">Back to Index</span></div>
@@ -35,8 +36,12 @@
 
         <!-- License -->
         <app-license-learnmore [target]="subKey" *ngIf="destination=='license' || helpSub =='license'"></app-license-learnmore>
-        <!-- License -->
+        <!-- Delay -->
         <app-adjustdelay-learnmore [target]="'adjustdelay'" *ngIf="destination=='adjustdelay' || helpSub =='adjustdelay'"></app-adjustdelay-learnmore>
+
+        <!-- Delay -->
+        <app-miscellaneous-learnmore [target]="'miscellaneous'" *ngIf="destination=='miscellaneous' || helpSub =='miscellaneous'"></app-miscellaneous-learnmore>
+        
       <!-- </mat-dialog-content>
       <mat-dialog-actions>
         <button  type="button" mat-dialog-close class="cs-btn bt2">Close</button>

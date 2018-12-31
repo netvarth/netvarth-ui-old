@@ -54,7 +54,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getNonworkingdays();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': 'services' };
   }
 
   ngOnDestroy() {
