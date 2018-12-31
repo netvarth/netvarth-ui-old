@@ -1,58 +1,56 @@
-
 <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
   <div class="content see-pages">
-      <div class="container">
-        <div class="outer-card">
+    <div class="container">
+      <div class="outer-card">
         <div class="card">
-        <div *ngIf="step==1" class="change-phone-div">
-          <form [formGroup]="spForm" novalidate
-          (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
-          (keyup)="resetApiErrors()">
+          <div *ngIf="step==1" class="change-phone-div">
+            <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)" (keyup)="resetApiErrors()">
 
-            <div class="form-group phonenumber">
-              <label class="col-form-label" for="phonenumber">{{mobile_cap}}</label>
-              <input type="text" class="form-control" id="phonenumber" placeholder="Mobile"
-              formControlName="phonenumber" (keyup)="isVerified(spForm.controls['phonenumber'].value)" autocomplete="off">
-              <div *ngIf="is_verified" class="verified">{{verified_cap}}</div>
-              <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'phonenumber')"
-              [errorMsgs]="fed_service.getErrorMessage(spForm,'phonenumber',
+              <div class="form-group phonenumber">
+                <label class="col-form-label" for="phonenumber">Old Mobile</label>
+                <input type="text" class="form-control" id="phonenumber" placeholder="Mobile" formControlName="phonenumber"
+                  autocomplete="off" disabled>
+                <div *ngIf="is_verified" class="verified">{{verified_cap}}</div>
+              </div>
+              <div class="form-group phonenumber">
+                <label class="col-form-label" for="phonenumber">New {{mobile_cap}}</label>
+                <input type="text" class="form-control" id="phonenumber" placeholder="Mobile" formControlName="phonenumber"
+                (keyup)="isVerified(spForm.controls['phonenumber'].value)" autocomplete="off">
+                <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(spForm,'phonenumber',
               {
                 'required' : 'Phone number is required',
                 'minlength' : 'Phone number should have 10 digits',
                 'maxlength' : 'Phone number should have 10 digits',
                 'pattern' : 'Only numbers are allowed'
               })">
-            </app-field-error-display>
+                </app-field-error-display>
+              </div>
+              <button type="submit" mat-button [disabled]="!spForm.valid || is_verified">{{save_btn_cap}}</button>
+            </form>
+          </div>
 
-            </div>
-            <button  type="submit" mat-button  [disabled]="!spForm.valid || is_verified">{{save_btn_cap}}</button>
-        </form>
-        </div>
+          <div class="example-container otpouter" *ngIf="step==2">
+            <app-otp-form [type]="'forgot_password'" [submitdata]="submit_data" (retonOtpSubmit)="onOtpSubmit($event)"
+              (resetApiErrors)="resetApiErrors()" (resendOtp)="resendOtp($event)"></app-otp-form>
+          </div>
 
-        <div class="example-container otpouter" *ngIf="step==2">
-          <app-otp-form [type]="'forgot_password'" [submitdata]="submit_data"  (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
-          (resendOtp)="resendOtp($event)"></app-otp-form>
-        </div>
+          <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-        <app-field-error-display [displayError]="true" *ngIf="api_error"
-        errorMsg="{{api_error}}"></app-field-error-display>
-
-        <app-form-success-display [displayMsg]="true" *ngIf="api_success"
-        successMsg="{{api_success}}"></app-form-success-display>
+          <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
         </div>
         <div class="right-menu">
-            <div class="right-menu-header">{{related_links_cap}}</div>
-            <ul class="related-link">
-                <li (click)="shared_functions.redirectto('profile')" class="icon-profile">{{user_profile_cap}}</li>
-                <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_pass_cap}}</li>
-                <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">{{add_change_email_cap}}</li>
-                <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">{{family_members_cap}}</li>
-            </ul>
+          <div class="right-menu-header">{{related_links_cap}}</div>
+          <ul class="related-link">
+            <li (click)="shared_functions.redirectto('profile')" class="icon-profile">{{user_profile_cap}}</li>
+            <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_pass_cap}}</li>
+            <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">{{add_change_email_cap}}</li>
+            <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">{{family_members_cap}}</li>
+          </ul>
         </div>
-        </div>
+      </div>
     </div>
   </div>
 </section>
