@@ -469,7 +469,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // Check whether the title is to be displayed
     if (this.holdisplaylist['kwtitle']) {
       if (this.holdisplaylist['kwtitle'].length > 0) {
-        const groupdomainobj = {displayname: 'Business Name as', name: 'kwtitle'};
+        const groupdomainobj = {displayname: 'Business Name/Keyword', name: 'kwtitle'};
         keywordgroup_val.push(groupdomainobj);
       }
     }

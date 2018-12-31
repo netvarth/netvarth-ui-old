@@ -38,7 +38,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
       title: 'Items',
       url: '/provider/settings/items'
     }
-  ]
+  ];
   item_status = projectConstants.ITEM_STATUS;
   breadcrumbs = this.breadcrumbs_init;
   itemnameTooltip = Messages.ITEMNAME_TOOLTIP;

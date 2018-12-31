@@ -162,6 +162,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   small_device_display = false;
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
+  breadcrumb_moreoptions: any = [];
+  breadcrumbs_init = [
+    {
+      title: Messages.DASHBOARD_TITLE
+    }
+  ]
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private common_datastorage: CommonDataStorageService,
@@ -210,6 +216,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit() {
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
     this.router.events
             .pipe(filter((e: any) => e instanceof RoutesRecognized),
                 pairwise()
