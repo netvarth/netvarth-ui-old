@@ -162,7 +162,9 @@ export const projectConstants = {
   LOCATION_BADGE_ICON: { // images to be used for the location badges
     'physiciansemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
     'dentistemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
+    'dentistambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' }, // dynamic
     'altemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
+    'altambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' }, // dynamic
     'emergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
     'traumacentre': { 'icon': 'trauma.png', 'class': 'icon-trauma' }, // dynamic
     'firstaid': { 'icon': 'noimage.png', 'class': 'icon-first-aid' }, // dynamic

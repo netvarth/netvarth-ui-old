@@ -730,7 +730,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.loc_badges = data;
         for (const badge of this.loc_badges) {
+          console.log(this.loc_badges);
           this.badge_map_arr[badge.name] = badge.displayName;
+          console.log(this.badge_map_arr);
         }
       });
   }

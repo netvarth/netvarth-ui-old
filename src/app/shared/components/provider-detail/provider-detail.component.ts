@@ -420,7 +420,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
             // console.log('domain', this.virtualfieldsDomainjson, 'subdomain', this.virtualfieldsSubdomainjson);
             // console.log('virtual', this.virtualfieldsjson);
-            // console.log('combined', this.virtualfieldsCombinedjson);
+             console.log('combined', this.virtualfieldsCombinedjson);
             // console.log('dd', this.objectToVal(this.virtualfieldsCombinedjson));
 
             if (this.virtualfieldsCombinedjson.length > 0) {

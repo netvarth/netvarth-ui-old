@@ -29,9 +29,10 @@ export class ChangeMobileComponent implements OnInit {
   api_success = null;
   is_verified = false;
   user_details;
+  prev_phonenumber;
   step = 1;
   curtype;
-  submit_data = {'phonenumber' : null};
+  submit_data = {'phonenumber': null};
   breadcrumbs_init = [
     {
       title: Messages.DASHBOARD_TITLE,
@@ -59,7 +60,6 @@ export class ChangeMobileComponent implements OnInit {
             Validators.maxLength(10),
             Validators.minLength(10),
             Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])]
-
       });
       this.getProfile();
     }
@@ -72,15 +72,16 @@ export class ChangeMobileComponent implements OnInit {
           this.step = 1;
          // console.log('typ', this.shared_functions.isBusinessOwner('returntyp'));
           if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
-            this.spForm.setValue({
-              'phonenumber': success['basicInfo']['mobile'] || null
-            });
+            this.prev_phonenumber = success['basicInfo']['mobile'];
+            // this.spForm.setValue({
+            //   'phonenumber': success['basicInfo']['mobile'] || null
+            // });
             this.is_verified = success['basicInfo']['phoneVerified'];
           } else {
-
-            this.spForm.setValue({
-              'phonenumber': success['userProfile']['primaryMobileNo'] || null
-            });
+            this.prev_phonenumber = success['userProfile']['primaryMobileNo'];
+            // this.spForm.setValue({
+            //   'phonenumber': success['userProfile']['primaryMobileNo'] || null
+            // });
             this.is_verified = success['userProfile']['phoneVerified'];
           }
         },
@@ -101,6 +102,7 @@ export class ChangeMobileComponent implements OnInit {
           // this.shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
           setTimeout(() => {
             this.api_success = '';
+            this.spForm.reset();
             }, projectConstants.TIMEOUT_DELAY_LARGE6);
         },
         error => {

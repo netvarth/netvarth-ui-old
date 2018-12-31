@@ -9,16 +9,15 @@
           <div *ngIf="step==1" class="change-phone-div">
             <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)" (keyup)="resetApiErrors()">
 
-              <div class="form-group phonenumber">
+               <div class="form-group phonenumber">
                 <label class="col-form-label" for="phonenumber">Old Mobile</label>
-                <input type="text" class="form-control" id="phonenumber" placeholder="Mobile" formControlName="phonenumber"
-                  autocomplete="off" disabled>
-                <div *ngIf="is_verified" class="verified">{{verified_cap}}</div>
-              </div>
+                <div>{{prev_phonenumber}} <span *ngIf="is_verified" class="verified">({{verified_cap}})</span></div>
+              </div> 
               <div class="form-group phonenumber">
+                  <!-- (keyup)="isVerified(spForm.controls['phonenumber'].value)" -->
                 <label class="col-form-label" for="phonenumber">New {{mobile_cap}}</label>
-                <input type="text" class="form-control" id="phonenumber" placeholder="Mobile" formControlName="phonenumber"
-                (keyup)="isVerified(spForm.controls['phonenumber'].value)" autocomplete="off">
+                <input type="text" class="form-control" id="phonenumber" placeholder="Enter New Mobile #" formControlName="phonenumber"
+                 autocomplete="off">
                 <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(spForm,'phonenumber',
               {
                 'required' : 'Phone number is required',
@@ -28,7 +27,7 @@
               })">
                 </app-field-error-display>
               </div>
-              <button type="submit" mat-button [disabled]="!spForm.valid || is_verified">{{save_btn_cap}}</button>
+              <button type="submit" mat-button [disabled]="(spForm.controls['phonenumber'].value === prev_phonenumber) || !spForm.valid">{{save_btn_cap}}</button>
             </form>
           </div>
 

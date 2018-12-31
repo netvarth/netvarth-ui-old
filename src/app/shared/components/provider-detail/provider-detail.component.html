@@ -77,7 +77,6 @@
                                                 </div>
                                             </ng-container>
                                         </div>
-
                                         <!-- <div class="services" *ngIf="servicesjson.length > 0">
                                           <span class="sub-title">Services Offered</span>
                                           <ul>
@@ -143,7 +142,7 @@
                                                 </mat-expansion-panel-header>
                                                 <div class="question-main-outer">
                                                     <ng-container *ngFor="let vfield of virtualfieldsCombinedjson">
-                                                        <div class="question-outer">
+                                                        <div class="question-outer" *ngIf="vfield.value">
                                                             <ng-container>
                                                                 <div class="question-header"><strong>{{vfield.displayName}}</strong></div>
                                                                 <div class="question-value1" *ngIf="vfield.type!= 'object'"
