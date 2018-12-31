@@ -89,7 +89,7 @@
                                 <!-- <div class="ad-l" *ngIf="adwords_maxremaining>0">{{you_have_cap}} {{adword_list.length}} {{create_adword_cap}} {{adwords_maxremaining}} {{more_cap}}.</div>
                                 <div class="ad-l" *ngIf="adwords_maxremaining == 0">{{you_have_cap}} {{adword_list.length}} {{more_adword_cap}} <a routerLink="/provider/settings/license"><strong>{{license_cap}}</strong></a></div> -->
                                 <div class="ad-l">
-                                    You can have upto {{adwordsmaxcount}} adwords as per your
+                                    You can have upto<span class="green-text"><b> {{adwordsmaxcount}} adwords</b></span> as per your
                                    <b> {{license_details.accountLicense.displayName}}</b> License package
                                 </div>
                                 <div class="ad-r">
@@ -303,7 +303,7 @@
                                                 <li class="ttd" *ngFor="let phone of phonearr; let i = index">
                                                     <div class="otr">
                                                         <div class="ctd">{{phone.label | capitalizeFirst}}</div>
-                                                        <div class="ctd">{{phone.number}}</div>
+                                                        <div class="ctd">+91 {{phone.number}}</div>
                                                         <!-- <div class="ctd"><span>{{visible_cap}}</span> {{show_privacyText(phone.permission)}}</div> -->
                                                         <div class="ctd"> {{show_privacyText(phone.permission)}}</div>
                                                         <!-- <a href="#" class="mbt"></a> -->

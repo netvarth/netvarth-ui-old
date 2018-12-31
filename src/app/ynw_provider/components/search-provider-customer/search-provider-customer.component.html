@@ -19,8 +19,9 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
                 First step for {{checkin_label}} is searching for {{customer_label  | capitalizeFirst}}.
         </span>
     </div> -->
-            <div class="form-group">
+            <div class="form-group mobilecont">
                 <label class="col-form-label" for="mobile_number">{{mob_cap}} *</label>
+                <span class="phoneprefix">{{mob_prefix_cap}}</span>
                 <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
                     formControlName="mobile_number" autocomplete="off">
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',

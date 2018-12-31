@@ -48,8 +48,9 @@
                                                         </div>
                                                         <div class='paytm-det row' *ngIf="paytmenabled">
                                                             <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                <div class="form-group">
+                                                                <div class="form-group mobilecont">
                                                                     <label class="caption">Mobile #</label>
+                <span class="phoneprefix">+91</span>
                                                                     <mat-form-field>
                                                                         <input matInput #paymobref [(ngModel)]="paytmmobile"
                                                                             (keypress)="resetApi('paytmmobile')"

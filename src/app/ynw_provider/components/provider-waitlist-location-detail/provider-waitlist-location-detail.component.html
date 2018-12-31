@@ -102,8 +102,8 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let queue of queues">
-                                    <td data-title="Service Time Window" class="pointer-cursor" (click)="goQueueDetail(queue)"
-                                        [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to edit service time window'">
+                                    <td data-title="Service Time-Window" class="pointer-cursor" (click)="goQueueDetail(queue)"
+                                        [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to edit service time-window'">
                                         {{queue.name | capitalizeFirst}}</td>
                                     <td data-title="Shedule">
                                         <div class="schtd">

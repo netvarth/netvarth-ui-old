@@ -11,11 +11,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="form-group">
             <mat-form-field class="example-full-width">
                 <label class="col-form-label">{{service_time_window_name}}</label>
-                <input matInput placeholder="Service Time Window Name *" formControlName="qname" autocomplete="off">
+                <input matInput placeholder="Service Time-Window Name *" formControlName="qname" autocomplete="off" ngModel maxlength="20">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
         {
-          'required' : 'Please enter the service time window name',
+          'required' : 'Please enter the service time-window name',
           'maxlength' : 'Name can contain only 100 characters'
         })">
             </app-field-error-display>
@@ -92,7 +92,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         <div class="form-group">
             <mat-form-field class="example-full-width">
                 <label class="col-form-label">{{max_capacity_cap}} *</label>
-                <input matInput type="text" placeholder="Maximum Capacity" formControlName="qcapacity" autocomplete="off">
+                <input matInput type="text" placeholder="Enter the number of people served in the time-window" formControlName="qcapacity" autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
         {

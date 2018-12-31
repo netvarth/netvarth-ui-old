@@ -16,13 +16,14 @@ import {projectConstants} from '../../constants/project-constants';
 export class ChangeMobileComponent implements OnInit {
 
   mobile_cap = Messages.MOBILE_CAP;
-  verified_cap = Messages.VERIFIED_CAP;
+  verified_cap = Messages.PHONE_VERIFIED;
   save_btn_cap = Messages.SAVE_BTN;
   related_links_cap = Messages.RELATED_LINKS;
   user_profile_cap = Messages.USER_PROF_CAP;
   change_pass_cap = Messages.CHANGE_PASSWORD_CAP;
   add_change_email_cap = Messages.ADD_CHANGE_EMAIL;
   family_members_cap = Messages.FAMILY_MEMBERS;
+  mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
 
   spForm: FormGroup;
   api_error = null;

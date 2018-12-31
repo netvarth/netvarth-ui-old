@@ -20,6 +20,7 @@ export class SearchProviderCustomerComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   oops_cap = Messages.OOPS_CAP;
   not_reg_customer_cap = Messages.CUSTOMER_NOT_REGISTER_CAP;
+  mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

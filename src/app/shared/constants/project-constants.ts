@@ -162,9 +162,7 @@ export const projectConstants = {
   LOCATION_BADGE_ICON: { // images to be used for the location badges
     'physiciansemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
     'dentistemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
-    'dentistambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' }, // dynamic
     'altemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
-    'altambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' }, // dynamic
     'emergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
     'traumacentre': { 'icon': 'trauma.png', 'class': 'icon-trauma' }, // dynamic
     'firstaid': { 'icon': 'noimage.png', 'class': 'icon-first-aid' }, // dynamic
@@ -229,7 +227,7 @@ export const projectConstants = {
       displayName: 'Settings',
       subcat: [
         { name: 'LOCATION', dispName: 'Location' },
-        { name: 'QUEUE', dispName: 'Service Time Window' },
+        { name: 'QUEUE', dispName: 'Service Time-Window' },
         { name: 'SERVICE', dispName: 'Service' },
         { name: 'HOLIDAY', dispName: 'Holiday' },
         { name: 'WAITLIST', dispName: 'Waitlist' },
@@ -314,14 +312,14 @@ export const projectConstants = {
     EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit'
   },
   CHECK_IN_STATUSES: {
-    Done: 'Complete',
+    Done: 'Completed',
     Started: 'Started',
     Arrived: 'Arrived',
     CheckedIn: 'CheckedIn',
     Cancelled: 'Cancelled'
   },
   CHECK_IN_STATUSES_FILTER: [
-    { displayName: 'Complete', value: 'done' },
+    { displayName: 'Completed', value: 'done' },
     { displayName: 'Started', value: 'started' },
     { displayName: 'Arrived', value: 'arrived' },
     { displayName: 'CheckedIn', value: 'checkedIn' },

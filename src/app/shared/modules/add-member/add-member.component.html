@@ -17,8 +17,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"> -->
     errorMsg="Please enter the last name.">
    </app-field-error-display> -->
 </div>
-<div class="form-group" *ngIf="calledFrom !='checkin'">
+<div class="form-group mobilecont" *ngIf="calledFrom !='checkin'">
     <label class="col-form-label" for="mobile">{{mobile_no}} </label>
+    <span class="phoneprefix">{{mob_prefix_cap}}</span>
     <input type="text" [(ngModel)] = "mobile" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number" autocomplete="off">
     <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
     errorMsg="Please enter the mobile number.">

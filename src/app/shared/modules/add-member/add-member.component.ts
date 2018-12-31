@@ -23,7 +23,7 @@ export class AddMemberComponent implements OnInit {
   male_cap = Messages.MALE_CAP;
   female_cap = Messages.FEMALE_CAP;
   dob_cap = Messages.DOB_CAP;
-  
+  mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
 
   firstname = '';
   lastname = '';

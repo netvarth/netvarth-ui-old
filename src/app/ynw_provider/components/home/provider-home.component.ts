@@ -60,6 +60,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   all_cap = Messages.ALL_CAP;
   date_cap = Messages.DATE_COL_CAP;
   actions_cap = Messages.ACTIONS_CAP;
+  complete_cap = Messages.STATUS_DONE;
   done_cap = Messages.DONE_BTN;
   bill_cap = Messages.BILL_CAPTION;
   accept_cap = Messages.ACCEPT_PAY_CAP;
@@ -162,12 +163,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   small_device_display = false;
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
-  breadcrumb_moreoptions: any = [];
-  breadcrumbs_init = [
-    {
-      title: Messages.DASHBOARD_TITLE
-    }
-  ]
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private common_datastorage: CommonDataStorageService,
@@ -216,7 +211,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit() {
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
     this.router.events
             .pipe(filter((e: any) => e instanceof RoutesRecognized),
                 pairwise()

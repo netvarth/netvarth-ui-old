@@ -174,7 +174,7 @@
 																					</div>
 																					<div class="col-md-12 col-lg-12 col-sm-12 no-padding">
 																						<div class="form-group ">
-																							<mat-checkbox [(ngModel)]="isConsNote">Notes for Consumer</mat-checkbox>
+																							<mat-checkbox [(ngModel)]="isConsNote">Notes for {{customer_label}}</mat-checkbox>
 																						</div>
 																						<div class="form-group" *ngIf="isConsNote">
 																							<textarea class="form-control" id="message" placeholder="Message" [(ngModel)]="discConsNote">

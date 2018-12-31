@@ -335,7 +335,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
       return false;
     }
     if (!this.phonePattern.test(this.srch_mobile)) {
-      this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
+      this.shared_functions.openSnackBar('Enter a 10 digit mobile number', {'panelClass': 'snackbarerror'});
       if (this.srchmob.nativeElement) {
         this.srchmob.nativeElement.focus();
       }
@@ -495,7 +495,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
         return false;
       }
       if (!this.phonePattern.test(this.reg_mobile)) {
-        this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar('Enter a 10 digit mobile number', {'panelClass': 'snackbarerror'});
         if (this.regmobile.nativeElement) {
           this.regmobile.nativeElement.focus();
         }

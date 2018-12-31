@@ -912,7 +912,7 @@ export class CheckInInnerComponent implements OnInit {
         if (!phonepattern.test(this.addmemberobj.mobile)) {
           derror = 'Phone number should have only numbers';
         } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
-          derror = 'Phone number should have 10 digits';
+          derror = 'Enter a 10 digit mobile number';
         }
       }
     }

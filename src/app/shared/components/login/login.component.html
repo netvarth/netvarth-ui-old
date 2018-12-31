@@ -12,8 +12,8 @@ onSubmit(loginForm.value)" *ngIf="step==1">
   [errorMsgs]="fed_service.getErrorMessage(loginForm,'phonenumber',
   {
     'required' : 'Phone number is required',
-    'minlength' : 'Phone number should have 10 digits',
-    'maxlength' : 'Phone number should have 10 digits',
+    'minlength' : 'Enter a 10 digit mobile number',
+    'maxlength' : 'Enter a 10 digit mobile number',
     'pattern' : 'Only numbers are allowed'
   })">
  </app-field-error-display>

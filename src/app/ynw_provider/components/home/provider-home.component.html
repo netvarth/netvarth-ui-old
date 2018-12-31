@@ -1,7 +1,6 @@
 <section>
   <app-provider-subheader [activeTab]="'dashboard'" (reloadActionSubheader)="reloadActionSubheader($event)"></app-provider-subheader>
   <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section class="dashboard">
@@ -77,7 +76,7 @@
                 <li [ngClass]="{'active': status_type =='started'}" (click)="changeStatusType('started')">
                   <span>{{started_upper}}</span></li>
                 <li [ngClass]="{'active': status_type =='done'}" (click)="changeStatusType('done')">
-                  <span>{{done_cap}}</span></li>
+                  <span>{{complete_cap}}</span></li>
                 <li [ngClass]="{'active': status_type =='cancelled'}" (click)="changeStatusType('cancelled')">
                   <span>{{cancelled_upper}}</span></li>
               </ng-container>

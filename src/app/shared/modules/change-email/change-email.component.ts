@@ -16,7 +16,7 @@ import {projectConstants} from '../../constants/project-constants';
 export class ChangeEmailComponent implements OnInit {
 
   email_cap = Messages.EMAIL_CAP;
-  verified_cap = Messages.VERIFIED_CAP;
+  verified_cap = Messages.EMAIL_VERIFIED;
   save_btn_cap = Messages.SAVE_BTN;
   related_links_cap = Messages.RELATED_LINKS;
   user_profile_cap = Messages.USER_PROF_CAP;

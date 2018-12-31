@@ -47,7 +47,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       url: '/provider/settings/waitlist-manager'
     },
     {
-      title: 'Service Time Windows'
+      title: 'Service Time-Windows'
     }
   ];
   queuedialogRef;

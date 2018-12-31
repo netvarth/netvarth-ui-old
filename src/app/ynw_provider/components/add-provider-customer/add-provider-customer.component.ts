@@ -26,6 +26,7 @@ dob_cap = Messages.DOB_CAP;
 adrress_cap = Messages.ADDRESS_CAP;
 cancel_btn = Messages.CANCEL_BTN;
 save_btn = Messages.SAVE_BTN;
+mob_prefix_cap=Messages.MOB_NO_PREFIX_CAP;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
