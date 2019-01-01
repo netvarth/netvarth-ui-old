@@ -71,24 +71,29 @@
 														<ng-container *ngIf="showAddItemsec">
 															<div class="add-serv-item edit-row service no-padding">
 																<div class="spl col-md-8 col-sm-8 col-lg-8 no-padding">
-																	<div class="item selectbox col-md-9 col-sm-8 col-lg-9 no-padding">
+																	<div class="item selectbox col-md-9 col-sm-8 col-lg-9 no-padding" *ngIf="!(actiontype=='adjustService' || actiontype=='adjustItem')">
 																		<mat-form-field class="example-full-width"> <input type="text" #itemservicesearch aria-label="Number"
-																			 matInput [formControl]="itemServiceSearch" [matAutocomplete]="auto">
+																			 matInput [formControl]="itemServiceSearch" [matAutocomplete]="auto" >
 																			<mat-autocomplete #auto="matAutocomplete">
-																				<ng-container *ngFor="let group of ItemServiceGroupOptions | async">
-																					<!-- <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)"> -->
-																					<ng-container *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
-																						<mat-option *ngFor="let value of group.values; let i = index" [value]="value" (keyup)="itemServiceSelected(group.type,value)"
-																						 (onSelectionChange)="itemServiceSelected(group.type,value)">
-																							{{ value }} <span class="bill_item_service">{{(group.type=='Items')? 'Item' : 'Service'}}</span>
-																						</mat-option>
+																				<ng-container *ngIf="!(actiontype=='adjustService' || actiontype=='adjustItem')">
+																					<ng-container *ngFor="let group of ItemServiceGroupOptions | async">
+																						<!-- <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)"> -->
+																						<ng-container *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
+																							<mat-option *ngFor="let value of group.values; let i = index" [value]="value" (keyup)="itemServiceSelected(group.type,value)"
+																							 (onSelectionChange)="itemServiceSelected(group.type,value)">
+																								{{ value }} <span class="bill_item_service">{{(group.type=='Items')? 'Item' : 'Service'}}</span>
+																							</mat-option>
+																						</ng-container>
+																						<mat-option *ngIf="group.values.length==0" [disabled]="true">
+																							<span class="no-data"></span>{{no_cap}} {{group.type}}
+																							{{available_cap}}</mat-option> <!-- </mat-optgroup> -->
 																					</ng-container>
-																					<mat-option *ngIf="group.values.length==0" [disabled]="true">
-																						<span class="no-data"></span>{{no_cap}} {{group.type}}
-																						{{available_cap}}</mat-option> <!-- </mat-optgroup> -->
 																				</ng-container>
 																			</mat-autocomplete>
 																		</mat-form-field>
+																	</div>
+																	<div class="item selectbox col-md-9 col-sm-8 col-lg-9 no-padding" *ngIf="(actiontype=='adjustService' || actiontype=='adjustItem')">
+																		<div class="rightalign pad-rt-10" >{{selectedItemService}}</div>
 																	</div>
 																	<div class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
 																		<span class="label">{{qty_cap}}</span> <span class="number">
@@ -270,8 +275,10 @@
 																<button mat-menu-item (click)="serviceDiscCoupSec(i)" *ngIf="itemdiscounts.length > 0">
 																	<span>Apply Discount</span>
 																</button>
-																<button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
-																	<span>Remove Service</span>
+																<button mat-menu-item (click)="adjustService(service.serviceName, service.quantity)">
+																	<!-- <button mat-menu-item (click)="removeService(service.serviceId, service.quantity)"> -->
+																	<!-- <span>Remove Service</span> -->
+																	<span>Change Qty</span>
 																</button>
 															</mat-menu>
 														</div>
@@ -344,8 +351,8 @@
 																<button mat-menu-item (click)="itemDiscCoupSec(i)" *ngIf="discounts.length > 0">
 																	<span>Apply Discount</span>
 																</button>
-																<button mat-menu-item (click)="removeItem(item.itemId, item.quantity)">
-																	<span>Remove Item</span>
+																<button mat-menu-item (click)="adjustItem(item.itemName, item.quantity)">
+																	<span>Change Qty</span>
 																</button>
 															</mat-menu>
 														</div>
@@ -480,24 +487,24 @@
 											<ng-container *ngIf="showPayWorkBench">
 												<div class="section-two pay-wb">
 													<div class="add-serv-item edit-row service no-padding">
-													
-															<div class="spl no-padding">
-																<div class="item qty no-padding">
-																	<span class="label">Amount</span> <span class="number">
-																		<mat-form-field class="example-full-width"> <input type="text" matInput #payamounttxt aria-label="Number"
-																			 matInput value="1" size="5" [(ngModel)]="amountpay" (keydown)="checkAmount($event)" autocomplete="off">
-																		</mat-form-field>
-																	</span>
-																</div>
+
+														<div class="spl no-padding">
+															<div class="item qty no-padding">
+																<span class="label">Amount</span> <span class="number">
+																	<mat-form-field class="example-full-width"> <input type="text" matInput #payamounttxt aria-label="Number"
+																		 matInput value="1" size="5" [(ngModel)]="amountpay" (keydown)="checkAmount($event)" autocomplete="off">
+																	</mat-form-field>
+																</span>
 															</div>
-															<div class="spr">
-																<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
-																 (click)="initPayment('cash',amountpay)">Pay by Cash</button>
-																<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
-																 (click)="initPayment('other',amountpay)">Pay by Others</button>
-																<button class="cs-btn bt2 cancel" (click)="hidePayWorkBench()">Cancel</button>
-															</div>
-													
+														</div>
+														<div class="spr">
+															<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+															 (click)="initPayment('cash',amountpay)">Pay by Cash</button>
+															<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+															 (click)="initPayment('other',amountpay)">Pay by Others</button>
+															<button class="cs-btn bt2 cancel" (click)="hidePayWorkBench()">Cancel</button>
+														</div>
+
 													</div>
 												</div>
 											</ng-container>

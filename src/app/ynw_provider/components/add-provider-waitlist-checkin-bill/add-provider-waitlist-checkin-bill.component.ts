@@ -66,6 +66,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   make_payment_cap = Messages.MAKE_PAYMENT_CAP;
   coupon_notes = projectConstants.COUPON_NOTES;
   @ViewChild('itemservicesearch') item_service_search;
+  @ViewChild('itemserviceqty') item_service_qty;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -92,7 +93,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   totpaid = 0;
   curSelItm = { indx: 0, typ: '', qty: 1 };
   bname;
+  selectedItemService;
   showPaidlist = false;
+  actiontype;
   ItemServiceGroupOptions: Observable<ItemServiceGroup[]>;
   itemServicesGroup: ItemServiceGroup[] = [{
     'type': 'Services',
@@ -444,21 +447,18 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPCouponSection = false;
     this.showJCouponSection = false;
     this.showAddItemsec = true;
+    this.actiontype = null;
     this.ItemServiceGroupOptions = this.itemServiceSearch.valueChanges
       .pipe(
         startWith(''),
         map(val => this.filterGroup(val))
       );
-    // console.log('reached here');
     setTimeout(() => {
-      /*if (this.document.getElementById('itemservicesearch')) {
-        console.log('focus here');
-        this.document.getElementById('itemservicesearch').focus();
-      }*/
       this.item_service_search.nativeElement.focus();
     }, 500);
   }
   hideAddItem() {
+    this.actiontype = null;
     this.showAddItemsec = false;
     this.itemServiceSearch.reset();
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
@@ -563,10 +563,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   itemServiceSelected(type, name) {
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
     if (type === 'Services') {
+      this.selectedItemService = name;
       this.curSelItm.indx = this.getSelectedServiceId(name);
       this.curSelItm.typ = 'Services';
       this.curSelItm.qty = 1;
     } else if (type === 'Items') {
+      this.selectedItemService = name;
       this.curSelItm.indx = this.getSelectedItemId(name);
       this.curSelItm.typ = 'Items';
       this.curSelItm.qty = 1;
@@ -586,36 +588,45 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.getPrePaymentDetails();
           console.log(this.bill_data);
           this.hideWorkBench();
+          this.actiontype  = null;
+          this.curSelItm.typ = 'Services';
+          this.curSelItm.qty = 1;
           resolve();
         },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          reject(error);
-        });
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            reject(error);
+          });
     });
   }
   /**
-   * Add Service/Item to the Bill
+   * Add/Adjust Service/Item to the Bill
    */
   addService_Item() {
-    let action;
     const type = this.curSelItm.typ;
     const itemId = this.curSelItm.indx;
-    console.log(this.curSelItm.indx);
+    let action = this.actiontype;
+    if (type === 'Services' && action === null) {
+      action = 'addService';
+    } else if (action === null) {
+      action = 'addItem';
+    }
     if (isNaN(this.curSelItm.qty)) {
       this.curSelItm.qty = 1;
     }
     const data = {};
     if (type === 'Services') {
-      action = 'addService';
       data['serviceId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
-      this.curSelItm.typ = 'Services';
-      this.curSelItm.qty = 1;
+      if (this.curSelItm.qty === 0) {
+        action = 'removeService';
+      }
     } else if (type === 'Items') {
-      action = 'addItem';
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
+      if (this.curSelItm.qty === 0) {
+        action = 'removeItem';
+      }
     }
     this.provider_services.setWaitlistBill(action, this.bill_data.uuid, data, null).subscribe
       (billInfo => {
@@ -638,6 +649,44 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['quantity'] = qty;
     data['serviceId'] = id;
     this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Adjust Service Qty (show the Workbench)
+   * @param name of service
+   * @param qty service qty
+   */
+  adjustService(name, qty) {
+    this.showDiscountSection = false;
+    this.showPCouponSection = false;
+    this.showJCouponSection = false;
+    this.showAddItemsec = true;
+    this.itemServiceSelected('Services', name);
+    this.itemServiceSearch.setValue(name);
+    this.curSelItm.qty = qty;
+    this.actiontype = 'adjustService';
+    setTimeout(() => {
+      this.item_service_qty.nativeElement.focus();
+    }, 500);
+    // this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Adjust Item Qty (show the Workbench)
+   * @param name item name
+   * @param qty item qty
+   */
+  adjustItem(name, qty) {
+    this.showDiscountSection = false;
+    this.showPCouponSection = false;
+    this.showJCouponSection = false;
+    this.showAddItemsec = true;
+    this.itemServiceSelected('Items', name);
+    this.itemServiceSearch.setValue(name);
+    this.curSelItm.qty = qty;
+    this.actiontype = 'adjustItem';
+    setTimeout(() => {
+      this.item_service_qty.nativeElement.focus();
+    }, 500);
+    // this.applyAction(action, this.bill_data.uuid, data);
   }
   /**
    * Remove an Item from the Bill
@@ -867,8 +916,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
 
-  confirmSettleBill(evt) {   
-    if(this.amountpay>0){
+  confirmSettleBill(evt) {
+    if (this.amountpay > 0) {
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -882,7 +931,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.settleBill();
         }
       });
-    }else {
+    } else {
       this.settleBill();
     }
   }
