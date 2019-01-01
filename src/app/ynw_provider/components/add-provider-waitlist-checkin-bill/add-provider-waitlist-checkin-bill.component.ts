@@ -13,6 +13,7 @@ import { EventEmitter } from 'protractor';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
+import { MessageService } from '../../services/provider-message.service';
 
 export interface ItemServiceGroup {
   type: string;
@@ -52,7 +53,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   tax_cap = Messages.TAX_CAP;
   amount_paid_cap = Messages.AMNT_PAID_CAP;
   amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
+  nettotal_cap =  Messages.NETTOTAL;
+  apply_cap = Messages.APPLY_CAP;
+  value_cap = Messages.VALUE_CAP;
   back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
+  amountdue_cap = Messages.AMOUNTDUE;
+  back_cap = Messages.BACK_CAP;
   payment_logs_cap = Messages.PAY_LOGS_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   refundable_cap = Messages.REFUNDABLE_CAP;
@@ -64,7 +70,22 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   print_bill_cap = Messages.PRINT_BILL_CAP;
   accept_payment_cap = Messages.ACCEPT_PAY_CAP;
   make_payment_cap = Messages.MAKE_PAYMENT_CAP;
+  applydiscount_cap = Messages.APPLY_DISCOUNT;
+  changeqty_cap = Messages.CHANGE_QTY;
+  removeservice_cap = Messages.REMOVE_SERVICE;
+  removeitem_cap = Messages.REMOVE_ITEM;
   coupon_notes = projectConstants.COUPON_NOTES;
+  paybycash_cap = Messages.PAYBYCASH;
+  paybyothers_cap = Messages.PAYBYOTHERS;
+  paybycashothers_cap = Messages.PAYBYCASH_OTHERS;
+  jaldeepay_cap = Messages.JALDEEPAY;
+  email_bill_cap = Messages.EMAILBILL;
+  wbamount_cap = Messages.WBAMOUNT;
+  apply_jc_cap = Messages.APPLYJC;
+  applyorderdisc_cap = Messages.APPLYORDERDISC;
+  applycoupon_cap = Messages.APPLYCOUPON;
+  notesfor_cap = Messages.NOTESFOR;
+  privatenote_cap = Messages.PROVIDER_NOTE_CAP;
   @ViewChild('itemservicesearch') item_service_search;
   @ViewChild('itemserviceqty') item_service_qty;
   amForm: FormGroup;

@@ -921,7 +921,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         // console.log('service', this.servicesjson);
         for (let i = 0; i < this.servicesjson.length; i++) {
           if (this.servicesjson[i].id === waitlist.service.id) {
-            prepayamt = this.servicesjson[i].minPrePaymentAmount || 0;
+            prepayamt = waitlist.waitlist_for.length * this.servicesjson[i].minPrePaymentAmount || 0;
+            // this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
             if (prepayamt > 0) {
               const payData = {
                 'amount': prepayamt,

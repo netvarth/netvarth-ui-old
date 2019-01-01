@@ -743,7 +743,7 @@ padding: 5px 5px 5px 10px !important;
 .padding-tp-10 {
   padding-top:10px;
 }
-.padding-right-10 {
+.pad-rt-10 {
   padding-right:10px !important;
 }
 .ot-it div .col-md-6 {
@@ -877,5 +877,4 @@ margin-top:10px;
 @media only screen and (max-width: 480px){
   .col-12.no-padding-small {padding-left: 0px !important;padding-right: 0px !important;}
 }
-
-
+.mob-prefix {margin-top : -1px !important;}

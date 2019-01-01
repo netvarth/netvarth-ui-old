@@ -91,7 +91,7 @@
                                     <!-- <button class="cs-btn bt3" (click)="makeFailedPayment(waitlist)">Make Payment</button>
                                     </span> -->
                                 </div>
-                                <div class="lt0 payment" *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus== 'Show')">
+                                <div class="lt0 payment" *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show')">
                                     <span class="paytext"><span>Amount Due : {{waitlist.amountDue |
                                             currency:'INR':'symbol':'.2-2'}} </span><a class="bt3 cust-btn" (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>

@@ -248,7 +248,7 @@ export const Messages = {
   'ADD_FAMILY_MEMBER': 'Add Family Member',
   'FIRST_NAME_CAP': 'First Name',
   'LAST_NAME_CAP': 'Last Name',
-  'MOBILE_NUMBER_CAP': 'Mobile Number',
+  'MOBILE_NUMBER_CAP': 'Mobile #',
   'GENDER_CAP': 'Gender',
   'DOB_CAP': 'Date of Birth',
 
@@ -626,7 +626,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-note
   'ADD_PROVIDER_NOTE_CAP': 'Add Private Note',
-  'PROVIDER_NOTE_CAP': 'Private Note*',
+  'PROVIDER_NOTE_CAP': 'Private Note',
 
   // App-ynw_provider-components-add-provider-location
   'AMENITIES_CAP': 'Amenities',
@@ -1153,7 +1153,23 @@ export const Messages = {
   'UP_LIC_PACKAGE_CAP' : 'License Package',
   'UP_LIC_PACK_CAP' : 'License Package *',
   'UP_SELECT_ONE_CAP' : '- Select One -',
-  'UP_NO_UPGRADE_PACK_FOUND' : 'Sorry No upgradable packages found.',
+  'UP_NO_UPGRADE_PACK_FOUND' : 'Sorry, No upgradable packages found.',
 
+  'APPLY_DISCOUNT' : 'Apply Discount',
+  'CHANGE_QTY' : 'Change Qty',
+  'REMOVE_SERVICE' : 'Remove Service',
+  'REMOVE_ITEM' : 'Remove Item',
+  'PAYBYCASH' : 'Pay by Cash',
+  'PAYBYOTHERS' : 'Pay by Others',
+  'PAYBYCASH_OTHERS' : 'Pay by Cash / Others',
+  'JALDEEPAY' : 'JaldeePay',
+  'EMAILBILL' : 'Email Bill',
+  'WBAMOUNT' : 'Amount',
+  'AMOUNTDUE' : 'Amount Due',
+  'NETTOTAL' : 'Net Total',
+  'NOTESFOR' : 'Notes for ',
+  'APPLYORDERDISC': 'Apply Order Discount',
+  'APPLYCOUPON' : 'Apply Coupon',
+  'APPLYJC' : 'Apply Jaldee Coupon'
 };
 

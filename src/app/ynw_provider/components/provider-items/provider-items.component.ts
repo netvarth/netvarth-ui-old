@@ -129,8 +129,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-    }
-    else {
+    } else {
       this.provider_servicesobj.enableItem(item.itemId).subscribe(
         data => {
           this.getitems();

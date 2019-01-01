@@ -48,18 +48,27 @@
                                                         </div>
                                                         <div class='paytm-det row' *ngIf="paytmenabled">
                                                             <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                <div class="form-group mobilecont">
+                                                                <div class="form-group">
                                                                     <label class="caption">Mobile #</label>
-                <span class="phoneprefix">+91</span>
                                                                     <mat-form-field>
-                                                                        <input matInput #paymobref [(ngModel)]="paytmmobile"
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-prepend mob-prefix">
+                                                                                <span class="input-group-text" id="">+91</span>
+                                                                            </div>
+                                                                            <input class="form-control" matInput #paymobref [(ngModel)]="paytmmobile"
                                                                             (keypress)="resetApi('paytmmobile')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
                                                                             (blur)="paytmBlur()" tabindex="2">
+                                                                        </div>
                                                                     </mat-form-field>
                                                                     <app-field-error-display [displayError]="showError['paytmmobile']['status']"
-                                                                        [errorMsg]="showError['paytmmobile']['msg']"></app-field-error-display>
+                                                                                    [errorMsg]="showError['paytmmobile']['msg']"></app-field-error-display>
+                                                                        
                                                                 </div>
+                                                                <!-- <div class="form-group mobilecont">
+                                                                    <label class="caption">Mobile #</label>
+                                                                    
+                                                                </div> -->
                                                             </div>
                                                             <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                 <div class="form-group">
