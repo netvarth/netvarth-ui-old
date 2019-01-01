@@ -968,5 +968,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
+  /**
+   * To Print Receipt
+   */
+  printMe() {
+    window.print();
+  }
 
 }

@@ -16,7 +16,7 @@
 					<div class="copy one">
 						<div class="col-a pl0 col-md-12 col-lg-8 col-xl-8">
 							<div class="card bill-section">
-								<div class="bill-section-content" *ngIf="bill_data && checkin">
+								<div class="bill-section-content" *ngIf="bill_data && checkin" id="receipt">
 									<div class="bill-wrapper ">
 										<div class="bill-header">
 											<div class="section-one">
@@ -425,7 +425,7 @@
 														</div>
 													</div> -->
 												</div>
-												<div class="section-four" *ngIf="showPaidlist">
+												<div class="section-four lg-tbl" *ngIf="showPaidlist">
 													<div class="heading">
 														<span class="back" (click)="showpaidSection()">{{back_cap}}</span>
 														<h4>{{payment_logs_cap}}</h4>
@@ -515,6 +515,7 @@
 											<div class="col-12" *ngIf="!showPayWorkBench">
 												<button type="button" mat-button class="cs-btn bt1 settle" *ngIf="bill_data.billStatus!='Settled'" (click)="confirmSettleBill()">{{settle_bill_cap}}</button>
 												<button type="button" mat-button class="cs-btn bt1 print" *ngIf="bill_data.billStatus=='Settled'" (click)="emailBill()">{{email_bill_cap}}</button>
+												<button type="button" mat-button class="cs-btn bt1 print" *ngIf="bill_data.billStatus=='Settled'" (click)="printMe()">Print</button>
 												<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
 												 (click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
 												<button type="button" mat-button class="cs-btn bt1 accept" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"

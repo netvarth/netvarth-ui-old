@@ -59,7 +59,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     gst_no_cap = Messages.PAY_SET_GST_NUMBER_CAP;
     tax_percentage_cap = Messages.PAY_SET_TAX_PER_CAP;
     update_tax_cap = Messages.PAY_SET_UPDATE_TAX_CAP;
-
+    mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
 
 
 

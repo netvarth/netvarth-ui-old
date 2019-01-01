@@ -1,7 +1,6 @@
 import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
@@ -10,7 +9,6 @@ import { Router, ActivatedRoute, RoutesRecognized  } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
-
 import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-delay.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -18,22 +16,21 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider
 import { AddProviderWaitlistCheckInBillComponent } from '../add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { ViewProviderWaitlistCheckInBillComponent } from '../view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
 import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
-
 import { SharedServices } from '../../../shared/services/shared-services';
-
 import * as moment from 'moment';
 import { startWith, map, filter, pairwise } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { projectConstants } from '../../../shared/constants/project-constants';
-
-
 @Component({
   selector: 'app-provider-home',
   templateUrl: './provider-home.component.html',
   styleUrls: ['./provider-home.component.scss']
 })
-
 export class ProviderHomeComponent implements OnInit, OnDestroy {
+
+// pdtyp  --- 0-History, 1-Future, 2-Today
+// pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
+// pdq 
 
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
@@ -91,7 +88,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   status_type = 'all';
   queue_date = moment(new Date()).format(projectConstants.POST_DATE_FORMAT);
   edit_location = 0;
-
   load_locations = 0;
   load_queue = 0;
   load_waitlist = 0;
@@ -99,7 +95,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   open_filter = false;
   waitlist_status = [];
   sel_queue_indx = 0;
-
   filter = {
     first_name: '',
     last_name: '',
@@ -114,15 +109,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   }; // same in resetFilter Fn
-
   // filter_date_max = moment(new Date()).add(-1, 'days');
   // filter_date_min = moment(new Date()).add(+1, 'days');
-
   filter_date_start_min = null;
   filter_date_start_max = null;
   filter_date_end_min = null;
   filter_date_end_max = null;
-
   customer_label = '';
   provider_label = '';
   arrived_label = '';
@@ -143,7 +135,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     totalCnt: 0,
     perPage: this.filter.page_count
   };
-
   cronHandle: Subscription;
   cronStarted;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
@@ -171,29 +162,20 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices) {
-
     this.onResize();
-
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-
     this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
     this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
-
     this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
     this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
-
     this.done_label = this.shared_functions.getTerminologyTerm('done');
     this.done_upper = this.shared_functions.firstToUpper(this.done_label);
-
     this.started_label = this.shared_functions.getTerminologyTerm('started');
     this.started_upper = this.shared_functions.firstToUpper(this.started_label);
-
     this.start_label = this.shared_functions.getTerminologyTerm('start');
-
     this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
     this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
-
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
     this.waitlist_status = [
@@ -202,14 +184,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       { name: this.started_upper, value: 'started' },
       { name: this.arrived_upper, value: 'arrived' },
       { name: this.done_upper, value: 'complete' }];
-
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' }
   ];
-
   ngOnInit() {
     this.router.events
             .pipe(filter((e: any) => e instanceof RoutesRecognized),
@@ -225,7 +205,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     } else {
       // console.log('NOT');
     }
-    const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp');
+    const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp'); // To get the active tab
     if (stattype !== undefined && stattype !== null && stattype !== '') {
       // console.log('exists', savedtype);
       this.status_type = stattype;
@@ -234,7 +214,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.status_type = 'all';
     }
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
-
     const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     // console.log('bdata', bprof);
     if (bprof === null || bprof === undefined) {
@@ -260,12 +239,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.getServiceList();
       this.getProviderSettings();
     }
-
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
   }
-
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
@@ -308,10 +285,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     }
     // console.log('resized', this.screenWidth,  this.small_device_display);
   }
-
   getBusinessProfile() {
     let bProfile: any = [];
-
     this.getBussinessProfileApi()
       .then(
         data => {
@@ -319,28 +294,22 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
             // this.shared_functions.retSubSectorNameifRequired();
-
             const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
             // console.log('subsector home', subsectorname);
             this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
               || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
-
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);
           }
         },
         error => {
-
         }
       );
-
   }
-
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
-
       _this.provider_services.getBussinessProfile()
         .subscribe(
           data => {
@@ -373,7 +342,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           this.shared_functions.sendMessage(pdata);
         },
         error => {
-
         }
       );
   }
@@ -386,9 +354,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
 
       });
   }
-
   getLocationList() {
-
     this.load_locations = 0;
     this.selected_location = null;
     this.provider_services.getProviderLocations()
@@ -396,13 +362,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         (data: any) => {
           const locations = data;
           this.locations = [];
-
           for (const loc of locations) {
             if (loc.status === 'ACTIVE') {
               this.locations.push(loc);
             }
           }
-
           const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider checkin button page
           if (cookie_location_id === '') {
             if (this.locations[0]) {
@@ -412,7 +376,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
             this.getQueueList();
           }
-
         },
         error => {
           this.load_locations = 1;
@@ -422,7 +385,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   selectLocationFromCookie(cookie_location_id) {
     let selected_location = null;
     for (const location of this.locations) {
@@ -430,12 +392,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         selected_location = location;
       }
     }
-
     (selected_location !== null) ? this.changeLocation(selected_location) :
       this.changeLocation(this.locations[0]);
-
   }
-
   getServiceList() {
     this.provider_services.getServicesList()
       .subscribe(
@@ -443,23 +402,19 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           this.services = data;
         },
         error => {
-
         }
       );
   }
-
   getQueueList() {
     // console.log('reached quelist');
     this.provider_services.getProviderLocationQueues(this.selected_location.id)
       .subscribe(
         (data: any) => {
           // this.all_queues = data;
-
           const Cqueues = data;
           // console.log('cqueue', Cqueues);
           this.all_queues = [];
           let indx = 0;
-
           for (const que of Cqueues) {
             if (que.queueState === 'ENABLED') {
               que.qindx = indx;
@@ -724,7 +679,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
    getTodayCheckinCount(Mfilter = null) {
-
     let no_filter = false;
 
     if (!Mfilter) {
@@ -974,7 +928,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
 
   countApiCall() {
-
     this.getHistoryCheckinCount();
     this.getFutureCheckinCount();
     this.getTodayCheckinCount();
@@ -987,7 +940,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     let status: any = this.status_type;
 
     switch (type) {
-      case 'all': status = ['checkedIn', 'arrived', 'prepaymentPending'];
+      case 'all': status = ['checkedIn', 'arrived'];
+      // case 'all': status = ['checkedIn', 'arrived', 'prepaymentPending'];
     }
 
     this.check_in_filtered_list = this.check_in_list.filter(

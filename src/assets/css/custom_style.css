@@ -652,6 +652,9 @@
         left: 0;
         top: 0;
       }
+      #receipt button{display: none !important;}
+      #receipt .link {text-decoration: none !important;color:#000 !important;}
+      #receipt .lg-tbl {display: none !important;}
     }
     .adjust-delay-heading {
       font-size: 1.575rem;
@@ -815,35 +818,35 @@ margin-top:10px;
 .search-text .mat-option {height: auto!important;}
 .add-nloc-s.bt3,.add-nloc-q.bt3 {border-radius: 30px; text-transform: none!important}
 @media only screen and (min-width: 768px) {
-.add-nloc-q {float: right !important;right:140px;top:-45px; }
-.add-nloc-s {float: right !important;right:140px;top:-45px; }
+.add-nloc-q {float: right !important;right:120px;top:-45px; }
+.add-nloc-s {float: right !important;right:120px;top:-45px; }
 }
 @media only screen and (min-width: 768px) {
-  .add-nloc-l {float: right !important;right:140px;top:-45px; }
+  .add-nloc-l {float: right !important;right:120px;top:-45px; }
 }
 @media only screen and (min-width: 768px) and (max-width: 990px) {
-  .add-nloc-q {float: right !important;right:140px;top:-15px; }
+  .add-nloc-q {float: right !important;right:120px;top:-15px; }
   .b-queue {top: 30px !important;} 
 }
 @media only screen and (max-width: 767px) {
-  .add-nloc-q {float: right !important;right:140px;top:0px; margin-bottom:5px !important;}
-  .add-nloc-s {float: right !important;right:140px;top:0px; margin-bottom:5px !important;}
+  .add-nloc-q {float: right !important;right:120px;top:0px; margin-bottom:5px !important;}
+  .add-nloc-s {float: right !important;right:120px;top:0px; margin-bottom:5px !important;}
   .b-queue {top: 25px !important;} 
   .b-service {top:45px !important}
 }
 @media only screen and (max-width:576px) {
   .b-queue{top: 45px !important;} 
-  .b-service {top: 45px !important;}
-  .add-nloc-q {float: right !important;right:125px;top:0px; margin-bottom:5px !important;}
+  .b-service {top: 43px !important;}
+  .add-nloc-q {float: right !important;right:110px;top:0px; margin-bottom:5px !important;}
   /* .add-nloc-q {float: right !important;right:140px;top:-15px; } */
 }
 @media only screen and (max-width: 330px) {
-  .add-nloc-q {right: 120px !important;} 
+  .add-nloc-q {right: 100px !important;} 
   .b-service {top: 45px !important;}
 }
 @media only screen and (max-width: 575px) {
   .add-nloc-s {
-    right: 125px; }
+    right: 115px; }
 }
  /* @media only screen and (max-width: 524px) {
   .add-nloc-s { top: -3px!important; }
@@ -863,7 +866,7 @@ margin-top:10px;
 } */
 @media only screen and (max-width:524px) {
   .add-nloc-s { top: -3px!important; }
-.add-nloc-s {right: 125px !important;} 
+.add-nloc-s {right: 110px !important;} 
   .b-service {top: 40px !important;}
 }
 @media only screen and (max-width:413px){

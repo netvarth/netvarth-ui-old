@@ -8,17 +8,19 @@
         <div class="card">
           <div *ngIf="step==1" class="change-phone-div">
             <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)" (keyup)="resetApiErrors()">
-
-               <div class="form-group phonenumber">
-                <label class="col-form-label" for="phonenumber">Old Mobile</label>
-                <div>{{prev_phonenumber}} <span *ngIf="is_verified" class="verified">({{verified_cap}})</span></div>
-              </div> 
-              <div class="form-group mobilecont">
-                  <!-- (keyup)="isVerified(spForm.controls['phonenumber'].value)" -->
-                <label class="col-form-label" for="phonenumber">New {{mobile_cap}}</label>
-                <span class="phoneprefix">{{mob_prefix_cap}}</span>
-                <input type="text" class="form-control" id="phonenumber" placeholder="Enter New Mobile #" formControlName="phonenumber"
-                 autocomplete="off" ngModel maxlength="10">
+              <div class="form-group phonenumber">
+                <label class="col-form-label" for="phonenumber">Previous Number</label>
+                <div>+91 {{prev_phonenumber}} <span *ngIf="is_verified" class="verified">({{verified_cap}})</span></div>
+              </div>
+              <div class="form-group col-sm-6 col-md-6 no-padding">
+                <label class="caption">New {{mobile_cap}} * </label>
+                <div class="input-group">
+                  <div class="input-group-prepend mob-prefix">
+                    <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                  </div>
+                  <input type="text" class="form-control" id="phonenumber" placeholder="Enter New Mobile #"
+                    formControlName="phonenumber" autocomplete="off" ngModel maxlength="10">
+                </div>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(spForm,'phonenumber',
               {
                 'required' : 'Phone number is required',

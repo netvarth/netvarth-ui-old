@@ -437,7 +437,7 @@ export const Messages = {
   'VERIFIED_CAP': 'Verified',
 
   // App-shared-modules-change-mobile
-  'MOBILE_CAP': 'Mobile *',
+  'MOBILE_CAP': 'Mobile #',
 
   // App-shared-modules-change-password
   'OLD_PASSWORD_CAP': 'Old Password *',
