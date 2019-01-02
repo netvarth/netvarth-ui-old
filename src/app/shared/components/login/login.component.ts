@@ -15,7 +15,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class LoginComponent implements OnInit {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
-  mobile_no_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
+  mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   password_cap = Messages.PASSWORD_CAP;
   login_cap = Messages.LOGIN_CAP;
   forgot_password_cap = Messages.FORGOT_PASS_CAP;

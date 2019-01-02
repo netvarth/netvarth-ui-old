@@ -4,20 +4,25 @@
 onSubmit()" (keyup)="resetApiErrors()">
 
 <div class="mat-dialog-content" *ngIf="step==1">
-  <div class="form-group mobilecont" *ngIf="!data.moreOptions.isCreateProv">
-    <label class="col-form-label" for="phonenumber">{{mobile_no_cap}}</label>
-    <span class="phoneprefix">{{mob_prefix_cap}}</span><input type="text" class="form-control" id="phonenumber"
-    formControlName="phonenumber" autocomplete="off" placeholder="Enter your 10 digit mobile number">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')"
-    [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
-    {
-      'required' : 'Mobile number is required',
-      'minlength' : 'Mobile number should have 10 digits',
-      'maxlength' : 'Mobile number should have 10 digits',
-      'pattern' : 'Only numbers are allowed'
-    })">
-    </app-field-error-display>
-  </div>
+    <div class="form-group" *ngIf="!data.moreOptions.isCreateProv">
+        <label class="caption">{{mobile_no_cap}} * </label>
+        <div class="input-group">
+            <div class="input-group-prepend mob-prefix">
+                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+            </div>
+            <input type="text" class="form-control" id="phonenumber"
+    formControlName="phonenumber" autocomplete="off" placeholder="Enter your 10 digit mobile number" maxlength=10>
+        </div>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')"
+        [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
+  {
+    'required' : 'Phone number is required',
+    'minlength' : 'Enter a 10 digit mobile number',
+    'maxlength' : 'Enter a 10 digit mobile number',
+    'pattern' : 'Only numbers are allowed'
+  })">
+        </app-field-error-display>
+    </div>
   <div class="form-group-inline" *ngIf="!data.moreOptions.isCreateProv">
   <div class="form-group">
     <label class="col-form-label" for="first_name">{{first_name_cap}}</label>

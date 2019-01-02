@@ -7,21 +7,25 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
     </button>
 </h1>
 <mat-dialog-content>
-<div class="form-group mobilecont">
-    <label class="col-form-label" for="mobile_number">{{mobile_cap}}</label>
-    <span class="phoneprefix">{{mob_prefix_cap}}</span>
-    <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
-    formControlName="mobile_number" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')"
+        <div class="form-group">
+                <label class="caption">{{mobile_cap}} * </label>
+                <div class="input-group">
+                    <div class="input-group-prepend mob-prefix">
+                        <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                    </div>
+                    <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
+                    formControlName="mobile_number" autocomplete="off" maxlength=10>
+                </div>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')"
     [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
-    {
-      'required' : 'Mobile number is required',
-      'minlength' : 'Mobile number should have 10 digits',
-      'maxlength' : 'Mobile number should have 10 digits',
-      'pattern' : 'Only numbers are allowed'
-    })">
-   </app-field-error-display>
-</div>
+          {
+            'required' : 'Phone number is required',
+            'minlength' : 'Enter a 10 digit mobile number',
+            'maxlength' : 'Enter a 10 digit mobile number',
+            'pattern' : 'Only numbers are allowed'
+          })">
+                </app-field-error-display>
+            </div>
 
 <div class="form-group" >
     <label class="col-form-label" for="first_name">{{f_name_cap}}</label>

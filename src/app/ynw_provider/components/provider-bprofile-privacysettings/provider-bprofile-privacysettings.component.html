@@ -1,30 +1,51 @@
-<h1 class="mat-dialog-title">{{priv_settings_cap}} {{curmod | capitalizeFirst}} {{curtype | capitalizeFirst}}   <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title">{{priv_settings_cap}} {{curmod | capitalizeFirst}} {{curtype | capitalizeFirst}} <button
+                mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
-    <div class="phoneouter" *ngIf="curtype=='phone'">
-        <div class="form-group mobilecont">
-            <label class="col-form-label" for="phone1">Mobile Phone</label>
-            <span class="phoneprefix">{{mob_prefix_cap}}</span>
-            <input type="text" matInput class="form-control" id="phone1" placeholder="Phone#" [(ngModel)]="phonenumber"
-            [ngModelOptions]="{standalone: true}" autocomplete="off">
-        </div>
-        <div class="form-group">
-           <label class="col-form-label" for="label1">{{phone_label_cap}} <!-- <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltiphone"  data-icon="F"></span>--></label>
-           <input type="text" matInput class="form-control" placeholder="Eg: Mobile, Emergency, Main line, others, etc"
-           [(ngModel)]="phonelabel"  [ngModelOptions]="{standalone: true}" autocomplete="off" maxlength="50">
-        </div>
-        <div class="form-group">
-                <div>
-                <label class="col-form-label">{{phone_no_visible_cap}}</label>
-                <mat-radio-group [(ngModel)]="phonepermission" [ngModelOptions]="{standalone: true}">
-                        <mat-radio-button value="all" >{{privacypermissiontxt['all']}}</mat-radio-button>
-                        <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button>
-                        <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
-                </mat-radio-group>
+        <div class="phoneouter" *ngIf="curtype=='phone'">
+                <div class="row">
+                        <div class="form-group col-sm-6 col-md-6">
+                                <label class="caption">{{mobile_cap}}</label>
+                                <div class="input-group">
+                                        <div class="input-group-prepend mob-prefix">
+                                                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                                        </div>
+                                        <input type="text" matInput class="form-control" id="phone1" placeholder="Mobile #"
+                                                [(ngModel)]="phonenumber" [ngModelOptions]="{standalone: true}"
+                                                autocomplete="off">
+                                        <!-- <input type="text" class="form-control" id="phonenumber" placeholder="Enter New Mobile #"
+                                        formControlName="phonenumber" autocomplete="off" ngModel maxlength="10"> -->
+                                </div>
+                                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'phonenumber')"
+                                [errorMsgs]="fed_service.getErrorMessage(spForm,'phonenumber',
+                              {
+                                'required' : 'Phone number is required',
+                                'minlength' : 'Enter a 10 digit mobile number',
+                                'maxlength' : 'Enter a 10 digit mobile number',
+                                'pattern' : 'Only numbers are allowed'
+                              })">
+                        </app-field-error-display> -->
+                        </div>
+                        <div class="form-group col-md-6">
+                                <label class="col-form-label" for="label1">{{phone_label_cap}}
+                                        <!-- <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltiphone"  data-icon="F"></span>--></label>
+                                <input type="text" matInput class="form-control" placeholder="Eg: Mobile, Emergency, Main line, others, etc"
+                                        [(ngModel)]="phonelabel" [ngModelOptions]="{standalone: true}" autocomplete="off"
+                                        maxlength="50">
+                        </div>
                 </div>
-        </div>
+                <div class="form-group">
+                        <div>
+                                <label class="col-form-label">{{phone_no_visible_cap}}</label>
+                                <mat-radio-group [(ngModel)]="phonepermission" [ngModelOptions]="{standalone: true}">
+                                        <mat-radio-button value="all">{{privacypermissiontxt['all']}}</mat-radio-button>
+                                        <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button>
+                                        <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
+                                </mat-radio-group>
+                        </div>
+                </div>
 
 
-        <!-- <div *ngFor="let phone of phone_arr; let i = index">
+                <!-- <div *ngFor="let phone of phone_arr; let i = index">
          <div><strong>Phone # {{(i+1)}}</strong></div> <div *ngIf="phone_arr.length>1"><button (click)="removePhone(phone, i)" class="btn btn-danger">Remove</button></div>
         <div class="form-group">
                 <label class="col-form-label" for="label1">Phone Label *</label>
@@ -47,31 +68,33 @@
 
         </div>
         <button type="button" (click)="addPhone()" class="btn btn-primary">Add Phone#</button> -->
-    </div>
+        </div>
 
-    <div class="emailouter" *ngIf="curtype=='email'">
-        <div class="form-group">
-                <label class="col-form-label" for="phone1">{{email_id_cap}}</label>
-                <input type="text" matInput class="form-control" id="phone1" placeholder="Email" [(ngModel)]="emailemailid"
-                [ngModelOptions]="{standalone: true}" autocomplete="off">
-        </div>
-        <div class="form-group">
-                <label class="col-form-label" for="label1">{{email_label_cap}} <!-- <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltemail" data-icon="F"></span>--></label>
-                <input type="text" matInput class="form-control" placeholder="Eg: Office Email, Personal Email, etc"
-                [(ngModel)]="emaillabel"  [ngModelOptions]="{standalone: true}" autocomplete="off" maxlength="50">
-        </div>
-        <div class="form-group">
-                <div>
-                <label class="col-form-label">{{email_visible_cap}}</label>
-                <mat-radio-group [(ngModel)]="emailpermission" [ngModelOptions]="{standalone: true}">
-                <mat-radio-button value="all" >{{privacypermissiontxt['all']}}</mat-radio-button>
-                <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button>
-                <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
-                </mat-radio-group>
+        <div class="emailouter" *ngIf="curtype=='email'">
+                <div class="form-group">
+                        <label class="col-form-label" for="phone1">{{email_id_cap}}</label>
+                        <input type="text" matInput class="form-control" id="phone1" placeholder="Email" [(ngModel)]="emailemailid"
+                                [ngModelOptions]="{standalone: true}" autocomplete="off">
                 </div>
-        </div>
+                <div class="form-group">
+                        <label class="col-form-label" for="label1">{{email_label_cap}}
+                                <!-- <span [matTooltipClass] = "tooltipcls" [matTooltip]="tooltemail" data-icon="F"></span>--></label>
+                        <input type="text" matInput class="form-control" placeholder="Eg: Office Email, Personal Email, etc"
+                                [(ngModel)]="emaillabel" [ngModelOptions]="{standalone: true}" autocomplete="off"
+                                maxlength="50">
+                </div>
+                <div class="form-group">
+                        <div>
+                                <label class="col-form-label">{{email_visible_cap}}</label>
+                                <mat-radio-group [(ngModel)]="emailpermission" [ngModelOptions]="{standalone: true}">
+                                        <mat-radio-button value="all">{{privacypermissiontxt['all']}}</mat-radio-button>
+                                        <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button>
+                                        <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
+                                </mat-radio-group>
+                        </div>
+                </div>
 
-            <!-- <div *ngFor="let email of email_arr; let i = index">
+                <!-- <div *ngFor="let email of email_arr; let i = index">
             <div><strong>Email # {{(i+1)}}</strong></div> <div *ngIf="email_arr.length>1"><button (click)="removeEmail(email, i)" class="btn btn-danger">Remove</button></div>
             <div class="form-group">
                     <label class="col-form-label" for="label1">Email Label *</label>
@@ -94,16 +117,14 @@
 
             </div>
             <button type="button" (click)="addEmail()" class="btn btn-primary">Add Email</button> -->
-    </div>
+        </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-   <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+        <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
         <button (click)="savePrivacySettings()" type="button" mat-button class="cs-btn bt1">{{save_btn_cap}}</button>
-    
+
 </mat-dialog-actions>
 
-<app-field-error-display [displayError]="true" *ngIf="api_error"
-   errorMsg="{{api_error}}"></app-field-error-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success"
-successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

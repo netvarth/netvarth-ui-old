@@ -19,7 +19,25 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
                 First step for {{checkin_label}} is searching for {{customer_label  | capitalizeFirst}}.
         </span>
     </div> -->
-            <div class="form-group mobilecont">
+            <div class="form-group">
+                <label class="caption">{{mob_cap}} * </label>
+                <div class="input-group">
+                    <div class="input-group-prepend mob-prefix">
+                        <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                    </div>
+                    <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
+                        formControlName="mobile_number" autocomplete="off" maxlength=10>
+                </div>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
+          {
+            'required' : 'Phone number is required',
+            'minlength' : 'Enter a 10 digit mobile number',
+            'maxlength' : 'Enter a 10 digit mobile number',
+            'pattern' : 'Only numbers are allowed'
+          })">
+                </app-field-error-display>
+            </div>
+            <!-- <div class="form-group mobilecont">
                 <label class="col-form-label" for="mobile_number">{{mob_cap}} *</label>
                 <span class="phoneprefix">{{mob_prefix_cap}}</span>
                 <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
@@ -32,7 +50,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
       'pattern' : 'Only numbers are allowed'
     })">
                 </app-field-error-display>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <label class="col-form-label" for="first_last_name">{{first_name_cap}} / {{last_name_cap}} *</label>

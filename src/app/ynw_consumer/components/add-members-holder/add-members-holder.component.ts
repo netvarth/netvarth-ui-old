@@ -77,7 +77,6 @@ export class AddMembersHolderComponent implements OnInit {
 if (!namepattern.test(this.addmemberobj.lname) || this.addmemberobj.lname.trim() === '') {
       derror = Messages.LASTNAME_INVAL_MSG;
     }
-    
     if (this.addmemberobj.lname.trim() === '') {
       derror = 'Please enter the last name';
     }

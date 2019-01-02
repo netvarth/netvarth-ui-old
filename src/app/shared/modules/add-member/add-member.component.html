@@ -17,21 +17,21 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"> -->
     errorMsg="Please enter the last name.">
    </app-field-error-display> -->
 </div>
-<div class="form-group mobilecont" *ngIf="calledFrom !='checkin'">
-    <label class="col-form-label" for="mobile">{{mobile_no}} </label>
-    <span class="phoneprefix">{{mob_prefix_cap}}</span>
-    <input type="text" [(ngModel)] = "mobile" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number" autocomplete="off">
-    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
-    errorMsg="Please enter the mobile number.">
-   </app-field-error-display> -->
+<div class="form-group col-sm-6 col-md-6 no-padding" *ngIf="calledFrom !='checkin'">
+    <label class="caption">{{mobile_no}}</label>
+    <div class="input-group">
+        <div class="input-group-prepend mob-prefix">
+        <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+        </div>
+        <input type="text" [(ngModel)] = "mobile" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number" autocomplete="off" maxlength="10">
+    </div>
 </div>
 <div class="form-group" *ngIf="calledFrom !='checkin'">
-        <label class="col-form-label" for="gender">{{gender_cap}} </label>
-        <mat-radio-group [(ngModel)] = "gender" (change)="valuechange()">
-            <mat-radio-button value="Male">{{male_cap}}</mat-radio-button>
-            <mat-radio-button value="Female">{{female_cap}}</mat-radio-button>
-        </mat-radio-group>
-              
+    <label class="col-form-label" for="gender">{{gender_cap}} </label>
+    <mat-radio-group [(ngModel)] = "gender" (change)="valuechange()">
+        <mat-radio-button value="Male">{{male_cap}}</mat-radio-button>
+        <mat-radio-button value="Female">{{female_cap}}</mat-radio-button>
+    </mat-radio-group>
 </div>
 <div class="form-group normalpicker" *ngIf="calledFrom !='checkin'">
     <label class="col-form-label" for="dob">{{dob_cap}} </label>
