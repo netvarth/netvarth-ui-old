@@ -14,7 +14,7 @@ import {Messages} from '../../constants/project-messages';
 })
 export class SignUpComponent implements OnInit {
 
-  mobile_no_cap = Messages.MOBILE_NO_CAP;
+  mobile_no_cap = Messages.MOBILE_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   first_name_cap = Messages.F_NAME_CAP;
   last_name_cap = Messages.L_NAME_CAP;

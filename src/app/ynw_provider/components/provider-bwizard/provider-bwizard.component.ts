@@ -90,7 +90,7 @@ export class ProviderbWizardComponent implements OnInit {
   search_active = false;
   coord_error = '';
   locname_error = '';
-
+  bProfile;
   address_error = '';
 
   gurl_error = '';
@@ -249,10 +249,8 @@ export class ProviderbWizardComponent implements OnInit {
             const addr_validate = blankpattern.test(this.wizard_data_holder.address);
             if (addr_validate) {
               this.error_Exists = true;
-              this.address_error = "Please enter the address";
+              this.address_error = 'Please enter the address';
             }
-            
-
             const mapurlexists_validate = blankpattern.test(this.wizard_data_holder.mapurl);
             if (!mapurlexists_validate) {
               const mapurl_validate = urlpattern.test(this.wizard_data_holder.mapurl);
@@ -462,6 +460,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   setBprofile_to_object(obj) {
+    this.bProfile = obj;
     this.wizard_data_holder = {
       'name': obj.businessName || '',
       'summary': obj.businessDesc || '',

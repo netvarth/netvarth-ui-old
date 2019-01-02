@@ -151,7 +151,8 @@
                     <div class="content">
                         <div class="flds">
                             <div class="form-group" >
-                                <label class="title16">{{working_hrs_cap}}</label>
+                                <label class="title16" *ngIf="bProfile.baseLocation">{{working_hrs_cap}} ({{bProfile.baseLocation.place}})</label>
+                                <label class="title16" *ngIf="!bProfile.baseLocation">{{working_hrs_cap}}</label>
                                 <span class="expl">{{shows_b_hrs_cap}}</span>
                                 <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
                                 <li *ngFor="let schedule of display_schedule">
