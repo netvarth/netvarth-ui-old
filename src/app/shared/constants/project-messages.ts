@@ -417,7 +417,7 @@ export const Messages = {
   'SUBMIT_CAP': 'Submit',
 
   // App-shared-components-signup
-  'MOBILE_NO_CAP': 'Mobile Number *',
+  'MOBILE_NO_CAP': 'Mobile #',
   'F_NAME_CAP': 'First Name *',
   'L_NAME_CAP': 'Last Name *',
   'SELECT_DMN_CAP': 'Select Domain *',
@@ -1027,7 +1027,7 @@ export const Messages = {
   'WIZ_USED_FIND_EXACT_LOC_CAP' : 'This can be used to find the exact location',
   'WIZ_BACK_CAP' : 'Back',
   'WIZ_WORKING_HOURS_CAP' : 'Working Hours',
-  'WIZ_SHOWS_B_HOURS_CAP' : 'This shows your office/business hours',
+  'WIZ_SHOWS_B_HOURS_CAP' : 'Adjust your office/business hours',
   'WIZ_PUBLIC_SEARCH_CAP' : 'Public Search',
   'WIZ_TURN_ON_OFF_CAP' : 'You can turn On or Off anytime in Settings -> Profile & Search -> Profile',
   'WIZ_PRO_SEARCHABLE_VIEWABLE_CAP' : 'Do you want to make your Profile searchable and viewable to public?',
