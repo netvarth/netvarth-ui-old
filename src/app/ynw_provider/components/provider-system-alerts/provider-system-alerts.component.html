@@ -32,7 +32,7 @@
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                             <input class="form-control1" name="alert-datepicker" [(ngModel)]="alertSeldate" [value]="alertSeldate" type="text"
-                          matInput [matDatepicker]="picker" autocomplete="off" disabled [max]="tday">
+                          matInput [matDatepicker]="picker" autocomplete="off" [max]="tday">
                             </div>
                 </div>
                 </div>

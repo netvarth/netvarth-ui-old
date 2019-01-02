@@ -417,7 +417,7 @@ export const Messages = {
   'SUBMIT_CAP': 'Submit',
 
   // App-shared-components-signup
-  'MOBILE_NO_CAP': 'Mobile #',
+  'MOBILE_NO_CAP': 'Mobile Number *',
   'F_NAME_CAP': 'First Name *',
   'L_NAME_CAP': 'Last Name *',
   'SELECT_DMN_CAP': 'Select Domain *',
@@ -1027,7 +1027,7 @@ export const Messages = {
   'WIZ_USED_FIND_EXACT_LOC_CAP' : 'This can be used to find the exact location',
   'WIZ_BACK_CAP' : 'Back',
   'WIZ_WORKING_HOURS_CAP' : 'Working Hours',
-  'WIZ_SHOWS_B_HOURS_CAP' : 'Adjust your office/business hours',
+  'WIZ_SHOWS_B_HOURS_CAP' : 'This shows your office/business hours',
   'WIZ_PUBLIC_SEARCH_CAP' : 'Public Search',
   'WIZ_TURN_ON_OFF_CAP' : 'You can turn On or Off anytime in Settings -> Profile & Search -> Profile',
   'WIZ_PRO_SEARCHABLE_VIEWABLE_CAP' : 'Do you want to make your Profile searchable and viewable to public?',
@@ -1150,7 +1150,7 @@ export const Messages = {
   'SER_MIN_CAP' : 'min',
 
   // App-ynw_provider-components-upgrade-license
-  'UP_LIC_PACKAGE_CAP' : 'License Package',
+  'UP_LIC_PACKAGE_CAP' : 'Upgrade License',
   'UP_LIC_PACK_CAP' : 'License Package *',
   'UP_SELECT_ONE_CAP' : '- Select One -',
   'UP_NO_UPGRADE_PACK_FOUND' : 'Sorry, No upgradable packages found.',

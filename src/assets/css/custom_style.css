@@ -881,3 +881,7 @@ margin-top:10px;
   .col-12.no-padding-small {padding-left: 0px !important;padding-right: 0px !important;}
 }
 .mob-prefix {margin-top : -1px !important;}
+.signupmainclass .mat-dialog-content .message-one .p1, .loginmainclass .mat-dialog-content .message-one .p1, .moreoptionsmainclass .mat-dialog-content .message-one .p1, .forgotpasswordmainclass .mat-dialog-content .message-one .p1, .commonpopupmainclass .mat-dialog-content .message-one .p1, .googlemainmappopup .mat-dialog-content .message-one .p1, .outer-card .mat-dialog-content .message-one .p1, .consumerpopupmainclass .mat-dialog-content .message-one .p1, .specialclass .mat-dialog-content .message-one .p1{
+  padding-bottom: 30px !important;
+  color: black !important;
+}
