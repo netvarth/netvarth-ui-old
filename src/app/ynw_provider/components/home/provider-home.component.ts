@@ -95,6 +95,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   open_filter = false;
   waitlist_status = [];
   sel_queue_indx = 0;
+  today_checkins_count = 0;
+  today_arrived_count = 0;
+  today_started_count = 0;
+  today_completed_count = 0;
+  today_cancelled_count = 0;
+  today_checkedin_count = 0;
   filter = {
     first_name: '',
     last_name: '',
@@ -705,6 +711,21 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  getCount(list, status) {
+    return list.filter(function(elem) {
+      return elem.waitlistStatus===status;
+    }).length;
+  }
+
+  setCounts(list) {
+    this.today_arrived_count = this.getCount(list, 'arrived');
+    this.today_checkedin_count = this.getCount(list, 'checkedIn');
+    this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
+    this.today_started_count = this.getCount(list, 'started');
+    this.today_completed_count = this.getCount(list, 'done');
+    this.today_cancelled_count = this.getCount(list, 'cancelled');
+  }
+
   getTodayCheckIn() {
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
@@ -717,6 +738,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.check_in_list = data;
+          // console.log("today checkin list count:",this.check_in_list.length);
+          this.setCounts(this.check_in_list);
+          // console.log(this.today_checkin_list_count);
           if (this.status_type) {
             this.changeStatusType(this.status_type);
           } else {
@@ -891,7 +915,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         queues: this.queues,
-        queue_id: this.selected_queue.id
+        queue_id: this.selected_queue.id,
+        checkedin_count:this.today_checkedin_count,
+        arrived_count: this.today_arrived_count
       }
     });
 

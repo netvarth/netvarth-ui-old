@@ -67,18 +67,18 @@
           <div class="ctrls">
             <ul>
               <li [ngClass]="{'active': status_type =='all'}" (click)="changeStatusType('all')" *ngIf="(time_type ==1 && selected_queue!=null && selected_queue.id)">
-                <span>{{checkin_label |capitalizeFirst}}s</span>
+                <span>{{checkin_label |capitalizeFirst}}s ({{today_checkins_count}})</span>
               </li>
               <li class="active" *ngIf="time_type != 1">
-                <span>{{checkin_label |capitalizeFirst}}s</span>
+                <span>{{checkin_label |capitalizeFirst}}s ({{today_checkins_count}})</span>
               </li>
               <ng-container *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
                 <li [ngClass]="{'active': status_type =='started'}" (click)="changeStatusType('started')">
-                  <span>{{started_upper}}</span></li>
+                  <span>{{started_upper}} ({{today_started_count}})</span></li>
                 <li [ngClass]="{'active': status_type =='done'}" (click)="changeStatusType('done')">
-                  <span>{{complete_cap}}</span></li>
+                  <span>{{complete_cap}} ({{today_completed_count}})</span></li>
                 <li [ngClass]="{'active': status_type =='cancelled'}" (click)="changeStatusType('cancelled')">
-                  <span>{{cancelled_upper}}</span></li>
+                  <span>{{cancelled_upper}} ({{today_cancelled_count}})</span></li>
               </ng-container>
             </ul>
 

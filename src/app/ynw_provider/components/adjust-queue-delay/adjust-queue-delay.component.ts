@@ -30,6 +30,8 @@ export class AdjustQueueDelayComponent implements OnInit {
   default_message = '';
   selected_queue = 0;
   placeholder = Messages.ADJUSTDELAY_PLACEHOLDER;
+  arrived_cnt = 0;
+  checkedin_cnt = 0;
 
   constructor(
     public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
@@ -43,6 +45,8 @@ export class AdjustQueueDelayComponent implements OnInit {
      }
 
      ngOnInit() {
+      this.arrived_cnt = this.data.arrived_count;
+      this.checkedin_cnt = this.data.checkedin_count;
       this.queues = this.data.queues;
 
       if (!this.data.queues || !this.data.queue_id) {
