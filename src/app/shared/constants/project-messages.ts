@@ -1043,7 +1043,7 @@ export const Messages = {
   'WIZ_PUB_SEARCH_CAP' : 'Public Search!',
 
   // App-ynw_provider-components-provider-payment-settings
-  'PAY_SET_JALDEE_ACCOUNT_CAP' : 'Jaldee Account',
+  'PAY_SET_JALDEE_ACCOUNT_CAP' : 'Jaldee Bank',
   'PAY_SET_MY_OWN_ACCOUNT_CAP' : 'My Own Bank Account',
   'PAY_SET_ONLY_IF_MAIL_VERIFIED_CAP' : 'Payment settings can be done only if your email id is verified. Please use the below button to set up your email id.',
   'PAY_SET_GO_TO_EMAIL_SET_CAP' : 'Go to Email Settings',
