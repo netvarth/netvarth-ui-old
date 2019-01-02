@@ -134,7 +134,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.getPaymentSettings(2);
         this.getTaxpercentage();
         this.getProviderProfile();
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'bprofile' };
+        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings' };
         this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
     /**

@@ -15,6 +15,7 @@
             <li (click)="sethelpSub('adjustdelay')">Adjust Delay</li>
             <li (click)="sethelpSub('miscellaneous')">Miscellaneous</li>
             <li (click)="sethelpSub('dashboard')">Dashboard</li>
+            <li (click)="sethelpSub('paymentsettings')">Payment Settings</li>
          </ul>
        </div>
        <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub !=''" (click)="sethelpSub('')"><span class="back-to-index">Back to Index</span></div>
@@ -45,7 +46,9 @@
         <!-- Dashboard -->
         <app-learnmore-dashboard [target]="'dashboard'" *ngIf="destination=='dashboard' || helpSub =='dashboard'"></app-learnmore-dashboard>
 
-        
+        <!-- Paymentsettings -->
+        <app-learnmore-paymentsettings [target]="'paymentsettings'" *ngIf="destination=='paymentsettings' || helpSub =='paymentsettings'"></app-learnmore-paymentsettings>
+
       <!-- </mat-dialog-content>
       <mat-dialog-actions>
         <button  type="button" mat-dialog-close class="cs-btn bt2">Close</button>

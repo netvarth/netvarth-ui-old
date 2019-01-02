@@ -76,6 +76,10 @@ import { LearnmoreDashboardComponent } from './learnmore-dashboard/learnmore-das
 import { HealthcareDashboardComponent } from './learnmore-dashboard/healthcare-dashboard/healthcare-dashboard.component';
 import { PersonalcareDashboardComponent } from './learnmore-dashboard/personalcare-dashboard/personalcare-dashboard.component';
 import { ProfessionalDashboardComponent } from './learnmore-dashboard/professional-dashboard/professional-dashboard.component';
+import { LearnmorePaymentsettingsComponent } from './learnmore-paymentsettings/learnmore-paymentsettings.component';
+import { HealthcarePaymentsettingsComponent } from './learnmore-paymentsettings/healthcare-paymentsettings/healthcare-paymentsettings.component';
+import { PersonalcarePaymentsettingsComponent } from './learnmore-paymentsettings/personalcare-paymentsettings/personalcare-paymentsettings.component';
+import { ProfessionalPaymentsettingsComponent } from './learnmore-paymentsettings/professional-paymentsettings/professional-paymentsettings.component';
 
 @NgModule({
     imports: [
@@ -151,6 +155,10 @@ import { ProfessionalDashboardComponent } from './learnmore-dashboard/profession
             PersonalcareDashboardComponent,
             ProfessionalDashboardComponent,
 
+            HealthcarePaymentsettingsComponent,
+            PersonalcarePaymentsettingsComponent,
+            ProfessionalPaymentsettingsComponent,
+
 
         LearnmoreWaitlistManagerComponent,
         LearnmoreCheckinComponent,
@@ -159,7 +167,9 @@ import { ProfessionalDashboardComponent } from './learnmore-dashboard/profession
         LearnmoreLicenseComponent,
         LearnmoreAdjustDelayComponent,
         LearnmoreMiscellaneousComponent,
-        LearnmoreDashboardComponent
+        LearnmoreDashboardComponent,
+        LearnmorePaymentsettingsComponent
+        
        
     ],
     entryComponents: [
