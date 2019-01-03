@@ -1,8 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import {HeaderComponent} from '../../../shared/modules/header/header.component';
+import { HeaderComponent } from '../../../shared/modules/header/header.component';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -10,14 +10,14 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
-import { Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
 
 
 
 @Component({
-    selector: 'app-provider-waitlist',
-    templateUrl: './provider-waitlist-component.html'
+  selector: 'app-provider-waitlist',
+  templateUrl: './provider-waitlist-component.html'
 })
 
 export class ProviderWaitlistComponent implements OnInit, OnDestroy {
@@ -28,31 +28,35 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   ser_time_windows_cap = Messages.WAITLIST_SER_TIME_WINDOWS_CAP;
 
   bProfile = null;
-  online_checkin = false ;
-  waitlist_manager: any  = null;
+  online_checkin = false;
+  waitlist_manager: any = null;
   location_count: any = 0;
   service_count: any = 0;
   queues_count: any = 0;
-
+  multipeLocationAllowed = false;
+  locName;
+  businessConfig: any = [];
   checkin_label = '';
-prevcheckstatus;
+  prevcheckstatus;
+  loc_list: any = [];
   breadcrumbs = [
     {
       title: 'Settings',
       url: '/provider/settings'
     },
     {
-    title: 'Waitlist Manager'
+      title: 'Waitlist Manager'
     }
   ];
-  breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'waitlistmanager'};
+  breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager' };
 
   subscription: Subscription;
 
   constructor(private provider_services: ProviderServices,
-  private provider_datastorage: ProviderDataStorageService,
-  private router: Router,
-  private shared_functions: SharedFunctions) {
+    private provider_datastorage: ProviderDataStorageService,
+    private router: Router,
+    private shared_functions: SharedFunctions,
+    private shared_services: SharedServices) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
 
@@ -62,19 +66,20 @@ prevcheckstatus;
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();
+    this.getBusinessConfiguration();
 
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
-    .subscribe(
-      data => {
-        if (data.ttype === 'online_checkin_status') {
-          this.getWaitlistMgr();
-        }
-      },
-      error => {
+      .subscribe(
+        data => {
+          if (data.ttype === 'online_checkin_status') {
+            this.getWaitlistMgr();
+          }
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
 
   }
@@ -87,36 +92,37 @@ prevcheckstatus;
 
 
   getWaitlistMgr() {
-this.waitlist_manager = null;
+    this.waitlist_manager = null;
     this.provider_services.getWaitlistMgr()
-    .subscribe(
-      data => {
-        this.waitlist_manager = data;
-        // this.online_checkin = data['enabledWaitlist'];
-        this.online_checkin = data['onlineCheckIns'];
+      .subscribe(
+        data => {
+          this.waitlist_manager = data;
+          // this.online_checkin = data['enabledWaitlist'];
+          this.online_checkin = data['onlineCheckIns'];
 
-       // console.log(this.online_checkin);
-        this.provider_datastorage.set('waitlistManage', data);
-      },
-      error => {
+          // console.log(this.online_checkin);
+          this.provider_datastorage.set('waitlistManage', data);
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
   }
 
   getBusinessProfile() {
 
     this.provider_services.getBussinessProfile()
-    .subscribe(
-      data => {
-        this.bProfile = data;
-        this.provider_datastorage.set('bProfile', data);
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.bProfile = data;
+          this.provider_datastorage.set('bProfile', data);
 
-      }
-    );
+        },
+        error => {
+
+        }
+      );
 
   }
 
@@ -130,15 +136,15 @@ this.waitlist_manager = null;
   setAcceptOnlineCheckin(is_check) {
 
     this.provider_services.setAcceptOnlineCheckin(is_check)
-    .subscribe(
-      data => {
-      this.getWaitlistMgr();
-      },
-      error => {
-		const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
-       this.online_checkin = this.prevcheckstatus;
-      }
-    );
+      .subscribe(
+        data => {
+          this.getWaitlistMgr();
+        },
+        error => {
+          const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.online_checkin = this.prevcheckstatus;
+        }
+      );
   }
 
 
@@ -156,42 +162,72 @@ this.waitlist_manager = null;
 
   getLocationCount() {
     this.provider_services.getLocationCount()
-    .subscribe(
-      data => {
-        this.location_count = data;
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.location_count = data;
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
 
   getServiceCount() {
     this.provider_services.getServiceCount()
-    .subscribe(
-      data => {
-        this.service_count = data;
+      .subscribe(
+        data => {
+          this.service_count = data;
 
-      },
-      error => {
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
 
   getQueuesCount() {
 
     this.provider_services.getQueuesCount()
-    .subscribe(
-      data => {
-        this.queues_count = data;
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.queues_count = data;
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
 
+  getBusinessConfiguration() {
+    this.shared_services.bussinessDomains()
+      .subscribe(data => {
+        this.businessConfig = data;
+        this.getBussinessProfile();
+      },
+        error => {
+
+        });
+  }
+  getBussinessProfile() {
+    this.provider_services.getBussinessProfile()
+      .subscribe(data => {
+        this.bProfile = data;
+        for (let i = 0; i < this.businessConfig.length; i++) {
+          if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
+            if (this.businessConfig[i].multipleLocation) {
+              this.multipeLocationAllowed = true;
+            }
+            if (this.multipeLocationAllowed == true) {
+              this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
+            }
+            if (this.multipeLocationAllowed == false) {
+              this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
+            }
+          }
+        }
+      },
+        error => {
+
+        });
+  }
 }
-
-

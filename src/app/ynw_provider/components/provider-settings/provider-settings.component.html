@@ -51,8 +51,8 @@
                                     <span class="lnk" (click)="redirecTo('waitlistmanager')">{{settings_cap}}</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('locations')">{{locations_cap}}
-                                        ({{location_count}})</span>
+                                    <span class="lnk" (click)="redirecTo('locations')">{{locName}}
+                                      <span *ngIf="multipeLocationAllowed == true">  ({{location_count}})</span></span>
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('services')">{{services_cap}}

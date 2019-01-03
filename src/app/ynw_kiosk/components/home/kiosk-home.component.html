@@ -1,149 +1,166 @@
 <ng-container *ngIf="provider_loggedin">
-<!-- welcome screen -->
-<h2 (click)="showMode('main')" *ngIf="customer_found">{{welcome_cap}} <span>{{customerDispDet.name | capitalizeFirst}}!</span></h2>
-<div class="ksk-cpy welcome" [class.loggedin]="customer_found" *ngIf="kiosk_loading==false && cMod=='main'">
-   
-    <div class="outer">
-        <ul class="controls" >
-            <li>
-                <button class="ot" (click)="showMode('checkin')">
-                    <span class="icon-k-checkin"></span>
-                    <span class="title" >{{checkin_youself_cap}}</span>
-                    <span class="sub-title" *ngIf="next_avail_queue['caption'] && waitlistmngr.calculationMode && waitlistmngr.calculationMode != 'NoCalc'">{{next_avail_queue['caption']}} <span class="time">{{next_avail_queue['time']}}</span></span>
-                </button>
-            </li>
-            <!-- <li>
+    <!-- welcome screen -->
+    <h2 (click)="showMode('main')" *ngIf="customer_found">{{welcome_cap}} <span>{{customerDispDet.name |
+            capitalizeFirst}}!</span></h2>
+    <div class="ksk-cpy welcome" [class.loggedin]="customer_found" *ngIf="kiosk_loading==false && cMod=='main'">
+
+        <div class="outer">
+            <ul class="controls">
+                <li>
+                    <button class="ot" (click)="showMode('checkin')">
+                        <span class="icon-k-checkin"></span>
+                        <span class="title">{{checkin_youself_cap}}</span>
+                        <span class="sub-title" *ngIf="next_avail_queue['caption'] && waitlistmngr.calculationMode && waitlistmngr.calculationMode != 'NoCalc'">{{next_avail_queue['caption']}}
+                            <span class="time">{{next_avail_queue['time']}}</span></span>
+                    </button>
+                </li>
+                <!-- <li>
                 <button class="ot" (click)="showMode('status')">
                     <span class="icon-k-lookup"></span>
                     <span class="title">Already Checked-In?</span>
                     <span class="sub-title">Check your status</span>
                 </button>
             </li> -->
-            <li>
-                <button class="ot" (click)="showMode('arrived')">
-                    <span class="icon-k-arrived"></span>
-                    <span class="title">{{checkin_online_cap}}</span>
-                    <span class="sub-title">{{check_your_status_cap}} <span>{{report_as_arrived_cap}}</span></span>
-                </button>
-            </li>
-        </ul>
-        <div class="signup-promotion" *ngIf="!customer_found" (click)="showSignup()">
-            <div class="outer">
-                <span class="icon-person" ></span>
-                <span class="title">
-                    {{do_you_want_to_signup_cap}}
-                </span>
-                <div class="description">
-                    {{marketing_text}}
+                <li>
+                    <button class="ot" (click)="showMode('arrived')">
+                        <span class="icon-k-arrived"></span>
+                        <span class="title">{{checkin_online_cap}}</span>
+                        <span class="sub-title">{{check_your_status_cap}} <span>{{report_as_arrived_cap}}</span></span>
+                    </button>
+                </li>
+            </ul>
+            <div class="signup-promotion" *ngIf="!customer_found" (click)="showSignup()">
+                <div class="outer">
+                    <span class="icon-person"></span>
+                    <span class="title">
+                        {{do_you_want_to_signup_cap}}
+                    </span>
+                    <div class="description">
+                        {{marketing_text}}
+                    </div>
                 </div>
             </div>
-        </div>
-    </div> 
-</div>
-<!-- welcome screen xx ends -->
-
-<!-- get info from User -->
-<div class="ksk-cpy get-info" *ngIf="!customer_found && showsearch_now">
-    <div class="outer">
-
-        <div class="form-group">
-            <span class="label">{{enter_your}} <span>{{mobile_no_cap}}</span></span>
-            <input type="text" #srchmobile id="srchmobilebox" class="form-control" [(ngModel)]="srch_mobile" autocomplete="off">
-        </div>
-
-        <div class="form-group">
-            <span class="label">{{enter_first_letters_name}} <span>{{first_last_name_cap}}</span></span>
-            <input type="text" #srchname class="form-control" [(ngModel)]="srch_fname" autocomplete="off">
-        </div>
-
-        <div class="form-group">
-            <button class="cs-btn ripple" (click)="searchCustomer()" *ngIf="loadingNow==false">{{search_cap}}</button>
         </div>
     </div>
-</div>
-        <!-- get info from User xx ends -->
+    <!-- welcome screen xx ends -->
 
-                <!-- signup as Consumer -->
-        <div class="ksk-cpy signup" *ngIf="show_customerRegister">
-            <div class="outer">
-               
-                <div class="notice show" *ngIf="!showregmobile">
-                    <div class="box error">
-                        <span class="label"><span>{{oops_cap}}</span>{{you_not_reg_cust_cap}}</span>
+    <!-- get info from User -->
+    <div class="ksk-cpy get-info" *ngIf="!customer_found && showsearch_now">
+        <div class="outer">
+
+            <div class="form-group">
+                <span class="label">{{enter_your}} <span>{{mobile_no_cap}}</span></span>
+                <div class="input-group">
+                    <div class="input-group-prepend mob-prefix">
+                        <span class="input-group-text" id="">+91</span>
                     </div>
-                </div>
-                
-                <h3>{{fill_det_to_reg_cap}}</h3>
-
-                <div class="form-group" *ngIf="showregmobile">
-                        <span class="label">{{enter_your}} <span>{{mobile_no_cap}}</span></span>
-                        <input type="text" class="form-control" #regmobile [(ngModel)]="reg_mobile" autofocus autocomplete="off">
-                    </div>
-                <div class="form-group">
-                    <span class="label">{{enter_your}} <span>{{first_name_cap}}</span></span>
-                    <input type="text" class="form-control" [(ngModel)]="reg_fname" #regfname autocomplete="off">
-                </div>
-
-                <div class="form-group">
-                    <span class="label">{{enter_your}} <span>{{last_name_cap}}</span></span>
-                    <input type="text" class="form-control" [(ngModel)]="reg_lname" #reglname autocomplete="off">
-                </div>
-
-                <div class="form-group">
-                    <button class="cs-btn ripple" (click)="registerCustomer()" *ngIf="loadingNow==false">{{register_cap}}</button>
-                </div>
-
-                <div class="goback" *ngIf="!showregmobile">
-                        <button class="cs-btn ripple" (click)="showSearchNow()" *ngIf="loadingNow==false">{{back_to_search_cap}}</button>
+                    <input type="text" class="form-control" #regmobile [(ngModel)]="reg_mobile" autofocus placeholder="Enter New Mobile #"
+                        autocomplete="off" ngModel maxlength="10">
                 </div>
             </div>
+
+            <div class="form-group">
+                <span class="label">{{enter_first_letters_name}} <span>{{first_last_name_cap}}</span></span>
+                <input type="text" #srchname class="form-control" [(ngModel)]="srch_fname" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <button class="cs-btn ripple" (click)="searchCustomer()" *ngIf="loadingNow==false">{{search_cap}}</button>
+            </div>
         </div>
-        <!-- signup as Consumer xx ends -->
+    </div>
+    <!-- get info from User xx ends -->
 
-        <ng-container *ngIf="customer_found">
-                <ng-container *ngIf="cMod=='checkin'">
-                    <div class="ksk-cpy checkin">
-                    <app-check-in-inner [data]="getParametersforCheckin()" (returntoParent) = "handleCheckinReturn($event)"></app-check-in-inner>
+    <!-- signup as Consumer -->
+    <div class="ksk-cpy signup" *ngIf="show_customerRegister">
+        <div class="outer">
+
+            <div class="notice show" *ngIf="!showregmobile">
+                <div class="box error">
+                    <span class="label"><span>{{oops_cap}}</span>{{you_not_reg_cust_cap}}</span>
+                </div>
+            </div>
+
+            <h3>{{fill_det_to_reg_cap}}</h3>
+            <div class="form-group">
+                <span class="label">{{enter_your}} <span>{{mobile_no_cap}}</span></span>
+                <div class="input-group">
+                    <div class="input-group-prepend mob-prefix">
+                        <span class="input-group-text" id="">+91</span>
                     </div>
-                </ng-container>
+                    <input type="text" class="form-control" #regmobile [(ngModel)]="reg_mobile" autofocus placeholder="Enter New Mobile #"
+                        autocomplete="off" ngModel maxlength="10">
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="label">{{enter_your}} <span>{{first_name_cap}}</span></span>
+                <input type="text" class="form-control" [(ngModel)]="reg_fname" #regfname autocomplete="off">
+            </div>
 
-                <ng-container *ngIf="cMod=='status'">
-                    <div class="ksk-cpy status">
-                    
-                    <app-lookup-status [passedInData]="getpassedinDetails()" *ngIf="query_executed"></app-lookup-status>
-                    </div>
-                </ng-container>
+            <div class="form-group">
+                <span class="label">{{enter_your}} <span>{{last_name_cap}}</span></span>
+                <input type="text" class="form-control" [(ngModel)]="reg_lname" #reglname autocomplete="off">
+            </div>
 
-                <!-- <ng-container *ngIf="cMod=='rate'">
+            <div class="form-group">
+                <button class="cs-btn ripple" (click)="registerCustomer()" *ngIf="loadingNow==false">{{register_cap}}</button>
+            </div>
+
+            <div class="goback" *ngIf="!showregmobile">
+                <button class="cs-btn ripple" (click)="showSearchNow()" *ngIf="loadingNow==false">{{back_to_search_cap}}</button>
+            </div>
+        </div>
+    </div>
+    <!-- signup as Consumer xx ends -->
+
+    <ng-container *ngIf="customer_found">
+        <ng-container *ngIf="cMod=='checkin'">
+            <div class="ksk-cpy checkin">
+                <app-check-in-inner [data]="getParametersforCheckin()" (returntoParent)="handleCheckinReturn($event)"></app-check-in-inner>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="cMod=='status'">
+            <div class="ksk-cpy status">
+
+                <app-lookup-status [passedInData]="getpassedinDetails()" *ngIf="query_executed"></app-lookup-status>
+            </div>
+        </ng-container>
+
+        <!-- <ng-container *ngIf="cMod=='rate'">
                     <app-rate-visit [passedInData]="getpassedinDetails()" *ngIf="query_executed"></app-rate-visit>
                 </ng-container> -->
 
-                <ng-container *ngIf="cMod=='arrived'">
-                    <div class="ksk-cpy arrived">
-                    <app-reportas-arrived [passedInData]="getpassedinDetails()" (handleArrived)="arrivedReturn($event)" *ngIf="query_executed"></app-reportas-arrived>
-                    </div>
-                </ng-container>
+        <ng-container *ngIf="cMod=='arrived'">
+            <div class="ksk-cpy arrived">
+                <app-reportas-arrived [passedInData]="getpassedinDetails()" (handleArrived)="arrivedReturn($event)"
+                    *ngIf="query_executed"></app-reportas-arrived>
+            </div>
         </ng-container>
+    </ng-container>
 
 
-        <!-- sticky navigation on inner pages -->
-        <div class="ksk-cpy navigation"  *ngIf="cMod != 'main'">
-                <div class="outer">
-                <ul class="controls">
-                    <li class="k1" *ngIf="!customer_found"><button class="ot" (click)="showMode('main')"><span class="icon-k-home"></span><span class="title">{{home_cap}}</span></button></li>
-                    <li class="k2"><button class="ot" (click)="showMode('checkin')"><span class="icon-k-checkin"></span><span class="title">{{checkin_youeself_cap}}</span></button></li>
-                    <!-- <li><button class="ot" (click)="showMode('status')"><span class="icon-k-lookup"></span><span class="title">Lookup Your Status</span></button></li> -->
-                    <li class="k3"><button class="ot" (click)="showMode('arrived')"><span class="icon-k-arrived"></span><span class="title">{{check_your_status_cap}}{{report_as_arrived_cap}}</span></button></li>
-                </ul>
-                </div>
+    <!-- sticky navigation on inner pages -->
+    <div class="ksk-cpy navigation" *ngIf="cMod != 'main'">
+        <div class="outer">
+            <ul class="controls">
+                <li class="k1" *ngIf="!customer_found"><button class="ot" (click)="showMode('main')"><span class="icon-k-home"></span><span
+                            class="title">{{home_cap}}</span></button></li>
+                <li class="k2"><button class="ot" (click)="showMode('checkin')"><span class="icon-k-checkin"></span><span
+                            class="title">{{checkin_youeself_cap}}</span></button></li>
+                <!-- <li><button class="ot" (click)="showMode('status')"><span class="icon-k-lookup"></span><span class="title">Lookup Your Status</span></button></li> -->
+                <li class="k3"><button class="ot" (click)="showMode('arrived')"><span class="icon-k-arrived"></span><span
+                            class="title">{{check_your_status_cap}}{{report_as_arrived_cap}}</span></button></li>
+            </ul>
         </div>
-        <!-- sticky navigation on inner pages xx ends -->
-        <div class="ksk-exit">
-            <button class="exit" (click)="logOff()" *ngIf="customer_found">
-                <span class="icon-logout"></span>{{exit_cap}}
-            </button>
-        </div>
+    </div>
+    <!-- sticky navigation on inner pages xx ends -->
+    <div class="ksk-exit">
+        <button class="exit" (click)="logOff()" *ngIf="customer_found">
+            <span class="icon-logout"></span>{{exit_cap}}
+        </button>
+    </div>
 </ng-container>
 <ng-container *ngIf="!provider_loggedin">
-<div class="error">{{not_auth_to_view_page}}</div>
+    <div class="error">{{not_auth_to_view_page}}</div>
 </ng-container>

@@ -38,7 +38,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   businessConfig: any = [];
   dialogRef;
   breadcrumb_moreoptions: any = [];
-  breadcrumbs = [
+  breadcrumbs_init = [
     {
       title: 'Settings',
       url: '/provider/settings'
@@ -46,12 +46,9 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     {
       title: 'Waitlist Manager',
       url: '/provider/settings/waitlist-manager'
-    },
-    {
-      title: 'Locations'
     }
   ];
-
+  breadcrumbs = this.breadcrumbs_init;
   constructor(
     private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -97,6 +94,26 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
             if (this.businessConfig[i].multipleLocation) {
               this.multipeLocationAllowed = true;
             }
+            if (this.multipeLocationAllowed == true) {
+              const breadcrumbs = [];
+              this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+              });
+              breadcrumbs.push({
+                title: 'Locations'
+              });
+              this.breadcrumbs = breadcrumbs;
+            }
+            if (this.multipeLocationAllowed == false) {
+              const breadcrumbs = [];
+              this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+              });
+              breadcrumbs.push({
+                title: 'Location'
+              });
+              this.breadcrumbs = breadcrumbs;
+            }
           }
         }
         // calling the method to get the list of locations
@@ -119,6 +136,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
             this.show_addlocationButton = true;
           }
         }
+
         this.query_executed = true;
       });
   }

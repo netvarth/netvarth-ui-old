@@ -1151,7 +1151,7 @@ export const Messages = {
 
   // App-ynw_provider-components-upgrade-license
   'UP_LIC_PACKAGE_CAP' : 'Upgrade License',
-  'UP_LIC_PACK_CAP' : 'License Package *',
+  'UP_LIC_PACK_CAP' : 'Select the License you would like to upgrade to :',
   'UP_SELECT_ONE_CAP' : '- Select One -',
   'UP_NO_UPGRADE_PACK_FOUND' : 'Sorry, No upgradable packages found.',
 

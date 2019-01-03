@@ -1,115 +1,105 @@
-<h1 class="mat-dialog-title">{{heading}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<form [formGroup]="signupForm"  novalidate
-(ngSubmit)="signupForm.valid &&
+<h1 class="mat-dialog-title">{{heading}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+      aria-hidden="true"></i></button></h1>
+<form [formGroup]="signupForm" novalidate (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">
 
-<div class="mat-dialog-content" *ngIf="step==1">
+  <div class="mat-dialog-content" *ngIf="step==1">
     <div class="form-group" *ngIf="!data.moreOptions.isCreateProv">
-        <label class="caption">{{mobile_no_cap}} * </label>
-        <div class="input-group">
-            <div class="input-group-prepend mob-prefix">
-                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-            </div>
-            <input type="text" class="form-control" id="phonenumber"
-    formControlName="phonenumber" autocomplete="off" placeholder="Enter your 10 digit mobile number" maxlength=10>
+      <label class="caption">{{mobile_no_cap}} * </label>
+      <div class="input-group">
+        <div class="input-group-prepend mob-prefix">
+          <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
         </div>
-        <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')"
-        [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
+        <input type="text" class="form-control" id="phonenumber" formControlName="phonenumber" autocomplete="off"
+          placeholder="Enter your 10 digit mobile number" maxlength=10>
+      </div>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
   {
     'required' : 'Phone number is required',
     'minlength' : 'Enter a 10 digit mobile number',
     'maxlength' : 'Enter a 10 digit mobile number',
     'pattern' : 'Only numbers are allowed'
   })">
-        </app-field-error-display>
+      </app-field-error-display>
     </div>
-  <div class="form-group-inline" *ngIf="!data.moreOptions.isCreateProv">
-  <div class="form-group">
-    <label class="col-form-label" for="first_name">{{first_name_cap}}</label>
-    <input type="text" class="form-control" id="first_name"
-    formControlName="first_name"  autocomplete="off" (blur)="onFieldBlur('first_name')">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')"
-    [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
+    <div class="form-group-inline" *ngIf="!data.moreOptions.isCreateProv">
+      <div class="form-group">
+        <label class="col-form-label" for="first_name">{{first_name_cap}}</label>
+        <input type="text" class="form-control" id="first_name" formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
     {
       'required' : 'First name is required',
       'pattern' : 'Only alphabets are allowed'
     })">
-   </app-field-error-display>
-  </div>
+        </app-field-error-display>
+      </div>
 
-  <div class="form-group">
-    <label class="col-form-label" for="last_name">{{last_name_cap}}</label>
-    <input type="text" class="form-control" id="last_name"
-    formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')"
-    [errorMsgs]="fed_service.getErrorMessage(signupForm,'last_name',
+      <div class="form-group">
+        <label class="col-form-label" for="last_name">{{last_name_cap}}</label>
+        <input type="text" class="form-control" id="last_name" formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'last_name',
     {
       'required' : 'Last name is required',
       'pattern' : 'Only alphabets are allowed'
     })">
-   </app-field-error-display>
-  </div>
-</div>
+        </app-field-error-display>
+      </div>
+    </div>
 
-  <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true'">
-    <mat-form-field>
+    <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true'">
+      <mat-form-field>
         <label class="col-form-label" for="last_name">{{select_domain_cap}}</label>
-      <mat-select formControlName="selectedDomainIndex" #seldom (selectionChange)="setDomain(seldom.value)">
-        <mat-option *ngFor="let domain of business_domains; let i = index" [value]="i">
+        <mat-select formControlName="selectedDomainIndex" #seldom (selectionChange)="setDomain(seldom.value)">
+          <mat-option *ngFor="let domain of business_domains; let i = index" [value]="i">
             {{domain.displayName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
 
-    <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedDomainIndex')"
-      errorMsg="Select one Service Domain" >
-    </app-field-error-display>
-  </div>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedDomainIndex')" errorMsg="Select one Service Domain">
+      </app-field-error-display>
+    </div>
 
-  <div class="form-group"  *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere && subDomainList.length >1">
-
-    <mat-form-field>
-      <label class="col-form-label" for="last_name">{{select_subdomain_cap}}</label>
-      <mat-select subdom formControlName="selectedSubDomains" #subdom (selectionChange)="onItemSelect(subdom.value)">
-        <mat-option *ngFor="let subdomain of subDomainList; let i = index" [value]="i">
+    <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere && subDomainList.length >1">
+      <mat-form-field>
+        <label class="col-form-label" for="last_name">{{select_subdomain_cap}}</label>
+        <mat-select subdom formControlName="selectedSubDomains" #subdom (selectionChange)="onItemSelect(subdom.value)">
+          <mat-option *ngFor="let subdomain of subDomainList; let i = index" [value]="i">
             {{subdomain.itemName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-
-     <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedSubDomains')"
-     errorMsg="Select one sub sector">
-    </app-field-error-display>
-
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedSubDomains')" errorMsg="Select one sub sector">
+      </app-field-error-display>
+    </div>
+    <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
+      <mat-form-field>
+        <label class="col-form-label" for="last_name">{{lic_package_cap}}</label>
+        <mat-select formControlName="package_id" #licpkg (selectionChange)="onItemSelect(licpkg.value)">
+          <mat-option *ngFor="let package of packages; let i = index" [value]="packages[i].displayName">
+            {{package.displayName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'package_id')" errorMsg="Select one license package">
+      </app-field-error-display>
+      <div class="addon-desc">
+        {{licpkg.value}}
+      </div>
+    </div>
+    <div class="form-group agree">
+      <mat-checkbox class="terms-margin" formControlName="terms_condition"></mat-checkbox> <span class="terms-link">{{i_agree_cap}}
+        <a [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
+    </div>
   </div>
-
-  <div class="form-group-packages"  *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
-    <label class="col-form-label" for="sub_sector">{{lic_package_cap}}</label>
-
-
-    <mat-radio-group formControlName="package_id">
-        <mat-radio-button [value]="package.pkgId" *ngFor="let package of packages"
-        (click)="clickedPackage(package.pkgId)" [class.activepackcls]="isSelectedClass(package.pkgId)" >
-         {{package.displayName}}
-        </mat-radio-button>
-    </mat-radio-group>
-
-  </div>
-
-  <div class="form-group agree" >
-      <mat-checkbox class="terms-margin" formControlName="terms_condition"></mat-checkbox> <span class="terms-link">{{i_agree_cap}} <a [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
-  </div>
-</div>
-<div class="mat-dialog-actions" *ngIf="step==1">
-  <button  type="submit" mat-button
-  [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">{{sign_up_cap}}</button>
+  <div class="mat-dialog-actions" *ngIf="step==1">
+    <button type="submit" mat-button [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">{{sign_up_cap}}</button>
   </div>
 </form>
 <div class="example-container otpouter" *ngIf="step==2">
   <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
-  (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess"></app-otp-form>
+    (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess"></app-otp-form>
 </div>
 
 
@@ -117,12 +107,8 @@ onSubmit()" (keyup)="resetApiErrors()">
   <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"></app-sp-form>
 </div>
 <div *ngIf="api_error">
-    <app-field-error-display [displayError]="true"
-    errorMsg="{{api_error}}"></app-field-error-display>
+  <app-field-error-display [displayError]="true" errorMsg="{{api_error}}"></app-field-error-display>
 </div>
 <div *ngIf="api_success">
-<app-form-success-display [displayMsg]="true"
-successMsg="{{api_success}}"></app-form-success-display>
+  <app-form-success-display [displayMsg]="true" successMsg="{{api_success}}"></app-form-success-display>
 </div>
-
-

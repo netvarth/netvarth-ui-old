@@ -55,6 +55,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   coupon_count = 0;
   item_list;
   item_count = 0;
+  bProfile = null;
+  multipeLocationAllowed = false;
+  locName;
+  businessConfig: any = [];
+  loc_list: any = [];
+
   breadcrumbs = [
     {
       title: 'Settings'
@@ -69,7 +75,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
 
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
-    private routerobj: Router) {
+    private routerobj: Router,
+    private shared_services: SharedServices) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
   bprofileTooltip = '';
@@ -93,6 +100,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getDiscounts();
     this.getCoupons();
     this.getitems();
+    this.getBusinessConfiguration();
 
 
     // Update from footer
@@ -354,5 +362,40 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       });
   }
   reloadHandler() {
+  }
+  getBusinessConfiguration() {
+    this.shared_services.bussinessDomains()
+      .subscribe(data => {
+        this.businessConfig = data;
+        // console.log('config', this.businessConfig);
+        this.getBussinessProfile();
+      },
+        error => {
+
+        });
+  }
+  getBussinessProfile() {
+    this.provider_services.getBussinessProfile()
+      .subscribe(data => {
+        this.bProfile = data;
+        console.log('sector Id', this.bProfile);
+        for (let i = 0; i < this.businessConfig.length; i++) {
+          if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
+            if (this.businessConfig[i].multipleLocation) {
+              this.multipeLocationAllowed = true;
+            }
+            console.log(this.multipeLocationAllowed);
+            if (this.multipeLocationAllowed == true) {
+              this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
+            }
+            if (this.multipeLocationAllowed == false) {
+              this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
+            }
+          }
+        }
+      },
+        error => {
+
+        });
   }
 }
