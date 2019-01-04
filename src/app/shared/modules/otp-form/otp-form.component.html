@@ -1,63 +1,58 @@
-  <ng-container *ngIf="showOTPContainer">
-  <form [formGroup]="otp_form" novalidate
-  (ngSubmit)="otp_form.valid && doOnOtpSubmit(otp_form.value)"
-  (keyup)="doResetApiErrors()">
-  <mat-dialog-content>
-      <div class="form-group">
-      <!-- <mat-form-field>
-          <label class="col-form-label" for="otp">Enter OTP *</label>
-          <input matInput [formControl]="otp_form.controls['phone_otp']"  autocomplete="off">
-      </mat-form-field> -->
-      
-        <label class="col-form-label" for="otp">{{enter_otp_cap}}</label>
-        <input class="form-control" [formControl]="otp_form.controls['phone_otp']"  autocomplete="off">
-    
-        <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
-        errorMsg="Please enter a valid OTP.">
-       </app-field-error-display>
+<ng-container *ngIf="showOTPContainer">
+  <form [formGroup]="otp_form" novalidate (ngSubmit)="otp_form.valid && doOnOtpSubmit(otp_form.value)" (keyup)="doResetApiErrors()">
+    <mat-dialog-content>
+      <div class="row">
+        <label class="col-form-label col-md-12" for="otp"><b>{{otp_mobile}}</b></label>
+        <div class="form-group col-md-5">
+          <input class="form-control otp_box" [formControl]="otp_form.controls['phone_otp']" autocomplete="off">
+          <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')" errorMsg="Please enter a valid OTP.">
+          </app-field-error-display>
+        </div>
+        <div class="form-group col-md-7 otp_box">
+          <button type="submit" mat-button class="cs-btn bt1" [disabled]="!otp_form.valid">{{ok_btn_cap}}</button>
+        </div>
       </div>
     </mat-dialog-content>
 
     <mat-dialog-actions>
-        <button  type="submit" mat-button class="cs-btn bt1" [disabled]="!otp_form.valid">{{ok_btn_cap}}</button>
-        <div class="resendouter" *ngIf="resetCounterVal==0">
-          <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">Email</ng-container><ng-container *ngIf="type!='change_email'">{{mobile_cap}}</ng-container></span>
-          <span (click)="setResendViaEmail()" *ngIf="type=='signup'" mat-button> {{resend_otp_email}}</span>
+      <div class="resendouter" *ngIf="resetCounterVal==0">
+        <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">Email</ng-container></span>
+        <div class="cd-b">
+          <!-- *ngIf="normal_socialmedia_show==2" -->
+          <ul class="info-lst">
+            <span> Having a problem with your phone. Click <span (click)="setResendViaEmail()" *ngIf="type=='signup'"
+                mat-button>
+                {{ resend_otp_email}}</span></span>
+          </ul>
         </div>
-        <div class="counter-outer" *ngIf="resetCounterVal>0">
-          {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}}</span> {{seconds_cap}}
-        </div>
-    </mat-dialog-actions>
-  </form>
-  </ng-container>
-
-  <ng-container *ngIf="showOTPEmailContainer">
-  <div class="otpbottom">
-  <form  [formGroup]="email_form" novalidate *ngIf="email_otp_req"
-  (ngSubmit)="email_form.valid && resendViaEmail(email_form.value)"
-  (keyup)="doResetApiErrors()">
-  <mat-dialog-content>
-      <div class="form-group">
-        <mat-form-field>
-          <label class="col-form-label" for="otp">{{enter_email_cap}}</label>
-          <input type="email"  [formControl]="email_form.controls['otp_email']" matInput  autocomplete="off"/>
-        </mat-form-field>
-
-        <app-field-error-display [displayError]="fed_service.isFieldValid(email_form,'otp_email')"
-        errorMsg="Please enter a valid email.">
-        </app-field-error-display>
       </div>
-   </mat-dialog-content>
-
-    <mat-dialog-actions>
-    <button type="submit" mat-button [disabled]="!email_form.valid">{{resend_btn_cap}}</button>
-    <button type="button" mat-button (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
+      <div class="counter-outer" *ngIf="resetCounterVal>0">
+        {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}}</span> {{seconds_cap}}
+      </div>
     </mat-dialog-actions>
   </form>
-  </div>
 </ng-container>
 
+<ng-container *ngIf="showOTPEmailContainer">
+  <div class="otpbottom">
+    <form [formGroup]="email_form" novalidate *ngIf="email_otp_req" (ngSubmit)="email_form.valid && resendViaEmail(email_form.value)"
+      (keyup)="doResetApiErrors()">
+      <mat-dialog-content>
+        <div class="form-group">
+          <mat-form-field>
+            <label class="col-form-label" for="otp">{{enter_email_cap}}</label>
+            <input type="email" [formControl]="email_form.controls['otp_email']" matInput autocomplete="off" />
+          </mat-form-field>
 
+          <app-field-error-display [displayError]="fed_service.isFieldValid(email_form,'otp_email')" errorMsg="Please enter a valid email.">
+          </app-field-error-display>
+        </div>
+      </mat-dialog-content>
 
-
-
+      <mat-dialog-actions>
+        <button type="submit" mat-button [disabled]="!email_form.valid">{{resend_btn_cap}}</button>
+        <button type="button" mat-button (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
+      </mat-dialog-actions>
+    </form>
+  </div>
+</ng-container>

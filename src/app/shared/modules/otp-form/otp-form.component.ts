@@ -1,21 +1,24 @@
 
-import {interval as observableInterval, Observable,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { interval as observableInterval, Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, Inject, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
-import {NgForm} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
+import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 
 
-import {Messages} from '../../constants/project-messages';
+import { Messages } from '../../constants/project-messages';
+import { projectConstants } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-otp-form',
   templateUrl: './otp-form.component.html'
 })
-export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
+export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
 
+  api_error = null;
+  api_success = null;
   enter_otp_cap = Messages.ENTER_OTP_CAP;
   ok_btn_cap = Messages.OK_BTN;
   resend_otp_to_cap = Messages.RESEND_OTP_TO_CAP;
@@ -31,7 +34,7 @@ export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
   otp_form: FormGroup;
   email_form: FormGroup;
 
-  email_otp_req = false ;
+  email_otp_req = false;
   otp_email = null;
   message;
   showOTPContainer = true;
@@ -40,17 +43,19 @@ export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
   resetCounterVal;
   cronHandle: Subscription;
   refreshTime = 30;
+  otp_mobile = null;
+  changed = null;
 
-  @Input()  submitdata;
-  @Input()  type;
-  @Input()  resendemailotpsuccess;
+  @Input() submitdata;
+  @Input() type;
+  @Input() resendemailotpsuccess;
   @Output() retonOtpSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   @Output() resendOtp: EventEmitter<any> = new EventEmitter();
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public shared_services: SharedServices) {}
+    public shared_services: SharedServices) { }
 
   ngOnInit() {
     this.createForm();
@@ -61,12 +66,13 @@ export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
       }
       // this.reloadAPIs();
     });
+    this.setMessageType();
     // console.log('type', this.type);
   }
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
-     }
+    }
   }
 
   ngOnChanges() {
@@ -86,8 +92,8 @@ export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
   createForm() {
     this.otp_form = this.fb.group({
       phone_otp: ['', Validators.compose(
-      [Validators.required]) ]
-      });
+        [Validators.required])]
+    });
 
     // this.setMessageType();
 
@@ -107,7 +113,7 @@ export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
     // console.log('test', this.submitdata.userProfile);
     if (this.submitdata.userProfile !== undefined) {
       this.submitdata.userProfile.email = null;
-  }
+    }
     // delete this.submitdata.userProfile.email;
     this.resendOtp.emit(this.submitdata);
     // this.setMessageType();
@@ -118,8 +124,8 @@ export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
     this.resetApiErrors.emit();
     this.email_form = this.fb.group({
       otp_email: ['', Validators.compose(
-      [Validators.required, Validators.email]) ]
-      });
+        [Validators.required, Validators.email])]
+    });
 
     if (this.submitdata.userProfile && this.submitdata.userProfile.email) {
       this.email_form.get('otp_email').setValue(this.submitdata.userProfile.email);
@@ -153,20 +159,27 @@ export class OtpFormComponent  implements OnInit, OnChanges, OnDestroy {
       this.setMessage('email', this.submitdata.email);
     } else {
       this.setMessage('mobile', this.submitdata.phonenumber);
+      console.log(this.submitdata.phonenumber);
     }
   }
 
-  setMessage (type, data) {
+  setMessage(type, data) {
 
     if (type === 'email') {
       const email = (data) ? data : 'your email';
-      this.message  = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
+      this.message = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
     } else if (type === 'mobile') {
       const phonenumber = (data) ? data : 'your mobile number';
       this.message = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
+      this.changed = this.submitdata.userProfile.primaryMobileNo.value;
+      this.changed = new Array(this.submitdata.userProfile.primaryMobileNo.length - 4).join('*') + this.submitdata.userProfile.primaryMobileNo.substr(this.submitdata.userProfile.primaryMobileNo.length - 4, 6);
+      console.log(this.changed);
+      this.otp_mobile = Messages.OTP_SENT_LABEL.replace('[your_mobile]', this.changed);
     }
 
   }
+
+
   doshowOTPEmailContainer() {
     this.showOTPContainer = false;
     this.showOTPEmailContainer = true;

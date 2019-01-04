@@ -332,5 +332,13 @@ export const projectConstants = {
     DISABLED: 'Disabled',
     DISABLED_BY_JALDEE: 'Disabled By Jaldee',
     DISABLED_PROVIDER_LIMIT_REACHED: 'Disabled (Limit Reached)'
-  }
+  },
+  LICENSE_PACKAGES: [
+   { value:'0',displayName: 'Gold free'},
+   { value:'1',displayName: 'basic'},
+   { value:'2',displayName:'bronze'},
+   { value:'3',displayName: 'silver'},
+   { value:'4',displayName:'Gold'},
+   { value:'5',displayName: 'Diamond'}
+  ]
 };

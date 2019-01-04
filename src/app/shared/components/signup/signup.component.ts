@@ -24,7 +24,7 @@ export class SignUpComponent implements OnInit {
   i_agree_cap = Messages.I_AGREE_CAP;
   terms_cond_cap = Messages.TERMS_CONDITIONS_CAP;
   sign_up_cap = Messages.SIGN_UP_CAP;
-
+  license_packages = projectConstants.LICENSE_PACKAGES;
   business_domains ;
   packages ;
   subDomainList = [];
@@ -50,6 +50,7 @@ export class SignUpComponent implements OnInit {
   heading = 'Activation Process';
   resendemailotpsuccess = true;
   claimmable = false;
+  defaultLicense;
 
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
@@ -118,8 +119,10 @@ export class SignUpComponent implements OnInit {
       .subscribe(
         data => {
           this.packages = data;
+        
           if (this.packages[0] && this.signupForm.get('package_id')) {
             this.signupForm.get('package_id').setValue(this.packages[0].pkgId);
+            console.log(this.packages[0].pkgId);
           }
 
           if (this.data.claimData !== undefined) { // case of claimmable
@@ -535,6 +538,8 @@ export class SignUpComponent implements OnInit {
       } else if (type === 'mobile') {
         const phonenumber = (data) ? data : 'your mobile number';
         this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
+        console.log(this.api_success);
+        console.log(phonenumber);
       }
       setTimeout(() => {
         this.api_success = '';

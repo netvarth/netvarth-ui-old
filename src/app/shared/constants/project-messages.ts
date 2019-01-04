@@ -1,6 +1,7 @@
 export const Messages = {
   'OTP_SENT_EMAIL': 'OTP has been sent to  [your_email]. Please enter your OTP.',
   'OTP_SENT_MOBILE': 'OTP has been sent to [your_mobile]. Please enter your OTP.',
+  'OTP_SENT_LABEL' : 'Enter the OTP code we sent to [your_mobile]',
   'PROFILE_UPDATE': 'Profile has been updated successfully',
   'PASSWORD_MISMATCH': 'Password and Re-entered Password do not match',
   'PASSWORD_CHANGED': 'Password has been changed successfully',
@@ -539,7 +540,7 @@ export const Messages = {
 
   // App-shared-modules-otp-form
   'ENTER_OTP_CAP': 'Enter OTP *',
-  'RESEND_OTP_TO_CAP': 'Resend OTP To',
+  'RESEND_OTP_TO_CAP': 'Resend OTP',
   'RESEND_OTP_EMAIL_CAP': 'Resend OTP Via Email',
   'RESEND_OTP_OPT_ACTIVE_IN_CAP': 'Resend OTP option will be active in',
   'SECONDS_CAP': 'seconds.',

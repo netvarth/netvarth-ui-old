@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">{{heading}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+<h1 class="mat-dialog-title"><button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
       aria-hidden="true"></i></button></h1>
 <form [formGroup]="signupForm" novalidate (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">
@@ -75,9 +75,10 @@ onSubmit()" (keyup)="resetApiErrors()">
     </div>
     <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
       <mat-form-field>
-        <label class="col-form-label" for="last_name">{{lic_package_cap}}</label>
-        <mat-select formControlName="package_id" #licpkg (selectionChange)="onItemSelect(licpkg.value)">
-          <mat-option *ngFor="let package of packages; let i = index" [value]="packages[i].displayName">
+        <label class="col-form-label" for="last_name">Choose your {{lic_package_cap}}</label>
+        <mat-select licpkg formControlName="package_id"  [formControl]="signupForm.controls['package_id']" 
+         #licpkg (selectionChange)="onItemSelect(licpkg.value)">
+          <mat-option *ngFor="let package of packages; let i = index" [value]="i">
             {{package.displayName}}
           </mat-option>
         </mat-select>
@@ -85,16 +86,21 @@ onSubmit()" (keyup)="resetApiErrors()">
       <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'package_id')" errorMsg="Select one license package">
       </app-field-error-display>
       <div class="addon-desc">
-        {{licpkg.value}}
+          {{license_packages[signupForm.controls['package_id']].displayName}}
       </div>
+
+      <!-- <div class="addon-desc" *ngFor="let pkg of license_packages" [value]="licpkg.value">
+          {{pkg.displayName}}
+      </div> -->
+
     </div>
     <div class="form-group agree">
-      <mat-checkbox class="terms-margin" formControlName="terms_condition"></mat-checkbox> <span class="terms-link">{{i_agree_cap}}
+      <mat-checkbox class="terms-margin" formControlName="terms_condition" [value]=true></mat-checkbox> <span class="terms-link">{{i_agree_cap}}
         <a [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
     </div>
   </div>
   <div class="mat-dialog-actions" *ngIf="step==1">
-    <button type="submit" mat-button [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">{{sign_up_cap}}</button>
+    <button type="submit" mat-button [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">Send OTP</button>
   </div>
 </form>
 <div class="example-container otpouter" *ngIf="step==2">
@@ -109,6 +115,6 @@ onSubmit()" (keyup)="resetApiErrors()">
 <div *ngIf="api_error">
   <app-field-error-display [displayError]="true" errorMsg="{{api_error}}"></app-field-error-display>
 </div>
-<div *ngIf="api_success">
+<!-- <div *ngIf="api_success">
   <app-form-success-display [displayMsg]="true" successMsg="{{api_success}}"></app-form-success-display>
-</div>
+</div> -->

@@ -885,3 +885,10 @@ margin-top:10px;
   padding-bottom: 30px !important;
   color: black !important;
 }
+.otp_box {
+  margin-top: 10px;
+}
+.info-lst {
+  padding: 0 0 0 20px !important;
+  background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/15px 24px !important;
+}
