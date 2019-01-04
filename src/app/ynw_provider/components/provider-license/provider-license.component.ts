@@ -47,6 +47,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   license_upgarde_sub = {};
   license_tooltip = '';
   hide_invoiceperiod = false;
+  current_lic;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -135,7 +136,8 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.getLicenseDetails()
       .subscribe(data => {
         this.currentlicense_details = data;
-
+        this.current_lic = this.currentlicense_details.accountLicense.displayName;
+        // console.log(this.current_lic);
         const ynw_user = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
         // console.log(ynw_user.accountLicenseDetails);
         ynw_user.accountLicenseDetails = this.currentlicense_details;
@@ -152,6 +154,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
           }
           this.license_message = valid_till + ' day trial, till ' + end_date.format('ll');
         }
+        
 
       });
 
@@ -178,7 +181,8 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
       data: {
-        type: 'upgrade'
+        type: 'upgrade',
+        current_license_pkg: this.current_lic
       }
     });
 
