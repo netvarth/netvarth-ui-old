@@ -5,17 +5,13 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
-import { Router, ActivatedRoute, RoutesRecognized  } from '@angular/router';
+import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-delay.component';
-import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
-import { AddProviderWaitlistCheckInBillComponent } from '../add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-import { ViewProviderWaitlistCheckInBillComponent } from '../view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
-import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { startWith, map, filter, pairwise } from 'rxjs/operators';
@@ -27,11 +23,9 @@ import { projectConstants } from '../../../shared/constants/project-constants';
   styleUrls: ['./provider-home.component.scss']
 })
 export class ProviderHomeComponent implements OnInit, OnDestroy {
-
-// pdtyp  --- 0-History, 1-Future, 2-Today
-// pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
-// pdq 
-
+  // pdtyp  --- 0-History, 1-Future, 2-Today
+  // pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
+  // pdq --- selected queue id
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
@@ -198,12 +192,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   ];
   ngOnInit() {
     this.router.events
-            .pipe(filter((e: any) => e instanceof RoutesRecognized),
-                pairwise()
-            ).subscribe((e: any) => {
-                this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/checkin-detail/'));
-                console.log(e[0].urlAfterRedirects, this.returnedFromCheckDetails); // previous url
-            });
+      .pipe(filter((e: any) => e instanceof RoutesRecognized),
+        pairwise()
+      ).subscribe((e: any) => {
+        this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/checkin-detail/'));
+        // console.log(e[0].urlAfterRedirects, this.returnedFromCheckDetails); // previous url
+      });
     const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
       // console.log('exists', savedtype);
@@ -357,7 +351,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         this.settings = data;
         // console.log('prov settings', this.settings);
       }, error => {
-
       });
   }
   getLocationList() {
@@ -432,6 +425,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             return;
           }
           const getsavedqueueid = this.shared_functions.getitemfromLocalStorage('pdq');
+          if (!getsavedqueueid) {
+            const selid = this.findCurrentActiveQueue(this.all_queues);
+            this.selectedQueue(this.all_queues[selid]);
+          }
           let selqid = 0;
           for (let ii = 0; ii < this.all_queues.length; ii++) {
             let schedule_arr = [];
@@ -446,7 +443,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
               selqid = ii;
             }
           }
-          // console.log('all queues', this.all_queues);
           if (this.queues.length === 0) {
             this.queues = this.all_queues;
           }
@@ -467,12 +463,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   getQueueListByDate() {
-    // console.log('qby date');
     this.load_queue = 0;
     if (!this.selected_queue) {
-
       if (this.selected_location.id) {
         this.provider_services.getProviderLocationQueuesByDate(
           this.selected_location.id, this.queue_date)
@@ -502,7 +495,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
                 if (this.queues[0] && this.selected_queue == null) {
                   const selectedQindx = this.findCurrentActiveQueue(this.queues);
                   // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
-
                   this.selectedQueue(this.queues[selectedQindx]);
                 }
               }
@@ -530,7 +522,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     let etime;
     const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
     const curtimeforchk = new Date(tday + ' ' + curtime);
-    // console.log('curtimestr', curtime, curtimeforchk);
     for (let i = 0; i < ques.length; i++) {
       for (let j = 0; j < ques[i].queueSchedule.repeatIntervals.length; j++) {
         const pday = Number(ques[i].queueSchedule.repeatIntervals[j]);
@@ -569,9 +560,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     mom_date.set('minute', sMinutes);*/
     return time24;
   }
-
   changeLocation(location) {
-
     this.selected_location = location;
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
@@ -592,7 +581,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           this.future_waitlist_count = result;
         }
       );
-
     // this.getTodayCheckinCount()
     // .then(
     //   result => {
@@ -601,9 +589,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     // );
     // this.getHistoryCheckinCount();
   }
-
   selectedQueue(selected_queue, qclick?) {
-    // console.log('selected q', selected_queue.id);
     if (selected_queue.id) {
       this.sel_queue_indx = selected_queue.qindx;
       this.shared_functions.setitemonLocalStorage('pdq', selected_queue.id);
@@ -619,7 +605,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       );
   }
   handleQueueSel(mod) {
-    // console.log('mod', mod, this.sel_queue_indx);
+    // console.log('handleQueueSel', mod, this.sel_queue_indx);
     let selqindx;
     if (mod === 'next') {
       if ((this.queues.length - 1) > this.sel_queue_indx) {
@@ -633,90 +619,70 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-    getFutureCheckinCount(Mfilter = null) {
-
+  getFutureCheckinCount(Mfilter = null) {
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {
-        'location-eq' : this.selected_location.id,
+        'location-eq': this.selected_location.id,
       };
       no_filter = true;
     }
-
     return new Promise((resolve, reject) => {
       this.provider_services.getWaitlistFutureCount(Mfilter)
-      .subscribe(
-        data => {
-          resolve(data);
-          if (no_filter) { this.future_waitlist_count = data; }
-        },
-        error => {
-
-        });
+        .subscribe(
+          data => {
+            resolve(data);
+            if (no_filter) { this.future_waitlist_count = data; }
+          },
+          error => {
+          });
     });
-
-
   }
-
-   getHistoryCheckinCount(Mfilter = null) {
-
+  getHistoryCheckinCount(Mfilter = null) {
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {
-        'location-eq' : this.selected_location.id
+        'location-eq': this.selected_location.id
       };
       no_filter = true;
     }
     // console.log(filter);
     return new Promise((resolve, reject) => {
-
-    this.provider_services.getwaitlistHistoryCount(Mfilter)
-    .subscribe(
-      data => {
-        resolve(data);
-        if (no_filter) { this.histroy_waitlist_count = data; }
-      },
-      error => {
-
-      });
-
+      this.provider_services.getwaitlistHistoryCount(Mfilter)
+        .subscribe(
+          data => {
+            resolve(data);
+            if (no_filter) { this.histroy_waitlist_count = data; }
+          },
+          error => {
+          });
     });
   }
-
-   getTodayCheckinCount(Mfilter = null) {
+  getTodayCheckinCount(Mfilter = null) {
     let no_filter = false;
-
     if (!Mfilter) {
       Mfilter = {
-        'location-eq' : this.selected_location.id,
-        'queue-eq' : this.selected_queue.id
+        'location-eq': this.selected_location.id,
+        'queue-eq': this.selected_queue.id
       };
-
       no_filter = true;
     }
-
     return new Promise((resolve, reject) => {
-
       this.provider_services.getwaitlistTodayCount(Mfilter)
-      .subscribe(
-        data => {
-          if (no_filter) { this.today_waitlist_count = data; }
-          resolve(data);
-        },
-        error => {
-
-        });
-
+        .subscribe(
+          data => {
+            if (no_filter) { this.today_waitlist_count = data; }
+            resolve(data);
+          },
+          error => {
+          });
     });
   }
-
   getCount(list, status) {
-    return list.filter(function(elem) {
-      return elem.waitlistStatus===status;
+    return list.filter(function (elem) {
+      return elem.waitlistStatus === status;
     }).length;
   }
-
   setCounts(list) {
     this.today_arrived_count = this.getCount(list, 'arrived');
     this.today_checkedin_count = this.getCount(list, 'checkedIn');
@@ -725,15 +691,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.today_completed_count = this.getCount(list, 'done');
     this.today_cancelled_count = this.getCount(list, 'cancelled');
   }
-
   getTodayCheckIn() {
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     this.resetPaginationData();
-
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
-
     this.provider_services.getTodayWaitlist(Mfilter)
       .subscribe(
         data => {
@@ -754,19 +717,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           this.load_waitlist = 1;
         });
   }
-
   getFutureCheckIn() {
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-
-
     const promise = this.getFutureCheckinCount(Mfilter);
-
     promise.then(
       result => {
         this.pagination.totalCnt = result;
         Mfilter = this.setPaginationFilter(Mfilter);
-
         this.provider_services.getFutureWaitlist(Mfilter)
           .subscribe(
             data => {
@@ -779,22 +737,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             () => {
               this.load_waitlist = 1;
             });
-
       });
-
   }
-
   getHistoryCheckIn() {
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-
     const promise = this.getHistoryCheckinCount(Mfilter);
-
     promise.then(
       result => {
         this.pagination.totalCnt = result;
         Mfilter = this.setPaginationFilter(Mfilter);
-
         this.provider_services.getHistroryWaitlist(Mfilter)
           .subscribe(
             data => {
@@ -806,19 +758,15 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             () => {
               this.load_waitlist = 1;
             });
-
       }
     );
-
-
-
   }
-
   setTimeType(time_type) {
+    // console.log('set time type');
     this.check_in_list = this.check_in_filtered_list = [];
     this.time_type = time_type;
     this.shared_functions.setitemonLocalStorage('pdtyp', this.time_type);
-        if (time_type !== 0) {
+    if (time_type !== 0) {
       this.shared_functions.removeitemfromLocalStorage('hP');
       this.shared_functions.removeitemfromLocalStorage('hPFil');
     }
@@ -836,14 +784,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     }
     this.loadApiSwitch('setTimeType');
   }
-
   setFilterDateMaxMin() {
-
     this.filter_date_start_min = null;
     this.filter_date_start_max = null;
     this.filter_date_end_min = null;
     this.filter_date_end_max = null;
-
     if (this.time_type === 0) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
       this.filter_date_end_max = moment(new Date()).add(-1, 'days');
@@ -851,9 +796,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.filter_date_start_min = moment(new Date()).add(+1, 'days');
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');
     }
-
   }
-
   checkFilterDateMaxMin(type) {
     if (type === 'check_in_start_date') {
       this.filter_date_end_min = this.filter.check_in_start_date;
@@ -862,73 +805,59 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     } else if (type === 'check_in_end_date') {
       this.filter_date_start_max = this.filter.check_in_end_date;
-
       if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
         this.filter.check_in_start_date = this.filter.check_in_end_date;
       }
-
     }
     this.doSearch();
-
   }
-
-    loadApiSwitch(source) {
-    console.log('apiswitch', source, this.returnedFromCheckDetails, this.time_type);
+  loadApiSwitch(source) {
+    // console.log('apiswitch', source, this.returnedFromCheckDetails, this.time_type);
     let chkSrc = true;
     // if (source === 'changeLocation' && this.returnedFromCheckDetails && this.time_type === 0) {
     if (source === 'changeLocation' && this.time_type === 0) {
-     const hisPage =  this.shared_functions.getitemfromLocalStorage('hP');
-     const hFilter =  this.shared_functions.getitemfromLocalStorage('hPFil');
-     console.log('reached inside switch', hisPage, hFilter);
-     if (hisPage !== null) {
-      this.filter = hFilter;
-      this.pagination.startpageval = hisPage;
-      this.shared_functions.removeitemfromLocalStorage('hP');
-      this.shared_functions.removeitemfromLocalStorage('hPFil');
-      chkSrc = false;
-     }
+      const hisPage = this.shared_functions.getitemfromLocalStorage('hP');
+      const hFilter = this.shared_functions.getitemfromLocalStorage('hPFil');
+      // console.log('reached inside switch', hisPage, hFilter);
+      if (hisPage !== null) {
+        this.filter = hFilter;
+        this.pagination.startpageval = hisPage;
+        this.shared_functions.removeitemfromLocalStorage('hP');
+        this.shared_functions.removeitemfromLocalStorage('hPFil');
+        chkSrc = false;
+      }
     }
-
     if (chkSrc) {
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
         this.resetFilter();
       }
     }
-
     switch (this.time_type) {
-
       case 0: this.getHistoryCheckIn(); break;
       case 1: this.getQueueListByDate(); break;
       case 2: this.getFutureCheckIn(); break;
     }
   }
-
   showAdjustDelay() {
-
     if (this.queues.length === 0 || !this.selected_queue.id) {
       return false;
     }
-
     this.adjustdialogRef = this.dialog.open(AdjustQueueDelayComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'adjust-delay'],
       disableClose: true,
       data: {
         queues: this.queues,
         queue_id: this.selected_queue.id,
-        checkedin_count:this.today_checkedin_count,
+        checkedin_count: this.today_checkedin_count,
         arrived_count: this.today_arrived_count
       }
     });
-
     this.adjustdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
       }
     });
   }
-
-
   editLocation() {
     this.locations.forEach((loc, index) => {
       if (this.selected_location.id === loc.id) {
@@ -936,61 +865,47 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
     this.edit_location = 1;
-
   }
-
   cancellocationChange() {
     this.edit_location = 0;
   }
-
   onChangeLocationSelect(event) {
     const value = event.value;
     this.changeLocation(this.locations[value] || []);
   }
-
   reloadAPIs() {
     this.countApiCall();
     this.loadApiSwitch('reloadAPIs');
   }
-
   countApiCall() {
     this.getHistoryCheckinCount();
     this.getFutureCheckinCount();
     this.getTodayCheckinCount();
   }
   changeStatusType(type) {
-
-
     this.status_type = type;
     this.shared_functions.setitemonLocalStorage('pdStyp', this.status_type);
     let status: any = this.status_type;
-
     switch (type) {
       case 'all': status = ['checkedIn', 'arrived'];
       // case 'all': status = ['checkedIn', 'arrived', 'prepaymentPending'];
     }
-
     this.check_in_filtered_list = this.check_in_list.filter(
       check_in => {
         if (typeof (status) === 'string' &&
           check_in.waitlistStatus === status) {
           return check_in;
         } else if (typeof (status) === 'object') {
-
           const index = status.indexOf(check_in.waitlistStatus);
           if (index !== -1) {
             return check_in;
           }
-
         }
-
       });
   }
-
   changeWaitlistStatus(waitlist, action) {
     this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
   }
-
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
     this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
       .then(
@@ -999,7 +914,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   showConsumerNote(checkin) {
     this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
       width: '50%',
@@ -1009,90 +923,68 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         checkin: checkin
       }
     });
-
     this.notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
       }
     });
   }
-
   toggleFilter() {
     this.open_filter = !this.open_filter;
   }
-
   setFilterData(type, value) {
     this.filter[type] = value;
     this.resetPaginationData();
     this.doSearch();
   }
-
   setFilterForApi() {
     const api_filter = {};
-
     if (this.time_type === 1) {
       api_filter['queue-eq'] = this.selected_queue.id;
     } else if (this.filter.queue !== 'all') {
       api_filter['queue-eq'] = this.filter.queue;
     }
-
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
-
     if (this.filter.last_name !== '') {
       api_filter['lastName-eq'] = this.filter.last_name;
     }
-
     if (this.filter.phone_number !== '') {
       api_filter['primaryMobileNo-eq'] = this.filter.phone_number;
     }
-
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;
     }
-
     if (this.time_type !== 1) {
       if (this.filter.waitlist_status !== 'all') {
         api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
       }
-
       // if (this.filter.check_in_date != null) {
       //   api_filter['date-eq'] = this.filter.check_in_date.format('YYYY-MM-DD');
       // }
-
       if (this.filter.check_in_start_date != null) {
         api_filter['date-ge'] = this.filter.check_in_start_date.format('YYYY-MM-DD');
       }
-
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.filter.check_in_end_date.format('YYYY-MM-DD');
       }
-
     }
     if (this.time_type === 0) {
       if (this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
     }
-
     api_filter['location-eq'] = this.selected_location.id;
-
     return api_filter;
   }
-
   setPaginationFilter(api_filter) {
-
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
     api_filter['count'] = this.filter.page_count;
-
     return api_filter;
   }
-
   doSearch() {
     this.loadApiSwitch('doSearch');
   }
-
   resetFilter() {
     this.filter = {
       first_name: '',
@@ -1109,15 +1001,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       page: 0
     };
   }
-
   goCheckinDetail(checkin) {
-   if (this.time_type === 0) {
+    if (this.time_type === 0) {
       this.shared_functions.setitemonLocalStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemonLocalStorage('hPFil', this.filter);
     }
     this.router.navigate(['provider', 'checkin-detail', checkin.ynwUuid]);
   }
-
   addProviderNote(checkin) {
     this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
@@ -1127,18 +1017,15 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         checkin_id: checkin.ynwUuid
       }
     });
-
     this.addnotedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
     });
   }
-
   viewBillPage(checkin) {
     this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
   }
-
   // getWaitlistBillgetWaitlistBill(checkin, type = 'bill') {
   //   this.provider_services.getWaitlistBill(checkin.ynwUuid)
   //     .subscribe(
@@ -1161,7 +1048,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   //       }
   //     );
   // }
-
   // addEditBill(checkin) {
   //   // console.log('add bill', bill_data);
   //   // this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
@@ -1173,14 +1059,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   //   //     bill_data: bill_data
   //   //   }
   //   // });
-
   //   // this.billdialogRef.afterClosed().subscribe(result => {
   //   //   if (result === 'reloadlist') {
   //   //     this.reloadAPIs();
   //   //   }
   //   // });
   // }
-
   // viewBill(checkin, bill_data) {
   //   // console.log('billdata', bill_data);
   //   // this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
@@ -1242,17 +1126,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   //     this.reloadAPIs();
   //   });
   // }
-
   resetPaginationData() {
     this.filter.page = 1;
     this.pagination.startpageval = 1;
-     this.shared_functions.removeitemfromLocalStorage('hP');
+    this.shared_functions.removeitemfromLocalStorage('hP');
     this.shared_functions.removeitemfromLocalStorage('hPFil');
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-       this.shared_functions.setitemonLocalStorage('hP', pg);
+    this.shared_functions.setitemonLocalStorage('hP', pg);
     this.shared_functions.setitemonLocalStorage('hPFil', this.filter);
     // console.log('page', pg);
     this.doSearch();
@@ -1274,7 +1157,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
     return label_status;
   }
-
   focusInput(ev, input) {
     const kCode = parseInt(ev.keyCode, 10);
     if (kCode === 13) {
@@ -1287,7 +1169,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.doSearch();
     }
   }
-
   learnmore_clicked(mod) {
     const moreOptions = { 'show_learnmore': true, 'scrollKey': 'adjustdelay' };
     const pdata = { 'ttype': 'learn_more', 'target': moreOptions };

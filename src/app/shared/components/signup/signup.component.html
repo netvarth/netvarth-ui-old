@@ -76,17 +76,16 @@ onSubmit()" (keyup)="resetApiErrors()">
     <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
       <mat-form-field>
         <label class="col-form-label" for="last_name">Choose your {{lic_package_cap}}</label>
-        <mat-select licpkg formControlName="package_id"  [formControl]="signupForm.controls['package_id']" 
-         #licpkg (selectionChange)="onItemSelect(licpkg.value)">
-          <mat-option *ngFor="let package of packages; let i = index" [value]="i">
+        <mat-select formControlName="package_id" #licpkg (selectionChange)="onItemSelect($event)">
+          <mat-option *ngFor="let package of packages; let i = index" [value]="package.pkgId">
             {{package.displayName}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'package_id')" errorMsg="Select one license package">
       </app-field-error-display>
-      <div class="addon-desc">
-          {{license_packages[signupForm.controls['package_id']].displayName}}
+      <div class="package-desc" >
+          {{license_description}}
       </div>
 
       <!-- <div class="addon-desc" *ngFor="let pkg of license_packages" [value]="licpkg.value">

@@ -28,6 +28,7 @@ export class EditProfileComponent implements OnInit {
   phone_no_cap = Messages.PHONE_NO_CAP;
   edit_phone_no_cap = Messages.EDIT_PHONE_NO_CAP;
   email_id_cap = Messages.EMAIL_ID_CAP;
+  email_cap = Messages.EMAIL_CAP;
   edit_email_cap = Messages.CHANGE_EMAIL_CAP;
   update_btn = Messages.UPDATE_BTN;
   related_links_cap = Messages.RELATED_LINKS;
@@ -74,7 +75,8 @@ export class EditProfileComponent implements OnInit {
       /*gender: ['', Validators.compose([Validators.required])],
       dob: ['', Validators.compose([Validators.required])]*/
       gender: [''],
-      dob: ['']
+      dob: [''],
+      email: ['']
     });
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     const ob = this;
@@ -100,18 +102,18 @@ export class EditProfileComponent implements OnInit {
             first_name : data['userProfile']['firstName'] || null,
             last_name : data['userProfile']['lastName'] || null,
             gender : data['userProfile']['gender'] || null,
-            dob : data['userProfile']['dob'] || null
+            dob : data['userProfile']['dob'] || null,
+            email : data['userProfile']['email'] || ''
           });
-          this.emailHolder = data['userProfile']['email'] || '';
           this.phonenoHolder = data['userProfile']['primaryMobileNo'] || '';
         } else if ( typ === 'provider') {
           this.editProfileForm.setValue({
             first_name : data['basicInfo']['firstName'] || null,
             last_name : data['basicInfo']['lastName'] || null,
             gender : data['basicInfo']['gender'] || null,
-            dob : data['basicInfo']['dob'] || null
+            dob : data['basicInfo']['dob'] || null,
+            email : data['basicInfo']['email'] || ''
           });
-          this.emailHolder = data['basicInfo']['email'] || '';
           this.phonenoHolder = data['basicInfo']['mobile'] || '';
         }
       },
@@ -141,26 +143,27 @@ export class EditProfileComponent implements OnInit {
     }
     if (this.fnameerror !== null || this.lnameerror !== null) {
       return;
-    }    
+    }
     if (this.curtype === 'consumer') {
       post_data = {
-                    'id': curuserdet['id'] || null,
-                    'firstName': sub_data.first_name.trim() || null,
-                    'lastName': sub_data.last_name.trim() || null,
-                    'dob': date_format || null,
-                    'gender': sub_data.gender || null
+        'id': curuserdet['id'] || null,
+        'firstName': sub_data.first_name.trim() || null,
+        'lastName': sub_data.last_name.trim() || null,
+        'dob': date_format || null,
+        'gender': sub_data.gender || null,
+        'email' : sub_data.email || null
       };
       passtyp = 'consumer';
     } else if (this.curtype === 'provider') {
-
       post_data = {
-              'basicInfo': {
-                  'id': curuserdet['id'] || null,
-                  'firstName': sub_data.first_name.trim() || null,
-                  'lastName': sub_data.last_name.trim() || null,
-                  'dob': date_format || null,
-                  'gender': sub_data.gender || null
-              }
+        'basicInfo': {
+            'id': curuserdet['id'] || null,
+            'firstName': sub_data.first_name.trim() || null,
+            'lastName': sub_data.last_name.trim() || null,
+            'dob': date_format || null,
+            'gender': sub_data.gender || null,
+            'email' : sub_data.email || null
+        }
       };
       passtyp = 'provider/profile';
     }

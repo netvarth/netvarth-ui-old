@@ -749,6 +749,15 @@ padding: 5px 5px 5px 10px !important;
 .pad-rt-10 {
   padding-right:10px !important;
 }
+.pad-bt-10 {
+  padding-bottom:10px !important;
+}
+.mgn-bt-10 {
+  margin-bottom:10px !important;
+}
+.brd-bt {
+ border-bottom: 1px solid #ddd !important;
+}
 .ot-it div .col-md-6 {
   display: inline !important;
 }
@@ -769,6 +778,7 @@ padding: 5px 5px 5px 10px !important;
 
 .checkin-consumer .mat-dialog-container {width: auto;max-width:450px !important}
 .checkin-provider .mat-dialog-container {max-width:450px !important}
+
 
 .checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action {
   width: 100%;
@@ -834,7 +844,7 @@ margin-top:10px;
   .b-queue {top: 25px !important;} 
   .b-service {top:45px !important}
 }
-@media only screen and (max-width:576px) {
+@media only screen and (max-width:575px) {
   .b-queue{top: 45px !important;} 
   .b-service {top: 43px !important;}
   .add-nloc-q {float: right !important;right:110px;top:0px; margin-bottom:5px !important;}
@@ -881,6 +891,20 @@ margin-top:10px;
   .col-12.no-padding-small {padding-left: 0px !important;padding-right: 0px !important;}
 }
 .mob-prefix {margin-top : -1px !important;}
+.lic-page .addbt:before {
+  top: -2px !important;
+  font-size: 1.10em !important;
+}
+.adjust-delay .mat-dialog-container {max-width:450px !important}
+.adjust-delay .mat-dialog-container form .form-group {margin-bottom:0.25em!important;}
+.adjustdelay .form-group .col-form-label {margin-bottom: 0px !important}
+.blue {color:blue !important}
+.red {color:red !important}
+.white {color: white !important}
+.black {color: black !important}
+.fa-icon-size-1 {font-size:1.0em !important}
+.fltr .mat-content {display: inline !important}
+.fltr span {margin-left:none!important; float: right!important;}
 .signupmainclass .mat-dialog-content .message-one .p1, .loginmainclass .mat-dialog-content .message-one .p1, .moreoptionsmainclass .mat-dialog-content .message-one .p1, .forgotpasswordmainclass .mat-dialog-content .message-one .p1, .commonpopupmainclass .mat-dialog-content .message-one .p1, .googlemainmappopup .mat-dialog-content .message-one .p1, .outer-card .mat-dialog-content .message-one .p1, .consumerpopupmainclass .mat-dialog-content .message-one .p1, .specialclass .mat-dialog-content .message-one .p1{
   padding-bottom: 30px !important;
   color: black !important;
@@ -891,4 +915,9 @@ margin-top:10px;
 .info-lst {
   padding: 0 0 0 20px !important;
   background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/15px 24px !important;
+}
+.package-desc {
+  padding: 10px !important;
+  color:green !important;
+  font-size: 0.80em !important;
 }

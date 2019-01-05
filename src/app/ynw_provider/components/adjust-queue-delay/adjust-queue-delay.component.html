@@ -18,9 +18,13 @@ onSubmit(amForm.value)">
               </mat-select>
             </mat-form-field>
         </div>
+        <div class="brd-bt no-padding pad-bt-10 mgn-bt-10">
+            <div class="row ">
+            <div class="col-md-6 "><h6>Checkins # {{checkedin_cnt}}</h6></div>
+            <div class="col-md-6 "><h6>Arrived # {{arrived_cnt}}</h6></div>
+        </div>
+        </div>
         <div class="form-group">
-            <label class="col-form-label">Checkedins: #{{checkedin_cnt}} , Arrived: #{{arrived_cnt}}</label>
-         
             <label class="col-form-label">{{delay_cap}}</label>
           <ngb-timepicker [(ngModel)]="time" formControlName="delay"></ngb-timepicker>
         </div>

@@ -392,8 +392,8 @@
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
                                 <span class="first-time-jc" *ngIf="search_result.fields.coupon_enabled==1 && isfirstCheckinOffer"
-                                    (click)="!btn_clicked && openCoupons(search_result,true)">FirstTimeSignup Coupon</span>
-                                <span class="other-jcs" *ngIf="search_result.fields.coupon_enabled==1" (click)="!btn_clicked && openCoupons(search_result)">Jaldee
+                                    (click)="!btn_clicked && openCoupons(search_result,true)"><i class="fa fa-tag red"></i> FirstTimeSignup Coupon</span>
+                                <span class="other-jcs" *ngIf="search_result.fields.coupon_enabled==1" (click)="!btn_clicked && openCoupons(search_result)"><i class="fa fa-tag blue"></i> Jaldee
                                     Coupons</span>
                                 <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">{{send_message_cap}}</span>

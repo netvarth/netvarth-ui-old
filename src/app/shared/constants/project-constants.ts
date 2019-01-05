@@ -333,12 +333,12 @@ export const projectConstants = {
     DISABLED_BY_JALDEE: 'Disabled By Jaldee',
     DISABLED_PROVIDER_LIMIT_REACHED: 'Disabled (Limit Reached)'
   },
-  LICENSE_PACKAGES: [
-   { value:'0',displayName: 'Gold free'},
-   { value:'1',displayName: 'basic'},
-   { value:'2',displayName:'bronze'},
-   { value:'3',displayName: 'silver'},
-   { value:'4',displayName:'Gold'},
-   { value:'5',displayName: 'Diamond'}
-  ]
+  LICENSE_PACKAGES: {
+   5 : 'You can always change licensing, Once the trial period expires, we will automatically put you in to "Basic Free". You will never gets charges unless until you say so.',
+   1 : 'Basic Free special offer.',
+   7 : 'bronze',
+   2 : 'silver',
+   3 : 'Gold',
+   4 : 'Diamond'
+  }
 };

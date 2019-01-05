@@ -58,10 +58,10 @@
                             <i class="icon-mobile"></i>
                             <span>{{change_mobile}}</span>
                         </button>
-                        <button mat-menu-item (click)="redirectto('change-email')">
+                        <!-- <button mat-menu-item (click)="redirectto('change-email')">
                             <i class="icon-inbox"></i>
                             <span>{{add_change_email}}</span>
-                        </button>
+                        </button> -->
                         <button mat-menu-item (click)="switchtoConsumer()" *ngIf="isprovider">
                             <i class="icon-switch"></i>
                             <span>{{switch_to_consumer}}</span>
@@ -111,7 +111,7 @@
                                 <li (click)="redirectto('profile')"><i class="icon-profile"></i> {{user_profile}}</li>
                                 <li (click)="redirectto('change-password')"><i class="icon-password"></i> {{change_password}}</li>
                                 <li (click)="redirectto('change-mobile')"><i class="icon-mobile"></i> {{change_mobile}}</li>
-                                <li (click)="redirectto('change-email')"><i class="icon-inbox"></i> {{add_change_email}}</li>
+                                <!-- <li (click)="redirectto('change-email')"><i class="icon-inbox"></i> {{add_change_email}}</li> -->
                                 <li (click)="switchtoConsumer()" *ngIf="isprovider"><i class="icon-switch"></i> {{switch_to_consumer}}</li>
                                 <li (click)="doLogout()"><i class="icon-logout"></i> {{logout_cap}}</li>
                             </ul>
@@ -169,10 +169,10 @@
                                         <i class="icon-mobile"></i>
                                         <span>{{change_mobile}}</span>
                                     </button>
-                                    <button mat-menu-item (click)="redirectto('change-email')">
+                                    <!-- <button mat-menu-item (click)="redirectto('change-email')">
                                         <i class="icon-inbox"></i>
                                         <span>{{add_change_email}}</span>
-                                    </button>
+                                    </button> -->
                                     <button mat-menu-item (click)="redirectto('members')">
                                         <i class="icon-members"></i>
                                         <span>{{family_members}}</span>

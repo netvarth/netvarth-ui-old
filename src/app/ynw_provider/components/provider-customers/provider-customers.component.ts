@@ -32,6 +32,7 @@ export class ProviderCustomersComponent implements OnInit {
   no_customer_cap = Messages.NO_CUSTOMER_CAP;
   customers: any = [];
   customer_count: any = 0;
+  filterapplied = false;
   open_filter = false;
   filter = {
     first_name: '',
@@ -53,6 +54,7 @@ export class ProviderCustomersComponent implements OnInit {
   checkin_label = '';
   checkedin_label = '';
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   constructor(private provider_services: ProviderServices,
     private router: Router,
@@ -95,7 +97,10 @@ export class ProviderCustomersComponent implements OnInit {
         }
       );
   }
-
+  clearFilter() {
+    this.resetFilter();
+    this.getCustomersList(true);
+  }
   getCustomersListCount(filter) {
     return new Promise((resolve, reject) => {
       this.provider_services.getProviderCustomersCount(filter)

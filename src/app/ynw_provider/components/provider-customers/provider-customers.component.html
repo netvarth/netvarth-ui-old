@@ -9,18 +9,21 @@
           <span class="cust_count">{{customer_label | capitalizeFirst}}s {{checkedin_label}}: {{customer_count}}</span>
         </div>
         <div class="dash-list">
-
           <mat-accordion>
             <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
               <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                <span (click)="toggleFilter()"  [matTooltipClass] = "tooltipcls" [matTooltip]="filtericonTooltip" *ngIf="!open_filter"><i class="icon-filter-one"></i></span>
-                        <span (click)="toggleFilter()"  *ngIf="open_filter"><i class="icon-filter-one"></i></span>
+                <span>
+                  <i class="icon-filter-one" (click)="toggleFilter()" *ngIf="open_filter"></i>
+                  <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
+                </span>
+                <span>
+                    <i class="fa fa-filter black fa-icon-size-1" *ngIf="filterapplied" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonclearTooltip"></i>
+                  </span>
               </mat-expansion-panel-header>
-
               <div class="form-group first_name">
                 <mat-form-field class="example-full-width">
                   <label class="col-form-label">{{first_name_cap}}</label>
-                  <input matInput [(ngModel)]="filter.first_name" #Ffname (blur)="doSearch()" (keyup)="focusInput($event, Fmobile)"
+                  <input matInput [(ngModel)]="filter.first_name" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
                     autocomplete="off">
                 </mat-form-field>
               </div>
@@ -31,7 +34,6 @@
                     autocomplete="off">
                 </mat-form-field>
               </div>
-
               <div class="form-group email">
                 <mat-form-field class="example-full-width">
                   <label class="col-form-label">{{email_cap}}</label>
@@ -39,7 +41,6 @@
                     autocomplete="off">
                 </mat-form-field>
               </div>
-
               <div class="check_in_date">
                 <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}} {{date_cap}}</label>
                 <mat-form-field>
@@ -49,7 +50,6 @@
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
               </div>
-
             </mat-expansion-panel>
           </mat-accordion>
           <div class="table-outer d-tbl">
@@ -64,7 +64,6 @@
               </thead>
               <tbody>
                 <tr *ngFor="let customer of customers">
-
                   <td data-title="Name" class="name">
                     {{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}
                   </td>
@@ -77,14 +76,11 @@
                 </tr>
               </tbody>
             </table>
-
-
             <ng-container *ngIf="loadComplete && customers.length == 0">
               <div class="qlst no-dta">
                 {{no_customer_cap}} {{customer_label}}s
               </div>
             </ng-container>
-
             <div class="search_paging" *ngIf="loadComplete">
               <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
                 [curpage]="pagination.startpageval"></app-pager>

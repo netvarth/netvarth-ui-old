@@ -16,6 +16,7 @@ import {projectConstants} from '../../constants/project-constants';
 export class ChangeMobileComponent implements OnInit {
 
   mobile_cap = Messages.MOBILE_CAP;
+  your_curmob_msg = Messages.CURRENTMOBMSG;
   verified_cap = Messages.PHONE_VERIFIED;
   save_btn_cap = Messages.SAVE_BTN;
   related_links_cap = Messages.RELATED_LINKS;
@@ -24,6 +25,7 @@ export class ChangeMobileComponent implements OnInit {
   add_change_email_cap = Messages.ADD_CHANGE_EMAIL;
   family_members_cap = Messages.FAMILY_MEMBERS;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
+  changemob_cap = Messages.CHANGE_MOB_CAP;
 
   spForm: FormGroup;
   api_error = null;
@@ -40,7 +42,7 @@ export class ChangeMobileComponent implements OnInit {
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     },
     {
-      title: 'Change Mobile Number',
+      title: 'Change Mobile #',
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
     }
   ];

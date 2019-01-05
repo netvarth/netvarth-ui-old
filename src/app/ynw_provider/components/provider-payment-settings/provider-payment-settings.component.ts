@@ -462,7 +462,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      */
     redirectToEmail() {
         this.shared_functions.setitemonLocalStorage('e_ret', 'pset');
-        this.router.navigate(['provider', 'change-email']);
+        this.router.navigate(['provider', 'profile']);
     }
 
     // handleEditPaySettings(mod) {

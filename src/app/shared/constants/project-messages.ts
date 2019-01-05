@@ -190,6 +190,7 @@ export const Messages = {
   'ADJUSTDELAY_TOOPTIP': 'Set delay in working hours anytime',
   'INBOXICON_TOOPTIP': 'Messages',
   'FILTERICON_TOOPTIP': 'Use filters to find specific data',
+  'FILTERICON_CLEARTOOLTIP': 'Clear filtered data',
   'BRPFOLE_SEARCH_TOOLTIP': 'Set up your profile here',
   'WAITLIST_TOOLTIP': 'Manage working hours and waitlist',
   'LINCENSE_TOOLTIP': 'View and change your license package',
@@ -257,7 +258,7 @@ export const Messages = {
   'RELATED_LINKS': 'Related Links',
   'USER_PROF_CAP': 'My Account',
   'CHANGE_PASSWORD_CAP': 'Change Password',
-  'CHANGE_MOB_CAP': 'Change Mobile',
+  'CHANGE_MOB_CAP': 'Change Mobile #',
   'ADD_CHANGE_EMAIL': 'Update Email',
 
   // Dashboard
@@ -434,7 +435,7 @@ export const Messages = {
   'FEMALE_CAP': 'Female',
 
   // App-shared-modules-change email
-  'EMAIL_CAP': 'Email *',
+  'EMAIL_CAP': 'Email',
   'VERIFIED_CAP': 'Verified',
 
   // App-shared-modules-change-mobile
@@ -1047,7 +1048,7 @@ export const Messages = {
   'PAY_SET_JALDEE_ACCOUNT_CAP' : 'Jaldee Bank',
   'PAY_SET_MY_OWN_ACCOUNT_CAP' : 'My Own Bank Account',
   'PAY_SET_ONLY_IF_MAIL_VERIFIED_CAP' : 'Payment settings can be done only if your email id is verified. Please use the below button to set up your email id.',
-  'PAY_SET_GO_TO_EMAIL_SET_CAP' : 'Go to Email Settings',
+  'PAY_SET_GO_TO_EMAIL_SET_CAP' : 'Go to My Account',
   'PAY_SET_REVISIT_THIS_PAGE_CAP' : 'Please revisit this page to do the payment settings, once you have verified the email address.',
   'PAY_SET_PAYTM_CAP' : 'Paytm',
   'PAY_SET_VERIFIED_CAP' : '(Verified)',
@@ -1171,6 +1172,7 @@ export const Messages = {
   'NOTESFOR' : 'Notes for ',
   'APPLYORDERDISC': 'Apply Order Discount',
   'APPLYCOUPON' : 'Apply Coupon',
-  'APPLYJC' : 'Apply Jaldee Coupon'
+  'APPLYJC' : 'Apply Jaldee Coupon',
+  'CURRENTMOBMSG': 'Your Current Mobile # '
 };
 
