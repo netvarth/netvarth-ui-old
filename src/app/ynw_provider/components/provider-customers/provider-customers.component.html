@@ -16,8 +16,7 @@
                   <i class="icon-filter-one" (click)="toggleFilter()" *ngIf="open_filter"></i>
                   <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
                 </span>
-                <span>
-                    <i class="fa fa-filter black fa-icon-size-1" *ngIf="filterapplied" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonclearTooltip"></i>
+                <span class="clear-filter" *ngIf="filterapplied" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonclearTooltip">
                   </span>
               </mat-expansion-panel-header>
               <div class="form-group first_name">

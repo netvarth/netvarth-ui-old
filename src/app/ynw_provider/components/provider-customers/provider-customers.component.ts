@@ -99,6 +99,7 @@ export class ProviderCustomersComponent implements OnInit {
   }
   clearFilter() {
     this.resetFilter();
+    this.filterapplied = false;
     this.getCustomersList(true);
   }
   getCustomersListCount(filter) {
@@ -131,6 +132,9 @@ export class ProviderCustomersComponent implements OnInit {
 
   doSearch() {
     this.getCustomersList();
+    if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
+      this.filterapplied = true;
+    }
   }
 
   resetFilter() {
