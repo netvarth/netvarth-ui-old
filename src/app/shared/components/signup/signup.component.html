@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title"><button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+<h1 class="mat-dialog-title"><button mat-dialog-close class="modal_close" (click)="onCancelPass(3)" tabindex="-1"><i class="fa fa-window-close"
       aria-hidden="true"></i></button></h1>
 <form [formGroup]="signupForm" novalidate (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">

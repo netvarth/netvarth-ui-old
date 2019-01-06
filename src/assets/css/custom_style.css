@@ -921,3 +921,7 @@ margin-top:10px;
   color:green !important;
   font-size: 0.80em !important;
 }
+
+.pass_butt {
+  padding: 10px 20px !important;
+}
