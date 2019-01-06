@@ -1,53 +1,59 @@
 import { Component, Inject, OnInit, EventEmitter, Output, ElementRef } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
-import {NgForm} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../modules/form-message-display/form-message-display.service';
+import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { DOCUMENT } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../functions/shared-functions';
+import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 
 
 @Component({
   selector: 'app-sp-form',
   templateUrl: './set-password-form.component.html'
 })
-export class SetPasswordFormComponent  implements OnInit {
+export class SetPasswordFormComponent implements OnInit {
 
 
   new_password_cap = Messages.NEW_PASSWORD_CAP;
   password_valid_cap = Messages.PASSWORD_VALID_CAP;
-  re_enter_password_cap =Messages.RE_ENTER_PASSWORD_CAP;
+  re_enter_password_cap = Messages.RE_ENTER_PASSWORD_CAP;
   submit_cap = Messages.SUBMIT_CAP;
-  
-  spForm: FormGroup;
+  set_password_msg = Messages.SET_PASSWORD_MSG;
+  passworddialogRef;
+
+  spForm;
 
   @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    public dialogRef: MatDialogRef<SetPasswordFormComponent>,
+    private fb: FormBuilder,private dialog: MatDialog,
+    public sharedfunctionObj: SharedFunctions,
     public fed_service: FormMessageDisplayService,
     @Inject(DOCUMENT) public document,
-    public shared_services: SharedServices) {}
+    public shared_services: SharedServices) { }
 
   ngOnInit() {
     this.createForm();
   }
 
   createForm() {
-
     this.spForm = this.fb.group({
-                      new_password: ['', Validators.compose(
-                        [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]).{8,}$')]) ],
-                      confirm_password: ['', Validators.compose(
-                          [Validators.required]) ],
+      new_password: ['', Validators.compose(
+        [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]).{8,}$')])],
+      confirm_password: ['', Validators.compose(
+        [Validators.required])],
 
-                  });
-      setTimeout(() => {
-        if (this.document.getElementById('newpassfield')) {
-          this.document.getElementById('newpassfield').focus();
-        }
-      }, 500);
+    });
+    setTimeout(() => {
+      if (this.document.getElementById('newpassfield')) {
+        this.document.getElementById('newpassfield').focus();
+      }
+    }, 500);
   }
 
   doOnPasswordSubmit(value) {
@@ -56,6 +62,22 @@ export class SetPasswordFormComponent  implements OnInit {
 
   doResetApiErrors() {
     this.resetApiErrors.emit();
+  }
+  
+  onCancelPass() {
+    this.passworddialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': this.sharedfunctionObj.getProjectMesssages('PASSWORD_ERR_MSG')
+      }
+    });
+    this.passworddialogRef.afterClosed().subscribe(result => {
+      if (result) {
+       this.passworddialogRef.close();
+      }
+    });
   }
 
 }
