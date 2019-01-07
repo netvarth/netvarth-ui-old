@@ -902,7 +902,7 @@ margin-top:10px;
 .red {color:red !important}
 .white {color: white !important}
 .black {color: black !important}
-.clear-filter {margin-right:5px; background: url(../images/icons8-clear-filters-40.png) no-repeat scroll 0 0/20px 20px !important;}
+.clear-filter {margin-top: 2px;margin-right:5px; background: url(../images/icons8-clear-filters-40.png) no-repeat scroll 0 0/20px 20px !important;}
 .fltr .mat-content {display: inline !important}
 .fltr span {margin-left:none!important; float: right!important;}
 .signupmainclass .mat-dialog-content .message-one .p1, .loginmainclass .mat-dialog-content .message-one .p1, .moreoptionsmainclass .mat-dialog-content .message-one .p1, .forgotpasswordmainclass .mat-dialog-content .message-one .p1, .commonpopupmainclass .mat-dialog-content .message-one .p1, .googlemainmappopup .mat-dialog-content .message-one .p1, .outer-card .mat-dialog-content .message-one .p1, .consumerpopupmainclass .mat-dialog-content .message-one .p1, .specialclass .mat-dialog-content .message-one .p1{
@@ -921,7 +921,64 @@ margin-top:10px;
   color:green !important;
   font-size: 0.80em !important;
 }
-
 .pass_butt {
   padding: 10px 20px !important;
 }
+/*
+Overriding mat input style
+*/
+.signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container {
+  width: 400px !important;
+}
+ .signup-form .mat-form-field-label, 
+ .login-form .mat-form-field-label {
+  width: auto !important;
+  margin-bottom: 0px !important;
+  background: white !important;
+  margin-left:5px !important;
+}
+.signup-form .mat-form-field.mat-focused .mat-form-field-label, 
+.signup-form .mat-form-field.ng-valid .mat-form-field-label,
+.login-form .mat-form-field.mat-focused .mat-form-field-label, 
+.login-form .mat-form-field.ng-valid .mat-form-field-label {
+  color: #3f51b5 !important;
+  z-index: 5;
+}
+.signup-form .mat-form-field-appearance-legacy .mat-form-field-label,
+.login-form .mat-form-field-appearance-legacy .mat-form-field-label
+{ color :rgb(167, 163, 163) !important;}
+.signup-form .mob-prefx .mat-form-field-label,
+.login-form .mob-prefx .mat-form-field-label
+ {
+  z-index: 5 !important;
+}
+.signup-form .mob-prefix span,
+.login-form .mob-prefix span
+{padding:15px 10px 0px 5px !important; font-size:0.875rem !important}
+
+.signup-form .mat-input-element, 
+.signup-form .mat-select,
+.login-form .mat-input-element, 
+.login-form .mat-select {
+  padding: 15px 0px 0px 5px !important;
+}
+.signup-form .mat-form-field-label-wrapper,
+.login-form .mat-form-field-label-wrapper
+{top:-.175em !important}
+/* .signup-form .mat-form-field-label-wrapper {
+  top:0px !important;
+}  */
+
+ .form-control:focus {
+  color: #495057;
+  background-color: #fff !important;
+  border-color: #00aef2 !important;
+  outline: 0  !important;
+  box-shadow: 0 0 0 0 #fff  !important;
+} 
+.input-group-text {
+  background: #fff !important;
+  border:none !important;
+  border-bottom: 1px solid #ccc !important;  
+}
+.form-control:focus .input-group-text {border-color: #00aef2 !important;}
