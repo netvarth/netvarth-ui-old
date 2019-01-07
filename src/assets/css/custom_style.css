@@ -927,11 +927,13 @@ margin-top:10px;
 /*
 Overriding mat input style
 */
-.signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container {
+.signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container
+.ynw-common-form .mat-dialog-container{
   width: 400px !important;
 }
  .signup-form .mat-form-field-label, 
- .login-form .mat-form-field-label {
+ .login-form .mat-form-field-label,
+ .ynw-common-form .mat-form-field-label {
   width: auto !important;
   margin-bottom: 0px !important;
   background: white !important;
@@ -939,30 +941,38 @@ Overriding mat input style
 }
 .signup-form .mat-form-field.mat-focused .mat-form-field-label, 
 .signup-form .mat-form-field.ng-valid .mat-form-field-label,
+.ynw-common-form .mat-form-field.mat-focused .mat-form-field-label, 
+.ynw-common-form .mat-form-field.ng-valid .mat-form-field-label,
 .login-form .mat-form-field.mat-focused .mat-form-field-label, 
 .login-form .mat-form-field.ng-valid .mat-form-field-label {
   color: #3f51b5 !important;
   z-index: 5;
 }
 .signup-form .mat-form-field-appearance-legacy .mat-form-field-label,
+.ynw-common-form .mat-form-field-appearance-legacy .mat-form-field-label,
 .login-form .mat-form-field-appearance-legacy .mat-form-field-label
 { color :rgb(167, 163, 163) !important;}
 .signup-form .mob-prefx .mat-form-field-label,
+.ynw-common-form .mob-prefx .mat-form-field-label,
 .login-form .mob-prefx .mat-form-field-label
  {
   z-index: 5 !important;
 }
 .signup-form .mob-prefix span,
+.ynw-common-form .mob-prefix span,
 .login-form .mob-prefix span
 {padding:15px 10px 0px 5px !important; font-size:0.875rem !important}
 
 .signup-form .mat-input-element, 
 .signup-form .mat-select,
+.ynw-common-form .mat-input-element, 
+.ynw-common-form .mat-select,
 .login-form .mat-input-element, 
 .login-form .mat-select {
   padding: 15px 0px 0px 5px !important;
 }
 .signup-form .mat-form-field-label-wrapper,
+.ynw-common-form .mat-form-field-label-wrapper,
 .login-form .mat-form-field-label-wrapper
 {top:-.175em !important}
 /* .signup-form .mat-form-field-label-wrapper {
