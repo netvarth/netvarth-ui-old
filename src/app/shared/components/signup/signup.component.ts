@@ -58,7 +58,7 @@ export class SignUpComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,private dialog: MatDialog,
+    private fb: FormBuilder, private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions
@@ -564,19 +564,18 @@ export class SignUpComponent implements OnInit {
     this.step = step;
     switch (step) {
       case 3: this.passworddialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG')
-      }
-    });
-    this.passworddialogRef.afterClosed().subscribe(result => {
-      if (result) {
-       this.passworddialogRef.close();
-      }
-    });
-  }
-
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG')
+        }
+      });
+        this.passworddialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.passworddialogRef.close();
+          }
+        });
+    }
   }
 }

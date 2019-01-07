@@ -17,14 +17,10 @@
     <mat-dialog-actions>
       <div class="resendouter" *ngIf="resetCounterVal==0">
         <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">Email</ng-container></span>
-        <div class="cd-b">
-          <!-- *ngIf="normal_socialmedia_show==2" -->
-          <ul class="info-lst">
-            <span> Having a problem with your phone. Click <span (click)="setResendViaEmail()" *ngIf="type=='signup'"
-                mat-button>
-                {{ resend_otp_email}}</span></span>
-          </ul>
-        </div>
+         <ul class="info-lst">
+        <span (click)="setResendViaEmail()" *ngIf="type=='signup'" mat-button> 
+          Having a problem with your phone. Click&nbsp; {{resend_otp_email}}</span>
+      </ul>
       </div>
       <div class="counter-outer" *ngIf="resetCounterVal>0">
         {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}}</span> {{seconds_cap}}

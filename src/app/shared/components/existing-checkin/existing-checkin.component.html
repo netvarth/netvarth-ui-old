@@ -10,14 +10,14 @@
 
         <div class="table-outer d-tbl">
             <table class="table">
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th>{{service_cap}}</th>
                         <th>{{for_cap}}</th>
                         <th>{{scheduled_on_cap}}</th>
                         <th></th>      
                     </tr>
-                </thead>
+                </thead> -->
                 <tbody>
                     <tr *ngFor="let chkin of loc">
                         <td class="chk-service" data-title="Service">{{chkin.service.name | capitalizeFirst}}</td>

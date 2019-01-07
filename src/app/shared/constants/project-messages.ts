@@ -117,7 +117,7 @@ export const Messages = {
   'MESSAGE_SENT': 'Message sent successfully',
 
   // Dashboard
-  'ADD_DELAY': 'New delay added successfully',
+  'ADD_DELAY': 'Delay has been notified to your [customer]',
   'ADD_DELAY_TIME_ERROR': 'Please specify the delay',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to [status]',
@@ -1119,7 +1119,7 @@ export const Messages = {
   'CHECK_DET_LOCATION_CAP' : 'Location:',
   'CHECK_DET_WAITLIST_FOR_CAP' : 'Waitlist For:',
   'CHECK_DET_SERVICE_CAP' : 'Service:',
-  'CHECK_DET_QUEUE_CAP' : 'Queue:',
+  'CHECK_DET_QUEUE_CAP' : 'Service Time-Window:',
   'CHECK_DET_PAY_STATUS_CAP' : 'Payment Status:',
   'CHECK_DET_NOT_PAID_CAP' : 'Not Paid',
   'CHECK_DET_PARTIALLY_PAID_CAP' : 'Partially Paid',

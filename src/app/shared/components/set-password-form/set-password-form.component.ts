@@ -75,9 +75,8 @@ export class SetPasswordFormComponent implements OnInit {
     });
     this.passworddialogRef.afterClosed().subscribe(result => {
       if (result) {
-       this.passworddialogRef.close();
+       this.dialogRef.close();
       }
     });
   }
-
 }
