@@ -31,9 +31,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let jCoupon of jaldeeCoupons">
+                                                <tr *ngFor="let jCoupon of jaldeeCoupons let i=index">
                                                     <td data-title="Coupon Code" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">
-                                                        {{jCoupon.jaldeeCouponCode}}<span class="td-i-info"><i class="" data-icon="B" id="customer-help" [matTooltipClass]="tooltipcls" [matTooltip]="coupon_info"></i></span>
+                                                        {{jCoupon.jaldeeCouponCode}}<span class="td-i-info"><i class="" data-icon="B" id="customer-help" [matTooltipClass]="tooltipcls" [matTooltip]="coupon_info[i]"></i></span>
                                                     </td>
                                                     <td data-title="Name">{{jCoupon.couponName}}</td>
                                                     <td data-title="Valid From">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>

@@ -97,7 +97,7 @@
                                     <span class="ttle">
                                         {{accept_payments_cap}} <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl">
+                                    <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="jaldeeBankTooltip">
                                         <mat-slide-toggle [(ngModel)]="payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle>
                                     </span>
                                 </li>

@@ -11,6 +11,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { error } from 'util';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -50,7 +51,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       title: 'Coupons'
     }
   ];
-  coupon_info;
+  coupon_info: any = [];;
   jaldee_reimburse;
   always_enable;
   addcoupdialogRef;
@@ -63,7 +64,6 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
-    this.coupon_info = this.sharedfunctionObj.getProjectMesssages('MAX_REIMBURSE_PERC');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
@@ -91,9 +91,11 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         console.log(data);
         this.jaldeeCoupons = data;
+        for (let index = 0; index < this.jaldeeCoupons.length; index++) {
+          this.coupon_info[index] = "Always enabled "+ this.jaldeeCoupons[index].couponRules.alwaysEnabled +" "+ this.jaldeeCoupons[index].couponState;
+        }
         this.query_executed = true;
       });
-
   }
   addCoupons() {
     this.addcoupdialogRef = this.dialog.open(AddProviderCouponsComponent, {

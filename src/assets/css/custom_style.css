@@ -992,3 +992,9 @@ Overriding mat input style
   border-bottom: 1px solid #ccc !important;  
 }
 .form-control:focus .input-group-text {border-color: #00aef2 !important;}
+.ksk app-kioskheader .ksk-hd .ksk-company-logo {
+  flex-grow: 0!important;
+  order: 2!important;}
+.ksk app-kioskheader .ksk-hd .ksk-ynw-logo {
+  flex-grow: 1!important;
+  display: flex!important; }

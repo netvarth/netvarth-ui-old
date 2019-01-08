@@ -1038,19 +1038,19 @@ cancelWaitlist(id , provider_id) {
 
 doDeleteFavProvider(fav, cthis?) {
   return new Promise((resolve, reject) => {
-    cthis.remfavdialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
-        'heading' : 'Confirm'
-      }
-    });
+    // cthis.remfavdialogRef = this.dialog.open(ConfirmBoxComponent, {
+    //   width: '50%',
+    //   panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
+    //     'heading' : 'Confirm'
+    //   }
+    // });
 
-    cthis.remfavdialogRef.afterClosed().subscribe(result => {
+    // cthis.remfavdialogRef.afterClosed().subscribe(result => {
 
-      if (result) {
+      // if (result) {
         this.deleteFavProvider(fav.id)
         .then(
           data => {
@@ -1060,12 +1060,12 @@ doDeleteFavProvider(fav, cthis?) {
             reject(error);
           }
         );
-      } else {
-        resolve();
-      }
+      // } else {
+      //   resolve();
+      // }
 
     });
-  });
+  // });
 }
 
 deleteFavProvider(id) {

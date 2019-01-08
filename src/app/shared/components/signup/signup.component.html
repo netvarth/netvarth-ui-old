@@ -1,5 +1,7 @@
-<h1 class="mat-dialog-title">&nbsp;<button mat-dialog-close (click)="onCancelPass(step)" class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+<h1 class="mat-dialog-title" *ngIf="step!=1">&nbsp;<button mat-dialog-close (click)="onCancelPass(step)" class="modal_close" tabindex="-1"><i class="fa fa-window-close"
   aria-hidden="true"></i></button></h1>
+  <h1 class="mat-dialog-title" *ngIf="step==1">Provider {{sign_up_cap}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+    aria-hidden="true"></i></button></h1>
 <form [formGroup]="signupForm" class="signup-form" novalidate (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">
 

@@ -1645,10 +1645,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   SignupforClaimmable(passData) {
-    const cClass = 'commonpopupmainclass';
     this.claimdialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
-      panelClass: ['signupmainclass', cClass],
+      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
       disableClose: true,
       data: {
         is_provider: 'true',
