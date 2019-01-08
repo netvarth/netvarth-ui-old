@@ -1,5 +1,5 @@
 <div class="search_provider">
-    <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+    <form [formGroup]="amForm"  class = "ynw-common-form" novalidate (ngSubmit)="amForm.valid &&
 searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
         <h1 class="mat-dialog-title">
             <ng-container *ngIf="source=='createCustomer'">{{create_cap}} {{customer_label | capitalizeFirst}}</ng-container>
@@ -20,7 +20,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
         </span>
     </div> -->
             <div class="form-group">
-                <label class="caption">{{mob_cap}} * </label>
+                <mat-form-field>
                 <div class="input-group">
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
@@ -28,6 +28,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
                     <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
                         formControlName="mobile_number" autocomplete="off" maxlength=10>
                 </div>
+            </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
             'required' : 'Phone number is required',
@@ -53,11 +54,12 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
             </div> -->
 
             <div class="form-group">
-                <label class="col-form-label" for="first_last_name">{{first_name_cap}} / {{last_name_cap}} *</label>
+                    <mat-form-field>
                 <input matInput type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
                     formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')" errorMsg="Please enter First Name / Last Name.">
                 </app-field-error-display>
+                </mat-form-field>
             </div>
 
         </mat-dialog-content>
