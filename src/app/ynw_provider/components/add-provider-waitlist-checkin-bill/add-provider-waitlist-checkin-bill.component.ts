@@ -898,6 +898,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   makePayment(mode, amount) {
     this.pay_data.uuid = this.checkin.ynwUuid;
     this.pay_data.acceptPaymentBy = mode;
+    console.log(this.pay_data.acceptPaymentBy);
     this.pay_data.amount = amount;
     this.provider_services.acceptPayment(this.pay_data)
       .subscribe(

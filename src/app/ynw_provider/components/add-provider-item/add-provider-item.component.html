@@ -1,11 +1,12 @@
-<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">{{item_hi_cap}} {{ data.type | capitalizeFirst }}
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+    class="ynw-common-form">
+    <h1 class="mat-dialog-title">{{item_hi_cap}} {{ data.type | capitalizeFirst }}
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
     </h1>
-<mat-dialog-content>
-<!-- <div class="form-group" *ngIf="data.type=='add'">
+    <mat-dialog-content>
+        <!-- <div class="form-group" *ngIf="data.type=='add'">
     <div><img [src]="showimg()" style="width:150px; height:auto;"></div>
     <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)">
     <app-field-error-display [displayError]="file_error_msg" errorMsg="Please select the file to upload.">
@@ -48,73 +49,76 @@
         </div>
     </div> -->
 
-<div class="form-group">
-    <label class="col-form-label" for="displayName">{{item_name_cap}} *</label>
-    <input matInput type="text" class="form-control" id="displayName" placeholder="Item Name" formControlName="displayName" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayName')" 
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
+        <div class="form-group">
+            <mat-form-field>
+                <input matInput type="text" class="form-control" id="displayName" placeholder="{{item_name_cap}} *"
+                    formControlName="displayName" autocomplete="off">
+            </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
     {
       'required' : 'Please enter item name',
       'maxlength' : 'Name can contain only ' + maxChars + ' characters'
     })">
-   </app-field-error-display>
-</div>
+            </app-field-error-display>
+        </div>
 
-<div class="form-group">
-    <label class="col-form-label" for="shortDesc">{{short_desc_cap}} *</label>
-    <input matInput type="text" class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc" autocomplete="off">
-    <!-- <textarea class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc"></textarea> -->
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" 
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDesc',
+        <div class="form-group">
+            <mat-form-field>
+                <input matInput type="text" class="form-control" id="shortDesc" placeholder="{{short_desc_cap}} *"
+                    formControlName="shortDesc" autocomplete="off">
+            </mat-form-field>
+            <!-- <textarea class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc"></textarea> -->
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDesc',
     {
       'required' : 'Please enter the short description',
       'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
     })">
-   </app-field-error-display>
-</div>
+            </app-field-error-display>
+        </div>
 
-<div class="form-group">
-    <label class="col-form-label" for="displayDesc">{{detailed_dec_cap}} *</label>
-    <textarea class="form-control" id="shortDesc" placeholder="Detailed Description" formControlName="displayDesc"></textarea>
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')"
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
+        <div class="form-group">
+            <!-- <label class="col-form-label" for="displayDesc">{{detailed_dec_cap}} *</label> -->
+            <mat-form-field>
+                <textarea matInput class="form-control" id="shortDesc" placeholder="Detailed Description *" formControlName="displayDesc"></textarea>
+            </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
     {
       'required' : 'Please enter detailed description.',
       'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
     })">
-   </app-field-error-display>
-</div>
+            </app-field-error-display>
+        </div>
 
-<div class="form-group">
-    <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label>
-    <input matInput type="text" class="form-control" id="price" placeholder="Price" formControlName="price" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')"  errorMsg=""
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
+        <div class="form-group">
+            <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
+            <mat-form-field>
+                <input matInput type="text" class="form-control" id="price" placeholder="Price" formControlName="price"
+                    autocomplete="off">
+            </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
     {
       'required' : 'Please enter valid price.',
       'pattern' : 'Please enter the price',
       'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
     })">
-   </app-field-error-display>
-</div>
+            </app-field-error-display>
+        </div>
 
-<div class="form-group">
-    <label class="col-form-label" for="taxable">{{taxable_cap}} * </label>
-    <mat-slide-toggle formControlName="taxable" (change)="handleTaxablechange()" [checked]="holdtaxable"></mat-slide-toggle>
-    <!-- <input type="radio" class="form-control" id="taxable" value="1" formControlName="taxable"> Yes<br/>
+        <div class="form-group">
+            <label class="col-form-label" for="taxable">{{taxable_cap}} * </label>
+            <mat-slide-toggle formControlName="taxable" (change)="handleTaxablechange()" [checked]="holdtaxable"></mat-slide-toggle>
+            <!-- <input type="radio" class="form-control" id="taxable" value="1" formControlName="taxable"> Yes<br/>
     <input type="radio" class="form-control" id="taxable" value="0" formControlName="taxable"> No -->
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')"  errorMsg="Please select taxable">
-   </app-field-error-display>
-</div>
-</mat-dialog-content>
-<mat-dialog-actions>
-<button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
-<button  type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">{{save_btn_cap}}</button>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')" errorMsg="Please select taxable">
+            </app-field-error-display>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+        <button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">{{save_btn_cap}}</button>
 
-</mat-dialog-actions>
+    </mat-dialog-actions>
 </form>
-<app-field-error-display [displayError]="true" *ngIf="api_error"
-errorMsg="{{api_error}}"></app-field-error-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success"
-successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

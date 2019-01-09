@@ -1,5 +1,6 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+    class="ynw-common-form">
     <h1 class="mat-dialog-title">{{location_cap}} <span *ngIf="forbadge">{{amenities_cap}}</span> <button #loc
             mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
     <mat-dialog-content>
@@ -9,10 +10,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
                 <span class="expl">{{location_map_message}}</span>
             </div>
             <div class="form-group">
-                <!-- <mat-form-field class="example-full-width"> -->
-                <label class="col-form-label">{{location_name}}</label>
-                <input class="form-control" formControlName="locname" autocomplete="off" maxlength="50" placeholder="Enter your precise location">
-                <!-- </mat-form-field> -->
+                <mat-form-field>
+                    <input class="form-control" matInput formControlName="locname" autocomplete="off" maxlength="50"
+                        placeholder="Enter your precise location">
+                </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
             {
             'required' : 'Please enter the location name',
@@ -24,7 +25,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
                 <div class="col-md-6 col-12 no-padding-small">
                     <div class="form-group">
                         <mat-form-field class="example-full-width">
-                            <label class="col-form-label">{{latitude_cap}}</label>
                             <input matInput type="text" placeholder="Latitude *" formControlName="loclattitude"
                                 autocomplete="off">
                         </mat-form-field>
@@ -40,7 +40,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
                 <div class="col-md-6 col-12 no-padding-small">
                     <div class="form-group">
                         <mat-form-field class="example-full-width">
-                            <label class="col-form-label">{{longitude_cap}}</label>
                             <input matInput type="text" placeholder="Longitude *" formControlName="loclongitude"
                                 autocomplete="off">
                         </mat-form-field>
@@ -58,9 +57,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
             <div class="form-group">
                 <mat-form-field class="example-full-width">
-                    <label class="col-form-label">{{address_cap}}</label>
                     <!-- <input matInput type="text" placeholder="Address" formControlName="locaddress"> -->
-                    <textarea matInput formControlName="locaddress" row="4"></textarea>
+                    <textarea matInput placeholder="{{address_cap}}" formControlName="locaddress" row="4"></textarea>
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
             {
@@ -82,8 +80,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             <div class="form-group">
                 <mat-form-field class="example-full-width">
                     <label class="col-form-label">{{map_url_cap}}</label>
-                    <input class="nofocus" matInput type="text" placeholder="Google Map URL" formControlName="locmapurl"
-                        autocomplete="off" tabindex="-1">
+                    <input class="nofocus" matInput type="text" formControlName="locmapurl" autocomplete="off" tabindex="-1">
                 </mat-form-field>
             </div>
             <!-- <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">  -->
@@ -115,7 +112,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
             </div>
             <div class="form-group" #badgediv>
                 <mat-form-field>
-                    <label>{{parking_type_cap}}</label>
                     <mat-select placeholder="Select Parking Type*" formControlName="locparkingtype">
                         <mat-option *ngFor="let ptype of parking_types" [value]="ptype.value">
                             {{ptype.displayName }}

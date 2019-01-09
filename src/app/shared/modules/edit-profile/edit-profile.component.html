@@ -9,13 +9,14 @@
                 <div class="card">
                     <form [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&
                     onSubmit(editProfileForm.value)"
-                        (keyup)="resetApiErrors()">
+                        class="ynw-common-form" (keyup)="resetApiErrors()">
                         <div class="innercard">
                             <div class="leftcard">
                                 <div class="form-group">
-                                    <label class="col-form-label" for="first_name">{{first_name_cap}}</label>
-                                    <input type="text" class="form-control" id="first_name" placeholder="First Name"
-                                        formControlName="first_name" autocomplete="off">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="first_name" placeholder="First Name"
+                                            formControlName="first_name" autocomplete="off">
+                                    </mat-form-field>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
                                         [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
                                         {
@@ -28,9 +29,10 @@
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label" for="last_name">{{last_name_cap}}</label>
-                                    <input type="text" class="form-control" id="last_name" placeholder="Last Name"
-                                        formControlName="last_name" autocomplete="off">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="last_name" placeholder="Last Name"
+                                            formControlName="last_name" autocomplete="off">
+                                    </mat-form-field>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
                                         [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
                                         {
@@ -43,11 +45,12 @@
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label" for="email">{{email_cap}}</label>
-                                    <input type="text" class="form-control" id="email" 
-                                    formControlName="email" autocomplete="off">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="{{email_cap}}" formControlName="email"
+                                            autocomplete="off">
+                                    </mat-form-field>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'email')"
-                                    errorMsg="Please enter a valid email.">
+                                        errorMsg="Please enter a valid email.">
                                     </app-field-error-display>
                                 </div>
                                 <!-- <div class="form-group">
@@ -100,8 +103,8 @@
                                     <!-- <div class="form-group" *ngIf="emailHolder!=''">
                                         <label class="col-form-label">{{email_id_cap}}</label>
                                         <span>{{emailHolder}}</span> -->
-                                        <!-- <input type="text" class="form-control" id="emailid" placeholder="Email Id" disabled [value]="emailHolder" autocomplete="off"> -->
-                                        <!-- <ul class="info-lst">
+                                    <!-- <input type="text" class="form-control" id="emailid" placeholder="Email Id" disabled [value]="emailHolder" autocomplete="off"> -->
+                                    <!-- <ul class="info-lst">
                                             <li>{{edit_email_cap}}</li>
                                         </ul>
                                     </div> -->

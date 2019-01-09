@@ -8,7 +8,7 @@
 	<!-- Subheader section -->
 	<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
-<section>
+<section class="ynw-common-form">
 	<div class="content comn-cls">
 		<div class="container">
 			<div class="w-dta">
@@ -137,8 +137,7 @@
 																					<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding">
 																						<div class="item selectbox1" *ngIf="discounts.length >0 && showDiscountSection">
 																							<mat-form-field>
-																								<mat-select [(ngModel)]="selOrderDiscount" [ngModelOptions]="{standalone: true}">
-																									<mat-option [value]="''">{{select_discount_cap}}</mat-option>
+																								<mat-select [(ngModel)]="selOrderDiscount" [ngModelOptions]="{standalone: true}" placeholder="{{select_discount_cap}}">
 																									<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount"> {{
 																										discount.name
 																										}}
@@ -227,8 +226,7 @@
 																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding" *ngIf="itemdiscounts.length > 0">
 																				<div class="item selectbox1">
 																					<mat-form-field>
-																						<mat-select [(ngModel)]="bill_data.service[i].serviceDiscount" [ngModelOptions]="{standalone: true}">
-																							<mat-option [value]="''">{{select_discount_cap}} </mat-option>
+																						<mat-select [(ngModel)]="bill_data.service[i].serviceDiscount" [ngModelOptions]="{standalone: true}" placeholder="{{select_discount_cap}}">
 																							<mat-option *ngFor="let discount of itemdiscounts; let i = index" [value]="discount">
 																								{{ discount.name }} </mat-option>
 																						</mat-select>
@@ -304,8 +302,7 @@
 																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding" *ngIf="discounts.length > 0">
 																				<div class="item selectbox1">
 																					<mat-form-field>
-																						<mat-select [(ngModel)]="bill_data.items[i].itemDiscount" [ngModelOptions]="{standalone: true}">
-																							<mat-option [value]="''">{{select_discount_cap}} </mat-option>
+																						<mat-select [(ngModel)]="bill_data.items[i].itemDiscount" [ngModelOptions]="{standalone: true}" placeholder="{{select_discount_cap}}">
 																							<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount">
 																								{{ discount.name }} </mat-option>
 																						</mat-select>

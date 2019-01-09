@@ -1,56 +1,58 @@
-<form [formGroup]="amForm"  novalidate
-(ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)">
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" class="ynw-common-form">
   <h1 class="mat-dialog-title">{{adjust_delay_cap}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-        <i class="fa fa-window-close" aria-hidden="true"></i>
+      <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
   <mat-dialog-content>
     <div class="adjustdelay">
-        <div class="form-group" *ngIf="queues.length>1">
-          <mat-form-field>
-              <label class="col-form-label">{{service_window_cap}}</label>
-              <mat-select placeholder="Service Time-Window" [(ngModel)] = "selected_queue" [ngModelOptions]="{standalone: true}" #selQueue (selectionChange)="handle_queue_sel(selQueue.value)">
-                <mat-option *ngFor="let queue of queues" [value]="queue.id">
-                  {{queue.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+      <div class="form-group" *ngIf="queues.length>1">
+        <mat-form-field>
+          <mat-select placeholder="{{service_window_cap}}" [(ngModel)]="selected_queue" [ngModelOptions]="{standalone: true}"
+            #selQueue (selectionChange)="handle_queue_sel(selQueue.value)">
+            <mat-option *ngFor="let queue of queues" [value]="queue.id">
+              {{queue.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="brd-bt no-padding pad-bt-10 mgn-bt-10">
+        <div class="row ">
+          <div class="col-md-6 ">
+            <h6>Checkins # {{checkedin_cnt}}</h6>
+          </div>
+          <div class="col-md-6 ">
+            <h6>Arrived # {{arrived_cnt}}</h6>
+          </div>
         </div>
-        <div class="brd-bt no-padding pad-bt-10 mgn-bt-10">
-            <div class="row ">
-            <div class="col-md-6 "><h6>Checkins # {{checkedin_cnt}}</h6></div>
-            <div class="col-md-6 "><h6>Arrived # {{arrived_cnt}}</h6></div>
-        </div>
-        </div>
-        <div class="form-group">
-            <label class="col-form-label">{{delay_cap}}</label>
-          <ngb-timepicker [(ngModel)]="time" formControlName="delay"></ngb-timepicker>
-        </div>
-        <div class="form-group inline">
-          <!-- <label class="col-form-label"></label> -->
-          <mat-checkbox formControlName="send_message">{{send_message_cap}}</mat-checkbox>
-        </div>
-        <div class="form-group">
-          <ng-container class="example-full-width"  *ngIf="amForm.get('send_message').value === true">
-            <label class="col-form-label">{{messgae_cap}}</label>
-            <textarea  class="form-control" placeholder="Message" formControlName="message" autocomplete="off" [placeholder]="placeholder">
+      </div>
+      <div class="form-group">
+        <label class="col-form-label">{{delay_cap}}</label>
+        <ngb-timepicker [(ngModel)]="time" formControlName="delay"></ngb-timepicker>
+      </div>
+      <div class="form-group inline">
+        <!-- <label class="col-form-label"></label> -->
+        <mat-checkbox formControlName="send_message">{{send_message_cap}}</mat-checkbox>
+      </div>
+      <div class="form-group">
+        <ng-container class="example-full-width" *ngIf="amForm.get('send_message').value === true">
+          <label class="col-form-label">{{messgae_cap}}</label>
+          <textarea class="form-control" placeholder="Message" formControlName="message" autocomplete="off"
+            [placeholder]="placeholder">
 
             </textarea>
-          </ng-container>
-        </div>
+        </ng-container>
+      </div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
- <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
-    <button  type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{save_btn}}</button>
+    <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
+    <button type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{save_btn}}</button>
   </mat-dialog-actions>
 
 
-  <app-field-error-display [displayError]="true" *ngIf="api_error"
-  errorMsg="{{api_error}}"></app-field-error-display>
+  <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-  <app-form-success-display [displayMsg]="true" *ngIf="api_success"
-  successMsg="{{api_success}}"></app-form-success-display>
+  <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
 </form>

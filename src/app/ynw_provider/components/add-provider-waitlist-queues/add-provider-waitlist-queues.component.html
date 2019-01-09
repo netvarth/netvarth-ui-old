@@ -1,5 +1,6 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+    class="ynw-common-form">
     <h1 class="mat-dialog-title">
         <ng-container *ngIf="data.type=='edit'">{{data.type | capitalizeFirst}}</ng-container> {{service_time_cap}}
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
@@ -10,9 +11,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <label class="col-form-label">{{service_time_window_name}}</label>
-                <input matInput placeholder="Service Time-Window Name *" formControlName="qname" autocomplete="off"
-                    ngModel maxlength="20">
+                <mat-form-field>
+                    <input matInput placeholder="Service Time-Window Name *" formControlName="qname" autocomplete="off"
+                        ngModel maxlength="20">
+                </mat-form-field>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
         {
@@ -23,7 +25,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </div>
 
         <div class="form-group" *ngIf="data.source !== 'location_detail'">
-            <label class="col-form-label">{{location_cap}}</label>
             <div *ngIf="multipeLocationAllowed">
                 <mat-form-field>
                     <mat-select placeholder="Location" formControlName="qlocation">
@@ -96,9 +97,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
         </div>
 
         <div class="form-group">
-            <label class="col-form-label">{{max_capacity_cap}} *</label>
-            <input matInput type="text" class="form-control" placeholder="Enter the number of people served in the time-window"
-                formControlName="qcapacity" autocomplete="off">
+            <mat-form-field>
+                <input matInput type="text" class="form-control" placeholder="Enter the number of people served in the time-window"
+                    formControlName="qcapacity" autocomplete="off">
+            </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
         {
           'required' : 'Please enter the capacity',
@@ -109,8 +111,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()">
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <label class="col-form-label">{{No_cap}}{{customer_label}}s {{servc_cap}} *</label>
-                <input matInput type="text" placeholder="No of {{customer_label}}s served at a time" formControlName="qserveonce"
+                <input matInput type="text" placeholder="{{No_cap}}{{customer_label}}s {{servc_cap}} *" formControlName="qserveonce"
                     autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',

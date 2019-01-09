@@ -1,5 +1,5 @@
 <form [formGroup]="amForm"  novalidate
-(ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+(ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
 <h1 class="mat-dialog-title">{{upgrade_lic_cap}}
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
@@ -10,11 +10,9 @@
       <label class="col-form-label" for="displayName">{{curr_lic_cap}}: <strong>{{current_license_pkg}}</strong></label>
   </div>
   <div class="form-group col-md-8 no-padding" *ngIf="obtainedUpgradable && upgradablepackages.length>0">
-    <label class="col-form-label" for="displayName">{{lic_package_cap}}</label>
     <mat-form-field>
       <mat-select #license_selpackage formControlName="license_selpackage" *ngIf="upgradablepackages"
-      (selectionChange)="licensepackage_Select(license_selpackage.value)">
-      <mat-option [value]="''">{{select_one_cap}}</mat-option>
+      (selectionChange)="licensepackage_Select(license_selpackage.value)" placeholder="{{lic_package_cap}}">
         <mat-option *ngFor="let package of upgradablepackages"
         [value]="package.pkgId">
           {{package.displayName}}
