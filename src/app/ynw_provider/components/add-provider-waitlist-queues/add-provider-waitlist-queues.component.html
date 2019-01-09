@@ -112,7 +112,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <input matInput type="text" placeholder="{{No_cap}}{{customer_label}}s {{servc_cap}} *" formControlName="qserveonce"
+                <input matInput type="text" placeholder="Maximum {{customer_label}}s served *" formControlName="qserveonce"
                     autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
