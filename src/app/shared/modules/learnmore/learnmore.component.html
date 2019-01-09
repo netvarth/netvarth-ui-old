@@ -16,6 +16,7 @@
             <li (click)="sethelpSub('miscellaneous')">Miscellaneous</li>
             <li (click)="sethelpSub('dashboard')">Dashboard</li>
             <li (click)="sethelpSub('paymentsettings')">Payment Settings</li>
+            <li (click)="sethelpSub('billing')">Billing/POS</li>
          </ul>
        </div>
        <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub !=''" (click)="sethelpSub('')"><span class="back-to-index">Back to Index</span></div>
@@ -48,6 +49,9 @@
 
         <!-- Paymentsettings -->
         <app-learnmore-paymentsettings [target]="'paymentsettings'" *ngIf="destination=='paymentsettings' || helpSub =='paymentsettings'"></app-learnmore-paymentsettings>
+
+        <!-- Billing/POS -->
+        <app-learnmore-billing [target]="'billing'" *ngIf="destination=='billing' || helpSub =='billing'"></app-learnmore-billing>
 
       <!-- </mat-dialog-content>
       <mat-dialog-actions>

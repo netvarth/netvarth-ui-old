@@ -54,7 +54,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getitems();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
   }
   ngOnDestroy() {
     if (this.additemdialogRef) {

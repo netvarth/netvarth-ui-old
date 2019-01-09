@@ -80,6 +80,10 @@ import { LearnmorePaymentsettingsComponent } from './learnmore-paymentsettings/l
 import { HealthcarePaymentsettingsComponent } from './learnmore-paymentsettings/healthcare-paymentsettings/healthcare-paymentsettings.component';
 import { PersonalcarePaymentsettingsComponent } from './learnmore-paymentsettings/personalcare-paymentsettings/personalcare-paymentsettings.component';
 import { ProfessionalPaymentsettingsComponent } from './learnmore-paymentsettings/professional-paymentsettings/professional-paymentsettings.component';
+import { LearnmoreBillingComponent } from './learnmore-billing/learnmore-billing.component';
+import { HealthcareBillingComponent } from './learnmore-billing/healthcare-billing/healthcare-billing.component';
+import { PersonalcareBillingComponent } from './learnmore-billing/personalcare-billing/personalcare-billing.component';
+import { ProfessionalBillingComponent } from './learnmore-billing/professional-billing/professional-billing.component';
 
 @NgModule({
     imports: [
@@ -159,6 +163,10 @@ import { ProfessionalPaymentsettingsComponent } from './learnmore-paymentsetting
             PersonalcarePaymentsettingsComponent,
             ProfessionalPaymentsettingsComponent,
 
+            HealthcareBillingComponent,
+            PersonalcareBillingComponent,
+            ProfessionalBillingComponent,
+
 
         LearnmoreWaitlistManagerComponent,
         LearnmoreCheckinComponent,
@@ -168,8 +176,8 @@ import { ProfessionalPaymentsettingsComponent } from './learnmore-paymentsetting
         LearnmoreAdjustDelayComponent,
         LearnmoreMiscellaneousComponent,
         LearnmoreDashboardComponent,
-        LearnmorePaymentsettingsComponent
-        
+        LearnmorePaymentsettingsComponent,
+        LearnmoreBillingComponent
        
     ],
     entryComponents: [

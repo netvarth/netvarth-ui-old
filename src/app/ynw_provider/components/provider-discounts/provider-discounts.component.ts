@@ -49,7 +49,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getDiscounts(); // Call function to get the list of discount lists
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
   }
 
   ngOnDestroy() {

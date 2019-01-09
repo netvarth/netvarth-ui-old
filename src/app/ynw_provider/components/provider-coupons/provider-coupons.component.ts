@@ -66,7 +66,8 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
+
   }
   ngOnDestroy() {
     if (this.addcoupdialogRef) {
