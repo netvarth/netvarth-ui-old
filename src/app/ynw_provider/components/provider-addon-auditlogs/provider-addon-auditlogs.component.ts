@@ -17,7 +17,6 @@ export class ProviderAddonAuditlogsComponent implements OnInit {
   ngOnInit() {
     this.getaddonAuditList();
   }
-
   getaddonAuditList() {
     this.addon_auditlog_details = this.provider_servicesobj.getAddonAuditList()
       .subscribe(data => {

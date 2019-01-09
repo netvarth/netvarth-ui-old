@@ -396,7 +396,6 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     });
 
     this.addonhistorydialogRef.afterClosed().subscribe(result => {
-
     });
   }
 
