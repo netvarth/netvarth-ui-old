@@ -45,7 +45,29 @@
     <!-- welcome screen xx ends -->
 
     <!-- get info from User -->
-    <div class="ksk-cpy get-info" *ngIf="!customer_found && showsearch_now">
+
+
+    <!-- <div class="ksk-cpy get-info" *ngIf="!customer_found && showsearch_now">
+            <div class="outer">
+        
+                <div class="form-group">
+                    <span class="label">Enter Your <span>Mobile Number</span></span>
+                    <input type="text" #srchmobile id="srchmobilebox" class="form-control" [(ngModel)]="srch_mobile" autocomplete="off">
+                </div>
+        
+                <div class="form-group">
+                    <span class="label">Enter first 3 letters of your <span>First Name/Last Name</span></span>
+                    <input type="text" #srchname class="form-control" [(ngModel)]="srch_fname" autocomplete="off">
+                </div>
+        
+                <div class="form-group">
+                    <button class="cs-btn ripple" (click)="searchCustomer()" *ngIf="loadingNow==false">Search</button>
+                </div>
+            </div>
+        </div> -->
+
+
+  <div class="ksk-cpy get-info" *ngIf="!customer_found && showsearch_now">
         <div class="outer">
 
             <div class="form-group">
@@ -54,8 +76,8 @@
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">+91</span>
                     </div>
-                    <input type="text" class="form-control" #regmobile [(ngModel)]="reg_mobile" autofocus placeholder="Enter New Mobile #"
-                        autocomplete="off" ngModel maxlength="10">
+                    <input type="text" class="form-control" id="regmobilebox" #regmobile [(ngModel)]="reg_mobile" autofocus placeholder="Enter New Mobile #"
+                        autocomplete="off" maxlength="10">
                 </div>
             </div>
 

@@ -160,7 +160,7 @@
                                     <div class="btm-ctrl">
                                         <div class="ctrl enable-disable">
                                             <span class="ttle">Coupon Status :</span>
-                                            <span *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED'">
+                                            <span *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE' && jCoupon.couponState!='DISABLED_PROVIDER_LIMIT_REACHED'">
                                                 <mat-slide-toggle [checked]="jCoupon.couponState=='ENABLED'" (change)="changecouponStatus(jCoupon)"></mat-slide-toggle>
                                             </span>
                                             <span class='blue-text' *ngIf="jCoupon.couponState=='NEW'">New - Available

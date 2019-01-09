@@ -53,9 +53,8 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
 
 
   provider_loggedin = false;
-  srch_mobile = '';
-  srch_fname = '';
   reg_mobile = '';
+  srch_fname = '';
   reg_fname = '';
   reg_lname = '';
   userdet;
@@ -327,17 +326,17 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
   }
 
   searchCustomer() {
-    if (!this.numberpattern.test(this.srch_mobile)) {
+    if (!this.numberpattern.test(this.reg_mobile)) {
       this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
-      if (this.srchmob.nativeElement) {
-        this.srchmob.nativeElement.focus();
+      if (this.regmobile.nativeElement) {
+        this.regmobile.nativeElement.focus();
       }
       return false;
     }
-    if (!this.phonePattern.test(this.srch_mobile)) {
+    if (!this.phonePattern.test(this.reg_mobile)) {
       this.shared_functions.openSnackBar('Enter a 10 digit mobile number', {'panelClass': 'snackbarerror'});
-      if (this.srchmob.nativeElement) {
-        this.srchmob.nativeElement.focus();
+      if (this.regmobile.nativeElement) {
+        this.regmobile.nativeElement.focus();
       }
       return false;
     }
@@ -359,7 +358,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     const data = {
       'firstName-eq': this.srch_fname,
       'lastName-eq': this.srch_fname,
-      'primaryMobileNo-eq': this.srch_mobile
+      'primaryMobileNo-eq': this.reg_mobile
 
     };
     this.customer_found = false;
@@ -377,7 +376,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
               this.cMod = 'main';
             }
             this.srch_fname = '';
-            this.srch_mobile = '';
+            this.reg_mobile = '';
             this.loadingNow = false;
             this.do_operation();
           } else { // case if searched customer does not exists, so show the "Not found" page
@@ -398,7 +397,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     this.showregmobile = false;
     this.cMod = val;
     this.srch_fname = '';
-    this.srch_mobile = '';
+    this.reg_mobile = '';
     this.reg_fname = '';
     this.reg_lname = '';
     this.reg_mobile = '';
@@ -410,8 +409,8 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
       if (!this.customer_found) {
         this.showsearch_now = true;
         setTimeout(() => {
-          if (this.document.getElementById('srchmobilebox')) {
-            this.document.getElementById('srchmobilebox').focus();
+          if (this.document.getElementById('regmobilebox')) {
+            this.document.getElementById('regmobilebox').focus();
           }
         }, 500);
       } else {
@@ -503,7 +502,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
       }
       curmobile = this.reg_mobile;
     } else {
-      curmobile = this.srch_mobile;
+      curmobile = this.reg_mobile;
     }
     if (this.blankPattern.test(this.reg_fname) || !this.namePattern.test(this.reg_fname)) {
       this.shared_functions.openSnackBar('Please enter a valid first name', {'panelClass': 'snackbarerror'});
@@ -539,7 +538,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
         this.reg_fname = '';
         this.reg_lname = '';
         this.srch_fname = '';
-        this.srch_mobile = '';
+        this.reg_mobile = '';
         this.loadingNow = false;
         if (this.showregmobile) { // case if reached here by clicking the signu link
           this.showMode('main');
@@ -559,9 +558,9 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     this.show_customernotfoundmsg = false;
     this.showsearch_now = true;
     setTimeout(function() {
-      if (this.srchmob !== undefined) {
-        if (this.srchmob.nativeElement) {
-          this.srchmob.nativeElement.focus();
+      if (this.regmobile !== undefined) {
+        if (this.regmobile.nativeElement) {
+          this.regmobile.nativeElement.focus();
         }
       }
     }, 5000);
