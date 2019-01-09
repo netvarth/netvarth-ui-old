@@ -33,7 +33,7 @@
                                                         class="pkg">{{currentlicense_details.accountLicense.displayName}}
                                                         <span class="cs-btn bt1" (click)="showupgradeLicense()" *ngIf="upgradablepackages.length > 0">Upgrade
                                                             License <span class="helprighticon"><i data-icon="B" id="customer-help"
-                                                                (click)="learnmore_clicked('upgradelicense', $event)"></i></span></span></span>
+                                                                    (click)="learnmore_clicked('upgradelicense', $event)"></i></span></span></span>
                                                     <span class="warning" *ngIf="license_message != ''">{{license_message}}</span></span></div>
                                         </div>
                                     </div>
@@ -214,7 +214,7 @@
                           </div> -->
                     </div>
                     <div class="copy two">
-                        <div class="left card">
+                        <div class=" pay-section left card">
                             <div class="lc22">
                                 <div class="lc2-1 lcd custom-help">
                                     <div class="ttle" [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">Add-on
@@ -236,7 +236,18 @@
                                 </ng-container>
 
                             </div>
+                            <span class="mbt">
+                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu1">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu1="matMenu">
+                                    <button type="button" (click)="goAddonHistory()" mat-menu-item>
+                                        <span>History</span>
+                                    </button>
+                                </mat-menu>
+                            </span>
                         </div>
+
                         <div class="right card">
                             <app-provider-bprofile-search-adwords [reloadadwordapi]="reload_adword_api"></app-provider-bprofile-search-adwords>
                         </div>

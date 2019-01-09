@@ -149,6 +149,9 @@ export class ProviderServices {
     // return this.servicemeta.httpGet('accounts/license/auditlog');
     return this.servicemeta.httpGet('provider/license/auditlog');
   }
+  getAddonAuditList(){
+    return this.servicemeta.httpGet('provider/license/addon/auditlog');
+  }
   getUpgradableAddonPackages() {
     // return this.servicemeta.httpGet('accounts/license/upgradableAddons');
     return this.servicemeta.httpGet('provider/license/upgradableAddons');

@@ -90,6 +90,7 @@ import { ProviderCustomersComponent } from './components/provider-customers/prov
 import { AddProviderCustomerComponent } from './components/add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from './components/search-provider-customer/search-provider-customer.component';
 import { ProviderRefundComponent } from './components/provider-refund/provider-refund.component';
+import { ProviderAddonAuditlogsComponent } from './components/provider-addon-auditlogs/provider-addon-auditlogs.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -161,6 +162,7 @@ import { ProviderJcouponDetailsComponent } from './components/provider-jcoupon-d
         UpgradeLicenseComponent,
         AddproviderAddonComponent,
         ProviderAuditLogComponent,
+        ProviderAddonAuditlogsComponent,
         AddProviderDiscountsComponent,
         AddProviderCouponsComponent,
         ProviderNonworkingdaysComponent,
@@ -251,6 +253,7 @@ import { ProviderJcouponDetailsComponent } from './components/provider-jcoupon-d
       AddProviderItemImageComponent,
       ProviderWaitlistCheckInConsumerNoteComponent,
       ProviderAuditLogComponent,
+      ProviderAddonAuditlogsComponent,
       ProviderLicenceInvoiceDetailComponent,
       AddProviderWaitlistCheckInProviderNoteComponent,
       AddProviderWaitlistCheckInBillComponent,

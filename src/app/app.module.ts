@@ -70,6 +70,7 @@ import { CouponsComponent } from './shared/components/coupons/coupons.component'
 import { ProviderReimburseReportComponent } from './ynw_provider/components/provider-reimburse-report/provider-reimburse-report.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ViewReportComponent } from './ynw_provider/components/view-report/view-report.component';
+import { ProviderAddonAuditlogsComponent } from './ynw_provider/components/provider-addon-auditlogs/provider-addon-auditlogs.component';
 
 @NgModule({
   declarations: [

@@ -1,0 +1,28 @@
+<h1 class="mat-dialog-title">Add-on history
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<mat-dialog-content>
+    <div class="audit_outer">
+        <div class="">
+            <table width="100%" class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date Applied</th>
+                    <th>Status</th>
+                </tr>
+                <tr *ngFor="let auditlog of addon_auditlog_details">
+                    <td>{{auditlog.name}}</td>
+                    <td>{{auditlog.description}}</td>
+                    <td>{{auditlog.dateApplied | date: dateFormat }}</td>
+                    <td>{{auditlog.status}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="" *ngIf="load_complete && addon_auditlog_details.length==0">
+            No History found
+        </div>
+    </div>
+</mat-dialog-content>

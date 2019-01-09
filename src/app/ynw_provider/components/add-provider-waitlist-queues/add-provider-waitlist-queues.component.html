@@ -35,6 +35,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                 </mat-form-field>
             </div>
             <div *ngIf="!multipeLocationAllowed">
+                <label>{{location_cap}}</label>
                 <div *ngFor="let loc of loc_list">
                     {{ loc.place | capitalizeFirst }}
                 </div>

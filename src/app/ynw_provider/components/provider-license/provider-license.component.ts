@@ -16,6 +16,7 @@ import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditl
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
+import { ProviderAddonAuditlogsComponent } from '../provider-addon-auditlogs/provider-addon-auditlogs.component';
 
 @Component({
   selector: 'app-provider-license',
@@ -69,6 +70,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   upgradedialogRef;
   addondialogRef;
   lichistorydialogRef;
+  addonhistorydialogRef;
   licenseusedialogRef;
   invoicedialogRef;
   upgradesubscriptdialogRef;
@@ -108,6 +110,9 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     }
     if (this.lichistorydialogRef) {
       this.lichistorydialogRef.close();
+    }
+    if (this.addonhistorydialogRef) {
+      this.addonhistorydialogRef.close();
     }
     if (this.licenseusedialogRef) {
       this.licenseusedialogRef.close();
@@ -379,6 +384,20 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
 
   goPaymentHistory() {
     this.router.navigate(['provider', 'settings', 'license', 'payment', 'history']);
+  }
+
+  goAddonHistory(){
+    this.addonhistorydialogRef = this.dialog.open(ProviderAddonAuditlogsComponent, {
+      width: '50%',
+      data: {
+      },
+      panelClass: ['commonpopupmainclass'],
+      disableClose: true
+    });
+
+    this.addonhistorydialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
   showUnpaidInvoice() {
