@@ -40,7 +40,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
       <div class="form-group">
         <mat-form-field>
-          <input matInput type="text" class="form-control" id="estimated_duration" placeholder="{{est_duration_cap}}"
+          <input matInput type="text" class="form-control number-ip-sm" id="estimated_duration" placeholder="{{est_duration_cap}}"
             formControlName="serviceDuration" autocomplete="off">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')" [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
@@ -54,7 +54,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
       <div class="form-group" *ngIf="!disable_price">
         <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
         <mat-form-field>
-          <input matInput type="text" class="form-control" id="price" placeholder="Price *" formControlName="totalAmount"
+          <input matInput type="text" class="form-control number-ip-sm" id="price" placeholder="Price *" formControlName="totalAmount"
             autocomplete="off">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',

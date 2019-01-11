@@ -99,7 +99,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field>
-                <input matInput type="text" class="form-control" placeholder="Enter the number of people served in the time-window"
+                <input matInput type="text" class="form-control number-ip-sm" placeholder="Enter the number of people served in the time-window"
                     formControlName="qcapacity" autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
@@ -112,7 +112,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <input matInput type="text" placeholder="Maximum {{customer_label}}s served *" formControlName="qserveonce"
+                <input matInput type="text" class="number-ip-sm" placeholder="Maximum {{customer_label}}s served *" formControlName="qserveonce"
                     autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',

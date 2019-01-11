@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
@@ -26,6 +26,8 @@ export class SignUpComponent implements OnInit {
   terms_cond_cap = Messages.TERMS_CONDITIONS_CAP;
   sign_up_cap = Messages.SIGN_UP_CAP;
   license_packages = projectConstants.LICENSE_PACKAGES;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  ok_btn_cap = Messages.OK_BTN;
   license_description;
   business_domains;
   packages;
@@ -54,6 +56,7 @@ export class SignUpComponent implements OnInit {
   claimmable = false;
   defaultLicense;
   passworddialogRef;
+  close_message: any;
 
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
@@ -170,7 +173,7 @@ export class SignUpComponent implements OnInit {
         selectedDomainIndex: ['', Validators.compose([Validators.required])],
         selectedSubDomains: [0, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],
-        terms_condition: [''],
+        terms_condition: ['true'],
 
       });
         this.signupForm.get('is_provider').setValue(this.is_provider);
@@ -222,7 +225,6 @@ export class SignUpComponent implements OnInit {
   changeType() {
     this.resetApiErrors();
     this.is_provider = this.signupForm.get('is_provider').value;
-
     if (this.is_provider === 'true') {
       this.resetValidation(['selectedSubDomains', 'selectedDomainIndex', 'package_id']);
     } else {
@@ -405,7 +407,6 @@ export class SignUpComponent implements OnInit {
           this.resendemailotpsuccess = true;
           if (user_details.userProfile &&
             user_details.userProfile.email) {
-
             this.setMessage('email', user_details.userProfile.email);
           } else {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
@@ -416,10 +417,7 @@ export class SignUpComponent implements OnInit {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
-
   }
-
-
   onOtpSubmit(submit_data) {
     this.resetApiErrors();
     if (this.is_provider === 'true') {
@@ -447,7 +445,6 @@ export class SignUpComponent implements OnInit {
           }
         );
     }
-
   }
 
   onPasswordSubmit(submit_data) {
@@ -559,23 +556,16 @@ export class SignUpComponent implements OnInit {
       return word;
     }
   }
-
-  onCancelPass(step) {
-    this.step = step;
-    switch (step) {
-      case 3: this.passworddialogRef = this.dialog.open(ConfirmBoxComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          'message': this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG')
-        }
-      });
-        this.passworddialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            this.passworddialogRef.close();
-          }
-        });
+  closePwdScreen() {
+    this.dialogRef.close();
+  }
+  continuetoPwd() {
+    this.step = 3;
+  }
+  onCancelPass() {
+    if ( this.step === 3) {
+      this.step = 4;
+      this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }
 }

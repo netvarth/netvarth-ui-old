@@ -28,10 +28,12 @@ export class SetPasswordFormComponent implements OnInit {
 
   @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
+  // tslint:disable-next-line:no-output-on-prefix
+  @Output() onCancelBtn: EventEmitter<any> = new EventEmitter();
 
   constructor(
     public dialogRef: MatDialogRef<SetPasswordFormComponent>,
-    private fb: FormBuilder,private dialog: MatDialog,
+    private fb: FormBuilder, private dialog: MatDialog,
     public sharedfunctionObj: SharedFunctions,
     public fed_service: FormMessageDisplayService,
     @Inject(DOCUMENT) public document,
@@ -63,20 +65,9 @@ export class SetPasswordFormComponent implements OnInit {
   doResetApiErrors() {
     this.resetApiErrors.emit();
   }
-  
-  onCancelPass() {
-    this.passworddialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('PASSWORD_ERR_MSG')
-      }
-    });
-    this.passworddialogRef.afterClosed().subscribe(result => {
-      if (result) {
-       this.dialogRef.close();
-      }
-    });
+
+  cancelDialog() {
+    this.onCancelBtn.emit();
   }
+
 }

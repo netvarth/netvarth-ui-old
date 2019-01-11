@@ -193,7 +193,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.retscrolltop = this.shared_functions.getitemfromLocalStorage('sctop') || 0;
     this.shared_functions.setitemonLocalStorage('sctop', 0);
     // setTimeout(() => {
-    //   console.log('i am here', scrolltop);
     //   window.scrollTo(0, scrolltop);
     //  }, 3200);
 
@@ -219,23 +218,19 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.screenWidth <= 767) {
       this.showrefinedsection = false;
     }
-    // console.log('here', this.screenWidth, this.screenHeight);
   }
   @HostListener('window:scroll', ['$event'])
   doScroll(event) {
     this.scrolltop = window.pageYOffset;
-    // console.log('scroll', this.scrolltop);
   }
   checkRefineSpecial() {
     const ynwsrchbuttonClicked = this.shared_functions.getitemfromLocalStorage('ynw_srchb');
-    // console.log('test', ynwsrchbuttonClicked);
     this.shared_functions.removeitemfromLocalStorage('ynw_srchb');
     if (ynwsrchbuttonClicked === 1) {
       this.hideRefineifOneresultchk = true;
     } else {
       this.hideRefineifOneresultchk = false;
     }
-    // console.log('ref check', this.hideRefineifOneresultchk);
   }
 
   getDomainListMain() {
@@ -271,7 +266,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
   }
   setEnvironment(bypassotherfunction?) {
-    // console.log('diff hours search', diff['hours']);
     if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
       const domainobtain = this.getdomainofaSubdomain(this.subsector);
       if (domainobtain !== undefined && domainobtain) {
@@ -311,7 +305,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   checklocationExistsinStorage() {
     const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
-
     // if (!localloc) {
     const holdLocObj = {
       autoname: this.locautoname || '',
@@ -332,7 +325,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   setSearchfields(obj, src) {
-    // console.log('src', src, 'details', obj);
     if (src === 1) { // case from ngoninit
       this.searchButtonClick = true;
       this.domain = obj.do;
@@ -362,7 +354,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         if (this.kwdomain !== '') {
           this.domain = this.kwdomain;
           // this.getlistofSubdomains(this.domain);
-          // console.log('reached here');
         }
         if (this.kwsubdomain !== '') {
           this.selected_leftsubdomain = this.kwsubdomain;
@@ -376,9 +367,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         if (this.kwdomain !== '') {
           this.domain = this.kwdomain;
           // this.getlistofSubdomains(this.domain);
-          // console.log('reached here');
         }
-        // console.log('subdom', this.kw);
         if (this.kw !== '') {
           this.selected_leftsubdomain = this.kw;
         }
@@ -386,9 +375,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       // calling method to parse refine filters in query string to respective array
       this.parseRefinedfiltersQueryString(obj);
-      // console.log('refined', this.querystringrefineretain_arr);
-      // console.log('ref_query', this.refined_querystr);
-      // console.log('cpg', obj.cpg);
       if (obj.cpg) { // check whether paging value is there in the url
         let cnumb = Number(obj.cpg);
         if (isNaN(cnumb)) {
@@ -399,8 +385,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.startpageval = 1;
       }
       // this.startpageval = 1;
-      /* console.log('domain', this.domain, 'locname', this.locname, 'locautoname',
-         this.locautoname, 'lat', this.latitude, 'lon', this.longitude, 'kw', this.kw, 'kwauto', this.kwautoname, 'kwdomain', this.kwdomain, 'kwsubdom', this.kwsubdomain, 'kwtyp', this.kwtyp);*/
       if (obj.sort && obj.srt !== ' ') {
         const sr = obj.srt.split(' ');
         this.sortfield = sr[0];
@@ -410,19 +394,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.sortorder = '';
       }
       if (this.labelq !== '') { // if came to details page by clicking the search labels
-        // console.log('case1');
         this.parsesearchLabelsQuerystring(this.labelq, false); // function which parse and set the respective public variable
       } else { // to handle the case of splitting the query string in case of refresh from search result page
-        // console.log('case2', obj.lq, this.labelq);
         this.parsesearchLabelsQuerystring(obj.q, false);
       }
     } else if (src === 2) { // case of setting values in response to call from the searchdetails page
-      // console.log('details obj', obj);
       this.searchButtonClick = true;
       this.refined_domain = '';
       this.refined_subdomain = '';
       this.subsector = '';
-
       this.domain = obj.domain;
       this.locname = obj.location;
       this.locautoname = obj.locationautoname;
@@ -437,8 +417,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.kwtyp = obj.kwtyp;
       this.checklocationExistsinStorage();
       this.getlistofSubdomains(this.domain, 'setsearchfields1');
-      // console.log('kwtyp', this.kwtyp);
-      // console.log('obj', obj);
       if (this.kwtyp === 'subdom') {
         this.subsector = this.kw;
         if (this.kwdomain !== '') {
@@ -454,7 +432,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         }
         this.getlistofSubdomains(this.domain, 'searchfields2');
       }
-
       if (this.kwtyp === 'special') {
         if (this.kwdomain !== '') {
           this.domain = this.kwdomain;
@@ -471,9 +448,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         }
         this.specialization_hide = true;
         this.specialization_exists = true;
-        // console.log('reached here');
       }
-
       if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
         if (this.kwtyp === 'label') {
           this.kwtyp = 'subdom';
@@ -493,7 +468,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.passrefinedfilters.length; i++) {
           for (const field in this.passrefinedfilters[i]) {
             if (field) {
-              // console.log('field', field, this.moreoptions_arr[i][field]);
               let valstr = '';
               for (const fval of this.passrefinedfilters[i][field]) {
                 if (valstr !== '') {
@@ -506,12 +480,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           }
         }
         this.parseRefinedfiltersQueryString(passparam1);
-        // console.log('passparam1', passparam1);
-
-
-
       }
-      // console.log('passed refine filter', this.passrefinedfilters);
       if (this.labelq !== '') { // if came to details page by clicking the search labels
         this.parsesearchLabelsQuerystring(this.labelq, true); // function which parse and set the respective public variable
       }
@@ -527,26 +496,20 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         const sufield = ufield.substr(0, 6);
         if (sufield === 'myref_') {
           const orgfield = ufield.substr(6); // getting the original name by eleminating the prefix
-          // console.log('splitfield', orgfield);
           this.refinedExists = true;
           if (this.check_QuerystrinfieldexistsinArray(sufield) === -1) {
-            // console.log('iamhere');
             this.querystringrefineretain_arr[orgfield] = obj[ufield].split('~'); // split values based on delimiter to an array
             if (orgfield === 'ynw_verified_level') {
-              // console.log('fieldval', this.querystringrefineretain_arr[orgfield]);
               for (let jjj = 0; jjj < this.querystringrefineretain_arr[orgfield].length; jjj++) {
                 this.querystringrefineretain_arr[orgfield][jjj] = Number(this.querystringrefineretain_arr[orgfield][jjj]);
               }
             }
-            // console.log('field', orgfield);
           }
         }
       }
     }
-    console.log('qrystr', this.refinedExists, this.querystringrefineretain_arr);
     this.arraycreatedfromquerystring = true;
   }
-
   // function to get the datatype of the fields obtained from query string from the search refine main array
   getSearchrefineFieldDetails(fname, fvalue) {
     for (let i = 0; i < this.searchrefine_arr.length; i++) {
@@ -555,13 +518,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     }
   }
-
   returnRefineCheckboxRetainValue(fieldheader, fieldname, fieldtype) {
-    // console.log('nowhere', fieldheader, fieldtype);
     if (fieldtype === 'EnumList' || fieldtype === 'Enum' || fieldtype === 'Gender') { // case of multiple selection of checkbox
       let retval = false;
       if (this.querystringrefineretain_arr[fieldheader]) {
-        // console.log('flxname',fieldheader,fieldname, this.querystringrefineretain_arr[fieldheader].indexOf(fieldname));
         if (this.querystringrefineretain_arr[fieldheader].indexOf(fieldname) !== -1) {
           retval = true;
         }
@@ -578,7 +538,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       let retval = '';
       if (this.querystringrefineretain_arr[fieldheader]) {
         retval = this.querystringrefineretain_arr[fieldheader][0];
-        // console.log('text', fieldheader, retval, fieldtype);
         // this.handleTextrefineblur(fieldheader, retval, fieldtype, true);
       }
       return retval;
@@ -602,7 +561,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       'specialization': '',
       'rating': ''
     };
-    // console.log('str', str);
     if (str !== null) {
       if (str.match(/\ssector:'(.*?)'/) !== null) {
         retarr['sector'] = str.match(/\ssector:'(.*?)'/)[1];
@@ -621,13 +579,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.domain = obj.sector || '';
     this.subsector = obj.subsector || '';
     this.specialization = obj.specialization || '';
-    // console.log('subsec', this.subsector);
     if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
       const domainobtain = this.getdomainofaSubdomain(this.subsector);
-      // console.log(domainobtain);
       this.kw = this.subsector;
       this.kwsubdomain = this.kw;
-      // console.log('domainobtained', domainobtain);
       if (domainobtain !== undefined) {
         if (domainobtain['subdom_dispname'] !== '') {
           this.kwautoname = domainobtain['subdom_dispname'] || '';
@@ -639,9 +594,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // this.showsearchsection = true;
     } else {
       if (this.domain !== '' && this.domain !== 'All' && this.specialization !== '') {
-        // console.log('special reached here', this.specialization, this.domain);
         const obtarr = this.getSubdomainofaSpecialization(this.specialization, this.domain);
-        // console.log('returned subdom', obtarr);
         this.subsector = obtarr['subdom_name'];
         this.kwsubdomain = this.subsector;
         this.specialization_hide = true;
@@ -663,23 +616,17 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   handlesearchClick(obj) {
     this.checkRefineSpecial();
-    // console.log('from details', obj);
     this.resetRefineVariables(); // calling method to reset the refine variables
-
     this.setSearchfields(obj, 2);
-
     this.buildQuery(true); // calling build query to rebuild the query
-
     // changing the url of the search result page based on the selected criteria
     this.change_url_on_criteria_change();
-
     if (obj.labelq === '') {
       // Calling api to get the search refine filters
       this.getRefinedSearch(true, 0, 'handlesearchClick');
     }
     // Calling the search function to perform the search
     // this.do_search();
-
   }
   private change_url_on_criteria_change() {
     let urlstr = '';
@@ -700,7 +647,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       urlstr += 'la=' + this.latitude + ';lo=' + this.longitude;
     }
-
     /*if (this.provider) {
       if (urlstr != '') {
         urlstr += '&';
@@ -725,8 +671,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       urlstr += 'lontyp=' + this.loctype;
     }
-
-    // console.log('kw' + this.kw);
     if (this.kw !== '' && this.kw !== undefined && this.kw !== 'undefined') {
       if (urlstr !== '') {
         urlstr += ';';
@@ -734,7 +678,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       urlstr += 'kw=' + this.kw + ';kwauto=' + this.kwautoname + ';kwdomain=' + this.kwdomain + ';kwsubdomain=' + this.kwsubdomain + ';kwtyp=' + this.kwtyp;
     }
     // }
-
     if (this.commonfilters !== '') {
       if (urlstr !== '') {
         urlstr += ';';
@@ -782,7 +725,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.latitude) { // case of location is selected
       // calling shared function to get the coordinates for nearybylocation
       const retcoordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude, this.loctype);
-      // console.log('loctype', this.loctype);
       const coordinates = retcoordinates['locationRange'];
       // const locstr = 'location1:' + coordinates + ' ' + 'location2:' + coordinates + 'location3:' + coordinates + 'location4:' + coordinates + 'location5:' + coordinates;
       // q_str = q_str + ' ( or ' + locstr + ')';
@@ -820,32 +762,25 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           break;
       }
     }
-
     let time_qstr = '';
     if (this.commonfilters === 'opennow') { // case of opennow clicked
-
       const curdatetime = new Date();
       const enddatetime = new Date();
       enddatetime.setMinutes(enddatetime.getMinutes() + 2); // adding 2 minutes to current time
-
       const starttime = this.shared_functions.addZero(curdatetime.getHours()) + '' + this.shared_functions.addZero(curdatetime.getMinutes());
       const endtime = this.shared_functions.addZero(enddatetime.getHours()) + '' + this.shared_functions.addZero(enddatetime.getMinutes());
       time_qstr = projectConstants.myweekdays[curdatetime.getDay()] + '_time:[' + starttime + ',' + endtime + ']';
     } else if (this.commonfilters === 'always_open1') { // case of opennow clicked
       time_qstr = time_qstr + ' ' + this.commonfilters + ':1 ';
     }
-    // console.log('Iamhere', this.labelq);
     if (this.labelq) { // if label search then bypass all other criteria
-      // console.log('labelq', this.labelq);
       const labelqarr = this.labelq.split('&');
       q_str = labelqarr[0].replace('?q=', '');
       q_str = q_str.replace('[loc_details]', locstr);
-
       /*if (this.latitude) { // case of location is selected
         // calling shared function to get the coordinates for nearybylocation
         q_str = q_str + '( and location1:' + this.shared_functions.getNearByLocation(this.latitude, this.longitude) + ')';
       }*/
-      // console.log('labelarr', labelqarr);
       // projectConstants.searchpass_criteria.parser = labelqarr[1].replace('q.parser=', '');
       // projectConstants.searchpass_criteria.return = labelqarr[2].replace('return=', '');
     } else {
@@ -857,15 +792,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     }
     // Creating criteria to be passed via get
-    // console.log('refined query', this.refined_querystr);
-    // console.log('search query', q_str);
     projectConstants.searchpass_criteria.q = q_str;
     projectConstants.searchpass_criteria.sort = sortval;
     projectConstants.searchpass_criteria.fq = this.refined_querystr;
-
-
     this.nosearch_results = false;
-    // console.log('pg', this.startpageval);
     // Finding the start row value for paging
     if (this.startpageval) {
       projectConstants.searchpass_criteria.start = (this.startpageval - 1) * projectConstants.searchpass_criteria.size;
@@ -878,13 +808,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
     this.search_result_count = 0;
     if (q_str === '') {
-      // console.log('no criteria');
     } else {
       this.shared_functions.getCloudUrl()
         .then(url => {
 
           /* const userobj = this.shared_functions.getitemfromLocalStorage('ynw-user');
-           // console.log("Hai:"+ JSON.stringify(userobj));
            let testUser = false;
            if (userobj !== null) {
              const phno = (userobj.primaryPhoneNumber.toString());
@@ -892,7 +820,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                testUser = true;
              }
            }
-           console.log('testuser', testUser, projectConstants.searchpass_criteria.fq);
            const qvar = projectConstants.searchpass_criteria.fq;
            let qvarlen;
            if (!testUser) {
@@ -909,19 +836,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
              } else {
                projectConstants.searchpass_criteria.fq = ' (and test_account:1) ';
              }
-           }
-           console.log('testuser2', testUser, projectConstants.searchpass_criteria.fq);*/
-          // console.log(projectConstants.searchpass_criteria);
+           } */
           this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria)
             .subscribe(res => {
               this.search_data = res;
               this.result_provid = [];
               this.result_providdet = [];
-              // console.log('search', this.search_data.hits.hit);
               let schedule_arr = [];
               let locationcnt = 0;
               for (let i = 0; i < this.search_data.hits.hit.length; i++) {
-                // console.log('result terminologies', this.search_data.hits.hit[i].fields.title, JSON.parse(this.search_data.hits.hit[i].fields.terminologies));
                 // this.getTerminologyTerm('waitlist', this.search_data.hits.hit[i].fields);
                 locationcnt = 0;
                 if (this.search_data.hits.hit[i].fields['logo']) {
@@ -929,7 +852,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
                 this.search_data.hits.hit[i].fields.rating = this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating);
                 this.search_data.hits.hit[i].fields['checkInsallowed'] = (this.search_data.hits.hit[i].fields.hasOwnProperty('online_checkins')) ? true : false;
-                // console.log('rating', this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating));
                 // const providarr = this.search_data.hits.hit[i].id.split('-');
                 const provid = this.search_data.hits.hit[i].id;
                 // this.result_provid[i] = this.search_data.hits.hit[i].id;
@@ -938,7 +860,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   // this.result_providdet.push({'provid': providarr[0], 'searchindx': i});
                   this.result_providdet.push({ 'provid': provid, 'searchindx': i });
                 } else {
-                  // console.log('claimable', this.search_data.hits.hit[i].fields.claimable );
                 }
                 if (this.search_data.hits.hit[i].fields.hasOwnProperty('place2')) {
                   ++locationcnt;
@@ -957,7 +878,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   schedule_arr = [];
                   for (let j = 0; j < this.search_data.hits.hit[i].fields.business_hours1.length; j++) {
                     const obt_sch = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[j]);
-                   // console.log('business', obt_sch[0].repeatIntervals);
                       for (let k = 0; k < obt_sch[0].repeatIntervals.length; k++) {
                         // pushing the schedule details to the respective array to show it in the page
                         schedule_arr.push({
@@ -975,7 +895,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   const business_hours = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[0]);
                   for (let j = 0; j < business_hours.length; j++) {
                     const obt_sch = business_hours[j];
-                    // console.log('business', obt_sch[0].repeatIntervals);
                     for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
                       // pushing the schedule details to the respective array to show it in the page
                       schedule_arr.push({
@@ -989,7 +908,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
 
               }
-              // console.log('search after', this.search_data.hits.hit);
               /*let display_schedule = [];
               display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
               this.queues[ii]['displayschedule'] = display_schedule;*/
@@ -1002,7 +920,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 if (this.search_result_count === 1) {
                   this.showrefinedsection = false;
                 } else {
-                  // console.log('screen width', this.screenWidth);
                   if (this.screenWidth <= 767) {
                     this.showrefinedsection = false;
                   } else {
@@ -1013,7 +930,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 this.showrefinedsection = false; // this is done to override all conditions and to hide the refined filter section by default
               }
               setTimeout(() => {
-                // console.log('i am here', this.retscrolltop);
                 window.scrollTo(0, this.retscrolltop);
                 this.retscrolltop = 0;
               }, 1000);
@@ -1031,7 +947,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       this.searchdetailserviceobj.getEstimatedWaitingTime(post_provids)
         .subscribe(data => {
-          // console.log('estimated', data);
           this.waitlisttime_arr = data;
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
             this.waitlisttime_arr = [];
@@ -1057,7 +972,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           let srchindx;
           const check_dtoday = new Date(dtoday);
           let cdate = new Date();
-          // console.log('prov id', provids);
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             srchindx = provids[i].searchindx;
             this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
@@ -1099,16 +1013,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         });
     }
   }
-
   private showproviderlogoicon(logo) {
     return this.shared_functions.showlogoicon(logo);
   }
   private getdomain() {
     return this.domain;
   }
-
   private setfields() {
-    // console.log('setfields', this.kw, this.kwautoname, this.kwtyp);
     this.searchfields = {
       domain: this.domain,
       location: this.locname,
@@ -1130,8 +1041,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       commonfilters: this.commonfilters || '',
       passrefinedfilters: []
     };
-
-    // console.log('ret search fields', this.searchfields);
     return this.searchfields;
   }
   private selected_sortfield(sel) {
@@ -1187,10 +1096,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.change_url_on_criteria_change();
     this.do_search();
   }
-
   // method which get the refined filters
   getRefinedSearch(call_dosearch?, fromrefine?, src?) {
-    // console.log('src', src);
     let subdom = '';
     this.searchrefine_arr = '';
     if (this.kw !== '') {
@@ -1204,11 +1111,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.kwtyp === 'label' || (this.labelq !== '' && this.labelq !== undefined)) {
       subdom = this.kwsubdomain;
     }
-    // console.log('obtained domain prefix', subdom, this.domain, this.kwtyp);
     if (subdom !== '' && (this.domain === '' || this.domain === undefined)) {
       const domdet = this.getdomainofaSubdomain(subdom);
       if (domdet) {
-        // console.log('obtained domain', domdet);
         this.domain = domdet['dom'];
         this.kwautoname = domdet['subdom_dispname'];
       }
@@ -1217,7 +1122,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (subdom === '') {
       // pasdomain = '';
     }
-    // console.log('pass dom subdom', pasdomain, subdom);
     if (fromrefine === 1) { // case of coming to this function from left side domain or subdomain selection
       if (this.refined_domain !== '' && this.refined_domain !== 'All') {
         pasdomain = this.refined_domain;
@@ -1234,7 +1138,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         // pasdomain = '';
       }
     }
-    // console.log('ref', pasdomain, subdom);
     this.searchdetailserviceobj.getRefinedSearch(pasdomain, subdom)
       .subscribe(data => {
         // if (pasdomain && subdom) { // case if domain and subdomain are available
@@ -1248,7 +1151,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           }
         } else {
           if (data['commonFilters']) {
-            // console.log('common', data['commonFilters']);
             for (let i = 0; i < data['commonFilters'].length; i++) {
               if (data['commonFilters'][i].name === 'opennow') {
                 data['commonFilters'][i].cloudSearchIndex = 'opennow';
@@ -1259,13 +1161,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         }
         this.searchcommononlyrefine_arr = data['commonFilters'];
         this.obtainedRefined = true;
-        // console.log('refined', this.searchrefine_arr);
-        // console.log('qrystr', this.querystringrefineretain_arr);
-
         // section which populates the respective arrays with criteria based on query string
         Object.keys(this.querystringrefineretain_arr).forEach(key => {
           const obtainedobj = this.getSearchrefineFieldDetails(key, this.querystringrefineretain_arr[key]);
-          // console.log('obtained', obtainedobj);
           if (obtainedobj) {
             if (obtainedobj.dataType === 'TEXT' || obtainedobj.dataType === 'TEXT_MED') {
               this.handleTextrefineblur(obtainedobj.cloudSearchIndex, this.querystringrefineretain_arr[key], obtainedobj.dataType, true);
@@ -1283,7 +1181,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       });
   }
   getdomainofaSubdomain(subdomname) {
-    // console.log('domain data list', this.domainlist_data);
     if (this.domainlist_data) {
       for (let i = 0; i < this.domainlist_data.length; i++) {
         for (const subdom of this.domainlist_data[i].subDomains) {
@@ -1300,10 +1197,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   getSubdomainofaSpecialization(special, domain) {
     let retarr = { 'dom': '', 'subdom_name': '', 'subdom_dispname': '' };
-    // console.log('domainlist', this.domainlist_data);
     if (this.domainlist_data === undefined) {
       const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-      // console.log('subdomspec', bconfig);
       if (bconfig) { // case if data is there in local storage
         this.domainlist_data = bconfig.bdata;
       }
@@ -1314,7 +1209,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           for (const subdom of this.domainlist_data[i].subDomains) {
             if (subdom.specializations.length > 0) {
               for (const spec of subdom.specializations) {
-                // console.log('spec name', spec.name.toLowerCase(), special.toLowerCase());
                 if (spec.name.toLowerCase() === special.toLowerCase()) {
                   retarr = { 'dom': this.domainlist_data[i].domain, 'subdom_name': subdom.subDomain, 'subdom_dispname': subdom.displayName };
                   return retarr;
@@ -1333,7 +1227,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
-    // console.log('click', fieldname, fieldtype, selval);
     if (this.searchrefineresult_arr.length) {
       const sec_indx = this.check_fieldexistsinArray(fieldname, fieldtype);
       if (sec_indx === -1) {
@@ -1346,10 +1239,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.searchrefineresult_arr[sec_indx][fieldname].splice(0, 1);
         }
         const chk_fieldvalexist = this.check_fieldvalexistsinArray(fieldname, selval);
-        // console.log('val exist', chk_fieldvalexist);
         if (chk_fieldvalexist[0]['indx'] !== -1) {
           this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].splice(chk_fieldvalexist[0]['key'], 1);
-          //  console.log('count', this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].length);
           /*if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']].length === 0) {
             this.searchrefineresult_arr.splice(chk_fieldvalexist[0]['indx'], 1);
           }*/
@@ -1373,12 +1264,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.searchrefineresult_arr[curi][fieldname] = new Array();
       this.searchrefineresult_arr[curi][fieldname][0] = new Array(selval, fieldtype);
     }
-    // console.log('refine filter', this.searchrefineresult_arr);
     if (bypassbuildquery === false) {
       this.buildQuery(false);
     }
   }
-
   // method which checks whether a fieldname already exists in the refineresult array
   check_fieldexistsinArray(fieldname, fieldtype) {
     let exists_indx = -1;
@@ -1396,9 +1285,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   check_fieldvalexistsinArray(fieldname, selval) {
     let ret_arr = [{ 'indx': -1, 'field': '', 'key': '' }];
     for (let i = 0; i < this.searchrefineresult_arr.length; i++) {
-      // console.log('inside', this.searchrefineresult_arr[i], fieldname);
       for (const key in this.searchrefineresult_arr[i][fieldname]) {
-        // console.log('inner', this.searchrefineresult_arr[i][fieldname][key]);
         if (this.searchrefineresult_arr[i][fieldname][key][0] === selval) {
           ret_arr = [{ 'indx': i, 'field': fieldname, 'key': key }];
         }
@@ -1420,7 +1307,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       for (const field in this.searchrefineresult_arr[i]) {
         if (field) {
           const subst_det = this.getsearchqueryforField(i, field);
-          // console.log(field, 'str=', subst_det['retstr'], 'cnt=', subst_det['retcnt']);
           if (subst_det['retstr'] !== '') {
             if (subst_det['retcnt'] > 1) {
               this.refined_querystr += ' (or ' + subst_det['retstr'] + ')';
@@ -1484,7 +1370,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     let retstr = '';
     let returlstr = '';
     let curcnt = 0;
-    // console.log('valcnt', this.searchrefineresult_arr[indx][fieldname].length);
     for (let i = 0; i < this.searchrefineresult_arr[indx][fieldname].length; i++) {
       if (retstr !== '') {
         retstr += '';
@@ -1549,7 +1434,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   handleTextrefineKeypress(ev, fieldname, fieldvalue, fieldtype, bypassbuildquery?) {
     const kCode = parseInt(ev.keyCode, 10);
     if (kCode === 13) {
-      // console.log('enter key');
       // replacing unwanted characters
       this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
       fieldvalue = fieldvalue.replace(/;/g, '');
@@ -1566,7 +1450,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
      this.selected_leftsubdomain = '';
      this.domain = domain;
      this.searchfields.domain = this.domain;
-     // console.log('domainchange', this.searchfields.domain);
      this.showopnow = 1;
      this.change_url_on_criteria_change();
      this.subdomainlist_data = '';
@@ -1575,7 +1458,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
    }*/
   getlistofSubdomains(curdomain, src?) {
     // const curdomain = this.refined_domain;
-    // console.log('psubdomain', curdomain, this.domainlist_data);
     this.subdomainlist_data = [];
     if (curdomain !== '' && curdomain !== 'All') {
       for (const domains of this.domainlist_data) {
@@ -1584,14 +1466,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         }
       }
       // if (this.subdomainlist_data.length === 1) {
-      //  console.log('subdom', this.subdomainlist_data[0].subDomain, src);
       // this.handlerefinedsubdomainchange(this.subdomainlist_data[0].subDomain);
       // }
     }
-    // console.log('subdomains', this.subdomainlist_data);
   }
   /* handleleftsubdomainchange(subdom) {
-  //  console.log('selsubdom', subdom);
     for (const csubdom of this.subdomainlist_data) {
       if (csubdom.subDomain === subdom) {
         this.kwautoname =  csubdom.displayName;
@@ -1616,7 +1495,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   handleratingClick(obj) {
     this.searchButtonClick = false;
     // this.ratingholder = obj.selectedrating;
-    // console.log('rating holder', this.ratingholder);
     this.handle_optionclick(obj.cloudindex, 'Rating', obj.selectedrating, false);
   }
 
@@ -1634,32 +1512,27 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             sector: claimdata['sector'],
             subsector: claimdata['subSector']
           };
-          // console.log('Claim Business', obj.id, 'dta', data, 'pass data', pass_data);
           this.SignupforClaimmable(pass_data);
         }, error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
     } else {
-
     }
   }
-
   SignupforClaimmable(passData) {
+    const cClass = 'commonpopupmainclass';
     this.claimdialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
-      panelClass: ['signupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['signupmainclass', cClass],
       disableClose: true,
       data: {
         is_provider: 'true',
         claimData: passData
       }
     });
-
     this.claimdialogRef.afterClosed().subscribe(result => {
     });
-
   }
-
   checkinClicked(obj, chdatereq) {
     this.current_provider = obj;
     this.changedate_req = chdatereq;
@@ -1682,7 +1555,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
         const pdata = { 'ttype': 'updateuserdetails' };
@@ -1700,7 +1572,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
@@ -1725,7 +1596,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log('login / signup return ', result);
       if (result === 'success') {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
@@ -1743,7 +1613,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.doSignup(passParam);
       }
     });
-
   }
   showCheckin(origin?) {
     this.checkindialogRef = this.dialog.open(CheckInComponent, {
@@ -1758,16 +1627,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         datechangereq: this.changedate_req
       }
     });
-
     this.checkindialogRef.afterClosed().subscribe(result => {
-
     });
   }
-
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
   }
-
   providerDetClicked(obj) {
     if (obj && obj.fields.unique_id !== undefined) {
       // const arr = obj.id.split('-');
@@ -1792,12 +1657,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   handlerefineddomainchange(val) {
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
-    // console.log('refineddomain', val);
     this.refined_domain = val;
     this.refined_subdomain = '';
     this.getlistofSubdomains(val, 'domainchange');
     if (this.subdomainlist_data.length === 1) { // case if there is only one subdomain
-      console.log('subdom', this.subdomainlist_data[0].subDomain);
       this.handlerefinedsubdomainchange(this.subdomainlist_data[0].subDomain);
     } else {
       this.getRefinedSearch(true, 1);
@@ -1807,11 +1670,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   handlerefinedsubdomainchange(val) {
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
-    // console.log('refinedSubdomain', val);
     this.refined_subdomain = val;
     this.getRefinedSearch(true, 1);
   }
-
   showmore(indx) {
     this.searchrefine_arr[indx]['showhiddendet'] = true;
   }
@@ -1828,7 +1689,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {
-          // console.log('communicate provid ', providforCommunicate);
           this.showCommunicate(providforCommunicate, name);
         }
       } else { // show consumer login
@@ -1856,7 +1716,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   additionalRefineCondition() {
     let retval = false;
-    // console.log('condi', this.searchButtonClick, this.search_result_count);
     if (this.searchButtonClick) {
       if (this.search_result_count !== undefined) {
         if (this.search_result_count > 0) {
@@ -1885,7 +1744,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       return true;
     }
   }
-
   isOnlineCheckinEnabled(obj) {
     if (obj) {
       if (obj.fields.hasOwnProperty('online_checkins')) {
@@ -1899,14 +1757,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     }
   }
-
   getTerminologyTerm(term, fields) {
     let terminologies = null;
-    // console.log('fields.terminolog', fields.terminologies, terminologies);
     if (fields.terminologies !== undefined) {
       terminologies = JSON.parse(fields.terminologies[0]);
     }
-    // console.log('term', term, fields, 'terminologies', terminologies);
     if (terminologies !== null) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
       // const terminologies = this.common_datastorage.get('terminologies');
@@ -1919,10 +1774,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       return this.shared_functions.firstToUpper(term);
     }
   }
-
   checkserviceClicked(name, obj) {
     this.btn_clicked = true;
-    console.log('here', name, obj);
     if (this.shared_functions.checkLogin()) {
       const ctype = this.shared_functions.isBusinessOwner('returntyp');
       // if (ctype === 'consumer') {
@@ -1950,7 +1803,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const s3url = res;
           this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
             .subscribe(services => {
-              // console.log(services);
               let servicesList: any = [];
               servicesList = services;
               for (let i = 0; i < servicesList.length; i++) {
@@ -1975,7 +1827,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         serdet: serv
       }
     });
-
     this.servicedialogRef.afterClosed().subscribe(result => {
       this.btn_clicked = false;
     });
@@ -1991,7 +1842,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const s3url = res;
           this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
             .subscribe(couponsList => {
-              console.log(couponsList);
               this.coupondialogRef = this.dialog.open(CouponsComponent, {
                 width: '60%',
                 panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'specialclass'],

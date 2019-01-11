@@ -126,23 +126,23 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #menu="matMenu">
-                                                <!-- <button type="button" (click)="addEditProviderQueue('edit',queue)" mat-menu-item>
+                                                <button type="button" (click)="addEditProviderQueue('edit',queue)" mat-menu-item>
                                                 <i class="icon-edit"></i>
                                                 <span>Edit</span>
-                                                </button> -->
+                                                </button>
                                                 <button type="button" (click)="changeProviderQueueStatus(queue)"
-                                                    mat-menu-item>
+                                                mat-menu-item >
                                                     <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
                                                     <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
                                                     <span> {{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</span>
                                                 </button>
                                             </mat-menu>
                                         </span>
-                                        <span class="mbt-mobile-show">
+                                        <!-- <span class="mbt-mobile-show">
                                             <button [class.enableicon]="queue.queueState=='DISABLED'"
                                                 [class.disableicon]="queue.queueState=='ENABLED'" type="button" (click)="changeProviderQueueStatus(queue)">{{(queue.queueState=='ENABLED')
                                                 ? 'Disable' :' Enable'}}</button>
-                                        </span>
+                                        </span> -->
                                     </td>
                                 </tr>
                             </tbody>

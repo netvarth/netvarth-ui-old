@@ -86,6 +86,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   load_queue = 0;
   load_waitlist = 0;
   tooltipcls = projectConstants.TOOLTIP_CLS;
+  filterapplied = false;
   open_filter = false;
   waitlist_status = [];
   sel_queue_indx = 0;
@@ -928,6 +929,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+  clearFilter() {
+    this.resetFilter();
+    this.filterapplied = false;
+    this.loadApiSwitch('doSearch');
+  }
   toggleFilter() {
     this.open_filter = !this.open_filter;
   }
@@ -983,6 +989,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     return api_filter;
   }
   doSearch() {
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service ||
+      this.filter.queue || this.filter.waitlist_status || this.filter.payment_status || this.filter.check_in_start_date
+      || this.filter.check_in_end_date) {
+      this.filterapplied = true;
+    }
     this.loadApiSwitch('doSearch');
   }
   resetFilter() {

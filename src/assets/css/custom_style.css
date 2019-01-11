@@ -910,7 +910,7 @@ margin-top:10px;
   color: black !important;
 }
 .otp_box {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .info-lst {
   padding: 0 0 0 20px !important;
@@ -927,7 +927,7 @@ margin-top:10px;
 /*
 Overriding mat input style
 */
-.signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container
+.signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container, .loginmainclass,
 .ynw-common-form .mat-dialog-container{
   width: 400px !important;
 }
@@ -943,13 +943,14 @@ Overriding mat input style
 .signup-form .mat-form-field.ng-valid .mat-form-field-label,
 .ynw-common-form .mat-form-field.mat-focused .mat-form-field-label, 
 .ynw-common-form .mat-form-field.ng-valid .mat-form-field-label,
-.login-form .mat-form-field.mat-focused .mat-form-field-label, 
-.login-form .mat-form-field.ng-valid .mat-form-field-label {
+.login-form .mat-form-field.mat-focused .mat-form-field-label,
+.login-form .mat-form-field.ng-valid .mat-form-field-label  
+{
   color: #3f51b5 !important;
   z-index: 5;
 }
 .signup-form .mat-form-field-appearance-legacy .mat-form-field-label,
-.ynw-common-form .mat-form-field-appearance-legacy .mat-form-field-label,
+.ynw-common-form .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty,
 .login-form .mat-form-field-appearance-legacy .mat-form-field-label
 { color :rgb(167, 163, 163) !important;}
 .signup-form .mob-prefx .mat-form-field-label,
@@ -971,13 +972,19 @@ Overriding mat input style
 .login-form .mat-select {
   padding: 15px 0px 0px 5px !important;
 }
+.mat-form-field textarea {margin-top:4px !important}
+.ynw-common-form .normalpicker .mat-input-element {padding:10px !important}
+.starttimediv label {margin-bottom: 0px !important}
+.endtimediv label {margin-bottom: 0px !important}
 .signup-form .mat-form-field-label-wrapper,
 .ynw-common-form .mat-form-field-label-wrapper,
 .login-form .mat-form-field-label-wrapper
-{top:-.175em !important}
-/* .signup-form .mat-form-field-label-wrapper {
-  top:0px !important;
-}  */
+/* {top:-.175em !important} */
+{top:.1em !important}
+
+
+.signup-form .mat-form-field-type-mat-select .mat-form-field-label-wrapper 
+  {top:-.175em !important}
 
  .form-control:focus {
   color: #495057;
@@ -998,3 +1005,8 @@ Overriding mat input style
 .ksk app-kioskheader .ksk-hd .ksk-ynw-logo {
   flex-grow: 1!important;
   display: flex!important; }
+  .number-ip-sm {max-width: 80px !important;}
+  .number-ip-sm {max-width: 80px !important;}
+  .otp_scr .number-ip-sm {max-width: 150px !important;}
+  .otp_scr .mat-button{padding: 10px 10px !important}
+  .pwd_cancel_scr {padding: 30px !important}

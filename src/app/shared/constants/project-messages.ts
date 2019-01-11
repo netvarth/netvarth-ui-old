@@ -1,5 +1,6 @@
 export const Messages = {
-  'OTP_SENT_EMAIL': 'OTP has been sent to  [your_email]. Please enter your OTP.',
+  // 'OTP_SENT_EMAIL': 'OTP has been sent to  [your_email]. Please enter your OTP.',
+  'OTP_SENT_EMAIL': 'Enter the OTP code we sent to [your_email]',
   'OTP_SENT_MOBILE': 'OTP has been sent to [your_mobile]. Please enter your OTP.',
   'OTP_SENT_LABEL' : 'Enter the OTP code we sent to [your_mobile]',
   'PROFILE_UPDATE': 'Profile has been updated successfully',

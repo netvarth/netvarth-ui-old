@@ -116,7 +116,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     }
     // delete this.submitdata.userProfile.email;
     this.resendOtp.emit(this.submitdata);
-    // this.setMessageType();
+    this.setMessageType();
   }
 
   setResendViaEmail() {
@@ -146,12 +146,8 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
       this.resendOtp.emit(this.submitdata);
       this.resetCounter(this.refreshTime);
       this.checking_email_otpsuccess = true;
-      // console.log('here',  this.submitdata,  this.submitdata.userProfile.email);
-
-
-
     }
-    // this.setMessage('email', email_form.otp_email);
+    this.setMessage('email', email_form.otp_email);
   }
 
   setMessageType() {
@@ -159,7 +155,6 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
       this.setMessage('email', this.submitdata.email);
     } else {
       this.setMessage('mobile', this.submitdata.phonenumber);
-      console.log(this.submitdata.phonenumber);
     }
   }
 
@@ -168,6 +163,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     if (type === 'email') {
       const email = (data) ? data : 'your email';
       this.message = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
+      this.otp_mobile = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
     } else if (type === 'mobile') {
       const phonenumber = (data) ? data : 'your mobile number';
       this.message = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);

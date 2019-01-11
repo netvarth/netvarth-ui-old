@@ -5,26 +5,26 @@ import { SharedServices } from '../services/shared-services';
 import { projectConstants } from '../constants/project-constants';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
-import {Observable,  Subject } from 'rxjs';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
+import { Observable, Subject } from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 
 @Injectable()
 
 export class SharedFunctions {
   holdbdata: any = [];
-    dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov']; // ['isBusinessOwner'];
+  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov']; // ['isBusinessOwner'];
 
-    private subject = new Subject<any>();
-    mUniqueId;
-    constructor(private shared_service: SharedServices, private router: Router,
-      private dialog: MatDialog,
-      private snackBar: MatSnackBar,
-      private common_datastorage: CommonDataStorageService
-    ) {}
+  private subject = new Subject<any>();
+  mUniqueId;
+  constructor(private shared_service: SharedServices, private router: Router,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private common_datastorage: CommonDataStorageService
+  ) { }
 
-    logout() {
-      this.doLogout()
+  logout() {
+    this.doLogout()
       .then(
         data => {
           this.router.navigate(['/home']);
@@ -32,408 +32,432 @@ export class SharedFunctions {
         error => {
         }
       );
-    }
+  }
 
-    doLogout() {
-      const promise = new Promise((resolve, reject) => {
-        // if (localStorage.getItem('ynw-user')) {
-          if (localStorage.getItem('isBusinessOwner') === 'true') {
-            this.providerLogout()
-            .then(
-              data => {
-                resolve();
-              }
-            );
-          } else {
-            this.consumerLogout()
-            .then(
-              data => {
-                resolve();
-              }
-            );
-          }
-        // } else {
-        //   reject();
-        // }
-      });
-      return promise;
-    }
-    private consumerLogout() {
-      const promise = new Promise((resolve, reject) => {
-        this.shared_service.ConsumerLogout()
-        .subscribe(data => {
-             // console.log(data);
-             this.clearLocalstorage();
-             resolve();
-        },
-        error => {
-           // console.log(error);
-           resolve();
-        }
-        );
-      });
-       return promise;
-    }
-
-     private providerLogout() {
-      const promise = new Promise((resolve, reject) => {
-         this.shared_service.ProviderLogout()
-         .subscribe(data => {
-              // console.log(data);
-              this.clearLocalstorage();
+  doLogout() {
+    const promise = new Promise((resolve, reject) => {
+      // if (localStorage.getItem('ynw-user')) {
+      if (localStorage.getItem('isBusinessOwner') === 'true') {
+        this.providerLogout()
+          .then(
+            data => {
               resolve();
-         },
-         error => {
+            }
+          );
+      } else {
+        this.consumerLogout()
+          .then(
+            data => {
+              resolve();
+            }
+          );
+      }
+      // } else {
+      //   reject();
+      // }
+    });
+    return promise;
+  }
+  private consumerLogout() {
+    const promise = new Promise((resolve, reject) => {
+      this.shared_service.ConsumerLogout()
+        .subscribe(data => {
+          // console.log(data);
+          this.clearLocalstorage();
+          resolve();
+        },
+          error => {
             // console.log(error);
             resolve();
-         }
-         );
-        });
-        return promise;
-      }
-     consumerLogin(post_data, moreParams?) {
+          }
+        );
+    });
+    return promise;
+  }
 
-      post_data.mUniqueId = localStorage.getItem('mUniqueId');
-      console.log('Key:' + localStorage.getItem('mUniqueId'));
-      this.sendMessage({ttype: 'main_loading' , action: true});
-      const promise = new Promise((resolve, reject) => {
-        this.shared_service.ConsumerLogin(post_data)
+  private providerLogout() {
+    const promise = new Promise((resolve, reject) => {
+      this.shared_service.ProviderLogout()
+        .subscribe(data => {
+          // console.log(data);
+          this.clearLocalstorage();
+          resolve();
+        },
+          error => {
+            // console.log(error);
+            resolve();
+          }
+        );
+    });
+    return promise;
+  }
+  consumerLogin(post_data, moreParams?) {
+
+    post_data.mUniqueId = localStorage.getItem('mUniqueId');
+    // console.log('Key:' + localStorage.getItem('mUniqueId'));
+    this.sendMessage({ ttype: 'main_loading', action: true });
+    const promise = new Promise((resolve, reject) => {
+      this.shared_service.ConsumerLogin(post_data)
         .subscribe(
-            data => {
-                // console.log('more params', moreParams);
-                resolve(data);
-                this.setLoginData(data, post_data, 'consumer');
-                if (moreParams === undefined) {
-                  this.router.navigate(['/consumer']);
-                } else {
-                  if (moreParams['bypassDefaultredirection'] === 1) {
-                    const mtemp = '1';
-                  } else {
-                    this.router.navigate(['/consumer']);
-                  }
-                }
-            },
-            error => {
-                this.sendMessage({ttype: 'main_loading' , action: false});
-                if (error.status === 401) {
-                // Not registred consumer or session alredy exists
-                    reject(error);
-                    // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
-                } else {
-                    console.log('Something went wrong. Please try after sometime');
-                    if (error.error && typeof(error.error) === 'object') {
-                      error.error = Messages.API_ERROR;
-                    }
-                    reject(error);
-                }
-            });
-
-      });
-      return promise;
-
-    }
-
-    /* providerLogin(post_data) {
-
-      const promise = new Promise((resolve, reject) => {
-        this.shared_service.ProviderLogin(post_data)
-        .subscribe(
-            data => {
-              resolve(data);
-              console.log(data);
-              this.setLoginData(data, post_data);
-              this.router.navigate(['/provider']);
-
-            },
-            error => {
-
-                if (error.status === 401) {
-                  // Not registred provider or session alredy exists
-                  this.consumerLogin(post_data)
-                  .then(
-                    data => resolve(data),
-                    err => reject(err)
-                  );
-                } else {
-                  console.log('Something went wrong. Please try after sometime');
-                  reject(error);
-                }
-            });
-        });
-        return promise;
-     }*/
-
-     providerLogin(post_data) {
-        this.sendMessage({ttype: 'main_loading' , action: true});
-        const promise = new Promise((resolve, reject) => {
-        this.shared_service.ProviderLogin(post_data)
-        .subscribe(
-            data => {
-              resolve(data);
-              // console.log(data);
-              this.setLoginData(data, post_data, 'provider');
-              this.router.navigate(['/provider']);
-
-            },
-            error => {
-              this.sendMessage({ttype: 'main_loading' , action: false});
-              if (error.status === 401) {
-                reject(error);
-                // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+          data => {
+            // console.log('more params', moreParams);
+            resolve(data);
+            this.setLoginData(data, post_data, 'consumer');
+            if (moreParams === undefined) {
+              this.router.navigate(['/consumer']);
+            } else {
+              if (moreParams['bypassDefaultredirection'] === 1) {
+                const mtemp = '1';
               } else {
-                console.log('Something went wrong. Please try after sometime', error);
-                if (error.error && typeof(error.error) === 'object') {
-                  error.error = Messages.API_ERROR;
-                }
+                this.router.navigate(['/consumer']);
+              }
+            }
+          },
+          error => {
+            this.sendMessage({ ttype: 'main_loading', action: false });
+            if (error.status === 401) {
+              // Not registred consumer or session alredy exists
+              reject(error);
+              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+            } else {
+              console.log('Something went wrong. Please try after sometime');
+              if (error.error && typeof (error.error) === 'object') {
+                error.error = Messages.API_ERROR;
+              }
+              reject(error);
+            }
+          });
+
+    });
+    return promise;
+
+  }
+
+  /* providerLogin(post_data) {
+
+    const promise = new Promise((resolve, reject) => {
+      this.shared_service.ProviderLogin(post_data)
+      .subscribe(
+          data => {
+            resolve(data);
+            console.log(data);
+            this.setLoginData(data, post_data);
+            this.router.navigate(['/provider']);
+
+          },
+          error => {
+
+              if (error.status === 401) {
+                // Not registred provider or session alredy exists
+                this.consumerLogin(post_data)
+                .then(
+                  data => resolve(data),
+                  err => reject(err)
+                );
+              } else {
+                console.log('Something went wrong. Please try after sometime');
                 reject(error);
               }
-            });
-        });
-        return promise;
-     }
+          });
+      });
+      return promise;
+   }*/
 
-
-
-    public setLoginData(data, post_data, mod) {
-
-          localStorage.setItem('ynw-user', JSON.stringify(data));
-          // localStorage.setItem('isBusinessOwner', data['isProvider']);
-          localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
-          if (mod === 'provider') {
-
-          }
-          localStorage.setItem('ynw-credentials', JSON.stringify(post_data));
-
-    }
-
-    public clearLocalstorage() {
-
-        for (let index = 0; index < localStorage.length; index++) {
-              if (this.dont_delete_localstorage.indexOf(localStorage.key( index )) === -1) {
-               localStorage.removeItem( localStorage.key( index ));
-               index = index - 1; // manage index after remove
-          }
-        }
-
-    }
-
-    public checkLogin() {
-      const login = (localStorage.getItem('ynw-credentials')) ? true : false;
-      return login;
-    }
-
-    public isBusinessOwner(passtyp?) {
-      let is_business_owner;
-      if (localStorage.getItem('isBusinessOwner')) {
-        if (passtyp === 'returntyp') {
-          // console.log('origin', passtyp);
-            is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
-        } else {
-            is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? true : false;
-        }
-      } else {
-        if (passtyp === 'returntyp') {
-            is_business_owner = '';
-        } else {
-            is_business_owner = false;
-        }
-      }
-      return is_business_owner;
-    }
-
-    public getitemfromLocalStorage(itemname) { // function to get local storage item value
-      return JSON.parse(localStorage.getItem(itemname));
-    }
-    public setitemonLocalStorage(itemname, itemvalue) { // function to set local storage item value
-      localStorage.setItem(itemname, JSON.stringify(itemvalue));
-    }
-    public removeitemfromLocalStorage(itemname) {
-      localStorage.removeItem(itemname);
-    }
-
-    public setItemOnCookie(cname, cvalue, exdays = 30) {
-      const d = new Date();
-      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-      const expires = 'expires=' + d.toUTCString();
-      document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
-    }
-
-    public getItemOnCookie(cname) {
-      const name = cname + '=';
-      const decodedCookie = decodeURIComponent(document.cookie);
-      const ca = decodedCookie.split(';');
-      for (let i = 0; i < ca.length; i++) {
-          let c = ca[i];
-          while (c.charAt(0) === ' ') {
-              c = c.substring(1);
-          }
-          if (c.indexOf(name) === 0) {
-              return c.substring(name.length, c.length);
-          }
-      }
-      return '';
-    }
-
-    public getCurrentUTCdatetimestring() {
-      const curdate = new Date();
-      const cdate = new Date(Date.UTC(curdate.getUTCFullYear(), curdate.getUTCMonth(), curdate.getUTCDate(), curdate.getUTCHours(),
-                      curdate.getUTCMinutes(), curdate.getUTCSeconds(), curdate.getUTCMilliseconds()));
-      // const dates = date.toUTCString().slice(0, -4);
-      // console.log('Inside'+dates);
-      return cdate.toISOString();
-    }
-
-    public showlogoicon(logo, moreparams?) {
-      if (logo == null || logo === '') {
-        return '../../assets/images/no_image_icon.png';
-      } else {
-        return logo;
-      }
-    }
-    public showitemimg(logo, moreparams?) {
-      if (logo == null || logo === '') {
-        return 'assets/images/no_image_icon.png';
-      } else {
-        return logo;
-      }
-    }
-
-    public tosentenceCase (str) { /* Convert string to sentence case*/
-      if ((str === null) || (str === '')) {
-           return false;
-      } else {
-       str = str.toString();
-      }
-     return str.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); } );
-    }
-
-    public getProfile() {
-      const promise = new Promise((resolve, reject) => {
-        const user = JSON.parse(localStorage.getItem('ynw-user'));
-        if (!user.id) {
-          this.router.navigate(['logout']);
-        }
-
-        this.shared_service.getProfile(user.id, this.isBusinessOwner('returntyp'))
+  providerLogin(post_data) {
+    this.sendMessage({ ttype: 'main_loading', action: true });
+    const promise = new Promise((resolve, reject) => {
+      this.shared_service.ProviderLogin(post_data)
         .subscribe(
+          data => {
+            resolve(data);
+            // console.log(data);
+            this.setLoginData(data, post_data, 'provider');
+            this.router.navigate(['/provider']);
+
+          },
+          error => {
+            this.sendMessage({ ttype: 'main_loading', action: false });
+            if (error.status === 401) {
+              reject(error);
+              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+            } else {
+              console.log('Something went wrong. Please try after sometime', error);
+              if (error.error && typeof (error.error) === 'object') {
+                error.error = Messages.API_ERROR;
+              }
+              reject(error);
+            }
+          });
+    });
+    return promise;
+  }
+
+
+
+  public setLoginData(data, post_data, mod) {
+
+    localStorage.setItem('ynw-user', JSON.stringify(data));
+    // localStorage.setItem('isBusinessOwner', data['isProvider']);
+    localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
+    if (mod === 'provider') {
+
+    }
+    localStorage.setItem('ynw-credentials', JSON.stringify(post_data));
+
+  }
+
+  public clearLocalstorage() {
+
+    for (let index = 0; index < localStorage.length; index++) {
+      if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
+        localStorage.removeItem(localStorage.key(index));
+        index = index - 1; // manage index after remove
+      }
+    }
+
+  }
+
+  public checkLogin() {
+    const login = (localStorage.getItem('ynw-credentials')) ? true : false;
+    return login;
+  }
+
+  public isBusinessOwner(passtyp?) {
+    let is_business_owner;
+    if (localStorage.getItem('isBusinessOwner')) {
+      if (passtyp === 'returntyp') {
+        // console.log('origin', passtyp);
+        is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
+      } else {
+        is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? true : false;
+      }
+    } else {
+      if (passtyp === 'returntyp') {
+        is_business_owner = '';
+      } else {
+        is_business_owner = false;
+      }
+    }
+    return is_business_owner;
+  }
+
+  public getitemfromLocalStorage(itemname) { // function to get local storage item value
+    return JSON.parse(localStorage.getItem(itemname));
+  }
+  public setitemonLocalStorage(itemname, itemvalue) { // function to set local storage item value
+    localStorage.setItem(itemname, JSON.stringify(itemvalue));
+  }
+  public removeitemfromLocalStorage(itemname) {
+    localStorage.removeItem(itemname);
+  }
+
+  public setItemOnCookie(cname, cvalue, exdays = 30) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    const expires = 'expires=' + d.toUTCString();
+    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+  }
+
+  public getItemOnCookie(cname) {
+    const name = cname + '=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
+  public getCurrentUTCdatetimestring() {
+    const curdate = new Date();
+    const cdate = new Date(Date.UTC(curdate.getUTCFullYear(), curdate.getUTCMonth(), curdate.getUTCDate(), curdate.getUTCHours(),
+      curdate.getUTCMinutes(), curdate.getUTCSeconds(), curdate.getUTCMilliseconds()));
+    // const dates = date.toUTCString().slice(0, -4);
+    // console.log('Inside'+dates);
+    return cdate.toISOString();
+  }
+
+  public showlogoicon(logo, moreparams?) {
+    if (logo == null || logo === '') {
+      return '../../assets/images/no_image_icon.png';
+    } else {
+      return logo;
+    }
+  }
+  public showitemimg(logo, moreparams?) {
+    if (logo == null || logo === '') {
+      return 'assets/images/no_image_icon.png';
+    } else {
+      return logo;
+    }
+  }
+
+  public tosentenceCase(str) { /* Convert string to sentence case*/
+    if ((str === null) || (str === '')) {
+      return false;
+    } else {
+      str = str.toString();
+    }
+    return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+  }
+
+  public getProfile() {
+    const promise = new Promise((resolve, reject) => {
+      const user = JSON.parse(localStorage.getItem('ynw-user'));
+      if (!user.id) {
+        this.router.navigate(['logout']);
+      }
+
+      this.shared_service.getProfile(user.id, this.isBusinessOwner('returntyp'))
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          });
+
+    });
+    return promise;
+  }
+
+  /*getNearByLocation (centerLat: number, centerLon: number) {
+      const d = 15000; // desired distance in meter
+      const angle = 45 * Math.PI / 180; // 45 degrees in radians
+      const oneDegree = 111319.9; // distance in meters from degree to degree at the equato
+      // const maxLat = parseFloat(centerLat) + parseFloat((d / oneDegree) * Math.sin(angle));
+      // const maxLon = parseFloat(centerLon) + parseFloat((d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle));
+      const maxLat = Number(centerLat) + Number((d / oneDegree) * Math.sin(angle));
+      const maxLon = Number(centerLon) + Number((d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle));
+      // console.log(centerLat, ((d / oneDegree) * Math.sin(angle)),maxLat);
+      // const minLat = centerLat - (d / oneDegree) * Math.sin(angle);
+      //  const minLon = centerLon - (d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle);
+      const locationRange = '[\'' + maxLat + ',' + maxLon + '\',\'' + centerLat + ',' + centerLon + '\']';
+      return locationRange;
+  }*/
+  getNearByLocation(centerLat: number, centerLon: number, loctype?) {
+    let distance = 0;
+    // if (loctype === undefined || loctype === '') {
+    //   distance = 5; // in KM
+    // } else {
+    switch (loctype) {
+      case 'state':
+        distance = projectConstants.DISTANCE_STATE;
+        break;
+      case 'city':
+        distance = projectConstants.DISTANCE_CITY;
+        break;
+      case 'area':
+        distance = projectConstants.DISTANCE_AREA;
+        break;
+      default:
+        distance = projectConstants.DISTANCE_AREA;
+        break;
+    }
+    // }
+    // console.log('Distance for Cloud', distance, loctype);
+    const distInDegree = distance / 111;
+    // console.log(distInDegree);
+    const upperLeftLat = Number(centerLat) - Number(distInDegree);
+    const upperLeftLon = Number(centerLon) + Number(distInDegree);
+    const lowerRightLat = Number(centerLat) + Number(distInDegree);
+    const lowerRightLon = Number(centerLon) - Number(distInDegree);
+    const locationRange = '[\'' + lowerRightLat + ',' + lowerRightLon + '\',\'' + upperLeftLat + ',' + upperLeftLon + '\']';
+    // console.log(locationRange);
+    const retarr = { 'locationRange': locationRange, 'upperLeftLat': upperLeftLat, 'upperLeftLon': upperLeftLon, 'lowerRightLat': lowerRightLat, 'lowerRightLon': lowerRightLon };
+    return retarr;
+  }
+
+  getS3Url(src?) {
+    const promise = new Promise((resolve, reject) => {
+      if (localStorage.getItem('s3Url')) {
+        resolve(localStorage.getItem('s3Url'));
+      } else {
+        this.shared_service.gets3url(src)
+          .subscribe(
             data => {
+              localStorage.setItem('s3Url', data.toString());
               resolve(data);
             },
             error => {
               reject(error);
             });
-
-      });
-      return promise;
-    }
-
-    /*getNearByLocation (centerLat: number, centerLon: number) {
-        const d = 15000; // desired distance in meter
-        const angle = 45 * Math.PI / 180; // 45 degrees in radians
-        const oneDegree = 111319.9; // distance in meters from degree to degree at the equato
-        // const maxLat = parseFloat(centerLat) + parseFloat((d / oneDegree) * Math.sin(angle));
-        // const maxLon = parseFloat(centerLon) + parseFloat((d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle));
-        const maxLat = Number(centerLat) + Number((d / oneDegree) * Math.sin(angle));
-        const maxLon = Number(centerLon) + Number((d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle));
-        // console.log(centerLat, ((d / oneDegree) * Math.sin(angle)),maxLat);
-        // const minLat = centerLat - (d / oneDegree) * Math.sin(angle);
-        //  const minLon = centerLon - (d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle);
-        const locationRange = '[\'' + maxLat + ',' + maxLon + '\',\'' + centerLat + ',' + centerLon + '\']';
-        return locationRange;
-    }*/
-    getNearByLocation (centerLat: number, centerLon: number, loctype?) {
-      let distance = 0;
-     // if (loctype === undefined || loctype === '') {
-     //   distance = 5; // in KM
-     // } else {
-          switch (loctype) {
-            case 'state':
-              distance = projectConstants.DISTANCE_STATE;
-            break;
-            case 'city':
-              distance = projectConstants.DISTANCE_CITY;
-            break;
-            case 'area':
-              distance = projectConstants.DISTANCE_AREA;
-            break;
-            default:
-              distance = projectConstants.DISTANCE_AREA;
-            break;
-          }
-      // }
-      // console.log('Distance for Cloud', distance, loctype);
-      const distInDegree = distance / 111;
-      // console.log(distInDegree);
-      const upperLeftLat = Number(centerLat) - Number(distInDegree);
-      const upperLeftLon = Number(centerLon) + Number(distInDegree);
-      const lowerRightLat = Number(centerLat) + Number(distInDegree);
-      const lowerRightLon = Number(centerLon) - Number(distInDegree);
-      const locationRange = '[\'' + lowerRightLat + ',' + lowerRightLon + '\',\'' + upperLeftLat + ',' + upperLeftLon + '\']';
-      // console.log(locationRange);
-      const retarr = {'locationRange': locationRange, 'upperLeftLat': upperLeftLat, 'upperLeftLon': upperLeftLon, 'lowerRightLat': lowerRightLat, 'lowerRightLon': lowerRightLon};
-      return retarr;
-  }
-
-    getS3Url(src?) {
-      const promise = new Promise((resolve, reject) => {
-        if (localStorage.getItem('s3Url')) {
-          resolve(localStorage.getItem('s3Url'));
-        } else {
-          this.shared_service.gets3url(src)
-          .subscribe(
-              data => {
-                localStorage.setItem('s3Url', data.toString());
-                resolve(data);
-              },
-              error => {
-                reject(error);
-              });
-        }
+      }
     });
     return promise;
   }
 
   getCloudUrl() {
-          const promise = new Promise((resolve, reject) => {
-            if (localStorage.getItem('cloudUrl')) {
-              resolve(localStorage.getItem('cloudUrl'));
-            } else {
-              this.shared_service.getCloudUrl()
-              .subscribe(
-                  data => { // console.log(data);
-                    localStorage.setItem('cloudUrl', data.toString());
-                    resolve(data);
-                  },
-                  error => {
-                    reject(error);
-                  });
-            }
-        });
-        return promise;
+    const promise = new Promise((resolve, reject) => {
+      if (localStorage.getItem('cloudUrl')) {
+        resolve(localStorage.getItem('cloudUrl'));
+      } else {
+        this.shared_service.getCloudUrl()
+          .subscribe(
+            data => { // console.log(data);
+              localStorage.setItem('cloudUrl', data.toString());
+              resolve(data);
+            },
+            error => {
+              reject(error);
+            });
+      }
+    });
+    return promise;
   }
 
   get_Searchlabels(labeltype, searchlabels_arr, params?) {
-    let retdet;
+    let retdet = [];
     switch (labeltype) {
-        case 'global':
-          retdet = searchlabels_arr.searchLabels[0].globalSearchLabels;
+      case 'global':
+        // retdet = searchlabels_arr.searchLabels[0].globalSearchLabels;
+        retdet = searchlabels_arr.globalSearchLabels;
+        // for (const labelarr of searchlabels_arr.searchLabels[1].sectorLevelLabels) {
+        for (const labelarr of searchlabels_arr.sectorLevelLabels) {
+          for (const subsecarr of labelarr.subSectorLevelLabels) {
+            // retdet.concat(subsecarr.specializationLabels);
+            const result = subsecarr.specializationLabels.map(function(el) {
+              const o = Object.assign({}, el);
+              o.type = 'special';
+              return o;
+            });
+            retdet.push.apply(retdet, result);
+          }
+        }
         break;
-        case 'domain':
-          for (const labelarr of searchlabels_arr.searchLabels[1].sectorLevelLabels) {
-            if (labelarr.name === params['domain']) {
-              retdet = labelarr.sectorLabels;
+      case 'domain':
+        // for (const labelarr of searchlabels_arr.searchLabels[1].sectorLevelLabels) {
+        for (const labelarr of searchlabels_arr.sectorLevelLabels) {
+          if (labelarr.name === params['domain']) {
+            // retdet = labelarr.sectorLabels;
+            for (const subsecarr of labelarr.subSectorLevelLabels) {
+              retdet.push({'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain'});
+              // retdet.concat(subsecarr.specializationLabels);
+              const result = subsecarr.specializationLabels.map(function(el) {
+                const o = Object.assign({}, el);
+                o.type = 'special';
+                return o;
+              });
+              retdet.push.apply(retdet, result);
             }
           }
+        }
         break;
     }
     return retdet;
   }
 
   print_PricewithCurrency(price) {
-    return '₹' + price ;
+    return '₹' + price;
   }
 
-  imageValidation (file) {
+  imageValidation(file) {
     // console.log('file', file);
     const file_types = projectConstants.IMAGE_FORMATS;
     const image_max_size = projectConstants.IMAGE_MAX_SIZE;
@@ -460,10 +484,10 @@ export class SharedFunctions {
   }
 
   getApiError(error) {
-    if ( error.error && typeof error.error === 'string') {
-      return  error.error;
+    if (error.error && typeof error.error === 'string') {
+      return error.error;
     } else if (typeof error === 'string') {
-        return error;
+      return error;
     } else {
       return Messages.API_ERROR;
     }
@@ -489,11 +513,11 @@ export class SharedFunctions {
   confirmGalleryImageDelete(ob, file) {
     ob.delgaldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message' : 'Do you want to delete this image ?',
-        'heading' : 'Delete Confirmation'
+        'message': 'Do you want to delete this image ?',
+        'heading': 'Delete Confirmation'
       }
     });
 
@@ -515,11 +539,11 @@ export class SharedFunctions {
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message' : msg,
-        'heading' : 'Public Search'
+        'message': msg,
+        'heading': 'Public Search'
       }
     });
 
@@ -534,11 +558,11 @@ export class SharedFunctions {
   confirmLogoImageDelete(ob, file) {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message' : 'Do you want to remove your profile picture?',
-        'heading' : 'Delete Confirmation'
+        'message': 'Do you want to remove your profile picture?',
+        'heading': 'Delete Confirmation'
       }
     });
 
@@ -569,25 +593,25 @@ export class SharedFunctions {
   }
 
   queueSheduleLoop(queueSchedule) {
-      const schedule_arr = [];
-      // extracting the schedule intervals
-      if (queueSchedule) {
-        // for (let i = 0; i < this.queues[ii].queueSchedule.length; i++) {
-            for (let j = 0; j < queueSchedule.repeatIntervals.length; j++) {
-            // pushing the schedule details to the respective array to show it in the page
-            schedule_arr.push({
-                day: queueSchedule.repeatIntervals[j],
-                sTime: queueSchedule.timeSlots[0].sTime,
-                eTime: queueSchedule.timeSlots[0].eTime
-            });
-            }
-        // }
+    const schedule_arr = [];
+    // extracting the schedule intervals
+    if (queueSchedule) {
+      // for (let i = 0; i < this.queues[ii].queueSchedule.length; i++) {
+      for (let j = 0; j < queueSchedule.repeatIntervals.length; j++) {
+        // pushing the schedule details to the respective array to show it in the page
+        schedule_arr.push({
+          day: queueSchedule.repeatIntervals[j],
+          sTime: queueSchedule.timeSlots[0].sTime,
+          eTime: queueSchedule.timeSlots[0].eTime
+        });
+      }
+      // }
     }
     return schedule_arr;
   }
   arrageScheduleforDisplay(schedule_arr) {
     const timebase: any = [];
-    for (let i = 0; i < schedule_arr.length; i++ ) {
+    for (let i = 0; i < schedule_arr.length; i++) {
       const timeindx = schedule_arr[i]['sTime'].replace(/\s+/, '') + schedule_arr[i]['eTime'].replace(/\s+/, '');
       // console.log('indx', timeindx);
       if (timebase[timeindx] === undefined) {
@@ -602,7 +626,7 @@ export class SharedFunctions {
         // console.log('obj', obj);
         const len = timebase[obj].length;
         for (let i = 0; i < len; i++) {
-          for (let j = i + 1 ; j < len; j++) {
+          for (let j = i + 1; j < len; j++) {
             if (timebase[obj][j].day < timebase[obj][i].day) {
               const tempobj = timebase[obj][i];
               timebase[obj][i] = timebase[obj][j];
@@ -621,32 +645,32 @@ export class SharedFunctions {
         // let pday = 0;
         let gap = 0;
         for (let i = 0; i < timebase[obj].length; i++) {
-            if (i === 0) {
-              curstr = this.getDay(timebase[obj][i].day);
-              pday = timebase[obj][i].day;
-            } else {
-              const diffs = timebase[obj][i].day - pday;
-              if (diffs > 1) {
-                if (gap >= 1) {
-                  curstr = curstr + ' - ' + this.getDay(pday);
-                }
-                curstr = curstr + ', ' + this.getDay(timebase[obj][i].day);
-              } else {
-                // console.log('cnts', i, timebase[obj].length);
-                if (i === (timebase[obj].length - 1)) {
-                  curstr = curstr + ' - ' + this.getDay(timebase[obj][i].day);
-                }
-                gap++;
+          if (i === 0) {
+            curstr = this.getDay(timebase[obj][i].day);
+            pday = timebase[obj][i].day;
+          } else {
+            const diffs = timebase[obj][i].day - pday;
+            if (diffs > 1) {
+              if (gap >= 1) {
+                curstr = curstr + ' - ' + this.getDay(pday);
               }
-              pday = timebase[obj][i].day;
+              curstr = curstr + ', ' + this.getDay(timebase[obj][i].day);
+            } else {
+              // console.log('cnts', i, timebase[obj].length);
+              if (i === (timebase[obj].length - 1)) {
+                curstr = curstr + ' - ' + this.getDay(timebase[obj][i].day);
+              }
+              gap++;
             }
+            pday = timebase[obj][i].day;
+          }
         }
-        displaysch.push({'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj});
+        displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj });
         // console.log('curstr', curstr);
       }
     }
-     // console.log('timebase', timebase);
-     // console.log('displaystr', displaysch);
+    // console.log('timebase', timebase);
+    // console.log('displaystr', displaysch);
     return displaysch;
   }
   getDay(num) {
@@ -656,8 +680,8 @@ export class SharedFunctions {
   orderChangeWorkingHours(schedulearr) {
     const tmparr = schedulearr;
     // console.log('inside before', schedulearr);
-    for (let i = 0; i < tmparr.length; i++ ) {
-      for (let j = i; j < tmparr.length; j++ ) {
+    for (let i = 0; i < tmparr.length; i++) {
+      for (let j = i; j < tmparr.length; j++) {
         if (tmparr[j].day < tmparr[i].day) {
           const tempobj = tmparr[i];
           tmparr[i] = tmparr[j];
@@ -665,13 +689,13 @@ export class SharedFunctions {
         }
       }
     }
-   // console.log('inside after', tmparr);
-   // console.log('inside sch after', schedulearr);
+    // console.log('inside after', tmparr);
+    // console.log('inside sch after', schedulearr);
   }
 
   prepareScheduleforSaving(schedule_arr) {
     const timebase: any = [];
-    for (let i = 0; i < schedule_arr.length; i++ ) {
+    for (let i = 0; i < schedule_arr.length; i++) {
       const timeindx = schedule_arr[i]['sTime'].replace(/\s+/, '') + schedule_arr[i]['eTime'].replace(/\s+/, '');
       // console.log('indx', timeindx);
       if (timebase[timeindx] === undefined) {
@@ -686,7 +710,7 @@ export class SharedFunctions {
         // console.log('obj', obj);
         const len = timebase[obj].length;
         for (let i = 0; i < len; i++) {
-          for (let j = i + 1 ; j < len; j++) {
+          for (let j = i + 1; j < len; j++) {
             if (timebase[obj][j].day < timebase[obj][i].day) {
               const tempobj = timebase[obj][i];
               timebase[obj][i] = timebase[obj][j];
@@ -700,8 +724,8 @@ export class SharedFunctions {
     const displaysch = [];
     for (const obj in timebase) {
       if (obj) {
-       // let curstr = '';
-       const curstr = [];
+        // let curstr = '';
+        const curstr = [];
         for (let i = 0; i < timebase[obj].length; i++) {
           // if (curstr !== '') {
           //   curstr += ',';
@@ -709,7 +733,7 @@ export class SharedFunctions {
           // curstr += timebase[obj][i].day;
           curstr.push(timebase[obj][i].day);
         }
-        displaysch.push({'stime': timebase[obj][0]['sTime'], 'etime': timebase[obj][0]['eTime'], 'daystr': curstr});
+        displaysch.push({ 'stime': timebase[obj][0]['sTime'], 'etime': timebase[obj][0]['eTime'], 'daystr': curstr });
         // console.log('curstr', curstr);
       }
     }
@@ -719,7 +743,7 @@ export class SharedFunctions {
   }
 
   setBusinessDetailsforHeaderDisp(bname, sector, subsector, logo, forcelogoblank?) {
-    const buss_det = {'bn': '', 'bs': '', 'bss': '', 'logo': '' };
+    const buss_det = { 'bn': '', 'bs': '', 'bss': '', 'logo': '' };
     const exist_det = this.getitemfromLocalStorage('ynwbp');
     if (exist_det) {
       buss_det.bn = bname || '';
@@ -728,7 +752,7 @@ export class SharedFunctions {
       if (forcelogoblank !== undefined) {
         buss_det.logo = '';
       } else {
-        buss_det.logo =  (logo !== '') ? logo : exist_det['logo'];
+        buss_det.logo = (logo !== '') ? logo : exist_det['logo'];
       }
     } else {
       buss_det.bn = bname;
@@ -745,7 +769,7 @@ export class SharedFunctions {
     // console.log('bdata', bprof);
     if (bprof === null || bprof === undefined) {
       this.shared_service.bussinessDomains()
-        .subscribe (
+        .subscribe(
           res => {
             this.holdbdata = res;
             // console.log('domainlilst_fetched', this.domainlist_data);
@@ -762,7 +786,7 @@ export class SharedFunctions {
           }
         );
     } else {
-      const getdata =  this.compareData(bprof, domain, subdomainname);
+      const getdata = this.compareData(bprof, domain, subdomainname);
       return getdata;
     }
   }
@@ -770,15 +794,15 @@ export class SharedFunctions {
     let retsubdom = '';
     // console.log('inbound', domain, subdomainname);
     for (let i = 0; i < bprof.bdata.length; i++) {
-     // console.log('data', bprof.bdata[i].domain, domain);
+      // console.log('data', bprof.bdata[i].domain, domain);
       if (bprof.bdata[i]['domain'] === domain) {
         if (bprof.bdata[i].subDomains.length > 1) {
-          retsubdom =  subdomainname;
+          retsubdom = subdomainname;
           return retsubdom;
         }
       }
     }
-   // console.log('return inside', retsubdom);
+    // console.log('return inside', retsubdom);
     return retsubdom;
   }
 
@@ -786,141 +810,138 @@ export class SharedFunctions {
     this.subject.next(message);
   }
 
-clearMessage() {
+  clearMessage() {
     this.subject.next();
-}
+  }
 
-getMessage(): Observable<any> {
+  getMessage(): Observable<any> {
     return this.subject.asObservable();
-}
-
-isNumberOnly(str) {
-  const pattern = /^\d+$/;
-  return pattern.test(str);  // returns a boolean
-}
-
-openSnackBar(message: string, params: any = []) {
-  const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
-
-  if (params['panelClass'] === 'snackbarerror') {
-    message = this.getApiError(message);
-  }
-  let duration = projectConstants.TIMEOUT_DELAY_LARGE;
-  if (params['duration']) {
-    duration = params['duration'];
   }
 
-  const replaced_message = this.findTerminologyTerm(message);
-  const snackBarRef = this.snackBar.open(replaced_message, '', {duration: duration, panelClass: panelclass });
-  // const snackBarRef = this.snackBar.open(message, '', {duration: 100000, panelClass: panelclass });
-  return snackBarRef;
-}
-
-redirectto (mod) {
-  const usertype = this.isBusinessOwner('returntyp');
-  switch (mod) {
-    case 'profile':
-      this.router.navigate([usertype, 'profile']);
-    break;
-    case 'change-password':
-      this.router.navigate([usertype, 'change-password']);
-    break;
-    case 'change-mobile':
-      this.router.navigate([usertype, 'change-mobile']);
-    break;
-    case 'change-email':
-      this.router.navigate([usertype, 'change-email']);
-    break;
-    case 'members':
-      this.router.navigate([usertype, 'members']);
-    break;
+  isNumberOnly(str) {
+    const pattern = /^\d+$/;
+    return pattern.test(str);  // returns a boolean
   }
-}
 
-convertMinutesToHourMinute(mins) {
-  let rethr = '';
-  let retmin = '';
-  if (mins > 0) {
-    const hr = Math.floor(mins / 60);
-    const min = Math.floor ( mins % 60);
+  openSnackBar(message: string, params: any = []) {
+    const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
 
-    if (hr > 0) {
-      if (hr > 1) {
-        rethr = hr + ' hours';
-      } else {
-        rethr = hr + ' hour';
-      }
+    if (params['panelClass'] === 'snackbarerror') {
+      message = this.getApiError(message);
     }
-    if (min > 0) {
-      if (min > 1) {
-        retmin = ' ' + min + ' minutes';
-      } else {
-        retmin = ' ' + min + ' minute';
-      }
+    let duration = projectConstants.TIMEOUT_DELAY_LARGE;
+    if (params['duration']) {
+      duration = params['duration'];
     }
-  } else {
-    retmin = '' + 0 + ' minutes';
-  }
-  return rethr + retmin;
-}
 
-getdaysdifffromDates(date1, date2) {
-  let firstdate;
-  let seconddate;
-  if (date1 === 'now') {
-    firstdate =  new Date();
-  } else {
-    firstdate =  new Date(date1);
+    const replaced_message = this.findTerminologyTerm(message);
+    const snackBarRef = this.snackBar.open(replaced_message, '', { duration: duration, panelClass: panelclass });
+    // const snackBarRef = this.snackBar.open(message, '', {duration: 100000, panelClass: panelclass });
+    return snackBarRef;
   }
-  seconddate = new Date(date2);
-  const timediff = Math.abs(firstdate.getTime() - seconddate.getTime());
-  const hours = Math.abs(firstdate.getTime() - seconddate.getTime()) / 36e5; // 36e5 is the scientific notation for 60*60*1000
-  return {'hours' : hours};
-}
-getTimeAsNumberOfMinutes(time) {
+
+  redirectto(mod) {
+    const usertype = this.isBusinessOwner('returntyp');
+    switch (mod) {
+      case 'profile':
+        this.router.navigate([usertype, 'profile']);
+        break;
+      case 'change-password':
+        this.router.navigate([usertype, 'change-password']);
+        break;
+      case 'change-mobile':
+        this.router.navigate([usertype, 'change-mobile']);
+        break;
+      case 'change-email':
+        this.router.navigate([usertype, 'change-email']);
+        break;
+      case 'members':
+        this.router.navigate([usertype, 'members']);
+        break;
+    }
+  }
+
+  convertMinutesToHourMinute(mins) {
+    let rethr = '';
+    let retmin = '';
+    if (mins > 0) {
+      const hr = Math.floor(mins / 60);
+      const min = Math.floor(mins % 60);
+
+      if (hr > 0) {
+        if (hr > 1) {
+          rethr = hr + ' hours';
+        } else {
+          rethr = hr + ' hour';
+        }
+      }
+      if (min > 0) {
+        if (min > 1) {
+          retmin = ' ' + min + ' minutes';
+        } else {
+          retmin = ' ' + min + ' minute';
+        }
+      }
+    } else {
+      retmin = '' + 0 + ' minutes';
+    }
+    return rethr + retmin;
+  }
+  getdaysdifffromDates(date1, date2) {
+    let firstdate;
+    let seconddate;
+    if (date1 === 'now') {
+      firstdate = new Date();
+    } else {
+      firstdate = new Date(date1);
+    }
+    seconddate = new Date(date2);
+    const timediff = Math.abs(firstdate.getTime() - seconddate.getTime());
+    const hours = Math.abs(firstdate.getTime() - seconddate.getTime()) / 36e5; // 36e5 is the scientific notation for 60*60*1000
+    return { 'hours': hours };
+  }
+  getTimeAsNumberOfMinutes(time) {
     const timeParts = time.split(':');
     const timeInMinutes = (parseInt(timeParts[0], 10) * 60) + parseInt(timeParts[1], 10);
     return timeInMinutes;
-}
-
-Lbase64Encode(str) {
-  let retstr = '';
-  /* // retstr = str.replace(/'/g, '~');
-  retstr = encodeURI(str);
-  if (str !== '' && str !== undefined) {
-    retstr = atob(retstr);
   }
-  return retstr; */
-  // return str;
-  if (str !== '' && str !== undefined) {
-    retstr = str.replace('(', '~');
-    retstr = retstr.replace(')', '~~');
-    return retstr;
-  } else {
-    return str;
+  Lbase64Encode(str) {
+    let retstr = '';
+    /* // retstr = str.replace(/'/g, '~');
+    retstr = encodeURI(str);
+    if (str !== '' && str !== undefined) {
+      retstr = atob(retstr);
+    }
+    return retstr; */
+    // return str;
+    if (str !== '' && str !== undefined) {
+      retstr = str.replace('(', '~');
+      retstr = retstr.replace(')', '~~');
+      return retstr;
+    } else {
+      return str;
+    }
   }
-}
-
-Lbase64Decode(str) {
-  let retstr = '';
-   /*if (str !== '' && str !== undefined) {
-    // retstr = btoa(str);
-    retstr = btoa(str);
-    // retstr = retstr.replace(/~/g, '\'');
-    retstr = decodeURI(retstr);
+  Lbase64Decode(str) {
+    let retstr = '';
+    /*if (str !== '' && str !== undefined) {
+     // retstr = btoa(str);
+     retstr = btoa(str);
+     // retstr = retstr.replace(/~/g, '\'');
+     retstr = decodeURI(retstr);
+   }
+    return retstr;*/
+    // return str;
+    if (str !== '' && str !== undefined) {
+      retstr = str.replace('~~', ')');
+      retstr = retstr.replace('~', '(');
+      return retstr;
+    } else {
+      return str;
+    }
   }
-   return retstr;*/
- // return str;
- if (str !== '' && str !== undefined) {
-  retstr = str.replace('~~', ')');
-  retstr = retstr.replace('~', '(');
-  return retstr;
- } else {
-   return str;
- }
-}
-formatDate(psdate, params: any = []) { /* convert year-month-day to day-monthname-year*/
-  const monthNames = {
+  formatDate(psdate, params: any = []) { /* convert year-month-day to day-monthname-year*/
+    const monthNames = {
       '01': 'Jan',
       '02': 'Feb',
       '03': 'Mar',
@@ -933,125 +954,116 @@ formatDate(psdate, params: any = []) { /* convert year-month-day to day-monthnam
       '10': 'Oct',
       '11': 'Nov',
       '12': 'Dec'
-  };
-  const darr =  psdate.split('-');
-  if (params['rettype'] === 'monthname') {
-    darr[1] = monthNames[darr[1]];
-    return  darr[1] + ' ' + darr[2];
-  } else if (params['rettype'] === 'fullarr') {
-    darr[1] = monthNames[darr[1]];
-    return darr;
-  } else {
-    return  darr[1] + ' ' + darr[2];
-  }
-}
-addZero(i) {
-  if (i < 10) {
-      i = '0' + i;
-  }
-  return i;
-}
-convert24HourtoAmPm(time, secreq?) {
-  const timesp = time.split(':');
-  let hr = parseInt(timesp[0], 10);
-  const min = parseInt(timesp[1], 10);
-  const sec = parseInt(timesp[2], 10);
-  let ampm = '';
-  let retstr = '';
-  // console.log('time', hr, min);
-
-  if (hr >= 12) {
-    hr = hr - 12;
-    if (hr === 0) {
-      hr = 12;
-      ampm = 'PM';
-    } else if (hr < 0) {
-      ampm = 'AM';
+    };
+    const darr = psdate.split('-');
+    if (params['rettype'] === 'monthname') {
+      darr[1] = monthNames[darr[1]];
+      return darr[1] + ' ' + darr[2];
+    } else if (params['rettype'] === 'fullarr') {
+      darr[1] = monthNames[darr[1]];
+      return darr;
     } else {
-      ampm = 'PM';
+      return darr[1] + ' ' + darr[2];
     }
-  } else {
-    ampm = 'AM';
   }
-  retstr = this.addZero(hr) + ':' + this.addZero(min);
-  if (secreq) {
-    retstr += ':' + sec;
+  addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
   }
-  retstr += ' ' + ampm;
-  return retstr;
-}
+  convert24HourtoAmPm(time, secreq?) {
+    const timesp = time.split(':');
+    let hr = parseInt(timesp[0], 10);
+    const min = parseInt(timesp[1], 10);
+    const sec = parseInt(timesp[2], 10);
+    let ampm = '';
+    let retstr = '';
+    // console.log('time', hr, min);
 
-doCancelWaitlist(waitlist, cthis?) {
-  return new Promise((resolve, reject) => {
-
-    cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message' : 'Do you want to cancel this Check-In ?',
-        'heading' : 'Confirm'
+    if (hr >= 12) {
+      hr = hr - 12;
+      if (hr === 0) {
+        hr = 12;
+        ampm = 'PM';
+      } else if (hr < 0) {
+        ampm = 'AM';
+      } else {
+        ampm = 'PM';
       }
+    } else {
+      ampm = 'AM';
+    }
+    retstr = this.addZero(hr) + ':' + this.addZero(min);
+    if (secreq) {
+      retstr += ':' + sec;
+    }
+    retstr += ' ' + ampm;
+    return retstr;
+  }
+
+  doCancelWaitlist(waitlist, cthis?) {
+    return new Promise((resolve, reject) => {
+
+      cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['consumerpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Do you want to cancel this Check-In ?',
+          'heading': 'Confirm'
+        }
+      });
+
+      cthis.canceldialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.cancelWaitlist(waitlist.ynwUuid, waitlist.provider.id)
+            .then(
+              data => {
+                resolve(data);
+              },
+              error => {
+                reject(error);
+              }
+            );
+        } else {
+          resolve();
+        }
+      });
     });
-
-    cthis.canceldialogRef.afterClosed().subscribe(result => {
-
-      if (result) {
-        this.cancelWaitlist(waitlist.ynwUuid , waitlist.provider.id)
-        .then(
+  }
+  cancelWaitlist(id, provider_id) {
+    return new Promise((resolve, reject) => {
+      const params = {
+        'account': provider_id
+      };
+      this.shared_service.deleteWaitlist(id, params)
+        .subscribe(
           data => {
-            resolve(data);
+            resolve('reloadlist');
           },
           error => {
             reject(error);
           }
         );
-      } else {
-        resolve();
-      }
-
     });
+  }
+  doDeleteFavProvider(fav, cthis?) {
+    return new Promise((resolve, reject) => {
+      // cthis.remfavdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      //   width: '50%',
+      //   panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
+      //   disableClose: true,
+      //   data: {
+      //     'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
+      //     'heading' : 'Confirm'
+      //   }
+      // });
 
-  });
-
-
-
-}
-
-cancelWaitlist(id , provider_id) {
-
-  return new Promise((resolve, reject) => {
-    const params = {
-      'account': provider_id
-    };
-    this.shared_service.deleteWaitlist(id, params)
-    .subscribe(
-    data => {
-      resolve('reloadlist');
-    },
-    error => {
-      reject(error);
-    }
-    );
-  });
-}
-
-doDeleteFavProvider(fav, cthis?) {
-  return new Promise((resolve, reject) => {
-    // cthis.remfavdialogRef = this.dialog.open(ConfirmBoxComponent, {
-    //   width: '50%',
-    //   panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
-    //     'heading' : 'Confirm'
-    //   }
-    // });
-
-    // cthis.remfavdialogRef.afterClosed().subscribe(result => {
+      // cthis.remfavdialogRef.afterClosed().subscribe(result => {
 
       // if (result) {
-        this.deleteFavProvider(fav.id)
+      this.deleteFavProvider(fav.id)
         .then(
           data => {
             resolve(data);
@@ -1065,134 +1077,128 @@ doDeleteFavProvider(fav, cthis?) {
       // }
 
     });
-  // });
-}
-
-deleteFavProvider(id) {
-  return new Promise((resolve, reject) => {
-  this.shared_service.removeProviderfromFavourite(id)
-  .subscribe(
-  data => {
-     resolve('reloadlist');
-  },
-  error => {
-    reject(error);
+    // });
   }
-  );
-  });
-}
-ratingRounding(val) {
-  let retval;
-  val = parseFloat(val);
-  for (let i = 0; i <= 4.5; i = i + .5) {
-    if (val > i && val <= (i + .5)) {
-      retval = (i + .5);
+  deleteFavProvider(id) {
+    return new Promise((resolve, reject) => {
+      this.shared_service.removeProviderfromFavourite(id)
+        .subscribe(
+          data => {
+            resolve('reloadlist');
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  ratingRounding(val) {
+    let retval;
+    val = parseFloat(val);
+    for (let i = 0; i <= 4.5; i = i + .5) {
+      if (val > i && val <= (i + .5)) {
+        retval = (i + .5);
+      }
     }
-  }
-  if (val === 0.0) {
-    // console.log('retval', retval);
-    retval = 0;
-  }
-  /*if (val > 0 && val <= .5) {
-    retval = .5;
-  } else if (val > .5 && val <= 1) {
-    retval = 1;
-  } else if (val > 1 && val <= 1.5) {
-    retval = 1.5;
-  } else if (val > 1.5 && val <= 2) {
-    retval = 2;
-  } else if (val > 2 && val <= 2.5) {
-    retval = 2.5;
-  } else if (val > 2.5 && val <= 3) {
-    retval = 3;
-  } else if (val > 3 && val <= 3.5) {
-    retval = 3.5;
-  } else if (val > 3.5 && val <= 4) {
-    retval = 4;
-  } else if (val > 4 && val <= 4.5) {
-    retval = 4.5;
-  } else if (val > 4.5 && val <= 5) {
-    retval = 5;
-  } else {
-    retval = val;
-  }*/
-  return retval;
-}
-
-setTerminologies(terminologies) {
-  this.common_datastorage.set('terminologies', terminologies);
-}
-
-getTerminologies() {
-  return this.common_datastorage.get('terminologies');
-}
-
-getTerminologyTerm(term) {
-
-  const term_only = term.replace(/[\[\]']/g, '' ); // term may me with or without '[' ']'
-  const terminologies = this.common_datastorage.get('terminologies');
-  if (terminologies) {
-    return (terminologies[term_only]) ? terminologies[term_only] :  (( term === term_only) ? term_only : term  );
-  } else {
-    return ( term === term_only) ? term_only : term;
-  }
-
-}
-
-removeTerminologyTerm(term, full_message) {
-  const term_replace = this.getTerminologyTerm(term);
-  const term_only = term.replace(/[\[\]']/g, '' ); // term may me with or without '[' ']'
-  // console.log(term_replace,term_only,term);
-  return full_message.replace('[' + term_only + ']', term_replace);
-
-}
-
-toCamelCase(str) {
-  /*return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
-      return match.charAt(match.length - 1).toUpperCase();
-  });*/
-  return str;
-}
-
-firstToUpper(str) {
-  if (str) {
-    if (str.substr(0, 7) === 'http://' || str.substr(0, 8) === 'https://') {
-      return str;
+    if (val === 0.0) {
+      // console.log('retval', retval);
+      retval = 0;
+    }
+    /*if (val > 0 && val <= .5) {
+      retval = .5;
+    } else if (val > .5 && val <= 1) {
+      retval = 1;
+    } else if (val > 1 && val <= 1.5) {
+      retval = 1.5;
+    } else if (val > 1.5 && val <= 2) {
+      retval = 2;
+    } else if (val > 2 && val <= 2.5) {
+      retval = 2.5;
+    } else if (val > 2.5 && val <= 3) {
+      retval = 3;
+    } else if (val > 3 && val <= 3.5) {
+      retval = 3.5;
+    } else if (val > 3.5 && val <= 4) {
+      retval = 4;
+    } else if (val > 4 && val <= 4.5) {
+      retval = 4.5;
+    } else if (val > 4.5 && val <= 5) {
+      retval = 5;
     } else {
-      return str.charAt(0).toUpperCase() + str.substr(1);
+      retval = val;
+    }*/
+    return retval;
+  }
+  setTerminologies(terminologies) {
+    this.common_datastorage.set('terminologies', terminologies);
+  }
+  getTerminologies() {
+    return this.common_datastorage.get('terminologies');
+  }
+  getTerminologyTerm(term) {
+    const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
+    const terminologies = this.common_datastorage.get('terminologies');
+    if (terminologies) {
+      return (terminologies[term_only]) ? terminologies[term_only] : ((term === term_only) ? term_only : term);
+    } else {
+      return (term === term_only) ? term_only : term;
     }
   }
-}
 
-findTerminologyTerm(message) {
-  const matches = message.match(/\[(.*?)\]/g);
-  let replaced_msg = message;
-  if (matches) {
-    for ( const match of matches) {
-      replaced_msg = this.removeTerminologyTerm(match, replaced_msg);
+  removeTerminologyTerm(term, full_message) {
+    const term_replace = this.getTerminologyTerm(term);
+    const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
+    // console.log(term_replace,term_only,term);
+    return full_message.replace('[' + term_only + ']', term_replace);
+
+  }
+
+  toCamelCase(str) {
+    /*return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
+        return match.charAt(match.length - 1).toUpperCase();
+    });*/
+    return str;
+  }
+
+  firstToUpper(str) {
+    if (str) {
+      if (str.substr(0, 7) === 'http://' || str.substr(0, 8) === 'https://') {
+        return str;
+      } else {
+        return str.charAt(0).toUpperCase() + str.substr(1);
+      }
     }
   }
-  return replaced_msg;
-}
 
-getProjectMesssages(key) {
-  let message = Messages[key] || '';
-  message = this.findTerminologyTerm(message);
-  return this.firstToUpper(message);
-}
+  findTerminologyTerm(message) {
+    const matches = message.match(/\[(.*?)\]/g);
+    let replaced_msg = message;
+    if (matches) {
+      for (const match of matches) {
+        replaced_msg = this.removeTerminologyTerm(match, replaced_msg);
+      }
+    }
+    return replaced_msg;
+  }
 
-getProjectErrorMesssages(error) {
-  let message = this.getApiError(error);
-  message = this.findTerminologyTerm(message);
-  return this.firstToUpper(message);
-}
+  getProjectMesssages(key) {
+    let message = Messages[key] || '';
+    message = this.findTerminologyTerm(message);
+    return this.firstToUpper(message);
+  }
 
-roundToTwoDecimel(amt) {
-  return Math.round(amt * 100) / 100; // for only two decimal
-}
-formatDateDisplay(dateStr) {
-  const pubDate = new Date(dateStr);
-  const obtshowdate = this.addZero(pubDate.getDate()) + '/' + this.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
-  return obtshowdate;
-}
+  getProjectErrorMesssages(error) {
+    let message = this.getApiError(error);
+    message = this.findTerminologyTerm(message);
+    return this.firstToUpper(message);
+  }
+
+  roundToTwoDecimel(amt) {
+    return Math.round(amt * 100) / 100; // for only two decimal
+  }
+  formatDateDisplay(dateStr) {
+    const pubDate = new Date(dateStr);
+    const obtshowdate = this.addZero(pubDate.getDate()) + '/' + this.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
+    return obtshowdate;
+  }
 }
