@@ -38,6 +38,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   about_us_cap = Messages.ABOUT_US_CAP;
   contact_us_cap = Messages.CONTACT_US_CAP;
   jaldee_cap = Messages.JALDEE_CAP;
+  copyright_cap = Messages.COPY_RIGHT_CAP;
   date_time_cap = Messages.DATE_TIME_CAP;
   text_cap = Messages.TEXT_CAP;
   subject_cap = Messages.SUBJECT_CAP;
