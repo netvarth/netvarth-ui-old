@@ -30,7 +30,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   max_capacity_cap = Messages.QUEUE_MAX_CAPACITY_CAP;
   queue_list: any = [];
   query_executed = false;
-
+  customer_label = '';
   api_error = null;
   api_success = null;
 
@@ -64,6 +64,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     // calling the method to get the list of locations
     this.getProviderQueues();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'timewindow', 'classname': 'b-queue' };
+    this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
   }
 
   ngOnDestroy() {
@@ -126,8 +127,8 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     e.stopPropagation();
     const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     this.shared_Functionsobj.sendMessage(pdata);
-        }
-getMode(mod) {
+  }
+  getMode(mod) {
     let moreOptions = {};
     moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
     return moreOptions;

@@ -896,6 +896,7 @@ Overriding mat input style
 {
   color: #3f51b5 !important;
   z-index: 5;
+  margin-bottom: 20px!important;
 }
 .signup-form .mat-form-field-appearance-legacy .mat-form-field-label,
 .ynw-common-form .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty,
@@ -1107,4 +1108,7 @@ Overriding mat input style
   -o-transition: all 300ms;
   -webkit-transition: all 300ms;
   transition: all 300ms;
+}
+.mainouter.checkin-page  .service-outer, .mainouter.checkin-page .queue-outer{
+border-bottom: none!important;
 }

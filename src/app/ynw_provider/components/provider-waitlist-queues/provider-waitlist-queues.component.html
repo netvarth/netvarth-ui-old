@@ -30,7 +30,7 @@
                                 <span class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
                             </div>
                             <div class="item" *ngIf="queue.capacity">
-                                <span class="ttle">{{max_capacity_cap}}</span>
+                                <span class="ttle">Maximum {{customer_label}}s served</span>
                                 <span class="icon-customer-line">{{queue.capacity}}</span>
                             </div>
                             <div class="item" *ngIf="queue.displayschedule">

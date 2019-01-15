@@ -1,14 +1,18 @@
 <div *ngIf="calledFrom=='checkin'" class="addmem-head">{{fill_fol_det_cap}}</div>
-<div class="outer">
-    <div class="form-group">
-        <label>{{first_name_cap}}</label>
-            <input type="text" [(ngModel)]="firstname" (keyup)="valuechange()" class="form-control" id="first_name"
-                placeholder="First name" autocomplete="off">
-    </div>
+<div class="outer ynw-common-form">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <mat-form-field>
+                <input type="text" matInput [(ngModel)]="firstname" (keyup)="valuechange()" class="form-control" id="first_name"
+                    placeholder="{{first_name_cap}}" autocomplete="off">
+            </mat-form-field>
+        </div>
 
-    <div class="form-group">
-       <label>{{last_name_cap}}</label>
-            <input type="text" [(ngModel)]="lastname" (keyup)="valuechange()" class="form-control" id="last_name"
-                placeholder="Last name" autocomplete="off">
+        <div class="form-group col-md-6">
+            <mat-form-field>
+                <input type="text" matInput [(ngModel)]="lastname" (keyup)="valuechange()" class="form-control" id="last_name"
+                    placeholder="{{last_name_cap}}" autocomplete="off">
+            </mat-form-field>
+        </div>
     </div>
 </div>
