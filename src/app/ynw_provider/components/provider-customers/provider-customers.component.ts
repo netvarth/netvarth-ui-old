@@ -80,7 +80,7 @@ export class ProviderCustomersComponent implements OnInit {
 
   ngOnInit() {
     this.getCustomersList(true);
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'customer', 'subKey': 'services' };
   }
 
   getCustomersList(from_oninit = false) {
