@@ -42,7 +42,16 @@ export class ProviderCustomersComponent implements OnInit {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   }; // same in resetFilter Fn
-
+  customer_label = '';
+  checkin_label = '';
+  checkedin_label = '';
+  breadcrumb_moreoptions: any = [];
+  breadcrumbs_init = [
+    {
+      title: this.customer_label
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
   pagination: any = {
     startpageval: 1,
     totalCnt: 0,
@@ -50,9 +59,6 @@ export class ProviderCustomersComponent implements OnInit {
   };
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   loadComplete = false;
-  customer_label = '';
-  checkin_label = '';
-  checkedin_label = '';
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
   filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
@@ -62,12 +68,19 @@ export class ProviderCustomersComponent implements OnInit {
     private dialog: MatDialog,
     private shared_services: SharedServices) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.breadcrumbs_init = [
+      {
+        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's'
+      }
+    ];
+    this.breadcrumbs = this.breadcrumbs_init;
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
   }
 
   ngOnInit() {
     this.getCustomersList(true);
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
   }
 
   getCustomersList(from_oninit = false) {

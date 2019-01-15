@@ -1,6 +1,6 @@
-<h1 class="mat-dialog-title" *ngIf="step!=1 && step!=4">&nbsp;<button (click)="onCancelPass()" class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+<h1 class="mat-dialog-title" *ngIf="step!=1 && step!=2 && step!=4">&nbsp;<button (click)="onCancelPass()" class="modal_close" tabindex="-1"><i class="fa fa-window-close"
   aria-hidden="true"></i></button></h1>
-  <h1 class="mat-dialog-title" *ngIf="step==1">{{heading}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+  <h1 class="mat-dialog-title" *ngIf="step==1 || step==2"><span *ngIf="step==1">{{heading}}</span><button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
     aria-hidden="true"></i></button></h1>
 <form [formGroup]="signupForm" class="signup-form" novalidate (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">
@@ -148,6 +148,6 @@ onSubmit()" (keyup)="resetApiErrors()">
 <div *ngIf="api_error">
 <app-field-error-display [displayError]="true" errorMsg="{{api_error}}"></app-field-error-display>
 </div>
-<!-- <div *ngIf="api_success">
+ <div *ngIf="api_success">
 <app-form-success-display [displayMsg]="true" successMsg="{{api_success}}"></app-form-success-display>
-</div> -->
+</div> 

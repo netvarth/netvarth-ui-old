@@ -36,10 +36,10 @@ export class MembersComponent implements OnInit {
   member_list: any = [] ;
   query_executed = false;
   breadcrumbs_init = [
-    {
-      title: Messages.DASHBOARD_TITLE,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
-    },
+    // {
+    //   title: Messages.DASHBOARD_TITLE,
+    //   url: '/' + this.shared_functions.isBusinessOwner('returntyp')
+    // },
     {
       title: 'Family Members',
       // url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/members'

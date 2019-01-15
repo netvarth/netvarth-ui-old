@@ -826,62 +826,7 @@ margin-top:10px;
 }
 .bcrumb {padding-right:5px !important;}
 .search-text .mat-option {height: auto!important;}
-.add-nloc-s.bt3,.add-nloc-q.bt3 {border-radius: 30px; text-transform: none!important}
-@media only screen and (min-width: 768px) {
-.add-nloc-q {float: right !important;right:120px;top:-45px; }
-.add-nloc-s {float: right !important;right:120px;top:-45px; }
-}
-@media only screen and (min-width: 768px) {
-  .add-nloc-l {float: right !important;right:120px;top:-45px; }
-}
-@media only screen and (min-width: 768px) and (max-width: 990px) {
-  .add-nloc-q {float: right !important;right:120px;top:-15px; }
-  .b-queue {top: 30px !important;} 
-}
-@media only screen and (max-width: 767px) {
-  .add-nloc-q {float: right !important;right:120px;top:0px; margin-bottom:5px !important;}
-  .add-nloc-s {float: right !important;right:120px;top:0px; margin-bottom:5px !important;}
-  .b-queue {top: 25px !important;} 
-  .b-service {top:45px !important}
-}
-@media only screen and (max-width:575px) {
-  .b-queue{top: 45px !important;} 
-  .b-service {top: 43px !important;}
-  .add-nloc-q {float: right !important;right:110px;top:0px; margin-bottom:5px !important;}
-  /* .add-nloc-q {float: right !important;right:140px;top:-15px; } */
-}
-@media only screen and (max-width: 330px) {
-  .add-nloc-q {right: 100px !important;} 
-  .b-service {top: 45px !important;}
-}
-@media only screen and (max-width: 575px) {
-  .add-nloc-s {
-    right: 115px; }
-}
- /* @media only screen and (max-width: 524px) {
-  .add-nloc-s { top: -3px!important; }
-  .add-nloc-s {right: 125px !important;} 
-  .b-service {top: 28px !important;}
-} 
-@media only screen and (max-width: 402px) {
-  .b-service {top: 28px !important;}
-}  */
-@media only screen and (max-width: 484px) {
-  .b-queue {top: 30px !important;} 
-}
-/* @media only screen and (min-width:413px) and (max-width:524px) {
-  .add-nloc-s { top: -3px!important; }
-.add-nloc-s {right: 125px !important;} 
-  .b-service {top: 40px !important;}
-} */
-@media only screen and (max-width:524px) {
-  .add-nloc-s { top: -3px!important; }
-.add-nloc-s {right: 110px !important;} 
-  .b-service {top: 40px !important;}
-}
-@media only screen and (max-width:413px){
-  .b-service {top: 28px !important;}
-}
+
 .lc-box .helprighticon {
   padding-left: 5px !important; 
 }
@@ -933,7 +878,8 @@ Overriding mat input style
 }
  .signup-form .mat-form-field-label, 
  .login-form .mat-form-field-label,
- .ynw-common-form .mat-form-field-label {
+ .ynw-common-form .mat-form-field-label,
+ .ynw-common-form-nm .mat-form-field-label {
   width: auto !important;
   margin-bottom: 0px !important;
   background: white !important;
@@ -943,6 +889,8 @@ Overriding mat input style
 .signup-form .mat-form-field.ng-valid .mat-form-field-label,
 .ynw-common-form .mat-form-field.mat-focused .mat-form-field-label, 
 .ynw-common-form .mat-form-field.ng-valid .mat-form-field-label,
+.ynw-common-form-nm .mat-form-field.mat-focused .mat-form-field-label, 
+.ynw-common-form-nm .mat-form-field.ng-valid .mat-form-field-label,
 .login-form .mat-form-field.mat-focused .mat-form-field-label,
 .login-form .mat-form-field.ng-valid .mat-form-field-label  
 {
@@ -951,16 +899,19 @@ Overriding mat input style
 }
 .signup-form .mat-form-field-appearance-legacy .mat-form-field-label,
 .ynw-common-form .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty,
+.ynw-common-form-nm .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty,
 .login-form .mat-form-field-appearance-legacy .mat-form-field-label
 { color :rgb(167, 163, 163) !important;}
 .signup-form .mob-prefx .mat-form-field-label,
 .ynw-common-form .mob-prefx .mat-form-field-label,
+.ynw-common-form-nm .mob-prefx .mat-form-field-label,
 .login-form .mob-prefx .mat-form-field-label
  {
   z-index: 5 !important;
 }
 .signup-form .mob-prefix span,
 .ynw-common-form .mob-prefix span,
+.ynw-common-form-nm .mob-prefix span,
 .login-form .mob-prefix span
 {padding:15px 10px 0px 5px !important; font-size:0.875rem !important}
 
@@ -968,22 +919,33 @@ Overriding mat input style
 .signup-form .mat-select,
 .ynw-common-form .mat-input-element, 
 .ynw-common-form .mat-select,
+.ynw-common-form-nm .mat-input-element, 
+.ynw-common-form-nm .mat-select,
 .login-form .mat-input-element, 
 .login-form .mat-select {
   padding: 15px 0px 0px 5px !important;
 }
+.ynw-common-form-nm .mat-form-field-underline {display: none !important}
 .mat-form-field textarea {margin-top:4px !important}
-.ynw-common-form .normalpicker .mat-input-element {padding:10px !important}
+.ynw-common-form .normalpicker .mat-input-element,
+.ynw-common-form-nm .normalpicker .mat-input-element {padding:10px !important}
 .starttimediv label {margin-bottom: 0px !important}
 .endtimediv label {margin-bottom: 0px !important}
 .signup-form .mat-form-field-label-wrapper,
 .ynw-common-form .mat-form-field-label-wrapper,
+
 .login-form .mat-form-field-label-wrapper
 /* {top:-.175em !important} */
 {top:.1em !important}
+.ynw-common-form-nm .mat-form-field-label-wrapper {
+  top:.3em !important
+}
+.ynw-common-form-nm .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 0px !important
+}
+.ynw-common-form-nm .mat-form-field {display: block !important}
 
-
-.signup-form .mat-form-field-type-mat-select .mat-form-field-label-wrapper 
+.signup-form .mat-form-field-type-mat-select .mat-form-field-label-wrapper,
   {top:-.175em !important}
 
  .form-control:focus {
@@ -1010,3 +972,139 @@ Overriding mat input style
   .otp_scr .number-ip-sm {max-width: 150px !important;}
   .otp_scr .mat-button{padding: 10px 10px !important}
   .pwd_cancel_scr {padding: 30px !important}
+  .normal-link {color: #00aef2 !important;
+  font-weight: 500;
+  }
+  .normal-link b {font-size: 0.875rem !important; cursor: pointer !important; text-decoration: underline !important}
+  .ynw-dynamic app-field-error-display .sts-msg.error {background: #fff !important; color: red !important; padding-left: 0px !important;}
+  .dashboard .card.w-dta {margin-top: 0px !important }
+  .dashboard .add-nloc-s {padding: 1px 10px 1px 15px !important}
+
+  @media only screen and (max-width: 484px) {
+    .is-bx .pt-btm .ico li {padding: 0px !important; width: 40px !important;height: 40px !important}
+    .emltbl .tbl-list li .otr .ctd {padding-bottom: 5px !important; padding-top: 3px !important}
+  }
+  .add-nloc-s.bt3,
+  .add-nloc-q.bt3,
+  .add-serv-btn.bt3,
+  .delay-btn,
+  .add-nloc.bt3
+  {border-radius: 30px; text-transform: none!important}
+  .delay-btn i {color:#000 !important;}
+  .add-nloc {float: right !important; margin-right: 100px!important; }
+
+  @media only screen and (max-width: 390px) {
+    .b-queue {top: 32px !important;}
+    .add-nloc-q {float: right !important; margin-top:0px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+  }
+@media only screen and (min-width: 390px) and (max-width: 490px) {
+    .b-queue {top: 10px !important;}
+    .add-nloc-q {float: right !important; margin-top:-22px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .b-queue {top: 10px !important;}
+  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+}
+@media only screen and (min-width: 767px ) {
+  .b-queue {top: 0px !important;}
+  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+}
+@media only screen and (min-width: 768px)  and (max-width: 992px) {
+  .b-queue {top: 30px !important;}
+  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+}
+@media only screen and (min-width: 992px) {
+  .b-queue {top: 0px !important;}
+  .add-nloc-q {float: right !important; margin-top:-43px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+}
+@media only screen and (width: 575px) {
+  .b-queue {top: 30px !important;}
+  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+}
+@media only screen and (width: 375px) {
+  .b-queue {top: 10px !important;}
+    .add-nloc-q {float: right !important; margin-top:-22px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+}
+@media only screen and (min-width: 490px) and (max-width: 575px) {
+  .b-queue {top: 30px !important;}
+  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+}
+  @media only screen and (max-width: 392px) {
+    .b-service {margin-top: 10px !important;}
+    .add-nloc-s {float: right !important; margin-top:-23px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+  }
+  @media only screen and (min-width: 767px) {
+    .add-serv-btn {float: right !important; margin-right: 120px!important; margin-top:-44px !important;}
+  }
+  @media only screen and (max-width: 411px) {
+    .b-service {margin-top: 8px !important;}
+    .b-loc {margin-top: 8px !important;}
+    
+  }
+  
+  @media only screen and (max-width: 399px) {
+    .b-loc {margin-top: 8px !important;}
+    .b-delay {margin-top: 8px !important;}
+    /* .b-queue {margin-top: 8px !important; }
+    .add-nloc-q {float: right !important; margin-top:0px !important; margin-right: 110px!important; margin-bottom: 5px !important} */
+    .add-serv-btn{float: right !important; margin-top:-20px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+    .delay-btn{float: right !important;padding:0px !important; margin-top:-40px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+    
+    .add-nloc { margin-top:-23px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+  }
+  @media only screen and (min-width: 399px) {
+    .b-delay {margin-top: 0px !important;}
+    .delay-btn{float: right !important;padding:0px !important; margin-top:-44px !important; margin-right: 115px!important; margin-bottom: 5px !important}
+  }
+  @media only screen and (min-width: 391px) and (max-width:575px) {
+    .b-service {margin-top: 55px !important;}
+    .add-serv-btn {float: right !important; margin-top:-16px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+  }
+@media only screen and (min-width: 399px) and (max-width:575px) {
+  .b-loc {margin-top: 55px !important;}
+  .add-nloc {float: right !important; margin-top:-16px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+
+  .b-service {margin-top: 55px !important;}
+  .add-serv-btn {margin-top:-16px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+}
+@media only screen and (min-width: 575px) and (max-width:767px) {
+  .b-loc {margin-top: 58px !important;}
+  .add-nloc {float: right !important; margin-top:-16px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+  .b-service {margin-top: 58px !important;}
+  .add-serv-btn {float: right !important; margin-top:-16px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+}
+.pwd_cancel_scr .mat-dialog-actions .bt2 {padding: 5px 10px !important}
+.cancel-btn-color.mat-button {background-color: #ddd !important}
+.delay-btn {
+  display: flex;
+  margin-left: 10px;
+  background : transparent;
+  /* border: 1px solid rgba(0, 174, 242, .8); */
+  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  border: 1px solid #00aef2;
+  background-clip: padding-box;
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+  padding: 5px;
+  -webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+}
+.delay-btn button.bt3{background: transparent !important;border-radius: 30px !important;border:0px !important; 
+  text-transform: none !important; padding: 5px !important}
+.delay-btn button.bt3:hover {background: #00aef2 !important;}
+.delay-btn i {
+  padding: 3px 10px 5px 5px;
+  color: #222223;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+}

@@ -1,4 +1,4 @@
-<div class="form-group" [formGroup]="form" class="ynw-common-form">
+<div class="form-group" [formGroup]="form" class="ynw-common-form ynw-dynamic">
   <!-- <label class="col-form-label" *ngIf="showlabel" for="{{question.label}}" [attr.for]="question.key">
     {{question.label}} <span *ngIf="question.required">*</span>
   </label> -->
@@ -87,9 +87,9 @@
     </div>
 
   </ng-container>
-
-  <app-field-error-display *ngIf="question.controlType !='datagrid'" [displayError]="fed_service.isFieldValid(form,question.key)"
-    [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
-  </app-field-error-display>
-
+  <div class="row">
+    <app-field-error-display *ngIf="question.controlType !='datagrid'" [displayError]="fed_service.isFieldValid(form,question.key)"
+      [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+    </app-field-error-display>
+  </div>
 </div>

@@ -34,10 +34,6 @@ export class ChangeEmailComponent implements OnInit {
   submit_data = {'email' : null};
   breadcrumbs_init = [
     {
-      title: Messages.DASHBOARD_TITLE,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
-    },
-    {
       title: Messages.ADD_CHANGE_EMAIL,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-email'
     }

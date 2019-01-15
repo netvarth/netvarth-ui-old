@@ -9,7 +9,7 @@
                 <div class="card">
                     <form [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&
                     onSubmit(editProfileForm.value)"
-                        class="ynw-common-form" (keyup)="resetApiErrors()">
+                        class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                         <div class="innercard">
                             <div class="leftcard">
                                 <div class="form-group">
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field>
-                                        <input matInput type="text" class="form-control" id="{{email_cap}}" formControlName="email"
+                                        <input matInput type="text" class="form-control" id="{{email_cap}}" formControlName="email" placeholder="Email"
                                             autocomplete="off">
                                     </mat-form-field>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'email')"

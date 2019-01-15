@@ -15,17 +15,20 @@
                     <ul class="ico">
                         <li><span data-icon="l"></span></li>
                         <li><span data-icon="k"></span></li>
+                        <li><span data-icon="1"></span></li>
                         <li><span data-icon="d"></span></li>
                     </ul>
 
                     <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">{{get_start_cap}} <i class="icon icon-angle-right"></i>
                     </span>
-                    <ul class="status-pnt">
+                    <p class="normal-link" *ngIf="!loading_active" (click)="skipMe()">I will explore myself, take me to Settings. <b> Skip</b>
+                    </p>
+                    <!-- <ul class="status-pnt">
                         <li></li>
                         <li></li>
                         <li></li>
                         <li></li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
 
@@ -40,12 +43,12 @@
                         <div class="form-group">
                             <label>{{business_name_cap}}</label>
                             <span class="expl">{{your_cap}} {{customer_label}}{{view_in_pub_search_cap}}</span>
-                            <input type="text" class="form-control" id="bnameId" maxlength="50" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="" autocomplete="off">
+                            <input type="text" class="form-control" id="bnameId" maxlength="50" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="Eg. Seven Star Clinic, Dr. Mani, Bright Hopital" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label>{{profile_summary_cap}}</label>
                             <span class="expl">{{your_cap}} {{customer_label}}{{view_in_pub_search_cap}}</span>
-                            <textarea class="form-control" id="" rows="3" maxlength="400" [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
+                            <textarea class="form-control" id="" rows="3" placeholder="Enter brief summary (max 400 characters)" maxlength="400" [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
                         </div>
                     </div>
                     <div class="footer">

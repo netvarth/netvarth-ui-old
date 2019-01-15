@@ -500,6 +500,9 @@ export class ProviderbWizardComponent implements OnInit {
       this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
    }
 
+  skipMe() {
+    this.redirecttoProfile();
+  }
   changeSchedule_clicked() {
     this.ischange_schedule_clicked = true;
   }

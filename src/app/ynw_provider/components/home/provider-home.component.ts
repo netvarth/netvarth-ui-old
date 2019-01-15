@@ -155,6 +155,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   small_device_display = false;
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
+  breadcrumb_moreoptions: any = [];
+  breadcrumbs_init = [
+    {
+      title: Messages.DASHBOARD_TITLE,
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private common_datastorage: CommonDataStorageService,
@@ -192,6 +200,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     { pk: 'FullyPaid', value: 'Fully Paid' }
   ];
   ngOnInit() {
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay'  };
     this.router.events
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()

@@ -3,22 +3,24 @@
     (keyup)="doResetApiErrors()">
     <mat-dialog-content>   
         <p class="col-form-label col-md-12 no-padding" for="otp"><b>{{otp_mobile}}</b></p>
-        <mat-form-field class="otp_box">
-            <div class="row">
-          <div class="col-md-6">
-              <div class="form-group">
+        
+            <div class="row otp_box">
+          <div class="col-md-6 col-7">
+              <div class="form-group ">
+                  <mat-form-field >
                   <input class="form-control number-ip-sm" matInput placeholder="OTP" [formControl]="otp_form.controls['phone_otp']" autocomplete="off">
+                </mat-form-field>
                   <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')" errorMsg="Please enter a valid OTP.">
                     </app-field-error-display>
                 </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-5">
               <div class="form-group">
                   <button type="submit" mat-button class="cs-btn bt1" [disabled]="!otp_form.valid">{{ok_btn_cap}}</button>
                 </div>
           </div>   
         </div>
-        </mat-form-field>
+        
     </mat-dialog-content>
     <mat-dialog-actions>
       <div class="resendouter" *ngIf="resetCounterVal==0">

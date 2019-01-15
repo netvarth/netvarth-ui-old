@@ -50,10 +50,6 @@ export class EditProfileComponent implements OnInit {
   lnameerror = null;
   breadcrumbs_init = [
     {
-      title: Messages.DASHBOARD_TITLE,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
-    },
-    {
       title: Messages.USER_PROF_CAP,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
     }

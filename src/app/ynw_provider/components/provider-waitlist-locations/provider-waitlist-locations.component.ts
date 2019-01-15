@@ -66,7 +66,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
     // this.bProfile = this.provider_datastorage.get('bProfile');
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'locations', 'classname': 'b-service' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'locations', 'classname': 'b-loc' };
   }
   ngOnDestroy() {
     if (this.dialogRef) {

@@ -1,10 +1,23 @@
 <section>
   <app-provider-subheader [activeTab]="'dashboard'" (reloadActionSubheader)="reloadActionSubheader($event)"></app-provider-subheader>
   <!-- Subheader section -->
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section class="dashboard">
   <div class="container">
+    <div class="row">
+        <!-- <span class="adjust-delay-button" *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+            <span class="ml-auto cs-btn bt5" (click)="" [matTooltipClass]="tooltipcls" [matTooltip]="delayTooltip">
+              {{adjust_delay}}
+            </span>
+            
+          </span> -->
+        <div class="n-loc col-md-12 no-padding" *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+            <span class="delay-btn" ><button class="cs-btn bt3" (click)="showAdjustDelay()">{{adjust_delay}} </button><i data-icon="B" (click)="learnmore_clicked('adjustdelay')"></i></span>
+            <!-- <span class="add-nloc-s cs-btn bt3" > </span> -->
+        </div>
+    </div>
     <div class="row">
       <div class="card p0 w-dta">
         <div class="head">
@@ -82,12 +95,12 @@
               </ng-container>
             </ul>
 
-            <span class="adjust-delay-button" *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+            <!-- <span class="adjust-delay-button" *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
               <span class="ml-auto cs-btn bt5" (click)="showAdjustDelay()" [matTooltipClass]="tooltipcls" [matTooltip]="delayTooltip">
                 {{adjust_delay}}
               </span>
               <i data-icon="B" (click)="learnmore_clicked('adjustdelay')"></i>
-            </span>
+            </span> -->
           </div>
 
           <!-- <div class="fltr" *ngIf="check_in_filtered_list.length != 0">
