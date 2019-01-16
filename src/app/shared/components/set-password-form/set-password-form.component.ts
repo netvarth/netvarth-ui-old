@@ -70,4 +70,12 @@ export class SetPasswordFormComponent implements OnInit {
     this.onCancelBtn.emit();
   }
 
+  keyPressed(ev) {
+    if (ev.keyCode === 13 ) {
+      if (this.spForm.valid) {
+        this.doOnPasswordSubmit(this.spForm.value);
+      }
+    }
+  }
+
 }
