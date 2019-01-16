@@ -1,58 +1,54 @@
-<form [formGroup]="amForm"  novalidate
-(ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Non Working Day - {{ data.type | capitalizeFirst }}
-  <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+  class="ynw-common-form">
+  <h1 class="mat-dialog-title">{{non_working_day_cap}} - {{ data.type | capitalizeFirst }}
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
-  </button>
-</h1>
-<mat-dialog-content>
-<div class="form-group normalpicker">
-    <label for="reason" class="col-form-label">{{(data.type === 'edit') ? 'Selected Date' : 'Select Date'}}</label>
-     <div class="pickerouter">
-      <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
-      <mat-datepicker #picker [disabled]="false"></mat-datepicker>
-      <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="selectdate" [min]="minDate" [max]="maxDate"
-      autocomplete="off" tabindex="-1">
+    </button>
+  </h1>
+  <mat-dialog-content>
+    <div class="form-group normalpicker">
+      <label for="reason" class="col-form-label">{{(data.type === 'edit') ? 'Selected Date' : 'Select Date'}}</label>
+      <div class="pickerouter">
+        <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
+        <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+        <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="selectdate" [min]="minDate"
+          [max]="maxDate" autocomplete="off" tabindex="-1">
+      </div>
     </div>
-</div>
-<div class="form-group">
-   <label for="reason" class="col-form-label">Reason</label>
-   <input type="text" matInput formControlName="reason" class="form-control" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')"
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
+    <div class="form-group">
+      <mat-form-field>
+        <input type="text" matInput formControlName="reason" class="form-control" autocomplete="off" placeholder="{{reason_cap}} *">
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')" [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
     {
       'required' : 'Please enter reason',
       'maxlength' : 'Maximum limit is ' + maxcharDesc + ' characters'
     })">
-   </app-field-error-display>
-</div>
-  <div class="form-group bold">
-  <div class="startendtime">
-    <div class="starttimediv">
-      <label for="changeHourStep">Start Time</label>
-      <ngb-timepicker formControlName="starttime" meridian="true"></ngb-timepicker>
-        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')"
-        errorMsg="Please enter the start time">
-        </app-field-error-display>
-    </div>
-    <div class="endtimediv">
-    <label for="changeHourStep">End Time</label>
-    <ngb-timepicker formControlName="endtime" meridian="true"></ngb-timepicker>
-      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')"
-      errorMsg="Please enter the Closing time">
       </app-field-error-display>
     </div>
-</div>
-</div>
-</mat-dialog-content>
-<mat-dialog-actions>
-<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-<button  type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">Save</button>
-</mat-dialog-actions>
+    <div class="form-group bold">
+      <div class="startendtime">
+        <div class="starttimediv">
+          <label for="changeHourStep">{{start_time_cap}}</label>
+          <ngb-timepicker formControlName="starttime" meridian="true"></ngb-timepicker>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')" errorMsg="Please enter the start time">
+          </app-field-error-display>
+        </div>
+        <div class="endtimediv">
+          <label for="changeHourStep">{{end_time_cap}}</label>
+          <ngb-timepicker formControlName="endtime" meridian="true"></ngb-timepicker>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')" errorMsg="Please enter the Closing time">
+          </app-field-error-display>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+    <button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">{{save_btn_cap}}</button>
+  </mat-dialog-actions>
 </form>
-<app-field-error-display [displayError]="true" *ngIf="api_error"
-errorMsg="{{api_error}}"></app-field-error-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success"
-successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

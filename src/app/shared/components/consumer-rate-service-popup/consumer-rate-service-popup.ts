@@ -22,6 +22,12 @@ export class ConsumerRateServicePopupComponent implements OnInit {
   newrating = true;
   load_complete = false;
 
+  rate_your_visit = Messages.RATE_YOU_VISIT;
+  rate_cap = Messages.RATING_CAP;
+  message_cap = Messages.MESSAGE_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  rate_btn_cap = Messages.RATE_BTN_CAP;
+
   constructor(
     public dialogRef: MatDialogRef<ConsumerRateServicePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

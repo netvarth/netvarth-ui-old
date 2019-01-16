@@ -5,3 +5,12 @@
 .itemdisplayname_anchor {
     cursor: pointer;
 }
+.status{
+    position: relative;
+    border: none;
+    background: transparent;
+    padding-left: 20px;
+    font-weight: 500;
+    margin-right: 15px;
+    cursor: pointer;
+}

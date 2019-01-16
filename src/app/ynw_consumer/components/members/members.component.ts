@@ -11,20 +11,35 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { AddMemberComponent } from '../../../shared/modules/add-member/add-member.component';
 import { AddMembersHolderComponent } from '../../components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from '../add-member/add-member.component';
+import { Messages} from '../../../shared/constants/project-messages';
+
 
 @Component({
   selector: 'app-consumer-members',
   templateUrl: './members.component.html'
 })
 export class MembersComponent implements OnInit {
+  add_fam_memb_cap = Messages.ADD_FAMILY_MEMBER;
+  first_name_cap = Messages.FIRST_NAME_CAP;
+  last_name_cap = Messages.LAST_NAME_CAP;
+  mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
+  gender_cap = Messages.GENDER_CAP;
+  date_of_birth = Messages.DOB_CAP;
+  edit_btn_cap = Messages.EDIT_BTN;
+  delete_btn_cap = Messages.DELETE_BTN;
+  related_links_cap = Messages.RELATED_LINKS;
+  user_profile_cap = Messages.USER_PROF_CAP;
+  change_password_cap = Messages.CHANGE_PASSWORD_CAP;
+  change_mob_no_cap = Messages.CHANGE_MOB_CAP;
+  add_change_email_cap = Messages.ADD_CHANGE_EMAIL;
 
   member_list: any = [] ;
   query_executed = false;
   breadcrumbs_init = [
-    {
-      title: 'Dashboard',
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
-    },
+    // {
+    //   title: Messages.DASHBOARD_TITLE,
+    //   url: '/' + this.shared_functions.isBusinessOwner('returntyp')
+    // },
     {
       title: 'Family Members',
       // url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/members'

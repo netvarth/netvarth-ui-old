@@ -7,6 +7,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 
+
 @Component({
     selector: 'app-confirm-box',
     templateUrl: './notification-list-box.component.html',

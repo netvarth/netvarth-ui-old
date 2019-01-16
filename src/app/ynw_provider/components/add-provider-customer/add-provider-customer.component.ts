@@ -14,6 +14,19 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderCustomerComponent implements OnInit {
 
+  create_cap = Messages.CREATE_CAP;
+  mobile_cap = Messages.MOBILE_NO_CAP;
+  f_name_cap = Messages.F_NAME_CAP;
+  l_name_cap = Messages.L_NAME_CAP;
+email_cap = Messages.EMAIL_ID_CAP;
+gender_cap = Messages.GENDER_CAP;
+male_cap = Messages.MALE_CAP;
+female_cap = Messages.FEMALE_CAP;
+dob_cap = Messages.DOB_CAP;
+adrress_cap = Messages.ADDRESS_CAP;
+cancel_btn = Messages.CANCEL_BTN;
+save_btn = Messages.SAVE_BTN;
+mob_prefix_cap=Messages.MOB_NO_PREFIX_CAP;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

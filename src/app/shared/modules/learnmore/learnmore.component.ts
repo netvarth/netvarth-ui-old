@@ -6,7 +6,6 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 
-
 @Component({
   selector: 'app-learnmore',
   templateUrl: './learnmore.component.html',

@@ -18,6 +18,8 @@ export class LookupStatusComponent implements OnInit {
   api_error = null;
   api_success = null;
 
+  no_checkins_exists = Messages.NO_CHECKINS_EXISTS_CAP;
+
   user_id = null;
   uuid = null;
   message = '';

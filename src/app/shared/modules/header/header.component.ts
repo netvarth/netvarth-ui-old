@@ -14,6 +14,7 @@ import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
 
 import { projectConstants } from '../../constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 
 // import { ViewChild } from '@angular/core';
 // import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
@@ -35,6 +36,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() passedRefine: any =  [];
   @Output() searchclick = new EventEmitter<any>();
   @Output() scrollhideclass = new EventEmitter<any>();
+  sign_in_cap = Messages.SIGN_IN_CAP;
+  join_cap = Messages.JOIN_CAP;
+  are_you_ser_pro = Messages.ARE_YOU_SER_PRO_CAP;
+  click_here_cap = Messages.CLICK_HERE_CAP;
+  user_profile = Messages.USER_PROF_CAP;
+  change_password = Messages.CHANGE_PASSWORD_CAP;
+  change_mobile = Messages.CHANGE_MOB_CAP;
+  add_change_email = Messages.ADD_CHANGE_EMAIL;
+  switch_to_consumer = Messages.SWITCH_TO_CONSUMER;
+  switch_to_provider = Messages.SWITCH_TO_PROVIDER;
+  logout_cap = Messages.LOGOUT_CAP;
+  upgrade_cap = Messages.UPGRADE_CAP;
+  membership_cap = Messages.MEMBERSHIP_CAP;
+  close_btn = Messages.CLOSE_BTN;
+  dashboard_cap = Messages.DASHBOARD_TITLE;
+  create_pro_accnt = Messages.CREATE_PRO_ACCNT;
+  family_members = Messages.FAMILY_MEMBERS;
+
   userdet: any = [];
   headercls = '';
   provider_loggedin = false;
@@ -311,7 +330,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   doLogout() {
-    // console.log('here');
+        // console.log('here');
     // this.router.navigate(['logout']);
     this.shared_functions.doLogout()
     .then (
@@ -326,7 +345,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
   upgradeMembership() {
-   // console.log(this.router.url);
+    console.log(this.router.url);
     this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
     this.router.navigate(['provider', 'settings', 'license', 'upgrade']);
   }
@@ -417,7 +436,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           dataCreateProv: storage_Data
         };
         this.doSignup('provider', moreOptions);
-        this.router.navigate(['/']);
+         this.router.navigate(['/']);
       },
       error => {
         // console.log(error);

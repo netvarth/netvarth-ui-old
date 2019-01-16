@@ -18,16 +18,15 @@ export class PrivacyStaticComponent implements OnInit {
   api_error = null;
   domain;
   showheaderandfooter = false;
-
   constructor(
-    private activaterouterobj: ActivatedRoute,
+   private activaterouterobj: ActivatedRoute,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions
     ) {
      }
 
   ngOnInit() {
-    this.activaterouterobj.paramMap
+  this.activaterouterobj.paramMap
     .subscribe(params => {
       const passid = params.get('id');
      // console.log('passedid', passid);

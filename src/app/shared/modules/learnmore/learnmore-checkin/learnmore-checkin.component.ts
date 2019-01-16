@@ -12,6 +12,9 @@ import { Messages } from '../../../constants/project-messages';
   templateUrl: './learnmore-checkin.component.html'
 })
 export class LearnmoreCheckinComponent implements OnInit {
+
+  checkin_cap = Messages.CHECK_IN_CAP;
+  
   @Input() target: string;
   curtype = '';
   constructor(
@@ -21,7 +24,7 @@ export class LearnmoreCheckinComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userdet = this.shared_function.getitemfromLocalStorage('ynw-user');
+  const userdet = this.shared_function.getitemfromLocalStorage('ynw-user');
     this.curtype = userdet.sector;
       // console.log('target', this.target);
   }

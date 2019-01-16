@@ -6,6 +6,7 @@ import {FormMessageDisplayService} from '../../../shared//modules/form-message-d
 import { ProviderServices } from '../../services/provider-services.service';
 import {projectConstants} from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages} from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-addprovider-addon',
@@ -14,6 +15,12 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddproviderAddonComponent implements OnInit {
 
+  add_addon_cap = Messages.ADD_ADDON_CAP;
+  addons_cap = Messages.ADDONS_CAP;
+  select_one_cap = Messages.SELECT_ONE_CAP;
+  no_upgrade_addons_found = Messages.NO_UPGRADE_ADDONS_FOUND_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

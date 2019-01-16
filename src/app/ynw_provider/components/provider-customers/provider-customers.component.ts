@@ -1,30 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {HeaderComponent} from '../../../shared/modules/header/header.component';
+import { Component, OnInit } from '@angular/core';
+import { HeaderComponent } from '../../../shared/modules/header/header.component';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 import { SharedServices } from '../../../shared/services/shared-services';
 
 import * as moment from 'moment';
 
-import {Observable} from 'rxjs';
-import {startWith, map} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
-    selector: 'app-provider-customers',
-    templateUrl: './provider-customers.component.html'
+  selector: 'app-provider-customers',
+  templateUrl: './provider-customers.component.html'
 })
 
 export class ProviderCustomersComponent implements OnInit {
 
+  first_name_cap = Messages.FIRST_NAME_CAP;
+  email_cap = Messages.SERVICE_EMAIL_CAP;
+  date_cap = Messages.DATE_COL_CAP;
+  name_cap = Messages.PRO_NAME_CAP;
+  mobile_cap = Messages.CUSTOMER_MOBILE_CAP;
+  last_visit_cap = Messages.LAST_VISIT_CAP;
+  no_customer_cap = Messages.NO_CUSTOMER_CAP;
   customers: any = [];
   customer_count: any = 0;
+  filterapplied = false;
   open_filter = false;
   filter = {
     first_name: '',
@@ -34,31 +42,45 @@ export class ProviderCustomersComponent implements OnInit {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   }; // same in resetFilter Fn
-
-  pagination: any  = {
-    startpageval: 1,
-    totalCnt : 0,
-    perPage : this.filter.page_count
-  };
-  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-  loadComplete = false;
   customer_label = '';
   checkin_label = '';
   checkedin_label = '';
+  breadcrumb_moreoptions: any = [];
+  breadcrumbs_init = [
+    {
+      title: this.customer_label
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: 0,
+    perPage: this.filter.page_count
+  };
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  loadComplete = false;
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices) {
-      this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-      this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-      this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
-    }
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.breadcrumbs_init = [
+      {
+        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's'
+      }
+    ];
+    this.breadcrumbs = this.breadcrumbs_init;
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+  }
 
   ngOnInit() {
-      this.getCustomersList(true);
+    this.getCustomersList(true);
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'customer', 'subKey': 'services' };
   }
 
   getCustomersList(from_oninit = false) {
@@ -66,42 +88,46 @@ export class ProviderCustomersComponent implements OnInit {
     let filter = this.setFilterForApi();
 
     this.getCustomersListCount(filter)
-    .then(
-      result => {
+      .then(
+        result => {
 
-        if (from_oninit) { this.customer_count = result; }
+          if (from_oninit) { this.customer_count = result; }
 
-        filter = this.setPaginationFilter(filter);
-        this.provider_services.getProviderCustomers(filter)
-        .subscribe(
-          data => {
-            this.customers = data;
-            this.loadComplete = true;
-          },
-          error => {
-            this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
-          }
-        );
-      },
-      error => {
-        this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
-      }
-    );
-
+          filter = this.setPaginationFilter(filter);
+          this.provider_services.getProviderCustomers(filter)
+            .subscribe(
+              data => {
+                this.customers = data;
+                this.loadComplete = true;
+              },
+              error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
-
+  clearFilter() {
+    this.resetFilter();
+    this.filterapplied = false;
+    this.getCustomersList(true);
+  }
   getCustomersListCount(filter) {
     return new Promise((resolve, reject) => {
       this.provider_services.getProviderCustomersCount(filter)
-      .subscribe(
-        data => {
-          this.pagination.totalCnt = data;
-          resolve(data);
-        },
-        error => {
-          reject(error);
-        }
-      );
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.customer_count = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
     });
 
   }
@@ -119,6 +145,9 @@ export class ProviderCustomersComponent implements OnInit {
 
   doSearch() {
     this.getCustomersList();
+    if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
+      this.filterapplied = true;
+    }
   }
 
   resetFilter() {

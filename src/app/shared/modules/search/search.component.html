@@ -21,7 +21,7 @@
     <mat-form-field>
       <div>
         <mat-select panelClass ="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange(seldomain.value)" >
-          <mat-option value="All">All</mat-option>
+          <mat-option value="All">{{all_cap}}</mat-option>
           <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain" >
             {{ domain.displayName }} 
           </mat-option>
@@ -30,16 +30,17 @@
     </mat-form-field> 
   </div>
 
-  <div class="sa-src flex-shrink-1 plr0i ml5">
+  <div class="sa-src flex-shrink-1 plr0i ml5 ">
       <mat-form-field class="search_keyword_class">
         <input name="provider_box" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">
         <!-- <mat-autocomplete #autoprov="matAutocomplete" (optionSelected)="selectedOption(provbox.value)"> -->
           <mat-autocomplete #autoprov="matAutocomplete" #autotest> 
-          <div *ngIf="keywordgroupList">
-              <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList">
+          <!-- <div *ngIf="keywordgroupList"> -->
+            <div>
+              <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList" class="search-text">
                 <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (click)="setKeyword(kw)">
                 <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (onSelectionChange)="setKeyword(kw)"> -->
-                <span [innerHTML] ="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>
+                <span [innerHTML] ="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }} <span class="item-category">{{(kw.name === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? 'specialization':''))}}</span>
                 </mat-option>
               </mat-optgroup>
         </div>
@@ -52,7 +53,7 @@
   </div>
   <!-- <div class="sa-mo flex-shrink-0" *ngIf="chk_moreoptionshow()"> -->
       <div class="sa-mo flex-shrink-0">
-      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'"  [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip">More Options</span>
+      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'"  [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip">{{more_options_cap}}</span>
       <span class="icon icon-filter" id="morefiltericon" (click)="showMoreOptions()" *ngIf="includedfrom=='consumer_header'" [matTooltipClass] = "tooltipcls" [matTooltip]="moreoptionsTooltip"></span>
   </div>
   <ng-container>

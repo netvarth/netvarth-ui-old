@@ -15,6 +15,10 @@ import { SearchDetailServices } from '../../../shared/components/search-detail/s
 })
 export class SearchMoreOptionsComponent implements OnInit {
 
+  more_search_opt = Messages.MORE_SEARCH_OPT_CAP;
+  other_filters_cap = Messages.OTHER_FILTERS_CAP;
+  search_cap = Messages.SEARCH_CAP;
+  
   amForm: FormGroup;
   api_error = null;
   api_success = null;

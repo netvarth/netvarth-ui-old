@@ -26,10 +26,35 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
  @ViewChild ('regmobile') private regmobile: ElementRef;
  @ViewChild ('regfname') private regfname: ElementRef;
  @ViewChild ('reglname') private reglname: ElementRef;
+
+  welcome_cap = Messages.WELCOME_CAP;
+  checkin_youself_cap = Messages.CHECKIN_YOURSELF_CAP;
+  checkin_online_cap = Messages.CHECKIN_ONLINE_CAP;
+  check_your_status_cap = Messages.CHECK_YOUR_STATUS_CAP;
+  report_as_arrived_cap = Messages.REP_AS_ARRIVED_CAP;
+  do_you_want_to_signup_cap = Messages.DO_YOU_WANT_TO_SIGNUP_CAP;
+  marketing_text = Messages.MARKETING_TEXT;
+  enter_your = Messages.ENTER_YOUR_CAP;
+  mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
+  enter_first_letters_name = Messages.ENTER_FIR_LETTERS_CAP;
+  first_last_name_cap = Messages.FIR_LAS_NAME_CAP;
+  search_cap = Messages.SEARCH_CAP;
+  oops_cap = Messages.OOPS_CAP;
+  you_not_reg_cust_cap = Messages.LOOKS_NOT_REG_CUS_CAP;
+  fill_det_to_reg_cap = Messages.FILL_YOUR_DET_CAP;
+  first_name_cap = Messages.FIRST_NAME_CAP;
+  last_name_cap = Messages.LAST_NAME_CAP;
+  register_cap = Messages.REGISTER_CAP;
+  back_to_search_cap = Messages.BACK_TO_SEARCH_CAP;
+  home_cap = Messages.HOME_CAP;
+  checkin_youeself_cap = Messages.CHECKIN_YOURSELF_CAP;
+  exit_cap = Messages.EXIT_CAP;
+  not_auth_to_view_page = Messages.SORRY_NOT_AUTH_TO_VIEW_PAGE;
+
+
   provider_loggedin = false;
-  srch_mobile = '';
-  srch_fname = '';
   reg_mobile = '';
+  srch_fname = '';
   reg_fname = '';
   reg_lname = '';
   userdet;
@@ -109,7 +134,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     // this.shared_functions.checkLogin()
   }
   checkloggedIn() {
-    // console.log('checkedIn check');
+    console.log('checkedIn check');
     if (!this.shared_functions.checkLogin()) {
       this.router.navigate(['/']);
     }
@@ -301,24 +326,22 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
   }
 
   searchCustomer() {
-    // alert('ddd');alert('ddd');
-    // console.log('src', this.numberpattern.test(this.srch_mobile));
-    if (!this.numberpattern.test(this.srch_mobile)) {
+    if (!this.numberpattern.test(this.reg_mobile)) {
       this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
-      if (this.srchmob.nativeElement) {
-        this.srchmob.nativeElement.focus();
+      if (this.regmobile.nativeElement) {
+        this.regmobile.nativeElement.focus();
       }
       return false;
     }
-    if (!this.phonePattern.test(this.srch_mobile)) {
-      this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
-      if (this.srchmob.nativeElement) {
-        this.srchmob.nativeElement.focus();
+    if (!this.phonePattern.test(this.reg_mobile)) {
+      this.shared_functions.openSnackBar('Enter a 10 digit mobile number', {'panelClass': 'snackbarerror'});
+      if (this.regmobile.nativeElement) {
+        this.regmobile.nativeElement.focus();
       }
       return false;
     }
     if (this.blankPattern.test(this.srch_fname) || this.srch_fname.length < 3) {
-      this.shared_functions.openSnackBar('Please enter atleast the first 3 letters of your first name', {'panelClass': 'snackbarerror'});
+      this.shared_functions.openSnackBar('Please enter atleast the first 3 letters of your First/Last Name', {'panelClass': 'snackbarerror'});
       if (this.srchname.nativeElement) {
         this.srchname.nativeElement.focus();
       }
@@ -335,7 +358,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     const data = {
       'firstName-eq': this.srch_fname,
       'lastName-eq': this.srch_fname,
-      'primaryMobileNo-eq': this.srch_mobile
+      'primaryMobileNo-eq': this.reg_mobile
 
     };
     this.customer_found = false;
@@ -353,7 +376,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
               this.cMod = 'main';
             }
             this.srch_fname = '';
-            this.srch_mobile = '';
+            this.reg_mobile = '';
             this.loadingNow = false;
             this.do_operation();
           } else { // case if searched customer does not exists, so show the "Not found" page
@@ -374,19 +397,20 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     this.showregmobile = false;
     this.cMod = val;
     this.srch_fname = '';
-    this.srch_mobile = '';
+    this.reg_mobile = '';
     this.reg_fname = '';
     this.reg_lname = '';
     this.reg_mobile = '';
     this.show_customernotfoundmsg = false;
     this.show_customerRegister = false;
     this.showsearch_now = false;
+    // console.log('cmod', this.cMod);
     if (this.cMod !== 'main') {
       if (!this.customer_found) {
         this.showsearch_now = true;
         setTimeout(() => {
-          if (this.document.getElementById('srchmobilebox')) {
-            this.document.getElementById('srchmobilebox').focus();
+          if (this.document.getElementById('regmobilebox')) {
+            this.document.getElementById('regmobilebox').focus();
           }
         }, 500);
       } else {
@@ -397,7 +421,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     }
   }
   do_operation() {
-   console.log('reached here', this.cMod);
+     console.log('reached here', this.cMod);
    if (this.cMod === 'checkin') {
     this.shared_functions.sendMessage({ttype: 'checkin', action: false});
    } else if (this.cMod === 'arrived') {
@@ -441,7 +465,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     return passedData;
   }
   logOff() {
-    this.shared_functions.sendMessage({ttype: '', action: false});
+  this.shared_functions.sendMessage({ttype: '', action: false});
     this.showregmobile = false;
     this.customer_found = false;
     this.show_customernotfoundmsg = false;
@@ -460,7 +484,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
 
     let curmobile = '';
     if (this.showregmobile) {
-      // alert('ddd');
+          // alert('ddd');
      // console.log('src', this.numberpattern.test(this.reg_mobile));
       if (!this.numberpattern.test(this.reg_mobile)) {
         this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
@@ -470,7 +494,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
         return false;
       }
       if (!this.phonePattern.test(this.reg_mobile)) {
-        this.shared_functions.openSnackBar('Phone number should have 10 digits', {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar('Enter a 10 digit mobile number', {'panelClass': 'snackbarerror'});
         if (this.regmobile.nativeElement) {
           this.regmobile.nativeElement.focus();
         }
@@ -478,7 +502,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
       }
       curmobile = this.reg_mobile;
     } else {
-      curmobile = this.srch_mobile;
+      curmobile = this.reg_mobile;
     }
     if (this.blankPattern.test(this.reg_fname) || !this.namePattern.test(this.reg_fname)) {
       this.shared_functions.openSnackBar('Please enter a valid first name', {'panelClass': 'snackbarerror'});
@@ -514,7 +538,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
         this.reg_fname = '';
         this.reg_lname = '';
         this.srch_fname = '';
-        this.srch_mobile = '';
+        this.reg_mobile = '';
         this.loadingNow = false;
         if (this.showregmobile) { // case if reached here by clicking the signu link
           this.showMode('main');
@@ -534,9 +558,9 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     this.show_customernotfoundmsg = false;
     this.showsearch_now = true;
     setTimeout(function() {
-      if (this.srchmob !== undefined) {
-        if (this.srchmob.nativeElement) {
-          this.srchmob.nativeElement.focus();
+      if (this.regmobile !== undefined) {
+        if (this.regmobile.nativeElement) {
+          this.regmobile.nativeElement.focus();
         }
       }
     }, 5000);

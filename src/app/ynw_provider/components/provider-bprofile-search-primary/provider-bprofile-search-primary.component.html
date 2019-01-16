@@ -1,16 +1,17 @@
-<h1 class="mat-dialog-title"> Profile Name and Summary <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+<h1 class="mat-dialog-title"> {{profile_name_summary_cap}} <button mat-dialog-close class="modal_close" tabindex="-1"><i
+            class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
 
-<mat-dialog-content>
-<div class="form-group">
-    <label class="col-form-label" for="first_name">Business Name *</label>
-    <input type="text" matInput class="form-control" id="bname" #bname
-    formControlName="bname" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bname')"
-    errorMsg="Please enter the business name">
-   </app-field-error-display>
-</div>
-<!-- <div class="form-group">
+    <mat-dialog-content>
+        <div class="form-group">
+            <mat-form-field>
+                <input type="text" matInput class="form-control" id="bname" #bname formControlName="bname" autocomplete="off"
+                    placeholder="{{business_name_cap}}">
+            </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bname')" errorMsg="Please enter the business name">
+            </app-field-error-display>
+        </div>
+        <!-- <div class="form-group">
         <label class="col-form-label" for="first_name">Short Name </label>
         <input type="text" class="form-control"
         formControlName="shortname">
@@ -19,24 +20,22 @@
        </app-field-error-display>
 </div> -->
 
-<div class="form-group">
-    <label class="col-form-label" for="first_name">Profile Summary </label>
-    <textarea class="form-control" id="bdesc"  formControlName="bdesc" row="4"></textarea>
-    <!-- <input type="text" class="form-control" id="bdesc"
+        <div class="form-group">
+            <mat-form-field>
+                <textarea matInput class="form-control" id="bdesc" formControlName="bdesc" row="4" placeholder="A short one line description about your service"></textarea>
+                <!-- <input type="text" class="form-control" id="bdesc"
     formControlName="bdesc"> -->
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')"
-    errorMsg="Please enter the profile summary">
-   </app-field-error-display>
-</div>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-    <button  type="submit"  [disabled]="!amForm.valid" class="cs-btn bt1" mat-button>Save</button>
-</mat-dialog-actions>
+            </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please enter the profile summary">
+            </app-field-error-display>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+        <button type="submit" [disabled]="!amForm.valid" class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
+    </mat-dialog-actions>
 </form>
 
-<app-field-error-display [displayError]="true" *ngIf="api_error"
-errorMsg="{{api_error}}"></app-field-error-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success"
-successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

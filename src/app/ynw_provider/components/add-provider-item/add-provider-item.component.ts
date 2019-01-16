@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
 import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
+import {Messages} from '../../../shared/constants/project-messages';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
@@ -15,6 +16,15 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderItemComponent implements OnInit {
 
+  item_hi_cap =Messages.ITEM_HI_CAP;
+  item_name_cap = Messages.ITEM_NAME_CAP;
+  short_desc_cap = Messages.SHORT_DESC_CAP;
+  detailed_dec_cap = Messages.DETAIL_DESC_CAP;
+  price_cap = Messages.PRICES_CAP;
+  taxable_cap = Messages.TAXABLE_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
+
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -24,6 +34,7 @@ export class AddProviderItemComponent implements OnInit {
     files: [],
     base64: null
   };
+  taxpercentage = 0;
   holdtaxable = false;
   file_error_msg = '';
   img_exists = false;
@@ -42,9 +53,10 @@ export class AddProviderItemComponent implements OnInit {
     ) {
        // console.log(data);
      }
-
+     taxDetails: any = [];
   ngOnInit() {
      this.createForm();
+     this.getTaxpercentage();
   }
   createForm() {
     if (this.data.type === 'add') {
@@ -99,8 +111,8 @@ export class AddProviderItemComponent implements OnInit {
     // if (form_data.taxable === '1') {
     taxable = this.holdtaxable;
    // }
-    let imgcaption = '';
-    const iprice = parseFloat(form_data.price);
+   let imgcaption = '';
+       const iprice = parseFloat(form_data.price);
     if (!iprice || iprice === 0) {
           this.api_error = 'Please enter the price';
           return;
@@ -218,7 +230,28 @@ export class AddProviderItemComponent implements OnInit {
   }
 
   handleTaxablechange() {
-    this.holdtaxable = !this.holdtaxable;
+    // this.holdtaxable = !this.holdtaxable;
+      if (this.taxpercentage <= 0) {
+        this.api_error = this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
+        setTimeout(() => {
+          this.api_error = null;
+        }, projectConstants.TIMEOUT_DELAY_LARGE);
+        this.amForm.get('taxable').setValue(false);
+      } else {
+        this.api_error = null;
+      }
+  }
+
+  getTaxpercentage() {
+    this.provider_services.getTaxpercentage()
+        .subscribe (data => {
+            this.taxDetails = data;
+            this.taxpercentage = this.taxDetails.taxPercentage;
+            console.log('tax percentage', this.taxpercentage);
+        },
+    error => {
+
+    });
   }
 
 }

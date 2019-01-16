@@ -9,17 +9,17 @@
            <div class="card members-card">
             <div class="no-dta" *ngIf="member_list.length ==0 && query_executed == true">
                 <p>{{emptyMsg}}</p>
-                <span class="cs-btn bt3" (click)="addMember()">Add Family Member</span>
+                <span class="cs-btn bt3" (click)="addMember()">{{add_fam_memb_cap}}</span>
                 </div>
               <div class="table-outer d-tbl" *ngIf="member_list.length !=0">
                   <table class="table">
                       <thead>
                           <tr>
-                              <th>First Name</th>
-                              <th>Last Name</th>
-                              <th>Mobile Number</th>
-                              <th>Gender</th>         
-                              <th>Date of Birth</th>     
+                              <th>{{first_name_cap}}</th>
+                              <th>{{last_name_cap}}</th>
+                              <th>{{mobile_no_cap}}</th>
+                              <th>{{gender_cap}}</th>         
+                              <th>{{date_of_birth}}</th>     
                               <th><span class="addbt" (click)="addMember()"></span></th>      
                           </tr>
                       </thead>
@@ -37,17 +37,17 @@
                                   <mat-menu #menu="matMenu">
                                       <button type="button" (click)="editMember(member)" mat-menu-item>
                                           <i class="icon-edit"></i>
-                                          Edit
+                                          {{edit_btn_cap}}
                                       </button>
                                       <button type="button" (click)="doRemoveMember(member)" mat-menu-item>
                                           <i class="icon-delete"></i>
-                                          Delete
+                                          {{delete_btn_cap}}
                                       </button>
                                   </mat-menu>
                               </span>
                               <span class="mbt-mobile-show">
-                                  <button class="editcls" type="button" (click)="editMember(member)">Edit</button>
-                                  <button class="deletecls" type="button" (click)="doRemoveMember(member)">Delete</button>
+                                  <button class="editcls" type="button" (click)="editMember(member)">{{edit_btn_cap}}</button>
+                                  <button class="deletecls" type="button" (click)="doRemoveMember(member)">{{delete_btn_cap}}</button>
                               </span>
                             </td>
                           </tr>
@@ -80,12 +80,12 @@
 
            </div>
            <div class="right-menu">
-               <div class="right-menu-header">Related Links</div>
+               <div class="right-menu-header">{{related_links_cap}}</div>
                <ul class="related-link">
-                   <li (click)="shared_functions.redirectto('profile')" class="icon-profile">User Profile</li>
-                   <li (click)="shared_functions.redirectto('change-password')" class="icon-password">Change Password</li>
-                   <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">Change Mobile</li>
-                   <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">Add or Change Email</li>
+                   <li (click)="shared_functions.redirectto('profile')" class="icon-profile">{{user_profile_cap}}</li>
+                   <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_password_cap}}</li>
+                   <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">{{change_mob_no_cap}}</li>
+                   <!-- <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">{{add_change_email_cap}}</li> -->
                </ul>
            </div>
            </div>

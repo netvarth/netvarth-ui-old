@@ -11,7 +11,6 @@ import { ServiceMeta } from './service-meta';
 @Injectable()
 
 export class SharedServices {
-
     constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
 
     }
@@ -506,5 +505,9 @@ export class SharedServices {
     getPartysizeDetails(domain, subdomain) {
       const url = 'ynwConf/settings/' + domain + '/' + subdomain;
       return this.servicemeta.httpGet(url);
+    }
+    applyCoupon(jCouponCode, checkinId, accountid) {
+      const url = 'consumer/jaldee/coupons/' + jCouponCode + '/' + checkinId + '?account=' + accountid;
+      return this.servicemeta.httpPost(url);
     }
 }

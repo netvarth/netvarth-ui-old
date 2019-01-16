@@ -15,6 +15,16 @@ import {projectConstants} from '../../../shared/constants/project-constants';
 })
 export class AddMemberComponent implements OnInit {
 
+  fill_foll_details_cap = Messages.FILL_FOLL_DETAILS_CAP;
+  first_name_cap = Messages.F_NAME_CAP;
+  last_name_cap = Messages.L_NAME_CAP;
+  mobile_no = Messages.MOBILE_NUMBER_CAP;
+  gender_cap = Messages.GENDER_CAP;
+  male_cap = Messages.MALE_CAP;
+  female_cap = Messages.FEMALE_CAP;
+  dob_cap = Messages.DOB_CAP;
+  mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
+
   firstname = '';
   lastname = '';
   mobile = '';

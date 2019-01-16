@@ -1,12 +1,12 @@
+import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 // import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable ,  Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 
 import {
@@ -40,12 +40,86 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 
 
 @Component({
-    selector: 'app-provider-bprofile-search',
-    templateUrl: './provider-bprofile-search.component.html',
-    styleUrls: ['./provider-bprofile-search.component.scss']
+  selector: 'app-provider-bprofile-search',
+  templateUrl: './provider-bprofile-search.component.html',
+  styleUrls: ['./provider-bprofile-search.component.scss']
 })
 
 export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
+
+  you_have_cap = Messages.YOU_HAVE_CAP;
+  more_cap = Messages.MORE_CAP;
+  add_cap = Messages.ADD_BTN;
+  location_cap = Messages.LOCATION_CAP;
+  working_hours_cap = Messages.WORKING_HRS_CAP;
+  edit_cap = Messages.EDIT_BTN;
+  delete_btn = Messages.DELETE_BTN;
+  click_here_cap = Messages.CLICK_HERE_CAP;
+  email_cap = Messages.SERVICE_EMAIL_CAP;
+  lang_known_cap = Messages.LANG_KNOWN_CAP;
+  gallery_cap = Messages.GALLERY_CAP;
+  sorry_cap = Messages.SORRY_CAP;
+  public_search_cap = Messages.BPROFILE_PUBLIC_SEARCH_CAP;
+  your_proflie_cap = Messages.BPROFILE_PROFILE_CAP;
+  disabled_Cap = Messages.BPROFILE_DISABLED_CAP;
+  not_visible_cap = Messages.BPROFILE_ONLINE_VISIBLE_CAP;
+  set_up_cap = Messages.BPROFILE_SET_UP_CAP;
+  profile_summary_cap = Messages.BPROFILE_SUMMARY_CAP;
+  on_search_cap = Messages.BPROFILE_ON_pUBLIC_SEARCH;
+  current_status_cap = Messages.BPROFILE_CURRENT_STATUS;
+  on_cap = Messages.BPROFILE_ON_CAP;
+  off_cap = Messages.BPROFILE_OFF_CAP;
+  profile_visible_cap = Messages.BPROFILE_VISIBILITY_CAP;
+  online_jaldee_cap = Messages.BPROFILE_ONLINE_JALDEE_CAP;
+  offline_cap = Messages.BPROFILE_OFFLINE_CAP;
+  turn_off_cap = Messages.BPROFILE_TURN_OFF;
+  turn_on_cap = Messages.BPROFILE_TURN_ON;
+  adowrds_cap = Messages.BPROFILE_ADWORDS_CAP;
+  buy_adowrds_cap = Messages.BPROFILE_BUY_ADWORDS_CAP;
+  buy_adowrds_btn = Messages.BPROFILE_BUY_ADWORD_BTN;
+  create_adword_cap = Messages.BPROFILE_CREATE_ADWORD_CAP;
+  more_adword_cap = Messages.BPROFILE_MOR_ADOWRDS_CAP;
+  license_cap = Messages.BPROFILE_LICENSE_INVOICE_CAP;
+  have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+  basic_info_cap = Messages.BPROFILE_BASIC_INFORMATION_CAP;
+  such_as_cap = Messages.BPROFILE_SUCH_AS_CAP;
+  name_summary_cap = Messages.BPROFILE_BUSINESS_NAME_CAP;
+  profile_pic_cap = Messages.PROFILE_PICTURE_CAP;
+  add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+  to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
+  change_cap = Messages.BPROFILE_CHANGE_CAP;
+  pic_cap = Messages.BPROFILE_PICTURE_CAP;
+  delete_pic = Messages.BPROFILE_DELETE_PICTURE_CAP;
+  info_cap = Messages.BPROFILE_INFORMATION_CAP;
+  need_loc_cap = Messages.BPROFILE_NEED_LOCATION_CAP;
+  work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
+  base_loc_det_cap = Messages.BPROFILE_BASE_LOCATION;
+  please_use_cap = Messages.BPROFILE_PLEASE_CAP;
+  btn_to_compl_cap = Messages.BPROFILE_BUTTON_COMPLETE_CAP;
+  pin_cap = Messages.BPROFILE_PIN_CAP;
+  more_loc_cap = Messages.BPROFILE_MORE_LOCATIONS_CAP;
+  locations_cap = Messages.BPROFILE_LOCATIONS_CAP;
+  page_cap = Messages.BPROFILE_PAGE_CAP;
+  long_cap = Messages.BPROFILE_LONGITUDE_CAP;
+  lat_cap = Messages.BPROFILE_LATIITUDE_CAP;
+  loc_amenities_cap = Messages.BPROFILE_LOCATION_AMENITIES;
+  can_change_hours = Messages.BPROFILE_CHANGE_WORKING_HOURS_CAP;
+  view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
+  privacy_sett_cap = Messages.BPROFILE_PRIVACY_SETTINGS_CAP;
+  phone_cap = Messages.BPROFILE_PHONE_CAP;
+  visible_cap = Messages.BPROFILE_VISIBLE_CAP;
+  special_cap = Messages.BPROFILE_SPECIAL_CAP;
+  additional_info_cap = Messages.BPROFILE_ADDOTIONAL_INFO_CAP;
+  additional_cap = Messages.BPROFILE_ADDITIONAL_CAP;
+  add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
+  photos_to_cap = Messages.BPROFILE_PHOTOS_CAP;
+  photo_cap = Messages.BPROFILE_PHOT0_CAP;
+  social_media_cap = Messages.BPROFILE_SOCIAL_MEDIA_CAP;
+  add_social_media = Messages.BPROFILE_ADD_SOCIAL_MEDIA_CAP;
+  no_social_media = Messages.NO_SOCIAL_MEDIA;
+  name_cap = Messages.PRO_NAME_CAP;
+  description_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
+
   checked = false;
   bProfile = null;
   serviceSector = null;
@@ -82,13 +156,14 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   adword_list: any = [];
   license_metadata: any = [];
   adwordsmaxcount = 0;
+  license_details:any = [];
   adwords_maxremaining = 0;
   adwords_remaining = 0;
   adwordshow_list: any = [];
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   searchquestiontooltip = '';
   tooltipcls = projectConstants.TOOLTIP_CLS;
-  breadcrumb_moreoptions: any =  [];
+  breadcrumb_moreoptions: any = [];
   languages_arr: any = [];
   specialization_arr: any = [];
 
@@ -105,7 +180,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   normal_locationamenities_show = 1;
   normal_language_show = 1;
   normal_specilization_show = 1;
-  loadingParams: any = {'diameter' : 40, 'strokewidth': 15};
+  loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
   showaddsocialmedia = false;
   customernormal_label = this.sharedfunctionobj.getTerminologyTerm('customer');
 
@@ -115,7 +190,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   };
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
-    strategy:  ButtonsStrategy.CUSTOM,
+    strategy: ButtonsStrategy.CUSTOM,
     buttons: [
       {
         className: 'fa fa-trash-o',
@@ -170,22 +245,21 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   adworddialogRef;
   delgaldialogRef;
   cacheavoider = '';
-
   constructor(private provider_services: ProviderServices,
-  private provider_datastorage: ProviderDataStorageService,
-  private sharedfunctionobj: SharedFunctions,
-  private sanitizer: DomSanitizer,
-  private dialog: MatDialog,
-  private routerobj: Router,
-  private shared_services: SharedServices,
-  private service: QuestionService) {
+    private provider_datastorage: ProviderDataStorageService,
+    private sharedfunctionobj: SharedFunctions,
+    private sanitizer: DomSanitizer,
+    private dialog: MatDialog,
+    private routerobj: Router,
+    private shared_services: SharedServices,
+    private service: QuestionService) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
   }
 
   ngOnInit() {
     this.getSpokenLanguages();
-    // this.getLicenseDetails();
+   this.getLicenseDetails();
     // this.getLicenseMetadata();
     this.getTotalAllowedAdwordsCnt();
     this.getLocationBadges();
@@ -199,7 +273,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     this.getBusinessConfiguration();
     this.getGalleryImages();
     this.getProviderLocations();
-    this.breadcrumb_moreoptions = {'show_learnmore': true , 'scrollKey': 'bprofile'};
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'bprofile' };
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {
@@ -241,27 +315,27 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
   getPublicSearch() {
     this.provider_services.getPublicSearch()
-    .subscribe(
-      data => {
-       this.public_search = (data && data.toString() === 'true') ? true : false;
-       this.normal_search_active = this.public_search;
-       // console.log('search_status', this.normal_search_active);
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.public_search = (data && data.toString() === 'true') ? true : false;
+          this.normal_search_active = this.public_search;
+          // console.log('search_status', this.normal_search_active);
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
   getBusinessConfiguration() {
     this.shared_services.bussinessDomains()
-      .subscribe (data => {
+      .subscribe(data => {
         this.businessConfig = data;
         // console.log('config', this.businessConfig);
         this.getBusinessProfile();
       },
-    error => {
+        error => {
 
-    });
+        });
   }
   confirm_searchStatus() {
     if (this.normal_search_active) {
@@ -273,10 +347,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   handle_searchstatus() {
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
-      .subscribe (data => {
-          this.getPublicSearch();
+      .subscribe(data => {
+        this.getPublicSearch();
       }, error => {
-        this.sharedfunctionobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
 
@@ -285,169 +359,169 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     this.bProfile = [];
 
     this.getBussinessProfileApi()
-    .then(
-      data => {
-        this.bProfile = data;
-        this.provider_datastorage.set('bProfile', data);
-        for (let i = 0; i < this.businessConfig.length ; i++) {
-          if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
-            if (this.businessConfig[i].multipleLocation) {
-              this.multipeLocationAllowed = true;
-              // console.log('multiple', this.multipeLocationAllowed, this.businessConfig[i].multipleLocation, this.businessConfig[i].id, this.bProfile.serviceSector.id);
+      .then(
+        data => {
+          this.bProfile = data;
+          this.provider_datastorage.set('bProfile', data);
+          for (let i = 0; i < this.businessConfig.length; i++) {
+            if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
+              if (this.businessConfig[i].multipleLocation) {
+                this.multipeLocationAllowed = true;
+                // console.log('multiple', this.multipeLocationAllowed, this.businessConfig[i].multipleLocation, this.businessConfig[i].id, this.bProfile.serviceSector.id);
+              }
             }
           }
-        }
-        const loginuserdata = this.sharedfunctionobj.getitemfromLocalStorage('ynw-user');
-        // setting the status of the customer from the profile details obtained from the API call
-        loginuserdata.accStatus = this.bProfile.status;
-        // Updating the status (ACTIVE / INACTIVE) in the local storage
-        this.sharedfunctionobj.setitemonLocalStorage('ynw-user', loginuserdata);
+          const loginuserdata = this.sharedfunctionobj.getitemfromLocalStorage('ynw-user');
+          // setting the status of the customer from the profile details obtained from the API call
+          loginuserdata.accStatus = this.bProfile.status;
+          // Updating the status (ACTIVE / INACTIVE) in the local storage
+          this.sharedfunctionobj.setitemonLocalStorage('ynw-user', loginuserdata);
 
-        this.serviceSector = data['serviceSector']['displayName'] || null;
-        this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
-        this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
-        this.specialization_title = (data['serviceSubSector']['displayName'])  ?
-         data['serviceSubSector']['displayName'] : '';
+          this.serviceSector = data['serviceSector']['displayName'] || null;
+          this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
+          this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
+          this.specialization_title = (data['serviceSubSector']['displayName']) ?
+            data['serviceSubSector']['displayName'] : '';
 
-        // console.log('bprofile', this.bProfile);
-        // console.log('bprofile - status', this.bProfile.status);
-        if (this.bProfile.status === 'ACTIVE') {
-          this.normal_profile_active = 3;
-        } else {
-          this.normal_profile_active = 2;
-        }
-        if (this.bProfile.languagesSpoken) {
-          if (this.bProfile.languagesSpoken.length > 0) {
-          this.normal_language_show = 3;
+          // console.log('bprofile', this.bProfile);
+          // console.log('bprofile - status', this.bProfile.status);
+          if (this.bProfile.status === 'ACTIVE') {
+            this.normal_profile_active = 3;
+          } else {
+            this.normal_profile_active = 2;
+          }
+          if (this.bProfile.languagesSpoken) {
+            if (this.bProfile.languagesSpoken.length > 0) {
+              this.normal_language_show = 3;
+            } else {
+              this.normal_language_show = 2;
+            }
           } else {
             this.normal_language_show = 2;
           }
-        } else {
-          this.normal_language_show = 2;
-        }
 
-        if (this.bProfile.specialization) {
-          if (this.bProfile.specialization.length > 0) {
-            this.normal_specilization_show = 3;
+          if (this.bProfile.specialization) {
+            if (this.bProfile.specialization.length > 0) {
+              this.normal_specilization_show = 3;
+            } else {
+              this.normal_specilization_show = 2;
+            }
           } else {
             this.normal_specilization_show = 2;
           }
-        } else {
-          this.normal_specilization_show = 2;
-        }
 
-        if (this.bProfile.baseLocation) {
-          if ((this.bProfile.baseLocation.parkingType && this.bProfile.baseLocation.parkingType !== 'none') || this.bProfile.baseLocation.open24hours
-             || this.objectKeys(this.bProfile.baseLocation.locationVirtualFields).length > 0) {
-            this.normal_locationamenities_show = 3;
+          if (this.bProfile.baseLocation) {
+            if ((this.bProfile.baseLocation.parkingType && this.bProfile.baseLocation.parkingType !== 'none') || this.bProfile.baseLocation.open24hours
+              || this.objectKeys(this.bProfile.baseLocation.locationVirtualFields).length > 0) {
+              this.normal_locationamenities_show = 3;
+            } else {
+              this.normal_locationamenities_show = 2;
+            }
           } else {
             this.normal_locationamenities_show = 2;
           }
-        } else {
-            this.normal_locationamenities_show = 2;
-        }
 
-        if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
+          if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
 
-          if (this.bProfile['domainVirtualFields'] &&
-              Object.keys(this.bProfile['domainVirtualFields']) .length === 0) {
-                this.normal_domainfield_show = 2;
+            if (this.bProfile['domainVirtualFields'] &&
+              Object.keys(this.bProfile['domainVirtualFields']).length === 0) {
+              this.normal_domainfield_show = 2;
+            }
+            const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+            // console.log('subsector bprofile', subsectorname);
+            // calling function which saves the business related details to show in the header
+            this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+              || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+
+            const pdata = { 'ttype': 'updateuserdetails' };
+            this.sharedfunctionobj.sendMessage(pdata);
+
+            this.getProviderLogo();
+            this.getDomainVirtualFields();
+
+            if (this.bProfile['subDomainVirtualFields'] &&
+              Object.keys(this.bProfile['subDomainVirtualFields']).length === 0) {
+              this.normal_subdomainfield_show = 2;
+            }
+
+            if (this.bProfile['serviceSubSector']['subDomain']) {
+              this.getSubDomainVirtualFields();
+            }
+
           }
-          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-          // console.log('subsector bprofile', subsectorname);
-          // calling function which saves the business related details to show in the header
-          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-           || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
 
-           const pdata = { 'ttype': 'updateuserdetails' };
-           this.sharedfunctionobj.sendMessage(pdata);
-
-          this.getProviderLogo();
-          this.getDomainVirtualFields();
-
-          if (this.bProfile['subDomainVirtualFields'] &&
-          Object.keys(this.bProfile['subDomainVirtualFields']) .length === 0) {
-            this.normal_subdomainfield_show = 2;
-          }
-
-          if (this.bProfile['serviceSubSector']['subDomain']) {
-            this.getSubDomainVirtualFields();
-          }
-
-        }
-
-        // check whether normal search section can be displayed
-        this.normal_search_display = this.bProfile.enableSearch;
-        // check whether normal business profile section can be displayed
-        if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
-         || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined) ) {
-          this.normal_basicinfo_show = 3;
-        } else {
-          this.normal_basicinfo_show = 2;
-        }
-
-        // check whether normal location section can be displayed
-        this.normal_locationinfo_show = 2;
-        if (this.bProfile.baseLocation) {
-          if (this.bProfile.baseLocation.place === '') { // case if base location name is blank
-            this.normal_locationinfo_show = 4;
+          // check whether normal search section can be displayed
+          this.normal_search_display = this.bProfile.enableSearch;
+          // check whether normal business profile section can be displayed
+          if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
+            || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
+            this.normal_basicinfo_show = 3;
           } else {
-            this.normal_locationinfo_show = 3;
+            this.normal_basicinfo_show = 2;
           }
+
+          // check whether normal location section can be displayed
+          this.normal_locationinfo_show = 2;
+          if (this.bProfile.baseLocation) {
+            if (this.bProfile.baseLocation.place === '') { // case if base location name is blank
+              this.normal_locationinfo_show = 4;
+            } else {
+              this.normal_locationinfo_show = 3;
+            }
             if (this.bProfile.baseLocation.bSchedule) {
               if (this.bProfile.baseLocation.bSchedule.timespec) {
                 if (this.bProfile.baseLocation.bSchedule.timespec.length > 0) {
                   this.schedule_arr = [];
-                    // extracting the schedule intervals
-                    for (let i = 0; i < this.bProfile.baseLocation.bSchedule.timespec.length; i++) {
-                      for (let j = 0; j < this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
-                        // pushing the schedule details to the respective array to show it in the page
-                        this.schedule_arr.push({
-                          day: this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
-                          sTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
-                          eTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
-                        });
-                      }
+                  // extracting the schedule intervals
+                  for (let i = 0; i < this.bProfile.baseLocation.bSchedule.timespec.length; i++) {
+                    for (let j = 0; j < this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
+                      // pushing the schedule details to the respective array to show it in the page
+                      this.schedule_arr.push({
+                        day: this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
+                        sTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
+                        eTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
+                      });
                     }
+                  }
                 }
               }
             }
 
             this.display_schedule = [];
-            this.display_schedule =  this.sharedfunctionobj.arrageScheduleforDisplay(this.schedule_arr);
-        }
+            this.display_schedule = this.sharedfunctionobj.arrageScheduleforDisplay(this.schedule_arr);
+          }
 
-        // check whether normal privacy settings can be displayed or not
-        this.normal_privacy_settings_show = 2;
-        this.setPrivacyDetails();
+          // check whether normal privacy settings can be displayed or not
+          this.normal_privacy_settings_show = 2;
+          this.setPrivacyDetails();
 
-        // check whether social media details exists
-        this.normal_socialmedia_show = 2;
-        this.social_arr = [];
-        if (this.bProfile.socialMedia) {
-          if (this.bProfile.socialMedia.length > 0) {
-            this.normal_socialmedia_show = 3;
-            for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
-              if (this.bProfile.socialMedia[i].resource !== '') {
-                 this.social_arr.push({'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
+          // check whether social media details exists
+          this.normal_socialmedia_show = 2;
+          this.social_arr = [];
+          if (this.bProfile.socialMedia) {
+            if (this.bProfile.socialMedia.length > 0) {
+              this.normal_socialmedia_show = 3;
+              for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
+                if (this.bProfile.socialMedia[i].resource !== '') {
+                  this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
+                }
               }
             }
           }
+          // console.log('social', this.social_arr.length, this.orgsocial_list.length);
+          if (this.social_arr.length < this.orgsocial_list.length) {
+            this.showaddsocialmedia = true;
+          }
+          // this.prepare_sociallist();
+
+          // check whether domain fields exists
+
+
+        },
+        error => {
+
         }
-       // console.log('social', this.social_arr.length, this.orgsocial_list.length);
-        if (this.social_arr.length < this.orgsocial_list.length) {
-          this.showaddsocialmedia = true;
-        }
-        // this.prepare_sociallist();
-
-        // check whether domain fields exists
-
-
-      },
-      error => {
-
-      }
-    );
+      );
 
   }
 
@@ -456,14 +530,14 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     return new Promise(function (resolve, reject) {
 
       _this.provider_services.getBussinessProfile()
-      .subscribe(
-        data => {
-          resolve(data);
-        },
-        error => {
-          reject();
-        }
-      );
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          error => {
+            reject();
+          }
+        );
 
     });
   }
@@ -474,7 +548,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       if (this.bProfile.phoneNumbers) {
         this.phonearr = [];
         for (let i = 0; i < this.bProfile.phoneNumbers.length; i++) {
-          this.phonearr.push (
+          this.phonearr.push(
             {
               'label': this.bProfile.phoneNumbers[i].label,
               'number': this.bProfile.phoneNumbers[i].instance,
@@ -487,7 +561,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       if (this.bProfile.emails) {
         this.emailarr = [];
         for (let i = 0; i < this.bProfile.emails.length; i++) {
-          this.emailarr.push (
+          this.emailarr.push(
             {
               'label': this.bProfile.emails[i].label,
               'emailid': this.bProfile.emails[i].instance,
@@ -523,15 +597,15 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }*/
   getGalleryImages() {
     this.provider_services.getGalleryImages()
-    .subscribe(
-      data => {
-        this.image_list = data;
-        // console.log(this.image_list);
-        this.image_showlist = [];
-        this.image_list_popup = [];
-        this.image_remaining_cnt = 0;
-        if (this.image_list.length > 0) {
-          for (let i = 0; i < this.image_list.length; i++) {
+      .subscribe(
+        data => {
+          this.image_list = data;
+          // console.log(this.image_list);
+          this.image_showlist = [];
+          this.image_list_popup = [];
+          this.image_remaining_cnt = 0;
+          if (this.image_list.length > 0) {
+            for (let i = 0; i < this.image_list.length; i++) {
               const imgobj = new Image(
                 i,
                 { // modal
@@ -540,15 +614,15 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
                 });
               this.image_list_popup.push(imgobj);
             }
-          this.normal_gallery_show = 3;
-        } else {
-          this.normal_gallery_show = 2;
-        }
-      },
-      error => {
+            this.normal_gallery_show = 3;
+          } else {
+            this.normal_gallery_show = 2;
+          }
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
   }
   confirmDelete(file, indx) {
@@ -561,17 +635,17 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   deleteImage(file, bypassgetgallery?) {
     this.provider_services.deleteProviderGalleryImage(file.keyName)
-    .subscribe(
-      data => {
-      // this.sharedfunctionobj.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_DELETE);
-        if (!bypassgetgallery) {
-          this.getGalleryImages();
-        }
-      },
-      error => {
+      .subscribe(
+        data => {
+          // this.sharedfunctionobj.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_DELETE);
+          if (!bypassgetgallery) {
+            this.getGalleryImages();
+          }
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
   }
   onButtonBeforeHook(event: ButtonEvent) {
@@ -597,12 +671,12 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       const knamearr = event.image.modal.img.split('/');
       const kname = knamearr[(knamearr.length - 1)];
       const file = {
-                        id: event.image.id,
-                        keyName: kname,
-                        modal: {
-                            img: event.image.modal.img
-                        },
-                        plain: undefined
+        id: event.image.id,
+        keyName: kname,
+        modal: {
+          img: event.image.modal.img
+        },
+        plain: undefined
       };
       // console.log('delete lightbox', file);
       // this.confirmDelete(file, event.image.id);
@@ -626,10 +700,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   changePublicSearch(event) {
     const is_check = (event.checked) ? 'ENABLE' : 'DISABLE';
     this.provider_services.updatePublicSearch(is_check)
-    .subscribe(
-      data => {},
-      error => {}
-    );
+      .subscribe(
+        data => { },
+        error => { }
+      );
   }
 
   showBPrimary() {
@@ -639,7 +713,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       disableClose: true,
       autoFocus: true,
       data: {
-        type : 'edit',
+        type: 'edit',
         bprofile: this.bProfile
       }
     });
@@ -653,12 +727,14 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
   getLocationBadges() {
     this.provider_services.getLocationBadges()
-     .subscribe (data => {
-      this.loc_badges = data;
-      for (const badge of this.loc_badges) {
+      .subscribe(data => {
+        this.loc_badges = data;
+        for (const badge of this.loc_badges) {
+          console.log(this.loc_badges);
           this.badge_map_arr[badge.name] = badge.displayName;
-      }
-     });
+          console.log(this.badge_map_arr);
+        }
+      });
   }
   editLocation(badge?) {
     if (this.bProfile.baseLocation) {
@@ -671,9 +747,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           disableClose: true,
           autoFocus: false,
           data: {
-            location : this.base_loc,
+            location: this.base_loc,
             badges: this.loc_badges,
-            type : 'edit',
+            type: 'edit',
             // source: 'bprofile',
             source: 'waitlist',
             forbadge: (badge) ? true : false
@@ -685,8 +761,8 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
             if (result === 'reloadlist') {
               this.getBusinessProfile();
               this.getProviderLocations();
+            }
           }
-        }
         });
       }
     } else {
@@ -736,7 +812,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       data: {
         // location : this.base_loc,
         badges: this.loc_badges,
-        type : 'add',
+        type: 'add',
         source: 'bprofile'
       }
     });
@@ -745,8 +821,8 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         if (result === 'reloadlist') {
           this.getBusinessProfile();
           this.getProviderLocations();
+        }
       }
-    }
     });
   }
 
@@ -756,13 +832,13 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.loc_list = data;
         for (const loc of this.loc_list) {
-         // console.log('base', loc['place'], loc['baseLocation']);
+          // console.log('base', loc['place'], loc['baseLocation']);
           if (loc['baseLocation']) {
             this.base_loc = loc;
             // console.log(this.base_loc);
             this.mapurl = null;
             if (this.base_loc.lattitude !== '' &&
-            this.base_loc.longitude !== '') {
+              this.base_loc.longitude !== '') {
               this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.base_loc.lattitude + ',' + this.base_loc.longitude + '&key=' + projectConstants.GOOGLEAPIKEY);
             }
 
@@ -784,8 +860,8 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       disableClose: true,
       autoFocus: true,
       data: {
-        bprofile : this.bProfile,
-        editindx : peditindx,
+        bprofile: this.bProfile,
+        editindx: peditindx,
         curtype: typ
       }
     });
@@ -794,9 +870,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         if (result.message === 'reloadlist') {
           this.bProfile = result.data;
           this.setPrivacyDetails();
+        }
+        console.log(result);
       }
-      // console.log(result);
-    }
     });
   }
   editSocialmedia(key) {
@@ -810,16 +886,16 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       disableClose: true,
       autoFocus: true,
       data: {
-        bprofile : this.bProfile,
-        editkey : key || ''
+        bprofile: this.bProfile,
+        editkey: key || ''
       }
     });
     this.socialdialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getBusinessProfile();
+        }
       }
-    }
     });
   }
   deleteSocialmedia(sockey) {
@@ -827,16 +903,16 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     const post_data: any = [];
     for (let i = 0; i < this.social_arr.length; i++) {
       if (this.social_arr[i].Sockey !== sockey) {
-        post_data.push({'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl});
+        post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
       }
     }
-      const submit_data = {
-        'socialMedia': post_data
-      };
-      this.provider_services.updateSocialMediaLinks(submit_data)
+    const submit_data = {
+      'socialMedia': post_data
+    };
+    this.provider_services.updateSocialMediaLinks(submit_data)
       .subscribe(
         data => {
-            this.getBusinessProfile();
+          this.getBusinessProfile();
         },
         error => {
 
@@ -846,12 +922,12 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
   getSpecializations(domain, subdomain) {
     this.provider_services.getSpecializations(domain, subdomain)
-      .subscribe ( data => {
+      .subscribe(data => {
         this.specialization_arr = data;
       });
   }
   getSpecializationName(n) {
-    for ( let i = 0; i < this.specialization_arr.length; i++) {
+    for (let i = 0; i < this.specialization_arr.length; i++) {
       if (this.specialization_arr[i].name === n) {
         return this.specialization_arr[i].displayName;
       }
@@ -874,7 +950,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       disableClose: true,
       autoFocus: false,
       data: {
-        selspecializations : bprof,
+        selspecializations: bprof,
         specializations: special
       }
     });
@@ -883,10 +959,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         // console.log('returned', result);
         if (result['mod'] === 'reloadlist') {
           // this.getBusinessProfile();
-        //  console.log('org bprofile', this.bProfile);
-       //   console.log('returned bprofile', result['data']);
+          //  console.log('org bprofile', this.bProfile);
+          //   console.log('returned bprofile', result['data']);
           this.bProfile = result['data'];
-         // console.log('returned', result);
+          // console.log('returned', result);
 
           if (this.bProfile.specialization) {
             if (this.bProfile.specialization.length > 0) {
@@ -903,12 +979,12 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
   getSpokenLanguages() {
     this.provider_services.getSpokenLanguages()
-      .subscribe ( data => {
+      .subscribe(data => {
         this.languages_arr = data;
       });
   }
   getlanguageName(n) {
-    for ( let i = 0; i < this.languages_arr.length; i++) {
+    for (let i = 0; i < this.languages_arr.length; i++) {
       if (this.languages_arr[i].name === n) {
         return this.languages_arr[i].displayName;
       }
@@ -937,7 +1013,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       disableClose: true,
       autoFocus: false,
       data: {
-        sellanguages : bprof,
+        sellanguages: bprof,
         languagesSpoken: lang
       }
     });
@@ -946,14 +1022,14 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         // console.log('returned', result);
         if (result['mod'] === 'reloadlist') {
           // this.getBusinessProfile();
-        //  console.log('org bprofile', this.bProfile);
-       //   console.log('returned bprofile', result['data']);
+          //  console.log('org bprofile', this.bProfile);
+          //   console.log('returned bprofile', result['data']);
           this.bProfile = result['data'];
-         // console.log('returned', result);
+          // console.log('returned', result);
 
           if (this.bProfile.languagesSpoken) {
             if (this.bProfile.languagesSpoken.length > 0) {
-            this.normal_language_show = 3;
+              this.normal_language_show = 3;
             } else {
               this.normal_language_show = 2;
             }
@@ -973,75 +1049,75 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       disableClose: true,
       autoFocus: false,
       data: {
-        bprofile : this.bProfile,
-        type : 'edit'
+        bprofile: this.bProfile,
+        type: 'edit'
       }
     });
     this.gallerydialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result === 'reloadlist') {
           this.getGalleryImages();
+        }
       }
-    }
     });
   }
   // get the logo url for the provider
   getProviderLogo() {
     this.provider_services.getProviderLogo()
       .subscribe(
-      data => {
-        this.blogo = data;
-        const cnow = new Date();
-        const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
-        this.cacheavoider = dd;
-        // console.log('here logo', this.blogo);
-        let logo = '';
-        if (this.blogo[0]) {
-          logo = this.blogo[0].url;
-        } else {
-          logo = '';
+        data => {
+          this.blogo = data;
+          const cnow = new Date();
+          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+          this.cacheavoider = dd;
+          console.log('here logo', this.blogo);
+          let logo = '';
+          if (this.blogo[0]) {
+            logo = this.blogo[0].url;
+          } else {
+            logo = '';
+          }
+          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          // console.log('subsector bprofile', subsectorname);
+          // calling function which saves the business related details to show in the header
+          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo);
+
+          const pdata = { 'ttype': 'updateuserdetails' };
+          this.sharedfunctionobj.sendMessage(pdata);
+        },
+        error => {
+
         }
-        const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-        // console.log('subsector bprofile', subsectorname);
-        // calling function which saves the business related details to show in the header
-        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-         || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo );
-
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedfunctionobj.sendMessage(pdata);
-      },
-      error => {
-
-      }
       );
   }
   // Upload logo
   uploadLogo(passdata) {
     this.provider_services.uploadLogo(passdata)
       .subscribe(
-      data => {
-       // this.getProviderLogo();
-       this.blogo = [];
-       this.blogo[0] = data;
-        // console.log('after upload logo', this.blogo);
-       // calling function which saves the business related details to show in the header
+        data => {
+          // this.getProviderLogo();
+          this.blogo = [];
+          this.blogo[0] = data;
+          // console.log('after upload logo', this.blogo);
+          // calling function which saves the business related details to show in the header
 
-       const today = new Date();
-       const tday = today.toString().replace(/\s/g, '');
-       const blogo = this.blogo[0].url + '?' + tday;
-       const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-       // console.log('subsector bprofile', subsectorname);
-       this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-        || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '' );
+          const today = new Date();
+          const tday = today.toString().replace(/\s/g, '');
+          const blogo = this.blogo[0].url + '?' + tday;
+          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          // console.log('subsector bprofile', subsectorname);
+          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
 
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedfunctionobj.sendMessage(pdata);
-       /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
-      },
-      error => {
-        this.sharedfunctionobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-       // this.api_error = error.error;
-      }
+          const pdata = { 'ttype': 'updateuserdetails' };
+          this.sharedfunctionobj.sendMessage(pdata);
+          /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
+        },
+        error => {
+          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.api_error = error.error;
+        }
       );
   }
 
@@ -1050,21 +1126,21 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
   removeLogo(keyname) {
     this.provider_services.deleteLogo(keyname)
-      .subscribe (data => {
+      .subscribe(data => {
         // calling function which saves the business related details to show in the header
         this.blogo = [];
         this.profimg_exists = false;
         const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-          // console.log('subsector bprofile', subsectorname);
+        // console.log('subsector bprofile', subsectorname);
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-         || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
+          || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);
       },
-      error => {
+        error => {
 
-      });
+        });
   }
   // handles the image display on load and on change
   imageSelect(input, ev) {
@@ -1092,10 +1168,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       this.uploadLogo(submit_data);
     }
   }
-   // display logo
-   showimg() {
+  // display logo
+  showimg() {
     let logourl = '';
-     this.profimg_exists = false;
+    this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
       return this.item_pic.base64;
@@ -1123,9 +1199,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       disableClose: true,
       autoFocus: false,
       data: {
-        schedule_arr : this.schedule_arr,
+        schedule_arr: this.schedule_arr,
         bProfile: this.bProfile,
-        type : 'edit'
+        type: 'edit'
       }
     });
     this.scheduledialogRef.afterClosed().subscribe(result => {
@@ -1133,8 +1209,8 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         if (result === 'reloadlist') {
           this.getBusinessProfile();
           this.getProviderLocations();
+        }
       }
-    }
     });
   }
 
@@ -1152,11 +1228,11 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message' : msg,
-        'heading' : 'Delete Confirmation'
+        'message': msg,
+        'heading': 'Delete Confirmation'
       }
     });
 
@@ -1166,18 +1242,17 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   deletePrivacysettings(mod, indx) {
     const temparr = [];
     let post_itemdata: any = [];
     if (mod === 'phone') {
       // console.log('delete ', this.phonearr[indx]);
       for (let i = 0; i < this.phonearr.length; i++) {
-        if (i !== indx ) {
+        if (i !== indx) {
           temparr.push({
             'label': this.phonearr[i].label,
             'resource': 'Phoneno',
-           'instance': this.phonearr[i].number,
+            'instance': this.phonearr[i].number,
             'permission': this.phonearr[i].permission
           });
         }
@@ -1189,7 +1264,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     } else if (mod === 'email') {
       // console.log('delete ', this.emailarr[indx]);
       for (let i = 0; i < this.emailarr.length; i++) {
-        if (i !== indx ) {
+        if (i !== indx) {
           temparr.push({
             'label': this.emailarr[i].label,
             'resource': 'Email',
@@ -1209,13 +1284,13 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   UpdatePrimaryFields(pdata, indx) {
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
-      data => {
-        this.bProfile = data;
-        this.setPrivacyDetails();
-      },
-      error => {
-        // this.api_error = error.error;
-      }
+        data => {
+          this.bProfile = data;
+          this.setPrivacyDetails();
+        },
+        error => {
+          // this.api_error = error.error;
+        }
       );
   }
   /*getLicenseMetadata() {
@@ -1240,17 +1315,17 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       }
     }
   }*/
-  /*getLicenseDetails() {
+ getLicenseDetails() {
     this.provider_services.getLicenseDetails()
       .subscribe(data => {
         this.currentlicense_details = data;
-        // console.log('license', this.currentlicense_details);
-        this.getLicenseMetadata();
+        this.license_details = this.currentlicense_details;
+      //  console.log(this.currentlicense_details);
       });
-  }*/
+  }
   getTotalAllowedAdwordsCnt() {
     this.provider_services.getTotalAllowedAdwordsCnt()
-      .subscribe (data => {
+      .subscribe(data => {
         this.currentlicense_details = data;
         // console.log('this', this.currentlicense_details);
         this.adwordsmaxcount = this.currentlicense_details;
@@ -1261,11 +1336,11 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   getAdwords() {
     this.adwordshow_list = [];
     this.provider_services.getAdwords()
-    .subscribe(data => {
+      .subscribe(data => {
         this.adword_list = data;
         if (this.adword_list.length > 2) {
           for (let i = 0; i < 2; i++) {
-            this.adwordshow_list.push (this.adword_list[i]);
+            this.adwordshow_list.push(this.adword_list[i]);
           }
         } else {
           this.adwordshow_list = this.adword_list;
@@ -1274,7 +1349,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         // this.query_executed = true;
         this.adwords_maxremaining = this.adwordsmaxcount - this.adword_list.length;
         this.adwords_remaining = this.adword_list.length - 2;
-    });
+      });
   }
 
   openImageModalRow(image: Image) {
@@ -1289,17 +1364,17 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   getDomainVirtualFields() {
 
-        this.getVirtualFields(this.bProfile['serviceSector']['domain'])
-        .then(
-          data => {
-            // this.domain_questions = data;
-           // console.log(data);
-            this.domain_fields = data['fields'];
-            this.domain_questions = data['questions'] || [];
-            this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
-            // normal_domainfield_show = 4 // no data
-          }
-        );
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'])
+      .then(
+        data => {
+          // this.domain_questions = data;
+          // console.log(data);
+          this.domain_fields = data['fields'];
+          this.domain_questions = data['questions'] || [];
+          this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
+          // normal_domainfield_show = 4 // no data
+        }
+      );
 
   }
 
@@ -1339,9 +1414,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   }
 
-  deleteGridDynamicField(field_name,  type = 'domain_questions', index = 0) {
-    const pre_value =  (type === 'domain_questions') ?  JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
-    JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
+  deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
+    const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
+      JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
     // JSON.parse(JSON.stringify used to remove reference
 
     const grid_list = pre_value[field_name] || [];
@@ -1355,21 +1430,21 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
     if (type === 'domain_questions') {
 
-       this.onDomainFormSubmit(pre_value);
+      this.onDomainFormSubmit(pre_value);
 
     } else if (type === 'subdomain_questions') {
       this.onSubDomainFormSubmit(pre_value);
     }
   }
 
-  editDynamicField(field_name , type) {
+  editDynamicField(field_name, type) {
 
     const field = this.getFieldQuestion(field_name, type);
     this.showDynamicFieldPopup(field, type);
 
   }
 
-  showDynamicFieldPopup(field, type, grid_row_index= null ) {
+  showDynamicFieldPopup(field, type, grid_row_index = null) {
 
 
     this.dynamicdialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
@@ -1388,23 +1463,23 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       if (result) {
         if (result === 'reloadlist') {
           this.getBussinessProfileApi()
-          .then(
-            data => {
-              this.bProfile = data;
-              if (type === 'domain_questions') {
+            .then(
+              data => {
+                this.bProfile = data;
+                if (type === 'domain_questions') {
                   this.getDomainVirtualFields();
                   // commented bcoz update not effect without refresh
-                // this.domain_fields = this.setFieldValue(this.domain_fields, null);
-              } else {
-                 // commented bcoz update not effect without refresh
-                this.getSubDomainVirtualFields();
-                // this.subdomain_fields = this.setFieldValue(this.subdomain_fields, this.bProfile['serviceSubSector']['subDomain']);
-              }
-            },
-            error => {
+                  // this.domain_fields = this.setFieldValue(this.domain_fields, null);
+                } else {
+                  // commented bcoz update not effect without refresh
+                  this.getSubDomainVirtualFields();
+                  // this.subdomain_fields = this.setFieldValue(this.subdomain_fields, this.bProfile['serviceSubSector']['subDomain']);
+                }
+              },
+              error => {
 
-            }
-          );
+              }
+            );
         }
       }
     });
@@ -1413,16 +1488,16 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   getSubDomainVirtualFields() {
 
     this.getVirtualFields(this.bProfile['serviceSector']['domain'],
-    this.bProfile['serviceSubSector']['subDomain']).then(
-      data => {
-         // console.log(data);
+      this.bProfile['serviceSubSector']['subDomain']).then(
+        data => {
+          // console.log(data);
           this.subdomain_fields = data['fields'];
           // console.log('subdom fields', data['fields']);
           this.subdomain_questions = data['questions'] || [];
           this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
           // normal_subdomainfield_show = 4 // no data
-      }
-    );
+        }
+      );
 
   }
   getdispVal(typ, field) {
@@ -1436,16 +1511,16 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     let str = '';
     if (field.value !== undefined) {
       if (field.dataType === 'Enum') {
-        retfield = this.getFieldDetails(passArray , field.value, field.name);
+        retfield = this.getFieldDetails(passArray, field.value, field.name);
       } else if (field.dataType === 'EnumList') {
-          for (let i = 0; i < field.value.length; i++) {
-            if (str !== '') {
-              str += ', ';
-            }
-            // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
-            str += this.getFieldDetails(passArray , field.value[i], field.name);
+        for (let i = 0; i < field.value.length; i++) {
+          if (str !== '') {
+            str += ', ';
           }
-          retfield = str;
+          // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+          str += this.getFieldDetails(passArray, field.value[i], field.name);
+        }
+        retfield = str;
       } else {
         retfield = field.value;
       }
@@ -1456,20 +1531,20 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   getFieldDetails(passedArray, fieldvalue, fieldname) {
     let retfield;
     if (fieldvalue !== undefined) {
-        for (let i = 0; i < passedArray.length; i++) {
-          if (fieldname === passedArray[i].name) {
-            for (let j = 0; j < passedArray[i].enumeratedConstants.length; j++) {
-              if (fieldvalue === passedArray[i].enumeratedConstants[j].name) {
-                retfield = passedArray[i].enumeratedConstants[j].displayName;
-              }
+      for (let i = 0; i < passedArray.length; i++) {
+        if (fieldname === passedArray[i].name) {
+          for (let j = 0; j < passedArray[i].enumeratedConstants.length; j++) {
+            if (fieldvalue === passedArray[i].enumeratedConstants[j].name) {
+              retfield = passedArray[i].enumeratedConstants[j].displayName;
             }
           }
         }
+      }
     }
     return retfield;
   }
 
-  showValueswithComma (fld) {
+  showValueswithComma(fld) {
     let str = '';
     if (fld.value !== undefined) {
       // console.log('fldlen', fld.value.length);
@@ -1488,18 +1563,18 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     return new Promise(function (resolve, reject) {
 
       _this.provider_services.getVirtualFields(domain, subdomin)
-      .subscribe(
-        data => {
-          const set_data = [];
-          set_data['fields'] = _this.setFieldValue(data, subdomin);
-          set_data['questions'] = _this.service.getQuestions(set_data['fields']);
+        .subscribe(
+          data => {
+            const set_data = [];
+            set_data['fields'] = _this.setFieldValue(data, subdomin);
+            set_data['questions'] = _this.service.getQuestions(set_data['fields']);
 
-          resolve(set_data);
-        },
-        error => {
-          reject();
-        }
-      );
+            resolve(set_data);
+          },
+          error => {
+            reject();
+          }
+        );
 
     });
 
@@ -1507,32 +1582,32 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   setFieldValue(data, subdomin) {
 
-        let fields = [];
-        // console.log(data, subdomin);
-        if (subdomin) {
-          fields = (this.bProfile['subDomainVirtualFields'] &&
-          this.bProfile['subDomainVirtualFields'][0]) ?
-          this.bProfile['subDomainVirtualFields'][0][subdomin] : [];
-        } else {
-          fields = (this.bProfile['domainVirtualFields']) ?
-          this.bProfile['domainVirtualFields'] : [];
-        }
-        if (fields) {
-          for (const i in data) {
-            if (data[i]) {
-              const row = data[i];
-              if (fields[row.name]) {
-                data[i]['value'] = fields[row.name];
-              } else {
-                delete data[i]['value'] ;
-              }
-            }
+    let fields = [];
+    // console.log(data, subdomin);
+    if (subdomin) {
+      fields = (this.bProfile['subDomainVirtualFields'] &&
+        this.bProfile['subDomainVirtualFields'][0]) ?
+        this.bProfile['subDomainVirtualFields'][0][subdomin] : [];
+    } else {
+      fields = (this.bProfile['domainVirtualFields']) ?
+        this.bProfile['domainVirtualFields'] : [];
+    }
+    if (fields) {
+      for (const i in data) {
+        if (data[i]) {
+          const row = data[i];
+          if (fields[row.name]) {
+            data[i]['value'] = fields[row.name];
+          } else {
+            delete data[i]['value'];
           }
-
-          return data;
-        } else {
-          return data;
         }
+      }
+
+      return data;
+    } else {
+      return data;
+    }
   }
 
   getFieldQuestion(field_key = null, type = 'domain_questions') {
@@ -1542,7 +1617,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     if (field_key != null) {
       const field = [];
       for (const que of questions) {
-        if (que.key === field_key ) {
+        if (que.key === field_key) {
           field.push(que);
         }
       }
@@ -1554,29 +1629,29 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
     this.provider_services.updateDomainSubDomainFields(post_data,
       this.bProfile['serviceSector']['domain'])
-    .subscribe(
-      data => {
-        this.getBusinessProfile();
-      },
-      error => {
-        this.getBusinessProfile(); // refresh data ;
-      }
-    );
+      .subscribe(
+        data => {
+          this.getBusinessProfile();
+        },
+        error => {
+          this.getBusinessProfile(); // refresh data ;
+        }
+      );
 
   }
 
   onSubDomainFormSubmit(post_data) {
 
-      this.provider_services.updateDomainSubDomainFields(post_data, null,
-        this.bProfile['serviceSubSector']['subDomain'])
+    this.provider_services.updateDomainSubDomainFields(post_data, null,
+      this.bProfile['serviceSubSector']['subDomain'])
       .subscribe(
-          data => {
-            this.getBusinessProfile();
-          },
-          error => {
-            this.getBusinessProfile(); // refresh data ;
-          }
-        );
+        data => {
+          this.getBusinessProfile();
+        },
+        error => {
+          this.getBusinessProfile(); // refresh data ;
+        }
+      );
 
   }
 
@@ -1584,7 +1659,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     this.adworddialogRef = this.dialog.open(AddProviderBprofileSearchAdwordsComponent, {
       width: '50%',
       data: {
-        type : 'add'
+        type: 'add'
       },
       panelClass: ['commonpopupmainclass'],
       disableClose: true
@@ -1598,7 +1673,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
 
   buyAdwords() {
-      this.routerobj.navigate(['provider' , 'settings', 'license']);
+    this.routerobj.navigate(['provider', 'settings', 'license']);
   }
   show_privacyText(txt) {
     let rettxt = '';
@@ -1608,12 +1683,14 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       } else {
         rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
       }
-    } else {
-      rettxt = this.privacypermissiontxt[txt];
+    } else if (txt === 'all') {
+      rettxt = 'Public';
+    }
+    else {
+      rettxt = 'Private';
     }
     return rettxt;
   }
-
   learnmore_clicked(mod, e) {
     /* const dialogRef = this.dialog.open(LearnmoreComponent, {
            width: '50%',
@@ -1625,13 +1702,13 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
          });
          dialogRef.afterClosed().subscribe(result => {
          });*/
-         e.stopPropagation();
-         const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-         this.sharedfunctionobj.sendMessage(pdata);
-   }
-   getMode(mod) {
-     let moreOptions = {};
-     moreOptions = {'show_learnmore': true , 'scrollKey': 'bprofile', 'subKey': mod};
-     return moreOptions;
-   }
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.sharedfunctionobj.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
+    return moreOptions;
+  }
 }

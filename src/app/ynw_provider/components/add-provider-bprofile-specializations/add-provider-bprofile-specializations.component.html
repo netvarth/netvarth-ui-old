@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">Specializations<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title">{{specializations_cap}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
     <div class="specializationouter" *ngIf="specialization_arr.length > 0" >
         <div *ngFor = "let spec of specialization_arr">
@@ -6,12 +6,12 @@
         </div>
     </div>
     <div class="languagesouter" *ngIf="specialization_arr.length == 0 && query_done" >
-        Sorry no specializations found.
+        {{no_speci_found_cap}}
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-    <button (click)="saveSpecializations()" type="button" mat-button class="cs-btn bt1" [disabled]="specialization_arr.length==0">Save</button>
+    <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+    <button (click)="saveSpecializations()" type="button" mat-button class="cs-btn bt1" [disabled]="specialization_arr.length==0">{{save_btn_cap}}</button>
 </mat-dialog-actions> 
 
 <app-field-error-display [displayError]="true" *ngIf="api_error"

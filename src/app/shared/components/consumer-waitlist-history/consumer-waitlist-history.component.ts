@@ -26,6 +26,9 @@ export class ConsumerWaitlistHistoryComponent implements OnInit {
     params = {};
     domain;
 
+    back_to_cap = Messages.BACK_TO_CAP;
+    provider_details = Messages.PROVIDER_DETAILS_CAP;
+
   constructor(
     private router: Router, private dialog: MatDialog,
     private shared_functions: SharedFunctions,

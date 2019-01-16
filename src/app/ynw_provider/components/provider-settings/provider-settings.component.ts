@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import {HeaderComponent} from '../../../shared/modules/header/header.component';
+import { HeaderComponent } from '../../../shared/modules/header/header.component';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -9,16 +9,37 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
-
+import { Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
-    selector: 'app-provider-settings',
-    templateUrl: './provider-settings.component.html'
+  selector: 'app-provider-settings',
+  templateUrl: './provider-settings.component.html'
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy {
-
+  profile_cap = Messages.PROFILE_CAP;
+  search_cap = Messages.SEARCH_CAP;
+  public_search_cap = Messages.BPROFILE_PUBLIC_SEARCH_CAP;
+  services_cap = Messages.SERVICES_CAP;
+  service_window_cap = Messages.SERVICE_TIME_CAP;
+  invoice_cap = Messages.INVOICE_CAP;
+  waitlist_manage_cap = Messages.WAITLIST_MANAGE_CAP;
+  accept_online_cap = Messages.ACCEPT_ONLINE_CAP;
+  settings_cap = Messages.SETTINGS_CAP;
+  locations_cap = Messages.LOCATIONS_CAP;
+  license_cap = Messages.LICENSE_CAP;
+  add_on_cap = Messages.ADDON_CAP;
+  payment_cap = Messages.PAYMENTS_CAP;
+  accept_payments_cap = Messages.ACCEPT_PAYMENT_CAP;
+  payment_setting_cap = Messages.PAYMENT_SETTING_CAP;
+  tax_setting_cap = Messages.TAX_SETTING_CAP;
+  billing_cap = Messages.BILLING_CAP;
+  items_cap = Messages.ITEMS_CAP;
+  discount_cap = Messages.DISCOUNTS_CAP;
+  coupons_cap = Messages.COUPONS_CAP;
+  miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
+  non_work_cap = Messages.NON_WORKING_CAP;
   waitlist_status = false;
   waitlist_statusstr = 'Off';
   search_status = false;
@@ -27,12 +48,19 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   payment_settingsdet: any = [];
   payment_status = false;
   payment_statusstr = 'Off';
-  discount_list ;
+  discount_list;
   discount_count = 0;
   coupon_list;
+  jaldeecoupon_list = 0;
   coupon_count = 0;
   item_list;
   item_count = 0;
+  bProfile = null;
+  multipeLocationAllowed = false;
+  locName;
+  businessConfig: any = [];
+  loc_list: any = [];
+
   breadcrumbs = [
     {
       title: 'Settings'
@@ -47,13 +75,15 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
 
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
-  private routerobj: Router) {
+    private routerobj: Router,
+    private shared_services: SharedServices) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
   bprofileTooltip = '';
   waitlistTooltip = '';
   licenseTooltip = '';
   paymentTooltip = '';
+  jaldeeBankTooltip = '';
   billposTooltip = '';
 
   ngOnInit() {
@@ -61,6 +91,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
     this.paymentTooltip = this.shared_functions.getProjectMesssages('PAYMENT_TOOLTIP');
+   // this.jaldeeBankTooltip = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
     this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
     this.getLocationCount();
     this.getQueuesCount();
@@ -71,20 +102,21 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getDiscounts();
     this.getCoupons();
     this.getitems();
+    this.getBusinessConfiguration();
 
 
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
-    .subscribe(
-      data => {
-        if (data.ttype === 'online_checkin_status') {
-          this.getWaitlistMgr();
-        }
-      },
-      error => {
+      .subscribe(
+        data => {
+          if (data.ttype === 'online_checkin_status') {
+            this.getWaitlistMgr();
+          }
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
   }
 
@@ -95,15 +127,15 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
 
   getWaitlistMgr() {
     this.provider_services.getWaitlistMgr()
-    .subscribe(
-      data => {
+      .subscribe(
+        data => {
 
-        // this.waitlist_status = data['enabledWaitlist'] || false;
-        this.waitlist_status = data['onlineCheckIns'] || false;
-        this.waitlist_statusstr = (this.waitlist_status) ? 'On' : 'Off';
-      },
-      error => {}
-    );
+          // this.waitlist_status = data['enabledWaitlist'] || false;
+          this.waitlist_status = data['onlineCheckIns'] || false;
+          this.waitlist_statusstr = (this.waitlist_status) ? 'On' : 'Off';
+        },
+        error => { }
+      );
 
   }
 
@@ -111,29 +143,36 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
     // this.provider_services.setWaitlistMgrStatus(is_check)
     this.provider_services.setAcceptOnlineCheckin(is_check)
-    .subscribe(
-      data => {
-        this.getWaitlistMgr();
-      },
-      error => {
-        const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
-        this.getWaitlistMgr();
-      }
-    );
+      .subscribe(
+        data => {
+          this.getWaitlistMgr();
+        },
+        error => {
+          const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getWaitlistMgr();
+        }
+      );
   }
   getpaymentDetails() {
     this.provider_services.getPaymentSettings()
-    .subscribe(
-      data => {
-        this.payment_settings = data;
-        // console.log('paystatus', data);
-        this.payment_status = (data['onlinePayment']) || false;
-        this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
-      },
-      error => {
-        const snackBarRef =  this.shared_functions.openSnackBar (error, {'panelClass': 'snackbarerror'});
-      }
-    );
+      .subscribe(
+        data => {
+          this.payment_settings = data;
+          // console.log('paystatus', data);
+          this.payment_status = (data['onlinePayment']) || false;
+          this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
+          if(this.payment_settings.isJaldeeAccount){
+            this.jaldeeBankTooltip = "You are using Jaldee bank account";
+          }
+          else{
+            this.jaldeeBankTooltip = "You are using your own bank account";
+          }
+          
+        },
+        error => {
+          const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
 
   }
   handle_paymentstatus(event) {
@@ -152,7 +191,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     }
     if (this.payment_settings.hasOwnProperty('dcOrCcOrNb')) {
       dataHolder += ', "dcOrCcOrNb": ' + this.payment_settings['dcOrCcOrNb'];
-     // post_Data.dcOrCcOrNb = this.payment_settings['dcOrCcOrNb'];
+      // post_Data.dcOrCcOrNb = this.payment_settings['dcOrCcOrNb'];
     }
     if (this.payment_settings.hasOwnProperty('panCardNumber')) {
       dataHolder += ', "panCardNumber": ' + '"' + this.payment_settings['panCardNumber'] + '"';
@@ -172,7 +211,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     }
     if (this.payment_settings.hasOwnProperty('nameOnPanCard')) {
       dataHolder += ', "nameOnPanCard": ' + '"' + this.payment_settings['nameOnPanCard'] + '"';
-     // post_Data.nameOnPanCard = this.payment_settings['nameOnPanCard'];
+      // post_Data.nameOnPanCard = this.payment_settings['nameOnPanCard'];
     }
     if (this.payment_settings.hasOwnProperty('accountHolderName')) {
       dataHolder += ', "accountHolderName": ' + '"' + this.payment_settings['accountHolderName'] + '"';
@@ -184,7 +223,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     }
     if (this.payment_settings.hasOwnProperty('businessFilingStatus')) {
       dataHolder += ', "businessFilingStatus": ' + '"' + this.payment_settings['businessFilingStatus'] + '"';
-     // post_Data.businessFilingStatus = this.payment_settings['businessFilingStatus'];
+      // post_Data.businessFilingStatus = this.payment_settings['businessFilingStatus'];
     }
     if (this.payment_settings.hasOwnProperty('accountType')) {
       dataHolder += ', "accountType": ' + '"' + this.payment_settings['accountType'] + '"';
@@ -194,16 +233,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     console.log('post', JSON.parse(post_Data));
 
     this.provider_services.setPaymentSettings(JSON.parse(post_Data))
-    .subscribe(
-      data => {
-        this.getpaymentDetails();
-      },
-      error => {
-        const snackBarRef =  this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
-        console.log('reached here');
-        this.getpaymentDetails();
-      }
-    );
+      .subscribe(
+        data => {
+          this.getpaymentDetails();
+        },
+        error => {
+          const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          console.log('reached here');
+          this.getpaymentDetails();
+        }
+      );
   }
   getSearchstatus() {
     this.provider_services.getPublicSearch()
@@ -221,118 +260,151 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   handle_searchstatus() {
     const changeTostatus = (this.search_status === false) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
-      .subscribe (data => {
+      .subscribe(data => {
+        this.getSearchstatus();
+        this.getWaitlistMgr();
+      },
+        error => {
+          const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getSearchstatus();
           this.getWaitlistMgr();
-      },
-    error => {
-      const snackBarRef =  this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
-      this.getSearchstatus();
-      this.getWaitlistMgr();
-    });
+        });
   }
   redirecTo(mod) {
     switch (mod) {
       case 'bprofile':
         this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
-      break;
+        break;
       case 'locations':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'locations']);
-      break;
+        break;
       case 'services':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'services']);
-      break;
+        break;
       case 'queues':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
-      break;
+        break;
       case 'discounts':
         this.routerobj.navigate(['provider', 'settings', 'discounts']);
-      break;
+        break;
       case 'coupons':
         this.routerobj.navigate(['provider', 'settings', 'coupons']);
-      break;
+        break;
       case 'nonworking':
         this.routerobj.navigate(['provider', 'settings', 'holidays']);
-      break;
+        break;
       case 'items':
         this.routerobj.navigate(['provider', 'settings', 'items']);
-      break;
+        break;
       case 'waitlistmanager':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager']);
-      break;
+        break;
       case 'license':
-      this.routerobj.navigate(['provider', 'settings', 'license']);
-      break;
+        this.routerobj.navigate(['provider', 'settings', 'license']);
+        break;
       case 'paymentsettings':
         this.routerobj.navigate(['provider', 'settings', 'paymentsettings']);
-      break;
+        break;
       case 'taxsettings':
-        this.routerobj.navigate(['provider', 'settings', 'paymentsettings', {id: 1}]);
-      break;
+        this.routerobj.navigate(['provider', 'settings', 'paymentsettings', { id: 1 }]);
+        break;
     }
   }
 
   getLocationCount() {
     this.provider_services.getLocationCount()
-    .subscribe(
-      data => {
-        this.location_count = data;
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.location_count = data;
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
 
   getServiceCount() {
     this.provider_services.getServiceCount()
-    .subscribe(
-      data => {
-        this.service_count = data;
+      .subscribe(
+        data => {
+          this.service_count = data;
 
-      },
-      error => {
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
 
   getQueuesCount() {
 
     this.provider_services.getQueuesCount()
-    .subscribe(
-      data => {
-        this.queues_count = data;
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.queues_count = data;
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
 
   getDiscounts() {
     this.provider_services.getProviderDiscounts()
-    .subscribe(data => {
+      .subscribe(data => {
         this.discount_list = data;
         this.discount_count = this.discount_list.length;
-    });
+      });
   }
   getCoupons() {
     this.provider_services.getProviderCoupons()
-    .subscribe(data => {
+      .subscribe(data => {
         this.coupon_list = data;
         this.coupon_count = this.coupon_list.length;
-    });
+      });
   }
   getitems() {
     this.provider_services.getProviderItems()
       .subscribe(data => {
-          this.item_list = data;
-          this.item_count = this.item_list.length;
+        this.item_list = data;
+        this.item_count = this.item_list.length;
       });
   }
-
   reloadHandler() {
+  }
+  getBusinessConfiguration() {
+    this.shared_services.bussinessDomains()
+      .subscribe(data => {
+        this.businessConfig = data;
+        // console.log('config', this.businessConfig);
+        this.getBussinessProfile();
+      },
+        error => {
 
+        });
+  }
+  getBussinessProfile() {
+    this.provider_services.getBussinessProfile()
+      .subscribe(data => {
+        this.bProfile = data;
+        console.log('sector Id', this.bProfile);
+        for (let i = 0; i < this.businessConfig.length; i++) {
+          if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
+            if (this.businessConfig[i].multipleLocation) {
+              this.multipeLocationAllowed = true;
+            }
+            console.log(this.multipeLocationAllowed);
+            if (this.multipeLocationAllowed == true) {
+              this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
+            }
+            if (this.multipeLocationAllowed == false) {
+              this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
+            }
+          }
+        }
+      },
+        error => {
+
+        });
   }
 }

@@ -19,7 +19,7 @@ import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-wait
 import {
     AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
     DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
-  } from 'angular-modal-gallery';
+} from 'angular-modal-gallery';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
@@ -29,7 +29,19 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 })
 
 export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy {
-
+    price_cap = Messages.PRICES_CAP;
+    pre_pay_amt = Messages.PREPAYMENT_CAP;
+    tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
+    end_service_notify_cap = Messages.SERVICE_NOTIFY_CAP;
+    enable_cap = Messages.ENABLE_CAP;
+    disbale_cap = Messages.DISABLE_CAP;
+    serv_gallery = Messages.SERVICE_GALLERY_CAP;
+    havent_added_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+    add_now_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+    delete_btn = Messages.DELETE_BTN;
+    est_duration_cap = Messages.SERVICE_DURATION_CAP;
+    serv_status = Messages.SERVICE_STATUS_CAP;
+    photo_cap = Messages.SERVICE_PHOTO_CAP;
     service_id = null;
     service_data;
     queues: any = [];
@@ -39,21 +51,19 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
     badge_map_arr: any = [];
     breadcrumbs_init = [
         {
-          title: 'Settings',
-          url: '/provider/settings'
+            title: 'Settings',
+            url: '/provider/settings'
         },
         {
-          title: 'Waitlist Manager',
-          url: '/provider/settings/waitlist-manager'
+            title: 'Waitlist Manager',
+            url: '/provider/settings/waitlist-manager'
         },
         {
-          title: 'Services',
-          url: '/provider/settings/waitlist-manager/services'
+            title: 'Services',
+            url: '/provider/settings/waitlist-manager/services'
         }
-      ];
+    ];
     breadcrumbs = this.breadcrumbs_init;
-
-
     image_list: any = [];
     image_list_popup: Image[];
     image_showlist: any = [];
@@ -67,26 +77,26 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
     };
-      customButtonsFontAwesomeConfig: ButtonsConfig = {
+    customButtonsFontAwesomeConfig: ButtonsConfig = {
         visible: true,
-        strategy:  ButtonsStrategy.CUSTOM,
+        strategy: ButtonsStrategy.CUSTOM,
         buttons: [
-          {
-            className: 'fa fa-trash-o',
-            type: ButtonType.DELETE,
-            ariaLabel: 'custom plus aria label',
-            title: 'Delete',
-            fontSize: '20px'
-          },
-          {
-            className: 'inside close-image',
-            type: ButtonType.CLOSE,
-            ariaLabel: 'custom close aria label',
-            title: 'Close',
-            fontSize: '20px'
-          }
+            {
+                className: 'fa fa-trash-o',
+                type: ButtonType.DELETE,
+                ariaLabel: 'custom plus aria label',
+                title: 'Delete',
+                fontSize: '20px'
+            },
+            {
+                className: 'inside close-image',
+                type: ButtonType.CLOSE,
+                ariaLabel: 'custom close aria label',
+                title: 'Close',
+                fontSize: '20px'
+            }
         ]
-      };
+    };
 
     constructor(
         private provider_services: ProviderServices,
@@ -97,14 +107,12 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
         private activated_route: ActivatedRoute,
         private sanitizer: DomSanitizer,
         public provider_shared_functions: ProviderSharedFuctions) {
-
-            this.activated_route.params.subscribe(params => {
-                this.service_id = params.id;
-            });
-        }
+        this.activated_route.params.subscribe(params => {
+            this.service_id = params.id;
+        });
+    }
 
     ngOnInit() {
-
         if (this.service_id) {
             const user = this.shared_Functionsobj.getitemfromLocalStorage('ynw-user');
             if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
@@ -133,33 +141,33 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
 
     getServiceDetail() {
         this.provider_services.getServiceDetail(this.service_id)
-        .subscribe(
-            data => {
-                this.service_data = data;
-                this.setGalleryImages(this.service_data.servicegallery || []);
-                // remove multiple end breadcrumb on edit function
-                const breadcrumbs = [];
-                this.breadcrumbs_init.map((e) => {
-                   breadcrumbs.push(e);
-                });
-                breadcrumbs.push({
-                    title: this.service_data.name
-                });
-                this.breadcrumbs = breadcrumbs;
+            .subscribe(
+                data => {
+                    this.service_data = data;
+                    this.setGalleryImages(this.service_data.servicegallery || []);
+                    // remove multiple end breadcrumb on edit function
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: this.service_data.name
+                    });
+                    this.breadcrumbs = breadcrumbs;
 
-           },
-            error => {
-                this.goBack();
-            }
-        );
+                },
+                error => {
+                    this.goBack();
+                }
+            );
     }
 
     getGalleryImages() {
         this.provider_services.getServiceGallery(this.service_id)
-        .subscribe(
-            data => {
-                this.setGalleryImages(data || []);
-            });
+            .subscribe(
+                data => {
+                    this.setGalleryImages(data || []);
+                });
     }
 
     setGalleryImages(data) {
@@ -170,72 +178,65 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
         this.image_list_popup = [];
         this.image_remaining_cnt = 0;
         if (this.image_list.length > 0) {
-          for (let i = 0; i < this.image_list.length; i++) {
-              const imgobj = new Image(
-                i,
-                { // modal
-                  img: this.image_list[i].url,
-                  description: this.image_list[i].caption || ''
-                });
-              this.image_list_popup.push(imgobj);
+            for (let i = 0; i < this.image_list.length; i++) {
+                const imgobj = new Image(
+                    i,
+                    { // modal
+                        img: this.image_list[i].url,
+                        description: this.image_list[i].caption || ''
+                    });
+                this.image_list_popup.push(imgobj);
             }
         }
-
     }
 
     confirmDelete(file, indx) {
-    // console.log('delete', file);
-    const skey = this.image_list[indx].keyName;
-    file.keyName = skey;
-    // console.log('from confirm', file, indx);
-    this.shared_Functionsobj.confirmGalleryImageDelete(this, file);
+        // console.log('delete', file);
+        const skey = this.image_list[indx].keyName;
+        file.keyName = skey;
+        // console.log('from confirm', file, indx);
+        this.shared_Functionsobj.confirmGalleryImageDelete(this, file);
     }
 
     deleteImage(file, bypassgetgallery?) {
         this.provider_services.deleteServiceGalleryImage(this.service_id, file.keyName)
-        .subscribe(
-            data => {
-            // this.sharedfunctionobj.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_DELETE);
-            if (!bypassgetgallery) {
-                this.getGalleryImages();
-            }
-            },
-            error => {
+            .subscribe(
+                data => {
+                    // this.sharedfunctionobj.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_DELETE);
+                    if (!bypassgetgallery) {
+                        this.getGalleryImages();
+                    }
+                },
+                error => {
 
-            }
-        );
-
+                }
+            );
     }
 
     onButtonBeforeHook(event: ButtonEvent) {
-
         // console.log('onButtonBeforeHook ', event);
-
         if (!event || !event.button) {
             return;
         }
-
         // Invoked after a click on a button, but before that the related
         // action is applied.
         // For instance: this method will be invoked after a click
         // of 'close' button, but before that the modal gallery
         // will be really closed.
-
         // if (event.button.type === ButtonType.DELETE) {
         if (event.button.type === ButtonType.DELETE) {
             // remove the current image and reassign all other to the array of images
-
             // console.log('delete in app with images count ' + this.images.length);
             // console.log('event', event.image, event.image.id);
             const knamearr = event.image.modal.img.split('/');
             const kname = knamearr[(knamearr.length - 1)];
             const file = {
-                            id: event.image.id,
-                            keyName: kname,
-                            modal: {
-                                img: event.image.modal.img
-                            },
-                            plain: undefined
+                id: event.image.id,
+                keyName: kname,
+                modal: {
+                    img: event.image.modal.img
+                },
+                plain: undefined
             };
             // console.log('delete lightbox', file);
             // this.confirmDelete(file, event.image.id);
@@ -250,9 +251,9 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
             return;
         }
         // Invoked after both a click on a button and its related action.
-        }
+    }
 
-        onVisibleIndex(event: ImageModalEvent) {
+    onVisibleIndex(event: ImageModalEvent) {
         // console.log('onVisibleIndex action: ' + Action[event.action]);
         // console.log('onVisibleIndex result:' + event.result);
     }
@@ -264,88 +265,78 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
     }
 
     getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
+        return image ? images.indexOf(image) : -1;
     }
 
-    editService () {
-
+    editService() {
         if (!this.service_data.id) { return false; }
-
         this.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
             disableClose: true,
             autoFocus: true,
             data: {
-            type : 'edit',
-            service: this.service_data
+                type: 'edit',
+                service: this.service_data
             }
         });
-
         this.servicedialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
-            this.getServiceDetail();
+                this.getServiceDetail();
             }
         });
-
     }
 
-    editImageGallery () {
-
+    editImageGallery() {
         if (!this.service_data.id) { return false; }
-
         this.editgaldialogRef = this.dialog.open(AddProviderWaitlistServiceGalleryComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass'],
             disableClose: true,
             data: {
-            type : 'edit',
-            service_id: this.service_data.id
+                type: 'edit',
+                service_id: this.service_data.id
             }
         });
-
         this.editgaldialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
-            this.getGalleryImages();
+                this.getGalleryImages();
             }
         });
-
     }
 
     goBack() {
-        this.router.navigate(['provider', 'settings' , 'waitlist-manager',
-        'services']);
+        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+            'services']);
     }
 
     changeServiceStatus(service) {
-      this.provider_shared_functions.changeServiceStatus(this, service);
+        this.provider_shared_functions.changeServiceStatus(this, service);
     }
 
     disableService(service, msg) {
-      this.provider_services.disableService(service.id)
-      .subscribe(
-        data => {
-          this.getServiceDetail();
-          const snackBarRef =  this.shared_Functionsobj.openSnackBar (msg);
-        },
-        error => {
-          const snackBarRef =  this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
-          this.getServiceDetail();
-        });
-
+        this.provider_services.disableService(service.id)
+            .subscribe(
+                data => {
+                    this.getServiceDetail();
+                    const snackBarRef = this.shared_Functionsobj.openSnackBar(msg);
+                },
+                error => {
+                    const snackBarRef = this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getServiceDetail();
+                });
     }
 
     enableService(service, msg) {
-      this.provider_services.enableService(service.id)
-      .subscribe(
-        data => {
-          this.getServiceDetail();
-          const snackBarRef =  this.shared_Functionsobj.openSnackBar (msg);
-        },
-        error => {
-          const snackBarRef =  this.shared_Functionsobj.openSnackBar (error, {'panelClass': 'snackbarerror'});
-          this.getServiceDetail();
-        });
+        this.provider_services.enableService(service.id)
+            .subscribe(
+                data => {
+                    this.getServiceDetail();
+                    const snackBarRef = this.shared_Functionsobj.openSnackBar(msg);
+                },
+                error => {
+                    const snackBarRef = this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getServiceDetail();
+                });
     }
-
 }

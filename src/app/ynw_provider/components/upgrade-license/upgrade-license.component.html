@@ -1,17 +1,18 @@
 <form [formGroup]="amForm"  novalidate
-(ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">License Package
+(ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
+<h1 class="mat-dialog-title">{{upgrade_lic_cap}}
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
 </h1>
 <mat-dialog-content>
-  <div class="form-group" *ngIf="obtainedUpgradable && upgradablepackages.length>0">
-    <label class="col-form-label" for="displayName">License Package *</label>
+  <div class="ngn-pt-10">
+      <label class="col-form-label" for="displayName">{{curr_lic_cap}}: <strong>{{current_license_pkg}}</strong></label>
+  </div>
+  <div class="form-group col-md-8 no-padding" *ngIf="obtainedUpgradable && upgradablepackages.length>0">
     <mat-form-field>
-      <mat-select #license_selpackage2 formControlName="license_selpackage" *ngIf="upgradablepackages"
-      (selectionChange)="licensepackage_Select(license_selpackage2.value)">
-      <mat-option [value]="''">- Select One -</mat-option>
+      <mat-select #license_selpackage formControlName="license_selpackage" *ngIf="upgradablepackages"
+      (selectionChange)="licensepackage_Select(license_selpackage.value)" placeholder="{{lic_package_cap}}">
         <mat-option *ngFor="let package of upgradablepackages"
         [value]="package.pkgId">
           {{package.displayName}}
@@ -23,13 +24,13 @@
     </app-field-error-display>
   </div>
   <div *ngIf="obtainedUpgradable && upgradablepackages.length==0">
-      Sorry No upgradable packages found.
+      {{no_up_pack_found_cap}}
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+     <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
     <button  type="submit" mat-button [disabled]="!amForm.valid"
-    *ngIf="obtainedUpgradable && upgradablepackages.length>0" class="cs-btn bt1">Save</button>
+    *ngIf="obtainedUpgradable && upgradablepackages.length>0" class="cs-btn bt1">{{save_btn_cap}}</button>
 </mat-dialog-actions>
 </form>
 

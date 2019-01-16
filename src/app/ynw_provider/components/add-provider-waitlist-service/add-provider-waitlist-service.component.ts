@@ -23,6 +23,22 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 export class AddProviderWaitlistServiceComponent implements OnInit {
 
+  service_cap = Messages.PRO_SERVICE_CAP;
+  description_cap = Messages.DESCRIPTION_CAP;
+price_cap = Messages.PRICE_CAP;
+service_name_cap = Messages.SERVICE_NAME_CAP;
+est_duration_cap = Messages.EST_DURATION_CAP;
+enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
+prepayment_cap = Messages.PREPAYMENT_CAP;
+tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
+service_notify_cap = Messages.SERVICE_NOTIFY_CAP;
+push_message_cap = Messages.PUSH_MESSAGE_CAP;
+service_email_cap = Messages.SERVICE_EMAIL_CAP;
+gallery_cap = Messages.GALLERY_CAP;
+select_image_cap = Messages.SELECT_IMAGE_CAP;
+go_to_service_cap = Messages.GO_TO_SERVICE_CAP;
+delete_btn = Messages.DELETE_BTN;
+cancel_btn = Messages.CANCEL_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -53,9 +69,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   disable_price = true;
   taxDetails: any = [];
   taxpercentage = 0;
-  savedisabled = false;
+ savedisabled = false;
   canceldisabled = false;
-
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -107,7 +122,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         .subscribe (data => {
             this.taxDetails = data;
             this.taxpercentage = this.taxDetails.taxPercentage;
-            // console.log('tax percentage', this.taxpercentage);
+            console.log('tax percentage', this.taxpercentage);
         },
     error => {
 
@@ -213,7 +228,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.provider_services.createService(post_data)
     .subscribe(
       data => {
-        this.savedisabled = false;
+       this.savedisabled = false;
         this.button_title = holdstat;
         const service_id = data;
         this.service = [];
@@ -228,7 +243,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       },
       error => {
         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-        this.savedisabled = false;
+         this.savedisabled = false;
         this.button_title = holdstat;
       }
     );
@@ -336,15 +351,14 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   uploadApi(submit_data, from) {
-    this.savedisabled = true;
+ this.savedisabled = true;
     const holdstat = this.button_title;
     this.button_title = 'Uploading ...';
     this.canceldisabled = true;
-
     this.provider_services.uploadServiceGallery(this.service.id, submit_data)
     .subscribe(
       data => {
-        this.savedisabled = false;
+       this.savedisabled = false;
         this.canceldisabled = false;
         this.button_title = holdstat;
         this.getGalleryImages();
@@ -357,7 +371,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         }
       },
       error => {
-        this.savedisabled = false;
+this.savedisabled = false;
         this.canceldisabled = false;
         this.button_title = holdstat;
         this.api_error =  this.shared_functions.getProjectErrorMesssages(error);
@@ -454,7 +468,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.provider_services.getPaymentSettings()
     .subscribe(
       data => {
-        // console.log('paysettings', data);
         this.payment_settings = data;
         this.payment_loading = false;
         if (!this.payment_settings.onlinePayment) {

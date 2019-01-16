@@ -18,6 +18,16 @@ export class ExistingCheckinComponent implements OnInit {
   api_error = null;
   api_success = null;
 
+  your_cap = Messages.YOUR_CAP;
+  at_cap = Messages.AT_CAP
+  service_cap = Messages.SERVICE_CAP;
+  for_cap = Messages.SERVICE_CAP;
+  scheduled_on_cap = Messages.SCHEDULED_ON_CAP;
+  mins_cap = Messages.MIN_CAP;
+  no_cap = Messages.NO_CAP;
+  exists_at_cap = Messages.EXISTS_AT;
+  close_btn_cap = Messages.CLOSE_BTN;
+ 
   user_id = null;
   uuid = null;
   message = '';

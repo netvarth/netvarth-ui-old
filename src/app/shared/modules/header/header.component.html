@@ -14,8 +14,8 @@
 
             <div class="lgo col-md-3"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
             <div class="tc1 col-md-3 ml-auto" *ngIf="!shared_functions.checkLogin()">
-                <div class="topsignouter" [matTooltipClass] = "tooltipcls" [matTooltip]="custsignTooltip"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span></div>
-                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">Are you a Service Provider? <span [matTooltipClass] = "tooltipcls" [matTooltip]="provsignTooltip" (click)="doLogin('provider')">Click Here</span></div>
+                <div class="topsignouter" [matTooltipClass] = "tooltipcls" [matTooltip]="custsignTooltip"><span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</span> / <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">{{join_cap}}</span></div>
+                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">{{are_you_ser_pro}} <span [matTooltipClass] = "tooltipcls" [matTooltip]="provsignTooltip" (click)="doLogin('provider')">{{click_here_cap}}</span></div>
             </div>
             <div class="lg-opt ml-auto" *ngIf="provider_loggedin">
                 <div class="bnps" *ngIf="headercls=='dashb' || headercls=='itl-steps'">
@@ -48,32 +48,32 @@
                         <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="redirectto('profile')">
                                 <i class="icon-profile"></i>
-                                <span>User Profile</span>
+                                <span>{{user_profile}}</span>
                         </button>
                         <button mat-menu-item (click)="redirectto('change-password')">
                             <i class="icon-password"></i>
-                            <span>Change Password</span>
+                            <span>{{change_password}}</span>
                         </button>
                         <button mat-menu-item (click)="redirectto('change-mobile')">
                             <i class="icon-mobile"></i>
-                            <span>Change Mobile</span>
+                            <span>{{change_mobile}}</span>
                         </button>
-                        <button mat-menu-item (click)="redirectto('change-email')">
+                        <!-- <button mat-menu-item (click)="redirectto('change-email')">
                             <i class="icon-inbox"></i>
-                            <span>Add or Change Email</span>
-                        </button>
+                            <span>{{add_change_email}}</span>
+                        </button> -->
                         <button mat-menu-item (click)="switchtoConsumer()" *ngIf="isprovider">
                             <i class="icon-switch"></i>
-                            <span>Switch to Consumer</span>
+                            <span>{{switch_to_consumer}}</span>
                         </button>
                         <button mat-menu-item (click)="doLogout()">
                             <i class="icon-logout"></i>
-                            <span>Logout</span>
+                            <span>{{logout_cap}}</span>
                         </button>
                         </mat-menu>
                     </span>
                     <span (click)="upgradeMembership()" class="membership"
-                    *ngIf="headercls!='itl-steps' && isprovider && upgradablepackages.length > 0"><i class="icon-membership"></i> Upgrade <span>Membership</span></span>
+                    *ngIf="headercls!='itl-steps' && isprovider && upgradablepackages.length > 0"><i class="icon-membership"></i> {{upgrade_cap}} <span>{{membership_cap}}</span></span>
                 </div>
                 <div class="userdt" (click)="showHidemobileSubMenu()">
                     <div class="usrbx">
@@ -89,7 +89,7 @@
             <div class="row">
                 <div class="menu-outer">
                     <div class="outer">
-                        <span class="close" (click)="showHidemobileSubMenu()"><span>Close</span></span>
+                        <span class="close" (click)="showHidemobileSubMenu()"><span>{{close_btn}}</span></span>
                         
                         <div class="sect1">
                             <div class="sl1">
@@ -108,12 +108,12 @@
                         </div>
                         <div class="sect3">
                             <ul class="menulinks">
-                                <li (click)="redirectto('profile')"><i class="icon-profile"></i> User Profile</li>
-                                <li (click)="redirectto('change-password')"><i class="icon-password"></i> Change Password</li>
-                                <li (click)="redirectto('change-mobile')"><i class="icon-mobile"></i> Change Mobile</li>
-                                <li (click)="redirectto('change-email')"><i class="icon-inbox"></i> Add or Change Email</li>
-                                <li (click)="switchtoConsumer()" *ngIf="isprovider"><i class="icon-switch"></i> Switch to Consumer</li>
-                                <li (click)="doLogout()"><i class="icon-logout"></i> Logout</li>
+                                <li (click)="redirectto('profile')"><i class="icon-profile"></i> {{user_profile}}</li>
+                                <li (click)="redirectto('change-password')"><i class="icon-password"></i> {{change_password}}</li>
+                                <li (click)="redirectto('change-mobile')"><i class="icon-mobile"></i> {{change_mobile}}</li>
+                                <!-- <li (click)="redirectto('change-email')"><i class="icon-inbox"></i> {{add_change_email}}</li> -->
+                                <li (click)="switchtoConsumer()" *ngIf="isprovider"><i class="icon-switch"></i> {{switch_to_consumer}}</li>
+                                <li (click)="doLogout()"><i class="icon-logout"></i> {{logout_cap}}</li>
                             </ul>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                 <div class="tp-r">
                     <div class="tc1 ml-auto">
                         <div class="topsignouter">
-                        <span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">Sign in</span> <span *ngIf="!shared_functions.checkLogin()">/</span> <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">Join</span>
+                        <span class="sgn" (click)="doLogin('consumer')" *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</span> <span *ngIf="!shared_functions.checkLogin()">/</span> <span class="jn" (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">{{join_cap}}</span>
                         <ng-container *ngIf="ctype=='consumer'">
                             <!-- <div class="bnps" *ngIf="headercls=='dashb'"> -->
                             <div class="bnps">
@@ -155,45 +155,45 @@
                                     <mat-menu #menu="matMenu">
                                     <button mat-menu-item (click)="redirectto('dashboard')">
                                             <i class="icon-dashboard"></i>
-                                            <span>Dashboard</span>
+                                            <span>{{dashboard_cap}}</span>
                                     </button>    
                                     <button mat-menu-item (click)="redirectto('profile')">
                                             <i class="icon-profile"></i>
-                                            <span>User Profile</span>
+                                            <span>{{user_profile}}</span>
                                     </button>
                                     <button mat-menu-item (click)="redirectto('change-password')">
                                         <i class="icon-password"></i>
-                                        <span>Change Password</span>
+                                        <span>{{change_password}}</span>
                                     </button>
                                     <button mat-menu-item (click)="redirectto('change-mobile')">
                                         <i class="icon-mobile"></i>
-                                        <span>Change Mobile</span>
+                                        <span>{{change_mobile}}</span>
                                     </button>
-                                    <button mat-menu-item (click)="redirectto('change-email')">
+                                    <!-- <button mat-menu-item (click)="redirectto('change-email')">
                                         <i class="icon-inbox"></i>
-                                        <span>Add or Change Email</span>
-                                    </button>
+                                        <span>{{add_change_email}}</span>
+                                    </button> -->
                                     <button mat-menu-item (click)="redirectto('members')">
                                         <i class="icon-members"></i>
-                                        <span>Family Members</span>
+                                        <span>{{family_members}}</span>
                                     </button>
                                     <button mat-menu-item (click)="switchtoProvider()" *ngIf="!isprovider && provider_loggedin">
                                         <i class="icon-switch"></i>
-                                        <span>Switch to Provider</span>
+                                        <span>{{switch_to_provider}}</span>
                                     </button>
                                     <button mat-menu-item (click)="createProviderAccount()" *ngIf="!isprovider && consumer_loggedin">
                                         <i class="icon-createprovider"></i>
-                                        <span>Create a Provider Account</span>
+                                        <span>{{create_pro_accnt}}</span>
                                     </button>
                                     <button mat-menu-item (click)="doLogout()">
                                         <i class="icon-logout"></i>
-                                        <span>Logout</span>
+                                        <span>{{logout_cap}}</span>
                                     </button>
                                     </mat-menu>
                                 </span>
                         </div>
                     </div>
-                        <div class="isprovidertop ng-star-inserted" *ngIf="!shared_functions.checkLogin()">Are you a Service Provider? <span (click)="doLogin('provider')">Click Here</span></div>
+                        <div class="isprovidertop ng-star-inserted" *ngIf="!shared_functions.checkLogin()">{{are_you_ser_pro}} <span (click)="doLogin('provider')">{{click_here_cap}}</span></div>
                     </div>
 
                     <app-search [showopennow]="0" [searchfields]="searchfields" [includedfrom]="'consumer_header'" [passedRefine]="passedRefine" (searchclick)="handlesearchClick($event)" [passedDomain]="passedDomain" [passedkwdet]="passedkwdet"></app-search>

@@ -1,16 +1,16 @@
-<h1 class="mat-dialog-title">Manage Privacy
+<h1 class="mat-dialog-title">{{manage_privacy_caption}}
   <button #queue mat-dialog-close class="modal_close">
       <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
 </h1>
 <mat-dialog-content>
   <div class="manage-privacy">
-      <mat-checkbox [(ngModel)]="manage_privacy_values.revealPhoneNumber">Reveal Phone number</mat-checkbox>
+      <mat-checkbox [(ngModel)]="manage_privacy_values.revealPhoneNumber">{{revealph_caption}}</mat-checkbox>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-    <button mat-button class="cs-btn bt1" (click)="providerManagePrivacy()">Save</button>
+<button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_caption}}</button>
+    <button mat-button class="cs-btn bt1" (click)="providerManagePrivacy()">{{save_btn_caption}}</button>
 </mat-dialog-actions>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

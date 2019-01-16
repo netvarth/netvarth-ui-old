@@ -90,6 +90,7 @@ import { ProviderCustomersComponent } from './components/provider-customers/prov
 import { AddProviderCustomerComponent } from './components/add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from './components/search-provider-customer/search-provider-customer.component';
 import { ProviderRefundComponent } from './components/provider-refund/provider-refund.component';
+import { ProviderAddonAuditlogsComponent } from './components/provider-addon-auditlogs/provider-addon-auditlogs.component';
 
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -117,6 +118,9 @@ import {Nl2BrPipeModule} from 'nl2br-pipe';
 
 import 'hammerjs';
 import 'mousetrap';
+import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
+import { ViewReportComponent } from './components/view-report/view-report.component';
+import { ProviderJcouponDetailsComponent } from './components/provider-jcoupon-details/provider-jcoupon-details.component';
 
 @NgModule({
     imports: [
@@ -158,6 +162,7 @@ import 'mousetrap';
         UpgradeLicenseComponent,
         AddproviderAddonComponent,
         ProviderAuditLogComponent,
+        ProviderAddonAuditlogsComponent,
         AddProviderDiscountsComponent,
         AddProviderCouponsComponent,
         ProviderNonworkingdaysComponent,
@@ -211,7 +216,10 @@ import 'mousetrap';
         ProviderCustomersComponent,
         AddProviderCustomerComponent,
         SearchProviderCustomerComponent,
-        ProviderRefundComponent
+        ProviderRefundComponent,
+        ProviderReimburseReportComponent,
+        ViewReportComponent,
+        ProviderJcouponDetailsComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -245,6 +253,7 @@ import 'mousetrap';
       AddProviderItemImageComponent,
       ProviderWaitlistCheckInConsumerNoteComponent,
       ProviderAuditLogComponent,
+      ProviderAddonAuditlogsComponent,
       ProviderLicenceInvoiceDetailComponent,
       AddProviderWaitlistCheckInProviderNoteComponent,
       AddProviderWaitlistCheckInBillComponent,
@@ -275,6 +284,5 @@ import 'mousetrap';
 export class ProviderModule {
 
 }
-
 
 

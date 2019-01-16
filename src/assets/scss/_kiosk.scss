@@ -896,7 +896,7 @@
                                         }
                                     }
                                 }
-                                
+                                                                
                                 @include respond-to(ynw-767) {
                                     flex-direction: column;
                                     align-items: flex-start;
@@ -1123,7 +1123,7 @@
                         .mat-form-field {
                             width: 100%;
 
-                            .mat-input-wrapper, .mat-form-field-wrapper {
+                            .mat-form-field-wrapper {
                                 padding: 0;
                                 margin: 0;
 
@@ -1131,7 +1131,7 @@
                                     color: $cc-red;
                                 }
 
-                                .mat-input-infix, .mat-form-field-infix {
+                                .mat-form-field-infix {
                                     margin: 0;
                                     padding: 0;
                                     border: none;
@@ -1186,7 +1186,7 @@
                                     }
                                 }
 
-                                .mat-input-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                                .mat-form-field-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
                                     display: none;
                                 }
                             }

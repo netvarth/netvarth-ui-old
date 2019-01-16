@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title"> Service Gallery <button mat-dialog-close class="modal_close" [disabled]="canceldisabled"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title"> {{service_gallery_cap}} <button mat-dialog-close class="modal_close" [disabled]="canceldisabled"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 
 <mat-dialog-content>
 
@@ -10,7 +10,7 @@
         <img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]">
       </div>
       <div class="gal_caption"><input type="text" matInput [(ngModel)]="item_pic.caption[i]" placeholder="Caption" autocomplete="off"></div>
-      <div class="gal_action" *ngIf="!canceldisabled">
+      <div class="gal_action"  *ngIf="!canceldisabled">
           <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
               <mat-icon>more_vert</mat-icon>
           </button>
@@ -18,7 +18,7 @@
               <button type="button" mat-menu-item (click)="deleteTempImage(i)">
                   <!-- <mat-icon>delete</mat-icon> -->
                   <i class="icon-delete"></i>
-                  <span >Delete</span>
+                  <span >{{delete_btn}}</span>
                 </button>
             </mat-menu>
       </div>
@@ -27,8 +27,8 @@
     </ul>
   </div>
 
-  <div class="upload-doc" (click)="filed.click()" *ngIf="!canceldisabled">
-    <label class="col-form-label">Click here to select the image files</label>
+  <div class="upload-doc" (click)="filed.click()"  *ngIf="!canceldisabled">
+    <label class="col-form-label">{{select_image_cap}}</label>
     <span class="select-wrapper ">
       <input type="file"  multiple name="image_src" id="image_src"  accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #filed (change)="imageSelect(filed,$event)">
     </span>
@@ -36,7 +36,7 @@
 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button  type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled">Cancel</button>
+  <button  type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled">{{cancel_btn}}</button>
   <button (click)="saveImages()" *ngIf="item_pic.files.length >0" mat-button class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>
 </mat-dialog-actions>
 <app-field-error-display [displayError]="(error_list.length > 0) ? true : false"  [errorMsg]="error_msg">

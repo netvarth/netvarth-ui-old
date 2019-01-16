@@ -136,7 +136,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     submit_data = this.checkEnumList(this.domain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.domain_questions, submit_data);
     const post_data = this.setPostData(submit_data);
-    console.log('domainpostdata', post_data);
+    // console.log(post_data, this.bProfile['domainVirtualFields']);
     this.provider_services.updateDomainSubDomainFields(post_data, this.bProfile['serviceSector']['domain'])
     .subscribe(
       data => {
@@ -155,7 +155,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     submit_data = this.checkEnumList(this.subdomain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.subdomain_questions, submit_data);
     const post_data = this.setPostData(submit_data);
-    // console.log('subdomainpostdata', post_data);
+        // console.log('subdomainpostdata', post_data);
     const hold_data = post_data; // additional checking to avoid blank arrays related issues reported in bug
     Object.keys(hold_data).forEach(key => {
       if (typeof hold_data[key] === 'object' ) {
@@ -171,6 +171,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     });
    //  console.log('subdomainpostdata- After', post_data);
 
+    
    // console.log(post_data, this.bProfile['subDomainVirtualFields']);
     this.provider_services.updateDomainSubDomainFields(post_data, null,
       this.bProfile['serviceSubSector']['subDomain'])

@@ -22,6 +22,11 @@ import { Observable ,  Subscription } from 'rxjs';
 
 export class ProviderBprofileSearchGalleryComponent implements OnInit {
 
+  gallery_cap = Messages.SEARCH_GALLERY_CAP;
+  delete_btn_cap = Messages.DELETE_BTN;
+  select_img_file_cap = Messages.SEARCH_GALLERY_SELEC_IMG_FILE_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN
+
   item_pic = {
     files: [],
     base64: [],

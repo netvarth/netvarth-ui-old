@@ -68,6 +68,22 @@ import { LearnmoreCustomerComponent } from './learnmore-customer/learnmore-custo
 import { LearnmoreKioskComponent } from './learnmore-kiosk/learnmore-kiosk.component';
 import { LearnmoreLicenseComponent } from './learnmore-license/learnmore-license.component';
 import { LearnmoreAdjustDelayComponent } from './learnmore-adjustdelay/learnmore-adjustdelay.component';
+import { LearnmoreMiscellaneousComponent } from './learnmore-miscellaneous/learnmore-miscellaneous.component';
+import { HealthcareMiscellaneousComponent } from './learnmore-miscellaneous/healthcare-miscellaneous/healthcare-miscellaneous.component';
+import { PersonalcareMiscellaneousComponent } from './learnmore-miscellaneous/personalcare-miscellaneous/personalcare-miscellaneous.component';
+import { ProfessionalMiscellaneousComponent } from './learnmore-miscellaneous/professional-miscellaneous/professional-miscellaneous.component';
+import { LearnmoreDashboardComponent } from './learnmore-dashboard/learnmore-dashboard.component';
+import { HealthcareDashboardComponent } from './learnmore-dashboard/healthcare-dashboard/healthcare-dashboard.component';
+import { PersonalcareDashboardComponent } from './learnmore-dashboard/personalcare-dashboard/personalcare-dashboard.component';
+import { ProfessionalDashboardComponent } from './learnmore-dashboard/professional-dashboard/professional-dashboard.component';
+import { LearnmorePaymentsettingsComponent } from './learnmore-paymentsettings/learnmore-paymentsettings.component';
+import { HealthcarePaymentsettingsComponent } from './learnmore-paymentsettings/healthcare-paymentsettings/healthcare-paymentsettings.component';
+import { PersonalcarePaymentsettingsComponent } from './learnmore-paymentsettings/personalcare-paymentsettings/personalcare-paymentsettings.component';
+import { ProfessionalPaymentsettingsComponent } from './learnmore-paymentsettings/professional-paymentsettings/professional-paymentsettings.component';
+import { LearnmoreBillingComponent } from './learnmore-billing/learnmore-billing.component';
+import { HealthcareBillingComponent } from './learnmore-billing/healthcare-billing/healthcare-billing.component';
+import { PersonalcareBillingComponent } from './learnmore-billing/personalcare-billing/personalcare-billing.component';
+import { ProfessionalBillingComponent } from './learnmore-billing/professional-billing/professional-billing.component';
 
 @NgModule({
     imports: [
@@ -135,12 +151,34 @@ import { LearnmoreAdjustDelayComponent } from './learnmore-adjustdelay/learnmore
             ReligiousWaitlistmanagerComponent,
             AutomobileWaitlistmanagerComponent,
 
+            HealthcareMiscellaneousComponent,
+            PersonalcareMiscellaneousComponent,
+            ProfessionalMiscellaneousComponent,
+
+            HealthcareDashboardComponent,
+            PersonalcareDashboardComponent,
+            ProfessionalDashboardComponent,
+
+            HealthcarePaymentsettingsComponent,
+            PersonalcarePaymentsettingsComponent,
+            ProfessionalPaymentsettingsComponent,
+
+            HealthcareBillingComponent,
+            PersonalcareBillingComponent,
+            ProfessionalBillingComponent,
+
+
         LearnmoreWaitlistManagerComponent,
         LearnmoreCheckinComponent,
         LearnmoreCustomerComponent,
         LearnmoreKioskComponent,
         LearnmoreLicenseComponent,
-        LearnmoreAdjustDelayComponent
+        LearnmoreAdjustDelayComponent,
+        LearnmoreMiscellaneousComponent,
+        LearnmoreDashboardComponent,
+        LearnmorePaymentsettingsComponent,
+        LearnmoreBillingComponent
+       
     ],
     entryComponents: [
         LearnmoreComponent

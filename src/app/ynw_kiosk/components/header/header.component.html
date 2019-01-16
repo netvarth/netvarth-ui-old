@@ -3,8 +3,8 @@
         <img src="assets/images/logo.png" alt="">
     </div>
     <div class="ksk-company-logo">
-        <div class="logo"><img [src] = "blogo" *ngIf="blogo!='' && blogo!=null"/></div>
-        <span class="title" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}}</span>
+        <span class="title" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}} &nbsp;</span>
+        <div class="logo"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" /></div>
     </div>
     <!-- <div class="ksk-exit">
         <button class="exit">

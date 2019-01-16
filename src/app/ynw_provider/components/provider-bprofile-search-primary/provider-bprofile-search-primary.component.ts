@@ -23,6 +23,12 @@ import { AddProviderSchedulesComponent } from '../add-provider-schedule/add-prov
 
 export class ProviderBprofileSearchPrimaryComponent implements OnInit {
   @ViewChild('bname') private elementRef: ElementRef;
+
+  profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
+  business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
+  profile_summary_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -56,7 +62,7 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       this.formfields = {
         bname: [{ value: this.bProfile.businessName, disabled: false }, Validators.compose([Validators.required])],
         // shortname: [{ value: this.bProfile.shortName, disabled: false }],
-        // bdesc: [{ value: this.bProfile.businessDesc, disabled: false }, Validators.compose([Validators.required])]
+          // bdesc: [{ value: this.bProfile.businessDesc, disabled: false }, Validators.compose([Validators.required])]
         bdesc: [{ value: this.bProfile.businessDesc, disabled: false }]
       };
      this.prov_curstatus = this.bProfile.status;
@@ -73,18 +79,20 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
   onSubmit(form_data) {
    // console.log('length', form_data.bname.length);
    const blankpatterm = projectConstants.VALIDATOR_BLANK;
-   form_data.bname = form_data.bname.trim();
+     form_data.bname = form_data.bname.trim();
    if (blankpatterm.test(form_data.bname)) {
      this.api_error = 'Please enter the business name';
      this.document.getElementById('bname').focus();
      return;
    }
-   if (form_data.bdesc !== '' && form_data.bdesc.trim() === '') {
-    this.api_error = 'Please enter the business description';
-    this.document.getElementById('bdesc').focus();
-    return;
-   }
-   form_data.bdesc = form_data.bdesc.trim();
+  //   if (form_data.bdesc !== '' && form_data.bdesc.trim() === '') {
+  //   this.api_error = 'Please enter the business description';
+  //   this.document.getElementById('bdesc').focus();
+  //   return;
+  //  }
+  if (form_data.bdesc) {
+    form_data.bdesc = form_data.bdesc.trim();
+  }
    /*if (blankpatterm.test(form_data.bdesc)) {
     this.api_error = 'Please enter the business description';
     this.document.getElementById('bdesc').focus();

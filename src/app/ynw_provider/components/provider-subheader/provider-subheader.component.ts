@@ -10,6 +10,7 @@ import { SearchProviderCustomerComponent } from '../search-provider-customer/sea
 import { ProviderServices } from '../../services/provider-services.service';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.component';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-provider-subheader',
@@ -20,6 +21,12 @@ import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.
 
 
 export class ProviderSubeaderComponent implements OnInit, OnDestroy {
+
+  create_cap = Messages.SUB_HEADER_CREATE_CAP;
+  dashboard_cap = Messages.DASHBOARD_TITLE;
+  help_cap = Messages.SUB_HEADER_HELP;
+  kiosk_cap = Messages.SUB_HEADER_KIOSK;
+  settings_cap = Messages.SUB_HEADER_SETTINGS;
 
   @Input() activeTab: string;
   @Output() reloadActionSubheader = new EventEmitter<any>();
@@ -61,7 +68,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass'],
+      panelClass : ['commonpopupmainclass', 'checkin-provider'],
       disableClose: true,
       data: {
         source: source
@@ -82,7 +89,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
     this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass'],
+      panelClass : ['commonpopupmainclass', 'checkin-provider'],
       disableClose: true,
       data: {
         search_data: search_data
@@ -166,7 +173,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
     this.ChkindialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
       disableClose: true,
      data: {
        type : 'provider',
@@ -259,7 +266,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
         });*/
-       // console.log('here');
         const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
         this.shared_functions.sendMessage(pdata);
   }

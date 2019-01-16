@@ -1,6 +1,6 @@
 <section>
   <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section>
@@ -8,7 +8,7 @@
       <div class="container">
           <div class="row">
               <div class="n-loc">
-                  <span class="add-nloc cs-btn bt3" (click)="addService()">Add New Service</span>
+                  <span class="add-serv-btn cs-btn bt3" (click)="addService()">{{add_new_serv_cap}}</span>
               </div>
           </div>
 
@@ -26,11 +26,11 @@
                     <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name | capitalizeFirst}}</h3>
                     <div class="c-ot m0">
                         <div class="item" *ngIf="!disable_price">
-                            <span class="ttle">Estimated Duration</span>
-                            <span class="icon-time">{{service.serviceDuration}} min</span>
+                            <span class="ttle">{{est_duration_cap}}</span>
+                            <span class="icon-time">{{service.serviceDuration}} {{min_cap}}</span>
                         </div>
-                        <div class="item" *ngIf="!disable_price">
-                            <span class="ttle">Price</span>
+                        <div class="item" *ngIf="!disable_price && service.totalAmount!=0">
+                            <span class="ttle">{{price_cap}}</span>
                             <span>{{service.totalAmount  | currency:'INR':'symbol':'.2-2'}}</span>
                         </div>
                     </div>

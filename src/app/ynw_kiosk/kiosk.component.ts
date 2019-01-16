@@ -1,6 +1,6 @@
 import {Component, HostListener} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 
 
@@ -32,5 +32,4 @@ export class KioskComponent {
     beforeunloadHandler(event) {
         // event.returnValue = false;
     }
-
 }

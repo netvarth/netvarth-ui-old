@@ -1,5 +1,5 @@
 <form [formGroup]="amForm"  novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-<h1 class="mat-dialog-title">Item Image - {{ data.type | capitalizeFirst }}
+<h1 class="mat-dialog-title">{{item_image_cap}}{{ data.type | capitalizeFirst }}
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
@@ -22,7 +22,7 @@
                 <mat-menu #menu="matMenu">
                 <button type="button" mat-menu-item (click)="deleteTempImage()">
                     <i class="icon-delete"></i>
-                    <span >Delete</span>
+                    <span >{{delete_btn}}</span>
                     </button>
                 </mat-menu>
         </div>
@@ -32,8 +32,8 @@
         </div>
 
         <div class="upload-doc" [class.imageexist] = "img_exists" (click)="file.click()" *ngIf="show_img_select">
-        <label class="col-form-label" *ngIf="!img_exists">Click here to select the image</label>
-        <label class="col-form-label" *ngIf="img_exists">Click here to change the image</label>
+        <label class="col-form-label" *ngIf="!img_exists">{{select_image}}</label>
+        <label class="col-form-label" *ngIf="img_exists">{{change_image}}</label>
         <span class="select-wrapper ">
         <input type="file" name="image_src" id="image_src"  accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)">
         </span>
@@ -41,8 +41,9 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-<button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+<button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
 <button  type="submit" mat-button class="cs-btn bt1" [disabled]="!img_exists || uploading">{{upload_button_caption}}</button>
+
 </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error"

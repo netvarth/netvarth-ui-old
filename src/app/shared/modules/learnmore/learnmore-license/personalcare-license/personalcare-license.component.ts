@@ -17,10 +17,10 @@ export class PersonalcareLicenseComponent implements OnInit, OnDestroy {
     // @Inject(MAT_DIALOG_DATA) public data: any,
     private _scrollToService: ScrollToService
   ) {}
-
   ngOnInit() {
+    console.log(this.target);
     if (this.target) {
-      // this.triggerScrollTo(this.target);
+     this.triggerScrollTo(this.target);
     }
     // window.addEventListener('scroll', this.scroll, true); // third parameter
   }

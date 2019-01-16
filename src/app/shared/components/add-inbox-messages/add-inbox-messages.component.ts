@@ -20,6 +20,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   api_error = null;
   api_success = null;
 
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  send_btn_cap = Messages.SEND_BTN; 
+
   user_id = null;
   uuid = null;
   message = '';
@@ -105,11 +108,13 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   setLabel () {
     this.api_loading = false;
     let provider_label = this.receiver_name;
+    let consumer_label = this.receiver_name;
     if (!provider_label) {
       provider_label = (this.terminologies && this.terminologies['provider']) ? this.terminologies['provider'] : 'provider';
     }
-    const consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
-
+    if(!consumer_label){
+      consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
+    }
     switch (this.source) {
       case 'provider-waitlist' : this.message_label = 'Message to ' + consumer_label; break;
       case 'consumer-waitlist' : this.message_label = 'Message to ' + provider_label;  break;
@@ -163,13 +168,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
          }
         );
     }
-
-
   }
-
   consumerToProviderWaitlistNote(post_data) {
     if (this.uuid !== null) {
-
       this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
         post_data)
         .subscribe(
@@ -185,10 +186,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         );
     }
   }
-
   providerToConsumerNoteAdd(post_data) {
     if (this.user_id !== null) {
-
       this.shared_services.addProvidertoConsumerNote(this.user_id,
         post_data)
         .subscribe(
@@ -202,13 +201,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             this.sharedfunctionObj.apiErrorAutoHide(this, error);
          }
         );
-
     }
   }
-
   consumerToProviderNoteAdd(post_data) {
     if (this.user_id) {
-
       this.shared_services.addConsumertoProviderNote(this.user_id,
         post_data)
         .subscribe(
@@ -225,11 +221,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
 
     }
   }
-
   resetApiErrors () {
     this.api_error = null;
     this.api_success = null;
   }
 }
-
-

@@ -18,6 +18,18 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class ProviderSystemAlertComponent implements OnInit {
 
+  acknow_status_cap = Messages.SYS_ALERTS_ACKNOWLEDGEMENT_STATUS;
+  any_cap = Messages.SYS_ALERTS_ANY_CAP;
+  acknowledged_cap = Messages.SYS_ALERTS_ACKNOWLEDGED_CAP;
+  not_acknowledged_cap = Messages.SYS_ALERTS_NOT_ACKNOWLEDGED_CAP;
+  select_date_cap = Messages.SYS_ALERTS_SELECT_DATE_CAP;
+  search_cap = Messages.SYS_ALERTS_SEARCH_CAP;
+  subject_cap = Messages.SYS_ALERTS_SUBJECT_CAP;
+  details_cap = Messages.SYS_ALERTS_DETAILS_CAP;
+  date_cap = Messages.SYS_ALERTS_DATE_CAP;
+  action_cap = Messages.SYS_ALERTS_ACTION_CAP;
+  no_alerts_found_cap = Messages.SYS_ALERTS_NO_ALERTS_FOUND_CAP;
+
     alert_details: any = [] ;
     load_complete = 0;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
@@ -33,7 +45,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     perPage = projectConstants.PERPAGING_LIMIT;
     breadcrumbs = [
         {
-          title: 'Dashboard',
+          title: Messages.DASHBOARD_TITLE,
           url: '/provider'
         },
         {

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { LearnmoreComponent } from '../learnmore/learnmore.component';
+import { Messages } from '../../constants/project-messages';
 
 
 @Component({
@@ -18,8 +19,11 @@ import { LearnmoreComponent } from '../learnmore/learnmore.component';
 
 export class BreadCrumbComponent implements OnInit {
 
+    lear_more_cap = Messages.LEARN_MORE_CAP;
+
     @Input () breadcrumbs;
     @Input () moreOptions: any = [];
+    className = '';
     constructor(
         public router: Router,
         private dialog: MatDialog,
@@ -28,6 +32,10 @@ export class BreadCrumbComponent implements OnInit {
 
     ngOnInit() {
         // console.log('options', this.moreOptions);
+        if (this.moreOptions.classname) {
+            this.className = this.moreOptions.classname;
+        }
+        delete this.moreOptions.className;
     }
 
     goNavigate(breadcrumb) {

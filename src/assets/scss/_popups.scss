@@ -219,11 +219,11 @@
             .mat-form-field {
                 width: 100%;
 
-                .mat-input-wrapper, .mat-form-field-wrapper {
+                .mat-form-field-wrapper, .mat-form-field-wrapper {
                     padding: 0;
                     margin: 0;
                     
-                    .mat-input-prefix {
+                    .mat-form-field-prefix {
                         align-self: center;
                         
                         .rupee {
@@ -231,7 +231,7 @@
                         }
                     }
 
-                    .mat-input-infix, .mat-form-field-infix {
+                    .mat-form-field-infix, .mat-form-field-infix {
                         margin: 0;
                         padding: 0;
                         border: none;
@@ -258,7 +258,7 @@
                         }
                     }
 
-                    .mat-input-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                    .mat-form-field-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
                         display: none;
                     }
                 }
@@ -470,7 +470,7 @@
         .mat-form-field {
             width: 100%;
 
-            .mat-input-wrapper, .mat-form-field-wrapper {
+            .mat-form-field-wrapper, .mat-form-field-wrapper {
                 padding: 0;
                 margin: 0;
 
@@ -478,7 +478,7 @@
                     color: $cc-red;
                 }
 
-                .mat-input-infix, .mat-form-field-infix {
+                .mat-form-field-infix, .mat-form-field-infix {
                     margin: 0;
                     padding: 0;
                     border: none;
@@ -543,7 +543,7 @@
                     }
                 }
 
-                .mat-input-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                .mat-form-field-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
                     display: none;
                 }
             }
@@ -852,8 +852,8 @@
                 width: 280px;
 
                 .mat-form-field {
-                    .mat-input-wrapper {
-                        .mat-input-infix {
+                    .mat-form-field-wrapper {
+                        .mat-form-field-infix {
                             .col-form-label {
                                 padding: 0px;
                                 margin-bottom: 5px;
@@ -888,11 +888,11 @@
                                     .mat-form-field {
                                         width: 100px;
 
-                                        .mat-input-wrapper {
+                                        .mat-form-field-wrapper {
                                             padding: 0;
                                             margin: 0;
 
-                                            .mat-input-infix {
+                                            .mat-form-field-infix {
                                                 margin: 0;
                                                 padding: 0;
                                                 border: none;
@@ -926,7 +926,7 @@
                                                 }
                                             }
 
-                                            .mat-input-underline {
+                                            .mat-form-field-underline {
                                                 display: none;
                                             }
                                         }
@@ -1079,11 +1079,11 @@
                     
                     .mat-form-field {
 
-                        .mat-input-wrapper {
+                        .mat-form-field-wrapper {
                             padding: 0;
                             margin: 0;
 
-                            .mat-input-infix {
+                            .mat-form-field-infix {
                                 margin: 0;
                                 padding: 0;
                                 border: none;
@@ -1121,7 +1121,7 @@
                                 }
                             }
 
-                            .mat-input-underline {
+                            .mat-form-field-underline {
                                 display: none;
                             }
                         }
@@ -3084,8 +3084,8 @@
                                     flex-grow: 1;
                                     
                                     .mat-form-field {
-                                        .mat-input-wrapper {
-                                            .mat-input-flex {
+                                        .mat-form-field-wrapper {
+                                            .mat-form-field-flex {
                                                 .mat-form-field-infix {
                                                     width: auto;
                                                     
@@ -3111,8 +3111,8 @@
                                     
                                     .number {
                                         .mat-form-field {
-                                            .mat-input-wrapper {
-                                                .mat-input-flex {
+                                            .mat-form-field-wrapper {
+                                                .mat-form-field-flex {
                                                     .mat-form-field-infix {
                                                         width: auto;
                                                         
@@ -3234,8 +3234,8 @@
                                                     flex-basis: 48%;
                                                     
                                                     .mat-form-field {
-                                                        .mat-input-wrapper {
-                                                            .mat-input-flex {
+                                                        .mat-form-field-wrapper {
+                                                            .mat-form-field-flex {
                                                                 .mat-form-field-infix {
                                                                     width: auto;
 
@@ -3481,7 +3481,7 @@
                                     .item {
                                         flex-basis: 48%;
 
-                                        .mat-form-field .mat-input-wrapper .mat-input-infix .mat-select {
+                                        .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
                                             height: 30px;
                                             width: 100%;
                                             padding: 5px 10px;

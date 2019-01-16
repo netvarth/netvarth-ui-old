@@ -1,6 +1,5 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { ProviderComponent } from './provider.component';
 import { ProviderHomeComponent } from './components/home/provider-home.component';
 import { ProviderProfileComponent } from './components/provider-profile/provider-profile.component';
@@ -28,7 +27,6 @@ import { ProviderWaitlistQueueDetailComponent } from './components/provider-wait
 import { ProviderPaymentHistoryComponent } from './components/provider-payment-history/provider-payment-history.component';
 import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { ProviderCustomersComponent } from './components/provider-customers/provider-customers.component';
-
 import { AuthGuardProviderHome, AuthGuardNewProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
 import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
@@ -37,139 +35,158 @@ import { ChangeEmailComponent } from '../shared/modules/change-email/change-emai
 import { ProviderPaymentSettingsComponent } from './components/provider-payment-settings/provider-payment-settings.component';
 import { ProviderSystemAuditLogComponent } from './components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { ProviderSystemAlertComponent } from './components/provider-system-alerts/provider-system-alerts.component';
-
 import { ProviderResolver } from './services/provider-resolver.service';
-
+import { ProviderReimburseReportComponent } from './components/provider-reimburse-report/provider-reimburse-report.component';
+import { ViewReportComponent } from './components/view-report/view-report.component';
+import { ProviderJcouponDetailsComponent } from './components/provider-jcoupon-details/provider-jcoupon-details.component';
+import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 const routes: Routes = [
-    {path: '', component: ProviderComponent,
+  {
+    path: '', component: ProviderComponent,
     resolve: {
       terminologies: ProviderResolver
     },
     children: [
-
-    { path: '',
-      component: ProviderHomeComponent,
-      canActivate: [AuthGuardProviderHome]
-    },
-    { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
-    { path: 'settings', component: ProviderSettingsComponent },
-    {
-      path: 'settings',
-      children: [
       {
-        path: 'bprofile-search',
-        component: ProviderBprofileSearchComponent
+        path: '',
+        component: ProviderHomeComponent,
+        canActivate: [AuthGuardProviderHome]
       },
+      { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
+      {path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent},
+      { path: 'settings', component: ProviderSettingsComponent },
       {
-        path: 'waitlist-manager',
-        component: ProviderWaitlistComponent
-      },
-      {
-        path: 'discounts',
-        component: ProviderDiscountsComponent
-      },
-      {
-        path: 'coupons',
-        component: ProviderCouponsComponent
-      },
-      {
-        path: 'holidays',
-        component: ProviderNonworkingdaysComponent
-      },
-      {
-        path: 'items',
-        component: ProviderItemsComponent
-      },
-      {
-        path: 'items/:id',
-        component: ProviderItemsDetailsComponent
-      },
-      {
-        path: 'waitlist-manager',
+        path: 'settings',
         children: [
           {
-            path: 'locations',
-            component: ProviderWaitlistLocationsComponent
+            path: 'bprofile-search',
+            component: ProviderBprofileSearchComponent
           },
           {
-            path: 'location-detail/:id',
-            component: ProviderWaitlistLocationDetailComponent
+            path: 'waitlist-manager',
+            component: ProviderWaitlistComponent
           },
           {
-            path: 'services',
-            component: ProviderWaitlistServicesComponent
+            path: 'discounts',
+            component: ProviderDiscountsComponent
           },
           {
-            path: 'service-detail/:id',
-            component: ProviderWaitlistServiceDetailComponent
+            path: 'coupons',
+            component: ProviderCouponsComponent
           },
           {
-            path: 'queues',
-            component: ProviderWaitlistQueuesComponent
+            path: 'coupons',
+            children: [
+              {
+                path: 'report',
+                component: ProviderReimburseReportComponent
+              },
+              {
+                path: 'report/:id',
+                component: ViewReportComponent
+              }
+            ]
           },
           {
-            path: 'queue-detail/:id',
-            component: ProviderWaitlistQueueDetailComponent
-          }
+            path: 'coupons/:id',
+            component: ProviderJcouponDetailsComponent
+          },
+          {
+            path: 'holidays',
+            component: ProviderNonworkingdaysComponent
+          },
+          {
+            path: 'items',
+            component: ProviderItemsComponent
+          },
+          {
+            path: 'items/:id',
+            component: ProviderItemsDetailsComponent
+          },
+          {
+            path: 'waitlist-manager',
+            children: [
+              {
+                path: 'locations',
+                component: ProviderWaitlistLocationsComponent
+              },
+              {
+                path: 'location-detail/:id',
+                component: ProviderWaitlistLocationDetailComponent
+              },
+              {
+                path: 'services',
+                component: ProviderWaitlistServicesComponent
+              },
+              {
+                path: 'service-detail/:id',
+                component: ProviderWaitlistServiceDetailComponent
+              },
+              {
+                path: 'queues',
+                component: ProviderWaitlistQueuesComponent
+              },
+              {
+                path: 'queue-detail/:id',
+                component: ProviderWaitlistQueueDetailComponent
+              }
 
-        ]
-      },
-      {
-        path: 'license',
-        component: ProviderLicenseComponent
-      },
-      {
-        path: 'license/:type',
-        component: ProviderLicenseComponent
-      },
-      {
-        path: 'license',
-        children: [
-          // {
-          //   path: 'auditlog',
-          //   component: ProviderAuditLogComponent
-          // },
+            ]
+          },
           {
-            path: 'payment/history',
-            component: ProviderPaymentHistoryComponent
-          }
-        ]
-      }/*,
+            path: 'license',
+            component: ProviderLicenseComponent
+          },
+          {
+            path: 'license/:type',
+            component: ProviderLicenseComponent
+          },
+          {
+            path: 'license',
+            children: [
+              // {
+              //   path: 'auditlog',
+              //   component: ProviderAuditLogComponent
+              // },
+              {
+                path: 'payment/history',
+                component: ProviderPaymentHistoryComponent
+              }
+            ]
+          }/*,
       {
         path: 'paymentsettings',
         component: ProviderPaymentSettingsComponent
       }*/,
+          {
+            path: 'paymentsettings',
+            component: ProviderPaymentSettingsComponent
+          }
+        ]
+      },
+      { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
+      { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
+      { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
+      { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin] },
+      { path: 'members', component: ProviderMembersComponent },
+      { path: 'customers', component: ProviderCustomersComponent },
       {
-        path: 'paymentsettings',
-        component: ProviderPaymentSettingsComponent
-      }
-      ]
-    },
-    { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
-    { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin]},
-    { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
-    { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin]},
-    { path: 'members', component: ProviderMembersComponent },
-    { path: 'customers', component: ProviderCustomersComponent },
-    {
-      path: 'inbox',
-      loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
-    },
-    {
-      path: 'auditlog', component: ProviderSystemAuditLogComponent
-    },
-    {
-      path: 'alerts', component: ProviderSystemAlertComponent
-    },
-    { path: 'bwizard', component: ProviderbWizardComponent }
-  ]}
+        path: 'inbox',
+        loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
+      },
+      {
+        path: 'auditlog', component: ProviderSystemAuditLogComponent
+      },
+      {
+        path: 'alerts', component: ProviderSystemAlertComponent
+      },
+      { path: 'bwizard', component: ProviderbWizardComponent }
+    ]
+  }
 ];
-
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-
 export class ProviderRouterModule {
-
 }

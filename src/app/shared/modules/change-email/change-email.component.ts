@@ -15,6 +15,15 @@ import {projectConstants} from '../../constants/project-constants';
 })
 export class ChangeEmailComponent implements OnInit {
 
+  email_cap = Messages.EMAIL_CAP;
+  verified_cap = Messages.EMAIL_VERIFIED;
+  save_btn_cap = Messages.SAVE_BTN;
+  related_links_cap = Messages.RELATED_LINKS;
+  user_profile_cap = Messages.USER_PROF_CAP;
+  change_password_cap = Messages.CHANGE_PASSWORD_CAP;
+  change_mobile_cap = Messages.CHANGE_MOB_CAP;
+  family_members_cap = Messages.FAMILY_MEMBERS;
+
   spForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -25,11 +34,7 @@ export class ChangeEmailComponent implements OnInit {
   submit_data = {'email' : null};
   breadcrumbs_init = [
     {
-      title: 'Dashboard',
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
-    },
-    {
-      title: 'Add or Change Email',
+      title: Messages.ADD_CHANGE_EMAIL,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-email'
     }
   ];

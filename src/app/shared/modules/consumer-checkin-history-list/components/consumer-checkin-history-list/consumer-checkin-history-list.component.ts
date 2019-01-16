@@ -25,6 +25,16 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
   @Input()  params;
   @Output() getWaitlistBillEvent = new EventEmitter<any>();
 
+  service_provider_cap = Messages.SERV_PROVIDER_CAP;
+  service_cap = Messages.PRO_SERVICE_CAP;
+  location_cap = Messages.LOCATION_CAP;
+  date_cap = Messages.DATE_COL_CAP;
+  status_cap = Messages.PRO_STATUS_CAP;
+  send_message_cap = Messages.SEND_MSG_CAP;
+  bill_cap = Messages.BILL_CAPTION;
+  rate_your_visit = Messages.RATE_YOU_VISIT;
+  no_prev_checkins_avail_cap = Messages.NO_PREV_CHECKINS_AVAIL_CAP;
+
   loadcomplete = {history: false};
   pagination: any  = {
     startpageval: 1,
@@ -184,7 +194,6 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
       // console.log('more clicks');
     }
   }
-
   makePayment(checkin, bill_data) {
     this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
       width: '50%',

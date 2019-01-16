@@ -1,47 +1,70 @@
-
-import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription , Observable} from 'rxjs';
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {HeaderComponent} from '../../../shared/modules/header/header.component';
-
+import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { HeaderComponent } from '../../../shared/modules/header/header.component';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
-
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
-
 import { AdjustQueueDelayComponent } from '../adjust-queue-delay/adjust-queue-delay.component';
-import { ProviderWaitlistCheckInCancelPopupComponent } from '../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
-import { AddProviderWaitlistCheckInBillComponent } from '../add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-import { ViewProviderWaitlistCheckInBillComponent } from '../view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
-import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
-
 import { SharedServices } from '../../../shared/services/shared-services';
-
 import * as moment from 'moment';
-import {startWith, map, filter, pairwise} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
+import { startWith, map, filter, pairwise } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 import { projectConstants } from '../../../shared/constants/project-constants';
-
-
-
-
-
-
 @Component({
-    selector: 'app-provider-home',
-    templateUrl: './provider-home.component.html',
-    styleUrls: ['./provider-home.component.scss']
+  selector: 'app-provider-home',
+  templateUrl: './provider-home.component.html',
+  styleUrls: ['./provider-home.component.scss']
 })
-
 export class ProviderHomeComponent implements OnInit, OnDestroy {
-
-
+  // pdtyp  --- 0-History, 1-Future, 2-Today
+  // pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
+  // pdq --- selected queue id
+  today_cap = Messages.TODAY_HOME_CAP;
+  future_cap = Messages.FUTURE_HOME_CAP;
+  history_cap = Messages.HISTORY_HOME_CAP;
+  service_window_cap = Messages.SERVICE_TIME_CAP;
+  services_cap = Messages.SERVICES_CAP;
+  check_in_status = Messages.CHECK_IN_STATUS_CAP;
+  payment_status = Messages.PAYMENT_STATUS_CAP;
+  start_date = Messages.START_DATE_CAP;
+  end_date = Messages.END_DATE_CAP;
+  token_no = Messages.TOKEN_NO_CAP;
+  name_cap = Messages.PRO_NAME_CAP;
+  service_cap = Messages.PRO_SERVICE_CAP;
+  status_cap = Messages.PRO_STATUS_CAP;
+  note_cap = Messages.NOTE_CAP;
+  change_status = Messages.CHANGE_STATUS_CAP;
+  add_note_cap = Messages.ADD_NOTE_CAP;
+  available_cap = Messages.PRO_AVAILABLE_CAP;
+  no_service_cap = Messages.NO_SERVICE_CAP;
+  adjust_delay = Messages.ADJUST_DELAY_CAP;
+  first_name = Messages.FIRST_NAME_CAP;
+  last_name = Messages.LAST_NAME_CAP;
+  phone_no_cap = Messages.PHONE_NO_CAP;
+  all_cap = Messages.ALL_CAP;
+  date_cap = Messages.DATE_COL_CAP;
+  actions_cap = Messages.ACTIONS_CAP;
+  complete_cap = Messages.STATUS_DONE;
+  done_cap = Messages.DONE_BTN;
+  bill_cap = Messages.BILL_CAPTION;
+  accept_cap = Messages.ACCEPT_PAY_CAP;
+  not_paid_cap = Messages.NOT_PAID_CAP;
+  partially_paid_cap = Messages.PARTIALLY_PAID_CAP;
+  paid_cap = Messages.PAID_CAP;
+  send_message_cap = Messages.SEND_MSG_CAP;
+  add_private_note = Messages.ADD_PROVIDER_NOTE_CAP;
+  cancel_cap = Messages.CANCEL_BTN;
+  view_cap = Messages.VIEW_CAP;
+  no_cap = Messages.NO_CAP;
+  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
   locations: any = [];
   queues: any = [];
   all_queues: any = [];
@@ -59,15 +82,20 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   status_type = 'all';
   queue_date = moment(new Date()).format(projectConstants.POST_DATE_FORMAT);
   edit_location = 0;
-
   load_locations = 0;
   load_queue = 0;
-  load_waitlist = 0 ;
+  load_waitlist = 0;
   tooltipcls = projectConstants.TOOLTIP_CLS;
+  filterapplied = false;
   open_filter = false;
   waitlist_status = [];
   sel_queue_indx = 0;
-
+  today_checkins_count = 0;
+  today_arrived_count = 0;
+  today_started_count = 0;
+  today_completed_count = 0;
+  today_cancelled_count = 0;
+  today_checkedin_count = 0;
   filter = {
     first_name: '',
     last_name: '',
@@ -82,15 +110,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   }; // same in resetFilter Fn
-
   // filter_date_max = moment(new Date()).add(-1, 'days');
   // filter_date_min = moment(new Date()).add(+1, 'days');
-
   filter_date_start_min = null;
   filter_date_start_max = null;
   filter_date_end_min = null;
   filter_date_end_max = null;
-
   customer_label = '';
   provider_label = '';
   arrived_label = '';
@@ -103,15 +128,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   started_upper = '';
   cancelled_label = '';
   cancelled_upper = '';
-  checkin_label  = '';
+  checkin_label = '';
   start_label = '';
-
-  pagination: any  = {
+  no_future_checkins = '';
+  pagination: any = {
     startpageval: 1,
-    totalCnt : 0,
-    perPage : this.filter.page_count
+    totalCnt: 0,
+    perPage: this.filter.page_count
   };
-
   cronHandle: Subscription;
   cronStarted;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
@@ -131,7 +155,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   small_device_display = false;
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
-
+  breadcrumb_moreoptions: any = [];
+  breadcrumbs_init = [
+    {
+      title: Messages.DASHBOARD_TITLE,
+      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
+    }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private common_datastorage: CommonDataStorageService,
@@ -140,63 +171,51 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices) {
-
-      this.onResize();
-
-      this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-      this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-
-      this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
-      this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
-
-      this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
-      this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
-
-      this.done_label = this.shared_functions.getTerminologyTerm('done');
-      this.done_upper = this.shared_functions.firstToUpper(this.done_label);
-
-      this.started_label = this.shared_functions.getTerminologyTerm('started');
-      this.started_upper = this.shared_functions.firstToUpper(this.started_label);
-
-      this.start_label = this.shared_functions.getTerminologyTerm('start');
-
-      this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
-      this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
-
-      this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-
-      this.waitlist_status = [
-        {name :  this.checkedin_upper, value: 'checkedIn'},
-        {name : this.cancelled_upper, value: 'cancelled'},
-        {name : this.started_upper, value: 'started'},
-        {name : this.arrived_upper, value: 'arrived'},
-        {name : this.done_upper, value: 'done'}];
-
-    }
-    payStatusList = [
-          { pk: 'NotPaid', value: 'Not Paid'},
-          { pk: 'PartiallyPaid', value: 'Partially Paid'},
-          { pk: 'FullyPaid', value: 'Fully Paid'}
-    ];
-
+    this.onResize();
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
+    this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
+    this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+    this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
+    this.done_label = this.shared_functions.getTerminologyTerm('done');
+    this.done_upper = this.shared_functions.firstToUpper(this.done_label);
+    this.started_label = this.shared_functions.getTerminologyTerm('started');
+    this.started_upper = this.shared_functions.firstToUpper(this.started_label);
+    this.start_label = this.shared_functions.getTerminologyTerm('start');
+    this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
+    this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
+    this.waitlist_status = [
+      { name: this.checkedin_upper, value: 'checkedIn' },
+      { name: this.cancelled_upper, value: 'cancelled' },
+      { name: this.started_upper, value: 'started' },
+      { name: this.arrived_upper, value: 'arrived' },
+      { name: this.done_upper, value: 'complete' }];
+  }
+  payStatusList = [
+    { pk: 'NotPaid', value: 'Not Paid' },
+    { pk: 'PartiallyPaid', value: 'Partially Paid' },
+    { pk: 'FullyPaid', value: 'Fully Paid' }
+  ];
   ngOnInit() {
-
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay'  };
     this.router.events
-            .pipe(filter((e: any) => e instanceof RoutesRecognized),
-                pairwise()
-            ).subscribe((e: any) => {
-                this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/checkin-detail/'));
-                // console.log(e[0].urlAfterRedirects, this.returnedFromCheckDetails); // previous url
-            });
+      .pipe(filter((e: any) => e instanceof RoutesRecognized),
+        pairwise()
+      ).subscribe((e: any) => {
+        this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/checkin-detail/'));
+        // console.log(e[0].urlAfterRedirects, this.returnedFromCheckDetails); // previous url
+      });
     const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
       // console.log('exists', savedtype);
       this.time_type = savedtype;
     } else {
-     // console.log('NOT');
+      // console.log('NOT');
     }
-    const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp');
-    // console.log('exists', stattype);
+    const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp'); // To get the active tab
     if (stattype !== undefined && stattype !== null && stattype !== '') {
       // console.log('exists', savedtype);
       this.status_type = stattype;
@@ -205,12 +224,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.status_type = 'all';
     }
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
-
     const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-   // console.log('bdata', bprof);
+    // console.log('bdata', bprof);
     if (bprof === null || bprof === undefined) {
       this.shared_services.bussinessDomains()
-        .subscribe (
+        .subscribe(
           res => {
             this.holdbdata = res;
             const today = new Date();
@@ -231,12 +249,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.getServiceList();
       this.getProviderSettings();
     }
-
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
-        this.reloadAPIs();
+      this.reloadAPIs();
     });
   }
-
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
@@ -277,254 +293,230 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     } else {
       this.small_device_display = false;
     }
-  // console.log('resized', this.screenWidth,  this.small_device_display);
-}
-
+    // console.log('resized', this.screenWidth,  this.small_device_display);
+  }
   getBusinessProfile() {
     let bProfile: any = [];
-
     this.getBussinessProfileApi()
-    .then(
-      data => {
-        bProfile = data;
-        if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
-          // calling function which saves the business related details to show in the header
-          // this.shared_functions.retSubSectorNameifRequired();
-
-          const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
-          // console.log('subsector home', subsectorname);
-          this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-           || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
-           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
-
-           const pdata = { 'ttype': 'updateuserdetails' };
-           this.shared_functions.sendMessage(pdata);
+      .then(
+        data => {
+          bProfile = data;
+          if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
+            // calling function which saves the business related details to show in the header
+            // this.shared_functions.retSubSectorNameifRequired();
+            const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
+            // console.log('subsector home', subsectorname);
+            this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
+              || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+            this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
+            const pdata = { 'ttype': 'updateuserdetails' };
+            this.shared_functions.sendMessage(pdata);
           }
-      },
-      error => {
-
-      }
-    );
-
+        },
+        error => {
+        }
+      );
   }
-
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
-
       _this.provider_services.getBussinessProfile()
-      .subscribe(
-        data => {
-          resolve(data);
-        },
-        error => {
-          reject();
-        }
-      );
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          error => {
+            reject();
+          }
+        );
 
     });
   }
-   // get the logo url for the provider
-   getProviderLogo(bname = '', bsector = '', bsubsector = '') {
+  // get the logo url for the provider
+  getProviderLogo(bname = '', bsector = '', bsubsector = '') {
     let blogo;
     this.provider_services.getProviderLogo()
       .subscribe(
-      data => {
-        blogo = data;
-        // console.log('here logo', this.blogo);
-        let logo = '';
-        if (blogo[0]) {
-          logo = blogo[0].url;
-        } else {
-          logo = '';
+        data => {
+          blogo = data;
+          // console.log('here logo', this.blogo);
+          let logo = '';
+          if (blogo[0]) {
+            logo = blogo[0].url;
+          } else {
+            logo = '';
+          }
+          // calling function which saves the business related details to show in the header
+          this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo);
+          const pdata = { 'ttype': 'updateuserdetails' };
+          this.shared_functions.sendMessage(pdata);
+        },
+        error => {
         }
-        // calling function which saves the business related details to show in the header
-        this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo );
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.shared_functions.sendMessage(pdata);
-      },
-      error => {
-
-      }
       );
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe (data => {
+      .subscribe(data => {
         this.settings = data;
         // console.log('prov settings', this.settings);
       }, error => {
-
       });
   }
-
   getLocationList() {
-
     this.load_locations = 0;
     this.selected_location = null;
     this.provider_services.getProviderLocations()
-    .subscribe(
-      (data: any) => {
-        const locations = data;
-        this.locations = [];
-
-        for ( const loc of locations) {
-          if (loc.status === 'ACTIVE') {
-            this.locations.push(loc);
+      .subscribe(
+        (data: any) => {
+          const locations = data;
+          this.locations = [];
+          for (const loc of locations) {
+            if (loc.status === 'ACTIVE') {
+              this.locations.push(loc);
+            }
           }
-        }
-
-        const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider checkin button page
-        if ( cookie_location_id === '') {
-          if (this.locations[0]) {
-            this.changeLocation(this.locations[0]);
+          const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider checkin button page
+          if (cookie_location_id === '') {
+            if (this.locations[0]) {
+              this.changeLocation(this.locations[0]);
+            }
+          } else {
+            this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
+            this.getQueueList();
           }
-        } else {
-          this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
-          this.getQueueList();
+        },
+        error => {
+          this.load_locations = 1;
+        },
+        () => {
+          this.load_locations = 1;
         }
-
-      },
-      error => {
-        this.load_locations = 1;
-      },
-      () => {
-        this.load_locations = 1;
-      }
-    );
+      );
   }
-
-  selectLocationFromCookie (cookie_location_id) {
+  selectLocationFromCookie(cookie_location_id) {
     let selected_location = null;
     for (const location of this.locations) {
       if (location.id === cookie_location_id) {
         selected_location = location;
       }
     }
-
     (selected_location !== null) ? this.changeLocation(selected_location) :
-    this.changeLocation(this.locations[0]);
-
+      this.changeLocation(this.locations[0]);
   }
-
   getServiceList() {
     this.provider_services.getServicesList()
-    .subscribe(
-      data => {
-        this.services = data;
-      },
-      error => {
-
-      }
-    );
+      .subscribe(
+        data => {
+          this.services = data;
+        },
+        error => {
+        }
+      );
   }
-
   getQueueList() {
     // console.log('reached quelist');
     this.provider_services.getProviderLocationQueues(this.selected_location.id)
-    .subscribe(
-      (data: any) => {
-        // this.all_queues = data;
-
-        const Cqueues = data;
-        // console.log('cqueue', Cqueues);
-        this.all_queues = [];
-        let indx = 0;
-        for ( const que of Cqueues) {
-          if (que.queueState === 'ENABLED') {
-            que.qindx = indx;
-            this.all_queues.push(que);
-            indx += 1;
-          }
-        }
-        if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
-          return;
-        }
-        const getsavedqueueid = this.shared_functions.getitemfromLocalStorage('pdq');
-        let selqid = 0;
-        for (let ii = 0; ii < this.all_queues.length; ii++) {
-          let schedule_arr = [];
-          // extracting the schedule intervals
-          if (this.all_queues[ii].queueSchedule) {
-           schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
-          }
-          let display_schedule = [];
-          display_schedule =  this.shared_functions.arrageScheduleforDisplay(schedule_arr);
-          this.all_queues[ii]['displayschedule'] = display_schedule[0];
-          if (this.all_queues[ii].id === getsavedqueueid) {
-            selqid = ii;
-          }
-        }
-        // console.log('queue', this.all_queues);
-        if (this.queues.length === 0 ) {
-          this.queues = this.all_queues;
-        }
-        this.selected_queue = this.all_queues[selqid];
-        if (this.time_type === 1) {
-          this.getTodayCheckIn();
-        }
-        this.getTodayCheckinCount()
-          .then(
-            (result) => {
-              this.today_waitlist_count = result;
+      .subscribe(
+        (data: any) => {
+          // this.all_queues = data;
+          const Cqueues = data;
+          // console.log('cqueue', Cqueues);
+          this.all_queues = [];
+          let indx = 0;
+          for (const que of Cqueues) {
+            if (que.queueState === 'ENABLED') {
+              que.qindx = indx;
+              this.all_queues.push(que);
+              indx += 1;
             }
-        );
-        // console.log('all queues', this.all_queues);
-      },
-      error => {
-      },
-      () => {
-      }
-    );
+          }
+          if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
+            return;
+          }
+          const getsavedqueueid = this.shared_functions.getitemfromLocalStorage('pdq');
+          if (!getsavedqueueid) {
+            const selid = this.findCurrentActiveQueue(this.all_queues);
+            this.selectedQueue(this.all_queues[selid]);
+          }
+          let selqid = 0;
+          for (let ii = 0; ii < this.all_queues.length; ii++) {
+            let schedule_arr = [];
+            // extracting the schedule intervals
+            if (this.all_queues[ii].queueSchedule) {
+              schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
+            }
+            let display_schedule = [];
+            display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+            this.all_queues[ii]['displayschedule'] = display_schedule[0];
+            if (this.all_queues[ii].id === getsavedqueueid) {
+              selqid = ii;
+            }
+          }
+          if (this.queues.length === 0) {
+            this.queues = this.all_queues;
+          }
+          this.selected_queue = this.all_queues[selqid];
+          if (this.time_type === 1) {
+            this.getTodayCheckIn();
+          }
+          this.getTodayCheckinCount()
+            .then(
+              (result) => {
+                this.today_waitlist_count = result;
+              }
+            );
+        },
+        error => {
+        },
+        () => {
+        }
+      );
   }
-
   getQueueListByDate() {
-    // console.log('qby date');
     this.load_queue = 0;
     if (!this.selected_queue) {
-
       if (this.selected_location.id) {
         this.provider_services.getProviderLocationQueuesByDate(
           this.selected_location.id, this.queue_date)
-        .subscribe(
-          (data: any) => {
-            // this.queues = data;
-            const Cqueues = data;
-            this.queues = [];
-            const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
-            const savedQok = [];
-            let indx = 0;
-            for ( const que of Cqueues) {
-              if (que.queueState === 'ENABLED') {
-                // console.log('que', que);
-                if (que.id === savedQ) {
-                  savedQok.push(que);
+          .subscribe(
+            (data: any) => {
+              // this.queues = data;
+              const Cqueues = data;
+              this.queues = [];
+              const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
+              const savedQok = [];
+              let indx = 0;
+              for (const que of Cqueues) {
+                if (que.queueState === 'ENABLED') {
+                  // console.log('que', que);
+                  if (que.id === savedQ) {
+                    savedQok.push(que);
+                  }
+                  que.qindx = indx;
+                  this.queues.push(que);
+                  indx += 1;
                 }
-                que.qindx = indx;
-                this.queues.push(que);
-                indx += 1;
               }
+              // console.log('queues', this.queues);
+              if (savedQok.length > 0) {
+                this.selectedQueue(savedQok[0]);
+              } else {
+                if (this.queues[0] && this.selected_queue == null) {
+                  const selectedQindx = this.findCurrentActiveQueue(this.queues);
+                  // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
+                  this.selectedQueue(this.queues[selectedQindx]);
+                }
+              }
+            },
+            error => {
+              this.queues = [];
+              this.load_queue = 1;
+            },
+            () => {
+              this.load_queue = 1;
             }
-            // console.log('queues', this.queues);
-            if (savedQok.length > 0) {
-              this.selectedQueue(savedQok[0]);
-            } else {
-              if (this.queues[0] && this.selected_queue == null) {
-                const selectedQindx = this.findCurrentActiveQueue(this.queues);
-                // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
-
-                this.selectedQueue(this.queues[selectedQindx]);
-              }
-          }
-          },
-          error => {
-            this.queues = [];
-            this.load_queue = 1;
-          },
-          () => {
-            this.load_queue = 1;
-          }
-        );
+          );
       }
     } else {
       this.selectedQueue(this.selected_queue);
@@ -540,8 +532,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     let etime;
     const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
     const curtimeforchk = new Date(tday + ' ' + curtime);
-    // console.log('curtimestr', curtime, curtimeforchk);
-    for (let i = 0; i < ques.length ; i++) {
+    for (let i = 0; i < ques.length; i++) {
       for (let j = 0; j < ques[i].queueSchedule.repeatIntervals.length; j++) {
         const pday = Number(ques[i].queueSchedule.repeatIntervals[j]);
         if (currentday === pday) {
@@ -572,26 +563,22 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     if (minutes < 10) {
       sMinutes = '0' + sMinutes;
     }
-   // alert(sHours + ':::' + sMinutes);
-   const time24 = sHours + ':' + sMinutes + ':00';
+    // alert(sHours + ':::' + sMinutes);
+    const time24 = sHours + ':' + sMinutes + ':00';
     /*const mom_date = moment(date);
     mom_date.set('hour', sHours);
     mom_date.set('minute', sMinutes);*/
     return time24;
   }
-
   changeLocation(location) {
-
     this.selected_location = location;
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
     this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
-    this.check_in_list  = this.check_in_filtered_list = [];
-    // console.log('here');
+    this.check_in_list = this.check_in_filtered_list = [];
     this.getQueueList();
-    // console.log('here1');
     /*this.getTodayCheckinCount()
     .then(
       (result) => {
@@ -599,12 +586,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     );*/
     this.getFutureCheckinCount()
-    .then(
-      (result) => {
-        this.future_waitlist_count = result;
-      }
-    );
-
+      .then(
+        (result) => {
+          this.future_waitlist_count = result;
+        }
+      );
     // this.getTodayCheckinCount()
     // .then(
     //   result => {
@@ -613,9 +599,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     // );
     // this.getHistoryCheckinCount();
   }
-
   selectedQueue(selected_queue, qclick?) {
-   // console.log('selected q', selected_queue.id);
     if (selected_queue.id) {
       this.sel_queue_indx = selected_queue.qindx;
       this.shared_functions.setitemonLocalStorage('pdq', selected_queue.id);
@@ -631,7 +615,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       );
   }
   handleQueueSel(mod) {
-   // console.log('mod', mod, this.sel_queue_indx);
+    // console.log('handleQueueSel', mod, this.sel_queue_indx);
     let selqindx;
     if (mod === 'next') {
       if ((this.queues.length - 1) > this.sel_queue_indx) {
@@ -645,173 +629,151 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     }
   }
-
   getFutureCheckinCount(Mfilter = null) {
-
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {
-        'location-eq' : this.selected_location.id,
+        'location-eq': this.selected_location.id,
       };
       no_filter = true;
     }
-
     return new Promise((resolve, reject) => {
       this.provider_services.getWaitlistFutureCount(Mfilter)
-      .subscribe(
-        data => {
-          resolve(data);
-          if (no_filter) { this.future_waitlist_count = data; }
-        },
-        error => {
-
-        });
+        .subscribe(
+          data => {
+            resolve(data);
+            if (no_filter) { this.future_waitlist_count = data; }
+          },
+          error => {
+          });
     });
-
-
   }
-
   getHistoryCheckinCount(Mfilter = null) {
-
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {
-        'location-eq' : this.selected_location.id
+        'location-eq': this.selected_location.id
       };
       no_filter = true;
     }
     // console.log(filter);
     return new Promise((resolve, reject) => {
-
-    this.provider_services.getwaitlistHistoryCount(Mfilter)
-    .subscribe(
-      data => {
-        resolve(data);
-        if (no_filter) { this.histroy_waitlist_count = data; }
-      },
-      error => {
-
-      });
-
+      this.provider_services.getwaitlistHistoryCount(Mfilter)
+        .subscribe(
+          data => {
+            resolve(data);
+            if (no_filter) { this.histroy_waitlist_count = data; }
+          },
+          error => {
+          });
     });
   }
-
   getTodayCheckinCount(Mfilter = null) {
-
     let no_filter = false;
-
     if (!Mfilter) {
       Mfilter = {
-        'location-eq' : this.selected_location.id,
-        'queue-eq' : this.selected_queue.id
+        'location-eq': this.selected_location.id,
+        'queue-eq': this.selected_queue.id
       };
-
       no_filter = true;
     }
-
     return new Promise((resolve, reject) => {
-
       this.provider_services.getwaitlistTodayCount(Mfilter)
-      .subscribe(
-        data => {
-          if (no_filter) { this.today_waitlist_count = data; }
-          resolve(data);
-        },
-        error => {
-
-        });
-
+        .subscribe(
+          data => {
+            if (no_filter) { this.today_waitlist_count = data; }
+            resolve(data);
+          },
+          error => {
+          });
     });
   }
-
+  getCount(list, status) {
+    return list.filter(function (elem) {
+      return elem.waitlistStatus === status;
+    }).length;
+  }
+  setCounts(list) {
+    this.today_arrived_count = this.getCount(list, 'arrived');
+    this.today_checkedin_count = this.getCount(list, 'checkedIn');
+    this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
+    this.today_started_count = this.getCount(list, 'started');
+    this.today_completed_count = this.getCount(list, 'done');
+    this.today_cancelled_count = this.getCount(list, 'cancelled');
+  }
   getTodayCheckIn() {
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     this.resetPaginationData();
-
-    this.pagination.startpageval =  1;
+    this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
-
     this.provider_services.getTodayWaitlist(Mfilter)
-    .subscribe(
-      data => {
-        this.check_in_list = data;
-        if (this.status_type) {
+      .subscribe(
+        data => {
+          this.check_in_list = data;
+          // console.log("today checkin list count:",this.check_in_list.length);
+          this.setCounts(this.check_in_list);
+          // console.log(this.today_checkin_list_count);
+          if (this.status_type) {
             this.changeStatusType(this.status_type);
-        } else {
-          this.changeStatusType('all');
-        }
-      },
-      error => {
-        this.load_waitlist = 1;
-      },
-      () => {
-        this.load_waitlist = 1;
-      });
+          } else {
+            this.changeStatusType('all');
+          }
+        },
+        error => {
+          this.load_waitlist = 1;
+        },
+        () => {
+          this.load_waitlist = 1;
+        });
   }
-
   getFutureCheckIn() {
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-
-
     const promise = this.getFutureCheckinCount(Mfilter);
-
     promise.then(
       result => {
         this.pagination.totalCnt = result;
         Mfilter = this.setPaginationFilter(Mfilter);
-
         this.provider_services.getFutureWaitlist(Mfilter)
-        .subscribe(
-          data => {
-            this.check_in_list = this.check_in_filtered_list = data;
-            // this.future_waitlist_count = this.check_in_list.length || 0;
-          },
-          error => {
-            this.load_waitlist = 1;
-          },
-          () => {
-            this.load_waitlist = 1;
-          });
-
+          .subscribe(
+            data => {
+              this.check_in_list = this.check_in_filtered_list = data;
+              // this.future_waitlist_count = this.check_in_list.length || 0;
+            },
+            error => {
+              this.load_waitlist = 1;
+            },
+            () => {
+              this.load_waitlist = 1;
+            });
       });
-
   }
-
   getHistoryCheckIn() {
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-
     const promise = this.getHistoryCheckinCount(Mfilter);
-
     promise.then(
       result => {
         this.pagination.totalCnt = result;
         Mfilter = this.setPaginationFilter(Mfilter);
-
         this.provider_services.getHistroryWaitlist(Mfilter)
-        .subscribe(
-          data => {
-            this.check_in_list = this.check_in_filtered_list = data;
-          },
-          error => {
-            this.load_waitlist = 1;
-          },
-          () => {
-            this.load_waitlist = 1;
-          });
-
+          .subscribe(
+            data => {
+              this.check_in_list = this.check_in_filtered_list = data;
+            },
+            error => {
+              this.load_waitlist = 1;
+            },
+            () => {
+              this.load_waitlist = 1;
+            });
       }
     );
-
-
-
   }
-
   setTimeType(time_type) {
-    console.log('reached timetype');
-    this.check_in_list  = this.check_in_filtered_list = [];
+    // console.log('set time type');
+    this.check_in_list = this.check_in_filtered_list = [];
     this.time_type = time_type;
     this.shared_functions.setitemonLocalStorage('pdtyp', this.time_type);
     if (time_type !== 0) {
@@ -832,14 +794,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     }
     this.loadApiSwitch('setTimeType');
   }
-
   setFilterDateMaxMin() {
-
     this.filter_date_start_min = null;
     this.filter_date_start_max = null;
     this.filter_date_end_min = null;
     this.filter_date_end_max = null;
-
     if (this.time_type === 0) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
       this.filter_date_end_max = moment(new Date()).add(-1, 'days');
@@ -847,9 +806,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.filter_date_start_min = moment(new Date()).add(+1, 'days');
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');
     }
-
   }
-
   checkFilterDateMaxMin(type) {
     if (type === 'check_in_start_date') {
       this.filter_date_end_min = this.filter.check_in_start_date;
@@ -858,143 +815,116 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     } else if (type === 'check_in_end_date') {
       this.filter_date_start_max = this.filter.check_in_end_date;
-
       if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
         this.filter.check_in_start_date = this.filter.check_in_end_date;
       }
-
     }
     this.doSearch();
-
   }
-
   loadApiSwitch(source) {
-    console.log('apiswitch', source, this.returnedFromCheckDetails, this.time_type);
+    // console.log('apiswitch', source, this.returnedFromCheckDetails, this.time_type);
     let chkSrc = true;
     // if (source === 'changeLocation' && this.returnedFromCheckDetails && this.time_type === 0) {
     if (source === 'changeLocation' && this.time_type === 0) {
-     const hisPage =  this.shared_functions.getitemfromLocalStorage('hP');
-     const hFilter =  this.shared_functions.getitemfromLocalStorage('hPFil');
-     console.log('reached inside switch', hisPage, hFilter);
-     if (hisPage !== null) {
-      this.filter = hFilter;
-      this.pagination.startpageval = hisPage;
-      this.shared_functions.removeitemfromLocalStorage('hP');
-      this.shared_functions.removeitemfromLocalStorage('hPFil');
-      chkSrc = false;
-     }
+      const hisPage = this.shared_functions.getitemfromLocalStorage('hP');
+      const hFilter = this.shared_functions.getitemfromLocalStorage('hPFil');
+      // console.log('reached inside switch', hisPage, hFilter);
+      if (hisPage !== null) {
+        this.filter = hFilter;
+        this.pagination.startpageval = hisPage;
+        this.shared_functions.removeitemfromLocalStorage('hP');
+        this.shared_functions.removeitemfromLocalStorage('hPFil');
+        chkSrc = false;
+      }
     }
-
     if (chkSrc) {
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
         this.resetFilter();
       }
     }
-
     switch (this.time_type) {
-
-      case 0 : this.getHistoryCheckIn(); break;
-      case 1 : this.getQueueListByDate(); break;
-      case 2 : this.getFutureCheckIn(); break;
+      case 0: this.getHistoryCheckIn(); break;
+      case 1: this.getQueueListByDate(); break;
+      case 2: this.getFutureCheckIn(); break;
     }
   }
-
   showAdjustDelay() {
-
     if (this.queues.length === 0 || !this.selected_queue.id) {
       return false;
     }
-
     this.adjustdialogRef = this.dialog.open(AdjustQueueDelayComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass'],
+      panelClass: ['commonpopupmainclass', 'adjust-delay'],
       disableClose: true,
       data: {
         queues: this.queues,
-        queue_id: this.selected_queue.id
+        queue_id: this.selected_queue.id,
+        checkedin_count: this.today_checkedin_count,
+        arrived_count: this.today_arrived_count
       }
     });
-
     this.adjustdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
       }
     });
   }
-
-
   editLocation() {
-     this.locations.forEach((loc, index) => {
+    this.locations.forEach((loc, index) => {
       if (this.selected_location.id === loc.id) {
         this.selected_location_index = index;
       }
     });
     this.edit_location = 1;
-
   }
-
   cancellocationChange() {
     this.edit_location = 0;
   }
-
   onChangeLocationSelect(event) {
     const value = event.value;
     this.changeLocation(this.locations[value] || []);
   }
-
   reloadAPIs() {
     this.countApiCall();
     this.loadApiSwitch('reloadAPIs');
   }
-
   countApiCall() {
-
     this.getHistoryCheckinCount();
     this.getFutureCheckinCount();
     this.getTodayCheckinCount();
   }
   changeStatusType(type) {
-
-
     this.status_type = type;
     this.shared_functions.setitemonLocalStorage('pdStyp', this.status_type);
-    let status: any = this.status_type ;
-
+    let status: any = this.status_type;
     switch (type) {
-      case 'all' : status = ['checkedIn', 'arrived', 'prepaymentPending'];
+      case 'all': status = ['checkedIn', 'arrived'];
+      // case 'all': status = ['checkedIn', 'arrived', 'prepaymentPending'];
     }
-
     this.check_in_filtered_list = this.check_in_list.filter(
-        check_in => {
-          if (typeof(status) === 'string' &&
+      check_in => {
+        if (typeof (status) === 'string' &&
           check_in.waitlistStatus === status) {
+          return check_in;
+        } else if (typeof (status) === 'object') {
+          const index = status.indexOf(check_in.waitlistStatus);
+          if (index !== -1) {
             return check_in;
-          } else if (typeof(status) === 'object') {
-
-            const index = status.indexOf(check_in.waitlistStatus);
-            if (index !== -1) {
-              return check_in;
-            }
-
           }
-
-        });
+        }
+      });
   }
-
   changeWaitlistStatus(waitlist, action) {
-  this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
+    this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
   }
-
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
     this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
-    .then(
-      result => {
-        this.loadApiSwitch(result);
-      }
-    );
+      .then(
+        result => {
+          this.loadApiSwitch(result);
+        }
+      );
   }
-
-  showConsumerNote (checkin) {
+  showConsumerNote(checkin) {
     this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
@@ -1003,90 +933,78 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         checkin: checkin
       }
     });
-
     this.notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
       }
     });
   }
-
+  clearFilter() {
+    this.resetFilter();
+    this.filterapplied = false;
+    this.loadApiSwitch('doSearch');
+  }
   toggleFilter() {
     this.open_filter = !this.open_filter;
   }
-
   setFilterData(type, value) {
     this.filter[type] = value;
     this.resetPaginationData();
     this.doSearch();
   }
-
   setFilterForApi() {
     const api_filter = {};
-
     if (this.time_type === 1) {
       api_filter['queue-eq'] = this.selected_queue.id;
     } else if (this.filter.queue !== 'all') {
       api_filter['queue-eq'] = this.filter.queue;
     }
-
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
-
     if (this.filter.last_name !== '') {
       api_filter['lastName-eq'] = this.filter.last_name;
     }
-
     if (this.filter.phone_number !== '') {
       api_filter['primaryMobileNo-eq'] = this.filter.phone_number;
     }
-
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;
     }
-
-    if (this.time_type !== 1 ) {
+    if (this.time_type !== 1) {
       if (this.filter.waitlist_status !== 'all') {
         api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
       }
-
       // if (this.filter.check_in_date != null) {
       //   api_filter['date-eq'] = this.filter.check_in_date.format('YYYY-MM-DD');
       // }
-
       if (this.filter.check_in_start_date != null) {
         api_filter['date-ge'] = this.filter.check_in_start_date.format('YYYY-MM-DD');
       }
-
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.filter.check_in_end_date.format('YYYY-MM-DD');
       }
-
     }
-    if (this.time_type === 0 ) {
+    if (this.time_type === 0) {
       if (this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
     }
-
     api_filter['location-eq'] = this.selected_location.id;
-
     return api_filter;
   }
-
   setPaginationFilter(api_filter) {
-
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
     api_filter['count'] = this.filter.page_count;
-
     return api_filter;
   }
-
   doSearch() {
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service ||
+      this.filter.queue || this.filter.waitlist_status || this.filter.payment_status || this.filter.check_in_start_date
+      || this.filter.check_in_end_date) {
+      this.filterapplied = true;
+    }
     this.loadApiSwitch('doSearch');
   }
-
   resetFilter() {
     this.filter = {
       first_name: '',
@@ -1103,7 +1021,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       page: 0
     };
   }
-
   goCheckinDetail(checkin) {
     if (this.time_type === 0) {
       this.shared_functions.setitemonLocalStorage('hP', this.filter.page || 1);
@@ -1111,7 +1028,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     }
     this.router.navigate(['provider', 'checkin-detail', checkin.ynwUuid]);
   }
-
   addProviderNote(checkin) {
     this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
@@ -1121,151 +1037,146 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         checkin_id: checkin.ynwUuid
       }
     });
-
     this.addnotedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
     });
   }
-
-  getWaitlistBill(checkin, type = 'bill') {
-    this.provider_services.getWaitlistBill(checkin.ynwUuid)
-    .subscribe(
-      data => {
-        if (type === 'bill') {
-          this.viewBill(checkin , data);
-        } else {
-          this.makePayment(checkin , data);
-        }
-      },
-      error => {
-        // console.log(error);
-        if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
-          this.addEditBill(checkin , null);
-        } else {
-          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
-        }
-      },
-      () => {
-      }
-    );
+  viewBillPage(checkin) {
+    this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
   }
+  // getWaitlistBillgetWaitlistBill(checkin, type = 'bill') {
+  //   this.provider_services.getWaitlistBill(checkin.ynwUuid)
+  //     .subscribe(
+  //       data => {
+  //         if (type === 'bill') {
+  //           this.viewBill(checkin, data);
+  //         } else {
+  //           this.makePayment(checkin, data);
+  //         }
+  //       },
+  //       error => {
+  //         // console.log(error);
+  //         if (error.status === 422 && (this.time_type === 1 || this.time_type === 0)) {
+  //           // this.addEditBill(checkin , null);
+  //         } else {
+  //           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //         }
+  //       },
+  //       () => {
+  //       }
+  //     );
+  // }
+  // addEditBill(checkin) {
+  //   // console.log('add bill', bill_data);
+  //   // this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+  //   //   width: '50%',
+  //   //   panelClass: ['commonpopupmainclass', 'billpopup'],
+  //   //   disableClose: true,
+  //   //   data: {
+  //   //     checkin: checkin,
+  //   //     bill_data: bill_data
+  //   //   }
+  //   // });
+  //   // this.billdialogRef.afterClosed().subscribe(result => {
+  //   //   if (result === 'reloadlist') {
+  //   //     this.reloadAPIs();
+  //   //   }
+  //   // });
+  // }
+  // viewBill(checkin, bill_data) {
+  //   // console.log('billdata', bill_data);
+  //   // this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
+  //   //   width: '50%',
+  //   //   panelClass: ['commonpopupmainclass', 'billpopup'],
+  //   //   disableClose: true,
+  //   //   data: {
+  //   //     checkin: checkin,
+  //   //     bill_data: bill_data
+  //   //   }
+  //   // });
+  //   if (!this.viewbilldialogRef) {
+  //     this.viewbilldialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
+  //       width: '50%',
+  //       panelClass: ['commonpopupmainclass', 'billpopup'],
+  //       disableClose: true,
+  //       data: {
+  //         checkin: checkin,
+  //         bill_data: bill_data
+  //       }
+  //     });
+  //   } else {
+  //     console.log('more clicks');
+  //   }
+  //   this.viewbilldialogRef.afterClosed().subscribe(result => {
+  //     // console.log(result);
+  //     if (this.viewbilldialogRef) {
+  //       this.viewbilldialogRef = null;
+  //     }
+  //     //   if (result === 'updateBill') {
+  //     // this.addEditBill(checkin, bill_data);
+  //     // } else
+  //     if (result === 'reloadlist') {
+  //       this.reloadAPIs();
+  //     } else if (result === 'makePayment') {
+  //       this.makePayment(checkin, bill_data);
+  //     }
+  //   });
+  // }
 
-  addEditBill(checkin, bill_data) {
-    // console.log('add bill', bill_data);
-    this.billdialogRef = this.dialog.open(AddProviderWaitlistCheckInBillComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'billpopup'],
-      disableClose: true,
-      data: {
-        checkin: checkin,
-        bill_data: bill_data
-      }
-    });
-
-    this.billdialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.reloadAPIs();
-      }
-    });
-  }
-
-  viewBill(checkin, bill_data) {
-    // console.log('billdata', bill_data);
-    if (!this.viewbilldialogRef) {
-      this.viewbilldialogRef = this.dialog.open(ViewProviderWaitlistCheckInBillComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'billpopup'],
-        disableClose: true,
-        data: {
-          checkin: checkin,
-          bill_data: bill_data
-        }
-      });
-  } else {
-    console.log('more clicks');
-  }
-
-    this.viewbilldialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
-      if (this.viewbilldialogRef) {
-        this.viewbilldialogRef = null;
-      }
-      if (result === 'updateBill') {
-        this.addEditBill(checkin, bill_data);
-      } else if (result === 'reloadlist') {
-        this.reloadAPIs();
-      } else if ( result === 'makePayment') {
-        this.makePayment(checkin, bill_data);
-      }
-    });
-  }
-
-  makePayment(checkin, bill_data) {
-    if (!this.makPaydialogRef) {
-      this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          checkin: checkin,
-          bill_data: bill_data
-        }
-      });
-    } else {
-     // console.log('more clicks');
-    }
-
-    this.makPaydialogRef.afterClosed().subscribe(result => {
-      if (this.makPaydialogRef) {
-        this.makPaydialogRef = null;
-      }
-      this.reloadAPIs();
-    });
-  }
-
+  // makePayment(checkin, bill_data) {
+  //   if (!this.makPaydialogRef) {
+  //     this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+  //       width: '50%',
+  //       panelClass: ['commonpopupmainclass'],
+  //       disableClose: true,
+  //       data: {
+  //         checkin: checkin,
+  //         bill_data: bill_data
+  //       }
+  //     });
+  //   } else {
+  //     console.log('more clicks');
+  //   }
+  //   this.makPaydialogRef.afterClosed().subscribe(result => {
+  //     if (this.makPaydialogRef) {
+  //       this.makPaydialogRef = null;
+  //     }
+  //     this.reloadAPIs();
+  //   });
+  // }
   resetPaginationData() {
     this.filter.page = 1;
     this.pagination.startpageval = 1;
     this.shared_functions.removeitemfromLocalStorage('hP');
     this.shared_functions.removeitemfromLocalStorage('hPFil');
   }
-
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
     this.shared_functions.setitemonLocalStorage('hP', pg);
     this.shared_functions.setitemonLocalStorage('hPFil', this.filter);
-
     // console.log('page', pg);
     this.doSearch();
   }
-
   addConsumerInboxMessage(waitlist) {
-
     const uuid = waitlist.ynwUuid || null;
-
-    this.provider_shared_functions.addConsumerInboxMessage(uuid, this)
-    .then(
-      result => {
-
-      },
-      error => {
-
-      }
-    );
+    this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
+      .then(
+        result => {
+        },
+        error => {
+        }
+      );
   }
-
   reloadActionSubheader(data) {
     this.reloadAPIs();
   }
-
   getStatusLabel(status) {
     const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
     return label_status;
   }
-
   focusInput(ev, input) {
     const kCode = parseInt(ev.keyCode, 10);
     if (kCode === 13) {
@@ -1278,10 +1189,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       this.doSearch();
     }
   }
-
   learnmore_clicked(mod) {
-    const moreOptions = {'show_learnmore': true , 'scrollKey': 'adjustdelay'};
+    const moreOptions = { 'show_learnmore': true, 'scrollKey': 'adjustdelay' };
     const pdata = { 'ttype': 'learn_more', 'target': moreOptions };
     this.shared_functions.sendMessage(pdata);
-   }
+  }
 }

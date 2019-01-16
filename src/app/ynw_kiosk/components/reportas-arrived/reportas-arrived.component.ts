@@ -17,6 +17,13 @@ export class ReportasArrivedComponent implements OnInit {
   @Input() passedInData: any =  [];
   @Output() handleArrived = new EventEmitter<any>();
 
+  no_checkins_exists_cap = Messages.NO_CHECKINS_EXISTS_CAP;
+  token_cap = Messages.TOKEN_CAP;
+  persons_ahead = Messages.PERS_AHEAD;
+  name_cap = Messages.NAME_CAP;
+  status_cap = Messages.STATUS_CAP;
+  confirm_arrival = Messages.CONFIRM_ARRIVAL_CAP;
+
   api_error = null;
   api_success = null;
 
@@ -73,7 +80,7 @@ export class ReportasArrivedComponent implements OnInit {
 
   getStatus(stat, mod) {
     const retval = { class: '', caption: '', waitingtimecaption: '', waitingtimemins: ''};
-    // console.log('service time', stat.serviceTime);
+    console.log('service time', stat.serviceTime);
     switch (stat.waitlistStatus) {
       case 'checkedIn':
         retval.class = 'checkedin-class';
@@ -119,7 +126,6 @@ export class ReportasArrivedComponent implements OnInit {
         retval.waitingtimemins = '';
       break;
     }
-    // console.log('mod', mod);
     if (mod === 'class') {
       return retval.class;
     } else if (mod === 'caption') {

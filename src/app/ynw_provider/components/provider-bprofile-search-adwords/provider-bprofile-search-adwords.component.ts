@@ -18,10 +18,14 @@ import {Messages} from '../../../shared/constants/project-messages';
 })
 export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges, OnDestroy {
 
+  adwords_cap = Messages.SEARCH_ADWORDS_CAP;
+  sorry_cap = Messages.SEARCH_SORRY_CAP;
+  not_have_any_adwords_msg = Messages.SEARCH_NOT_HAVE_ANY_ADWORD_MSG;
+  
     @Input() reloadadwordapi;
 
     adword_list: any = [] ;
-    showadword_list: any = [] ;
+        showadword_list: any = [] ;
     adwordsmaxcount: any = 0;
     remaining_adword = 0;
     tooltipcls = projectConstants.TOOLTIP_CLS;
@@ -134,7 +138,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
           this.adwordshowmore = true;
         }
       }
-      private pass_totalpages() {
+       private pass_totalpages() {
         return this.adword_list.length;
       }
       private pass_pagesize() {
@@ -160,5 +164,25 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         for (let i = startval; i < rLimit; i++) {
           this.showadword_list.push(this.adword_list[i]);
         }
+      }
+      learnmore_clicked(mod, e) {
+        /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+               width: '50%',
+               panelClass: 'commonpopupmainclass',
+               autoFocus: true,
+               data: {
+                   moreOptions : this.getMode(mod)
+               }
+             });
+             dialogRef.afterClosed().subscribe(result => {
+             });*/
+        e.stopPropagation();
+        const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+        this.sharedfunctionObj.sendMessage(pdata);
+      }
+      getMode(mod) {
+        let moreOptions = {};
+        moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };
+        return moreOptions;
       }
 }

@@ -1,209 +1,195 @@
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+  class="ynw-common-form">
 
-
-<form [formGroup]="amForm"  novalidate
-(ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()">
-
-<h1 class="mat-dialog-title">Service
+  <h1 class="mat-dialog-title">{{service_cap}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1" [disabled]="canceldisabled">
-        <i class="fa fa-window-close" aria-hidden="true"></i>
+      <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
-</h1>
-<mat-dialog-content>
-  <ng-container *ngIf="mode=='normal'">
-  <div class="form-group">
-    <label class="col-form-label" for="service_name">Service Name *</label>
-    <input matInput type="text" class="form-control" id="service_name" placeholder="Service Name"
-    formControlName="name" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
-    [errorMsg]="fed_service.getErrorMessage(amForm,'name',
+  </h1>
+  <mat-dialog-content>
+    <ng-container *ngIf="mode=='normal'">
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" id="service_name" placeholder="{{service_name_cap}}"
+            formControlName="name" autocomplete="off">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')" [errorMsg]="fed_service.getErrorMessage(amForm,'name',
     {
       'required' : 'Please enter the service name.',
       'maxlength' : 'Name can contain only 100 characters'
     })">
-  </app-field-error-display>
-  </div>
+        </app-field-error-display>
+      </div>
 
-  <div class="form-group">
-    <label class="col-form-label" for="description">Description </label>
-    <!-- <input matInput type="text" class="form-control" id="description" placeholder="Description"
+      <div class="form-group">
+        <!-- <input matInput type="text" class="form-control" id="description" placeholder="Description"
     formControlName="description" autocomplete="off"> -->
-    <textarea class="form-control" id="description" placeholder="Briefly describe service" formControlName="description">
+        <mat-form-field>
+          <textarea matInput class="form-control" id="description" placeholder="Briefly describe service"
+            formControlName="description"> </textarea>
+        </mat-form-field>
 
-    </textarea>
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
-    [errorMsg]="fed_service.getErrorMessage(amForm,'description',
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')" [errorMsg]="fed_service.getErrorMessage(amForm,'description',
     {
       'required' : 'Please enter the service description.',
       'maxlength' : 'Description can contain only 500 characters'
     })">
-  </app-field-error-display>
-  </div>
+        </app-field-error-display>
+      </div>
 
-  <div class="form-group">
-    <label class="col-form-label" for="estimated_duration">Estimated Duration (min)*</label>
-    <input matInput type="text" class="form-control" id="estimated_duration" placeholder="Estimated Duration"
-    formControlName="serviceDuration" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')"
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput type="text" class="form-control number-ip-sm" id="estimated_duration" placeholder="{{est_duration_cap}}"
+            formControlName="serviceDuration" autocomplete="off">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')" [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
     {'required' : 'Please enter estimated duration.',
     'pattern' : 'Estimated duration should be an integer value (eg. 1, 10, 15 etc)',
     'maxlength' : 'Only 10 digits are allowed'
   })">
-  </app-field-error-display>
-  </div>
+        </app-field-error-display>
+      </div>
 
-  <div class="form-group" *ngIf="!disable_price">
-    <label class="col-form-label" for="price">Price (<i class="fa fa-inr"></i>) *</label>
-    <input matInput type="text" class="form-control" id="price" placeholder="Price"
-    formControlName="totalAmount" autocomplete="off">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')"
-    [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
+      <div class="form-group" *ngIf="!disable_price">
+        <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
+        <mat-form-field>
+          <input matInput type="text" class="form-control number-ip-sm" id="price" placeholder="Price *" formControlName="totalAmount"
+            autocomplete="off">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
     {'required' : 'Please enter price',
     'pattern' : 'Enter a valid price',
     'maxlength' : 'Only 10 digits are allowed'})">
-  </app-field-error-display>
-  </div>
-  <div class="form-group inline" *ngIf="!disable_price">
-  <label class="col-form-label">Enable prepayment</label>
-  <mat-slide-toggle
-  class="example-margin"
-  formControlName="isPrePayment"
-  (change)="changePrepayment()">
+        </app-field-error-display>
+      </div>
+      <div class="form-group inline" *ngIf="!disable_price">
+        <label class="col-form-label">{{enable_prepayment_cap}}</label>
+        <mat-slide-toggle class="example-margin" formControlName="isPrePayment" (change)="changePrepayment()">
 
-  </mat-slide-toggle>
-  </div>
-  <ng-container *ngIf="!disable_price">
-    <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
-      <label class="col-form-label" for="prepayment_amount">Prepayment Amount (<i class="fa fa-inr"></i>) *</label>
-      <input matInput type="text" class="form-control" id="prepayment_amount" placeholder="Prepayment Amount"
-      formControlName="minPrePaymentAmount" autocomplete="off">
-      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
-      [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
+        </mat-slide-toggle>
+      </div>
+      <ng-container *ngIf="!disable_price">
+        <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
+          <!-- <label class="col-form-label" for="prepayment_amount">{{prepayment_cap}}(<i class="fa fa-inr"></i>) *</label> -->
+          <mat-form-field>
+            <input matInput type="text" class="form-control" id="prepayment_amount" placeholder="Prepayment Amount"
+              formControlName="minPrePaymentAmount" autocomplete="off">
+          </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
       {'required' : 'Please enter prepayment amount',
       'pattern' : 'Enter a valid amount'})">
-    </app-field-error-display>
-    </div>
-  </ng-container>
-  <div class="form-group inline" *ngIf="!disable_price">
-    <label class="col-form-label">Tax applicable</label>
-    <mat-slide-toggle
-    class="example-margin"
-    formControlName="taxable" (change)="taxapplicableChange()">
-    </mat-slide-toggle>
-  </div>
-
-  <div class="form-group inline">
-
-    <label class="col-form-label">End of Service Notification</label>
-    <mat-slide-toggle
-    class="example-margin"
-    formControlName="notification"
-    (change)="changeNotification()">
-
-    </mat-slide-toggle>
-  </div>
-
-
-  <mat-radio-group formControlName="notificationType"
-  *ngIf="amForm.get('notification').value === true">
-    <mat-radio-button value="pushMsg">Push Message</mat-radio-button>
-    <mat-radio-button value="email">Email</mat-radio-button>
-  </mat-radio-group>
-
-  <ng-container *ngIf="type == 'add' ">
-
-    <div class="form-group">
-      <label class="col-form-label">Gallery</label>
-    </div>
-
-    <div *ngIf="gallery.length > 0">
-      <ul class="galul">
-      <li *ngFor="let file of gallery;let i = index ">
-        <div class="galimg_outer">
-        <div class="gal_img" *ngIf="file.thumbUrl"><img [src]="file.thumbUrl"></div>
-        <div class="gal_caption">{{file.caption}}</div>
-        <div class="gal_action" *ngIf="!canceldisabled">
-            <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
-                <mat-icon>more_vert</mat-icon>
-            </button>
-              <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item  (click)="confirmDelete(file)">
-                    <!-- <mat-icon>delete</mat-icon> -->
-                    <i class="icon-delete"></i>
-                    <span >Delete</span>
-                  </button>
-              </mat-menu>
+          </app-field-error-display>
         </div>
+      </ng-container>
+      <div class="form-group inline" *ngIf="!disable_price">
+        <label class="col-form-label">{{tax_applicable_cap}}</label>
+        <mat-slide-toggle class="example-margin" formControlName="taxable" (change)="taxapplicableChange()">
+        </mat-slide-toggle>
       </div>
-      </li>
-      </ul>
-    </div>
 
-    <div *ngIf="item_pic.files">
-      <ul class="galul">
-      <li *ngFor="let file of item_pic.files;let i = index ">
-        <div class="galimg_outer">
-        <div class="gal_img" *ngIf="item_pic.base64[i]"><img [src]="item_pic.base64[i]"></div>
-        <div class="gal_caption"><input matInput type="text" [(ngModel)]="item_pic.caption[i]"
-          [ngModelOptions]="{standalone: true}"
-          placeholder="Caption" autocomplete="off"></div>
-        <div class="gal_action" *ngIf="!canceldisabled">
-            <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
-                <mat-icon>more_vert</mat-icon>
-            </button>
-              <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item (click)="deleteTempImage(i)">
-                    <!-- <mat-icon>delete</mat-icon> -->
-                    <i class="icon-delete"></i>
-                    <span >Delete</span>
-                  </button>
-              </mat-menu>
+      <div class="form-group inline">
+
+        <label class="col-form-label">{{service_notify_cap}}</label>
+        <mat-slide-toggle class="example-margin" formControlName="notification" (change)="changeNotification()">
+
+        </mat-slide-toggle>
+      </div>
+
+
+      <mat-radio-group formControlName="notificationType" *ngIf="amForm.get('notification').value === true">
+        <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
+        <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
+      </mat-radio-group>
+
+      <ng-container *ngIf="type == 'add' ">
+
+        <div class="form-group">
+          <label class="col-form-label">{{gallery_cap}}</label>
         </div>
+
+        <div *ngIf="gallery.length > 0">
+          <ul class="galul">
+            <li *ngFor="let file of gallery;let i = index ">
+              <div class="galimg_outer">
+                <div class="gal_img" *ngIf="file.thumbUrl"><img [src]="file.thumbUrl"></div>
+                <div class="gal_caption">{{file.caption}}</div>
+                <div class="gal_action" *ngIf="!canceldisabled">
+                  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button type="button" mat-menu-item (click)="confirmDelete(file)">
+                      <!-- <mat-icon>delete</mat-icon> -->
+                      <i class="icon-delete"></i>
+                      <span>{{delete_btn}}</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div *ngIf="item_pic.files">
+          <ul class="galul">
+            <li *ngFor="let file of item_pic.files;let i = index ">
+              <div class="galimg_outer">
+                <div class="gal_img" *ngIf="item_pic.base64[i]"><img [src]="item_pic.base64[i]"></div>
+                <div class="gal_caption"><input matInput type="text" [(ngModel)]="item_pic.caption[i]" [ngModelOptions]="{standalone: true}"
+                    placeholder="Caption" autocomplete="off"></div>
+                <div class="gal_action" *ngIf="!canceldisabled">
+                  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button type="button" mat-menu-item (click)="deleteTempImage(i)">
+                      <!-- <mat-icon>delete</mat-icon> -->
+                      <i class="icon-delete"></i>
+                      <span>{{delete_btn}}</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="upload-doc" (click)="file.click()" *ngIf="!canceldisabled">
+          <label class="col-form-label">{{select_image_cap}}</label>
+          <span class="select-wrapper ">
+            <input type="file" multiple name="image_src" id="image_src" accept="image/*" #file (change)="imageSelect(file,$event)">
+          </span>
+        </div>
+
+      </ng-container>
+
+    </ng-container>
+
+    <ng-container *ngIf="mode=='afteradd'">
+      <div class="message-one">
+        <p class="p1">{{normaladd_msg1}}</p>
+        <p class="p2">{{normaladd_msg2}}</p>
       </div>
-      </li>
-      </ul>
-    </div>
-
-    <div class="upload-doc" (click)="file.click()" *ngIf="!canceldisabled">
-      <label class="col-form-label">Click here to select the image files</label>
-      <span class="select-wrapper ">
-        <input type="file"  multiple name="image_src" id="image_src" accept="image/*"
-        #file (change)="imageSelect(file,$event)">
-      </span>
-    </div>
-
-  </ng-container>
-
-  </ng-container>
-
-  <ng-container *ngIf="mode=='afteradd'">
-    <div class="message-one">
-      <p class="p1">{{normaladd_msg1}}</p>
-      <p class="p2">{{normaladd_msg2}}</p>
-    </div>
-    <div class="message-two" (click)="gotoManageQueue()">Please click here to go to the service time window List</div>
-  </ng-container>
+      <div class="message-two" (click)="gotoManageQueue()">{{go_to_service_cap}}</div>
+    </ng-container>
 
 
-</mat-dialog-content>
+  </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button *ngIf="mode=='normal'" type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled">Cancel</button>
+  <mat-dialog-actions>
+    <button *ngIf="mode=='normal' && !canceldisabled" type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
     <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid || savedisabled" class="cs-btn bt1">{{button_title}}</button>
-
     <span class="service-tooltip" *ngIf="type == 'add' && mode=='normal'">
-        <i class="icon-bell"></i>
-        {{tooltip}}
+      <i class="icon-bell"></i>
+      {{tooltip}}
     </span>
-</mat-dialog-actions>
+  </mat-dialog-actions>
 
-<app-field-error-display [displayError]="(error_list.length > 0) ? true : false"  [errorMsg]="error_msg">
-</app-field-error-display>
+  <app-field-error-display [displayError]="(error_list.length > 0) ? true : false" [errorMsg]="error_msg">
+  </app-field-error-display>
 
-<app-field-error-display [displayError]="true" *ngIf="api_error"
-errorMsg="{{api_error}}"></app-field-error-display>
+  <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success"
-successMsg="{{api_success}}"></app-form-success-display>
+  <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
 </form>

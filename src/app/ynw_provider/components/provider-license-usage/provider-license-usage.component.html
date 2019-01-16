@@ -2,30 +2,29 @@
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
-  </h1>
-  <mat-dialog-content>
-      <div>
-          <div class="audit_outer">
-              <div class="" *ngIf="metrics.length>0">
-                  <table width="100%" class="table">
-                      <tr>
-                          <th>Name</th>
-                          <th>Total</th>
-                          <th>Used</th>
-                          <th>Compliance Info</th>
-                      </tr>
-                      <tr *ngFor="let metric of metrics">
-                          <td>{{metric.metricName}}</td>
-                          <td>{{metric.total }} {{metric.unitValue}}</td>
-                          <td>{{metric.used }} {{metric.unitValue}}</td>
-                          <td>{{metric.ComplainceInfo}}</td>
-                      </tr>
-                  </table>
-              </div>
-              <div class="" *ngIf="metrics.length==0">
-                  No metric found
-              </div>
-          </div>
+</h1>
+<mat-dialog-content>
+    <div>
+        <div class="audit_outer">
+            <div class="" *ngIf="metrics.length>0">
+                <table width="100%" class="table">
+                    <tr>
+                        <th>{{name_cap}}</th>
+                        <th>{{total_cap}}</th>
+                        <th>{{used_cap}}</th>
+                        <th>{{compliance_cap}}</th>
+                    </tr>
+                    <tr *ngFor="let metric of metrics">
+                        <td>{{metric.metricName}}</td>
+                        <td>{{metric.total }} {{metric.unitValue}}</td>
+                        <td>{{metric.used }} {{metric.unitValue}}</td>
+                        <td>{{metric.ComplainceInfo}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="" *ngIf="metrics.length==0">
+                {{no_metric_cap}}
+            </div>
         </div>
-  </mat-dialog-content>
-
+    </div>
+</mat-dialog-content>

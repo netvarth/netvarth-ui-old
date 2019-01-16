@@ -11,6 +11,10 @@ import {Messages} from '../../constants/project-messages';
 })
 export class ReturnPaymentComponent implements OnInit {
 
+  payment_done_success_cap = Messages.PAY_DONE_SUCCESS_CAP;
+  go_back_home_cap = Messages.GO_BACK_HOME_CAP;
+  payment_failed_cap = Messages.PAY_FAILED_CAP;
+  
   status = null;
   statussmall = null;
   user_type = null;

@@ -1,18 +1,18 @@
-
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+
 </section>
 
 <section>
-  <div class="content loc-list">
-      <div class="container">
-          <div class="row">
-              <div class="n-loc">
-                  <span class="add-nloc cs-btn bt3" (click)="addEditProviderQueue('add')">Add New Service Time Window</span>
-              </div>
-          </div>
-          <div class="row" *ngFor="let queue of queue_list">
+    <div class="content loc-list">
+        <div class="container">
+            <div class="row">
+                <div class="n-loc">
+                    <span class="add-nloc-q cs-btn bt3" (click)="addEditProviderQueue('add')">{{new_serv_cap}}</span>
+                </div>
+            </div>
+            <div class="row" *ngFor="let queue of queue_list">
                 <div class="card" [class.disabled]="queue.queueState=='DISABLED'">
                     <div class="copy">
                         <span class="mbt">
@@ -20,69 +20,65 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                         </span>
-
-                        <h3 class="pointer-cursor" (click)="goQueueDetail(queue)" [matTooltipClass] = "tooltipcls" [matTooltip]="tooltip_queueedit">
-                        {{queue.name | capitalizeFirst}}
+                        <h3 class="pointer-cursor" (click)="goQueueDetail(queue)" [matTooltipClass]="tooltipcls"
+                            [matTooltip]="tooltip_queueedit">
+                            {{queue.name | capitalizeFirst}}
                         </h3>
-
                         <div class="c-ot m0">
                             <div class="item" *ngIf="queue.location">
-                                <span class="ttle">Location</span>
+                                <span class="ttle">{{loc_cap}}</span>
                                 <span class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
                             </div>
                             <div class="item" *ngIf="queue.capacity">
-                                <span class="ttle">Max. Capacity</span>
+                                <span class="ttle">Maximum {{customer_label}}s served</span>
                                 <span class="icon-customer-line">{{queue.capacity}}</span>
                             </div>
-
                             <div class="item" *ngIf="queue.displayschedule">
-                              <span class="ttle">Schedule</span>
-                              <span>
-                                <ng-container *ngFor="let schedule of queue.displayschedule">
-                                  <!-- <span class="sch">
+                                <span class="ttle">{{schedule_cap}}</span>
+                                <span>
+                                    <ng-container *ngFor="let schedule of queue.displayschedule">
+                                        <!-- <span class="sch">
                                       Mon - Fri 09:00 AM - 06:00 PM
                                   </span> -->
-                                  <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
-                              </ng-container>
-                              </span>
+                                        <span class="day">{{schedule.dstr}}</span>&nbsp;<span class="time">{{schedule.time}}</span>
+                                    </ng-container>
+                                </span>
                             </div>
-
                         </div>
 
                         <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="addEditProviderQueue('edit', queue)" *ngIf="queue.queueState=='ENABLED'">
-                                    <i class="icon-edit"></i>
+                                <i class="icon-edit"></i>
                                 Edit
                             </button>
                             <button mat-menu-item (click)="changeProviderQueueStatus(queue)">
                                 <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
                                 <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
-                            {{(queue.queueState=='ENABLED') ? 'Disable' :'Enable'}}
-                        </button>
+                                {{(queue.queueState=='ENABLED') ? 'Disable' :'Enable'}}
+                            </button>
                         </mat-menu>
 
                     </div>
                 </div>
             </div>
-
+            <div class="card" *ngIf="queue_list.length==0">
+                No Service time-window added
+            </div>
             <div class="row" *ngIf="api_load_complete == 1 && queue_list.length == 0">
                 <div class="card">
                     <div class="copy">
                         <h3 class="pointer-cursor">
-                        No service time windows available
+                            {{no_service_cap}}
                         </h3>
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
     </div>
 </section>
 
-<app-field-error-display [displayError]="true" *ngIf="api_error"
-errorMsg="{{api_error}}"></app-field-error-display>
-
-<app-form-success-display [displayMsg]="true" *ngIf="api_success"
-successMsg="{{api_success}}"></app-form-success-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
 
 <!-- <table class="table" *ngIf="queue_list.length !=0">
   <thead>

@@ -1,54 +1,57 @@
-  <section>
+<section>
     <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-  </section>
-  <section>
+</section>
+<section>
     <div class="content comn-cls paymenthistory">
         <div class="container">
             <div class="w-dta">
                 <div class="row">
                     <div class="card">
-                      <div class="lc4-2" >
-                          <div class="pay-tbl table-outer">
-                              <app-innerloading-spinner *ngIf="!load_complete"></app-innerloading-spinner>
-                              <table class="table"  *ngIf="payment_history.length != 0">
-                                  <thead>
-                                      <tr>
-                                          <th class="th1">Date</th>
-                                          <th class="th2">Amount</th>
-                                          <th class="th3">Period</th>
-                                          <th class="th4">Invoice</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr *ngFor="let invoice of payment_history">
-                                          <td class="td1" data-title="Date">{{invoice.createdDate | date: dateFormat }}</td>
-                                          <td class="td2"data-title="Amount">
-                                              <strong>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</strong>
-                                          </td>
-                                          <td class="td3"data-title="Period">
-                                              {{invoice.periodFrom | date: dateFormat }} - {{invoice.periodTo | date: dateFormat }}
-                                          </td>
-                                          <td class="td4" data-title="Invoice">
-                                              <span class="icon-invoice" (click)="getInvoice(invoice)"></span>
-                                          </td>
-                                      </tr>
-                                  </tbody>
-                              </table>
+                        <div class="lc4-2">
+                            <div class="pay-tbl table-outer">
+                                <app-innerloading-spinner *ngIf="!load_complete"></app-innerloading-spinner>
+                                <table class="table" *ngIf="payment_history.length != 0">
+                                    <thead>
+                                        <tr>
+                                            <th class="th1">{{date_cap}}</th>
+                                            <th class="th2">{{amount_cap}}</th>
+                                            <th class="th3">{{period_cap}}</th>
+                                            <th class="th4">{{invoice_cap}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let invoice of payment_history">
+                                            <td class="td1" data-title="Date">{{invoice.createdDate | date: dateFormat
+                                                }}</td>
+                                            <td class="td2" data-title="Amount">
+                                                <strong>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</strong>
+                                            </td>
+                                            <td class="td3" data-title="Period">
+                                                {{invoice.periodFrom | date: dateFormat }} - {{invoice.periodTo | date:
+                                                dateFormat }}
+                                            </td>
+                                            <td class="td4" data-title="Invoice">
+                                                <span class="icon-invoice" (click)="getInvoice(invoice)"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                              <div class="search_paging">
-                                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
-                              </div>
+                                <div class="search_paging">
+                                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                                        (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+                                </div>
 
-                          </div>
-                      </div>
-                      <div  *ngIf="load_complete==1 && payment_history.length == 0">
-                        No transactions done yet.
-                      </div>
+                            </div>
+                        </div>
+                        <div *ngIf="load_complete==1 && payment_history.length == 0">
+                            {{no_transaction}}.
+                        </div>
 
                     </div>
                 </div>
             </div>
         </div>
-      </div>
-  </section>
+    </div>
+</section>

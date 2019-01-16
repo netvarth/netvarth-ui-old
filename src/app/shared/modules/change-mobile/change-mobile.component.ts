@@ -15,21 +15,30 @@ import {projectConstants} from '../../constants/project-constants';
 })
 export class ChangeMobileComponent implements OnInit {
 
+  mobile_cap = Messages.MOBILE_CAP;
+  your_curmob_msg = Messages.CURRENTMOBMSG;
+  verified_cap = Messages.PHONE_VERIFIED;
+  save_btn_cap = Messages.SAVE_BTN;
+  related_links_cap = Messages.RELATED_LINKS;
+  user_profile_cap = Messages.USER_PROF_CAP;
+  change_pass_cap = Messages.CHANGE_PASSWORD_CAP;
+  add_change_email_cap = Messages.ADD_CHANGE_EMAIL;
+  family_members_cap = Messages.FAMILY_MEMBERS;
+  mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
+  changemob_cap = Messages.CHANGE_MOB_CAP;
+
   spForm: FormGroup;
   api_error = null;
   api_success = null;
   is_verified = false;
   user_details;
+  prev_phonenumber;
   step = 1;
   curtype;
-  submit_data = {'phonenumber' : null};
+  submit_data = {'phonenumber': null};
   breadcrumbs_init = [
     {
-      title: 'Dashboard',
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
-    },
-    {
-      title: 'Change Mobile Number',
+      title: 'Change Mobile #',
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
     }
   ];
@@ -50,7 +59,6 @@ export class ChangeMobileComponent implements OnInit {
             Validators.maxLength(10),
             Validators.minLength(10),
             Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])]
-
       });
       this.getProfile();
     }
@@ -63,15 +71,16 @@ export class ChangeMobileComponent implements OnInit {
           this.step = 1;
          // console.log('typ', this.shared_functions.isBusinessOwner('returntyp'));
           if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
-            this.spForm.setValue({
-              'phonenumber': success['basicInfo']['mobile'] || null
-            });
+            this.prev_phonenumber = success['basicInfo']['mobile'];
+            // this.spForm.setValue({
+            //   'phonenumber': success['basicInfo']['mobile'] || null
+            // });
             this.is_verified = success['basicInfo']['phoneVerified'];
           } else {
-
-            this.spForm.setValue({
-              'phonenumber': success['userProfile']['primaryMobileNo'] || null
-            });
+            this.prev_phonenumber = success['userProfile']['primaryMobileNo'];
+            // this.spForm.setValue({
+            //   'phonenumber': success['userProfile']['primaryMobileNo'] || null
+            // });
             this.is_verified = success['userProfile']['phoneVerified'];
           }
         },
@@ -92,6 +101,7 @@ export class ChangeMobileComponent implements OnInit {
           // this.shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
           setTimeout(() => {
             this.api_success = '';
+            this.spForm.reset();
             }, projectConstants.TIMEOUT_DELAY_LARGE6);
         },
         error => {

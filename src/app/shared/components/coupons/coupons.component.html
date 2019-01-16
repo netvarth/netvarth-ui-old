@@ -1,0 +1,38 @@
+<h1 class="mat-dialog-title">Available Coupons
+  <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+    <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+
+<mat-dialog-content>
+  <ng-container *ngFor="let coupon of couponsList let i=index">
+    <div class="coupon">
+      <div class="coupon-container">
+        <div class="servicedet_outer">
+          <div class="outer">
+            <h6><b>{{coupon.couponName}}</b></h6>
+            <span> {{coupon.couponDescription}}</span>
+            <div> Coupon Code: <span class="code">{{coupon.jaldeeCouponCode}}</span> <span class="help">Apply this coupon code while Check-in</span>
+            </div>
+            <div class="outer4">
+              <div class="name">
+                <span class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} -
+                  {{formatDateDisplay(coupon.endDate)}}</span>
+              </div>
+              <div class="tnc" *ngIf="coupon.consumerTermsAndconditions">
+                <ng-container>
+                  <div class="lc3-2 lcd">
+                    <div class="cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C</div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" *ngIf="couponsList[i].adwordshowmore">
+          {{coupon.consumerTermsAndconditions}}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</mat-dialog-content>

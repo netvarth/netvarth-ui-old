@@ -94,10 +94,6 @@ export class HomeComponent implements OnInit {
         { 'caption': 'Car Wash <span class="itm-no">(200)</span>', 'kw': 'carWash', 'kwautoname' : 'Car Wash', 'kwtyp': 'subdom' },
         { 'caption': 'Two Wheeler Services <span class="itm-no">(340)</span>', 'kw': 'twoWheelerServicesAndRepair', 'kwautoname' : 'Two Wheeler Services', 'kwtyp': 'subdom' }
       ];
-
-
-
-
       // building array to hold the details related to the domains
       this.sector_info['healthCare'] = { 'simg': 'assets/images/icon-big-healthcare.svg',
       'caption1': '1000s of Doctors', 'caption2': '', 'special': this.special_info['healthCare']};

@@ -1,63 +1,66 @@
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->    
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section>
     <div class="content comn-cls">
         <div class="container">
             <div class="no-dta" *ngIf="discount_list.length ==0 && query_executed == true">
-                    <p>{{emptyMsg}}</p>
-                    <span class="cs-btn bt3" (click)="addDiscounts()">Add Bill Discounts</span>
+                <p>{{emptyMsg}}</p>
+                <span class="cs-btn bt3" (click)="addDiscounts()">{{add_disc_cap}}</span>
             </div>
             <div class="w-dta" *ngIf="discount_list.length>0">
-                    <div class="row">
-                        <div class="card">
-                            <div class="copy">
-                                <div class="table-outer q-tbl">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Value</th>
-                                                <th><span class="addbt" (click)="addDiscounts()"></span></th>                            
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr *ngFor="let discount of discount_list">
-                                                        <td data-title="Name"  class="td1">{{discount.name}}</td>
-                                                        <td data-title="Value" clas="td2">{{(discount.calculationType=='Percentage')? discount.discValue+'%': formatPrice(discount.discValue)}}</td>        
-                                                        <td class="action">
-                                                            <span class="mbt">
-                                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                                    <mat-icon>more_vert</mat-icon>
-                                                                </button>
-                                                                <mat-menu #menu="matMenu">
-                                                                    <button type="button" (click)="editDiscounts(discount)" mat-menu-item>
-                                                                        <i class="icon-edit"></i> 
-                                                                        Edit
-                                                                    </button>
-                                                                    <button type="button" (click)="doRemoveDiscounts(discount)" mat-menu-item>
-                                                                        <i class="icon-delete"></i> 
-                                                                        Delete
-                                                                    </button>
-                                                                </mat-menu>
-                                                            </span>
+                <div class="row">
+                    <div class="card">
+                        <div class="copy">
+                            <div class="table-outer q-tbl">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>{{name_cap}}</th>
+                                            <th>{{value_cap}}</th>
+                                            <th><span class="addbt" (click)="addDiscounts()"></span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let discount of discount_list">
+                                            <td data-title="Name" class="td1">{{discount.name}}</td>
+                                            <td data-title="Value" clas="td2">{{(discount.calculationType=='Percentage')?
+                                                discount.discValue+'%': formatPrice(discount.discValue)}}</td>
+                                            <td class="action">
+                                                <span class="mbt">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button type="button" (click)="editDiscounts(discount)"
+                                                            mat-menu-item>
+                                                            <i class="icon-edit"></i>
+                                                            {{edit_btn}}
+                                                        </button>
+                                                        <button type="button" (click)="doRemoveDiscounts(discount)"
+                                                            mat-menu-item>
+                                                            <i class="icon-delete"></i>
+                                                            {{delete_btn}}
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
 
-                                                            <span class="mbt-mobile-show">
-                                                                    <button class="editcls" type="button" (click)="editDiscounts(discount)">Edit</button>
-                                                                    <button class="deletecls" type="button" (click)="doRemoveDiscounts(discount)">Delete</button>
-                                                            </span>
-                                                        </td>   
-                                                    </tr>
-                                        </tbody>
-                                    </table>
-                                    <span class="addbt d-block d-md-none" (click)="addDiscounts()"></span>
-                                </div>
+                                                <span class="mbt-mobile-show">
+                                                    <button class="editcls" type="button" (click)="editDiscounts(discount)">{{edit_btn}}</button>
+                                                    <button class="deletecls" type="button" (click)="doRemoveDiscounts(discount)">{{delete_btn}}</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <span class="addbt d-block d-md-none" (click)="addDiscounts()"></span>
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
+    </div>
 </section>

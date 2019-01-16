@@ -1,19 +1,19 @@
 <div class="lc33">
-    <div class="lc3-1 lcd">
-        <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addwordTooltip">Adwords
+    <div class="lc3-1 lcd custom-help">
+        <div class="ttle" [matTooltipClass] = "tooltipcls" [matTooltip]="addwordTooltip">{{adwords_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div>
           <span class="addbt" (click)="addAdwords()"
           *ngIf="adwordsmaxcount > 0"></span>
         </div>
     </div>
     <ng-container *ngIf="adwordsmaxcount != 0">
-        <div *ngFor="let adword of showadword_list; let i = index">
+		<div *ngFor="let adword of showadword_list; let i = index">
             <div class="lc3-2 lcd">
             <div class="ttle">{{adword.name}}</div>
             <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
             </div>
         </div>
-
-        <!-- <div *ngFor="let adword of adword_list; let i = index">
+        
+<!--         <div *ngFor="let adword of adword_list; let i = index">
             <ng-container *ngIf="i<5">
                 <div class="lc3-2 lcd">
                 <div class="ttle">{{adword.name}}</div>
@@ -43,7 +43,7 @@
 
     <div class="lc3-2 lcd" *ngIf="adwordsmaxcount == 0 && query_executed == true">
       <div  class="ttle">
-          <p><strong>Sorry!</strong> Currently you did not have any adwords. Please upgrade your Licence Package/Add-On </p>
+          <p><strong>{{sorry_cap}}</strong> {{not_have_any_adwords_msg}} </p>
       </div>
     </div>
 

@@ -15,6 +15,13 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AdjustQueueDelayComponent implements OnInit {
 
+  adjust_delay_cap = Messages.ADJUST_DELAY_CAP;
+  service_window_cap = Messages.SERV_TIME_WINDOW_CAP;
+  send_message_cap = Messages.SEND_MSG_CAP;
+  messgae_cap = Messages.MESSAGE_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  save_btn = Messages.SAVE_BTN;
+  delay_cap = Messages.DELAY_CAP;
   amForm: FormGroup;
   queues: any = [];
   api_success = null;
@@ -23,6 +30,8 @@ export class AdjustQueueDelayComponent implements OnInit {
   default_message = '';
   selected_queue = 0;
   placeholder = Messages.ADJUSTDELAY_PLACEHOLDER;
+  arrived_cnt = 0;
+  checkedin_cnt = 0;
 
   constructor(
     public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
@@ -36,6 +45,8 @@ export class AdjustQueueDelayComponent implements OnInit {
      }
 
      ngOnInit() {
+      this.arrived_cnt = this.data.arrived_count;
+      this.checkedin_cnt = this.data.checkedin_count;
       this.queues = this.data.queues;
 
       if (!this.data.queues || !this.data.queue_id) {

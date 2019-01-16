@@ -1,5 +1,5 @@
 
-<h1 class="mat-dialog-title">License History
+<h1 class="mat-dialog-title">{{lic_history_cap}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -11,13 +11,13 @@
               <div class=""  *ngIf="auditlog_details.length>0">
                   <table width="100%" class="table">
                       <tr>
-                          <th>Name</th>
-                          <th>Applied On</th>
-                          <th>Expiry Date</th>
-                          <th>Status</th>
+                          <th>{{name_cap}}</th>
+                          <th>{{applied_on_cap}}</th>
+                          <th>{{expiry_date_cap}}</th>
+                          <th>{{status_cap}}</th>
                       </tr>
                       <tr *ngFor="let auditlog of auditlog_details">
-                          <td>{{auditlog.name}}</td>
+                          <td>{{auditlog.displayName}}</td>
                           <td>{{auditlog.dateApplied | date: dateFormat }}</td>
                           <td>{{auditlog.expiryDate | date: dateFormat }}</td>
                           <td>{{auditlog.status}}</td>
@@ -25,7 +25,7 @@
                   </table>
               </div>
               <div class="" *ngIf="load_complete && auditlog_details.length==0">
-                  No logs found
+                  {{no_logs_founf_cap}}
               </div>
           </div>
         </div>

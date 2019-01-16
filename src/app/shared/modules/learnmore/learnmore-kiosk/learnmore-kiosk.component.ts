@@ -12,10 +12,11 @@ import { Messages } from '../../../constants/project-messages';
   templateUrl: './learnmore-kiosk.component.html'
 })
 export class LearnmoreKioskComponent implements OnInit {
+  kiosk_cap = Messages.KIOSK_CAP;
   @Input() target: string;
   curtype = '';
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data: any,
+   // @Inject(MAT_DIALOG_DATA) public data: any,
     private _scrollToService: ScrollToService,
     public shared_function: SharedFunctions
   ) {}

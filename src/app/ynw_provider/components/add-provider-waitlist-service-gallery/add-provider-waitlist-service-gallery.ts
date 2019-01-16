@@ -27,6 +27,10 @@ export class AddProviderWaitlistServiceGalleryComponent implements OnInit {
     caption: []
   };
 
+  select_image_cap = Messages.SELECT_IMAGE_CAP;
+  delete_btn = Messages.DELETE_BTN;
+  cancel_btn = Messages.CANCEL_BTN;
+  service_gallery_cap = Messages.SERVICE_GALLERY_CAP;
   image_list: any = [];
   success_error = null;
   error_list = [];

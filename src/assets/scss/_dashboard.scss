@@ -1421,7 +1421,7 @@ footer {
                 @include respond-to(ynw-767) {
                     padding: 0px 20px 20px;
                 }
-
+                
                 h2 {
                     text-align: left;
                 }
@@ -4526,19 +4526,19 @@ footer {
                     font-size: .875rem;
 
                     .mat-form-field {
-                        .mat-input-wrapper, .mat-form-field-wrapper {
+                        .mat-input-wrapper {
                             padding-bottom: 0px;
 
                             .mat-input-underline,
                             .mat-input-subscript-wrapper,
-                            .mat-form-field-label-wrapper, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                            .mat-form-field-label-wrapper {
                                 display: none;
                             }
 
-                            .mat-input-flex, .mat-form-field-flex {
+                            .mat-input-flex {
                                 height: 40px;
 
-                                .mat-form-field-infix, .mat-input-infix {
+                                .mat-form-field-infix {
                                     padding: 0;
                                     border: none;
 
@@ -4796,7 +4796,7 @@ footer {
                             display: block;
                             font-size: .60rem;
                             margin-top: 5px;
-                        }
+                        }                        
                     }
 
                     .leftarrow,
@@ -6765,8 +6765,8 @@ footer {
             
             @include respond-to(ynw-575) {
                 .pay-section {
-                    padding-right: 50px;
-                    
+                	padding-right: 50px;
+                	
                     &.card {
                         .lc11 {
                             .lc1-1 {

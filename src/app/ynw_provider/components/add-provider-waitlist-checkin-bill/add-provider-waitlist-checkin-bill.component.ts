@@ -1,15 +1,19 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, Output } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
-import {Observable} from 'rxjs';
-import {startWith, map} from 'rxjs/operators';
-
+import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
+import { EventEmitter } from 'protractor';
+import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
+import { ActivatedRoute } from '@angular/router';
+import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
+import { MessageService } from '../../services/provider-message.service';
 
 export interface ItemServiceGroup {
   type: string;
@@ -23,10 +27,67 @@ export interface ItemServiceGroup {
 })
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {
-
-
+  new_cap = Messages.NEW_CAP;
+  bill_cap = Messages.BILL_CAPTION;
+  date_cap = Messages.SYS_ALERTS_DATE_CAP;
+  time_cap = Messages.TIME_CAP;
+  bill_no_cap = Messages.BILL_NO_CAP;
+  gstin_cap = Messages.GSTIN_CAP;
+  ad_ser_item_cap = Messages.ADD_SER_ITEM_CAP;
+  no_cap = Messages.NO_CAP;
+  available_cap = Messages.AVAILABLE_CAP;
+  qty_cap = Messages.QTY_CAPITAL_CAP;
+  add_btn_cap = Messages.ADD_BTN;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  qnty_cap = Messages.QTY_CAP;
+  select_discount_cap = Messages.SEL_DISC_CAP;
+  select_coupon_cap = Messages.SEL_COUPON_CAP;
+  done_btn_cap = Messages.DONE_BTN;
+  discount_cap = Messages.DISCOUNT_CAP;
+  coupon_cap = Messages.COUPON_CAP;
+  sub_tot_cap = Messages.SUB_TOT_CAP;
+  dis_coupons_cap = Messages.DISCOUNTS_COUPONS_CAP;
+  delete_btn_cap = Messages.DELETE_BTN;
+  gross_amnt_cap = Messages.GROSS_AMNT_CAP;
+  bill_disc_cap = Messages.BILL_DISCOUNT_CAP;
+  tax_cap = Messages.TAX_CAP;
+  amount_paid_cap = Messages.AMNT_PAID_CAP;
+  amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
+  nettotal_cap =  Messages.NETTOTAL;
+  apply_cap = Messages.APPLY_CAP;
+  value_cap = Messages.VALUE_CAP;
+  back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
+  amountdue_cap = Messages.AMOUNTDUE;
+  back_cap = Messages.BACK_CAP;
+  payment_logs_cap = Messages.PAY_LOGS_CAP;
+  amount_cap = Messages.AMOUNT_CAP;
+  refundable_cap = Messages.REFUNDABLE_CAP;
+  status_cap = Messages.STATUS_CAP;
+  mode_cap = Messages.MODE_CAP;
+  refunds_cap = Messages.REFUNDS_CAP;
+  save_btn_cap = Messages.SAVE_BTN;
+  settle_bill_cap = Messages.SETTLE_BILL_CAP;
+  print_bill_cap = Messages.PRINT_BILL_CAP;
+  accept_payment_cap = Messages.ACCEPT_PAY_CAP;
+  make_payment_cap = Messages.MAKE_PAYMENT_CAP;
+  applydiscount_cap = Messages.APPLY_DISCOUNT;
+  changeqty_cap = Messages.CHANGE_QTY;
+  removeservice_cap = Messages.REMOVE_SERVICE;
+  removeitem_cap = Messages.REMOVE_ITEM;
+  coupon_notes = projectConstants.COUPON_NOTES;
+  paybycash_cap = Messages.PAYBYCASH;
+  paybyothers_cap = Messages.PAYBYOTHERS;
+  paybycashothers_cap = Messages.PAYBYCASH_OTHERS;
+  jaldeepay_cap = Messages.JALDEEPAY;
+  email_bill_cap = Messages.EMAILBILL;
+  wbamount_cap = Messages.WBAMOUNT;
+  apply_jc_cap = Messages.APPLYJC;
+  applyorderdisc_cap = Messages.APPLYORDERDISC;
+  applycoupon_cap = Messages.APPLYCOUPON;
+  notesfor_cap = Messages.NOTESFOR;
+  privatenote_cap = Messages.PROVIDER_NOTE_CAP;
   @ViewChild('itemservicesearch') item_service_search;
-
+  @ViewChild('itemserviceqty') item_service_qty;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -41,6 +102,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   services: any = [];
   coupons: any = [];
   discounts: any = [];
+  itemdiscounts: any = [];
   items: any = [];
   totdisc_val = 0;
   totcoup_val = 0;
@@ -50,32 +112,26 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   taxabletotal = 0;
   tottaxvalue = 0;
   totpaid = 0;
-  curSelItm = { indx: 0, typ: '', qty: 1};
+  curSelItm = { indx: 0, typ: '', qty: 1 };
   bname;
+  selectedItemService;
   showPaidlist = false;
+  actiontype;
   ItemServiceGroupOptions: Observable<ItemServiceGroup[]>;
   itemServicesGroup: ItemServiceGroup[] = [{
-    'type' : 'Services',
-    'values' : []
-    },
-    {
-      'type' : 'Items',
-      'values' : []
-    }] ;
-
-  selectedItems = [];
-  cart = {
-    'items': [],
-    'prepayment_amount' : 0,
-    'sub_total': 0,
-    'sub_totalwithouttax': 0,
-    'discount': '',
-    'discountamt': 0,
-    'coupon': '',
-    'couponamt': 0,
-    'total': 0,
-    'totalwithouttax': 0
+    'type': 'Services',
+    'values': []
+  },
+  {
+    'type': 'Items',
+    'values': []
+  }];
+  pay_data = {
+    'uuid': null,
+    'acceptPaymentBy': 'cash',
+    'amount': 0
   };
+  selectedItems = [];
   bill_load_complete = 0;
   item_service_tax: any = 0;
   pre_payment_log: any = [];
@@ -85,118 +141,140 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   billtime = '';
   gstnumber = '';
   billnumber = '';
-
+  showDiscountSection;
+  showPCouponSection;
+  showJCouponSection;
+  showAddItemMenuSection = true;
+  jCoupon;
+  selOrderProviderCoupon: any = '';
+  selOrderDiscount: any = '';
+  discAmount = '';
+  discProvNote = '';
+  discConsNote = '';
+  isConsNote = false;
+  isProvNote = false;
+  uuid;
+  jCouponsList: any = [];
+  makPaydialogRef;
+  breadcrumbs = [
+    {
+      title: Messages.DASHBOARD_TITLE,
+      url: '/provider'
+    },
+    {
+      title: 'Bill'
+    }
+  ];
+  showPayWorkBench = false;
+  amountpay;
+  paymentOnline = false;
   constructor(
-    public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    //  public dialogRef: MatDialogRef<AddProviderWaitlistCheckInBillComponent>,
+    //  @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
+    private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+    private activated_route: ActivatedRoute,
     @Inject(DOCUMENT) public document
 
-    ) {
-        this.checkin = this.data.checkin || null;
-        this.bill_data = this.data.bill_data || [];
-        // console.log('data' , this.bill_data);
-        if ( !this.checkin) {
-          setTimeout(() => {
-            this.dialogRef.close('error');
-            }, projectConstants.TIMEOUT_DELAY);
-        }
-        this.getBillDateandTime();
-
-        // this.getWaitlistBill();
-
-        this.getPrePaymentDetails()
-        .then(
-          (result) => {
-
-            this.getCoupons()
-            .then(
-              () => {
-
-                this.getDiscounts()
-                .then(
-                  () => {
-
-                    this.getTaxDetails()
-                    .then(
-                      () => {
-                          this.getDomainSubdomainSettings()
-                          .then(
-                            () => {
-                              this.getServiceList();
-                            },
-                            error => {
-                            }
-
-                          );
-
-                          this.getItemsList();
-
-                          this.bill_load_complete = 1;
-                      },
-                      (error) => {
-                        this.bill_load_complete = 0;
-                      });
-
-                  },
-                  (error) => {
-                    this.bill_load_complete = 0;
-                  });
-
-                },
-                (error) => {
-                  this.bill_load_complete = 0;
-                });
-          },
-          (error) => {
-            this.bill_load_complete = 0;
-          }
-        );
-
-        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-
-     }
-
+  ) {
+    this.activated_route.params.subscribe(params => {
+      this.uuid = params.id;
+    });
+    this.getCheckinDetails();
+  }
   ngOnInit() {
     const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
-    //  this.ItemServiceGroupOptions = this.itemServiceSearch.valueChanges
-    //  .pipe(
-    //    startWith(''),
-    //    map(val => this.filterGroup(val))
-    //  );
-
+    this.getJaldeeActiveCoupons();
+    this.getCoupons()
+      .then(
+        () => {
+          this.getDiscounts()
+            .then(
+              () => {
+                this.getDomainSubdomainSettings()
+                  .then(
+                    () => {
+                      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                      this.getServiceList();
+                    },
+                    error => {
+                    }
+                  );
+                this.getItemsList();
+                this.bill_load_complete = 1;
+              },
+              (error) => {
+                this.bill_load_complete = 0;
+              });
+        },
+        (error) => {
+          this.bill_load_complete = 0;
+        });
+  }
+  getJaldeeActiveCoupons() {
+    this.jCouponsList = [];
+    let couponList: any = [];
+    this.provider_services.getJaldeeCoupons()
+      .subscribe(
+        (list) => {
+          couponList = list;
+          for (let index = 0; index < couponList.length; index++) {
+            if (couponList[index].couponState === 'ENABLED') {
+              this.jCouponsList.push(couponList[index]);
+            }
+          }
+        });
+  }
+  getCheckinDetails() {
+    this.provider_services.getProviderWaitlistDetailById(this.uuid)
+      .subscribe(
+        data => {
+          this.checkin = data;
+          this.getWaitlistBill();
+          this.getPrePaymentDetails()
+            .then(
+              (result) => {
+                this.bill_load_complete = 1;
+              },
+              (error) => {
+                this.bill_load_complete = 0;
+              }
+            );
+        }, error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
       const datearr = this.bill_data.createdDate.split(' ');
       const billdatearr = datearr[0].split('-');
-      this.billdate =  billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       this.billtime = datearr[1] + ' ' + datearr[2];
     } else {
-      this.billdate =  this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
+      this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
       // this.billtime = this.sharedfunctionObj.addZero(this.today.getHours()) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes());
       const gethrs = this.today.getHours();
       const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
-     // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
-     let hour = 0;
-     if (gethrs === 12) {
-       hour = 12;
-     } else if (gethrs > 12) {
-       hour = gethrs - 12;
-     } else {
-       hour = gethrs;
-     }
+      // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
+      let hour = 0;
+      if (gethrs === 12) {
+        hour = 12;
+      } else if (gethrs > 12) {
+        hour = gethrs - 12;
+      } else {
+        hour = gethrs;
+      }
       this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
       // const amOrPm = (this.today.getHours() < 12) ? 'AM' : 'PM';
       // const hour = (this.today.getHours() < 12) ? this.today.getHours() : this.today.getHours() - 12;
       // this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
-
     }
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
@@ -207,723 +285,162 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       // console.log('gst', this.billnumber);
     }
   }
-
   filterGroup(val: string): ItemServiceGroup[] {
     if (val) {
       return this.itemServicesGroup
         .map(group => ({ type: group.type, values: this._filter(group.values, val) }))
         .filter(group => group.values.length > 0);
     }
-
     return this.itemServicesGroup;
   }
-
   private _filter(opt: string[], val: string) {
     const filterValue = val.toLowerCase();
     return opt.filter(item => item.toLowerCase().startsWith(filterValue));
   }
-
-
-
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
-
-  getWaitlistBill() {
-    this.provider_services.getWaitlistBill(this.checkin.ynwUuid)
-    .subscribe(
-      data => {
-        this.bill_data = data;
-      },
-      error => {
-        if (error.status === 422) { this.bill_data = [];
-        // console.log('reached here');
-      }
-        this.bill_load_complete = 1;
-      },
-      () => {
-        this.bill_load_complete = 1;
-      }
-    );
-  }
-
-  getDomainSubdomainSettings() {
-
-    const user_data = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
-
-    const domain = user_data.sector || null;
-    const sub_domain =  user_data.subSector || null;
-
-    return new Promise((resolve, reject) => {
-      this.provider_services.domainSubdomainSettings(domain, sub_domain)
+  getPaymentSettings() {
+    this.provider_services.getPaymentSettings()
       .subscribe(
         (data: any) => {
-          if (data.serviceBillable === false) {
-            this.isServiceBillable = false;
-            reject();
-          } else {
-            this.isServiceBillable = true;
-            resolve();
-          }
+          // if (data.payUVerified || data.payTmVerified) {
+          console.log(data);
+          this.paymentOnline = data.onlinePayment;
         },
         error => {
-         reject(error);
+        });
+  }
+  getWaitlistBill() {
+    this.provider_services.getWaitlistBill(this.uuid)
+      .subscribe(
+        data => {
+          this.bill_data = data;
+          this.getBillDateandTime();
+        },
+        error => {
+          if (error.status === 422) {
+            this.bill_data = [];
+            // console.log('reached here');
+          }
+          this.bill_load_complete = 1;
+        },
+        () => {
+          this.bill_load_complete = 1;
         }
       );
-    });
-
   }
-
+  getDomainSubdomainSettings() {
+    const user_data = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+    const domain = user_data.sector || null;
+    const sub_domain = user_data.subSector || null;
+    return new Promise((resolve, reject) => {
+      this.provider_services.domainSubdomainSettings(domain, sub_domain)
+        .subscribe(
+          (data: any) => {
+            if (data.serviceBillable === false) {
+              this.isServiceBillable = false;
+              reject();
+            } else {
+              this.isServiceBillable = true;
+              resolve();
+            }
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
   getServiceList() {
     this.provider_services.getServicesList()
-    .subscribe(
-      (data: any) => {
-
-        for (const ser of data) {
-          if (ser.status === 'ACTIVE') {
-            this.services.push(ser);
+      .subscribe(
+        (data: any) => {
+          for (const ser of data) {
+            if (ser.status === 'ACTIVE') {
+              this.services.push(ser);
+            }
           }
+          const services = this.services.map((ob) => ob.name);
+          this.itemServicesGroup[0]['values'] = services;
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
-
-        const services = this.services.map((ob) => ob.name );
-
-        this.itemServicesGroup[0]['values'] = services;
-
-        if (this.bill_data.service && this.bill_data.service.length > 0) {
-          this.addSavedServiceToCart(this.bill_data.service);
-        } else if (this.bill_data.length === 0 && this.checkin.service) {
-          // Add waitlist service by default
-          const service = [];
-          service.push({
-            name: this.checkin.service.id || '',
-            serviceId: this.checkin.service.id || 0
-          }); // Create an array same like service array
-          this.addSavedServiceToCart(service);
-        }
-
-      },
-      error => {
-        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-      }
-    );
+      );
   }
-
   getCoupons() {
     return new Promise((resolve, reject) => {
       this.provider_services.getProviderCoupons()
-      .subscribe(
-        data => {
-          this.coupons = data;
-
-          if (this.bill_data.couponId) {
-            this.cart.coupon = this.getIndexFromId(this.coupons, this.bill_data.couponId);
+        .subscribe(
+          data => {
+            this.coupons = data;
+            resolve();
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            reject(error);
           }
-          resolve();
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-          reject(error);
-        }
-      );
+        );
     });
-
   }
-
   getDiscounts() {
-
     return new Promise((resolve, reject) => {
       this.provider_services.getProviderDiscounts()
-      .subscribe(
-        data => {
-          this.discounts = data;
-
-          if (this.bill_data.discountId) {
-            this.cart.discount = this.getIndexFromId(this.discounts, this.bill_data.discountId);
+        .subscribe(
+          data => {
+            this.discounts = data;
+            this.itemdiscounts = Array.from(this.discounts);
+            this.itemdiscounts.splice(0, 1);
+            resolve();
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            reject(error);
           }
-
-          resolve();
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-          reject(error);
-        }
-      );
-     });
-
-
+        );
+    });
   }
 
   getItemsList() {
     this.provider_services.getProviderItems()
-    .subscribe(
-      (data: any) => {
-
-        this.items = data;
-        const items = this.items.map((ob) => ob.displayName );
-
-        this.itemServicesGroup[1]['values'] = items;
-
-        if (this.bill_data.items && this.bill_data.items.length > 0) {
-          this.addSavedItemToCart(this.bill_data.items);
-        }
-      },
-      error => {
-        this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-
-      }
-    );
-  }
-
-  getTaxDetails() {
-    return new Promise((resolve, reject) => {
-      this.provider_services.getProviderTax()
       .subscribe(
-        data => {
-          this.item_service_tax = data['taxPercentage'];
-          resolve();
+        (data: any) => {
+          this.items = data;
+          const items = this.items.map((ob) => ob.displayName);
+          this.itemServicesGroup[1]['values'] = items;
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
-          reject(error);
         }
       );
-    });
-
   }
-
-  keyupitemServiceSelected(ev, type, indx) {
-    const kCode = parseInt(ev.keyCode, 10);
-    if (kCode === 13) {
-      this.itemServiceSelected(type, indx);
-    }
-  }
-
-  itemServiceSelected(type, index) {
-
-    // this.itemServiceSearch.reset();
-    // this.item_service_search.nativeElement.blur();
-    // console.log('typ', type, index);
-    this.curSelItm = { indx: 0, typ: '', qty: 1};
-    if (type === 'Services') {
-      this.curSelItm.indx = this.services[index];
-      this.curSelItm.typ = 'Services';
-      this.curSelItm.qty = 1;
-      // this.addCartItem(this.services[index], 'Services');
-    } else if (type === 'Items') {
-      // this.addCartItem(this.items[index], 'Items');
-      this.curSelItm.indx = this.items[index];
-      this.curSelItm.typ = 'Items';
-      this.curSelItm.qty = 1;
-    }
-    // console.log('selected item', this.curSelItm);
-
-  }
-
-  addCartItem(item, type) {
-   // console.log(item);
-   let recalcreq = true;
-    const retid = this.pushCartItem(item, type);
-    if (type === 'Services') {
-      if (retid !== -1) {
-        this.api_error = Messages.PROVIDER_BILL_SERV_EXISTS;
-        setTimeout(() => {
-          this.api_error = '';
-          }, projectConstants.TIMEOUT_DELAY);
-        recalcreq = false;
-      }
-    }
-    if (recalcreq) {
-      if (retid === -1) {
-        this.calculateItemTotal(this.cart.items.length - 1);
-      } else {
-        this.calculateItemTotal(retid);
-      }
-      this.calculateTotal();
-    }
-    // console.log('cart', this.cart);
-  }
-
-  pushCartItem(item, type) {
-
-    let selected_item = {
-    };
-   // console.log('cart', this.cart);
-    // check whether item already exists in the cart
-    let foundid = -1;
-    const itmid = (type === 'Services') ? item.id : item.itemId;
-    for (let i = 0; i < this.cart.items.length; i++) {
-        if (this.cart.items[i].itemId === itmid && this.cart.items[i].type === type) {
-          foundid = i;
-        }
-    }
-   // console.log('foundid', foundid);
-    const tax = (item.taxable) ? this.item_service_tax : 0;
-    if (foundid !== -1) { // case if item / service already exists in the array, then just increment the qty
-      if (type !== 'Services') {
-        this.cart.items[foundid].quantity = Number(this.cart.items[foundid].quantity) + Number(this.curSelItm.qty);
-      }
-    } else {
-      let cqty = Number(this.curSelItm.qty);
-      if (cqty < 0) {
-        // cqty = cqty * -1;
-        cqty = 1;
-      }
-      switch (type) {
-        case 'Services' :  selected_item = {
-                                  'name' : item.name,
-                                  'itemId': item.id,
-                                  // 'quantity': 1,
-                                  'quantity': cqty, // Number(this.curSelItm.qty),
-                                  'price': item.totalAmount,
-                                  'rowtotal': item.totalAmount,
-                                  'subtotal': item.totalAmount,
-                                  'subtotalwithouttax': item.totalAmount,
-                                  'discount': '',
-                                  'discountamt': '',
-                                  'coupon': '',
-                                  'couponamt': '',
-                                  'gst_percentage': tax / 2,
-                                  'cgst_percentage': tax / 2,
-                                  'type' : type,
-                                  'taxable':  item.taxable,
-                                  'showdisccoup': false
-                                };
-                                break;
-
-        case 'Items' :  selected_item = {
-                                  'name' : item.displayName,
-                                  'itemId': item.itemId,
-                                  // 'quantity': 1,
-                                  'quantity': cqty, // Number(this.curSelItm.qty),
-                                  'price': item.price,
-                                  'rowtotal': item.price,
-                                  'subtotal': item.price,
-                                  'subtotalwithouttax': item.price,
-                                  'discount': '',
-                                  'discountamt': '',
-                                  'coupon': '',
-                                  'couponamt': '',
-                                  'gst_percentage': tax / 2,
-                                  'cgst_percentage': tax / 2,
-                                  'type' : type,
-                                  'taxable':  item.taxable,
-                                  'showdisccoup': false
-                                };
-                                break;
-      }
-
-      this.cart.items.push(selected_item);
-      this.selectedItems.push(item);
-    }
-    return foundid;
-
-  }
-
-  deleteCartItem(i) {
-    this.hideAddItem();
-    this.cart.items.splice(i, 1);
-    this.selectedItems.splice(i, 1);
-    this.calculateTotal();
-  }
-
-  itemDiscountChange(i) {
-    this.cart['items'][i]['discountamt'] = 0;
-    this.calculateItemTotal(i);
-  }
-
-  itemCouponChange(i) {
-    this.cart['items'][i]['couponamt'] = 0;
-    this.calculateItemTotal(i);
-  }
-
-  stdRateChange(i) {
-    if (!this.cart['items'][i]['price'] ||
-    isNaN(this.cart['items'][i]['price']) ||
-    this.cart['items'][i]['price'] < 0) {
-      this.cart['items'][i]['price'] = 1;
-    }
-
-    this.calculateItemTotal(i);
-  }
-
-  quantityChange(i) {
-
-    if (!this.cart['items'][i]['quantity'] ||
-    this.cart['items'][i]['quantity'] < 0) {
-      this.cart['items'][i]['quantity'] = 1;
-    }
-
-    this.calculateItemTotal(i);
-
-  }
-
-  calculateItemTotal(i) {
-    this.cart['items'][i]['rowtotal'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
-    this.cart['items'][i]['subtotal'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
-    this.cart['items'][i]['subtotalwithouttax'] = this.cart['items'][i]['price'] * this.cart['items'][i]['quantity'];
-    this.reduceItemDiscount(i);
-    this.reduceItemCoupon(i);
-    if (this.cart['items'][i]['taxable']) {
-
-      this.applyTax(i);
-    }
-    this.calculateTotal();
-  }
-
-  reduceItemDiscount(i) {
-
-    if (this.cart['items'][i].discount !== '' && this.discounts[this.cart['items'][i].discount]) {
-      const discount = this.discounts[this.cart['items'][i].discount];
-      this.cart['items'][i].subtotal = this.discCalculation(discount, 'discount', this.cart['items'][i].subtotal, '' , -1);
-      this.cart['items'][i].subtotalwithouttax = this.discCalculation(discount, 'discount', this.cart['items'][i].subtotalwithouttax, '', i);
-    }
-
-  }
-
-  reduceItemCoupon(i) {
-
-    if (this.cart['items'][i].coupon !== '' &&
-    this.coupons[this.cart['items'][i].coupon]) {
-      const discount = this.coupons[this.cart['items'][i].coupon];
-      discount.discValue = discount.amount;
-      // coupon dont have discValue field
-      // but we need it because discount n coupon used same function
-      this.cart['items'][i].subtotal = this.discCalculation(discount, 'coupon', this.cart['items'][i].subtotal, '' , -1);
-      this.cart['items'][i].subtotalwithouttax = this.discCalculation(discount, 'coupon', this.cart['items'][i].subtotalwithouttax, '', i);
-    }
-
-  }
-
-  applyTax(i) {
-    this.cart['items'][i].subtotal = this.cart['items'][i].subtotal + (this.cart['items'][i].subtotal * this.item_service_tax / 100);
-  }
-
-  discountChange() {
-    this.calculateTotal();
-  }
-  couponChange() {
-    this.calculateTotal();
-  }
-
-  calculateTotal() {
-    let total = 0;
-    let totalwithouttax = 0;
-    this.taxabletotal = 0;
-    for ( const item of this.cart.items) {
-
-      if (item.subtotal && item.subtotal > 0) {
-        total = total + item.subtotal;
-        totalwithouttax = totalwithouttax + item.subtotalwithouttax;
-        if (item.taxable) {
-          // console.log('taxable', item);
-          this.taxabletotal += item.subtotalwithouttax;
-        }
-      }
-    }
-    // console.log('edit taxable total', this.taxabletotal);
-    if (this.item_service_tax) {
-      this.tottaxvalue = this.taxabletotal * (this.item_service_tax / 100);
-    } else {
-      this.tottaxvalue = 0;
-    }
-
-    this.cart.sub_total = (total < 0 ) ? 0 : total;
-    this.cart.sub_totalwithouttax = (totalwithouttax < 0 ) ? 0 : totalwithouttax;
-    this.cart.total = total;
-    this.cart.totalwithouttax = totalwithouttax;
-
-    // console.log(this.cart.total );
-    this.reduceDiscount();
-    this.reduceCoupon();
-    this.reducePrePaidAmount();
-    // console.log('cart', this.cart);
-
-  }
-
-  reduceDiscount() {
-
-    if (this.cart.discount !== '' && this.discounts[this.cart.discount]) {
-      const discount = this.discounts[this.cart.discount];
-      this.cart.total = this.discCalculation(discount, 'discount', this.cart.sub_total, 'totdiscount', -1);
-    } else {
-      this.totdisc_val = 0;
-    }
-
-  }
-
-  reduceCoupon() {
-
-    if (this.cart.coupon !== '' && this.coupons[this.cart.coupon]) {
-      const discount = this.coupons[this.cart.coupon];
-      discount.discValue = discount.amount;
-      // coupon dont have discValue field
-      // but we need it because discount n coupon used same function
-      this.cart.total = this.discCalculation(discount, 'coupon', this.cart.total, 'totcoupon', -1);
-    } else {
-      this.totcoup_val = 0;
-    }
-
-  }
-
-  discCalculation(discount, curtype, cal_total, granddisc?, indx?) {
-    // console.log('grand disc', granddisc);
-    if (discount.calculationType === 'Fixed') {
-      const disc_value = (discount.discValue > 0) ? discount.discValue : 0;
-      if (indx !== -1) {
-        if (curtype === 'discount') {
-          this.cart['items'][indx]['discountamt'] = (disc_value <= cal_total) ? disc_value : cal_total;
-        } else if (curtype === 'coupon') {
-          this.cart['items'][indx]['couponamt'] = (disc_value <= cal_total) ? disc_value : cal_total;
-        }
-      } else {
-          // this.cart['items'][indx]['discountamt'] = 0;
-      }
-      if (granddisc === 'totdiscount') {
-        this.totdisc_val = disc_value;
-      }
-      if (granddisc === 'totcoupon') {
-        this.totcoup_val = disc_value;
-      }
-      const total = cal_total - disc_value;
-      return (total > 0) ? total : 0;
-
-    } else if (discount.calculationType === 'Percentage') {
-      const disc_value = (discount.discValue > 0) ? discount.discValue : 0;
-      const calcdisc = ( cal_total * disc_value / 100);
-      if (granddisc === 'totdiscount') {
-        this.totdisc_val = calcdisc;
-      }
-      if (granddisc === 'totcoupon') {
-        this.totcoup_val = calcdisc;
-      }
-      if (indx !== -1) {
-        if (curtype === 'discount') {
-          this.cart['items'][indx]['discountamt'] = (cal_total * disc_value / 100);
-        } else if (curtype === 'coupon') {
-          this.cart['items'][indx]['couponamt'] = (cal_total * disc_value / 100);
-        }
-      } else {
-        // this.cart['items'][indx]['discountamt'] = 0;
-      }
-      const total = cal_total - ( cal_total * disc_value / 100);
-      return (total > 0) ? total : 0;
-    }
-  }
-
-  reducePrePaidAmount() {
-    let pre_total = 0;
-    for (const pay of this.pre_payment_log) {
-      if (pay.status === 'SUCCESS') {
-        pre_total = pre_total + pay.amount;
-        if (pay.refundDetails.length > 0) {
-                for (let j = 0; j < pay.refundDetails.length; j++) {
-                  if (pay.refundDetails[j].status === 'SUCCESS') {
-                    pre_total -= pay.refundDetails[j].amount;
-                  }
-                }
-              }
-      }
-    } // console.log(pre_total);
-    this.totpaid = pre_total;
-    this.cart.total = this.cart.total - pre_total;
-    // console.log(this.cart.total);
-    this.cart.total = (this.cart.total > 0) ? this.cart.total : 0;
-  }
-
-  submitBill() {
-
-    const item_array = [];
-    const service_array = [];
-    // console.log(this.cart.items);
-    for ( const item of  this.cart.items) {
-      const ob = {
-        'reason': '',
-        'price': item.price,
-        'quantity': item.quantity,
-      };
-     // console.log(item, ob);
-      if (item.coupon !== '' && this.coupons[item.coupon]) {
-        ob['couponId'] = this.coupons[item.coupon]['id'];
-      }
-
-      if (item.discount !== '' && this.discounts[item.discount]) {
-        ob['discountId'] = this.discounts[item.discount]['id'];
-      }
-
-      if (item.type === 'Items') {
-        ob['itemId'] =  item.itemId;
-        item_array.push(ob);
-      } else if (item.type === 'Services') {
-        ob['serviceId'] =  item.itemId;
-        service_array.push(ob);
-      }
-    }
-
-
-    const post_data = {
-      'uuid' : this.checkin.ynwUuid,
-      'netTotal': this.cart.total,
-      'service': service_array,
-      'items': item_array
-    } ;
-
-    // if (service_array.length > 0) {
-    //   post_data['service'] = service_array;
-    // }
-
-    // if (item_array.length > 0) {
-    //   post_data['items'] = item_array;
-    // }
-
-    if (this.cart.coupon !== '' && this.coupons[this.cart.coupon]) {
-      post_data['couponId'] = this.coupons[this.cart.coupon]['id'];
-    }
-
-    if (this.cart.discount !== '' && this.discounts[this.cart.discount]) {
-      post_data['discountId'] = this.discounts[this.cart.discount]['id'];
-    }
-
-    if (this.bill_data.length === 0) {
-      this.provider_services.createWaitlistBill(post_data)
-      .subscribe(
-        data => {
-          // console.log(data);
-          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_CREATE);
-          this.dialogRef.close('reloadlist');
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-        }
-      );
-    } else {
-      this.provider_services.updateWaitlistBill(post_data)
-      .subscribe(
-        data => {
-          // console.log(data);
-          if (data) {
-            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_UPDATE);
-            this.dialogRef.close('reloadlist');
-          }
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
-        }
-      );
-    }
-  }
-
   getPrePaymentDetails() {
     return new Promise((resolve, reject) => {
       this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
-      .subscribe(
-        data => {
-          this.pre_payment_log = data;
-          // console.log('paid', this.pre_payment_log);
-          // for (let i = 0; i < this.pre_payment_log.length; i++) {
-          //   // if (this.pre_payment_log[i].status === 'SUCCESS')  {
-          //     this.totpaid += this.pre_payment_log[i].amount;
-          //     if (this.pre_payment_log[i].refundDetails.length > 0) {
-          //       for (let j = 0; j < this.pre_payment_log[i].refundDetails.length; j++) {
-          //         if (this.pre_payment_log[i].refundDetails[j].status === 'SUCCESS') {
-          //           // this.totpaid -= this.pre_payment_log[i].refundDetails[j].amount;
-          //         }
-          //       }
-          //     }
-          //  // }
-          // }
-          // console.log('tot paid', this.totpaid);
-          resolve();
-        },
-        error => {
-          this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        .subscribe(
+          data => {
+            this.pre_payment_log = data;
+            resolve();
+          },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
-          reject(error);
-        }
-      );
+            reject(error);
+          }
+        );
     });
-
   }
-
-  addSavedServiceToCart(services) {
-
-    for (const service of services) {
-      this.services
-      .map((ob) => {
-        // console.log(ob, service);
-        if (ob.id === service.serviceId) {// console.log('here');
-          let retid = this.pushCartItem(ob, 'Services');
-          // console.log('retid', retid);
-          if (retid === -1) {
-            retid = this.cart.items.length - 1;
-
-            this.cart.items[retid] ['quantity']  = service.quantity || 1;
-            this.cart.items[retid]['price'] = service.price || ob.totalAmount;
-            if (service.discountId !== 0) {
-              this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, service.discountId);
-            }
-            if (service.couponId !== 0) {
-              this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, service.couponId);
-            }
-            this.calculateItemTotal(retid);
-
-
-          } else {
-             this.api_error = 'Service already exists in the bill';
-          }
-        }
-
-      });
-
-    }
-
-    this.calculateTotal();
-
-
-  }
-
-  addSavedItemToCart(items) {
-
-    for (const item of items) {
-      this.items
-      .map((ob) => {
-
-        if (ob.itemId === item.itemId) {
-          let retid = this.pushCartItem(ob, 'Items');
-          if (retid === -1) {
-            retid = this.cart.items.length - 1;
-          }
-          this.cart.items[retid] ['quantity']  = item.quantity;
-          this.cart.items[retid]['price'] = item.price;
-          if (item.discountId !== 0) {
-            this.cart.items[retid] ['discount'] = this.getIndexFromId(this.discounts, item.discountId);
-          }
-
-          if (item.couponId !== 0) {
-            this.cart.items[retid] ['coupon'] = this.getIndexFromId(this.coupons, item.couponId);
-          }
-
-          this.calculateItemTotal(retid);
-        }
-
-      });
-
-    }
-
-    this.calculateTotal();
-
-
-  }
-
   getIndexFromId(array, id) {
     let index = '';
     array
-    .map((ob, i) => {
-      if (ob.id === id) {
-        index = i;
-      }
-    });
+      .map((ob, i) => {
+        if (ob.id === id) {
+          index = i;
+        }
+      });
     return index;
   }
   stringtoDate(dt, mod) {
@@ -946,52 +463,80 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       return;
     }
   }
-
   showAddItem() {
+    this.showDiscountSection = false;
+    this.showPCouponSection = false;
+    this.showJCouponSection = false;
     this.showAddItemsec = true;
+    this.actiontype = null;
     this.ItemServiceGroupOptions = this.itemServiceSearch.valueChanges
-     .pipe(
-       startWith(''),
-       map(val => this.filterGroup(val))
-     );
-     // console.log('reached here');
-     setTimeout(() => {
-      /*if (this.document.getElementById('itemservicesearch')) {
-        console.log('focus here');
-        this.document.getElementById('itemservicesearch').focus();
-      }*/
+      .pipe(
+        startWith(''),
+        map(val => this.filterGroup(val))
+      );
+    setTimeout(() => {
       this.item_service_search.nativeElement.focus();
     }, 500);
   }
   hideAddItem() {
+    this.actiontype = null;
     this.showAddItemsec = false;
     this.itemServiceSearch.reset();
-    this.curSelItm = { indx: 0, typ: '', qty: 1};
+    this.curSelItm = { indx: 0, typ: '', qty: 1 };
   }
-  addItem() {
-    // console.log('clicked add item', this.curSelItm);
-    if (isNaN(this.curSelItm.qty)) {
-      this.curSelItm.qty = 1;
+  /**
+   * Returns Service Id
+   * @param serviceName Service Name
+   */
+  getSelectedServiceId(serviceName) {
+    let serviceId = 0;
+    for (let i = 0; i < this.services.length; i++) {
+      if (this.services[i].name === serviceName) {
+        serviceId = this.services[i].id;
+        break;
+      }
     }
-    this.addCartItem(this.curSelItm.indx, this.curSelItm.typ);
-    this.itemServiceSearch.reset();
-    this.curSelItm = { indx: 0, typ: '', qty: 1};
-    // this.item_service_search.nativeElement.blur();
+    return serviceId;
   }
-  handleTotalDiscSec() {
-    if (this.showmainDiscSelsec) {
-      this.showmainDiscSelsec = false;
-    } else {
-      this.showmainDiscSelsec = true;
+  /**
+   * Return Item Id
+   * @param itemName Item Name
+   */
+  getSelectedItemId(itemName) {
+    let itemId = 0;
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].displayName === itemName) {
+        itemId = this.items[i].itemId;
+        break;
+      }
     }
+    return itemId;
   }
+  /**
+   * Toggle Item Discount/Coupon Section
+   * @param indx Index
+   */
   itemDiscCoupSec(indx) {
-    // console.log('here', this.cart.items);
-    if (this.cart.items[indx]) {
-      if (this.cart.items[indx].showdisccoup) {
-        this.cart.items[indx].showdisccoup = false;
+    this.bill_data.items[indx].itemDiscount = '';
+    if (this.bill_data.items[indx]) {
+      if (this.bill_data.items[indx].showitemdisccoup) {
+        this.bill_data.items[indx].showitemdisccoup = false;
       } else {
-        this.cart.items[indx].showdisccoup = true;
+        this.bill_data.items[indx].showitemdisccoup = true;
+      }
+    }
+  }
+  /**
+   * Toggle Service Discount/Coupon section
+   * @param indx Index
+   */
+  serviceDiscCoupSec(indx) {
+    this.bill_data.service[indx].serviceDiscount = '';
+    if (this.bill_data.service[indx]) {
+      if (this.bill_data.service[indx].showservicedisccoup) {
+        this.bill_data.service[indx].showservicedisccoup = false;
+      } else {
+        this.bill_data.service[indx].showservicedisccoup = true;
       }
     }
   }
@@ -1003,20 +548,432 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   blurQty(val, itm) {
-    if (isNaN(val)) {
+    if (isNaN(val) || val < 0) {
       itm.qty = 1;
     } else {
-      let vv = parseInt(val, 10);
-      if (vv === 0) {
-        vv = 1;
-      } else if ( vv < 0) {
-        // vv = vv * -1;
-        vv = 1;
-      }
+      const vv = parseInt(val, 10);
       itm.qty = vv;
     }
   }
+  orderDiscountSelected() {
+    this.showDiscountSection = true;
+    this.showPCouponSection = false;
+    this.showJCouponSection = false;
+    this.showAddItemsec = false;
+    this.showAddItemMenuSection = false;
+  }
+  orderPCouponSelected() {
+    this.showDiscountSection = false;
+    this.showPCouponSection = true;
+    this.showJCouponSection = false;
+    this.showAddItemsec = false;
+    this.showAddItemMenuSection = false;
+  }
+  jCouponSelected() {
+    this.showDiscountSection = false;
+    this.showPCouponSection = false;
+    this.showJCouponSection = true;
+    this.showAddItemsec = false;
+    this.showAddItemMenuSection = false;
+  }
+  /**
+   * Set Item/Service
+   * @param type Category Services/Items
+   * @param name Service/Item Name
+   */
+  itemServiceSelected(type, name) {
+    this.curSelItm = { indx: 0, typ: '', qty: 1 };
+    if (type === 'Services') {
+      this.selectedItemService = name;
+      this.curSelItm.indx = this.getSelectedServiceId(name);
+      this.curSelItm.typ = 'Services';
+      this.curSelItm.qty = 1;
+    } else if (type === 'Items') {
+      this.selectedItemService = name;
+      this.curSelItm.indx = this.getSelectedItemId(name);
+      this.curSelItm.typ = 'Items';
+      this.curSelItm.qty = 1;
+    }
+  }
+  /**
+   * Perform Bill Actions
+   * @param action Action Type
+   * @param uuid Bill Id
+   * @param data Data to be sent as request body
+   */
+  applyAction(action, uuid, data) {
+    return new Promise((resolve, reject) => {
+      this.provider_services.setWaitlistBill(action, uuid, data, { 'Content-Type': 'application/json' }).subscribe
+        (billInfo => {
+          this.bill_data = billInfo;
+          this.getPrePaymentDetails();
+          console.log(this.bill_data);
+          this.hideWorkBench();
+          this.actiontype  = null;
+          this.curSelItm.typ = 'Services';
+          this.curSelItm.qty = 1;
+          resolve();
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            reject(error);
+          });
+    });
+  }
+  /**
+   * Add/Adjust Service/Item to the Bill
+   */
+  addService_Item() {
+    const type = this.curSelItm.typ;
+    const itemId = this.curSelItm.indx;
+    let action = this.actiontype;
+    if (type === 'Services' && action === null) {
+      action = 'addService';
+    } else if (action === null) {
+      action = 'addItem';
+    }
+    if (isNaN(this.curSelItm.qty)) {
+      this.curSelItm.qty = 1;
+    }
+    const data = {};
+    if (type === 'Services') {
+      data['serviceId'] = itemId;
+      data['quantity'] = this.curSelItm.qty;
+      if (this.curSelItm.qty === 0) {
+        action = 'removeService';
+      }
+    } else if (type === 'Items') {
+      data['itemId'] = itemId;
+      data['quantity'] = this.curSelItm.qty;
+      if (this.curSelItm.qty === 0) {
+        action = 'removeItem';
+      }
+    }
+    this.provider_services.setWaitlistBill(action, this.bill_data.uuid, data, null).subscribe
+      (billInfo => {
+        this.bill_data = billInfo;
+        this.hideAddItem();
+      }, error => {
+        this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+    this.itemServiceSearch.reset();
+    this.curSelItm = { indx: 0, typ: '', qty: 1 };
+  }
+  /**
+   * Remove a particular Service from the bill
+   * @param id Service Id
+   * @param qty Service Quantity
+   */
+  removeService(id, qty) {
+    const action = 'removeService';
+    const data = {};
+    data['quantity'] = qty;
+    data['serviceId'] = id;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Adjust Service Qty (show the Workbench)
+   * @param name of service
+   * @param qty service qty
+   */
+  adjustService(name, qty) {
+    this.showDiscountSection = false;
+    this.showPCouponSection = false;
+    this.showJCouponSection = false;
+    this.showAddItemsec = true;
+    this.itemServiceSelected('Services', name);
+    this.itemServiceSearch.setValue(name);
+    this.curSelItm.qty = qty;
+    this.actiontype = 'adjustService';
+    setTimeout(() => {
+      this.item_service_qty.nativeElement.focus();
+    }, 500);
+    // this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Adjust Item Qty (show the Workbench)
+   * @param name item name
+   * @param qty item qty
+   */
+  adjustItem(name, qty) {
+    this.showDiscountSection = false;
+    this.showPCouponSection = false;
+    this.showJCouponSection = false;
+    this.showAddItemsec = true;
+    this.itemServiceSelected('Items', name);
+    this.itemServiceSearch.setValue(name);
+    this.curSelItm.qty = qty;
+    this.actiontype = 'adjustItem';
+    setTimeout(() => {
+      this.item_service_qty.nativeElement.focus();
+    }, 500);
+    // this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Remove an Item from the Bill
+   * @param id Item Id
+   * @param qty Item Quantity
+   */
+  removeItem(id, qty) {
+    const action = 'removeItem';
+    const data = {};
+    data['quantity'] = qty;
+    data['itemId'] = id;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Apply Service Level Discount
+   * @param service Service Details
+   */
+  applyServiceDiscount(service) {
+    console.log(service);
+    const action = 'addServiceLevelDiscount';
+    const discountIds = [];
+    discountIds.push(service.serviceDiscount.id);
+    const data = {};
+    data['serviceId'] = service.serviceId;
+    data['discountIds'] = discountIds;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Remove Service Level Discount
+   * @param serviceId Service Id
+   * @param discountId Discount Id
+   */
+  removeServiceDiscount(serviceId, discountId) {
+    const action = 'removeServiceLevelDiscount';
+    const discountIds = [];
+    discountIds.push(discountId);
+    const data = {};
+    data['serviceId'] = serviceId;
+    data['discountIds'] = discountIds;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Remove Item Level Discount
+   * @param itemId Item Id
+   * @param discountId Discount Id
+   */
+  removeItemDiscount(itemId, discountId) {
+    const action = 'removeItemLevelDiscount';
+    const discountIds = [];
+    discountIds.push(discountId);
+    const data = {};
+    data['itemId'] = itemId;
+    data['discountIds'] = discountIds;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Apply Item Level Discount
+   * @param item Item
+   */
+  applyItemDiscount(item) {
+    console.log(item);
+    const action = 'addItemLevelDiscount';
+    const discountIds = [];
+    discountIds.push(item.itemDiscount.id);
+    const data = {};
+    data['itemId'] = item.itemId;
+    data['discountIds'] = discountIds;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Apply Jaldee Coupon
+   * @param jCoupon Coupon Code
+   */
+  applyJCoupon(jCoupon) {
+    console.log(jCoupon);
+    const action = 'addJaldeeCoupons';
+    let jaldeeCoupon: string;
+    jaldeeCoupon = '"' + jCoupon + '"';
+    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon);
+  }
+  /**
+   * Remove Jaldee Coupon
+   * @param jCouponCode Coupon Code
+   */
+  removeJCoupon(jCouponCode) {
+    const action = 'removeJaldeeCoupons';
+    let jaldeeCoupon: string;
+    jaldeeCoupon = '"' + jCouponCode + '"';
+    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon);
+  }
+  /**
+   * Remove Order Level Discounts
+   * @param discount Discount Info
+   */
+  removeOrderDiscount(discount) {
+    const action = 'removeBillLevelDiscount';
+    const discountIds = [];
+    console.log(discount);
+    const discountObj = {};
+    discountObj['id'] = discount.id;
+    discountIds.push(discountObj);
+    const data = {};
+    data['id'] = this.bill_data.id;
+    data['discounts'] = discountIds;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  /**
+   * Remove Provider Coupons
+   * @param coupon Coupon Info
+   */
+  removeProviderCoupon(coupon) {
+    const action = 'removeProviderCoupons';
+    const couponIds = [];
+    couponIds.push(coupon.id);
+    const data = {};
+    data['id'] = this.bill_data.id;
+    data['couponIds'] = couponIds;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  hideWorkBench() {
+    this.jCoupon = '';
+    this.showJCouponSection = false;
+    this.showDiscountSection = false;
+    this.showPCouponSection = false;
+    this.showAddItemsec = false;
+    this.showAddItemMenuSection = true;
+    this.discAmount = '';
+    this.discProvNote = '';
+    this.discConsNote = '';
+  }
+  applyOrderDiscount() {
+    const action = 'addBillLevelDiscount';
+    const data = {};
+    data['id'] = this.bill_data.id;
+    const discounts = [];
+    const discount = {};
+    discount['id'] = this.selOrderDiscount.id;
+    if (this.selOrderDiscount.discType === 'OnDemand') {
+      discount['discValue'] = this.discAmount;
+    }
+    if (this.discProvNote) {
+      discount['privateNote'] = this.discProvNote;
+    }
+    if (this.discConsNote) {
+      discount['displayNote'] = this.discConsNote;
+    }
+    console.log(this.selOrderDiscount);
+    discounts.push(discount);
+    data['discounts'] = discounts;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  applyOrderCoupon() {
+    const action = 'addProviderCoupons';
+    const data = {};
+    data['id'] = this.bill_data.id;
+    const coupons = [];
+    console.log(this.selOrderProviderCoupon);
+    coupons.push(this.selOrderProviderCoupon.id);
+    data['couponIds'] = coupons;
+    this.applyAction(action, this.bill_data.uuid, data);
+  }
+  // makePayment(checkin, bill_data) {
+  //   this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       checkin: checkin,
+  //       bill_data: bill_data
+  //     }
+  //   });
+
+  //   this.makPaydialogRef.afterClosed().subscribe(result => {
+  //     this.getCheckinDetails();
+  //   });
+  // }
+  initPayment(mode, amount) {
+    console.log(amount);
+    this.makePayment(mode, amount);
+  }
+  showPayment() {
+    this.amountpay = this.bill_data.amountDue;
+    this.showPayWorkBench = true;
+  }
+  hidePayWorkBench() {
+    this.showPayWorkBench = false;
+  }
+  makePayment(mode, amount) {
+    this.pay_data.uuid = this.checkin.ynwUuid;
+    this.pay_data.acceptPaymentBy = mode;
+    console.log(this.pay_data.acceptPaymentBy);
+    this.pay_data.amount = amount;
+    this.provider_services.acceptPayment(this.pay_data)
+      .subscribe(
+        data => {
+          if (this.pay_data.acceptPaymentBy === 'self_pay') {
+            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
+          } else {
+            this.hidePayWorkBench();
+            this.getWaitlistBill();
+            this.getPrePaymentDetails();
+            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          }
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  checkAmount(evt) {
+    if (evt.which !== 8 && evt.which !== 0 &&
+      ((evt.which < 48 || evt.which > 57) &&
+        (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
+      isNaN(this.amountpay) || this.amountpay < 0) {
+      evt.preventDefault();
+    }
+  }
+  settleBill() {
+    this.provider_services.settleWaitlistBill(this.uuid)
+      .subscribe(
+        data => {
+          this.getWaitlistBill();
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
+
+  confirmSettleBill(evt) {
+    if (this.amountpay > 0) {
+      const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+        }
+      });
+      dialogrefd.afterClosed().subscribe(result => {
+        if (result) {
+          this.settleBill();
+        }
+      });
+    } else {
+      this.settleBill();
+    }
+  }
+
+  emailBill(e) {
+    this.provider_services.emailWaitlistBill(this.uuid)
+      .subscribe(
+        data => {
+          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_EMAIL);
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  /**
+   * To Print Receipt
+   */
+  printMe() {
+    window.print();
+  }
 
 }
-
-

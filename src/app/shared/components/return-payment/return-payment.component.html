@@ -7,16 +7,16 @@
             <div class="payment-message" *ngIf="loading==0">
                 <div class="card success" *ngIf="status=='success'">
                     <span class="icon-tick"></span>
-                    <span class="message">Your payment has done successfully!</span>
-                    <a class="btn rounded-btn" *ngIf="user_type == 'consumer'" [routerLink]="['/consumer']">Go Back to home</a>
-                    <a class="btn rounded-btn" *ngIf="user_type == 'provider'" [routerLink]="['/provider']">Go Back to home</a>
+                    <span class="message">{{payment_done_success_cap}}</span>
+                    <a class="btn rounded-btn" *ngIf="user_type == 'consumer'" [routerLink]="['/consumer']">{{go_back_home_cap}}</a>
+                    <a class="btn rounded-btn" *ngIf="user_type == 'provider'" [routerLink]="['/provider']">{{go_back_home_cap}}</a>
                 </div>
                 
                 <div class="card failed" *ngIf="status=='failed'">
                     <span class="icon-warning"></span>
-                    <span class="message">Your payment has failed!</span>
-                    <a class="btn rounded-btn" *ngIf="user_type == 'consumer'" [routerLink]="['/consumer']">Go Back to home</a>
-                    <a class="btn rounded-btn" *ngIf="user_type == 'provider'" [routerLink]="['/provider']">Go Back to home</a>
+                    <span class="message">{{payment_failed_cap}}</span>
+                    <a class="btn rounded-btn" *ngIf="user_type == 'consumer'" [routerLink]="['/consumer']">{{go_back_home_cap}}</a>
+                    <a class="btn rounded-btn" *ngIf="user_type == 'provider'" [routerLink]="['/provider']">{{go_back_home_cap}}</a>
                 </div>
             </div>
 

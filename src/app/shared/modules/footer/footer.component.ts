@@ -19,6 +19,37 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 export class FooterComponent implements OnInit, OnDestroy, DoCheck {
 
   @Input() includedfrom: string;
+
+  about_cap = Messages.ABOUT_CAP;
+  about_jaldee_one = Messages.ABOUT_JALDEE_ONE;
+  about_jaldee_two = Messages.ABOUT_JALDEE_TWO;
+  contact_cap = Messages.CONTACT_CAP;
+  netvarth_tech_pvt_ltd = Messages.NETVARTH_TECH_PVT_LTD;
+  addr_one = Messages.ADDRESS_ONE;
+  addr_two = Messages.ADDRESS_TWO;
+  addr_three = Messages.ADDRESS_THREE;
+  addr_four = Messages.ADDRESS_FOUR;
+  support_email = Messages.SUPPORT_EMAIL;
+  support_phone = Messages.SUPPORT_PHONE;
+  terms_cap = Messages.TERMS_CAP;
+  conditions_cap = Messages.CONDITIONS_CAP;
+  privacy_policy_cap = Messages.PRIVACY_POLICY_CAP;
+  pricing_cap = Messages.PRICING_CAP;
+  about_us_cap = Messages.ABOUT_US_CAP;
+  contact_us_cap = Messages.CONTACT_US_CAP;
+  jaldee_cap = Messages.JALDEE_CAP;
+  copyright_cap = Messages.COPY_RIGHT_CAP;
+  date_time_cap = Messages.DATE_TIME_CAP;
+  text_cap = Messages.TEXT_CAP;
+  subject_cap = Messages.SUBJECT_CAP;
+  user_name_cap = Messages.USER_NAME_CAP;
+  no_audit_log_cap = Messages.NO_AUDIT_LOGS_CAP;
+  view_all_cap = Messages.VIEW_ALL_CAP;
+  no_alerts_cap = Messages.NO_ALERTS_CAP;
+  settings_not_found_cap = Messages.SETTINGS_NOT_FOUND_CAP;
+  accept_online_checkin_cap = Messages.ACC_ONLINE_CHECKIN_CAP;
+
+
   curyear;
   ctype;
   auditlog: any = [];

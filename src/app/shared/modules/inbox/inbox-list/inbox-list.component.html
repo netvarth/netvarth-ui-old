@@ -22,7 +22,7 @@
                           </div>
 
                           <div class="td td3">
-                            <div class="label">Provider / Consumer</div>
+                            <div class="label">{{provider_consumer_cap}}</div>
                             <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | capitalizeFirst}}</div>
                             <div class="result" *ngIf="user_id != message.receiver.id">{{message.receiver.userName | capitalizeFirst}}</div>
                           </div>
@@ -31,37 +31,39 @@
                             <div class="result">{{(user_id != message.receiver.id) ? (message.receiver.userName  | capitalizeFirst) : 'Me'}}</div>
                           </div> -->
                           <div class="td td2">
-                            <div class="label">Service</div>
+                            <div class="label">{{service_cap}}</div>
                             <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
                           </div>
                           <div class="td td4">
-                                <div class="label">Message</div>
+                                <div class="label">{{message_cap}}</div>
                                 <div class="result">{{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'.....':shared_functions.firstToUpper(message.msg) }}
                                 </div>
                             </div>
                           <div class="td td1">
-                              <div class="label">Date/Time</div>
+                              <div class="label">{{date_time_cap}}</div>
                               <!-- <div class="result">{{message.timeStamp | date: dateFormat}}</div> -->
                               <div class="result">{{formatDateDisplay(message.timeStamp)}}</div>
                           </div>
                       </div>
                       <div class="details" [class.show]="selectedMsg==i">
-                          <div class="result" [innerHTML]="message.msg | nl2br | capitalizeFirst">
+                          <div class="result">
+                              <div class="result" [innerHTML]="message.msg | nl2br | capitalizeFirst">
                               <!-- {{shared_functions.firstToUpper(message.msg)}} -->
                           </div>
                           <div class="action">
                               <span class="icon-reply" (click)="replyMessage(message)" *ngIf="user_id != message.owner.id && !hide_reply_button">
-                                  Reply
+                                  {{reply_cap}}
                               </span>
                               <span class="icon-close" (click)="closeMsg()">
-                                  Close
+                                  {{close_cap}}
                               </span>
                           </div>
                       </div>
                       <div class="actions">
-                          <span class="icon-delete"> Delete Message</span>
+                          <span class="icon-delete"> {{delete_msg_cap}}</span>
+                      </div>
                       </div>
                   </li>
               </ul>
-              <div class="no-msg" *ngIf="this.messages.length == 0">No Messages exists</div>
+              <div class="no-msg" *ngIf="this.messages.length == 0">{{no_msg_exists_cap}}</div>
   </div>

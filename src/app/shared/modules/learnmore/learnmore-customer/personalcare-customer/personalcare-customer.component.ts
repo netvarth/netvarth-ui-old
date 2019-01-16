@@ -20,7 +20,7 @@ export class PersonalcareCustomerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.target) {
-      // this.triggerScrollTo(this.target);
+     // this.triggerScrollTo(this.target);
     }
     // window.addEventListener('scroll', this.scroll, true); // third parameter
   }

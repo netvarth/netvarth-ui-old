@@ -10,18 +10,21 @@
                 <div class="card set01 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2 [matTooltipClass] = "tooltipcls" [matTooltip]="bprofileTooltip">Profile &amp; Search</h2>
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="bprofileTooltip">{{profile_cap}} &amp;
+                                {{search_cap}}</h2>
                         </div>
                         <div class="ct">
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Public Search <span class="sts" [class.active]="search_status">{{search_statusstr}}</span>
+                                        {{public_search_cap}} <span class="sts" [class.active]="search_status">{{search_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"><mat-slide-toggle [(ngModel)]="search_status" (change)="handle_searchstatus()"></mat-slide-toggle></span>
+                                    <span class="ctrl">
+                                        <mat-slide-toggle [(ngModel)]="search_status" (change)="handle_searchstatus()"></mat-slide-toggle>
+                                    </span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('bprofile')">Profile</span>
+                                    <span class="lnk" (click)="redirecTo('bprofile')">{{profile_cap}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -31,27 +34,33 @@
                 <div class="card set02 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2 [matTooltipClass] = "tooltipcls" [matTooltip]="waitlistTooltip">Waitlist Manager</h2>
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">{{waitlist_manage_cap}}</h2>
                         </div>
                         <div class="ct">
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Accept Online {{checkin_label |capitalizeFirst}} <span class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</span>
+                                        {{accept_online_cap}} {{checkin_label |capitalizeFirst}} <span class="sts"
+                                            [class.active]="waitlist_status">{{waitlist_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"><mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handle_waitliststatus($event)"></mat-slide-toggle></span>
+                                    <span class="ctrl">
+                                        <mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handle_waitliststatus($event)"></mat-slide-toggle>
+                                    </span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('waitlistmanager')">Settings</span>
+                                    <span class="lnk" (click)="redirecTo('waitlistmanager')">{{settings_cap}}</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('locations')">Locations ({{location_count}})</span>
+                                    <span class="lnk" (click)="redirecTo('locations')">{{locName}}
+                                      <span *ngIf="multipeLocationAllowed == true">  ({{location_count}})</span></span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('services')">Services ({{service_count}})</span>
+                                    <span class="lnk" (click)="redirecTo('services')">{{services_cap}}
+                                        ({{service_count}})</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('queues')">Service Time Windows ({{queues_count}})</span>
+                                    <span class="lnk" (click)="redirecTo('queues')">{{service_window_cap}}
+                                        ({{queues_count}})</span>
                                 </li>
                             </ul>
                         </div>
@@ -61,15 +70,16 @@
                 <div class="card set03 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2 [matTooltipClass] = "tooltipcls" [matTooltip]="licenseTooltip">License</h2>
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="licenseTooltip">{{license_cap}}</h2>
                         </div>
                         <div class="ct">
                             <ul>
                                 <li>
-                                    <span class="lnk"  (click)="redirecTo('license')">License &amp; Invoice</span>
+                                    <span class="lnk" (click)="redirecTo('license')">{{license_cap}} &amp;
+                                        {{invoice_cap}}</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('license')">Add-ons</span>
+                                    <span class="lnk" (click)="redirecTo('license')">{{add_on_cap}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -79,21 +89,23 @@
                 <div class="card set04 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2 [matTooltipClass] = "tooltipcls" [matTooltip]="paymentTooltip">Payments</h2>
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="paymentTooltip">{{payment_cap}}</h2>
                         </div>
                         <div class="ct">
                             <ul>
                                 <li>
                                     <span class="ttle">
-                                        Accept Payments <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
+                                        {{accept_payments_cap}} <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
                                     </span>
-                                    <span class="ctrl"><mat-slide-toggle [(ngModel)] = "payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle></span>
+                                    <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="jaldeeBankTooltip">
+                                        <mat-slide-toggle [(ngModel)]="payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle>
+                                    </span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('paymentsettings')">Payment Settings</span>
+                                    <span class="lnk" (click)="redirecTo('paymentsettings')">{{payment_setting_cap}}</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('taxsettings')">Tax Settings</span>
+                                    <span class="lnk" (click)="redirecTo('taxsettings')">{{tax_setting_cap}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -103,18 +115,20 @@
                 <div class="card set05 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2 [matTooltipClass] = "tooltipcls" [matTooltip]="billposTooltip">Billing/POS</h2>
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="billposTooltip">{{billing_cap}}</h2>
                         </div>
                         <div class="ct">
                             <ul>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('items')">Items ({{item_count}})</span>
+                                    <span class="lnk" (click)="redirecTo('items')">{{items_cap}} ({{item_count}})</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('discounts')">Discounts ({{discount_count}})</span>
+                                    <span class="lnk" (click)="redirecTo('discounts')">{{discount_cap}}
+                                        ({{discount_count}})</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('coupons')">Coupons ({{coupon_count}})</span>
+                                    <!-- <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}} ({{coupon_count}})</span> -->
+                                    <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -124,12 +138,12 @@
                 <div class="card set06 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2>Miscellaneous</h2>
+                            <h2>{{miscellaneous_cap}}</h2>
                         </div>
                         <div class="ct">
                             <ul>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('nonworking')">Non-working Days</span>
+                                    <span class="lnk" (click)="redirecTo('nonworking')">{{non_work_cap}}</span>
                                 </li>
                             </ul>
                         </div>

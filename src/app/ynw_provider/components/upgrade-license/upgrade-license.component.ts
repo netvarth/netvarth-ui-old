@@ -15,6 +15,18 @@ import { MessageService } from '../../services/provider-message.service';
   // styleUrls: ['./home.component.scss']
 })
 export class UpgradeLicenseComponent implements OnInit {
+  upgrade_lic_cap = Messages.UPGRADE_LICENSE;
+  curr_lic_cap = Messages.CURRENT_PACKAGE_CAP;
+  lic_pack_cap = Messages.UP_LIC_PACKAGE_CAP;
+  lic_package_cap = Messages.UP_LIC_PACK_CAP;
+
+  select_one_cap = Messages.UP_SELECT_ONE_CAP;
+  no_up_pack_found_cap = Messages.UP_NO_UPGRADE_PACK_FOUND;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  save_btn_cap = Messages.SAVE_BTN;
+  current_license_pkg;
+
+
 
   amForm: FormGroup;
   api_error = null;
@@ -41,6 +53,8 @@ export class UpgradeLicenseComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.getUpgradablePackages();
+    this.current_license_pkg = this.data.current_license_pkg;
+    // console.log(this.current_license_pkg);
   }
   getUpgradablePackages() {
     this.provider_services.getUpgradableLicensePackages()

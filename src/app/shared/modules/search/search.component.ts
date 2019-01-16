@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material';
+import {Messages} from '../../constants/project-messages';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
@@ -22,7 +23,7 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { projectConstants } from '../../constants/project-constants';
 
 export class Locscls {
-  constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string) { }
+  constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string, public rank: number) { }
 }
 export class Keywordsgroupcls {
   constructor(public displayname: string, public name: string) { }
@@ -40,6 +41,8 @@ export class Keywordscls {
 })
 export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
+  all_cap = Messages.ALL_CAP;
+  more_options_cap = Messages.MORE_OPTIONS_CAP;
   @Input() searchfields: SearchFields;
   @Input() showopennow: number;
   @Input() domainpassedfromrefined: string;
@@ -150,10 +153,14 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
     // console.log('included from', this.includedfrom);
     this.selected_domain = 'All';
+    if (this.passedDomain) {
+      this.selected_domain = this.passedDomain;
+    }
+
     if (this.domainlistpassed.length > 0) {
       // console.log('reached exists');
        this.domainlist_data = this.domainlistpassed;
-       this.loadkeywordAPIreponsetoArray();
+      // this.loadkeywordAPIreponsetoArray();
     } else {
         // console.log('reached not exists');
         this.getDomainList();
@@ -169,7 +176,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   }
   checktoSetLocationtoDefaultLocation() {
-    // console.log('loccheck search start', this.locationholder);
+    // console.log('loccheck search', this.locationholder);
     if (this.locationholder.autoname === '' || this.locationholder.autoname === undefined || this.locationholder.autoname === null) {
       /* if the location details are saved in the local storage, fetch them and set it as the location */
 
@@ -198,7 +205,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       }
 
     }
-    // console.log('loccheck search end', this.locationholder);
   }
   ngDoCheck() {
     // console.log('ondocheck');
@@ -311,18 +317,19 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   // loads the location details in json file to the respective array
   private loadLocationjsontoArray() {
     for (const state of locationjson['states']) {
-        const objstate = {autoname: 'All of ' + state.name + ', India', name: state.name, lat: state.latitude, lon: state.longitude, typ: 'state' };
+        const objstate = {autoname: state.name + ', India', name: state.name, lat: state.latitude, lon: state.longitude, typ: 'state', rank: 2 };
         this.locationList.push(objstate);
         for (const city of state.cities) {
-          const objcity = {autoname: 'All of ' + city.name + ', ' + state.name, name: city.name, lat: city.latitude, lon: city.longitude, typ: 'city' };
+          const objcity = {autoname: city.name + ', ' + state.name, name: city.name, lat: city.latitude, lon: city.longitude, typ: 'city', rank: 1 };
           this.locationList.push(objcity);
           for (const area of city.locations) {
-            const objarea = {autoname: area.name + ', ' + city.name + ', ' + state.name, name: area.name, lat: area.latitude, lon: area.longitude, typ: 'area' };
+            const objarea = {autoname: area.name + ', ' + city.name + ', ' + state.name, name: area.name, lat: area.latitude, lon: area.longitude, typ: 'area', rank: 3 };
             this.locationList.push(objarea);
           }
         }
     }
-    // console.log('loclist', this.locationList);
+     this.locationList.sort((a, b) => a.rank.toString().localeCompare(b.rank.toString()));
+    //  console.log(this.locationList);
  }
  private filterLocation(criteria: string= '') {
   this.locsearchcriteria = criteria;
@@ -341,7 +348,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           const hold_criteria = criteria.toLowerCase();
           for (const locs of this.locationList) {
               const holdlocname = locs.autoname.toLowerCase();
-              if (holdlocname.includes(hold_criteria)) {
+              if (holdlocname.startsWith(hold_criteria)) {
+                // if (holdlocname.includes(hold_criteria)) {
                 if (curcnt <= maxcnt) {
                   this.displaylocationList.push(locs);
                 }
@@ -385,9 +393,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
    }
    this.keywordList = [];
    // Call method to merge the subdomain details to the keyword array
-   this.addheadandMergearray('subdom');
+  //  this.addheadandMergearray('subdom');
    // Call method to merge the specialization details to the keyword array
-   this.addheadandMergearray('special');
+  //  this.addheadandMergearray('special');
  }
  private addheadandMergearray(typ) {
    switch (typ) {
@@ -406,6 +414,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
    }
  }
  filterKeywords(criteria: string= '') {
+   // console.log('Criteria:' + criteria);
   this.keyssearchcriteria = criteria;
     this.displaykeywordList = [];
     this.keywordgroupList = [];
@@ -422,41 +431,41 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
      } else {
 
-       if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
-        const hold_criteria = criteria.toLowerCase();
-        let curcnt = 1;
-        this.displaykeywordList.push({autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle'});
-        for (const kw of this.keywordList) {
-          const holdkeyword = kw.autoname.toLowerCase();
-           if (holdkeyword.includes(hold_criteria)) {
+      //  if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
+      //   const hold_criteria = criteria.toLowerCase();
+      //   let curcnt = 1;
+      //   this.displaykeywordList.push({autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle'});
+        // for (const kw of this.keywordList) {
+        //   const holdkeyword = kw.autoname.toLowerCase();
+        //    if (holdkeyword.includes(hold_criteria)) {
             // if (curcnt <= projectConstants.AUTOSUGGEST_LOC_MAX_CNT) {
-              this.displaykeywordList.push(kw);
-              curcnt++;
+              // this.displaykeywordList.push(kw);
+              // curcnt++;
             // }
-          }
-        }
+        //   }
+        // }
 
-        this.holdisplaylist['subdom'] = new Array();
-        this.holdisplaylist['special'] = new Array();
+        // this.holdisplaylist['subdom'] = new Array();
+        // this.holdisplaylist['special'] = new Array();
         this.holdisplaylist['kwtitle'] = new Array();
 
-        for (const kw of this.displaykeywordList) {
+        // for (const kw of this.displaykeywordList) {
 
-          if (kw.typ === 'kwtitle') {
-            this.holdisplaylist['kwtitle'].push(kw);
-          }
-          // case of subdomain header row
-          if (kw.typ === 'subdom') {
-            this.holdisplaylist['subdom'].push(kw);
-          }
+        //   if (kw.typ === 'kwtitle') {
+        //     this.holdisplaylist['kwtitle'].push(kw);
+        //   }
+        //   // case of subdomain header row
+        //   if (kw.typ === 'subdom') {
+        //     this.holdisplaylist['subdom'].push(kw);
+        //   }
 
-           // case of specialization header row
-          if (kw.typ === 'special') {
-            this.holdisplaylist['special'].push(kw);
-          }
-        }
-       }
-    }
+        //    // case of specialization header row
+        //   if (kw.typ === 'special') {
+        //     this.holdisplaylist['special'].push(kw);
+        //   }
+        // }
+      //  }
+     }
 
      // Defining the types of details that will be displayed for keywords autocomplete
     const keywordgroup_val = [];
@@ -464,46 +473,63 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // Check whether the title is to be displayed
     if (this.holdisplaylist['kwtitle']) {
       if (this.holdisplaylist['kwtitle'].length > 0) {
-        const groupdomainobj = {displayname: 'Business Name as', name: 'kwtitle'};
+        const groupdomainobj = {displayname: 'Business Name/Keyword', name: 'kwtitle'};
         keywordgroup_val.push(groupdomainobj);
       }
     }
     // Check whether the subdomain heading is to be displayed
-    if (this.holdisplaylist['subdom']) {
-      if (this.holdisplaylist['subdom'].length > 0) {
-        const groupdomainobj = {displayname: 'Sub Domains', name: 'subdom'};
-        keywordgroup_val.push(groupdomainobj);
-      }
-    }
+    // if (this.holdisplaylist['subdom']) {
+    //   if (this.holdisplaylist['subdom'].length > 0) {
+    //     const groupdomainobj = {displayname: '', name: 'subdom'};
+    //     keywordgroup_val.push(groupdomainobj);
+    //   }
+    // }
     // Check whether the specialization heading is to be displayed
-    if (this.holdisplaylist['special']) {
-      if (this.holdisplaylist['special'].length > 0) {
-        const groupspecialobj = {displayname: 'Specializations', name: 'special'};
-        keywordgroup_val.push(groupspecialobj);
-      }
-    }
+    // if (this.holdisplaylist['special']) {
+    //   if (this.holdisplaylist['special'].length > 0) {
+    //     const groupspecialobj = {displayname: 'Specializations', name: 'special'};
+    //     keywordgroup_val.push(groupspecialobj);
+    //   }
+    // }
     // Check whether search labels exists
     if (this.show_searchlabellist) {
       this.holdisplaylist['label'] = [];
+      this.holdisplaylist['special'] = [];
       for (const label of this.show_searchlabellist) {
         const holdkeyword = label.displayname.toLowerCase();
+        // const holdkeyword = label.displayname.toLowerCase();
         if (label.displayname !== '') {
           if (holdkeyword.includes(this.keyssearchcriteria)) {
             const lbl = label.query.split('&');
-            const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
-            this.holdisplaylist['label'].push(labelspec);
+            // console.log(label.type);
+            if (label.type === 'special') {
+              // const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+              // this.holdisplaylist['label'].push(labelspec);
+             const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: label.type };
+             this.holdisplaylist['special'].push(labelspec);
+            } else {
+              const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+              this.holdisplaylist['label'].push(labelspec);
+            }
           }
         }
+        // console.log(this.holdisplaylist);
       }
       // Check whether search labels heading is to be displayed
       if (this.holdisplaylist['label'].length > 0 ) {
         const grouplabelsobj = {displayname: 'Suggested Searches', name: 'label'};
         keywordgroup_val.push(grouplabelsobj);
       }
+      if (this.holdisplaylist['special'].length > 0 ) {
+        const grouplabelsobj = {displayname: 'Specialization', name: 'special'};
+        keywordgroup_val.push(grouplabelsobj);
+      }
     }
     this.keywordgroupList = keywordgroup_val;
     // assiging the details to the displayed in the autosuggestion for keywords box
     this.displaykeywordList = this.holdisplaylist;
+    // console.log('Display Search Items');
+    // console.log(this.displaykeywordList);
  }
  // this method decides how the items are shown in the autosuggestion list
  highlightSelText(curtext, classname, mod?, typ?) {
@@ -595,7 +621,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;
-          this.loadkeywordAPIreponsetoArray();
+        // this.loadkeywordAPIreponsetoArray();
         }
       }
     }
@@ -604,7 +630,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       .subscribe (
         res => {
           this.domainlist_data = res;
-          this.loadkeywordAPIreponsetoArray();
+        //  this.loadkeywordAPIreponsetoArray();
           const today = new Date();
           const postdata = {
             cdate: today,
@@ -669,23 +695,25 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }*/
   private setLocation(loc) {
    this.locationholder =  {
-                            name: loc.name,
-                            autoname: loc.autoname,
-                            lat: loc.lat,
-                            lon: loc.lon,
-                            typ: loc.typ
-                          };
+      name: loc.name,
+      autoname: loc.autoname,
+      lat: loc.lat,
+      lon: loc.lon,
+      typ: loc.typ,
+      rank: loc.rank
+    };
    this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
    this.location_data = undefined;
    // console.log('loc', loc);
   }
   private setNulllocationvalues(loc?) {
     this.locationholder =  {
-                        name: loc.name || null,
-                        autoname: loc.autoname || null,
-                        lat: loc.lat || null,
-                        lon: loc.lon || null,
-                        typ: loc.typ || null
+      name: loc.name || null,
+      autoname: loc.autoname || null,
+      lat: loc.lat || null,
+      lon: loc.lon || null,
+      typ: loc.typ || null,
+      rank: loc.rank || null
     };
     this.location_data = undefined;
   }
@@ -697,12 +725,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   if (kw.name !== '') {
     this.kw_autoname = kw.autoname;
     this.keywordholder = {
-                              autoname: kw.autoname,
-                              name: kw.name,
-                              domain: kw.domain,
-                              subdomain: kw.subdomain,
-                              typ: kw.typ
-                            };
+      autoname: kw.autoname,
+      name: kw.name,
+      domain: kw.domain,
+      subdomain: kw.subdomain,
+      typ: kw.typ
+    };
   }
    // console.log('kwholder', this.keywordholder);
    if (kw.typ === 'label') {
@@ -840,7 +868,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
               }
             }
          }
-        // console.log('params', passparam);
+        //  console.log('params', passparam);
          this.routerobj.navigate(['/searchdetail', passparam]);
      }
   }
@@ -921,7 +949,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         ret_arr['subdom_dispname'] = ret['subdom_dispname'] || ret_arr['subsector'];
         if (ret_arr['sector'] === '') { // sector not mentioned in the search label condition
           if (ret['dom'] === '') {
-            // ret['dom'] = 'All';
             ret.dom = 'All';
           }
           ret_arr['dom'] = ret['dom'];
@@ -983,11 +1010,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   // function which parse the querystring from search leabels
   parsesearchLabelsQuerystring (str = null) {
     const retarr = {
-                  'sector': '',
-                  'subsector': '',
-                  'specialization': '',
-                  'rating': ''
-                 };
+    'sector': '',
+    'subsector': '',
+    'specialization': '',
+    'rating': ''
+    };
     // console.log('str', str);
     if (str !== null) {
       if (str.match(/\ssector:'(.*?)'/) !== null) {
@@ -1005,29 +1032,29 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   handledomainchange(domain, avoidclear?) {
     // setting the domain in the selected_domain holder variable
+   // alert('here' + this.selected_domain);
     if (domain === 'All') {
      // domain = '';
     }
     this.selected_domain = domain;
-
     if (avoidclear === 1) {
     } else {
       this.kw_autoname = '';
       this.keywordholder = {
-                                autoname: '',
-                                name: '',
-                                domain: '',
-                                subdomain: '',
-                                typ: ''
+        autoname: '',
+        name: '',
+        domain: '',
+        subdomain: '',
+        typ: ''
       };
       this.curlabel = {typ: '', query: ''};
     }
     this.keyssearchcriteria = '';
     this.prov_name = '';
-   // console.log('seldomain', this.selected_domain);
+    // alert(this.selected_domain);
     this.getSearchlabelsbydomain(domain);
-    this.loadkeywordAPIreponsetoArray();
-    if (avoidclear === undefined) {
+    // this.loadkeywordAPIreponsetoArray();
+        if (avoidclear === undefined) {
       this.handleNormalSearchClick();
     }
    // this.handleNormalSearchClick();

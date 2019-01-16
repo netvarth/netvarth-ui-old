@@ -21,6 +21,13 @@ import {
 
 export class ServiceDetailComponent implements OnInit {
 
+  service_cap = Messages.SERVICE_CAP;
+  duration_cap = Messages.DURATION_CAP;
+  price_cap = Messages.PRICE_CAP;
+  prepayment_amount = Messages.PREPAYMENT_AMOUNT_CAP;
+  description_cap = Messages.DESCRIPTION_CAP;
+  close_btn_cap = Messages.CLOSE_BTN;
+
   api_error = null;
   api_success = null;
 

@@ -1,39 +1,36 @@
-<h1 class="mat-dialog-title">{{curmod | capitalizeFirst}} Your Social Media <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<mat-dialog-content>
-<div class="form-group" *ngIf="curmod=='add'">
-<mat-form-field  class="example-full-width">
-<label class="col-form-label" for="socialkey">Select</label>
-<mat-select placeholder="Please Select" #selsocial [(ngModel)]="socialkey">
-    <mat-option [value]="''">- Select One -</mat-option>
-    <mat-option *ngFor="let slist of social_list" [value]="slist.key">
-    <mat-icon [class]="slist.iconClass" aria-hidden="true"></mat-icon>
-    {{ slist.displayName }}
-    </mat-option>
-</mat-select>
-</mat-form-field>
-</div>
-<div class="sm_keydiv" *ngIf="curmod=='edit'">
-    <div class="form-group">
-    <label class="col-form-label" for="socialkey">
-        <i [class]="getSocialdet(socialkey, 'iconClass')"></i>
-        {{getSocialdet(socialkey, 'displayName')}}
-    </label>
+<h1 class="mat-dialog-title">{{curmod | capitalizeFirst}} {{your_social_media_cap}} <button mat-dialog-close class="modal_close"
+        tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<mat-dialog-content class="ynw-common-form">
+    <div class="form-group" *ngIf="curmod=='add'">
+        <mat-form-field class="example-full-width">
+            <mat-select placeholder="{{select_cap}}" #selsocial [(ngModel)]="socialkey">
+                <mat-option *ngFor="let slist of social_list" [value]="slist.key">
+                    <mat-icon [class]="slist.iconClass" aria-hidden="true"></mat-icon>
+                    {{ slist.displayName }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
-</div>
+    <div class="sm_keydiv" *ngIf="curmod=='edit'">
+        <div class="form-group">
+            <label class="col-form-label" for="socialkey">
+                <i [class]="getSocialdet(socialkey, 'iconClass')"></i>
+                {{getSocialdet(socialkey, 'displayName')}}
+            </label>
+        </div>
+    </div>
 
-<div class="form-group">
-
-    <label class="col-form-label">Enter the URL</label>
-    <input class="form-control" placeholder="URL" type="url" [(ngModel)]="socialurl" name="socialurl" matInput autocomplete="off" [placeholder]="placeholder">
-
-</div>
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput class="form-control" placeholder="{{social_url_cap}}" type="url" [(ngModel)]="socialurl"
+                name="socialurl" matInput autocomplete="off" [placeholder]="placeholder">
+        </mat-form-field>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-    <button  type="button" mat-button (click)="saveSocial()" [disabled]="!socialkey || !socialurl || posted" class="cs-btn bt1">Save</button>
-    
+    <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
+    <button type="button" mat-button (click)="saveSocial()" [disabled]="!socialkey || !socialurl || posted" class="cs-btn bt1">{{save_btn}}</button>
 
 </mat-dialog-actions>
-<app-form-success-display  [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-

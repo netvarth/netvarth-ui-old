@@ -12,10 +12,12 @@ import { Messages } from '../../../constants/project-messages';
   templateUrl: './learnmore-adjustdelay.component.html'
 })
 export class LearnmoreAdjustDelayComponent implements OnInit {
+
+  adjust_delay_cap = Messages.ADJUST_DELAY_CAP;
   @Input() target: string;
   curtype = '';
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data: any,
+   // @Inject(MAT_DIALOG_DATA) public data: any,
     private _scrollToService: ScrollToService,
     public shared_function: SharedFunctions
   ) {}
@@ -24,7 +26,7 @@ export class LearnmoreAdjustDelayComponent implements OnInit {
     const userdet = this.shared_function.getitemfromLocalStorage('ynw-user');
     this.curtype = userdet.sector;
     if (this.target) {
-      // this.triggerScrollTo(this.target);
+     // this.triggerScrollTo(this.target);
     }
     // window.addEventListener('scroll', this.scroll, true); // third parameter
   }

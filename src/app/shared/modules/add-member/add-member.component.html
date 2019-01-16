@@ -1,35 +1,45 @@
-<!-- <form [formGroup]="amForm"  novalidate
-(ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()"> -->
-<div *ngIf="calledFrom=='checkin'" class="addmem-head">Please fill in the following details</div>
-<div class="form-group">
-    <label class="col-form-label" for="first_name">First Name *</label>
-    <input type="text" [(ngModel)] = "firstname" (keyup)="valuechange()" class="form-control" id="first_name" placeholder="First Name" autocomplete="off">
-    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
+<!-- <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+    class="ynw-common-form"> -->
+<div *ngIf="calledFrom=='checkin'" class="addmem-head">{{fill_foll_details_cap}}</div>
+<div class="ynw-common-form">
+    <div class="form-group">
+        <mat-form-field>
+            <input type="text" matInput [(ngModel)]="firstname" (keyup)="valuechange()" class="form-control" id="first_name"
+                placeholder="First Name" autocomplete="off">
+        </mat-form-field>
+        <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
     errorMsg="Please enter the first name.">
    </app-field-error-display> -->
-</div>
+    </div>
 
-<div class="form-group">
-    <label class="col-form-label" for="last_name">Last Name *</label>
-    <input type="text" [(ngModel)] = "lastname" (keyup)="valuechange()" class="form-control" id="last_name" placeholder="Last Name" autocomplete="off">
-    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
+    <div class="form-group">
+        <mat-form-field>
+            <input type="text" matInput [(ngModel)]="lastname" (keyup)="valuechange()" class="form-control" id="last_name"
+                placeholder="Last Name" autocomplete="off">
+        </mat-form-field>
+        <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
     errorMsg="Please enter the last name.">
    </app-field-error-display> -->
-</div>
-<div class="form-group" *ngIf="calledFrom !='checkin'">
-    <label class="col-form-label" for="mobile">Mobile Number </label>
-    <input type="text" [(ngModel)] = "mobile" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number" autocomplete="off">
-    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
-    errorMsg="Please enter the mobile number.">
-   </app-field-error-display> -->
-</div>
-<div class="form-group" *ngIf="calledFrom !='checkin'">
-        <label class="col-form-label" for="gender">Gender </label>
-        <mat-radio-group [(ngModel)] = "gender" (change)="valuechange()">
-            <mat-radio-button value="Male">Male</mat-radio-button>
-            <mat-radio-button value="Female">Female</mat-radio-button>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 no-padding" *ngIf="calledFrom !='checkin'">
+        <mat-form-field>
+            <div class="input-group">
+                <div class="input-group-prepend mob-prefix">
+                    <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                </div>
+                <input type="text" matInput [(ngModel)]="mobile" (keyup)="valuechange()" class="form-control" id="mobile"
+                    placeholder="Mobile Number" autocomplete="off" maxlength="10">
+            </div>
+        </mat-form-field>
+    </div>
+    <div class="form-group" *ngIf="calledFrom !='checkin'">
+        <label class="col-form-label" for="gender">{{gender_cap}} </label>
+        <mat-radio-group [(ngModel)]="gender" (change)="valuechange()">
+            <mat-radio-button value="Male">{{male_cap}}</mat-radio-button>
+            <mat-radio-button value="Female">{{female_cap}}</mat-radio-button>
         </mat-radio-group>
+<<<<<<< HEAD
               
 </div>
 <div class="form-group normalpicker" *ngIf="calledFrom !='checkin'">
@@ -41,11 +51,24 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"> -->
         <input class="form-control nofocus" type="text" matInput [matDatepicker]="picker" [max]="tday" disabled [(ngModel)] = "dob" tabindex="-1">
       </div>
     <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
+=======
+    </div>
+    <div class="form-group normalpicker" *ngIf="calledFrom !='checkin'">
+        <label class="col-form-label" for="dob">{{dob_cap}} </label>
+        <!-- <input type="text" [(ngModel)] = "dob" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number"> -->
+        <div class="pickerouter">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker (selectedChanged)="dateChanged($event)" [disabled]="false"></mat-datepicker>
+            <input class="form-control nofocus" type="text" matInput [matDatepicker]="picker" [max]="tday" disabled
+                [(ngModel)]="dob" tabindex="-1">
+        </div>
+        <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
+>>>>>>> refs/remotes/origin/jaldee-nv
     errorMsg="Please enter the mobile number.">
     </app-field-error-display> -->
+    </div>
 </div>
-    
-    
+
 <!-- <button  type="submit" mat-button
 [disabled]="!amForm.valid" *ngIf="calledFrom!='checkin'">Submit</button>
 

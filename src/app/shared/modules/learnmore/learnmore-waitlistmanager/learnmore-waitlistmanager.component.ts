@@ -15,7 +15,7 @@ export class LearnmoreWaitlistManagerComponent implements OnInit {
   @Input() target: string;
   curtype = '';
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data: any,
+   // @Inject(MAT_DIALOG_DATA) public data: any,
     private _scrollToService: ScrollToService,
     public shared_function: SharedFunctions
   ) {}

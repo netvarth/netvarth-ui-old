@@ -1,4 +1,4 @@
-    <h1 class="mat-dialog-title">{{consumer_label |capitalizeFirst}} Note
+    <h1 class="mat-dialog-title">{{consumer_label |capitalizeFirst}} {{note_cap}}
       <button #queue mat-dialog-close class="modal_close" tabindex="-1">
           <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
@@ -7,5 +7,5 @@
       {{checkin.consumerNote}}
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button  type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+      <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
     </mat-dialog-actions>
