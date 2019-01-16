@@ -66,7 +66,9 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
       }
       // this.reloadAPIs();
     });
-    this.setMessageType();
+    if (this.type !== 'forgot_password') {
+      this.setMessageType();
+    }
     // console.log('type', this.type);
   }
   ngOnDestroy() {

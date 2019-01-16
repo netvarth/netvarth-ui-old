@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, EventEmitter, Output, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, Output, ElementRef, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
 import { NgForm } from '@angular/forms';
@@ -25,7 +25,7 @@ export class SetPasswordFormComponent implements OnInit {
   passworddialogRef;
 
   spForm;
-
+  @Input() type;
   @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   // tslint:disable-next-line:no-output-on-prefix

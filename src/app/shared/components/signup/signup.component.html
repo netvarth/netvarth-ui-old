@@ -134,7 +134,7 @@ onSubmit()" (keyup)="resetApiErrors()">
 (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess"></app-otp-form>
 </div>
 <div class="example-container" *ngIf="step==3">
-<app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()" (onCancelBtn)="onCancelPass()"></app-sp-form>
+<app-sp-form [type]="'forgot_password'" (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()" (onCancelBtn)="onCancelPass()"></app-sp-form>
 </div>
 <div class="example-container" *ngIf="step==4">
     <mat-dialog-content class="pwd_cancel_scr">   
