@@ -83,7 +83,7 @@
                 <span>{{checkin_label |capitalizeFirst}}s ({{today_checkins_count}})</span>
               </li>
               <li class="active" *ngIf="time_type != 1">
-                <span>{{checkin_label |capitalizeFirst}}s ({{today_checkins_count}})</span>
+                <span>{{checkin_label |capitalizeFirst}}s</span>
               </li>
               <ng-container *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
                 <li [ngClass]="{'active': status_type =='started'}" (click)="changeStatusType('started')">

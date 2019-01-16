@@ -288,12 +288,20 @@ export const projectConstants = {
   },
   PARKING_TYPES: [
     { displayName: 'None', value: 'none' },
-    { displayName: 'Free', value: 'free' },
-    { displayName: 'Street', value: 'street' },
-    { displayName: 'Privatelot', value: 'privatelot' },
-    { displayName: 'Valet', value: 'valet' },
-    { displayName: 'Paid', value: 'paid' }
+    { displayName: 'Free Parking', value: 'free' },
+    { displayName: 'Street Parking', value: 'street' },
+    { displayName: 'Private Parking', value: 'privatelot' },
+    { displayName: 'Valet Parking', value: 'valet' },
+    { displayName: 'Paid Parking', value: 'paid' }
   ],
+  PARKING_TYPES_DISPLAY: {
+    none: 'None',
+    free: 'Free Parking',
+    street: 'Street Parking',
+    privatelot: 'Private Parking',
+    valet: 'Valet Parking',
+    paid: 'Paid Parking'
+  },
   REPORT_STATUS_FILTER: [
     { displayName: 'Payment Pending', value: 'PAYMENTPENDING' },
     { displayName: 'Requested', value: 'REQUESTED' },

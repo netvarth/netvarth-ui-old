@@ -293,7 +293,7 @@
                                     <div class="phtbl">
                                         <ul class="tbl-list">
                                             <li class="tth">
-                                                <div class="otr">
+                                                <div class="otr no-padding">
                                                     <div class="cth">{{phone_cap}} <span (click)="handlePrivacysettings('phone')"
                                                             class="addbt" *ngIf="phonearr.length>0"></span></div>
 
@@ -334,7 +334,7 @@
                                                 </li>
                                             </ng-container>
                                             <ng-container *ngIf="phonearr.length==0">
-                                                <div class="no-dta">
+                                                <div class="no-dta no-padding">
                                                     <p>You haven't added any Phone</p>
                                                     <span class="cs-btn bt3" (click)="handlePrivacysettings('phone')">{{add_it_cap}}</span>
                                                 </div>
@@ -347,7 +347,7 @@
                                         <ul class="tbl-list">
                                             <li class="tth">
                                                 <div class="otr">
-                                                    <div class="cth">{{email_cap}} <span (click)="handlePrivacysettings('email')"
+                                                    <div class="cth no-padding">{{email_cap}} <span (click)="handlePrivacysettings('email')"
                                                             class="addbt" *ngIf="emailarr.length>0"></span></div>
                                                 </div>
                                             </li>
@@ -386,7 +386,7 @@
                                                 </li>
                                             </ng-container>
                                             <ng-container *ngIf="emailarr.length==0">
-                                                <div class="no-dta">
+                                                <div class="no-dta no-padding">
                                                     <p>You haven't added any Email</p>
                                                     <span class="cs-btn bt3" (click)="handlePrivacysettings('email')">{{add_it_cap}}</span>
                                                 </div>

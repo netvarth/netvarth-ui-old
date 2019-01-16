@@ -755,6 +755,9 @@ padding: 5px 5px 5px 10px !important;
 .mgn-bt-10 {
   margin-bottom:10px !important;
 }
+.mgn-up-10 {
+  margin-top:10px !important;
+}
 .brd-bt {
  border-bottom: 1px solid #ddd !important;
 }
@@ -791,7 +794,7 @@ padding: 5px 5px 5px 10px !important;
 .checkin-provider .mat-dialog-container .search_provider .create_new .cs-btn {
 margin-top:10px;
 }
-.checkin-consumer .mat-dialog-container .form-group input[type="text"] {height:35px !important;}
+.checkin-consumer .mat-dialog-container .coupon-outer .form-group input[type="text"] {height:35px !important;} */
 .checkin-consumer .coupon-add-msg {font-size:0.75rem !important;color:green; padding: 5px !important;}
 .checkin-consumer .read-more-checkin {font-size:0.60rem !important; color:#00aef2; font-weight: 800}
 .checkin-consumer .read-more-checkin:hover {text-decoration: underline;}
@@ -896,7 +899,6 @@ Overriding mat input style
 {
   color: #3f51b5 !important;
   z-index: 5;
-  margin-bottom: 20px!important;
 }
 .signup-form .mat-form-field-appearance-legacy .mat-form-field-label,
 .ynw-common-form .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty,
@@ -1049,7 +1051,7 @@ Overriding mat input style
     /* .b-queue {margin-top: 8px !important; }
     .add-nloc-q {float: right !important; margin-top:0px !important; margin-right: 110px!important; margin-bottom: 5px !important} */
     .add-serv-btn{float: right !important; margin-top:-20px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-    .delay-btn{float: right !important;padding:0px !important; margin-top:-40px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+    .delay-btn{float: right !important;padding:0px !important; margin-top:-44px !important; margin-right: 110px!important; margin-bottom: 5px !important}
     
     .add-nloc { margin-top:-23px !important; margin-right: 110px!important; margin-bottom: 5px !important}
   }

@@ -548,7 +548,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   blurQty(val, itm) {
-    if (isNaN(val)) {
+    if (isNaN(val) || val < 0) {
       itm.qty = 1;
     } else {
       const vv = parseInt(val, 10);

@@ -36,7 +36,6 @@
                                                     <p></p>
                                                     <p>{{revisit_this_page_cap}}</p>
                                                 </div>
-
                                                 <div class='paymode-outer' *ngIf="emailidVerified">
                                                     <div class='paytm-outer patm_txtgrp'>
                                                         <div class="form-group">
@@ -232,7 +231,7 @@
                                 </div>
                             </div>
                         </mat-radio-group>
-                        <div class="actiondiv" *ngIf="(isJaldeeAccount && optJaldeeAccount==='disable' && (payuverified || paytmverified))">
+                        <div class="actiondiv" *ngIf="(!isJaldeeAccount && optJaldeeAccount==='enable' && (payuverified || paytmverified))">
                             <button type="button" mat-button class="cs-btn bt1" (click)="saveAccountPaymentSettings(optJaldeeAccount)">{{save_btn_cap}}</button>
                         </div>
                     </mat-tab>

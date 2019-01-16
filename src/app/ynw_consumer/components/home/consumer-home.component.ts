@@ -918,10 +918,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.shared_services.getServicesByLocationId(waitlist.queue.location.id)
       .subscribe(data => {
         this.servicesjson = data;
-        // console.log('service', this.servicesjson);
+        // console.log('waitlist', waitlist);
         for (let i = 0; i < this.servicesjson.length; i++) {
           if (this.servicesjson[i].id === waitlist.service.id) {
-            prepayamt = waitlist.waitlist_for.length * this.servicesjson[i].minPrePaymentAmount || 0;
+            prepayamt = waitlist.waitlistingFor.length * this.servicesjson[i].minPrePaymentAmount || 0;
             // this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
             if (prepayamt > 0) {
               const payData = {
