@@ -169,7 +169,7 @@
                       {{all_cap}}
                     </mat-option>
                     <mat-option *ngFor="let queue of all_queues" (click)="setFilterData('queue', queue.id)" [value]="queue.id">
-                      <span class="day_label">{{queue.displayschedule.dstr}}</span>
+                      <span class="day_label">{{queue.displayschedule.dstr}} </span>
                       <span class="time_label">{{queue.displayschedule.time}}</span>
                     </mat-option>
                   </mat-select>
