@@ -51,7 +51,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       title: 'Coupons'
     }
   ];
-  coupon_info: any = [];;
+  coupon_info: any = [];
   jaldee_reimburse;
   always_enable;
   addcoupdialogRef;
@@ -93,7 +93,10 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
         console.log(data);
         this.jaldeeCoupons = data;
         for (let index = 0; index < this.jaldeeCoupons.length; index++) {
-          this.coupon_info[index] = "Always enabled "+ this.jaldeeCoupons[index].couponRules.alwaysEnabled +" "+ this.jaldeeCoupons[index].couponState;
+          if (this.jaldeeCoupons[index].couponRules.onlineCheckinRequired === true) {
+            this.coupon_info[index] = "Online checkin required";
+          }
+          // this.coupon_info[index] = "Always enabled "+ this.jaldeeCoupons[index].couponRules.alwaysEnabled;
         }
         this.query_executed = true;
       });

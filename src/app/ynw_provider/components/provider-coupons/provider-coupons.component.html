@@ -14,7 +14,7 @@
                     <div class="w-dta" *ngIf="jaldeeCoupons.length>0">
                         <div class="row">
                             <div class="n-loc col-md-12 col-sm-12 col-xs-12 reportbtn">
-                                <span class="add-nloc cs-btn bt3 " (click)="reports()">{{reports_cap}}</span>
+                                <span class="cs-btn bt3 " (click)="reports()">{{reports_cap}}</span>
                             </div>
                             <div class="card coupon-card">
                                 <div class="copy">
@@ -32,10 +32,11 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let jCoupon of jaldeeCoupons let i=index">
-                                                    <td data-title="Coupon Code" class="pointer-cursor" (click)="couponView(jCoupon.jaldeeCouponCode)">
-                                                        {{jCoupon.jaldeeCouponCode}}<span class="td-i-info"><i class=""
-                                                                data-icon="B" id="customer-help" [matTooltipClass]="tooltipcls"
-                                                                [matTooltip]="coupon_info[i]"></i></span>
+                                                    <td data-title="Coupon Code" class="pointer-cursor">
+                                                        <span (click)="couponView(jCoupon.jaldeeCouponCode)">
+                                                            {{jCoupon.jaldeeCouponCode}}</span> <span class="td-i-info"><i
+                                                                class="" data-icon="B" id="customer-help"
+                                                                [matTooltipClass]="tooltipcls" [matTooltip]="coupon_info[i]"></i></span>
                                                     </td>
                                                     <td data-title="Name">{{jCoupon.couponName}}</td>
                                                     <td data-title="Valid From">{{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>

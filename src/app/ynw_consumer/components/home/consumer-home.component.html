@@ -142,8 +142,8 @@
                         <div class="list" [class.active]="open_fav_div == i" *ngFor="let provider of fav_providers; index as i">
                             <div class="header">
                                 <div class="lt" (click)="toogleDetail(provider, i)">
-                                    <h3 class="pointer-cursor">
-                                        {{provider.businessName | capitalizeFirst}}</h3>
+                                    <h3 class="pointer-cursor" >
+                                        <a (click)="providerDetail(provider)">{{provider.businessName | capitalizeFirst}}</a></h3>
                                 </div>
                                 <div class="rt">
                                     <ul class="controls">
