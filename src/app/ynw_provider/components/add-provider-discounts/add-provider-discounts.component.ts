@@ -27,7 +27,7 @@ export class AddProviderDiscountsComponent implements OnInit {
   api_error = null;
   api_success = null;
   parent_id ;
-  valueCaption = 'Enter value';
+  valueCaption = 'Enter value *';
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
   curtype = 'Fixed';

@@ -2,13 +2,13 @@
   <form [formGroup]="otp_form" novalidate (ngSubmit)="otp_form.valid && doOnOtpSubmit(otp_form.value)" class="ynw-common-form otp_scr"
     (keyup)="doResetApiErrors()">
     <mat-dialog-content>   
-        <p class="col-form-label col-md-12 no-padding" for="otp"><b>{{otp_mobile}}</b></p>
+        <!-- <p class="col-form-label col-md-12 no-padding" for="otp"><b>{{otp_mobile}}</b></p> -->
         
             <div class="row otp_box">
           <div class="col-md-6 col-7">
               <div class="form-group ">
                   <mat-form-field >
-                  <input class="form-control number-ip-sm" matInput placeholder="OTP" [formControl]="otp_form.controls['phone_otp']" autocomplete="off">
+                  <input class="form-control number-ip-sm" matInput placeholder="Enter OTP" [formControl]="otp_form.controls['phone_otp']" autocomplete="off">
                 </mat-form-field>
                   <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')" errorMsg="Please enter a valid OTP.">
                     </app-field-error-display>

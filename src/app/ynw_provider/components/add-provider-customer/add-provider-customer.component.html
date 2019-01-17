@@ -13,7 +13,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                     </div>
-                    <input matInput type="text" matInput class="form-control" id="mobile_number" placeholder="Mobile Number"
+                    <input matInput type="text" matInput class="form-control" id="mobile_number" placeholder="{{mobile_cap}}"
                         formControlName="mobile_number" autocomplete="off" maxlength=10>
                 </div>
             </mat-form-field>
@@ -29,7 +29,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field>
-                <input matInput type="text" class="form-control" matInput id="first_name" placeholder="First Name"
+                <input matInput type="text" class="form-control" matInput id="first_name" placeholder="{{f_name_cap}}"
                     formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
@@ -43,7 +43,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field>
-                <input matInput type="text" class="form-control" id="last_name" placeholder="Last Name" formControlName="last_name"
+                <input matInput type="text" class="form-control" id="last_name" placeholder="{{l_name_cap}}" formControlName="last_name"
                     autocomplete="off" (blur)="onFieldBlur('last_name')">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',

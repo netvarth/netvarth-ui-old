@@ -25,7 +25,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                     </div>
-                    <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
+                    <input matInput type="text" class="form-control" id="mobile_number" placeholder="{{mob_cap}}"
                         formControlName="mobile_number" autocomplete="off" maxlength=10>
                 </div>
             </mat-form-field>
@@ -55,7 +55,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 
             <div class="form-group">
                     <mat-form-field>
-                <input matInput type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
+                <input matInput type="text" class="form-control" id="first_last_name" placeholder="{{first_name_cap}} / {{last_name_cap}} *"
                     formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')" errorMsg="Please enter First Name / Last Name.">
                 </app-field-error-display>

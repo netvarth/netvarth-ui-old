@@ -17,6 +17,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
 
   add_provider_note_cap = Messages.ADD_PROVIDER_NOTE_CAP;
   provider_note_cap = Messages.PROVIDER_NOTE_CAP;
+  note_placeholder = Messages.NOTE_PLACEHOLDER;
   cancel_btn = Messages.CANCEL_BTN;
   save_btn = Messages.SAVE_BTN;
   amForm: FormGroup;

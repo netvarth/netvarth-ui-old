@@ -6,7 +6,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     <div class="form-group">
         <mat-form-field>
             <input type="text" matInput [(ngModel)]="firstname" (keyup)="valuechange()" class="form-control" id="first_name"
-                placeholder="First Name" autocomplete="off">
+                placeholder="{{first_name_cap}}" autocomplete="off">
         </mat-form-field>
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
     errorMsg="Please enter the first name.">
@@ -16,7 +16,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     <div class="form-group">
         <mat-form-field>
             <input type="text" matInput [(ngModel)]="lastname" (keyup)="valuechange()" class="form-control" id="last_name"
-                placeholder="Last Name" autocomplete="off">
+                placeholder="{{last_name_cap}}" autocomplete="off">
         </mat-form-field>
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
     errorMsg="Please enter the last name.">

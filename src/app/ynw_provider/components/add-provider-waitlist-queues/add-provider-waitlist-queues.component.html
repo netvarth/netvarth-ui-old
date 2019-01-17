@@ -27,7 +27,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <div class="form-group" *ngIf="data.source !== 'location_detail'">
             <div *ngIf="multipeLocationAllowed">
                 <mat-form-field>
-                    <mat-select placeholder="Location" formControlName="qlocation">
+                    <mat-select placeholder="Location *" formControlName="qlocation">
                         <mat-option *ngFor="let loc of loc_list" [value]="loc.id">
                             {{ loc.place | capitalizeFirst }}
                         </mat-option>
@@ -112,7 +112,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <input matInput type="text" class="number-ip-sm" placeholder="{{customer_label | capitalizeFirst}}s served at a time"
+                <input matInput type="text" class="number-ip-sm" placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
                     formControlName="qserveonce" autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',

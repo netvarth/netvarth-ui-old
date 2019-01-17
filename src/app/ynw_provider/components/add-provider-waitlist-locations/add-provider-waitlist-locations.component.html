@@ -12,7 +12,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             <div class="form-group">
                 <mat-form-field>
                     <input class="form-control" matInput formControlName="locname" autocomplete="off" maxlength="50"
-                        placeholder="Enter your precise location">
+                        placeholder="{{loc_placeholder}} *">
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
             {

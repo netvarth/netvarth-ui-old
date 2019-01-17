@@ -631,6 +631,7 @@ export const Messages = {
   // App-ynw_provider-components-add-provider-note
   'ADD_PROVIDER_NOTE_CAP': 'Add Private Note',
   'PROVIDER_NOTE_CAP': 'Private Note',
+  'NOTE_PLACEHOLDER' : 'Type notes for your reference only',
 
   // App-ynw_provider-components-add-provider-location
   'AMENITIES_CAP': 'Amenities',
@@ -644,6 +645,7 @@ export const Messages = {
   'SCHEULDE_CAP': 'Business Schedules',
   'OPEN_CAP': '24 hours Open',
   'PARKING_TYPE_CAP': 'Select Parking Type',
+  'LOC_PLACEHOLDER' : 'Enter your precise location',
 
   // App-ynw_provider-components-add-provider-waitlist_queue
   'SERVICE_TIME_WINDOW_CAP': 'Service Time-Window Name *',
@@ -744,7 +746,7 @@ export const Messages = {
   'BPROFILE_MOR_ADOWRDS_CAP': 'adword(s). To add more adwords, go to',
   'BPROFILE_LICENSE_INVOICE_CAP': 'License & Invoice',
   'BPROFILE_HAVE_NOT_ADD_CAP': 'You haven\'t added any',
-  'BPROFILE_BASIC_INFORMATION_CAP': 'Basic Information*',
+  'BPROFILE_BASIC_INFORMATION_CAP': 'Basic Information',
   'BPROFILE_SUCH_AS_CAP': 'such as',
   'BPROFILE_BUSINESS_NAME_CAP': 'Business Name, Profile Summary',
   'PROFILE_PICTURE_CAP': 'Profile Picture',
@@ -1178,7 +1180,7 @@ export const Messages = {
   'CURRENTMOBMSG': 'Your Current Mobile # ',
 
   // App-shared-components-set-password-form
-  'SET_PASSWORD_MSG' : 'Congratulations! You have become Jaldee partner! For your security, set the password.',
+  'SET_PASSWORD_MSG' : 'Congratulations! You have become Jaldee partner! Please set your password to continue sign up process.',
   'PASSWORD_ERR_MSG' : 'You haven\'t set your password. Next time you want to go through forgot password',
 };
 

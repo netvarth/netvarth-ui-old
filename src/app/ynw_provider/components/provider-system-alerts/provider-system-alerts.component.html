@@ -50,7 +50,7 @@
                                     <th>{{details_cap}}</th>
                                     <th>{{acknowledged_cap}}</th>
                                     <th>{{date_cap}}</th>
-                                    <th>{{action_cap}}</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,7 +88,7 @@
                                         [class.warning]="alrt.severity.name=='Warning'"
                                         [class.high]="alrt.severity.name=='High'"
                                         [class.error]="alrt.severity.name=='Critical'">{{alrt.createdOn | date:dateFormat}}</td>
-                                    <td data-title="Action" class="td5"
+                                    <td class="td5"
                                         [class.info]="alrt.severity.name=='Info'"
                                         [class.warning]="alrt.severity.name=='Warning'"
                                         [class.high]="alrt.severity.name=='High'"
