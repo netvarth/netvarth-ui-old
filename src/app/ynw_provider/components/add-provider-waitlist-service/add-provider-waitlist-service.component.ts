@@ -51,6 +51,9 @@ cancel_btn = Messages.CANCEL_BTN;
   images: Observable<Array<Image>>;
   openModalWindow = false;
   imagePointer = 0;
+  char_count = 0;
+  max_char_count = 400;
+  isfocused = false;
   item_pic = {
     files: [],
     base64: [],
@@ -103,7 +106,16 @@ cancel_btn = Messages.CANCEL_BTN;
       this.button_title = 'Update';
      }
   }
-
+  setDescFocus() {
+    this.isfocused = true;
+    this.char_count = this.max_char_count - this.amForm.get('description').value.length;
+  }
+  lostDescFocus() {
+    this.isfocused = false;
+  }
+  setCharCount(ev) {
+    this.char_count = this.max_char_count - this.amForm.get('description').value.length;
+  }
   getGalleryImages () {
     const service_id = this.service.id;
     this.provider_services.getServiceGallery(service_id)

@@ -150,7 +150,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet('provider/license/auditlog');
   }
   
-  getAddonAuditList(){
+  getAddonAuditList() {
     return this.servicemeta.httpGet('provider/license/addon/auditlog');
   }
   getUpgradableAddonPackages() {
