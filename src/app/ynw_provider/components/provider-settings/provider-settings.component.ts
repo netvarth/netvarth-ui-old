@@ -83,7 +83,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   waitlistTooltip = '';
   licenseTooltip = '';
   paymentTooltip = '';
-  jaldeeBankTooltip = '';
+  accountActiveMsg = '';
   billposTooltip = '';
 
   ngOnInit() {
@@ -91,7 +91,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
     this.paymentTooltip = this.shared_functions.getProjectMesssages('PAYMENT_TOOLTIP');
-   // this.jaldeeBankTooltip = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
+   // this.accountActiveMsg = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
     this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
     this.getLocationCount();
     this.getQueuesCount();
@@ -162,10 +162,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.payment_status = (data['onlinePayment']) || false;
           this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
           if(this.payment_settings.isJaldeeAccount){
-            this.jaldeeBankTooltip = "You are using Jaldee bank account";
+            this.accountActiveMsg = "You are using Jaldee bank account";
           }
           else{
-            this.jaldeeBankTooltip = "You are using your own bank account";
+            this.accountActiveMsg = "You are using your own bank account";
           }
           
         },

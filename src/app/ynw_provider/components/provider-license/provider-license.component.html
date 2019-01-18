@@ -38,7 +38,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="subs" *ngIf="license_upgarde_sub['price'] != 0">
+                                    <!-- <div class="subs" *ngIf="license_upgarde_sub['price'] != 0">
                                         <h4>Subscription</h4>
                                         <span class="ttle">
                                             You have currently enrolled to
@@ -47,7 +47,7 @@
                                                     currency:'INR':'symbol':'.2-2'}}</span> /
                                                 {{license_upgarde_sub['current_sub']}}
                                             </span>
-                                        </span>
+                                        </span> -->
 
                                         <!-- <div class="subs-box">
                                                     <ng-container *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
@@ -63,7 +63,7 @@
                                                     </ng-container>
                                                 </div> -->
 
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                             <div class="colum">
@@ -74,9 +74,9 @@
                                                 <span class="amount">Due Amount : <strong>{{currentlicense_details.dueAmount
                                                         | currency:'INR':'symbol':'.2-2'}}</strong>
                                                 </span>
-                                                <span class="cs-btn bt3" (click)="showUnpaidInvoice()" *ngIf="invoices.length != 0">Pay</span>
+                                                <span class="cs-btn bt3" (click)="showUnpaidInvoice()" *ngIf="invoices.length != 0">{{pay_button}}</span>
                                             </div>
-                                            <span class="amount" *ngIf="invoices.length != 0">Next Payment On : <strong>{{currentlicense_details.nextPaymentOn
+                                            <span class="amount" *ngIf="invoices.length != 0">{{due_date_cap}} : <strong>{{currentlicense_details.nextPaymentOn
                                                     | date: dateFormat }}</strong>
                                             </span>
                                         </div>

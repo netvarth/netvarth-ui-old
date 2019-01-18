@@ -987,10 +987,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   handlepanelClose() {
-    this.virtualsectionHeader = 'Click here to View More Details';
+    this.virtualsectionHeader = 'Click here to view more details';
   }
   handlepanelOpen() {
-    this.virtualsectionHeader = 'Click here to View Less Details';
+    this.virtualsectionHeader = 'Click here to hide details';
   }
   converNewlinetoBr(value: any): any {
     return value.replace(/(?:\r\n|\r|\n)/g, '<br />');

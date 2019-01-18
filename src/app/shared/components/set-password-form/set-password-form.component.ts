@@ -23,6 +23,7 @@ export class SetPasswordFormComponent implements OnInit {
   submit_cap = Messages.SUBMIT_CAP;
   set_password_msg = Messages.SET_PASSWORD_MSG;
   passworddialogRef;
+  isValidConfirm_pw = false;
 
   spForm;
   @Input() type;
@@ -71,11 +72,17 @@ export class SetPasswordFormComponent implements OnInit {
   }
 
   keyPressed(ev) {
-    if (ev.keyCode === 13 ) {
+    this.isValidConfirm_pw = this.fed_service.isFieldValid(this.spForm, 'confirm_password');
+    if (ev.keyCode === 13) {
       if (this.spForm.valid) {
         this.doOnPasswordSubmit(this.spForm.value);
       }
     }
   }
 
+  resetError(ev) {
+    if (ev.keyCode) {
+      this.isValidConfirm_pw = false;
+    }
+  }
 }

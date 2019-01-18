@@ -52,7 +52,7 @@
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('locations')">{{locName}}
-                                      <span *ngIf="multipeLocationAllowed == true">  ({{location_count}})</span></span>
+                                        <span *ngIf="multipeLocationAllowed == true"> ({{location_count}})</span></span>
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('services')">{{services_cap}}
@@ -96,8 +96,10 @@
                                 <li>
                                     <span class="ttle">
                                         {{accept_payments_cap}} <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
+                                            <!-- <span class="acc-msg">({{accountActiveMsg}})</span> -->
+                                        
                                     </span>
-                                    <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="jaldeeBankTooltip">
+                                    <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
                                         <mat-slide-toggle [(ngModel)]="payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle>
                                     </span>
                                 </li>

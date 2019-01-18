@@ -747,7 +747,7 @@ export class CheckInInnerComponent implements OnInit {
   addCheckInProvider(post_Data) {
     this.shared_services.addProviderCheckin(post_Data)
       .subscribe(data => {
-        this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+        this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_PRO');
         setTimeout(() => {
           // this.dialogRef.close('reloadlist');
           this.returntoParent.emit('reloadlist');

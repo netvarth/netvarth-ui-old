@@ -1,8 +1,7 @@
-<h1 class="mat-dialog-title">{{invoice_cap}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
-            aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title"><span *ngIf="source !== 'payment-history'"> {{invoice_cap}}</span>
+    <span *ngIf="source === 'payment-history'"> Payment details</span>
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
-
-
     <div class="invoice">
         <div class="outer">
             <div class="ivc">
@@ -11,7 +10,7 @@
                     dateFormat}}</span>
             </div>
 
-            <h4>{{service_cap}}</h4>
+            <h4>{{subsc_pack_cap}}</h4>
 
             <div class="ivc" *ngIf="invoice.licensePkgDetails">
                 <span class="label"><span>{{invoice.licensePkgDetails.licenseName}}</span></span>
@@ -33,7 +32,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>{{gateway_cap}}/th>
+                            <th>{{gateway_cap}}</th>
                             <th>{{payment_cap}} {{mode_cap}}</th>
                             <th>{{amount_cap}}</th>
                             <th>{{payment_cap}} {{date_cap}}</th>

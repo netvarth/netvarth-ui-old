@@ -40,6 +40,8 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   period_cap = Messages.PERIOD_CAP;
   addon_cap = Messages.ADD_ON_CAP;
   no_addon_cap = Messages.NO_ADDON_CAP;
+  pay_button = Messages.PAY_BUTTON;
+  due_date_cap = Messages.DUE_DATE_CAP;
   currentlicense_details: any = [];
   metrics: any = [];
   invoices: any = [];

@@ -27,6 +27,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   serv_period = Messages.SERV_PERIOD_CAP;
   gateway_cap = Messages.GATEWAY_CAP;
   payment_cap = Messages.PAYMENT_CAP;
+  subsc_pack_cap = Messages.SUBSC_PACKAGE;
   id_cap = Messages.ID_CAP;
   ref_id_cap = Messages.REF_ID_CAP;
   @ViewChild('div') div: ElementRef;

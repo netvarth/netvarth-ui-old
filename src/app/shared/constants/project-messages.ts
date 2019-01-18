@@ -118,7 +118,7 @@ export const Messages = {
   'MESSAGE_SENT': 'Message sent successfully',
 
   // Dashboard
-  'ADD_DELAY': 'Delay has been notified to your [customer]',
+  'ADD_DELAY': 'Delay has been added successfully',
   'ADD_DELAY_TIME_ERROR': 'Please specify the delay',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to [status]',
@@ -172,12 +172,13 @@ export const Messages = {
   'PROVIDER_BILL_SETTLE_CONFIRM': 'Do you want to settle this bill?',
   'PROVIDER_ALERT_ACK_SUCC': 'Acknowledged Successfully',
   'CHECKIN_SUCC': 'You have [waitlisted] successfully',
+  'CHECKIN_SUCC_PRO' : '[customer] has been checked in successfully ',
   'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
   'CHECKIN_CANCELLED': '[waitlist] [cancelled] successfully',
   'PAYMENT_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CASH_PAYMENT': 'Visit provider to pay by cash',
-
+  'DISC_APPLY_ERR_MSG' : 'Discount already applied',
 
   // Consumer Dashboard
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
@@ -210,7 +211,7 @@ export const Messages = {
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
   'QUEUENAME_TOOLTIP': 'Click here to edit the Service Time-Window',
-  'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
+  'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with the delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION': 'Next Available Time',
   'APPX_WAIT_TIME_CAPTION': 'Appox Waiting Time',
@@ -839,11 +840,12 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
-  'SERV_PERIOD_CAP': 'Service Period',
+  'SERV_PERIOD_CAP': 'Billing Period',
   'GATEWAY_CAP': 'Payment Gateway',
   'PAYMENT_CAP': 'Payment',
   'ID_CAP': 'Id',
   'REF_ID_CAP': 'Ref Id',
+  'SUBSC_PACKAGE' : 'Subscription/Package',
 
   // App-ynw_provider-components-provider-license
   'CURRENT_PACKAGE_CAP': 'Your current License Package is',
@@ -856,6 +858,9 @@ export const Messages = {
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
   'NO_ADDON_CAP': 'No addons exists',
+  'BILLIN_CAP' : 'Billing ',
+  'PAY_BUTTON' : 'Invoices to pay',
+  'DUE_DATE_CAP' : 'Due date',
 
   // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
