@@ -126,6 +126,10 @@ update_btn = Messages.UPDATE_BTN;
       this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SELECTTIME');
       return;
     }
+    if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) === this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
+      this.api_error = 'Start Time and End Time cannot be the same';
+      return;
+    }
     // today
     const curday = new Date();
     const today_date = moment(curday).format('YYYY-MM-DD');
