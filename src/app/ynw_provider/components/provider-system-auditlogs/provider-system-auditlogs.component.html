@@ -44,20 +44,25 @@
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
-                                <label for="reason" class="col-form-label">{{select_date_cap}}</label>
+                                <!-- <label for="reason" class="col-form-label">{{select_date_cap}}</label> -->
                                 <!-- <div class="pickerouter">
                                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                             <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" matInput
                             [matDatepicker]="picker" autocomplete="off" disabled [max]="tday">
                                 </div> -->
 
-                                <div class="pickerouter">
+                                <!-- <div class="pickerouter">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                     <input class="form-control1" name="audit-datepicker" [(ngModel)]="logSeldate"
                                         [value]="logSeldate" type="text" matInput [matDatepicker]="picker" autocomplete="off"
                                         disabled [max]="tday">
-                                </div>
+                                </div> -->
+                                <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" autocomplete="off" placeholder="Choose a date" [max]="tday">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+                                      </mat-form-field>
                             </div>
                         </div>
                         <div class="actions-div">
