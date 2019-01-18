@@ -7,16 +7,20 @@ onSubmit(amForm.value)" class="ynw-common-form">
   </h1>
   <mat-dialog-content>
     <div class="adjustdelay">
-      <div class="form-group" *ngIf="queues.length>1">
-        <mat-form-field>
+      <!-- <div class="form-group" *ngIf="queues.length>1"> -->
+          <div class="form-group">
+           <span class="no-padding mgn-bt-10 mgn-up-10">{{queue_name}} [{{queue_schedule}}]</span> 
+        <!-- <mat-form-field>
           <mat-select placeholder="{{service_window_cap}}" [(ngModel)]="selected_queue" [ngModelOptions]="{standalone: true}"
             #selQueue (selectionChange)="handle_queue_sel(selQueue.value)">
             <mat-option *ngFor="let queue of queues" [value]="queue.id">
               {{queue.name}}
+              
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
+      
       <div class="brd-bt no-padding mgn-bt-10 mgn-up-10">
         <div class="row ">
           <div class="col-md-6 col-6">

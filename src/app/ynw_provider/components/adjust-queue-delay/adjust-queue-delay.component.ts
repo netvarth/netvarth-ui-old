@@ -29,10 +29,14 @@ export class AdjustQueueDelayComponent implements OnInit {
   time = {hour: 0, minute: 0};
   default_message = '';
   selected_queue = 0;
+
+  queue_name = '';
+  queue_schedule = '';
   placeholder = Messages.ADJUSTDELAY_PLACEHOLDER;
   arrived_cnt = 0;
   checkedin_cnt = 0;
   tot_checkin_count = 0;
+  
 
   constructor(
     public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
@@ -50,6 +54,8 @@ export class AdjustQueueDelayComponent implements OnInit {
       this.checkedin_cnt = this.data.checkedin_count;
       this.tot_checkin_count = this.checkedin_cnt+this.arrived_cnt;
       this.queues = this.data.queues;
+      this.queue_name = this.data.queue_name;
+     this.queue_schedule = this.data.queue_schedule;
 
       if (!this.data.queues || !this.data.queue_id) {
         this.closePopup('error');

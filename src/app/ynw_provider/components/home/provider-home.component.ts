@@ -859,10 +859,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       data: {
         queues: this.queues,
         queue_id: this.selected_queue.id,
+        queue_name: this.selected_queue.name,
+        queue_schedule: this.selected_queue.queueSchedule.timeSlots[0].sTime + '-' + this.selected_queue.queueSchedule.timeSlots[0].eTime,
         checkedin_count: this.today_checkedin_count,
         arrived_count: this.today_arrived_count
       }
+      
     });
+    // console.log("Selected queue:",this.selected_queue),
     this.adjustdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
       }
