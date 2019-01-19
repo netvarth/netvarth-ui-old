@@ -2,8 +2,7 @@
   <form [formGroup]="otp_form" novalidate (ngSubmit)="otp_form.valid && doOnOtpSubmit(otp_form.value)" class="ynw-common-form otp_scr"
     (keyup)="doResetApiErrors()">
     <mat-dialog-content>   
-        <!-- <p class="col-form-label col-md-12 no-padding" for="otp"><b>{{otp_mobile}}</b></p> -->
-        
+        <p class="col-form-label col-md-12 no-padding" for="otp"><b>{{otp_mobile}}</b></p>
             <div class="row otp_box">
           <div class="col-md-6 col-7">
               <div class="form-group ">

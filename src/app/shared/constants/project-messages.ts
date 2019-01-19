@@ -206,8 +206,8 @@ export const Messages = {
   'HISTORY_TOOLTIP': 'Your past check-ins',
   'COMM_TOOPTIP': 'Send messages to your provider here',
   'REF_TOOPTIP': 'Show/hide refined search',
-  'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee.com',
-  'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee.com',
+  'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee',
+  'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee',
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
   'QUEUENAME_TOOLTIP': 'Click here to edit the Service Time-Window',
@@ -416,7 +416,7 @@ export const Messages = {
 
   // App-shared-components-set-password-form
   'NEW_PASSWORD_CAP': 'New Password *',
-  'PASSWORD_VALID_CAP': 'Atleast one uppercase, one number and minimum 8 characters',
+  'PASSWORD_VALID_CAP': 'Use minimum 8 characters with atleast one uppercase, lowercase and number',
   'RE_ENTER_PASSWORD_CAP': 'Re-enter Password *',
   'SUBMIT_CAP': 'Submit',
 

@@ -7,6 +7,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { count } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-provider-customer',
@@ -30,7 +31,8 @@ export class SearchProviderCustomerComponent implements OnInit {
   checkin_label = '';
   create_new = false;
   form_data = null;
-
+  blankPattern;
+  count = 0;
   constructor(
     public dialogRef: MatDialogRef<SearchProviderCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,6 +48,7 @@ export class SearchProviderCustomerComponent implements OnInit {
 
   ngOnInit() {
     // console.log('source', this.source);
+    this.blankPattern = projectConstants.VALIDATOR_BLANK;
     this.createForm();
   }
 
@@ -61,11 +64,13 @@ export class SearchProviderCustomerComponent implements OnInit {
     this.resetApiErrors();
     this.form_data = null;
     this.create_new = false;
-    const post_data = {
+    if(form_data.first_last_name.length>=3){
+    const post_data = {   
       'firstName-eq': form_data.first_last_name,
       'lastName-eq': form_data.first_last_name,
       'primaryMobileNo-eq': form_data.mobile_number
     };
+  
     this.provider_services.getCustomer(post_data)
       .subscribe(
         (data: any) => {
@@ -97,6 +102,10 @@ export class SearchProviderCustomerComponent implements OnInit {
         }
       );
   }
+  else{
+    this.shared_functions.apiErrorAutoHide(this, 'Please enter atleast the first 3 letters of First/Last Name');
+  }
+}
 
   createNew() {
     const return_data = {
