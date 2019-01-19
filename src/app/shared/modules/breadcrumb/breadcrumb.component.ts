@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -17,27 +17,36 @@ import { Messages } from '../../constants/project-messages';
 })
 
 
-export class BreadCrumbComponent implements OnInit {
+export class BreadCrumbComponent implements OnInit, OnChanges {
 
     lear_more_cap = Messages.LEARN_MORE_CAP;
 
     @Input () breadcrumbs;
     @Input () moreOptions: any = [];
+    @Output() performAction: EventEmitter<any> = new EventEmitter();
     className = '';
     constructor(
         public router: Router,
         private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions
     ) {}
-
+    ngOnChanges() {
+        // console.log('options', this.moreOptions);
+        if (this.moreOptions.classname) {
+            this.className = this.moreOptions.classname;
+        }
+        delete this.moreOptions.classname;
+    }
     ngOnInit() {
         // console.log('options', this.moreOptions);
         if (this.moreOptions.classname) {
             this.className = this.moreOptions.classname;
         }
-        delete this.moreOptions.className;
+        delete this.moreOptions.classname;
     }
-
+    btn_clicked(action) {
+        this.performAction.emit(action);
+    }
     goNavigate(breadcrumb) {
         if (breadcrumb.url) {
             this.router.navigateByUrl(breadcrumb.url);

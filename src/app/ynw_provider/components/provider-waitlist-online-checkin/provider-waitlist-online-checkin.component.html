@@ -15,7 +15,7 @@
           <div class="form-group">
             <mat-radio-button value="Fixed"></mat-radio-button>
             <label for="">{{fixed_cap}}</label>
-            <input type="number" min="0" class="form-control" [(ngModel)]="form['trnArndTime']" ngDefaultControl *ngIf="form['calculationMode'] == 'Fixed'">
+            <input type="number" min="0" (keyup)="isValid(form['trnArndTime'])" class="form-control" [(ngModel)]="form['trnArndTime']" ngDefaultControl *ngIf="form['calculationMode'] == 'Fixed'">
             <span class='mins' *ngIf="form['calculationMode'] == 'Fixed'"> {{mins_cap}}</span>
           </div>
         </div>

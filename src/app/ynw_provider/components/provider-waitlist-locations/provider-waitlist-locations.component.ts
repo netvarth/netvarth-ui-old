@@ -38,6 +38,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   businessConfig: any = [];
   dialogRef;
   breadcrumb_moreoptions: any = [];
+  init_location = true;
   breadcrumbs_init = [
     {
       title: 'Settings',
@@ -66,7 +67,6 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
     // this.bProfile = this.provider_datastorage.get('bProfile');
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'locations', 'classname': 'b-loc' };
   }
   ngOnDestroy() {
     if (this.dialogRef) {
@@ -84,6 +84,11 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
 
         });
   }
+  performActions(action) {
+    if (action === 'addlocation') {
+      this.addLocation();
+    }
+  }
   getBussinessProfile() {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
@@ -94,7 +99,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
             if (this.businessConfig[i].multipleLocation) {
               this.multipeLocationAllowed = true;
             }
-            if (this.multipeLocationAllowed == true) {
+            if (this.multipeLocationAllowed === true) {
               const breadcrumbs = [];
               this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -104,7 +109,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
               });
               this.breadcrumbs = breadcrumbs;
             }
-            if (this.multipeLocationAllowed == false) {
+            if (this.multipeLocationAllowed === false) {
               const breadcrumbs = [];
               this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -136,7 +141,17 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
             this.show_addlocationButton = true;
           }
         }
-
+        if (this.init_location) {
+          const actions = [];
+          if (this.show_addlocationButton) {
+            actions.push({ 'title': this.new_loc_cap, 'type': 'addlocation' });
+          }
+          this.breadcrumb_moreoptions = {
+            'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'locations', 'classname': 'b-loc',
+            'actions': actions
+          };
+          this.init_location = false;
+        }
         this.query_executed = true;
       });
   }

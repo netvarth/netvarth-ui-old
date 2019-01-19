@@ -1,16 +1,16 @@
 <section>
   <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+  <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section>
   <div class="content loc-list">
       <div class="container">
-          <div class="row">
+          <!-- <div class="row">
               <div class="n-loc">
                   <span class="add-serv-btn cs-btn bt3" (click)="addService()">{{add_new_serv_cap}}</span>
               </div>
-          </div>
+          </div> -->
 
           <div class="row" *ngFor="let service of service_list">
             <div class="card" [class.disabled]="service.status=='INACTIVE'">

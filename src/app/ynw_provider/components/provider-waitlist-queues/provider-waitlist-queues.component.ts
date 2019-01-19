@@ -63,7 +63,9 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // calling the method to get the list of locations
     this.getProviderQueues();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'timewindow', 'classname': 'b-queue' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'timewindow', 'classname': 'b-queue',
+    'actions': [{'title': this.new_serv_cap, 'type': 'timewindow'}]
+  };
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
   }
 
@@ -72,7 +74,11 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       this.queuedialogRef.close();
     }
   }
-
+  performActions(action) {
+    // if (action === 'timewindow') {
+      this.addEditProviderQueue('add');
+    // }
+  }
   // get the list of locations added for the current provider
   getProviderQueues() {
     const activeQueues: any = [];

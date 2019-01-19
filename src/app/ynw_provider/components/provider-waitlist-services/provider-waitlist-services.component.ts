@@ -55,7 +55,9 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getServices();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services', 'classname': 'b-service' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'services', 'classname': 'b-service',
+    'actions': [{'title': this.add_new_serv_cap, 'type': 'addservice'}]
+  };
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
      if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
         this.disable_price = true;
@@ -69,7 +71,11 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
       this.addservicedialogRef.close();
     }
   }
-
+  performActions(action) {
+    if (action === 'addservice') {
+      this.addService();
+    }
+  }
   getServices() {
     this.provider_services.getServicesList()
     .subscribe(

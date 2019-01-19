@@ -1,5 +1,5 @@
 import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Output, EventEmitter } from '@angular/core';
 import { HeaderComponent } from '../../../shared/modules/header/header.component';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
@@ -17,6 +17,7 @@ import * as moment from 'moment';
 import { startWith, map, filter, pairwise } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { applySourceSpanToExpressionIfNeeded } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-provider-home',
   templateUrl: './provider-home.component.html',
@@ -200,7 +201,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     { pk: 'FullyPaid', value: 'Fully Paid' }
   ];
   ngOnInit() {
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay'  };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay',
+  'actions': [{'title' : 'Adjust Delay', 'icon': 'B', 'type': 'adjustdelay', 'icontype': 'adjustdelay_learnmore'}]
+  };
     this.router.events
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
@@ -252,6 +255,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
+  }
+  performActions(action) {
+    if (action === 'adjustdelay') {
+      this.showAdjustDelay();
+    } else if (action === 'adjustdelay_learnmore') {
+      this.learnmore_clicked(action.split('_')[0]);
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -864,7 +874,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
         checkedin_count: this.today_checkedin_count,
         arrived_count: this.today_arrived_count
       }
-      
     });
     // console.log("Selected queue:",this.selected_queue),
     this.adjustdialogRef.afterClosed().subscribe(result => {

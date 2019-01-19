@@ -1,16 +1,16 @@
 <section>
     <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb  (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section>
     <div class="content loc-list">
         <div class="container">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="n-loc n-loc-small" *ngIf="show_addlocationButton">
                     <span class="add-nloc cs-btn bt3" (click)="addLocation()">{{new_loc_cap}}</span>
                 </div>
-            </div>
+            </div> -->
             <div class="row" *ngFor="let loc of loc_list">
                 <div class="card" [class.disabled]="loc.status=='INACTIVE'" [class.bse-lcn]="loc.baseLocation == true">
                     <div class="copy">

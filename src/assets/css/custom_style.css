@@ -617,7 +617,8 @@
     .billpopup .mat-dialog-content .bill-wrapper .section-one .details .columns .title:after {content:none!important}
     .billpopup .mat-dialog-content .bill-wrapper .section-one .details .columns .title {font-weight: 500 !important}
     .rightalign {text-align: right!important;}
-    .fl-right{float: right;}
+    .fl-right{float: right !important;}
+    .fl-left{float: left !important;}
     .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {text-align: right}
     .billpopup .mat-dialog-container .two-col .name {flex-basis:75%!important;text-align: right!important;}
     .billpopup .mat-dialog-container .two-col .price {flex-basis:25%!important;text-align: right!important;}
@@ -987,94 +988,17 @@ Overriding mat input style
     .is-bx .pt-btm .ico li {padding: 0px !important; width: 40px !important;height: 40px !important}
     .emltbl .tbl-list li .otr .ctd {padding-bottom: 5px !important; padding-top: 3px !important}
   }
-  .add-nloc-s.bt3,
-  .add-nloc-q.bt3,
-  .add-serv-btn.bt3,
-  .delay-btn,
-  .add-nloc.bt3
-  {border-radius: 30px; text-transform: none!important}
-  .delay-btn i {color:#000 !important;}
-  .add-nloc {float: right !important; margin-right: 100px!important; }
-
-  @media only screen and (max-width: 390px) {
-    .b-queue {top: 32px !important;}
-    .add-nloc-q {float: right !important; margin-top:0px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-  }
-@media only screen and (min-width: 390px) and (max-width: 490px) {
-    .b-queue {top: 10px !important;}
-    .add-nloc-q {float: right !important; margin-top:-22px !important; margin-right: 110px!important; margin-bottom: 5px !important}
+@media only screen and (max-width: 992px) {
+  .b-queue {margin-top: 5px !important;}
 }
-@media only screen and (min-width: 576px) and (max-width: 767px) {
-  .b-queue {top: 10px !important;}
-  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+@media only screen and (max-width: 512px) {
+  .b-loc {margin-top: 5px !important;}
 }
-@media only screen and (min-width: 767px ) {
-  .b-queue {top: 0px !important;}
-  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+@media only screen and (max-width: 512px) {
+  .b-service {margin-top: 5px !important;}
 }
-@media only screen and (min-width: 768px)  and (max-width: 992px) {
-  .b-queue {top: 30px !important;}
-  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 120px!important; margin-bottom: 5px !important}
-}
-@media only screen and (min-width: 992px) {
-  .b-queue {top: 0px !important;}
-  .add-nloc-q {float: right !important; margin-top:-43px !important; margin-right: 120px!important; margin-bottom: 5px !important}
-}
-@media only screen and (width: 575px) {
-  .b-queue {top: 30px !important;}
-  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 120px!important; margin-bottom: 5px !important}
-}
-@media only screen and (width: 375px) {
-  .b-queue {top: 10px !important;}
-    .add-nloc-q {float: right !important; margin-top:-22px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-}
-@media only screen and (min-width: 490px) and (max-width: 575px) {
-  .b-queue {top: 30px !important;}
-  .add-nloc-q {float: right !important; margin-top:-13px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-}
-  @media only screen and (max-width: 392px) {
-    .b-service {margin-top: 10px !important;}
-    .add-nloc-s {float: right !important; margin-top:-23px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-  }
-  @media only screen and (min-width: 767px) {
-    .add-serv-btn {float: right !important; margin-right: 120px!important; margin-top:-44px !important;}
-  }
-  @media only screen and (max-width: 411px) {
-    .b-service {margin-top: 8px !important;}
-    .b-loc {margin-top: 8px !important;}
-    
-  }
-  
-  @media only screen and (max-width: 399px) {
-    .b-loc {margin-top: 8px !important;}
-    .b-delay {margin-top: 8px !important;}
-    /* .b-queue {margin-top: 8px !important; }
-    .add-nloc-q {float: right !important; margin-top:0px !important; margin-right: 110px!important; margin-bottom: 5px !important} */
-    .add-serv-btn{float: right !important; margin-top:-20px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-    .delay-btn{float: right !important;padding:0px !important; margin-top:-44px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-    
-    .add-nloc { margin-top:-23px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-  }
-  @media only screen and (min-width: 399px) {
-    .b-delay {margin-top: 0px !important;}
-    .delay-btn{float: right !important;padding:0px !important; margin-top:-44px !important; margin-right: 115px!important; margin-bottom: 5px !important}
-  }
-  @media only screen and (min-width: 391px) and (max-width:575px) {
-    .b-service {margin-top: 55px !important;}
-    .add-serv-btn {float: right !important; margin-top:-16px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-  }
-@media only screen and (min-width: 399px) and (max-width:575px) {
-  .b-loc {margin-top: 55px !important;}
-  .add-nloc {float: right !important; margin-top:-16px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-
-  .b-service {margin-top: 55px !important;}
-  .add-serv-btn {margin-top:-16px !important; margin-right: 110px!important; margin-bottom: 5px !important}
-}
-@media only screen and (min-width: 575px) and (max-width:767px) {
-  .b-loc {margin-top: 58px !important;}
-  .add-nloc {float: right !important; margin-top:-16px !important; margin-right: 120px!important; margin-bottom: 5px !important}
-  .b-service {margin-top: 58px !important;}
-  .add-serv-btn {float: right !important; margin-top:-16px !important; margin-right: 120px!important; margin-bottom: 5px !important}
+@media only screen and (max-width: 337px) {
+  .b-delay {margin-top: 5px !important;}
 }
 .pwd_cancel_scr .mat-dialog-actions .bt2 {padding: 5px 10px !important}
 .cancel-btn-color.mat-button {background-color: #ddd !important}
@@ -1119,6 +1043,16 @@ Overriding mat input style
 }
 .text-link:hover {color: #00aef2 !important;
   cursor: pointer;}
+.bcrumb {display: block !important; height: auto !important}
+.bcrumb div:first-child {display: flex !important; float: left !important;}
+.bcrumb div.actions {display: flex !important; justify-content: flex-end !important; float: right !important}
+.bcrumb span.bt6 {margin-right:5px !important; }
+.bcrumb span.bt6:last-child {margin-right:0px !important; }
+.bcrumb .b-delay i {padding-left:5px !important; color:#000 !important}
+.bcrumb span.bt6 {border :1px solid #1873f2 !important; float: right !important;}
 .cert{
   font-size: 0.75rem;
+}
+.form-group textarea, .form-check textarea {
+  min-height: 60px !important;
 }
