@@ -1119,3 +1119,11 @@ Overriding mat input style
 }
 .text-link:hover {color: #00aef2 !important;
   cursor: pointer;}
+.max-char-length{
+  color: #3f51b5;
+  font-size: .625rem;
+  font-weight: 500;
+  background: transparent;
+  text-align: left;
+  padding: none;
+}

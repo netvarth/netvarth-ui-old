@@ -30,6 +30,10 @@ export class AdjustQueueDelayComponent implements OnInit {
   default_message = '';
   selected_queue = 0;
 
+  char_count = 0;
+  max_char_count = 500;
+  isfocused = false;
+
   queue_name = '';
   queue_schedule = '';
   placeholder = Messages.ADJUSTDELAY_PLACEHOLDER;
@@ -60,7 +64,6 @@ export class AdjustQueueDelayComponent implements OnInit {
       if (!this.data.queues || !this.data.queue_id) {
         this.closePopup('error');
       }
-
       this.getDefaultMessages();
 
       this.amForm = this.fb.group({
@@ -90,6 +93,16 @@ export class AdjustQueueDelayComponent implements OnInit {
 
 
      }
+     setDescFocus() {
+      this.isfocused = true;
+      this.char_count = this.max_char_count - this.amForm.get('message').value.length;
+    }
+    lostDescFocus() {
+      this.isfocused = false;
+    }
+    setCharCount(ev) {
+      this.char_count = this.max_char_count - this.amForm.get('message').value.length;
+    }
 
      getDefaultMessages () {
        this.provider_services.getProviderMessages()

@@ -52,7 +52,7 @@ cancel_btn = Messages.CANCEL_BTN;
   openModalWindow = false;
   imagePointer = 0;
   char_count = 0;
-  max_char_count = 400;
+  max_char_count = 500;
   isfocused = false;
   item_pic = {
     files: [],

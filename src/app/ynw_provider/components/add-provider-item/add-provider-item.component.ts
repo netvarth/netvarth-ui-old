@@ -30,6 +30,9 @@ export class AddProviderItemComponent implements OnInit {
   api_success = null;
   parent_id ;
   selitem_pic = '';
+  char_count = 0;
+  max_char_count = 500;
+  isfocused = false;
   item_pic = {
     files: [],
     base64: null
@@ -83,6 +86,16 @@ export class AddProviderItemComponent implements OnInit {
     if (this.data.type === 'edit') {
       this.updateForm();
     }
+  }
+  setDescFocus() {
+    this.isfocused = true;
+    this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
+  }
+  lostDescFocus() {
+    this.isfocused = false;
+  }
+  setCharCount(ev) {
+    this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
   }
   updateForm() {
     // let taxable = '0';

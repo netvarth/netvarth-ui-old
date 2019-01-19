@@ -79,7 +79,7 @@
         <div class="form-group">
             <!-- <label class="col-form-label" for="displayDesc">{{detailed_dec_cap}} *</label> -->
             <mat-form-field>
-                <textarea matInput class="form-control" id="shortDesc" placeholder="Detailed Description *" formControlName="displayDesc"></textarea>
+                <textarea matInput class="form-control" id="shortDesc" placeholder="Detailed Description *" formControlName="displayDesc" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"></textarea>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
     {
@@ -87,6 +87,7 @@
       'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
     })">
             </app-field-error-display>
+            <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
         </div>
 
         <div class="form-group">

@@ -27,7 +27,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     formControlName="description" autocomplete="off"> -->
         <mat-form-field>
           <textarea matInput class="form-control" id="description" placeholder="Briefly describe service"
-            formControlName="description"> </textarea>
+            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"> </textarea>
         </mat-form-field>
 
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')" [errorMsg]="fed_service.getErrorMessage(amForm,'description',
@@ -36,6 +36,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
       'maxlength' : 'Description can contain only 500 characters'
     })">
         </app-field-error-display>
+        <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
       </div>
 
       <div class="form-group">

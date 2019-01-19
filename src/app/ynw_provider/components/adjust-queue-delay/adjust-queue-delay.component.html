@@ -43,11 +43,12 @@ onSubmit(amForm.value)" class="ynw-common-form">
         <ng-container class="example-full-width" *ngIf="amForm.get('send_message').value === true">
           <label class="col-form-label">{{messgae_cap}}</label>
           <textarea class="form-control" placeholder="Message" formControlName="message" autocomplete="off"
-            [placeholder]="placeholder">
+            [placeholder]="placeholder" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500">
 
             </textarea>
         </ng-container>
       </div>
+      <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
