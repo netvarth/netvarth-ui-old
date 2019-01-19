@@ -40,15 +40,21 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             <mat-radio-button value="Female">{{female_cap}}</mat-radio-button>
         </mat-radio-group>
     </div>
-    <div class="form-group normalpicker" *ngIf="calledFrom !='checkin'">
-        <label class="col-form-label" for="dob">{{dob_cap}} </label>
+    <div class="form-group col-md-3 no-padding" *ngIf="calledFrom !='checkin'">
+        <!-- <label class="col-form-label" for="dob">{{dob_cap}} </label> -->
         <!-- <input type="text" [(ngModel)] = "dob" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number"> -->
-        <div class="pickerouter">
+        <!-- <div class="pickerouter">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker (selectedChanged)="dateChanged($event)" [disabled]="false"></mat-datepicker>
             <input class="form-control nofocus" type="text" matInput [matDatepicker]="picker" [max]="tday" disabled
                 [(ngModel)]="dob" tabindex="-1">
-        </div>
+        </div> -->
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Date of birth" #inputdob
+                formControlName="dob" [max]="tday" disabled class="form-control" type="text" [(ngModel)]="dob" tabindex="-1">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+        </mat-form-field>
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
     errorMsg="Please enter the mobile number.">
     </app-field-error-display> -->
