@@ -296,7 +296,7 @@
                     <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'" [matTooltipClass]="tooltipcls"
                       [matTooltip]="cloudTooltip"></span>
                   </td>
-                  <td data-title="Seq No" class="seq pointer-cursor" *ngIf="time_type ==1 && settings.showTokenId"
+                  <td data-title="Token No" class="seq pointer-cursor" *ngIf="time_type ==1 && settings.showTokenId"
                     (click)="goCheckinDetail(checkin)">
                     <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                   </td>

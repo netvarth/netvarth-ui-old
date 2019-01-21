@@ -880,6 +880,9 @@ Overriding mat input style
 .ynw-common-form .mat-dialog-container{
   width: 400px !important;
 }
+.smallform .mat-dialog-container{
+  width: 500px !important;
+}
  .signup-form .mat-form-field-label, 
  .login-form .mat-form-field-label,
  .ynw-common-form .mat-form-field-label,
@@ -1072,3 +1075,10 @@ Overriding mat input style
   color: #f24949;
 }
 .content .col-a .card .pubs.w-dta .ctrl .ct-fl {width: 100%;}
+.payment-details{
+  color: #999999;
+  border-top: 2px solid #f2f2f2; 
+}
+.pay-det-row{
+  margin: 10px 0 10px 0;
+}

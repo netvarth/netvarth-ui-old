@@ -100,7 +100,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
         invoice: invoice,
         source: 'payment-history'
       },
-      panelClass: ['commonpopupmainclass', 'width-100'],
+      panelClass: ['commonpopupmainclass', 'smallform'],
       disableClose: true
     });
 
