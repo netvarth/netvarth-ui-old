@@ -4,7 +4,7 @@
 </section>
 
 <section>
-    <div class="content">
+    <div class="pub-profl content">
         <div class="container">
             <!-- <div class="row">
                 <div class="title">
@@ -61,19 +61,25 @@
                                         <span class="on" *ngIf="normal_search_active">{{on_cap}}</span>
                                         <span class="off" *ngIf="!normal_search_active">{{off_cap}}</span>
                                     </span>
-                                    <ng-container *ngIf="normal_search_active">
-                                        <span class="success">{{profile_visible_cap}} {{customer_label}}s
-                                            {{online_jaldee_cap}}</span>
-                                    </ng-container>
-                                    <ng-container *ngIf="!normal_search_active">
-                                        <span class="error"><i data-icon="m"></i>{{offline_cap}} {{customer_label}}s</span>
-                                    </ng-container>
                                 </div>
                                 <div class="ct-r ml-auto">
                                     <button class="cs-btn bt3 off" *ngIf="normal_search_active" (click)="confirm_searchStatus()">{{turn_off_cap}}</button>
                                     <!-- <span *ngIf="normal_search_active"><i data-icon="m" ></i>Your customer canâ€™t find you online</span> -->
                                     <button class="cs-btn bt3 on" *ngIf="!normal_search_active" (click)="confirm_searchStatus()">{{turn_on_cap}}</button>
                                 </div>
+                            </div>
+                            <div class="ctrl">
+                                <ng-container *ngIf="normal_search_active">
+                                    <div class="ct-fl">
+                                        <span class="success">{{profile_visible_cap}} {{customer_label}}s
+                                            {{online_jaldee_cap}}</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="!normal_search_active">
+                                    <div class="ct-fl">
+                                        <span class="error"><i data-icon="m"></i>{{offline_cap}} {{customer_label}}s</span>
+                                    </div>
+                                </ng-container>
                             </div>
                         </div>
                         <!-- <div class="adwds" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0"> -->
@@ -89,8 +95,9 @@
                                 <!-- <div class="ad-l" *ngIf="adwords_maxremaining>0">{{you_have_cap}} {{adword_list.length}} {{create_adword_cap}} {{adwords_maxremaining}} {{more_cap}}.</div>
                                 <div class="ad-l" *ngIf="adwords_maxremaining == 0">{{you_have_cap}} {{adword_list.length}} {{more_adword_cap}} <a routerLink="/provider/settings/license"><strong>{{license_cap}}</strong></a></div> -->
                                 <div class="ad-l">
-                                    You can have upto<span class="green-text"><b> {{adwordsmaxcount}} adwords</b></span> as per your
-                                   <b> {{license_details.accountLicense.displayName}}</b> License package
+                                    You can have upto<span class="green-text"><b> {{adwordsmaxcount}} adwords</b></span>
+                                    as per your
+                                    <b> {{license_details.accountLicense.displayName}}</b> License package
                                 </div>
                                 <div class="ad-r">
                                     <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span class="mre"
@@ -991,30 +998,30 @@
                     </div>
                 </div>
                 <div class="col-b pr0 col-md-12 col-lg-4 col-xl-4">
-                        <div class="card p0 w-dta active">
-                                <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true">
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                Your verified level <div class="helprighticon"><i data-icon="B" id="verified-levels"
-                                                        (click)="learnmore_clicked('verified-levels', $event)"></i></div>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="no-dta" *ngIf="normal_socialmedia_show==1">
-                                            <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
-                                        </div>
-                                       
-        
-                                        
-                                        <div class="cd-b">
-                                            <!-- *ngIf="normal_socialmedia_show==2" -->
-                                            <ul class="info-lst">
-                                                <li>Your verified level is basic.</li>
-                                            </ul>
-                                        </div>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
-                            </div>
+                    <div class="card p0 w-dta active">
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="true">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Your verified level <div class="helprighticon"><i data-icon="B" id="verified-levels"
+                                                (click)="learnmore_clicked('verified-levels', $event)"></i></div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="no-dta" *ngIf="normal_socialmedia_show==1">
+                                    <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
+                                </div>
+
+
+
+                                <div class="cd-b">
+                                    <!-- *ngIf="normal_socialmedia_show==2" -->
+                                    <ul class="info-lst">
+                                        <li>Your verified level is basic.</li>
+                                    </ul>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
                     <div class="card p0 w-dta active">
                         <mat-accordion>
                             <mat-expansion-panel [expanded]="true">

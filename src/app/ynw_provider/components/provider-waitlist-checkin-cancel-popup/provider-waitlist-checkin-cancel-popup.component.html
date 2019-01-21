@@ -14,19 +14,18 @@
         </mat-chip>
       </mat-chip-list>
     </div>
-
+    <div class="form-group" *ngIf="amForm.get('reason').value">
+        <mat-form-field>
+          <textarea matInput class="form-control" id="message" placeholder="Message" formControlName="message">
+        </textarea>
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter a message.">
+        </app-field-error-display>
+      </div>
     <div class="form-group ">
       <mat-checkbox formControlName="send_message">{{send_message_cap}} {{rep_username}}</mat-checkbox>
     </div>
 
-    <div class="form-group" *ngIf="amForm.get('send_message').value">
-      <mat-form-field>
-        <textarea matInput class="form-control" id="message" placeholder="Message" formControlName="message">
-      </textarea>
-      </mat-form-field>
-      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter a message.">
-      </app-field-error-display>
-    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_cap}}</button>

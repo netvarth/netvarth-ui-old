@@ -77,6 +77,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
   isprovider = false;
   ctype;
+  active_license;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   public searchfields: SearchFields = new SearchFields();
   locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
@@ -125,6 +126,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.handleHeaderclassbasedonURL();
         break;
         case 'upgradelicence':
+          this.setLicense();
           this.getUpgradablePackages();
         break;
         case 'main_loading':
@@ -167,6 +169,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
    this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
+    this.setLicense();
     this.getBusinessdetFromLocalstorage();
     // this.handleHeaderclassbasedonURL();
     this.isprovider = this.shared_functions.isBusinessOwner();
@@ -187,7 +190,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
 
-
+setLicense() {
+  const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+  if (cuser.new_lic) {
+    this.active_license = cuser.new_lic;
+  } else {
+    this.active_license = cuser.accountLicenseDetails.accountLicense.displayName;
+  }
+}
   ngOnDestroy() {
     this.evnt.unsubscribe();
      // unsubscribe to ensure no memory leaks
@@ -236,9 +246,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.consumer_loggedin = true;
           this.provider_loggedin = false;
         }
-
         if (this.ctype === 'provider') {
-
           this.getUpgradablePackages();
         }
 

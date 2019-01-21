@@ -24,7 +24,6 @@ import { ProviderAddonAuditlogsComponent } from '../provider-addon-auditlogs/pro
   styleUrls: ['./provider-license.component.css']
 })
 export class ProviderLicenseComponent implements OnInit, OnDestroy {
-
   date_cap = Messages.DATE_COL_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   invoice_cap = Messages.INVOICE_CAP;
@@ -76,23 +75,21 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   licenseusedialogRef;
   invoicedialogRef;
   upgradesubscriptdialogRef;
-
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions,
     private route: ActivatedRoute) {
     this.onResize();
     this.license_tooltip = this.sharedfunctionObj.getProjectMesssages('LICENSE_TOOLTIP');
-
     this.route.params.subscribe((data) => {
       this.type = data.type;
       if (this.type === 'upgrade') {
+        const ynw_user = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+        this.current_lic = ynw_user.accountLicenseDetails.accountLicense.displayName;
         this.showupgradeLicense();
       }
     });
-
   }
-
   ngOnInit() {
     this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
     this.getLicenseDetails();
@@ -100,9 +97,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     this.getInvoiceList();
     this.getSubscriptionDetail();
     this.getUpgradablePackages();
-
   }
-
   ngOnDestroy() {
     if (this.upgradedialogRef) {
       this.upgradedialogRef.close();
@@ -136,9 +131,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     }
     // console.log('resized', this.screenWidth, this.screenHeight, this.small_device_display);
   }
-
   getLicenseDetails(call_type = 'init') {
-
     this.license_message = '';
     this.provider_servicesobj.getLicenseDetails()
       .subscribe(data => {
@@ -149,9 +142,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
         // console.log(ynw_user.accountLicenseDetails);
         ynw_user.accountLicenseDetails = this.currentlicense_details;
         this.sharedfunctionObj.setitemonLocalStorage('ynw-user', ynw_user);
-
         if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
-
           const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
           const end_date = (data['accountLicense']['expiryDate']) ? moment(data['accountLicense']['expiryDate']) : null;
           let valid_till = 0;
@@ -161,27 +152,21 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
           }
           this.license_message = valid_till + ' day trial, till ' + end_date.format('ll');
         }
-        
-
       });
-
     if (call_type === 'update') {
       this.getLicenseUsage();
       this.getUpgradablePackages();
       this.getInvoiceList();
       this.getSubscriptionDetail();
       this.reload_adword_api = { status: true };
-
     }
   }
-
   getUpgradablePackages() {
     this.provider_servicesobj.getUpgradableLicensePackages()
       .subscribe((data: any) => {
         this.upgradablepackages = data;
       });
   }
-
   showupgradeLicense() {
     this.upgradedialogRef = this.dialog.open(UpgradeLicenseComponent, {
       width: '50%',
@@ -192,7 +177,6 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
         current_license_pkg: this.current_lic
       }
     });
-
     this.upgradedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getLicenseDetails('update');
@@ -200,7 +184,6 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       this.goBacktoPrev();
     });
   }
-
   goBacktoPrev() {
     const retcheck = this.sharedfunctionObj.getitemfromLocalStorage('lic_ret');
     if (retcheck !== undefined && retcheck !== null) {
@@ -211,7 +194,6 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       }, 100);
     }
   }
-
   showadd_addons() {
     this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
       width: '50%',
@@ -221,14 +203,12 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass'],
       disableClose: true
     });
-
     this.addondialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getLicenseDetails('update');
       }
     });
   }
-
   /*dodelete(addon) {
     if (!addon) {
       return false;
@@ -266,12 +246,9 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass'],
       disableClose: true
     });
-
     this.lichistorydialogRef.afterClosed().subscribe(result => {
-
     });
   }
-
   getLicenseUsage() {
     this.provider_servicesobj.getLicenseUsage()
       .subscribe(
@@ -283,7 +260,6 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   showLicenseUsage() {
     this.licenseusedialogRef = this.dialog.open(ProviderLicenseUsageComponent, {
       width: '50%',
@@ -293,12 +269,9 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass'],
       disableClose: true
     });
-
     this.licenseusedialogRef.afterClosed().subscribe(result => {
-
     });
   }
-
   getInvoiceList() {
     this.provider_servicesobj.getInvoicesWithStatus()
       .subscribe(
@@ -310,7 +283,6 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   getSubscriptionDetail() {
     this.provider_servicesobj.getLicenseSubscription()
       .subscribe(
@@ -323,7 +295,6 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   getLicenseMetaData() {
     this.provider_servicesobj.getLicenseMetadata()
       .subscribe(
@@ -332,23 +303,18 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
           const license_meta = {};
           this.license_upgarde_sub = {};
           for (const meta of this.all_license_metadata) {
-
             if (meta['pkgId'] === this.currentlicense_details['accountLicense']['licPkgOrAddonId']) {
               license_meta['price'] = meta['price'] || 0;
               license_meta['discPercFor12Months'] = meta['discPercFor12Months'] || 0;
               license_meta['discPercFor6Months'] = meta['discPercFor6Months'] || 0;
               license_meta['current_sub'] = (this.license_sub === 'Monthly') ? 'month' : 'year';
-
               if (license_meta['current_sub'] === 'year') {
                 const year_amount = (license_meta['price'] * 12);
                 license_meta['price'] = year_amount - (year_amount * license_meta['discPercFor12Months'] / 100);
               }
-
               license_meta['next_sub'] = null;
-
               if (license_meta['current_sub'] === 'month' &&
                 (license_meta['price'] !== 0 || (license_meta['price'] === 0 && license_meta['discPercFor12Months'] === 100))) {
-
                 const year_amount = (license_meta['price'] * 12);
                 license_meta['next_sub'] = [
                   {
@@ -358,20 +324,17 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
                     'value': 'Annual'
                   }
                 ];
-
               }
               // console.log(license_meta);
               this.license_upgarde_sub = license_meta;
             }
           }
-
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
-
   updateSubscription(value) {
     this.provider_servicesobj.changeLicenseSubscription(value)
       .subscribe(
@@ -383,12 +346,10 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   goPaymentHistory() {
     this.router.navigate(['provider', 'settings', 'license', 'payment', 'history']);
   }
-
-  goAddonHistory(){
+  goAddonHistory() {
     this.addonhistorydialogRef = this.dialog.open(ProviderAddonAuditlogsComponent, {
       width: '50%',
       data: {
@@ -396,20 +357,16 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass'],
       disableClose: true
     });
-
     this.addonhistorydialogRef.afterClosed().subscribe(result => {
     });
   }
-
   showUnpaidInvoice() {
     if (this.invoices.length === 1) {
       this.getInvoice(this.invoices[0]);
     } else {
       this.unpaid_invoice_show = (this.unpaid_invoice_show) ? 0 : 1;
     }
-
   }
-
   getInvoice(invoice) {
     // console.log(invoice.ynwUuid);
     this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
@@ -421,13 +378,9 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass'],
       disableClose: true
     });
-
     this.invoicedialogRef.afterClosed().subscribe(result => {
-
     });
-
   }
-
   doUpgradeSubcription(value) {
     this.upgradesubscriptdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -443,7 +396,6 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   learnmore_clicked(mod, e) {
     /* const dialogRef = this.dialog.open(LearnmoreComponent, {
            width: '50%',

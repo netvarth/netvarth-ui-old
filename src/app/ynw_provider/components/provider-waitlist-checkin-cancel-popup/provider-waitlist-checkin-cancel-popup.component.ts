@@ -61,19 +61,21 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
       reason: ['', Validators.compose([Validators.required])],
+      message: [''],
       send_message: [{ value: false, disabled: true }]
     });
-    this.amForm.get('send_message').valueChanges
-      .subscribe(
+     this.amForm.get('send_message').valueChanges
+       .subscribe(
         data => {
           // console.log(data);
           if (data) {
-            this.amForm.addControl('message',
-              new FormControl(this.replacedMessage(), Validators.compose([Validators.required])));
+            this.amForm.controls['message'].enable();
+            // this.amForm.addControl('message',
+            //   new FormControl(this.replacedMessage(), Validators.compose([Validators.required])));
             // this.amForm.get('message').setValue(this.replacedMessage());
-          } else {
-            this.amForm.removeControl('message');
-          }
+           } else {
+            this.amForm.controls['message'].disable();
+           }
         }
       );
   }
@@ -97,6 +99,9 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     this.amForm.controls['send_message'].enable();
     if (this.amForm.get('message')) {
       this.amForm.get('message').setValue(this.replacedMessage());
+    }
+    if (!this.amForm.controls['send_message'].value) {
+      this.amForm.controls['message'].disable();
     }
   }
 

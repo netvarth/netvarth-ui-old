@@ -74,6 +74,7 @@
                     </span>
                     <span (click)="upgradeMembership()" class="membership"
                     *ngIf="headercls!='itl-steps' && isprovider && upgradablepackages.length > 0"><i class="icon-membership"></i> {{upgrade_cap}} <span>{{membership_cap}}</span></span>
+                    <span  class="membership lic-sml" *ngIf="headercls!='itl-steps' && isprovider && upgradablepackages.length > 0">{{active_license}}</span>
                 </div>
                 <div class="userdt" (click)="showHidemobileSubMenu()">
                     <div class="usrbx">

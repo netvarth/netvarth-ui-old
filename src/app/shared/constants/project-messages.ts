@@ -217,7 +217,7 @@ export const Messages = {
   'APPX_WAIT_TIME_CAPTION': 'Appox Waiting Time',
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
   'CHECKIN_TIME_CAPTION': 'Est Service Time',
-  'PREPAYMENT_ERROR': 'Sorry! Please try again.',
+  'PREPAYMENT_ERROR': 'Prepayment for this service no more accepted.',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
 
   // General
@@ -732,7 +732,7 @@ export const Messages = {
   'BPROFILE_SET_UP_CAP': 'We recommend you to set up the',
   'BPROFILE_SUMMARY_CAP': 'Profile Name and Description',
   'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn ON the Public Search',
-  'BPROFILE_CURRENT_STATUS': 'Current Status',
+  'BPROFILE_CURRENT_STATUS': '',
   'BPROFILE_ON_CAP': 'On',
   'BPROFILE_OFF_CAP': 'Off',
   'BPROFILE_VISIBILITY_CAP': 'Your profile is visible to',

@@ -74,7 +74,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
           <!-- <label class="col-form-label" for="prepayment_amount">{{prepayment_cap}}(<i class="fa fa-inr"></i>) *</label> -->
           <mat-form-field>
-            <input matInput type="text" class="form-control" id="prepayment_amount" placeholder="{{prepayment_cap}}*"
+            <input matInput type="text" class="form-control number-ip-sm" id="prepayment_amount" placeholder="{{prepayment_cap}}*"
               formControlName="minPrePaymentAmount" autocomplete="off">
           </mat-form-field>
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',

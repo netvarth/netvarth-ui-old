@@ -215,7 +215,7 @@
 																</div>
 																<div class="quantity">{{qnty_cap}}
 																	{{service.quantity}}</div>
-																<div class="price">{{service.price |
+																<div class="price">{{(service.quantity * service.price) |
 																	currency:'INR':'symbol':'.2-2'}}</div>
 															</div>
 															<div class="c-row two section-two">
