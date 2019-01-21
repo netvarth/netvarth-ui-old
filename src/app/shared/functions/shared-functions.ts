@@ -356,6 +356,12 @@ export class SharedFunctions {
       case 'area':
         distance = projectConstants.DISTANCE_AREA;
         break;
+      case 'metro':
+        distance = projectConstants.DISTANCE_METRO;
+        break;
+      case 'capital':
+        distance = projectConstants.DISTANCE_CAPITAL;
+        break;
       default:
         distance = projectConstants.DISTANCE_AREA;
         break;

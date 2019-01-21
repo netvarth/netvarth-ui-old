@@ -192,7 +192,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   setLicense() {
     const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    if (cuser) {
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    if (cuser && usertype === 'provider') {
       if (cuser.new_lic) {
         this.active_license = cuser.new_lic;
       } else {

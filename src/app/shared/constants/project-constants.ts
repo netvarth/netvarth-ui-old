@@ -220,6 +220,9 @@ export const projectConstants = {
   DISTANCE_STATE: 100, // in Km
   DISTANCE_CITY: 25, // in Km
   DISTANCE_AREA: 5, // in Km
+  DISTANCE_METRO: 10, // in Km
+  DISTANCE_CAPITAL: 20, // in Km
+
   AUDITLOG_CNT: 10,
   AUDITLOG_FILTER_CATEGORIES: [
     {

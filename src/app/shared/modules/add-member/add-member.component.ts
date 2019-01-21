@@ -29,7 +29,7 @@ export class AddMemberComponent implements OnInit {
   lastname = '';
   mobile = '';
   gender = '';
-  dob = ';';
+  dob = '';
   dobholder = '';
   amForm: FormGroup;
   api_error = null;
@@ -133,7 +133,7 @@ export class AddMemberComponent implements OnInit {
     );
   }*/
   valuechange() {
-    console.log('value change', this.firstname, this.lastname, this.mobile, this.gender, this.dob);
+    // console.log('value change', this.firstname, this.lastname, this.mobile, this.gender, this.dobholder);
     const retobj = {
       'fname': this.firstname || '',
       'lname': this.lastname || '',
@@ -141,7 +141,7 @@ export class AddMemberComponent implements OnInit {
       'gender': this.gender || '',
       'dob': this.dobholder || ''
     };
-    this.returnDetails.emit(retobj);
+    this. returnDetails.emit(retobj);
   }
   dateChanged(e) {
     if (e) {

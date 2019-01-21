@@ -739,9 +739,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       q_str = q_str + ' title:\'' + ptitle + '\'';
       // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
     } else if (this.kwtyp === 'kwphrase') {
-      let phrase = this.kw.replace('/', '');
-      phrase = phrase.replace(/'/g, '\\\'');
-      phrasestr = ' (phrase \'' + phrase + '\') ';
+      // let phrase = this.kw.replace('/', '');
+      phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' + ' specialization_displayname:\'' + this.kw + '\''
+      + ' title:\'' + this.kw + '\'' + ' services:\'' + this.kw + '\'' + ' qualification:\'' + this.kw + '\''  + ' adwords:\'' + this.kw + '\')';
+      // phrase = phrase.replace(/'/g, '\\\'');
+      // phrasestr = ' (phrase \'' + phrase + '\') ';
       // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
     }
     if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
@@ -788,7 +790,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       if (this.latitude || this.domain || this.labelq || time_qstr || phrasestr) {
         // if location or domain is selected, then the criteria should include following syntax
         // q_str = '(and ' + time_qstr + q_str + this.refined_querystr + ')';
-        q_str = '(and ' + phrasestr + time_qstr + q_str + ')';
+        q_str = '(and ' + q_str + time_qstr + phrasestr + ')';
       }
     }
     // Creating criteria to be passed via get

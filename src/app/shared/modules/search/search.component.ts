@@ -4,7 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material';
-import {Messages} from '../../constants/project-messages';
+import { Messages } from '../../constants/project-messages';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
@@ -17,7 +17,7 @@ import { base_url } from '../../constants/urls';
 
 // Importing the locations json file so that we can make use of it
 import * as locationjson from '../../../../assets/json/locations.json';
-
+import * as metrojson from '../../../../assets/json/metros_capital.json';
 
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { projectConstants } from '../../constants/project-constants';
@@ -50,8 +50,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   @Input() domainlistpassed: any = [];
   @Input() includedfrom: any;
   @Input() passedDomain: string;
-  @Input() passedkwdet: any =  [];
-  @Input() passedRefine: any =  [];
+  @Input() passedkwdet: any = [];
+  @Input() passedRefine: any = [];
   @Output() searchclick = new EventEmitter<any>();
 
   myControl_prov: FormControl = new FormControl();
@@ -92,7 +92,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   public commonfilters;
   public insidelocloop;
   showMoreOptionsOverlay = false;
-  curlabel = {typ: '', query: ''};
+  curlabel = { typ: '', query: '' };
 
   moreoptions_arr: any = [];
   location_arr: any = [];
@@ -103,18 +103,18 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   area_arr: any = [];
   areaname_arr: any = [];
 
-  locationList: Locscls[] = [] ;
-  displaylocationList: Locscls[] = [] ;
+  locationList: Locscls[] = [];
+  displaylocationList: Locscls[] = [];
   locsearchcriteria = '';
 
-  keywordList: Keywordscls[] = [] ;
-  displaykeywordList: Keywordscls[] = [] ;
+  keywordList: Keywordscls[] = [];
+  displaykeywordList: Keywordscls[] = [];
   keyssearchcriteria = '';
 
   subdomainList: Keywordscls[] = [];
   holdisplaylist: Keywordscls[] = [];
-  specilizationList: Keywordscls[] = [] ;
-  titleobj: Keywordscls[] = [] ;
+  specilizationList: Keywordscls[] = [];
+  titleobj: Keywordscls[] = [];
 
   keywordgroupList: Keywordsgroupcls[] = [];
 
@@ -126,25 +126,25 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
   moreoptionsTooltip = '';
 
-  constructor (
+  constructor(
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
     private searchdataserviceobj: SearchDataStorageService,
     private dialog: MatDialog,
     private routerobj: Router) {
 
-      this.myControl_prov.valueChanges.subscribe(val => {
-        this.filterKeywords(val);
-      });
-      this.myControl_loc.valueChanges.subscribe(val => {
-        this.filterLocation(val);
-      });
-    }
+    this.myControl_prov.valueChanges.subscribe(val => {
+      this.filterKeywords(val);
+    });
+    this.myControl_loc.valueChanges.subscribe(val => {
+      this.filterLocation(val);
+    });
+  }
 
   ngOnInit() {
     // console.log('srch pass kw', this.passedkwdet);
-   // console.log('Refined search ', this.passedRefine);
-   this.moreoptionsTooltip = this.shared_functions.getProjectMesssages('MOREOPTIONS_TOOLTIP');
+    // console.log('Refined search ', this.passedRefine);
+    this.moreoptionsTooltip = this.shared_functions.getProjectMesssages('MOREOPTIONS_TOOLTIP');
     if (this.passedkwdet.kwtyp === 'label') {
       if (this.passedkwdet.kwdomain !== '' && this.passedkwdet.kwdomain !== undefined) {
         this.curlabel.typ = 'label';
@@ -159,11 +159,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
     if (this.domainlistpassed.length > 0) {
       // console.log('reached exists');
-       this.domainlist_data = this.domainlistpassed;
+      this.domainlist_data = this.domainlistpassed;
       // this.loadkeywordAPIreponsetoArray();
     } else {
-        // console.log('reached not exists');
-        this.getDomainList();
+      // console.log('reached not exists');
+      this.getDomainList();
     }
     this.getAllsearchlabels();
     this.setNulllocationvalues('');
@@ -183,25 +183,25 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
       if (localloc) {
         if (localloc.autoname !== '' && localloc.autoname !== undefined && localloc.autoname !== null) {
-            this.locationholder = localloc;
-            this.location_name = localloc.autoname;
+          this.locationholder = localloc;
+          this.location_name = localloc.autoname;
         } else { // case if details are not there in the local storage
-            this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
-            this.locationholder.autoname = this.location_name;
-            this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
-            this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
-            this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
-            this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
-            this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+          this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
+          this.locationholder.autoname = this.location_name;
+          this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
+          this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
+          this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
+          this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
+          this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
         }
       } else {
-            this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
-            this.locationholder.autoname = this.location_name;
-            this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
-            this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
-            this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
-            this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
-            this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+        this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
+        this.locationholder.autoname = this.location_name;
+        this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
+        this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
+        this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
+        this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
+        this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
       }
 
     }
@@ -248,15 +248,15 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.sortorder = this.searchfields.sortorder;
     }
   }
- /* clickedoutsider(e) {
-    console.log('clicked outside', e);
-    const targetid = e.target.id;
-    if (targetid !== undefined) {
-      if (targetid !== 'morefiltericon') {
-       // this.closeMoreoptions();
-      }
-    }
-  }*/
+  /* clickedoutsider(e) {
+     console.log('clicked outside', e);
+     const targetid = e.target.id;
+     if (targetid !== undefined) {
+       if (targetid !== 'morefiltericon') {
+        // this.closeMoreoptions();
+       }
+     }
+   }*/
   closeMoreoptions() {
     // this.passedRefine = [];
     this.showmoreoptionsSec = false;
@@ -292,7 +292,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   handleNormalSearchClick() {
     this.moreoptions_arr = [];
     this.showmoreoptionsSec = false;
-    this.do_search(null, true);
+    if (this.holdisplaylist['label'].length !== 0) {
+      this.setKeyword(this.holdisplaylist['label'][0]);
+    } else {
+      this.do_search(null, true);
+    }
   }
 
   handleSearchmoreSearchClick(result) {
@@ -306,36 +310,44 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   // method with decides whether the more option link is to be display
   chk_moreoptionshow() {
     if ((this.selected_domain !== '' && this.selected_domain !== undefined
-        && this.selected_domain !== 'undefined' && this.selected_domain !== 'All')
-        || (this.keywordholder.name !== '') || (this.locationholder.name !== '' && this.locationholder.name !== null)) {
-          const currenturl = this.routerobj.url.split(';');
-          if (currenturl[0] !== '/searchdetail') {
-            return true;
-          }
+      && this.selected_domain !== 'undefined' && this.selected_domain !== 'All')
+      || (this.keywordholder.name !== '') || (this.locationholder.name !== '' && this.locationholder.name !== null)) {
+      const currenturl = this.routerobj.url.split(';');
+      if (currenturl[0] !== '/searchdetail') {
+        return true;
+      }
     }
   }
   // loads the location details in json file to the respective array
   private loadLocationjsontoArray() {
     for (const state of locationjson['states']) {
-        const objstate = {autoname: state.name + ', India', name: state.name, lat: state.latitude, lon: state.longitude, typ: 'state', rank: 2 };
-        this.locationList.push(objstate);
-        for (const city of state.cities) {
-          const objcity = {autoname: city.name + ', ' + state.name, name: city.name, lat: city.latitude, lon: city.longitude, typ: 'city', rank: 1 };
-          this.locationList.push(objcity);
-          for (const area of city.locations) {
-            const objarea = {autoname: area.name + ', ' + city.name + ', ' + state.name, name: area.name, lat: area.latitude, lon: area.longitude, typ: 'area', rank: 3 };
-            this.locationList.push(objarea);
-          }
+      const objstate = { autoname: state.name + ', India', name: state.name, lat: state.latitude, lon: state.longitude, typ: 'state', rank: 4 };
+      this.locationList.push(objstate);
+      for (const city of state.cities) {
+        const objcity = { autoname: city.name + ', ' + state.name, name: city.name, lat: city.latitude, lon: city.longitude, typ: 'city', rank: 3 };
+        this.locationList.push(objcity);
+        for (const area of city.locations) {
+          const objarea = { autoname: area.name + ', ' + city.name + ', ' + state.name, name: area.name, lat: area.latitude, lon: area.longitude, typ: 'area', rank: 5 };
+          this.locationList.push(objarea);
         }
+      }
     }
-     this.locationList.sort((a, b) => a.rank.toString().localeCompare(b.rank.toString()));
+    for (const metro of metrojson['metros']) {
+      const objstate = { autoname: metro.name + ' (Metro)', name: metro.name, lat: metro.latitude, lon: metro.longitude, typ: 'metro', rank: 1 };
+      this.locationList.push(objstate);
+    }
+    for (const capital of metrojson['capitals']) {
+      const objstate = { autoname: capital.name + ' (Capital)', name: capital.name, lat: capital.latitude, lon: capital.longitude, typ: 'capital', rank: 2 };
+      this.locationList.push(objstate);
+    }
+    this.locationList.sort((a, b) => a.rank.toString().localeCompare(b.rank.toString()));
     //  console.log(this.locationList);
- }
- private filterLocation(criteria: string= '') {
-  this.locsearchcriteria = criteria;
-  this.displaylocationList = [];
-  const maxcnt = projectConstants.AUTOSUGGEST_LOC_MAX_CNT;
-  let curcnt = 1;
+  }
+  private filterLocation(criteria: string = '') {
+    this.locsearchcriteria = criteria;
+    this.displaylocationList = [];
+    const maxcnt = projectConstants.AUTOSUGGEST_LOC_MAX_CNT;
+    let curcnt = 1;
     if (criteria === '') {
       this.setNulllocationvalues('');
       this.searchfields.location = '';
@@ -343,140 +355,143 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchfields.locationtype = '';
       this.searchfields.latitude = undefined;
       this.searchfields.longitude = undefined;
-      } else {
-        if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
-          const hold_criteria = criteria.toLowerCase();
-          for (const locs of this.locationList) {
-              const holdlocname = locs.autoname.toLowerCase();
-              if (holdlocname.startsWith(hold_criteria)) {
-                // if (holdlocname.includes(hold_criteria)) {
-                if (curcnt <= maxcnt) {
-                  this.displaylocationList.push(locs);
-                }
-                curcnt++;
-              }
+    } else {
+      if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
+        const hold_criteria = criteria.toLowerCase();
+        for (const locs of this.locationList) {
+          const holdlocname = locs.autoname.toLowerCase();
+          if (holdlocname.startsWith(hold_criteria)) {
+            // if (holdlocname.includes(hold_criteria)) {
+            if (curcnt <= maxcnt) {
+              this.displaylocationList.push(locs);
+            }
+            curcnt++;
           }
         }
       }
- }
- // loads the keyword details to the respective arrays
- private loadkeywordAPIreponsetoArray() {
-   this.displaykeywordList = [];
+    }
+  }
+  // loads the keyword details to the respective arrays
+  private loadkeywordAPIreponsetoArray() {
+    this.displaykeywordList = [];
     this.keywordList = [];
-   // Initialize the arrays
-   this.subdomainList = [];
-   this.specilizationList = [];
-   this.keyssearchcriteria = '';
+    // Initialize the arrays
+    this.subdomainList = [];
+    this.specilizationList = [];
+    this.keyssearchcriteria = '';
 
-   if (!this.domainlist_data) {
-    return;
-   }
-   // get the list of subdomains and specializations to the respective arrays
-   const domain = this.selected_domain || '';
-   for (const dom of this.domainlist_data) {
-     let getsubdomainandspec = true;
-     if (domain !== '' && domain !== 'All') {
-       if (domain !== dom.domain) {
-        getsubdomainandspec = false;
-       }
-     }
-     if (getsubdomainandspec === true) {
-        for (const subdom of dom.subDomains) {
-            const keywordsub = {autoname: subdom.displayName, name: subdom.subDomain, subdomain: '', domain: dom.domain, typ: 'subdom' };
-            this.subdomainList.push(keywordsub);
-            for (const special of subdom.specializations) {
-              const keywordspec = {autoname: special.displayName, name: special.name, subdomain: subdom.subDomain, domain: dom.domain, typ: 'special' };
-              this.specilizationList.push(keywordspec);
-            }
+    if (!this.domainlist_data) {
+      return;
+    }
+    // get the list of subdomains and specializations to the respective arrays
+    const domain = this.selected_domain || '';
+    for (const dom of this.domainlist_data) {
+      let getsubdomainandspec = true;
+      if (domain !== '' && domain !== 'All') {
+        if (domain !== dom.domain) {
+          getsubdomainandspec = false;
         }
       }
-   }
-   this.keywordList = [];
-   // Call method to merge the subdomain details to the keyword array
-  //  this.addheadandMergearray('subdom');
-   // Call method to merge the specialization details to the keyword array
-  //  this.addheadandMergearray('special');
- }
- private addheadandMergearray(typ) {
-   switch (typ) {
-    case 'subdom':
+      if (getsubdomainandspec === true) {
+        for (const subdom of dom.subDomains) {
+          const keywordsub = { autoname: subdom.displayName, name: subdom.subDomain, subdomain: '', domain: dom.domain, typ: 'subdom' };
+          this.subdomainList.push(keywordsub);
+          for (const special of subdom.specializations) {
+            const keywordspec = { autoname: special.displayName, name: special.name, subdomain: subdom.subDomain, domain: dom.domain, typ: 'special' };
+            this.specilizationList.push(keywordspec);
+          }
+        }
+      }
+    }
+    this.keywordList = [];
+    // Call method to merge the subdomain details to the keyword array
+    //  this.addheadandMergearray('subdom');
+    // Call method to merge the specialization details to the keyword array
+    //  this.addheadandMergearray('special');
+  }
+  private addheadandMergearray(typ) {
+    switch (typ) {
+      case 'subdom':
         if (this.subdomainList.length > 0) {
           const holderarr = this.keywordList.concat(this.subdomainList);
           this.keywordList = holderarr;
         }
-    break;
-    case 'special':
+        break;
+      case 'special':
         if (this.specilizationList.length > 0) {
           const holderarr = this.keywordList.concat(this.specilizationList);
           this.keywordList = holderarr;
         }
-    break;
-   }
- }
- filterKeywords(criteria: string= '') {
-   // console.log('Criteria:' + criteria);
-  this.keyssearchcriteria = criteria;
+        break;
+    }
+  }
+  filterKeywords(criteria: string = '') {
+    // console.log('Criteria:' + criteria);
+    this.keyssearchcriteria = criteria.toLowerCase();
     this.displaykeywordList = [];
     this.keywordgroupList = [];
     this.holdisplaylist = [];
-     if (criteria === '') {
+    if (criteria === '') {
       //  this.displaykeywordList = [];
-       this.setNullKeyword('');
+      this.setNullKeyword('');
 
-       this.searchfields.kw = '';
-       this.searchfields.kwautoname = '';
-       this.searchfields.kwdomain = '';
-       this.searchfields.kwsubdomain = '';
-       this.searchfields.kwtyp = '';
+      this.searchfields.kw = '';
+      this.searchfields.kwautoname = '';
+      this.searchfields.kwdomain = '';
+      this.searchfields.kwsubdomain = '';
+      this.searchfields.kwtyp = '';
 
-     } else {
+    } else {
 
-      //  if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
-      //   const hold_criteria = criteria.toLowerCase();
-      //   let curcnt = 1;
-      //   this.displaykeywordList.push({autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle'});
-        // for (const kw of this.keywordList) {
-        //   const holdkeyword = kw.autoname.toLowerCase();
-        //    if (holdkeyword.includes(hold_criteria)) {
-            // if (curcnt <= projectConstants.AUTOSUGGEST_LOC_MAX_CNT) {
-              // this.displaykeywordList.push(kw);
-              // curcnt++;
-            // }
-        //   }
-        // }
+      // if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
+      //    const hold_criteria = criteria.toLowerCase();
+      // let curcnt = 1;
+      //  this.displaykeywordList.push({autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle'});
+      // for (const kw of this.keywordList) {
+      //   const holdkeyword = kw.autoname.toLowerCase();
+      //    if (holdkeyword.includes(hold_criteria)) {
+      // if (curcnt <= projectConstants.AUTOSUGGEST_LOC_MAX_CNT) {
+      // this.displaykeywordList.push(kw);
+      // curcnt++;
+      // }
+      //   }
+      // }
 
-        // this.holdisplaylist['subdom'] = new Array();
-        // this.holdisplaylist['special'] = new Array();
-        this.holdisplaylist['kwtitle'] = new Array();
+      // this.holdisplaylist['subdom'] = new Array();
+      // this.holdisplaylist['special'] = new Array();
+      this.holdisplaylist['kwtitle'] = new Array();
+      if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
+        const hold_criteria = criteria.toLowerCase();
+        this.holdisplaylist['kwtitle'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle' });
+      }
+      // for (const kw of this.displaykeywordList) {
 
-        // for (const kw of this.displaykeywordList) {
+      //   if (kw.typ === 'kwtitle') {
+      //     this.holdisplaylist['kwtitle'].push(kw);
+      //   }
+      //   // case of subdomain header row
+      //   if (kw.typ === 'subdom') {
+      //     this.holdisplaylist['subdom'].push(kw);
+      //   }
 
-        //   if (kw.typ === 'kwtitle') {
-        //     this.holdisplaylist['kwtitle'].push(kw);
-        //   }
-        //   // case of subdomain header row
-        //   if (kw.typ === 'subdom') {
-        //     this.holdisplaylist['subdom'].push(kw);
-        //   }
-
-        //    // case of specialization header row
-        //   if (kw.typ === 'special') {
-        //     this.holdisplaylist['special'].push(kw);
-        //   }
-        // }
+      //    // case of specialization header row
+      //   if (kw.typ === 'special') {
+      //     this.holdisplaylist['special'].push(kw);
+      //   }
+      // }
       //  }
-     }
+    }
 
-     // Defining the types of details that will be displayed for keywords autocomplete
+    // Defining the types of details that will be displayed for keywords autocomplete
     const keywordgroup_val = [];
 
     // Check whether the title is to be displayed
-    if (this.holdisplaylist['kwtitle']) {
-      if (this.holdisplaylist['kwtitle'].length > 0) {
-        const groupdomainobj = {displayname: 'Business Name/Keyword', name: 'kwtitle'};
-        keywordgroup_val.push(groupdomainobj);
-      }
-    }
+    // if (this.holdisplaylist['kwtitle']) {
+    //   if (this.holdisplaylist['kwtitle'].length > 0) {
+    //     const groupdomainobj = {displayname: 'Business Name/Keyword', name: 'kwtitle'};
+    //     keywordgroup_val.push(groupdomainobj);
+    //   }
+    // }
     // Check whether the subdomain heading is to be displayed
     // if (this.holdisplaylist['subdom']) {
     //   if (this.holdisplaylist['subdom'].length > 0) {
@@ -505,10 +520,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
             if (label.type === 'special') {
               // const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
               // this.holdisplaylist['label'].push(labelspec);
-             const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: label.type };
-             this.holdisplaylist['special'].push(labelspec);
+              const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: label.type };
+              this.holdisplaylist['special'].push(labelspec);
             } else {
-              const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+              const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
               this.holdisplaylist['label'].push(labelspec);
             }
           }
@@ -516,12 +531,18 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         // console.log(this.holdisplaylist);
       }
       // Check whether search labels heading is to be displayed
-      if (this.holdisplaylist['label'].length > 0 ) {
-        const grouplabelsobj = {displayname: 'Suggested Searches', name: 'label'};
+      if (this.holdisplaylist['kwtitle']) {
+        if (this.holdisplaylist['kwtitle'].length > 0) {
+          const groupdomainobj = { displayname: 'Business Name/Keyword', name: 'kwtitle' };
+          keywordgroup_val.push(groupdomainobj);
+        }
+      }
+      if (this.holdisplaylist['label'].length > 0) {
+        const grouplabelsobj = { displayname: 'Suggested Searches', name: 'label' };
         keywordgroup_val.push(grouplabelsobj);
       }
-      if (this.holdisplaylist['special'].length > 0 ) {
-        const grouplabelsobj = {displayname: 'Specialization', name: 'special'};
+      if (this.holdisplaylist['special'].length > 0) {
+        const grouplabelsobj = { displayname: 'Specialization', name: 'special' };
         keywordgroup_val.push(grouplabelsobj);
       }
     }
@@ -530,33 +551,33 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.displaykeywordList = this.holdisplaylist;
     // console.log('Display Search Items');
     // console.log(this.displaykeywordList);
- }
- // this method decides how the items are shown in the autosuggestion list
- highlightSelText(curtext, classname, mod?, typ?) {
-      let criteria = '';
-      switch (mod) {
-        case 'keyword':
-          criteria = this.keyssearchcriteria;
+  }
+  // this method decides how the items are shown in the autosuggestion list
+  highlightSelText(curtext, classname, mod?, typ?) {
+    let criteria = '';
+    switch (mod) {
+      case 'keyword':
+        criteria = this.keyssearchcriteria;
         break;
-        case 'location':
-          criteria = this.locsearchcriteria;
+      case 'location':
+        criteria = this.locsearchcriteria;
         break;
-      }
-      const regexp = new RegExp(criteria, 'gi');
-      if (criteria !== '' && criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
-        // convert the criteria and current text to lower case to find the position of criteria in the string
-        const l_criteria = criteria.toLowerCase();
-        const l_curtext = curtext.toLowerCase();
-        const index = l_curtext.indexOf( l_criteria );
-        const foundstr = curtext.substr(index, criteria.length);
-        return curtext.replace(regexp, '<span class="' + classname + '">' + foundstr + '</span>');
-      } else {
-        return curtext;
-      }
- }
+    }
+    const regexp = new RegExp(criteria, 'gi');
+    if (criteria !== '' && criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
+      // convert the criteria and current text to lower case to find the position of criteria in the string
+      const l_criteria = criteria.toLowerCase();
+      const l_curtext = curtext.toLowerCase();
+      const index = l_curtext.indexOf(l_criteria);
+      const foundstr = curtext.substr(index, criteria.length);
+      return curtext.replace(regexp, '<span class="' + classname + '">' + foundstr + '</span>');
+    } else {
+      return curtext;
+    }
+  }
 
- private initialize_fields() {
-   //  console.log('initialize', this.searchfields);
+  private initialize_fields() {
+    //  console.log('initialize', this.searchfields);
     if (this.searchfields.domain) {
       this.selected_domain = this.searchfields.domain;
     }
@@ -621,24 +642,24 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;
-        // this.loadkeywordAPIreponsetoArray();
+          // this.loadkeywordAPIreponsetoArray();
         }
       }
     }
     if (run_api) { // case if data is not there in data
       this.shared_service.bussinessDomains()
-      .subscribe (
-        res => {
-          this.domainlist_data = res;
-        //  this.loadkeywordAPIreponsetoArray();
-          const today = new Date();
-          const postdata = {
-            cdate: today,
-            bdata: this.domainlist_data
-          };
-          this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
-        }
-      );
+        .subscribe(
+          res => {
+            this.domainlist_data = res;
+            //  this.loadkeywordAPIreponsetoArray();
+            const today = new Date();
+            const postdata = {
+              cdate: today,
+              bdata: this.domainlist_data
+            };
+            this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+          }
+        );
     }
   }
 
@@ -651,50 +672,50 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.handledomainchange(this.selected_domain, 1);
     } else {
       this.shared_service.getAllSearchlabels()
-      .subscribe (
-        res => {
-          this.searchlabels_data = res || [];
-          this.shared_functions.setitemonLocalStorage('srchLabels', res);
-          this.searchdataserviceobj.set(this.searchlabels_data);
-          this.handledomainchange(this.selected_domain, 1);
-        }
-      );
+        .subscribe(
+          res => {
+            this.searchlabels_data = res || [];
+            this.shared_functions.setitemonLocalStorage('srchLabels', res);
+            this.searchdataserviceobj.set(this.searchlabels_data);
+            this.handledomainchange(this.selected_domain, 1);
+          }
+        );
     }
   }
- /*private do_domain_sel(domainname) {
-    this.selected_domain = domainname;
-  }
-  /*private getLocation(criteria) {
-    this.location_exists = false;
-    this.nocriteria = true;
-    this.loading = true;
-    this.location_latitude = undefined;
-    this.location_longitude = undefined;
-    this.hide_location_div = false;
-      if (criteria !== '') {
-        if ( this.subscription ) {
-            this.subscription.unsubscribe();
-          }
+  /*private do_domain_sel(domainname) {
+     this.selected_domain = domainname;
+   }
+   /*private getLocation(criteria) {
+     this.location_exists = false;
+     this.nocriteria = true;
+     this.loading = true;
+     this.location_latitude = undefined;
+     this.location_longitude = undefined;
+     this.hide_location_div = false;
+       if (criteria !== '') {
+         if ( this.subscription ) {
+             this.subscription.unsubscribe();
+           }
 
-        // Creating criteria to be passed via get
-        const pass_criteria = {
-          'criteria': criteria
-        };
-        this.subscription = this.shared_service.GetsearchLocation(pass_criteria)
-          .subscribe(res => {
-            this.location_data = res;
-            if (!res[0]) { this.setNulllocationvalues(res); } this.loading = false;
-          });
-        } else {
-        if ( this.subscription ) {
-          this.subscription.unsubscribe();
-        }
-        this.loading = false;
-        this.location_data = undefined;
-      }
-  }*/
+         // Creating criteria to be passed via get
+         const pass_criteria = {
+           'criteria': criteria
+         };
+         this.subscription = this.shared_service.GetsearchLocation(pass_criteria)
+           .subscribe(res => {
+             this.location_data = res;
+             if (!res[0]) { this.setNulllocationvalues(res); } this.loading = false;
+           });
+         } else {
+         if ( this.subscription ) {
+           this.subscription.unsubscribe();
+         }
+         this.loading = false;
+         this.location_data = undefined;
+       }
+   }*/
   private setLocation(loc) {
-   this.locationholder =  {
+    this.locationholder = {
       name: loc.name,
       autoname: loc.autoname,
       lat: loc.lat,
@@ -702,12 +723,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       typ: loc.typ,
       rank: loc.rank
     };
-   this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
-   this.location_data = undefined;
-   // console.log('loc', loc);
+    this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+    this.location_data = undefined;
+    // console.log('loc', loc);
   }
   private setNulllocationvalues(loc?) {
-    this.locationholder =  {
+    this.locationholder = {
       name: loc.name || null,
       autoname: loc.autoname || null,
       lat: loc.lat || null,
@@ -722,112 +743,112 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
 
   private setKeyword(kw) {
-  if (kw.name !== '') {
-    this.kw_autoname = kw.autoname;
-    this.keywordholder = {
-      autoname: kw.autoname,
-      name: kw.name,
-      domain: kw.domain,
-      subdomain: kw.subdomain,
-      typ: kw.typ
-    };
-  }
-   // console.log('kwholder', this.keywordholder);
-   if (kw.typ === 'label') {
-    this.curlabel.typ = 'label';
-    this.curlabel.query = kw.domain;
-    const passkw = {query: kw.domain}; // kw.domain holds the hardcoded query for the search labels
-    if (kw.domain !== '') {
-      this.searchlabels_clicked(passkw);
+    if (kw.name !== '') {
+      this.kw_autoname = kw.autoname;
+      this.keywordholder = {
+        autoname: kw.autoname,
+        name: kw.name,
+        domain: kw.domain,
+        subdomain: kw.subdomain,
+        typ: kw.typ
+      };
     }
-   } else {
-    this.curlabel.typ = '';
-    this.curlabel.query = '';
-   }
-   if (kw.typ !== 'label') { // execute search when selected an option using mouse in keyword box
-    this.do_search();
-   }
- }
- private setNullKeyword(kw?) {
-    this.keywordholder = {
-       autoname: kw.autoname || '',
-       name: kw.name || '',
-       domain: kw.domain || '',
-       subdomain: kw.subdomain || '',
-       typ: kw.typ || ''
-    };
- }
- kwtyping(ev, val) {
-   const kCode = parseInt(ev.keyCode, 10);
-  switch (kCode) {
-    case 37: // left arrow key
-    case 38: // top arrow key
-    case 39: // right arrow key
-    case 40: // bottom arrow key
-        // do nothing for above keys
-    break;
-    case 13: // enter key
-      // this.provRef.nativeElement.closePanel();
-      // this.provRef.closePanel();
-      this.provRef.closePanel();
-      this.setKeyword(this.keywordholder);
-    break;
-    default: // if other than above keys, then by default set the type as "kwtitle"
-      this.kw_autoname = val;
-      this.keywordholder.name = val;
-      this.keywordholder.autoname = val;
-      this.keywordholder.domain = '';
-      this.keywordholder.subdomain = '';
-      // this.keywordholder.typ = 'kwtitle';
-      this.keywordholder.typ = 'kwphrase';
+    // console.log('kwholder', this.keywordholder);
+    if (kw.typ === 'label') {
+      this.curlabel.typ = 'label';
+      this.curlabel.query = kw.domain;
+      const passkw = { query: kw.domain }; // kw.domain holds the hardcoded query for the search labels
+      if (kw.domain !== '') {
+        this.searchlabels_clicked(passkw);
+      }
+    } else {
       this.curlabel.typ = '';
       this.curlabel.query = '';
-      // console.log('reached here', this.keywordholder);
-    break;
+    }
+    if (kw.typ !== 'label') { // execute search when selected an option using mouse in keyword box
+      this.do_search();
+    }
   }
- }
- selectedOption(kw) {
-   // console.log('selected', kw);
- }
- do_search(labelqpassed?, buttonclick?) {
-   // console.log('buttonclick', buttonclick);
-   this.shared_functions.setitemonLocalStorage('ynw_srchb', 1);
-   this.closeMoreoptions();
-   // console.log('search clicked');
+  private setNullKeyword(kw?) {
+    this.keywordholder = {
+      autoname: kw.autoname || '',
+      name: kw.name || '',
+      domain: kw.domain || '',
+      subdomain: kw.subdomain || '',
+      typ: kw.typ || ''
+    };
+  }
+  kwtyping(ev, val) {
+    const kCode = parseInt(ev.keyCode, 10);
+    switch (kCode) {
+      case 37: // left arrow key
+      case 38: // top arrow key
+      case 39: // right arrow key
+      case 40: // bottom arrow key
+        // do nothing for above keys
+        break;
+      case 13: // enter key
+        // this.provRef.nativeElement.closePanel();
+        // this.provRef.closePanel();
+        this.provRef.closePanel();
+        this.setKeyword(this.keywordholder);
+        break;
+      default: // if other than above keys, then by default set the type as "kwtitle"
+        this.kw_autoname = val;
+        this.keywordholder.name = val;
+        this.keywordholder.autoname = val;
+        this.keywordholder.domain = '';
+        this.keywordholder.subdomain = '';
+        // this.keywordholder.typ = 'kwtitle';
+        this.keywordholder.typ = 'kwphrase';
+        this.curlabel.typ = '';
+        this.curlabel.query = '';
+        // console.log('reached here', this.keywordholder);
+        break;
+    }
+  }
+  selectedOption(kw) {
+    // console.log('selected', kw);
+  }
+  do_search(labelqpassed?, buttonclick?) {
+    // console.log('buttonclick', buttonclick);
+    this.shared_functions.setitemonLocalStorage('ynw_srchb', 1);
+    this.closeMoreoptions();
+    // console.log('search clicked');
 
-   // done to handle the case if something is typed in the last text box and nothing else is selected by consumer, but some text is there
-   // in such as case the text will be used to search against the index "title"
-   // console.log('kwauto', this.kw_autoname);
-   if (this.kw_autoname !== '' && this.kw_autoname !== undefined) {
-    if (this.keywordholder.typ === '' || this.keywordholder.typ === undefined || this.keywordholder.typ === 'kwtitle') {
+    // done to handle the case if something is typed in the last text box and nothing else is selected by consumer, but some text is there
+    // in such as case the text will be used to search against the index "title"
+    // console.log('kwauto', this.kw_autoname);
+    if (this.kw_autoname !== '' && this.kw_autoname !== undefined) {
+      if (this.keywordholder.typ === '' || this.keywordholder.typ === undefined || this.keywordholder.typ === 'kwtitle') {
         this.keywordholder.name = this.kw_autoname;
         this.keywordholder.autoname = this.kw_autoname;
         this.keywordholder.domain = '';
         this.keywordholder.subdomain = '';
         this.keywordholder.typ = 'kwtitle';
-    }
-  }
-
-   let labelq = labelqpassed;
-   if (labelq === '' || labelq === undefined) {
-      if (this.curlabel.typ === 'label') {
-          if (this.curlabel.query !== '') {
-            labelq = this.curlabel.query;
-          }
       }
     }
-   const currenturl = this.routerobj.url.split(';');
 
-   /* if (!this.location_latitude) {
-      this.location_name = '';
-    }*/
+    let labelq = labelqpassed;
+    if (labelq === '' || labelq === undefined) {
+      if (this.curlabel.typ === 'label') {
+        if (this.curlabel.query !== '') {
+          labelq = this.curlabel.query;
+        }
+      }
+    }
+    const currenturl = this.routerobj.url.split(';');
+
+    /* if (!this.location_latitude) {
+       this.location_name = '';
+     }*/
 
     // Checking whether the location is blank, if yes, then set it to the default location mentioned in the constants file
     this.checktoSetLocationtoDefaultLocation();
 
     if (currenturl[0] === '/searchdetail') { // if clicked search button from the search result page itself
-        this.onsearchclick(labelq);
-       // window.location.reload();
+      this.onsearchclick(labelq);
+      // window.location.reload();
     } else { // clicked search button from home page
 
       /*this.routerobj.navigate(['/searchdetail'], { queryParams: { do: this.selected_domain, la: this.location_latitude,
@@ -835,49 +856,49 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           srt: this.sortfield + ' ' + this.sortorder, ps: this.searchlabel_search, on: this.opennow_search,
         lq: labelq }}); */
 
-        const passparam = {
-          do: this.selected_domain || '',
-          la: this.locationholder.lat || '',
-          lo: this.locationholder.lon || '',
-          lon: this.locationholder.name || '',
-          lontyp: this.locationholder.typ || '',
-          lonauto: this.locationholder.autoname || '',
-          kw: this.keywordholder.name || '',
-          kwauto: this.keywordholder.autoname || '',
-          kwdomain: this.keywordholder.domain || '',
-          kwsubdomain: this.keywordholder.subdomain || '',
-          kwtyp: this.keywordholder.typ || '',
-          srt: this.sortfield + ' ' + this.sortorder,
-          lq: labelq || '',
-          cfilter: this.commonfilters || ''
-         };
-         if (this.moreoptions_arr.length > 0) {
-            for (let i = 0; i < this.moreoptions_arr.length; i++) {
-              for (const field in this.moreoptions_arr[i]) {
-                if (field) {
-                 // console.log('field', field, this.moreoptions_arr[i][field]);
-                  let valstr = '';
-                  for (const fval of this.moreoptions_arr[i][field]) {
-                    if (valstr !== '') {
-                      valstr += '~';
-                    }
-                    valstr += fval[0];
-                  }
-                  passparam['myref_' + field.toString()] = valstr;
+      const passparam = {
+        do: this.selected_domain || '',
+        la: this.locationholder.lat || '',
+        lo: this.locationholder.lon || '',
+        lon: this.locationholder.name || '',
+        lontyp: this.locationholder.typ || '',
+        lonauto: this.locationholder.autoname || '',
+        kw: this.keywordholder.name || '',
+        kwauto: this.keywordholder.autoname || '',
+        kwdomain: this.keywordholder.domain || '',
+        kwsubdomain: this.keywordholder.subdomain || '',
+        kwtyp: this.keywordholder.typ || '',
+        srt: this.sortfield + ' ' + this.sortorder,
+        lq: labelq || '',
+        cfilter: this.commonfilters || ''
+      };
+      if (this.moreoptions_arr.length > 0) {
+        for (let i = 0; i < this.moreoptions_arr.length; i++) {
+          for (const field in this.moreoptions_arr[i]) {
+            if (field) {
+              // console.log('field', field, this.moreoptions_arr[i][field]);
+              let valstr = '';
+              for (const fval of this.moreoptions_arr[i][field]) {
+                if (valstr !== '') {
+                  valstr += '~';
                 }
+                valstr += fval[0];
               }
+              passparam['myref_' + field.toString()] = valstr;
             }
-         }
-        //  console.log('params', passparam);
-         this.routerobj.navigate(['/searchdetail', passparam]);
-     }
+          }
+        }
+      }
+      //  console.log('params', passparam);
+      this.routerobj.navigate(['/searchdetail', passparam]);
+    }
   }
-  private opennow_searchhandle () {
+  private opennow_searchhandle() {
     this.opennow_search = 1;
     this.do_search();
 
   }
-  onsearchclick(labelq?)  {
+  onsearchclick(labelq?) {
 
     this.searchfields.domain = this.selected_domain;
     if (this.locationholder.name === '') {
@@ -893,7 +914,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       // this.location_name = this.locationholder.autoname;
 
       if (this.locRef.nativeElement) {
-        this.locRef.nativeElement.value  = this.locationholder.autoname;
+        this.locRef.nativeElement.value = this.locationholder.autoname;
       }
       // console.log('locauto', this.locationholder.autoname);
       this.searchfields.location = this.locationholder.name;
@@ -927,7 +948,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
 
     if (labelq === '' || labelq === undefined || labelq === 'undefined') {
-     // console.log('holder', this.keywordholder);
+      // console.log('holder', this.keywordholder);
       this.searchfields.kwdomain = '';
       // this.searchfields.kwtyp = this.keywordholder.typ;
     }
@@ -938,7 +959,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.searchfields.labelq = labelq || '';
     // if (this.searchfields.labelq != '') {
     if (labelq !== '' && labelq !== undefined && labelq !== 'undefined') {
-      const ret_arr =  this.parsesearchLabelsQuerystring (this.searchfields.labelq);
+      const ret_arr = this.parsesearchLabelsQuerystring(this.searchfields.labelq);
       // console.log('label return', ret_arr);
       if (ret_arr['sector'] !== '') {
         this.searchfields.domain = ret_arr['sector'];
@@ -953,7 +974,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           }
           ret_arr['dom'] = ret['dom'];
           this.searchfields.domain = ret['dom'];
-           // console.log('retdom', ret);
+          // console.log('retdom', ret);
         }
         this.searchfields.subsector = ret_arr['subsector'];
         this.searchfields.kw = ret_arr['subsector'];
@@ -975,12 +996,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.searchclick.emit(this.searchfields);
   }
   getdomainofaSubdomain(subdomname) {
-    let retarr = { 'dom': '', 'subdom_dispname': ''};
+    let retarr = { 'dom': '', 'subdom_dispname': '' };
     if (this.domainlist_data) {
       for (let i = 0; i < this.domainlist_data.length; i++) {
         for (const subdom of this.domainlist_data[i].subDomains) {
           if (subdom.subDomain === subdomname) {
-            retarr = { 'dom': this.domainlist_data[i].domain, 'subdom_dispname': subdom.displayName};
+            retarr = { 'dom': this.domainlist_data[i].domain, 'subdom_dispname': subdom.displayName };
             return retarr;
           }
         }
@@ -990,30 +1011,30 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
   getdomainofaSpecialization(specialization) {
     //  console.log('domain list', this.domainlist_data);
-    let retarr = { 'dom': '', 'special_dispname': ''};
+    let retarr = { 'dom': '', 'special_dispname': '' };
     if (this.domainlist_data) {
       for (let i = 0; i < this.domainlist_data.length; i++) {
         for (const subdom of this.domainlist_data[i].subDomains) {
           for (const specilization of subdom.specializations) {
             if (specilization.name === specialization) {
-              retarr = { 'dom': this.domainlist_data[i].domain, 'special_dispname': specilization.displayName};
+              retarr = { 'dom': this.domainlist_data[i].domain, 'special_dispname': specilization.displayName };
               return retarr;
             }
           }
         }
       }
     } // else {
-      retarr = { 'dom': '', 'special_dispname': ''};
-      return retarr;
+    retarr = { 'dom': '', 'special_dispname': '' };
+    return retarr;
     // }
   }
   // function which parse the querystring from search leabels
-  parsesearchLabelsQuerystring (str = null) {
+  parsesearchLabelsQuerystring(str = null) {
     const retarr = {
-    'sector': '',
-    'subsector': '',
-    'specialization': '',
-    'rating': ''
+      'sector': '',
+      'subsector': '',
+      'specialization': '',
+      'rating': ''
     };
     // console.log('str', str);
     if (str !== null) {
@@ -1032,9 +1053,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   handledomainchange(domain, avoidclear?) {
     // setting the domain in the selected_domain holder variable
-   // alert('here' + this.selected_domain);
+    // alert('here' + this.selected_domain);
     if (domain === 'All') {
-     // domain = '';
+      // domain = '';
     }
     this.selected_domain = domain;
     if (avoidclear === 1) {
@@ -1047,53 +1068,53 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         subdomain: '',
         typ: ''
       };
-      this.curlabel = {typ: '', query: ''};
+      this.curlabel = { typ: '', query: '' };
     }
     this.keyssearchcriteria = '';
     this.prov_name = '';
     // alert(this.selected_domain);
     this.getSearchlabelsbydomain(domain);
     // this.loadkeywordAPIreponsetoArray();
-        if (avoidclear === undefined) {
+    if (avoidclear === undefined) {
       this.handleNormalSearchClick();
     }
-   // this.handleNormalSearchClick();
+    // this.handleNormalSearchClick();
   }
   getSearchlabelsbydomain(domain) {
-    if ( domain == null || domain === '' || domain === 'All') {
+    if (domain == null || domain === '' || domain === 'All') {
       this.show_searchlabellist = this.shared_functions.get_Searchlabels('global', this.searchdataserviceobj.getAll());
     } else {
-      this.show_searchlabellist = this.shared_functions.get_Searchlabels('domain', this.searchdataserviceobj.getAll(), {'domain': domain});
+      this.show_searchlabellist = this.shared_functions.get_Searchlabels('domain', this.searchdataserviceobj.getAll(), { 'domain': domain });
     }
   }
   searchlabels_clicked(obj) {
-   this.setNulllocationvalues('');
-   // this.setNullKeyword('');
-      this.do_search(obj.query);
+    this.setNulllocationvalues('');
+    // this.setNullKeyword('');
+    this.do_search(obj.query);
   }
   handleCustomfilter(val) {
     this.commonfilters = val;
     this.do_search();
   }
   handle_returntochild(obj) {
-   // console.log('reached back');
+    // console.log('reached back');
   }
   clearSearch(obj) {
     this.displaylocationList = [];
     obj.value = '';
   }
   blurSearch(obj) {
-   /* if (this.holdsrchlocname !== '' && obj.value === '') {
-      obj.value = this.holdsrchlocname;
-    }*/
+    /* if (this.holdsrchlocname !== '' && obj.value === '') {
+       obj.value = this.holdsrchlocname;
+     }*/
     if (obj.value === '') {
       obj.value = this.locationholder.autoname;
     }
   }
   deselect() {
-   // console.log('blur');
+    // console.log('blur');
     if (this.locRef.nativeElement) {
-      this.locRef.nativeElement.value  = this.locRef.nativeElement.value;
+      this.locRef.nativeElement.value = this.locRef.nativeElement.value;
     }
   }
 }

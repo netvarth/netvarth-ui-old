@@ -879,10 +879,7 @@ Overriding mat input style
 .signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container, .loginmainclass,
 .ynw-common-form .mat-dialog-container{
   width: 400px !important;
-}
-.smallform .mat-dialog-container{
-  width: 500px !important;
-}
+} 
  .signup-form .mat-form-field-label, 
  .login-form .mat-form-field-label,
  .ynw-common-form .mat-form-field-label,
