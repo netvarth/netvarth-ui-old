@@ -56,7 +56,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field>
-                <input matInput type="text" class="form-control" id="email_id" placeholder="Email Id" formControlName="email_id"
+                <input matInput type="text" class="form-control" id="email_id" placeholder="Email(user@xyz.com)" formControlName="email_id"
                     autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')" errorMsg="Please enter valid email.">
@@ -80,7 +80,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday"
-                    readonly>
+                    readonly placeholder="DD/MM/YYYY">
             </div>
 
 

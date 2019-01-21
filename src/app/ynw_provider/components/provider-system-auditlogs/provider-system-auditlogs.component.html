@@ -59,7 +59,7 @@
                                         disabled [max]="tday">
                                 </div> -->
                                 <mat-form-field>
-                                        <input matInput [matDatepicker]="picker" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" autocomplete="off" placeholder="Choose a date" [max]="tday">
+                                        <input matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" autocomplete="off" [max]="tday">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                       </mat-form-field>
