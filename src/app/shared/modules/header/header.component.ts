@@ -1,5 +1,5 @@
 
-import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription ,  Observable } from 'rxjs';
+import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
 import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy, HostListener, OnChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -20,9 +20,9 @@ import { Messages } from '../../../shared/constants/project-messages';
 // import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    // styleUrls: ['./home.component.scss']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  // styleUrls: ['./home.component.scss']
 })
 
 
@@ -32,8 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() headerTitle: string;
   @Input() includedfrom: string;
   @Input() passedDomain: string;
-  @Input() passedkwdet: any =  [];
-  @Input() passedRefine: any =  [];
+  @Input() passedkwdet: any = [];
+  @Input() passedRefine: any = [];
   @Output() searchclick = new EventEmitter<any>();
   @Output() scrollhideclass = new EventEmitter<any>();
   sign_in_cap = Messages.SIGN_IN_CAP;
@@ -71,9 +71,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   cronStarted;
   showmobileSubmenu = false;
   urls_class = [
-    {url: '\/provider\/bwizard' , class: 'itl-steps'},
-    {url: '\/provider\/settings\/.+' , class: 'dashb'},
-    {url: null , class: 'dashb'},
+    { url: '\/provider\/bwizard', class: 'itl-steps' },
+    { url: '\/provider\/settings\/.+', class: 'dashb' },
+    { url: null, class: 'dashb' },
   ];
   isprovider = false;
   ctype;
@@ -81,7 +81,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   public searchfields: SearchFields = new SearchFields();
   locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
-  keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': ''};
+  keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': '' };
   selected_domain = '';
   avoidClear = 1;
   upgradablepackages: any = [];
@@ -103,14 +103,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices
   ) {
     this.onResize();
-     /*router.events.subscribe((val) => {
-        console.log('routerval', val['url']);
-        if (val['url']) {
-          this.curPgurl = val['url'];
-          this.handleHeaderclassbasedonURL();
-        }
-     }
-    });*/
+    /*router.events.subscribe((val) => {
+       console.log('routerval', val['url']);
+       if (val['url']) {
+         this.curPgurl = val['url'];
+         this.handleHeaderclassbasedonURL();
+       }
+    }
+   });*/
 
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -124,28 +124,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
         case 'updateuserdetails':
           this.getUserdetails();
           this.handleHeaderclassbasedonURL();
-        break;
+          break;
         case 'upgradelicence':
           this.setLicense();
           this.getUpgradablePackages();
-        break;
+          break;
         case 'main_loading':
           this.main_loading = message.action || false;
-        break;
-        case 'load_unread_count' :
+          break;
+        case 'load_unread_count':
           if (!message.action) {
             this.getInboxUnreadCnt();
           } else if (message.action === 'setzero') {
             this.inboxUnreadCnt = 0;
             this.inboxCntFetched = true;
           }
-        break;
+          break;
         case 'learn_more':
           this.showLearnMore = true;
           // this.scrollhideclass.emit(true);
           this.scrollhideclass.emit(false);
-          this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey};
-        break;
+          this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
+          break;
       }
       /*if (message.ttype === 'updateuserdetails') {
         this.getUserdetails();
@@ -156,18 +156,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
   hideLearnmore() {
-   // console.log('reached here');
+    // console.log('reached here');
     this.showLearnMore = false;
     this.scrollhideclass.emit(false);
   }
 
   ngOnInit() {
-   // console.log('passeddomain', this.passedDomain);
-   // console.log('passedkw', this.passedkwdet);
-   // console.log('passedRefine', this.passedRefine);
-   this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
-   this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
-   this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
+    // console.log('passeddomain', this.passedDomain);
+    // console.log('passedkw', this.passedkwdet);
+    // console.log('passedRefine', this.passedRefine);
+    this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
+    this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
+    this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
     this.setLicense();
     this.getBusinessdetFromLocalstorage();
@@ -183,28 +183,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.reloadHandler();
       });
     } else {
-        if (this.cronHandle) {
-          this.cronHandle.unsubscribe();
-        }
+      if (this.cronHandle) {
+        this.cronHandle.unsubscribe();
+      }
     }
 
   }
 
-setLicense() {
-  const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
-  if (cuser.new_lic) {
-    this.active_license = cuser.new_lic;
-  } else {
-    this.active_license = cuser.accountLicenseDetails.accountLicense.displayName;
+  setLicense() {
+    const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    if (cuser) {
+      if (cuser.new_lic) {
+        this.active_license = cuser.new_lic;
+      } else {
+        this.active_license = cuser.accountLicenseDetails.accountLicense.displayName;
+      }
+    }
   }
-}
   ngOnDestroy() {
     this.evnt.unsubscribe();
-     // unsubscribe to ensure no memory leaks
-     this.subscription.unsubscribe();
-     if (this.cronHandle) {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
+    if (this.cronHandle) {
       this.cronHandle.unsubscribe();
-     }
+    }
   }
   reloadHandler() { // this is the function which will be called periodically to refresh the contents in various sections
     // doSomething();
@@ -220,23 +222,23 @@ setLicense() {
     } else {
       this.small_device_display = false;
     }
-  // console.log('resized', this.screenWidth, this.screenHeight, this.small_device_display);
-}
+    // console.log('resized', this.screenWidth, this.screenHeight, this.small_device_display);
+  }
 
- getBusinessdetFromLocalstorage() {
+  getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
       this.blogo = bdetails.logo || '';
-     // console.log('logo', this.blogo);
+      // console.log('logo', this.blogo);
     }
   }
   getUserdetails() {
     this.userdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    if (this.userdet)  {
-     //  console.log(this.userdet);
+    if (this.userdet) {
+      //  console.log(this.userdet);
       if (this.shared_functions.checkLogin()) {
         this.ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (this.userdet.isProvider === true) {
@@ -256,8 +258,8 @@ setLicense() {
 
   getUpgradablePackages() {
     this.shared_service.getUpgradableLicensePackages()
-      .subscribe( data => {
-          this.upgradablepackages = data;
+      .subscribe(data => {
+        this.upgradablepackages = data;
       });
   }
 
@@ -265,22 +267,22 @@ setLicense() {
     this.headercls = '';
     const currenturl = this.router.url.split(';');
     const checkUrl = currenturl[0]; // this.curPgurl;
-   // return this.headercls;
-   for (const url of this.urls_class) {
-     if (url.url != null) {
-        const match = checkUrl.match(url.url) ;
+    // return this.headercls;
+    for (const url of this.urls_class) {
+      if (url.url != null) {
+        const match = checkUrl.match(url.url);
         if (match instanceof Array && match.length === 1) {
           this.headercls = url.class;
           // console.log('reached here', url.class);
         }
 
-     }
+      }
 
-   }
-   if (this.headercls === '') {
-        this.headercls = 'dashb';
-   }
-   // console.log('header class', this.headercls);
+    }
+    if (this.headercls === '') {
+      this.headercls = 'dashb';
+    }
+    // console.log('header class', this.headercls);
 
   }
   doSignup(origin?, moreOptions = {}) {
@@ -298,7 +300,7 @@ setLicense() {
       panelClass: ['signupmainclass', cClass],
       disableClose: true,
       data: {
-        is_provider : this.checkProvider(origin),
+        is_provider: this.checkProvider(origin),
         moreOptions: moreOptions
       }
     });
@@ -314,18 +316,18 @@ setLicense() {
       // cClass = 'commonpopupmainclass';
     }
     const dialogRef = this.dialog.open(LoginComponent, {
-       width: '50%',
-       panelClass: ['loginmainclass', cClass],
-       disableClose: true,
+      width: '50%',
+      panelClass: ['loginmainclass', cClass],
+      disableClose: true,
       data: {
-        type : origin,
-        is_provider : this.checkProvider(origin)
+        type: origin,
+        is_provider: this.checkProvider(origin)
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       // this.animal = result;
-     // console.log('returned', result);
+      // console.log('returned', result);
       if (result === 'showsignupfromlogin') {
         this.doSignup(origin);
       }
@@ -334,23 +336,23 @@ setLicense() {
   }
 
   checkProvider(type) {
-    return  (type === 'consumer') ? 'false' : 'true';
+    return (type === 'consumer') ? 'false' : 'true';
   }
 
   doLogout() {
-        // console.log('here');
+    // console.log('here');
     // this.router.navigate(['logout']);
     this.shared_functions.doLogout()
-    .then (
-      success =>  {
-        // console.log('logout succ');
-        this.router.navigate(['/home']);
-      },
+      .then(
+        success => {
+          // console.log('logout succ');
+          this.router.navigate(['/home']);
+        },
         error => {
           // console.log('logout fail');
-         // this.router.navigate(['/']);
+          // this.router.navigate(['/']);
         }
-    );
+      );
   }
   upgradeMembership() {
     console.log(this.router.url);
@@ -361,31 +363,31 @@ setLicense() {
     this.redirectto('inbox');
   }
 
-  redirectto (mod) {
+  redirectto(mod) {
     this.showmobileSubmenu = false;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     switch (mod) {
       case 'profile':
         this.router.navigate([usertype, 'profile']);
-      break;
+        break;
       case 'change-password':
         this.router.navigate([usertype, 'change-password']);
-      break;
+        break;
       case 'change-mobile':
         this.router.navigate([usertype, 'change-mobile']);
-      break;
+        break;
       case 'change-email':
         this.router.navigate([usertype, 'change-email']);
-      break;
+        break;
       case 'inbox':
         this.router.navigate([usertype, 'inbox']);
-      break;
+        break;
       case 'members':
         this.router.navigate([usertype, 'members']);
-      break;
+        break;
       case 'dashboard':
         this.router.navigate([usertype]);
-      break;
+        break;
     }
   }
   switchtoConsumer() {
@@ -393,19 +395,19 @@ setLicense() {
     const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
     // console.log('credentials', ynw.loginId, ynw.password);
     this.shared_service.ProviderLogout()
-         .subscribe(data => {
-            this.shared_functions.clearLocalstorage();
-            const post_data = {
-              'countryCode': '+91',
-              'loginId': ynw.loginId,
-              'password': ynw.password
-            };
-            this.shared_functions.consumerLogin(post_data);
-         },
-         error => {
-            // console.log(error);
-         }
-         );
+      .subscribe(data => {
+        this.shared_functions.clearLocalstorage();
+        const post_data = {
+          'countryCode': '+91',
+          'loginId': ynw.loginId,
+          'password': ynw.password
+        };
+        this.shared_functions.consumerLogin(post_data);
+      },
+        error => {
+          // console.log(error);
+        }
+      );
   }
   switchtoProvider() {
     const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
@@ -420,10 +422,10 @@ setLicense() {
         };
         this.shared_functions.providerLogin(post_data);
       },
-      error => {
-        // console.log(error);
-      }
-    );
+        error => {
+          // console.log(error);
+        }
+      );
   }
   createProviderAccount() {
     const ynw = this.shared_functions.getitemfromLocalStorage('ynw-user');
@@ -431,9 +433,9 @@ setLicense() {
     const lastname = ynw.lastName;
     const mobile = ynw.primaryPhoneNumber;
     const storage_Data = {
-        fname: firstname,
-        lname: lastname,
-        ph: mobile
+      fname: firstname,
+      lname: lastname,
+      ph: mobile
     };
     this.shared_functions.setitemonLocalStorage('ynw-createprov', storage_Data);
     this.shared_service.ConsumerLogout()
@@ -444,27 +446,27 @@ setLicense() {
           dataCreateProv: storage_Data
         };
         this.doSignup('provider', moreOptions);
-         this.router.navigate(['/']);
+        this.router.navigate(['/']);
       },
-      error => {
-        // console.log(error);
-      }
-    );
+        error => {
+          // console.log(error);
+        }
+      );
   }
 
   handlesearchClick(ob) {
-     this.searchclick.emit(ob);
+    this.searchclick.emit(ob);
   }
   getInboxUnreadCnt() {
     const usertype = this.ctype;
     this.shared_service.getInboxUnreadCount(usertype)
-      .subscribe (data => {
+      .subscribe(data => {
         this.inboxCntFetched = true;
         // console.log('inboxcnt', data);
         this.inboxUnreadCnt = data;
       },
-    error => {
-    });
+        error => {
+        });
   }
 
   gototop() {
@@ -480,10 +482,10 @@ setLicense() {
   }
 
   handleScroll(target) {
-   // if (this.data.moreOptions.scrollKey !== undefined) {
-      setTimeout(() => {
-        this.triggerScrollTo(target);
-        }, 200);
+    // if (this.data.moreOptions.scrollKey !== undefined) {
+    setTimeout(() => {
+      this.triggerScrollTo(target);
+    }, 200);
     // }
   }
   showHidemobileSubMenu() {
