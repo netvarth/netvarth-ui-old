@@ -15,7 +15,7 @@
                 <span *ngIf="open_filter === false" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
               </mat-expansion-panel-header>
               <div class="check_in_date end_date">
-                <label class="col-form-label" for="displayName">Date From</label>
+                <label class="col-form-label" for="displayName">{{date_from_cap}}</label>
                 <mat-form-field>
                   <input matInput [(ngModel)]="filter.from_date" [matDatepicker]="picker" (dateChange)="checkFilterDateMaxMin('from_date')"
                     [min]="filter_date_start_min" [max]="filter_date_start_max" autocomplete="off">
@@ -24,7 +24,7 @@
                 </mat-form-field>
               </div>
               <div class="check_in_date end_date">
-                <label class="col-form-label" for="displayName">Date To</label>
+                <label class="col-form-label" for="displayName">{{date_to_cap}}</label>
                 <mat-form-field>
                   <input matInput [(ngModel)]="filter.to_date" [matDatepicker]="picker1" (dateChange)="checkFilterDateMaxMin('to_date')"
                     [min]="filter_date_end_min" [max]="filter_date_end_max" autocomplete="off">
@@ -56,7 +56,7 @@
                   <th>{{time_period_cap}}</th>
                   <th>{{coup_use_cap}}</th>
                   <th>{{j_acc_cap}}</th>
-                  <th>Coupon Amount</th>
+                  <th>{{coupon_amt_cap}}</th>
                   <th>{{reimburse_amt_cap}}</th>
                   <th>{{status_cap}}</th>
                   <th></th>
@@ -75,9 +75,9 @@
                         </span>
                     </span>
                   </td>
-                  <td data-title={{j_acc_cap}}>{{report.subTotalJaldeeBank}}</td>
-                  <td data-title="Reimbursable Amount">{{report.subTotalJaldeeCoupons}}</td>
-                  <td data-title="Grant Total">{{report.grantTotal}}</td>
+                  <td data-title="Jaldee Bank">{{report.subTotalJaldeeBank}}</td>
+                  <td data-title="Coupon Amount">{{report.subTotalJaldeeCoupons}}</td>
+                  <td data-title="Reimbursable Amount">{{report.grantTotal}}</td>
                   <td data-title="Status">
                     {{report_statuses[report.status]}}
                   </td>
@@ -107,7 +107,7 @@
         </div>
         <ng-container>
           <div class="qlst no-dta" *ngIf="couponreport.length == 0">
-            No reports
+            {{no_reports_msg}}
           </div>
         </ng-container>
       </div>

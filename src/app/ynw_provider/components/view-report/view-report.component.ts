@@ -12,6 +12,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
   styleUrls: ['./view-report.component.css']
 })
 export class ViewReportComponent implements OnInit {
+  grant_total_cap = Messages.GRANT_TOTAL;
   report_id_cap = Messages.REPORT_ID_CAP;
   coupon_use_cap = Messages.COUP_USE_CAP;
   j_acc_cap = Messages.J_ACC_CAP;

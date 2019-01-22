@@ -15,6 +15,10 @@ import { from } from 'rxjs';
   styleUrls: ['./provider-reimburse-report.component.css']
 })
 export class ProviderReimburseReportComponent implements OnInit {
+  no_reports_msg = Messages.NO_REPORTS_MSG;
+  date_from_cap = Messages.DATE_FROM_CAP;
+  date_to_cap = Messages.DATE_TO_CAP;
+  coupon_amt_cap = Messages.REPORT_COUPON_AMT_CAP;
   status_cap = Messages.PRO_STATUS_CAP;
   all_cap = Messages.ALL_CAP;
   reimburse_report_cap = Messages.REIMBUSE_REPORT_CAP;
