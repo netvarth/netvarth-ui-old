@@ -11,11 +11,12 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 
 @Component({
-    selector: 'app-provider-subheader',
-    templateUrl: './provider-subheader.component.html',
-    // styleUrls: ['./home.component.scss']
+  selector: 'app-provider-subheader',
+  templateUrl: './provider-subheader.component.html',
+  // styleUrls: ['./home.component.scss']
 })
 
 
@@ -42,14 +43,18 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   ChkindialogRef;
 
   constructor(public dialog: MatDialog,
-  public provider_services: ProviderServices,
-  public shared_functions: SharedFunctions,
-  public routerobj: Router) {}
-
+    private provider_datastorage: ProviderDataStorageService,
+    public provider_services: ProviderServices,
+    public shared_functions: SharedFunctions,
+    public routerobj: Router) { }
+  normal_profile_active = 1;
+  normal_locationinfo_show = 1;
+  normal_basicinfo_show = 1;
   ngOnInit() {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     // this.getWaitlistMgr(); // hide becuause it called on every page change
+    this.dashClick();
   }
   ngOnDestroy() {
     // console.log('on destroy');
@@ -68,7 +73,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'checkin-provider'],
+      panelClass: ['commonpopupmainclass', 'checkin-provider'],
       disableClose: true,
       data: {
         source: source
@@ -89,7 +94,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
     this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
-      panelClass : ['commonpopupmainclass', 'checkin-provider'],
+      panelClass: ['commonpopupmainclass', 'checkin-provider'],
       disableClose: true,
       data: {
         search_data: search_data
@@ -105,22 +110,22 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   beforeCheckIn(user_data) {
 
     this.getProviderLocations()
-    .then(
-      result => {
-        this.getBprofile()
-        .then(
-          data => {
-            this.createCheckin(user_data);
-          },
-          error => {
+      .then(
+        result => {
+          this.getBprofile()
+            .then(
+              data => {
+                this.createCheckin(user_data);
+              },
+              error => {
 
-          }
-        );
-      },
-      error => {
+              }
+            );
+        },
+        error => {
 
-      }
-    );
+        }
+      );
 
   }
   createCheckin(user_data) {
@@ -129,18 +134,18 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     let selected_location = null;
 
     const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider home page
-    if ( cookie_location_id === '') {
+    if (cookie_location_id === '') {
       if (this.locations[0]) {
         selected_location = this.locations[0];
       }
     } else {
-       selected_location = this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
+      selected_location = this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
 
     }
 
     if (selected_location != null) {
       post_data['location'] = {
-        'id' :  selected_location['id'],
+        'id': selected_location['id'],
         'name': selected_location['place']
       };
 
@@ -153,9 +158,9 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       name: this.bprofile.businessName
     };
 
-    const  cdate = new Date();
-    const  mn = cdate.getMonth() + 1;
-    const  dy = cdate.getDate();
+    const cdate = new Date();
+    const mn = cdate.getMonth() + 1;
+    const dy = cdate.getDate();
     let mon = '';
     let day = '';
     if (mn < 10) {
@@ -175,75 +180,108 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
       disableClose: true,
-     data: {
-       type : 'provider',
-       is_provider : 'true',
-       customer_data: user_data,
-       moreparams: { source: 'provider_checkin',
-       bypassDefaultredirection: 1,
-       provider: post_data['provider'],
-       location: post_data['location'],
-       sel_date: curdate
-      },
-      datechangereq: true
-     }
-   });
-
-   this.ChkindialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-          this.reloadActionSubheader.emit(result);
+      data: {
+        type: 'provider',
+        is_provider: 'true',
+        customer_data: user_data,
+        moreparams: {
+          source: 'provider_checkin',
+          bypassDefaultredirection: 1,
+          provider: post_data['provider'],
+          location: post_data['location'],
+          sel_date: curdate
+        },
+        datechangereq: true
       }
-   });
+    });
+
+    this.ChkindialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.reloadActionSubheader.emit(result);
+      }
+    });
 
   }
 
   getWaitlistMgr() {
     this.provider_services.getWaitlistMgr()
-    .subscribe(
-      data => {
-        this.waitlist_set = data;
-      }
-    );
+      .subscribe(
+        data => {
+          this.waitlist_set = data;
+        }
+      );
   }
 
   getProviderLocations() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
       this.provider_services.getProviderLocations()
-      .subscribe(
-        data => {
-          this.locations = data;
-          resolve();
-        },
-        error => {
-          reject(error);
-        }
-      );
+        .subscribe(
+          data => {
+            this.locations = data;
+            resolve();
+          },
+          error => {
+            reject(error);
+          }
+        );
 
     });
 
   }
 
-  getBprofile() {
-    return new Promise( (resolve, reject) => {
-
-      this.provider_services.getBussinessProfile()
+  dashClick() {
+    this.bprofile = [];
+    this.provider_services.getBussinessProfile()
       .subscribe(
         data => {
           this.bprofile = data;
-          resolve();
+          this.provider_datastorage.set('bprofile', data);
+          if (this.bprofile.status === 'ACTIVE') {
+            this.normal_profile_active = 3;
+          } else {
+            this.normal_profile_active = 2;
+          }
+
+          this.normal_locationinfo_show = 2;
+          if (this.bprofile.baseLocation) {
+            if (this.bprofile.baseLocation.place === '') { // case if base location name is blank
+              this.normal_locationinfo_show = 4;
+            } else {
+              this.normal_locationinfo_show = 3;
+            }
+          }
         },
         error => {
-          reject(error);
+
         }
       );
+  }
+
+  dashboardErrMsg() {
+      this.shared_functions.openSnackBar('Business profile and Location is incomplete', { 'panelClass': 'snackbarerror' });
+  }
+
+  getBprofile() {
+    return new Promise((resolve, reject) => {
+
+      this.provider_services.getBussinessProfile()
+        .subscribe(
+          data => {
+            this.bprofile = data;
+            resolve();
+          },
+          error => {
+            reject(error);
+          }
+        );
 
     });
 
   }
 
 
-  selectLocationFromCookie (cookie_location_id) {
+  selectLocationFromCookie(cookie_location_id) {
     let selected_location = null;
     for (const location of this.locations) {
       if (location.id === cookie_location_id) {
@@ -256,33 +294,33 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   }
 
   learnmore_clicked(mod) {
-   /* const dialogRef = this.dialog.open(LearnmoreComponent, {
-          width: '50%',
-          panelClass: 'commonpopupmainclass',
-          autoFocus: true,
-          data: {
-              moreOptions : this.getMode(mod)
-          }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-        });*/
-        const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-        this.shared_functions.sendMessage(pdata);
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.shared_functions.sendMessage(pdata);
   }
   getMode(mod) {
     switch (mod) {
       case 'checkin':
-         this.moreOptions = {'show_learnmore': true , 'scrollKey': 'checkin'};
-      break;
+        this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'checkin' };
+        break;
       case 'customer':
-        this.moreOptions = {'show_learnmore': true , 'scrollKey': 'customer'};
-      break;
+        this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'customer' };
+        break;
       case 'kiosk':
-         this.moreOptions = {'show_learnmore': true , 'scrollKey': 'kiosk'};
-      break;
+        this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'kiosk' };
+        break;
       case 'help':
-        this.moreOptions = {'show_learnmore': true , 'scrollKey': 'help'};
-      break;
+        this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'help' };
+        break;
     }
     return this.moreOptions;
   }

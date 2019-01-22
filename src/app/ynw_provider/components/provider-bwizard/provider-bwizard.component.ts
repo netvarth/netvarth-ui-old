@@ -1,11 +1,11 @@
-import {Component, OnInit, ElementRef, Inject} from '@angular/core';
+import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Messages } from '../../../shared/constants/project-messages';
 
-import {HeaderComponent} from '../../../shared/modules/header/header.component';
+import { HeaderComponent } from '../../../shared/modules/header/header.component';
 import { AddProviderSchedulesComponent } from '../add-provider-schedule/add-provider-schedule.component';
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
 
@@ -18,8 +18,8 @@ import { ViewChild } from '@angular/core';
 import { MessageService } from '../../services/provider-message.service';
 
 @Component({
-    selector: 'app-provider-bwizard',
-    templateUrl: './provider-bwizard.component.html'
+  selector: 'app-provider-bwizard',
+  templateUrl: './provider-bwizard.component.html'
 })
 
 export class ProviderbWizardComponent implements OnInit {
@@ -92,7 +92,6 @@ export class ProviderbWizardComponent implements OnInit {
   locname_error = '';
   bProfile;
   address_error = '';
-
   gurl_error = '';
   error_Exists = false;
   schedule_exists = false;
@@ -100,7 +99,7 @@ export class ProviderbWizardComponent implements OnInit {
   checkin_label = '';
   multipeLocationAllowed = false;
   disablebuttonsInSchedule = false;
-
+  loc_exist = true;
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
@@ -116,14 +115,14 @@ export class ProviderbWizardComponent implements OnInit {
 
   ngOnInit() {
     this.wizard_data_holder = {
-                                'name': '',
-                                'summary': '',
-                                'lat': '',
-                                'lon': '',
-                                'address': '',
-                                'searchstatus': false,
-                                'accountstatus': ''
-                              };
+      'name': '',
+      'summary': '',
+      'lat': '',
+      'lon': '',
+      'address': '',
+      'searchstatus': false,
+      'accountstatus': ''
+    };
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
     const pdata = { 'ttype': 'updateuserdetails' };
     this.shared_functions.sendMessage(pdata);
@@ -147,7 +146,7 @@ export class ProviderbWizardComponent implements OnInit {
     this.loading_active = true;
     this.resetErrors();
     if (changetostep === 2) {
-     // this.ischange_schedule_clicked = false;
+      // this.ischange_schedule_clicked = false;
     } else if (changetostep === 4) {
       this.getSearchstatus();
     }
@@ -174,11 +173,11 @@ export class ProviderbWizardComponent implements OnInit {
       case 0:
         this.active_step = changetostep;
         this.loading_active = false;
-      break;
+        break;
       case 1:
         const post_itemdata1 = {
-            'businessName': this.wizard_data_holder.name || '' ,
-            'businessDesc': this.wizard_data_holder.summary || ''
+          'businessName': this.wizard_data_holder.name || '',
+          'businessDesc': this.wizard_data_holder.summary || ''
         };
 
         // adding the basic data to the submit_data
@@ -194,7 +193,7 @@ export class ProviderbWizardComponent implements OnInit {
               this.loading_active = false;
               // calling function which saves the business related details to show in the header
               const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
-             // console.log('subsector bprofile', subsectorname);
+              // console.log('subsector bprofile', subsectorname);
               this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], subsectorname, '');
               const pdata = { 'ttype': 'updateuserdetails' };
               this.shared_functions.sendMessage(pdata);
@@ -203,147 +202,127 @@ export class ProviderbWizardComponent implements OnInit {
               this.loading_active = false;
             }
           );
-      break;
+        break;
       case 2:
-          let latlon_Exists = false;
-          const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
-          const floatpattern = new RegExp(projectConstants.VALIDATOR_FLOAT);
-          const urlpattern = new RegExp(projectConstants.VALIDATOR_URL);
-          let latexists = false;
-          let lonexists = false;
-          // validating the fields if they are entered
-          if (this.wizard_data_holder.lon !== '' && this.wizard_data_holder.lon !== undefined) {
-            latlon_Exists = true;
-            const lon_validate = floatpattern.test(this.wizard_data_holder.lon);
-            latexists = true;
-            if (!lon_validate) {
-              this.error_Exists = true;
-              this.coord_error = 'Only number are allowed for GPS Coordinate';
-            }
-          }
-          if (this.wizard_data_holder.lat !== '' && this.wizard_data_holder.lat !== undefined) {
-            latlon_Exists = true;
-            lonexists = true;
-            const lat_validate = floatpattern.test(this.wizard_data_holder.lat);
-            if (!lat_validate) {
-              this.error_Exists = true;
-              this.coord_error = 'Only number are allowed for GPS Coordinate';
-            }
-          }
-          if (latlon_Exists) { // if lat or lan or both exist, then the location name is required
-            if (!latexists || !lonexists) {
-              this.error_Exists = true;
-              this.coord_error = 'Both coordinates are required';
-            }
-            if (this.wizard_data_holder.location === undefined) {
-              this.wizard_data_holder.location = '';
-            }
-            const locname_validate = blankpattern.test(this.wizard_data_holder.location);
-            // console.log('name check', locname_validate, this.wizard_data_holder.location);
-            if (locname_validate) {
-              this.error_Exists = true;
-              this.locname_error = 'Please enter the location name';
-             // console.log('iamhere');
-            }
+        let latlon_Exists = false;
+        const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
+        const floatpattern = new RegExp(projectConstants.VALIDATOR_FLOAT);
+        const urlpattern = new RegExp(projectConstants.VALIDATOR_URL);
+        let latexists = false;
+        let lonexists = false;
 
-            const addr_validate = blankpattern.test(this.wizard_data_holder.address);
-            if (addr_validate) {
-              this.error_Exists = true;
-              this.address_error = 'Please enter the address';
-            }
-            const mapurlexists_validate = blankpattern.test(this.wizard_data_holder.mapurl);
-            if (!mapurlexists_validate) {
-              const mapurl_validate = urlpattern.test(this.wizard_data_holder.mapurl);
-              if (!mapurl_validate) {
-                this.error_Exists = true;
-                this.gurl_error = 'Invalid Google map URL';
-              }
-            }
+        // validating the fields if they are entered
+        if (this.wizard_data_holder.lon !== '' && this.wizard_data_holder.lon !== undefined) {
+          latlon_Exists = true;
+          const lon_validate = floatpattern.test(this.wizard_data_holder.lon);
+          latexists = true;
+          if (!lon_validate) {
+            this.error_Exists = true;
+            this.coord_error = 'Only number are allowed for GPS Coordinate';
           }
-          if (this.error_Exists === true) {
-            this.loading_active = false;
-            return;
-          }
-        const post_itemdata2 = {
-           'baseLocation': {
-                              'place': this.wizard_data_holder.location || '',
-                              'longitude': this.wizard_data_holder.lon || '',
-                              'lattitude': this.wizard_data_holder.lat || '',
-                              'googleMapUrl': this.wizard_data_holder.mapurl || '',
-                             // 'pinCode': this.wizard_data_holder.pincode || '',
-                              'address': this.wizard_data_holder.address || '',
-                              'bSchedule': {
-                                   'timespec': {}
-                                }
-                              }
-          };
-
-          // Check whether atleast one schedule is added. If not setting the base schedule from constants to save it as the schedule for base location
-          if (this.schedule_arr.length === 0) {
-            // this.schedule_arr = projectConstants.BASE_SCHEDULE;
-            this.setDefaultSchedules();
-          }
-
-          // Preparing the respective json variable with the schedule details
-          this.schedule_json = [];
-          const cdate2 = new Date();
-          const mon2 = (cdate2.getMonth() + 1);
-          let month2 = '';
-          if (mon2 < 10) {
-            month2 = '0' + mon2;
-          }
-          const today2 = cdate2.getFullYear() + '-' + month2 + '-' + cdate2.getDate();
-          const save_schedule2 = this.shared_functions.prepareScheduleforSaving(this.schedule_arr);
-          for (const schedule of save_schedule2) {
-            this.schedule_json.push({
-              'recurringType': 'Weekly',
-              'repeatIntervals': schedule.daystr,
-              'startDate': today2,
-              'terminator': {
-                'endDate': '',
-                'noOfOccurance': ''
-              },
-              'timeSlots': [{
-                'sTime': schedule.stime,
-                'eTime': schedule.etime
-              }]
-            });
-          }
-          // assiging the schedule json to the object to save it
-          post_itemdata2.baseLocation.bSchedule.timespec = this.schedule_json;
-
-          this.provider_services.patchbProfile(post_itemdata2)
-            .subscribe(
-              data => {
-                this.setBprofile_to_object(data);
-                this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
-                this.loading_active = false;
-              },
-              error => {
-                this.loading_active = false;
-              }
-            );
-      break;
-      case 3:
-        let post_itemdata3;
-      // Check whether atleast one schedule is added
-      if (this.schedule_arr.length === 0) {
-        this.schedule_json = [];
-      } else {
-        this.schedule_json = [];
-        const cdate = new Date();
-        const mon = (cdate.getMonth() + 1);
-        let month = '';
-        if (mon < 10) {
-          month = '0' + mon;
         }
-        const today = cdate.getFullYear() + '-' + month + '-' + cdate.getDate();
-        const save_schedule = this.shared_functions.prepareScheduleforSaving(this.schedule_arr);
-        for (const schedule of save_schedule) {
+        if (this.wizard_data_holder.lat !== '' && this.wizard_data_holder.lat !== undefined) {
+          latlon_Exists = true;
+          lonexists = true;
+          const lat_validate = floatpattern.test(this.wizard_data_holder.lat);
+          if (!lat_validate) {
+            this.error_Exists = true;
+            this.coord_error = 'Only number are allowed for GPS Coordinate';
+          }
+        }
+
+        if (latlon_Exists) { // if lat or lan or both exist, then the location name is required
+          if (!latexists || !lonexists) {
+            this.error_Exists = true;
+            this.coord_error = 'Both coordinates are required';
+          }
+          if (this.wizard_data_holder.location === undefined) {
+            this.wizard_data_holder.location = '';
+          }
+
+          // console.log('name check', locname_validate, this.wizard_data_holder.location);
+          const locname_validate = blankpattern.test(this.wizard_data_holder.location);
+          if (locname_validate) {
+            this.error_Exists = true;
+            this.locname_error = 'Please enter the location name';
+            // console.log('iamhere');
+          }
+          const addr_validate = blankpattern.test(this.wizard_data_holder.address);
+          if (addr_validate) {
+            this.error_Exists = true;
+            this.address_error = 'Please enter the address';
+          }
+          const mapurlexists_validate = blankpattern.test(this.wizard_data_holder.mapurl);
+          if (!mapurlexists_validate) {
+            const mapurl_validate = urlpattern.test(this.wizard_data_holder.mapurl);
+            if (!mapurl_validate) {
+              this.error_Exists = true;
+              this.gurl_error = 'Invalid Google map URL';
+            }
+          }
+        }
+        if (!latlon_Exists) {
+          // console.log(this.loc_exist);
+          // // this.loc_exist = blankpattern.test(this.wizard_data_holder.location);
+          // console.log(blankpattern.test(this.wizard_data_holder.location));
+          // console.log(this.loc_exist);
+        
+
+          const locname_validate = blankpattern.test(this.wizard_data_holder.location);
+          console.log(locname_validate);
+          if (!locname_validate) {
+            this.error_Exists = true;
+            this.coord_error = 'Both coordinates are required';
+            // console.log('iamhere');
+          }
+        }
+
+        // const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
+
+        // if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
+        //   derror = 'Please enter a valid first name';
+        // }
+
+
+        if (this.error_Exists === true) {
+          this.loading_active = false;
+          return;
+        }
+        const post_itemdata2 = {
+          'baseLocation': {
+            'place': this.wizard_data_holder.location || '',
+            'longitude': this.wizard_data_holder.lon || '',
+            'lattitude': this.wizard_data_holder.lat || '',
+            'googleMapUrl': this.wizard_data_holder.mapurl || '',
+            // 'pinCode': this.wizard_data_holder.pincode || '',
+            'address': this.wizard_data_holder.address || '',
+            'bSchedule': {
+              'timespec': {}
+            }
+          }
+        };
+
+        // Check whether atleast one schedule is added. If not setting the base schedule from constants to save it as the schedule for base location
+        if (this.schedule_arr.length === 0) {
+          // this.schedule_arr = projectConstants.BASE_SCHEDULE;
+          this.setDefaultSchedules();
+        }
+
+        // Preparing the respective json variable with the schedule details
+        this.schedule_json = [];
+        const cdate2 = new Date();
+        const mon2 = (cdate2.getMonth() + 1);
+        let month2 = '';
+        if (mon2 < 10) {
+          month2 = '0' + mon2;
+        }
+        const today2 = cdate2.getFullYear() + '-' + month2 + '-' + cdate2.getDate();
+        const save_schedule2 = this.shared_functions.prepareScheduleforSaving(this.schedule_arr);
+        for (const schedule of save_schedule2) {
           this.schedule_json.push({
             'recurringType': 'Weekly',
             'repeatIntervals': schedule.daystr,
-            'startDate': today,
+            'startDate': today2,
             'terminator': {
               'endDate': '',
               'noOfOccurance': ''
@@ -354,51 +333,96 @@ export class ProviderbWizardComponent implements OnInit {
             }]
           });
         }
-      }
+        // assiging the schedule json to the object to save it
+        post_itemdata2.baseLocation.bSchedule.timespec = this.schedule_json;
 
-      post_itemdata3 = {
-        'baseLocation': {
-          'id' : this.wizard_data_holder.locid,
-          'bSchedule': {
-          'timespec': this.schedule_json
+        this.provider_services.patchbProfile(post_itemdata2)
+          .subscribe(
+            data => {
+              this.setBprofile_to_object(data);
+              this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
+              this.loading_active = false;
+            },
+            error => {
+              this.loading_active = false;
+            }
+          );
+        break;
+      case 3:
+        let post_itemdata3;
+        // Check whether atleast one schedule is added
+        if (this.schedule_arr.length === 0) {
+          this.schedule_json = [];
+        } else {
+          this.schedule_json = [];
+          const cdate = new Date();
+          const mon = (cdate.getMonth() + 1);
+          let month = '';
+          if (mon < 10) {
+            month = '0' + mon;
+          }
+          const today = cdate.getFullYear() + '-' + month + '-' + cdate.getDate();
+          const save_schedule = this.shared_functions.prepareScheduleforSaving(this.schedule_arr);
+          for (const schedule of save_schedule) {
+            this.schedule_json.push({
+              'recurringType': 'Weekly',
+              'repeatIntervals': schedule.daystr,
+              'startDate': today,
+              'terminator': {
+                'endDate': '',
+                'noOfOccurance': ''
+              },
+              'timeSlots': [{
+                'sTime': schedule.stime,
+                'eTime': schedule.etime
+              }]
+            });
           }
         }
-      };
-      // console.log('schedule save', post_itemdata3);
-      // this.loading_active = false;
 
-      // adding the schedule for the location
-      /* const blob_itemdata3 = new Blob([JSON.stringify(post_itemdata3)], { type: 'application/json' });
-      const submit_data3: FormData = new FormData();
-      submit_data3.append('data', blob_itemdata3);*/
-      // this.provider_services.createPrimaryFields(submit_data3)
-
-      this.provider_services.patchbProfile(post_itemdata3)
-        .subscribe(
-          data => {
-            this.setBprofile_to_object(data);
-            this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
-            this.loading_active = false;
-          },
-          error => {
-            this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
-            this.loading_active = false;
+        post_itemdata3 = {
+          'baseLocation': {
+            'id': this.wizard_data_holder.locid,
+            'bSchedule': {
+              'timespec': this.schedule_json
+            }
           }
-        );
-      break;
+        };
+        // console.log('schedule save', post_itemdata3);
+        // this.loading_active = false;
+
+        // adding the schedule for the location
+        /* const blob_itemdata3 = new Blob([JSON.stringify(post_itemdata3)], { type: 'application/json' });
+        const submit_data3: FormData = new FormData();
+        submit_data3.append('data', blob_itemdata3);*/
+        // this.provider_services.createPrimaryFields(submit_data3)
+
+        this.provider_services.patchbProfile(post_itemdata3)
+          .subscribe(
+            data => {
+              this.setBprofile_to_object(data);
+              this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
+              this.loading_active = false;
+            },
+            error => {
+              this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
+              this.loading_active = false;
+            }
+          );
+        break;
       case 4:
         this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
         this.loading_active = false;
-      break;
+        break;
       case 5:
         this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
         this.loading_active = false;
-      break;
+        break;
     }
   }
 
   wizardPageShowDecision(curstep, changetostep) {
-   // console.log('curpage', curstep);
+    // console.log('curpage', curstep);
     let changerequired = false;
     let changeid = -1;
     if (curstep === 2 && changetostep === 3) { // from location to schedule
@@ -408,18 +432,18 @@ export class ProviderbWizardComponent implements OnInit {
         changerequired = true;
         changeid = 5; // commented since ynw told that schedule page should be shown even if location details are blank
       }*/
-    } else  if (curstep === 3 && changetostep === 4) { // from schedule to search
-      if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon  === '' || this.wizard_data_holder.location === '' ||
-          this.wizard_data_holder.name === '' ) {
+    } else if (curstep === 3 && changetostep === 4) { // from schedule to search
+      if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon === '' || this.wizard_data_holder.location === '' ||
+        this.wizard_data_holder.name === '') {
         changerequired = true;
         changeid = 5;
       }
     } else if (curstep === 5 && changetostep === 4) { // from missing data to search
       this.loading_active = true;
       if (this.wizard_data_holder.name === '') { // if business name is blank, then take user to step 1
-       changerequired = true;
-       changeid = 1;
-      } else if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon  === '' || this.wizard_data_holder.location === '') {
+        changerequired = true;
+        changeid = 1;
+      } else if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon === '' || this.wizard_data_holder.location === '') {
         // if location basic details are missing, then take user to step 2
         changerequired = true;
         changeid = 2;
@@ -439,15 +463,15 @@ export class ProviderbWizardComponent implements OnInit {
 
   getBusinessProfile() {
     this.provider_services.getBussinessProfile()
-      .subscribe (data => {
+      .subscribe(data => {
         this.setBprofile_to_object(data);
         const tbprof = data;
         const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
-       // console.log('subsector bprofile', subsectorname);
+        // console.log('subsector bprofile', subsectorname);
         this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], subsectorname, '');
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
-        for (let i = 0; i < this.businessConfig.length ; i++) {
+        for (let i = 0; i < this.businessConfig.length; i++) {
           if (this.businessConfig[i].id === tbprof['serviceSector']['id']) {
             if (this.businessConfig[i].multipleLocation) {
               this.multipeLocationAllowed = true;
@@ -468,37 +492,37 @@ export class ProviderbWizardComponent implements OnInit {
     };
 
     if (obj.baseLocation) {
-        this.wizard_data_holder.locid = obj.baseLocation.id || '';
-        this.wizard_data_holder.lat =  obj.baseLocation.lattitude || '';
-        this.wizard_data_holder.lon =  obj.baseLocation.longitude || '';
-        this.wizard_data_holder.address = obj.baseLocation.address || '';
-        // this.wizard_data_holder.pincode =  obj.baseLocation.pinCode || '';
-        this.wizard_data_holder.location = obj.baseLocation.place || '';
-        this.wizard_data_holder.mapurl =  obj.baseLocation.googleMapUrl || '';
-        if (this.wizard_data_holder.mapurl === '' && this.wizard_data_holder.lat.trim() !== '' && this.wizard_data_holder.lon.trim !== '') {
-          this.wizard_data_holder.mapurl = projectConstants.MAP_BASE_URL + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + '/@' + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + ',15z';
-        }
+      this.wizard_data_holder.locid = obj.baseLocation.id || '';
+      this.wizard_data_holder.lat = obj.baseLocation.lattitude || '';
+      this.wizard_data_holder.lon = obj.baseLocation.longitude || '';
+      this.wizard_data_holder.address = obj.baseLocation.address || '';
+      // this.wizard_data_holder.pincode =  obj.baseLocation.pinCode || '';
+      this.wizard_data_holder.location = obj.baseLocation.place || '';
+      this.wizard_data_holder.mapurl = obj.baseLocation.googleMapUrl || '';
+      if (this.wizard_data_holder.mapurl === '' && this.wizard_data_holder.lat.trim() !== '' && this.wizard_data_holder.lon.trim !== '') {
+        this.wizard_data_holder.mapurl = projectConstants.MAP_BASE_URL + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + '/@' + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + ',15z';
+      }
 
-        if (obj.baseLocation.bSchedule.timespec) {
-          if (obj.baseLocation.bSchedule.timespec.length > 0) {
-            this.schedule_arr = [];
-          }
-          // extracting the schedule intervals
-          for (let i = 0; i < obj.baseLocation.bSchedule.timespec.length; i++) {
-            for (let j = 0; j < obj.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
-              // pushing the schedule details to the respective array to show it in the page
-              this.schedule_arr.push({
-                day: obj.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
-                sTime: obj.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
-                eTime: obj.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
-              });
-            }
+      if (obj.baseLocation.bSchedule.timespec) {
+        if (obj.baseLocation.bSchedule.timespec.length > 0) {
+          this.schedule_arr = [];
+        }
+        // extracting the schedule intervals
+        for (let i = 0; i < obj.baseLocation.bSchedule.timespec.length; i++) {
+          for (let j = 0; j < obj.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
+            // pushing the schedule details to the respective array to show it in the page
+            this.schedule_arr.push({
+              day: obj.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
+              sTime: obj.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
+              eTime: obj.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
+            });
           }
         }
       }
-      this.display_schedule = [];
-      this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
-   }
+    }
+    this.display_schedule = [];
+    this.display_schedule = this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
+  }
 
   skipMe() {
     this.redirecttoProfile();
@@ -511,7 +535,7 @@ export class ProviderbWizardComponent implements OnInit {
   handlesSaveschedule(obj) {
     // console.log('returned Schedule', obj);
     this.schedule_arr = obj;
-    this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
+    this.display_schedule = this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     this.disablebuttonsInSchedule = false;
     // this.ischange_schedule_clicked = false;
   }
@@ -538,52 +562,52 @@ export class ProviderbWizardComponent implements OnInit {
       panelClass: 'googlemainmappopup',
       disableClose: true,
       data: {
-        type : 'add',
-        passloc: {'lat': this.wizard_data_holder['lat'], 'lon': this.wizard_data_holder['lon']}
+        type: 'add',
+        passloc: { 'lat': this.wizard_data_holder['lat'], 'lon': this.wizard_data_holder['lon'] }
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result['status'] === 'selectedonmap') {
           if (result['map_point'].latitude) {
-          const mapurl = projectConstants.MAP_BASE_URL + result['map_point'].latitude + ',' + result['map_point'].longitude + '/@' + result['map_point'].latitude + ',' + result['map_point'].longitude + ',15z';
+            const mapurl = projectConstants.MAP_BASE_URL + result['map_point'].latitude + ',' + result['map_point'].longitude + '/@' + result['map_point'].latitude + ',' + result['map_point'].longitude + ',15z';
 
-          this.wizard_data_holder['lat'] = result['map_point'].latitude || null;
-          this.wizard_data_holder['lon'] = result['map_point'].longitude || null;
-          this.wizard_data_holder['address'] = result['address'] || null;
-         // this.wizard_data_holder['pincode'] = result['pincode'] || null;
-          this.wizard_data_holder['mapurl'] = mapurl || null;
-          if (!this.wizard_data_holder['address']) {
-            // console.log('no address');
-            if (this.document.getElementById('locaddress')) {
-              this.document.getElementById('locaddress').focus();
+            this.wizard_data_holder['lat'] = result['map_point'].latitude || null;
+            this.wizard_data_holder['lon'] = result['map_point'].longitude || null;
+            this.wizard_data_holder['address'] = result['address'] || null;
+            // this.wizard_data_holder['pincode'] = result['pincode'] || null;
+            this.wizard_data_holder['mapurl'] = mapurl || null;
+            if (!this.wizard_data_holder['address']) {
+              // console.log('no address');
+              if (this.document.getElementById('locaddress')) {
+                this.document.getElementById('locaddress').focus();
+              }
             }
           }
         }
       }
-    }
     });
   }
   getBusinessConfiguration() {
     this.shared_services.bussinessDomains()
-      .subscribe (data => {
+      .subscribe(data => {
         this.businessConfig = data;
-       // console.log('business config', this.businessConfig);
+        // console.log('business config', this.businessConfig);
         const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-       // console.log('bdata', bprof);
+        // console.log('bdata', bprof);
         if (bprof === null || bprof === undefined) {
-            const today = new Date();
-            const postdata = {
-              cdate: today,
-              bdata: this.businessConfig
-            };
-            this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+          const today = new Date();
+          const postdata = {
+            cdate: today,
+            bdata: this.businessConfig
+          };
+          this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
         }
         this.getBusinessProfile();
       },
-    error => {
+        error => {
 
-    });
+        });
   }
 
   getSearchstatus() {
@@ -601,7 +625,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   handle_searchstatus(status) {
-      const prevstat = this.search_status;
+    const prevstat = this.search_status;
     if (status === 'ENABLE') {
       if (this.search_status === 1) {
         return;
@@ -612,24 +636,24 @@ export class ProviderbWizardComponent implements OnInit {
       }
     }
     this.provider_services.updatePublicSearch(status)
-      .subscribe (data => {
-          if (status === 'ENABLE') {
-            this.wizard_data_holder['searchstatus'] = 1;
-            this.search_status = 1;
-          } else if (status === 'DISABLE') {
-            this.wizard_data_holder['searchstatus'] = 2;
-            this.search_status = 2;
-          }
+      .subscribe(data => {
+        if (status === 'ENABLE') {
+          this.wizard_data_holder['searchstatus'] = 1;
+          this.search_status = 1;
+        } else if (status === 'DISABLE') {
+          this.wizard_data_holder['searchstatus'] = 2;
+          this.search_status = 2;
+        }
       }, error => {
         if (status === 'ENABLE') {
-          this.shared_functions.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
         this.search_status = prevstat;
       });
   }
 
   redirecttoProfile() {
-   this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
+    this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
   }
 
   checkClose() {
@@ -637,19 +661,19 @@ export class ProviderbWizardComponent implements OnInit {
     let show_incomplete = false;
     const bname = (this.wizard_data_holder.name) ? this.wizard_data_holder.name.trim() : '';
     const lat = (this.wizard_data_holder.lat) ? this.wizard_data_holder.lat.trim() : '';
-    const lon = (this.wizard_data_holder.lon)  ? this.wizard_data_holder.lon.trim() : '';
+    const lon = (this.wizard_data_holder.lon) ? this.wizard_data_holder.lon.trim() : '';
     const lname = (this.wizard_data_holder.location) ? this.wizard_data_holder.location.trim() : '';
     const sch = this.schedule_arr.length;
-    if (bname === '')  {
+    if (bname === '') {
       show_incomplete = true;
     }
-    if (lat === '')  {
+    if (lat === '') {
       show_incomplete = true;
     }
-    if (lon === '')  {
+    if (lon === '') {
       show_incomplete = true;
     }
-    if (lname === '')  {
+    if (lname === '') {
       show_incomplete = true;
     }
     if (sch === 0 || sch === '') {
@@ -671,30 +695,30 @@ export class ProviderbWizardComponent implements OnInit {
 
   getgeneralBusinessSchedules() {
     this.provider_services.getgeneralBusinessSchedules()
-      .subscribe (data => {
+      .subscribe(data => {
         this.general_scheduleholder = data;
         this.general_schedule = [];
         for (let j = 0; j < this.general_scheduleholder.length; j++) {
           const obt_sch = this.general_scheduleholder[j];
-         // console.log('business', obt_sch[0].repeatIntervals);
-            for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
-              // pushing the schedule details to the respective array to show it in the page
-              for (let l = 0; l < obt_sch.timeSlots.length; l++) {
-                this.general_schedule.push({
-                    day: obt_sch.repeatIntervals[k],
-                    sTime: obt_sch.timeSlots[l].sTime,
-                    eTime: obt_sch.timeSlots[l].eTime
-                });
-              }
+          // console.log('business', obt_sch[0].repeatIntervals);
+          for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+            // pushing the schedule details to the respective array to show it in the page
+            for (let l = 0; l < obt_sch.timeSlots.length; l++) {
+              this.general_schedule.push({
+                day: obt_sch.repeatIntervals[k],
+                sTime: obt_sch.timeSlots[l].sTime,
+                eTime: obt_sch.timeSlots[l].eTime
+              });
             }
+          }
         }
         this.setDefaultSchedules();
-       // console.log('genschedule', this.general_schedule);
+        // console.log('genschedule', this.general_schedule);
         // console.log('arranged Schedule', this.shared_functions.arrageScheduleforDisplay(this.general_schedule));
       },
-      error => {
+        error => {
 
-      });
+        });
   }
 
   setDefaultSchedules() {
@@ -704,20 +728,20 @@ export class ProviderbWizardComponent implements OnInit {
       this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     }
     // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
-   // console.log('genschedule', this.general_schedule, 'gen sch length', this.general_schedule.length);
-   // console.log('display schedule', this.schedule_arr);
+    // console.log('genschedule', this.general_schedule, 'gen sch length', this.general_schedule.length);
+    // console.log('display schedule', this.schedule_arr);
   }
-    handlekeyup(mod) {
+  handlekeyup(mod) {
     switch (mod) {
       case 'locname_error':
         this.locname_error = '';
-      break;
+        break;
       case 'address_error':
         this.address_error = '';
-      break;
+        break;
       case 'coord_error':
         this.coord_error = '';
-      break;
+        break;
     }
   }
 }
