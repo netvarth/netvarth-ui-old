@@ -119,6 +119,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   no_social_media = Messages.NO_SOCIAL_MEDIA;
   name_cap = Messages.PRO_NAME_CAP;
   description_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
+  adword_maxcount=Messages.ADWORD_MAXCOUNT;
 
   checked = false;
   bProfile = null;

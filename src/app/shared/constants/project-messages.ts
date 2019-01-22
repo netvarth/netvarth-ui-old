@@ -86,10 +86,10 @@ export const Messages = {
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 400 characters',
 
   // Adwords
-  'ADWORD_LISTEMPTY': 'No adwords exists',
+  'ADWORD_LISTEMPTY': 'No AdWords exists',
   'ADWORD_CREATED': 'Adword added successfully',
-  'ADWORD_DELETE': 'Do you really want to remove the Adword [adword]?',
-  'ADWORD_DELETE_SUCCESS': 'Adword deleted successfully',
+  'ADWORD_DELETE': 'Do you really want to remove the AdWord [adword]?',
+  'ADWORD_DELETE_SUCCESS': 'AdWord deleted successfully',
   'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/addon for more benefits',
 
   // WaitlistManager
@@ -118,7 +118,7 @@ export const Messages = {
   'MESSAGE_SENT': 'Message sent successfully',
 
   // Dashboard
-  'ADD_DELAY': 'Delay has been added successfully',
+  'ADD_DELAY': 'Delay has been notified to your [customer]',
   'ADD_DELAY_TIME_ERROR': 'Please specify the delay',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to [status]',
@@ -172,13 +172,12 @@ export const Messages = {
   'PROVIDER_BILL_SETTLE_CONFIRM': 'Do you want to settle this bill?',
   'PROVIDER_ALERT_ACK_SUCC': 'Acknowledged Successfully',
   'CHECKIN_SUCC': 'You have [waitlisted] successfully',
-  'CHECKIN_SUCC_PRO' : '[customer] has been checked in successfully ',
   'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
   'CHECKIN_CANCELLED': '[waitlist] [cancelled] successfully',
   'PAYMENT_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CASH_PAYMENT': 'Visit provider to pay by cash',
-  'DISC_APPLY_ERR_MSG' : 'Discount already applied',
+
 
   // Consumer Dashboard
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
@@ -199,25 +198,25 @@ export const Messages = {
   'PAYMENT_TOOLTIP': 'View and edit online payment setings and tax settings',
   'BILLPOS_TOOLTIP': 'Add items, discounts, coupons',
   'ADDON_TOOLTIP': 'Buy available add-ons',
-  'ADDWORD_TOOLTIP': 'Buy adwords here',
+  'ADDWORD_TOOLTIP': 'Buy AdWords here',
   'MOREOPTIONS_TOOLTIP': 'More Search Options',
   'CURRENTCHECKINS_TOOLTIP': 'Your check-ins',
   'FAVORITE_TOOLTIP': 'Your favourite providers',
   'HISTORY_TOOLTIP': 'Your past check-ins',
   'COMM_TOOPTIP': 'Send messages to your provider here',
   'REF_TOOPTIP': 'Show/hide refined search',
-  'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee',
-  'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee',
+  'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee.com',
+  'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee.com',
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
   'QUEUENAME_TOOLTIP': 'Click here to edit the Service Time-Window',
-  'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with the delay time or you can type your own message here',
+  'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION': 'Next Available Time',
   'APPX_WAIT_TIME_CAPTION': 'Appox Waiting Time',
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
   'CHECKIN_TIME_CAPTION': 'Est Service Time',
-  'PREPAYMENT_ERROR': 'Prepayment for this service no more accepted.',
+  'PREPAYMENT_ERROR': 'Sorry! Please try again.',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
 
   // General
@@ -416,7 +415,7 @@ export const Messages = {
 
   // App-shared-components-set-password-form
   'NEW_PASSWORD_CAP': 'New Password *',
-  'PASSWORD_VALID_CAP': 'Use minimum 8 characters with atleast one uppercase, lowercase and number',
+  'PASSWORD_VALID_CAP': 'Atleast one uppercase, one number and minimum 8 characters',
   'RE_ENTER_PASSWORD_CAP': 'Re-enter Password *',
   'SUBMIT_CAP': 'Submit',
 
@@ -593,8 +592,8 @@ export const Messages = {
   'NO_UPGRADE_ADDONS_FOUND_CAP': 'Sorry no upgradable addons found.',
 
   // App-ynw_provider-components-add-provider-bprofile-search-adwords
-  'ADD_ADWORD_CAP': 'Add Adword',
-  'ADWORD_CAP': 'Adword',
+  'ADD_ADWORD_CAP': 'Add AdWord',
+  'ADWORD_CAP': 'AdWord',
 
   // App-ynw_provider-components-add-provider-bprofile-specializations
   'SPECIALIZATIONS_CAP': 'Specializations',
@@ -732,7 +731,7 @@ export const Messages = {
   'BPROFILE_SET_UP_CAP': 'We recommend you to set up the',
   'BPROFILE_SUMMARY_CAP': 'Profile Name and Description',
   'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn ON the Public Search',
-  'BPROFILE_CURRENT_STATUS': '',
+  'BPROFILE_CURRENT_STATUS': 'Current Status',
   'BPROFILE_ON_CAP': 'On',
   'BPROFILE_OFF_CAP': 'Off',
   'BPROFILE_VISIBILITY_CAP': 'Your profile is visible to',
@@ -740,11 +739,11 @@ export const Messages = {
   'BPROFILE_OFFLINE_CAP': 'You are offline. Turn ON public search to make your profile visible to',
   'BPROFILE_TURN_OFF': 'Turn Off',
   'BPROFILE_TURN_ON': 'Turn On',
-  'BPROFILE_ADWORDS_CAP': 'Adwords',
-  'BPROFILE_BUY_ADWORDS_CAP': 'Currently you did not have any adwords. Would you like to buy adwords?',
-  'BPROFILE_BUY_ADWORD_BTN': 'Buy Adwords',
-  'BPROFILE_CREATE_ADWORD_CAP': 'adword(s), you can create',
-  'BPROFILE_MOR_ADOWRDS_CAP': 'adword(s). To add more adwords, go to',
+  'BPROFILE_ADWORDS_CAP': 'AdWords',
+  'BPROFILE_BUY_ADWORDS_CAP': 'Currently you did not have any AdWords. Would you like to buy AdWords?',
+  'BPROFILE_BUY_ADWORD_BTN': 'Buy AdWords',
+  'BPROFILE_CREATE_ADWORD_CAP': 'AdWord(s), you can create',
+  'BPROFILE_MOR_ADOWRDS_CAP': 'AdWord(s). To add more AdWords, go to',
   'BPROFILE_LICENSE_INVOICE_CAP': 'License & Invoice',
   'BPROFILE_HAVE_NOT_ADD_CAP': 'You haven\'t added any',
   'BPROFILE_BASIC_INFORMATION_CAP': 'Basic Information',
@@ -815,7 +814,7 @@ export const Messages = {
   'CHART_CAP': 'Chart',
 
   // App-ynw_provider-components-provider-coupons
-  'REPORTS_CAP': 'Reimbursement Reports',
+  'REPORTS_CAP': 'Reports',
   'VALID_FROM_CAP': 'Valid From',
   'VALID_TO_CAP': 'Valid To',
   'CONSUM_APPLY_CAP': 'consumers# applied',
@@ -840,12 +839,11 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
-  'SERV_PERIOD_CAP': 'Billing Period',
+  'SERV_PERIOD_CAP': 'Service Period',
   'GATEWAY_CAP': 'Payment Gateway',
   'PAYMENT_CAP': 'Payment',
   'ID_CAP': 'Id',
   'REF_ID_CAP': 'Ref Id',
-  'SUBSC_PACKAGE' : 'Subscription/Package',
 
   // App-ynw_provider-components-provider-license
   'CURRENT_PACKAGE_CAP': 'Your current License Package is',
@@ -858,9 +856,6 @@ export const Messages = {
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
   'NO_ADDON_CAP': 'No addons exists',
-  'BILLIN_CAP' : 'Billing ',
-  'PAY_BUTTON' : 'Invoices to pay',
-  'DUE_DATE_CAP' : 'Due date',
 
   // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
@@ -993,9 +988,9 @@ export const Messages = {
   'PRI_MAIL_ID_IS_VISIBLE_TO_CAP' : 'This email is visible to',
 
   // App-ynw_provider-components-provider-bprofile-search-adwords
-  'SEARCH_ADWORDS_CAP' : 'Adwords',
+  'SEARCH_ADWORDS_CAP' : 'AdWords',
   'SEARCH_SORRY_CAP' : 'Sorry!',
-  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG' : 'Currently you do not have any adwords. Please upgrade your Licence Package/Add-On',
+  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG' : 'Currently you do not have any AdWords. Please upgrade your Licence Package/Add-On',
 
   // App-ynw_provider-components-provider-bprofile-search-gallery
   'SEARCH_GALLERY_CAP' : 'Gallery',
@@ -1187,5 +1182,7 @@ export const Messages = {
   // App-shared-components-set-password-form
   'SET_PASSWORD_MSG' : 'Congratulations! You have become Jaldee partner! Please set your password to continue sign up process.',
   'PASSWORD_ERR_MSG' : 'You haven\'t set your password. Next time you want to go through forgot password',
+  'ADWORD_ERRMSG': 'Please enter adword',
+  'ADWORD_MAXCOUNT' : 'Upgrade your License package to Gold or Diamond for free AdWords. You can also purchase AdWords as Add ons',
 };
 
