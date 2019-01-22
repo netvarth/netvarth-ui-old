@@ -259,7 +259,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   }
 
   dashboardErrMsg() {
-      this.shared_functions.openSnackBar('Business profile and Location is incomplete', { 'panelClass': 'snackbarerror' });
+      this.shared_functions.openSnackBar('You haven\'t added any Basic Information and Location & Working Hours', { 'panelClass': 'snackbarerror' });
   }
 
   getBprofile() {

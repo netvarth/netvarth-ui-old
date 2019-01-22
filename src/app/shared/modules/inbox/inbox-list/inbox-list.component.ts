@@ -1,8 +1,8 @@
 
-import {interval as observableInterval,  Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { interval as observableInterval, Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 
@@ -49,14 +49,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
   @Input() fromsource: any;
   @Output() reloadApi = new EventEmitter<any>();
 
-  constructor( private inbox_services: InboxServices,
+  constructor(private inbox_services: InboxServices,
     private router: Router, private dialog: MatDialog,
-    private shared_functions: SharedFunctions) {}
+    private shared_functions: SharedFunctions) { }
 
   ngOnInit() {
 
     if (this.fromsource === 'provider_checkin_detail' ||
-    this.fromsource === 'consumer_checkin_detail' ) {
+      this.fromsource === 'consumer_checkin_detail') {
       this.hide_reply_button = true;
     } else {
       this.hide_reply_button = false;
@@ -66,15 +66,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
 
     if (this.usertype === 'provider') {
       this.inbox_services.getBussinessProfile()
-      .subscribe(
-        (data: any) => {
-          this.user_id = data.id;
-          this.loading = false;
-        },
-        error => {
-          this.loading = false;
-        }
-      );
+        .subscribe(
+          (data: any) => {
+            this.user_id = data.id;
+            this.loading = false;
+          },
+          error => {
+            this.loading = false;
+          }
+        );
     } else {
       const userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
       this.user_id = userDet.id;
@@ -89,7 +89,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.cronHandle) {
-     this.cronHandle.unsubscribe();
+      this.cronHandle.unsubscribe();
     }
     if (this.msgdialogRef) {
       this.msgdialogRef.close();
@@ -104,7 +104,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     let source = this.usertype + '-';
     if (message.waitlistId) {
       source = source + 'waitlist';
-      pass_ob['uuid'] = message.waitlistId;
+      pass_ob['uuid'] = 'h_' + message.waitlistId;
     } else {
       source = source + 'common';
     }
