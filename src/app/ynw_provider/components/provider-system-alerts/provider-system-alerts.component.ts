@@ -39,6 +39,9 @@ export class ProviderSystemAlertComponent implements OnInit {
     holdalertSelAck = '';
     holdalertSeldate = '';
 
+    filterapplied ;
+    
+
     alertStatus = 1;
     startpageval;
     totalCnt;
@@ -111,6 +114,19 @@ export class ProviderSystemAlertComponent implements OnInit {
         });
     }
 
+    clearFilter() {
+      this.resetFilter();
+      
+      this.do_search(false);
+      this.filterapplied = false;
+    
+    }
+    resetFilter(){
+      this.alertSeldate = '';   
+      this.alertSelAck = 'false';
+      this.holdalertSeldate = null;  
+    }
+
     goback() {
       this.locationobj.back();
     }
@@ -142,6 +158,8 @@ export class ProviderSystemAlertComponent implements OnInit {
         } else {
           this.getAlertList(this.holdalertSelAck || '', seldate);
         }
+        this.filterapplied = true;
+
       // }
     }
     handle_pageclick(pg) {

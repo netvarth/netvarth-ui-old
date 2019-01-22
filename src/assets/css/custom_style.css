@@ -756,6 +756,9 @@ padding: 5px 5px 5px 10px !important;
 .mgn-bt-10 {
   margin-bottom:10px !important;
 }
+.mgn-bt-5 {
+  margin-right:5px !important;
+}
 .mgn-up-10 {
   margin-top:10px !important;
 }
@@ -879,7 +882,10 @@ Overriding mat input style
 .signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container, .loginmainclass,
 .ynw-common-form .mat-dialog-container{
   width: 400px !important;
-} 
+}
+.smallform .mat-dialog-container{
+  width: 500px !important;
+}
  .signup-form .mat-form-field-label, 
  .login-form .mat-form-field-label,
  .ynw-common-form .mat-form-field-label,
@@ -1078,4 +1084,7 @@ Overriding mat input style
 }
 .pay-det-row{
   margin: 10px 0 10px 0;
+}
+.alrt button {
+  margin-top: 25px !important;
 }

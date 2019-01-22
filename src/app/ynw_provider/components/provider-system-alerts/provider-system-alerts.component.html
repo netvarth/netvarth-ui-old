@@ -3,24 +3,24 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-    <div class="content comn-cls">
+    <div class="content ynw-common-form-nm">
         <div class="container">
             <div class="row">
                 <div class="card">
                     <div class="logfil-outer">
                         <div class="formgroup-outer">
-                            <div class="form-group">
-                                <label class="col-form-label">{{acknow_status_cap}}</label>
+                            <div class="row">
+                            <div class="form-group col-md-3  col-sm-6 col-lg-3" >
                                 <mat-form-field>
-                                    <mat-select [(ngModel)]="alertSelAck" name="catg">
+                                    <mat-select placeholder="{{acknow_status_cap}}" [(ngModel)]="alertSelAck" name="catg">
                                         <mat-option value=""> {{any_cap}}</mat-option>
                                         <mat-option value="true">{{acknowledged_cap}}</mat-option>
                                         <mat-option value="false">{{not_acknowledged_cap}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="form-group col-md-2">
-                                <label for="reason" class="col-form-label">{{select_date_cap}}</label>
+                            <div class="form-group col-md-2 col-sm-4 col-lg-2">
+                                
                                 <!-- <div class="pickerouter">
                          <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                           <input class="form-control1" name="alert-datepicker" [(ngModel)]="alertSeldate" [value]="alertSeldate" type="text"
@@ -34,16 +34,21 @@
                             </div> -->
                                 <mat-form-field>
                                     <input matInput [matDatepicker]="picker" name="alert-datepicker" [(ngModel)]="alertSeldate"
-                                        [value]="alertSeldate" type="text" autocomplete="off" placeholder="Choose a date"
+                                        [value]="alertSeldate" type="text" autocomplete="off" placeholder="{{select_date_cap}}"
                                         [max]="tday">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                 </mat-form-field>
                             </div>
+                            <div class="form-group col-md-7 col-sm-12 alrt"><button type="button" class="cs-btn bt3 mgn-bt-5" (click)="do_search(false)">{{search_cap}}</button>
+                                <button class="cs-btn bt3" *ngIf="filterapplied" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonclearTooltip">Clear</button>
+                            </div>
                         </div>
-                        <div class="actions-div">
-                            <button type="button" class="cs-btn bt1 mat-button" (click)="do_search(false)">{{search_cap}}</button>
                         </div>
+                        <!-- <div class="actions-div">
+                           
+                        </div> -->
+                              
                     </div>
                     <div class="audit">
                         <div class="table-outer d-tbl">
