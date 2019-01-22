@@ -590,6 +590,8 @@ export const Messages = {
   'ADDONS_CAP': 'Addons *',
   'SELECT_ONE_CAP': '- Select One -',
   'NO_UPGRADE_ADDONS_FOUND_CAP': 'Sorry no upgradable addons found.',
+  'DATE_APPLY_CAP' : 'Date Applied',
+  'ADD_ON_HISTORY' : 'Add-on History',
 
   // App-ynw_provider-components-add-provider-bprofile-search-adwords
   'ADD_ADWORD_CAP': 'Add AdWord',
@@ -898,6 +900,10 @@ export const Messages = {
   'REQ_PAYMENT_CAP': 'Request for payment',
   'SCCESS_MSG' : 'Requested Successfully',
   'ERROR_MSG' : 'Failed',
+  'NO_REPORTS_MSG' : 'No reports',
+  'GRANT_TOTAL' : 'Grant Total',
+  'DATE_FROM_CAP' : 'Date From',
+  'DATE_TO_CAP' : 'Date To',
 
   // App-ynw_provider-components-provider-settings
   'WAITLIST_MANAGE_CAP': 'Waitlist Manager',
