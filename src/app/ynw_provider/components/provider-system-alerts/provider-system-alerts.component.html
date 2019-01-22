@@ -40,6 +40,7 @@
                                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                 </mat-form-field>
                             </div>
+                            
                             <div class="form-group col-md-7 col-sm-12 alrt"><button type="button" class="cs-btn bt3 mgn-bt-5" (click)="do_search(false)">{{search_cap}}</button>
                                 <button class="cs-btn bt3" *ngIf="filterapplied" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonclearTooltip">Clear</button>
                             </div>
