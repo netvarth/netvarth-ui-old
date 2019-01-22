@@ -815,7 +815,7 @@ export const Messages = {
   'CHART_CAP': 'Chart',
 
   // App-ynw_provider-components-provider-coupons
-  'REPORTS_CAP': 'Reports',
+  'REPORTS_CAP': 'Reimbursement Reports',
   'VALID_FROM_CAP': 'Valid From',
   'VALID_TO_CAP': 'Valid To',
   'CONSUM_APPLY_CAP': 'consumers# applied',

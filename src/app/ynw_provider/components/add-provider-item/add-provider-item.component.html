@@ -98,8 +98,8 @@
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
     {
-      'required' : 'Please enter valid price.',
-      'pattern' : 'Please enter the price',
+      'required' : 'Please enter the price.',
+      'pattern' : 'Please enter valid price',
       'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
     })">
             </app-field-error-display>

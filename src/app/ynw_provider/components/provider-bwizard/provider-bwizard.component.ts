@@ -159,7 +159,8 @@ export class ProviderbWizardComponent implements OnInit {
           this.document.getElementById('bnameId').focus();
         }
       }, 1000);
-    } else if (changetostep === 2) {
+    } 
+    else if (changetostep === 2) {
       setTimeout(() => {
         if (this.document.getElementById('blatId')) {
           this.document.getElementById('blatId').focus();
@@ -262,27 +263,12 @@ export class ProviderbWizardComponent implements OnInit {
           }
         }
         if (!latlon_Exists) {
-          // console.log(this.loc_exist);
-          // // this.loc_exist = blankpattern.test(this.wizard_data_holder.location);
-          // console.log(blankpattern.test(this.wizard_data_holder.location));
-          // console.log(this.loc_exist);
-        
-
           const locname_validate = blankpattern.test(this.wizard_data_holder.location);
-          console.log(locname_validate);
           if (!locname_validate) {
             this.error_Exists = true;
             this.coord_error = 'Both coordinates are required';
-            // console.log('iamhere');
           }
         }
-
-        // const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
-
-        // if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
-        //   derror = 'Please enter a valid first name';
-        // }
-
 
         if (this.error_Exists === true) {
           this.loading_active = false;

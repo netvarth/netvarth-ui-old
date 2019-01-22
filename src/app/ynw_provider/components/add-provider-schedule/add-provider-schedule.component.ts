@@ -175,13 +175,13 @@ update_btn = Messages.UPDATE_BTN;
                           };
           // const etime =  moment(sch.eTime, ['h:mm A']).format('HH:mm');
           // // console.log('obtained', this.dstart_time, stime, etime, this.dend_time);
-            if ((this.sharedfunctionObj.getminutesOfDay(this.dstart_time) >= this.sharedfunctionObj.getminutesOfDay(stime))
-                && (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) <= this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start time within the existing range
+            if ((this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(stime))
+                && (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) < this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start time within the existing range
                 this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday)) ;
                 return;
             }
-            if ((this.sharedfunctionObj.getminutesOfDay(this.dend_time) >= this.sharedfunctionObj.getminutesOfDay(stime))
-                && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) <= this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current end time within the existing range
+            if ((this.sharedfunctionObj.getminutesOfDay(this.dend_time) > this.sharedfunctionObj.getminutesOfDay(stime))
+                && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) < this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current end time within the existing range
               this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday)) ;
               return;
             }

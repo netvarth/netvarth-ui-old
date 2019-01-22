@@ -188,6 +188,7 @@ export class AddProviderItemComponent implements OnInit {
         .subscribe(
           data => {
             this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
+            this.api_error = null;
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);

@@ -22,7 +22,7 @@
                     <a routerLink="/" [class.active]="activeTab=='dashboard'"><i data-icon="w"></i>
                         {{dashboard_cap}}</a></span>
                 <span *ngIf="normal_profile_active==2 || normal_locationinfo_show==4">
-                    <a (click)="dashboardErrMsg()"><i data-icon="w"></i>
+                    <a (click)="dashboardErrMsg()" class="pointer-cursor"><i data-icon="w"></i>
                         {{dashboard_cap}}</a></span>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 nav01"><a routerLink="/provider/customers" [class.active]="activeTab=='customers'"><i

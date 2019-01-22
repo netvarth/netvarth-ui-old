@@ -277,7 +277,7 @@ export const projectConstants = {
     { name: 'ADD', dispName: 'Add' },
     { name: 'DELETE', dispName: 'Delete' },
     { name: 'EDIT', dispName: 'Edit' },
-    { name: 'COPY', dispName: 'Copy' },
+    // { name: 'COPY', dispName: 'Copy' },
     { name: 'VIEW', dispName: 'View' }
   ],
   ALERT_CNT: 10,
