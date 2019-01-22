@@ -72,11 +72,14 @@ export class SetPasswordFormComponent implements OnInit {
   }
 
   keyPressed(ev) {
-    this.isValidConfirm_pw = this.fed_service.isFieldValid(this.spForm, 'confirm_password');
     if (ev.keyCode === 13) {
+      this.isValidConfirm_pw = this.fed_service.isFieldValid(this.spForm, 'confirm_password');
+      console.log(this.spForm.valid);
       if (this.spForm.valid) {
         this.doOnPasswordSubmit(this.spForm.value);
       }
+    } else {
+      this.resetError(ev);
     }
   }
 
