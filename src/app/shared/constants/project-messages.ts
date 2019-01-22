@@ -856,6 +856,9 @@ export const Messages = {
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
   'NO_ADDON_CAP': 'No addons exists',
+  'PAY_BUTTON' : 'Invoices to Pay',
+  'DUE_DATE_CAP' : 'Due Date',
+  'SUBSC_PACKAGE' : 'Subscription/Package',
 
   // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
@@ -868,6 +871,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-payment-history
   'NO_TRANSACTION': 'No transactions done yet',
+  'BILLIN_CAP' : 'Billing',
 
   // App-ynw_provider-components-provider-profile
   'PROFILE_CAP': 'Profile',

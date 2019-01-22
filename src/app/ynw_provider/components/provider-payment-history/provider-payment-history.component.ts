@@ -26,7 +26,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   no_transaction = Messages.NO_TRANSACTION;
   payment_cap = Messages.PAYMENT_CAP;
   paid_cap = Messages.CHECK_DET_PAID_CAP;
-  billing_cap = Messages.BILLIN_CAP
+  billing_cap = Messages.BILLIN_CAP;
   payment_history: any = [];
   load_complete = 0;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;

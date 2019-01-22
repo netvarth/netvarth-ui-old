@@ -67,7 +67,6 @@
                 <input matInput type="text" class="form-control" id="shortDesc" placeholder="{{short_desc_cap}} *"
                     formControlName="shortDesc" autocomplete="off">
             </mat-form-field>
-            <!-- <textarea class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc"></textarea> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDesc',
     {
       'required' : 'Please enter the short description',
@@ -77,9 +76,8 @@
         </div>
 
         <div class="form-group">
-            <!-- <label class="col-form-label" for="displayDesc">{{detailed_dec_cap}} *</label> -->
             <mat-form-field>
-                <textarea matInput class="form-control" id="shortDesc" placeholder="Detailed Description *" formControlName="displayDesc" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"></textarea>
+                <textarea matInput class="form-control" id="shortDesc" placeholder="{{detailed_dec_cap}} *" formControlName="displayDesc" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"></textarea>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
     {
