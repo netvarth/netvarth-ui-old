@@ -841,7 +841,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
-  'SERV_PERIOD_CAP': 'Service Period',
+  'SERV_PERIOD_CAP': 'Billing Period',
   'GATEWAY_CAP': 'Payment Gateway',
   'PAYMENT_CAP': 'Payment',
   'ID_CAP': 'Id',
@@ -891,7 +891,7 @@ export const Messages = {
   'PLEASE_WAIT': 'Please wait',
 
   // App-ynw_provider-components-provider-reimburse-report
-  'REIMBUSE_REPORT_CAP': 'Reimbursement Report',
+  'REIMBUSE_REPORT_CAP': 'Reimbursement Reports',
   'REPORT_ID_CAP': 'Report Id',
   'TIME_PERIOD_CAP': 'Time Period',
   'COUP_USE_CAP': 'Coupons Used',

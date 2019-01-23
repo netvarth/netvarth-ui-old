@@ -24,7 +24,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   jCouponCode_Cap = Messages.JCOUPON_CODE;
   edit_btn = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
-  reports_cap = Messages.REPORTS_CAP;
+  reports_cap = Messages.REIMBUSE_REPORT_CAP;
   valid_from_cap = Messages.VALID_FROM_CAP;
   valid_to_cap = Messages.VALID_TO_CAP;
   consumers_apply_cap = Messages.CONSUM_APPLY_CAP;
