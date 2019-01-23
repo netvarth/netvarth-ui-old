@@ -1091,3 +1091,4 @@ Overriding mat input style
 .side-menu .icon-jal-coupon, .side-menu .icon-first-coup {
   padding-left:20px !important;
 }
+.picker-form-group input {height: 40px;}

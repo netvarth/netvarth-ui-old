@@ -742,7 +742,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
     } else if (this.kwtyp === 'kwphrase') {
       // let phrase = this.kw.replace('/', '');
-      phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' + ' specialization_displayname:\'' + this.kw + '\''
+      phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' +  ' sub_sector:\'' + this.kw.toLowerCase() + '\'' + ' specialization:\'' + this.kw.toLowerCase() + '\'' +
+       ' specialization_displayname:\'' + this.kw + '\''
       + ' title:\'' + this.kw + '\'' + ' services:\'' + this.kw + '\'' + ' qualification:\'' + this.kw + '\''  + ' adwords:\'' + this.kw + '\')';
       // phrase = phrase.replace(/'/g, '\\\'');
       // phrasestr = ' (phrase \'' + phrase + '\') ';
