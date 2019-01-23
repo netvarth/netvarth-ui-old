@@ -292,10 +292,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   handleNormalSearchClick() {
     this.moreoptions_arr = [];
     this.showmoreoptionsSec = false;
-    if (this.holdisplaylist['label'].length !== 0) {
-      this.setKeyword(this.holdisplaylist['label'][0]);
-    } else {
+    if (!this.kw_autoname || this.kw_autoname.trim() === '') {
       this.do_search(null, true);
+    } else if (this.holdisplaylist['label'].length !== 0) {
+      this.setKeyword(this.holdisplaylist['label'][0]);
     }
   }
 

@@ -195,7 +195,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // setTimeout(() => {
     //   window.scrollTo(0, scrolltop);
     //  }, 3200);
-
+  }
+  stringToInt(stringVal) {
+    return parseInt(stringVal, 0);
   }
   ngOnDestroy() {
     if (this.checkindialogRef) {

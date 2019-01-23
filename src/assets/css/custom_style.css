@@ -1088,3 +1088,6 @@ Overriding mat input style
 .alrt button {
   margin-top: 25px !important;
 }
+.side-menu .icon-jal-coupon, .side-menu .icon-first-coup {
+  padding-left:20px !important;
+}

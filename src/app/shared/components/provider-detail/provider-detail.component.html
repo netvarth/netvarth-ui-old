@@ -109,9 +109,9 @@
                                 <!-- <div [class.femaleicon]="genderType=='female'" [class.maleicon]="genderType=='male'" *ngIf="genderType"></div> -->
                                 <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
-                                    <li *ngIf="isfirstCheckinOffer"><span class="pointer-cursor" (click)="openCoupons('first')">FirstTimeSignup
+                                    <li *ngIf="isfirstCheckinOffer"><i class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor" (click)="openCoupons('first')">FirstTimeSignup
                                             Coupon</span></li>
-                                    <li><span class="pointer-cursor" (click)="openCoupons()">Jaldee Coupons</span></li>
+                                    <li><i class="fa fa-tag blue"></i><span class="icon-jal-coupon pointer-cursor" (click)="openCoupons()">Jaldee Coupons</span></li>
                                     <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
                                     <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li><span class="icon-favourite-filled" *ngIf="isInFav" (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
